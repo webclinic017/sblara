@@ -29,3 +29,17 @@
 
     </tbody>
 </table>
+<script>
+    $(".showTransactionChildren").click(function () {
+        $(this).addClass('hidden');
+        var tr = $(this).closest('tr');
+        tr.nextUntil('.normalTransaction').removeClass('hidden');
+        tr.find('.hideTransactionChildren').removeClass('hidden');
+    })
+    $(".hideTransactionChildren").click(function () {
+        $(this).addClass('hidden');
+        var tr = $(this).closest('tr');
+        tr.nextUntil('.normalTransaction').addClass('hidden');
+        tr.find('.showTransactionChildren').removeClass('hidden');
+    })
+</script>
