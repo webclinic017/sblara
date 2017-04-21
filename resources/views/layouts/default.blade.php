@@ -51,6 +51,7 @@
 
         <!-- BEGIN ALL JS SCRIPTS -->
         @include('includes.js')
+        @yield('js')
         <!-- END ALL JS SCRIPTS -->
 
     </body>
