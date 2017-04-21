@@ -1,5 +1,7 @@
 @extends('layouts.default')
 @section('content')
+@include('portfolio.portfolio_actions')
+
 <div class="portlet light bordered ">
     <div class="portlet-title">
         <div class="caption font-green">
@@ -37,9 +39,9 @@
 @endsection
 @section('js')
 <script>
+    $(".portfolioActions .gain-loss").addClass('active');
+    $(".portfolio-menu").addClass('open');
     $(function () {
-        $(".portfolio-menu .gain-loss").addClass('active');
-        $(".portfolio-menu").addClass('open');
     })
 
 </script>

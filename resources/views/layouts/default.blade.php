@@ -24,6 +24,7 @@
 
                     <!-- BEGIN BREADCRUMBS -->
                     @include('includes.breadcrumbs')
+
                     <!-- END BREADCRUMBS -->
 
                     <!-- BEGIN PAGE BASE CONTENT -->

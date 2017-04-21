@@ -1,10 +1,13 @@
 @extends('layouts.default')
 @section('content')
+
 @if(session('status')=='success')
 <div class="alert alert-success">
     Portfolio Saved successfully!
 </div>
 @endif
+@include('portfolio.portfolio_actions')
+
 <form role="form" action="/portfolio" method="post">
     <div class="portlet light bordered ">
         <div class="portlet-title">
@@ -57,6 +60,8 @@
 @endsection
 @section('js')
 <script>
+    $(".portfolioActions .edit").addClass('active');
+    $(".portfolio-menu").addClass('open');
     $(function () {
         $(".datepicker").datepicker({
             dateFormat: 'yy-mm-dd'
@@ -76,8 +81,6 @@
 
             }
         })
-        $(".portfolio-menu .edit").addClass('active');
-        $(".portfolio-menu").addClass('open');
     })
 
 </script>

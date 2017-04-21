@@ -18,47 +18,47 @@
                 </li>
             </ul>
         </li>
-        <li class="dropdown dropdown-fw dropdown-fw-disabled portfolio-menu">
-            <a href="javascript:;" class="text-uppercase">
+        <li class="portfolio-menu">
+            <a href="/portfolio" class="text-uppercase">
                 <i class="icon-home"></i> Portfolio</a>
-            <ul class="dropdown-menu dropdown-menu-fw">
-                <li class="">
-                    <a href="/portfolio">Portfolio</a>
-                </li>
-                @if(isset($portfolioId))
-                <li class="">
-                    <a href="/portfolio_diversity/{{$portfolioId}}">Diversity Model</a>
-                </li>
-                <li class="">
-                    <a href="/portfolio_ratio/{{$portfolioId}}">Fundamental Ratios</a>
-                </li>
-                <li class="performance">
-                    <a href="/portfolio/{{$portfolioId}}">Performance</a>
-                </li>
-                <li class="">
-                    <a href="/portfolio_market_summary/{{$portfolioId}}">Market Summary</a>
-                </li>
-                <li class="gain-loss">
-                    <a href="/portfolio_gain_loss/{{$portfolioId}}">Realized Gain/Loss</a>
-                </li>
-                <li class="edit">
-                    <a href="/portfolio/{{$portfolioId}}/edit">Edit Portfolio</a>
-                </li>
-                @endif
-                @if(auth()->user())
-                <li class="">
-                    <select class="form-control portfolio-select" selectedItem='{{$portfolioId or ''}}'>
-                        <option value="">Select Portfolio...</option>
-                        @foreach(auth()->user()->portfolios as $portfolio)
-                        <option value="{{$portfolio->id}}">{{$portfolio->portfolio_name}}</option>
-                        @endforeach
-                    </select>
-                </li>
-                <li class="create">
-                    <a href="/portfolio/create">Add Portfolio</a>
-                </li>
-                @endif
-            </ul>
+            <!--            <ul class="dropdown-menu dropdown-menu-fw">
+                            <li class="">
+                                <a href="/portfolio">Portfolio</a>
+                            </li>
+                            @if(isset($portfolioId))
+                            <li class="">
+                                <a href="/portfolio_diversity/{{$portfolioId}}">Diversity Model</a>
+                            </li>
+                            <li class="">
+                                <a href="/portfolio_ratio/{{$portfolioId}}">Fundamental Ratios</a>
+                            </li>
+                            <li class="performance">
+                                <a href="/portfolio/{{$portfolioId}}">Performance</a>
+                            </li>
+                            <li class="">
+                                <a href="/portfolio_market_summary/{{$portfolioId}}">Market Summary</a>
+                            </li>
+                            <li class="gain-loss">
+                                <a href="/portfolio_gain_loss/{{$portfolioId}}">Realized Gain/Loss</a>
+                            </li>
+                            <li class="edit">
+                                <a href="/portfolio/{{$portfolioId}}/edit">Edit Portfolio</a>
+                            </li>
+                            @endif
+                            @if(auth()->user())
+                            <li class="">
+                                <select class="form-control portfolio-select" selectedItem='{{$portfolioId or ''}}'>
+                                    <option value="">Select Portfolio...</option>
+                                    @foreach(auth()->user()->portfolios as $portfolio)
+                                    <option value="{{$portfolio->id}}">{{$portfolio->portfolio_name}}</option>
+                                    @endforeach
+                                </select>
+                            </li>
+                            <li class="create">
+                                <a href="/portfolio/create">Add Portfolio</a>
+                            </li>
+                            @endif
+                        </ul>-->
         </li>
         <li class="dropdown dropdown-fw dropdown-fw-disabled  ">
             <a href="javascript:;" class="text-uppercase">

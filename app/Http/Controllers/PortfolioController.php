@@ -17,12 +17,19 @@ class PortfolioController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        $portfolio = auth()->user()->portfolios()->first();
-        if ($portfolio) {
-            return redirect('/portfolio/' . $portfolio->id);
-        } else
-            return redirect('/portfolio/create');
-        return view('portfolio.index');
+//        $portfolio = auth()->user()->portfolios()->first();
+//        if ($portfolio) {
+//            return redirect('/portfolio/' . $portfolio->id);
+//        } else
+//            return redirect('/portfolio/create');
+        $data = [
+            'navigation' => [
+                'Portfolio',
+                'Your Portfolios',
+            ],
+            'portfolios' => auth()->user()->portfolios,
+        ];
+        return view('portfolio.index', $data);
     }
 
     /**
@@ -32,6 +39,10 @@ class PortfolioController extends Controller {
      */
     public function create() {
         $data = [
+            'navigation' => [
+                'Portfolio',
+                'Create Portfolio',
+            ],
         ];
         return view('portfolio.create', $data);
     }
@@ -119,6 +130,11 @@ class PortfolioController extends Controller {
      */
     public function show(Portfolio $portfolio) {
         $data = [
+            'navigation' => [
+                'Portfolio',
+                $portfolio->portfolio_name,
+                'Performance',
+            ],
             'portfolioId' => $portfolio->id,
             'portfolio' => $portfolio,
             'transactions' => $portfolio->portfolio_transactions()->where('transaction_type_id', 1)->get(),
@@ -129,6 +145,11 @@ class PortfolioController extends Controller {
     public function gainLoss($id) {
         $portfolio = Portfolio::find($id);
         $data = [
+            'navigation' => [
+                'Portfolio',
+                $portfolio->portfolio_name,
+                'Realized Gain/Loss',
+            ],
             'portfolioId' => $portfolio->id,
             'portfolio' => $portfolio,
             'transactions' => $portfolio->portfolio_transactions()->where('transaction_type_id', 2)->get(),
@@ -145,6 +166,11 @@ class PortfolioController extends Controller {
      */
     public function edit(Portfolio $portfolio) {
         $data = [
+            'navigation' => [
+                'Portfolio',
+                $portfolio->portfolio_name,
+                'Edit Portfolio',
+            ],
             'portfolioId' => $portfolio->id,
             'portfolio' => $portfolio,
             'instruments' => \App\Repositories\InstrumentRepository::getInstrumentList(),

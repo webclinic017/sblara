@@ -46,8 +46,8 @@ class PerformanceItem {
         }
         $view->with('lastTradeDate', $lastTradeDate);
         $view->with('lastTradePrice', $lastTradePrice);
-        $view->with('changeToday', $change);
-        $view->with('changeTodayPercent', $changePercent);
+        $view->with('changeToday', round($change, 2));
+        $view->with('changeTodayPercent', round($changePercent, 2));
         $view->with('gainLossToday', round($gainLossToday, 2));
         $view->with('gainLossTotal', round($gainLossTotal, 2));
         $view->with('percentChange', round($changePercentTotal, 2));
