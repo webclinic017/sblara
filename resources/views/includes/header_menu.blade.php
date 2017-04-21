@@ -22,6 +22,9 @@
             <a href="javascript:;" class="text-uppercase">
                 <i class="icon-home"></i> Portfolio</a>
             <ul class="dropdown-menu dropdown-menu-fw">
+                <li class="">
+                    <a href="/portfolio">Portfolio</a>
+                </li>
                 @if(isset($portfolioId))
                 <li class="">
                     <a href="/portfolio_diversity/{{$portfolioId}}">Diversity Model</a>
@@ -45,7 +48,7 @@
                 @if(auth()->user())
                 <li class="">
                     <select class="form-control portfolio-select" selectedItem='{{$portfolioId or ''}}'>
-                        <option>Select Portfolio...</option>
+                        <option value="">Select Portfolio...</option>
                         @foreach(auth()->user()->portfolios as $portfolio)
                         <option value="{{$portfolio->id}}">{{$portfolio->portfolio_name}}</option>
                         @endforeach

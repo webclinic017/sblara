@@ -17,6 +17,11 @@ class PortfolioController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index() {
+        $portfolio = auth()->user()->portfolios()->first();
+        if ($portfolio) {
+            return redirect('/portfolio/' . $portfolio->id);
+        } else
+            return redirect('/portfolio/create');
         return view('portfolio.index');
     }
 
