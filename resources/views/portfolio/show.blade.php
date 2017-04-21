@@ -52,20 +52,18 @@
     $(".portfolioActions .performance").addClass('active');
     $(function () {
 
-        $(".transactionType").change(function () {
-            var value = $(this).val()
-            var tr = $(this).closest('tr');
-            if (value == 1 || value == 4)
-            {
-                tr.find('.type-sell').addClass('hidden');
-                tr.find('.type-buy').removeClass('hidden');
-            }
-            else
-            {
-                tr.find('.type-buy').addClass('hidden');
-                tr.find('.type-sell').removeClass('hidden');
 
-            }
+        $(".showTransactionChildren").click(function () {
+            $(this).addClass('hidden');
+            var tr = $(this).closest('tr');
+            tr.nextUntil('.normalTransaction').removeClass('hidden');
+            tr.find('.hideTransactionChildren').removeClass('hidden');
+        })
+        $(".hideTransactionChildren").click(function () {
+            $(this).addClass('hidden');
+            var tr = $(this).closest('tr');
+            tr.nextUntil('.normalTransaction').addClass('hidden');
+            tr.find('.showTransactionChildren').removeClass('hidden');
         })
     })
 

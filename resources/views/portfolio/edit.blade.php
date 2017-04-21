@@ -42,4 +42,19 @@
     $(".datepicker").datepicker({
         dateFormat: 'yy-mm-dd'
     });
+    $(".transactionType").change(function () {
+        var value = $(this).val()
+        var tr = $(this).closest('tr');
+        if (value == 1 || value == 4)
+        {
+            tr.find('.type-sell').addClass('hidden');
+            tr.find('.type-buy').removeClass('hidden');
+        }
+        else
+        {
+            tr.find('.type-buy').addClass('hidden');
+            tr.find('.type-sell').removeClass('hidden');
+
+        }
+    })
 </script>
