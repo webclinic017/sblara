@@ -9,7 +9,8 @@
             <span class="caption-subject bold uppercase"> Portfolio Performance</span>
         </div>
     </div>
-    <div class="portlet-body form">
+    <div class="portlet-body portfolio-content-area form">
+
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -50,6 +51,22 @@
     $(".portfolio-menu").addClass('open');
     $(".portfolioActions .performance").addClass('active');
     $(function () {
+
+        $(".transactionType").change(function () {
+            var value = $(this).val()
+            var tr = $(this).closest('tr');
+            if (value == 1 || value == 4)
+            {
+                tr.find('.type-sell').addClass('hidden');
+                tr.find('.type-buy').removeClass('hidden');
+            }
+            else
+            {
+                tr.find('.type-buy').addClass('hidden');
+                tr.find('.type-sell').removeClass('hidden');
+
+            }
+        })
     })
 
 </script>

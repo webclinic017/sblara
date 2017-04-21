@@ -142,6 +142,21 @@ class PortfolioController extends Controller {
         return view('portfolio.show', $data);
     }
 
+    public function performance($id) {
+        $portfolio = Portfolio::find($id);
+        $data = [
+            'navigation' => [
+                'Portfolio',
+                $portfolio->portfolio_name,
+                'Performance',
+            ],
+            'portfolioId' => $portfolio->id,
+            'portfolio' => $portfolio,
+            'transactions' => $portfolio->portfolio_transactions()->where('transaction_type_id', 1)->get(),
+        ];
+        return view('portfolio.performance', $data);
+    }
+
     public function gainLoss($id) {
         $portfolio = Portfolio::find($id);
         $data = [
