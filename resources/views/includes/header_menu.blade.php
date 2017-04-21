@@ -42,6 +42,7 @@
                     <a href="/portfolio/{{$portfolioId}}/edit">Edit Portfolio</a>
                 </li>
                 @endif
+                @if(auth()->user())
                 <li class="">
                     <select class="form-control portfolio-select" selectedItem='{{$portfolioId or ''}}'>
                         <option>Select Portfolio...</option>
@@ -53,6 +54,7 @@
                 <li class="create">
                     <a href="/portfolio/create">Add Portfolio</a>
                 </li>
+                @endif
             </ul>
         </li>
         <li class="dropdown dropdown-fw dropdown-fw-disabled  ">
