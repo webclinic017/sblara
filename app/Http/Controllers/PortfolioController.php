@@ -137,7 +137,7 @@ class PortfolioController extends Controller {
             ],
             'portfolioId' => $portfolio->id,
             'portfolio' => $portfolio,
-            'transactions' => $portfolio->portfolio_transactions()->where('transaction_type_id', 1)->get(),
+            'transactions' => $portfolio->portfolio_transactions()->where('transaction_type_id', 1)->groupBy('instrument_id')->get(),
         ];
         return view('portfolio.show', $data);
     }
