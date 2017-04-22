@@ -24,6 +24,7 @@
 
                     <!-- BEGIN BREADCRUMBS -->
                     @include('includes.breadcrumbs')
+
                     <!-- END BREADCRUMBS -->
 
                     <!-- BEGIN PAGE BASE CONTENT -->
@@ -51,6 +52,7 @@
 
         <!-- BEGIN ALL JS SCRIPTS -->
         @include('includes.js')
+        @yield('js')
         <!-- END ALL JS SCRIPTS -->
 
     </body>
