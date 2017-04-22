@@ -5,7 +5,7 @@
     <td>
         <select class="form-control" name="symbols[]">
             @foreach($instruments as $instrument)
-            <option value="{{$instrument->id}}">{{$instrument->name}}</option>
+            <option value="{{$instrument->id}}">{{$instrument->instrument_code}}</option>
             @endforeach
         </select>
     </td>

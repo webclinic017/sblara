@@ -34,7 +34,8 @@ class PerformanceItem {
         $instrumentId = $transaction->instrument_id;
         $shares = $transaction->shares;
         $buyPrice = $transaction->rate;
-        $buyCommission = $transaction->commission;
+        $totalBuyCost = $shares * $buyPrice;
+        $buyCommission = $transaction->commission * $totalBuyCost / 100;
         $amount = $transaction->amount;
         $totalPurchase = $buyPrice * $shares + $buyCommission;
         if (!$isChild) {
@@ -48,12 +49,14 @@ class PerformanceItem {
                 foreach ($transactions as $transactionChild) {
                     $shares+=$transactionChild->shares;
                     $buyPrice+=$transactionChild->rate;
-                    $buyCommission+=$transactionChild->commission;
+                    $totalBuyCost = $transactionChild->shares * $transactionChild->rate;
+                    $buyCommissionChil = $totalBuyCost * $transactionChild->commission / 100;
+                    $buyCommission+=$totalBuyCost * $transactionChild->commission / 100;
                     $amount+=$transactionChild->amount;
-                    $totalPurchase += $transactionChild->rate * $transactionChild->shares + $transactionChild->commission;
+                    $totalPurchase += $transactionChild->rate * $transactionChild->shares + $buyCommissionChil;
                 }
                 $buyPrice = $buyPrice / $transactions->count();
-                $buyCommission = $buyCommission / $transactions->count();
+//                $buyCommission = $buyCommission / $transactions->count();
             }
         }
         $amountSumOfPortfolio = \App\PortfolioTransaction::where('portfolio_id', $transaction->portfolio_id)->where('transaction_type_id', 1)->sum('amount');
@@ -75,11 +78,12 @@ class PerformanceItem {
         if (!$isChild && $transactions->count() > 1) {
             $isParent = true;
             $view->with('childTransactions', $transactions);
-        } else
+        } else {
             $view->with('childTransactions', []);
+        }
         $view->with('shares', $shares);
-        $view->with('rate', $buyPrice);
-        $view->with('commission', $buyCommission);
+        $view->with('rate', round($buyPrice, 2));
+        $view->with('commission', round($buyCommission, 2));
         $view->with('isParent', $isParent);
         $view->with('isChild', $isChild);
         $view->with('lastTradeDate', $lastTradeDate);

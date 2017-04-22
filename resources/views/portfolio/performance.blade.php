@@ -26,6 +26,8 @@
     </thead>
     <tbody>
         @each('portfolio.performance_item',$transactions,'transaction')
+        @include('portfolio.performance_total_item',['portfolio'=>$portfolio])
+
 
     </tbody>
 </table>

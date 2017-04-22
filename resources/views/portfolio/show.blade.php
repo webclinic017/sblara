@@ -11,7 +11,7 @@
     </div>
     <div class="portlet-body portfolio-content-area form">
 
-        <table class="table table-striped">
+        <table class="table table-bordered">
             <thead>
                 <tr>
                     <th colspan="2"></th>
@@ -39,6 +39,7 @@
             </thead>
             <tbody>
                 @each('portfolio.performance_item',$transactions,'transaction')
+                @include('portfolio.performance_total_item',['portfolio'=>$portfolio])
 
             </tbody>
         </table>

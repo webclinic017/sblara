@@ -65,8 +65,7 @@
         {{$percentPortfolio or 'N/A'}}
         @endif
     </td>
-    <td>{{$sellValue or 'N/A'}}</td>
+    <td>
+        {{$sellValue or 'N/A'}}
+    </td>
 </tr>
-@foreach($childTransactions as $transaction)
-@include('portfolio.performance_item',['isChild'=>true])
-@endforeach
