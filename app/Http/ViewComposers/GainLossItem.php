@@ -35,8 +35,8 @@ class GainLossItem {
         $profit = 0;
         $buyCommission = 0;
         if ($parentTransaction) {
-            $profit = $transaction->amount * $transaction->commission / 100 - $parentTransaction->amount * $parentTransaction->commission / 100;
-            $buyCommission = $parentTransaction->amount + $parentTransaction->commission / 100;
+            $profit = ($parentTransaction->amount + $transaction->amount ) * $parentTransaction->commission / 100 - $transaction->amount * $transaction->commission / 100;
+            $buyCommission = ($parentTransaction->amount * $parentTransaction->commission ) / 100;
 //            $view->with('shares', $shares);
         }
         $sellCommission = $transaction->amount * $transaction->commission / 100;
