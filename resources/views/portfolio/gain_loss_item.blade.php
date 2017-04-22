@@ -11,5 +11,5 @@
     <td>{{$transaction->amount}}</td>
     <td>{{$transaction->transaction_time?$transaction->transaction_time->format('Y-m-d'):'N\A'}}</td>
     <td class="{{$profit<0?'text-danger':'text-success'}}">{{$profit}}</td>
-    <td>Delete</td>
+    <td><button class="btn btn-danger btn-sm deleteTransaction" itemId='{{$transaction->id}}'>Delete</button></td>
 </tr>

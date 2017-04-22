@@ -18,6 +18,22 @@
     </thead>
     <tbody>
         @each('portfolio.gain_loss_item',$transactions,'transaction')
-
+        {{csrf_field()}}
     </tbody>
 </table>
+<script>
+    $(".deleteTransaction").click(function () {
+        var id = $(this).attr('itemId');
+        var tr = $(this).closest('tr');
+        $.ajax({
+            url: '/portfolio_transaction/' + id,
+            type: 'delete',
+            data: {_token: $("[name=_token]").val()},
+            success: function () {
+                tr.remove();
+            },
+        })
+        return false;
+    })
+
+</script>

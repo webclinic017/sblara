@@ -5,15 +5,14 @@ namespace App\Http\Controllers;
 use App\PortfolioTransaction;
 use Illuminate\Http\Request;
 
-class PortfolioTransactionController extends Controller
-{
+class PortfolioTransactionController extends Controller {
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function index() {
         //
     }
 
@@ -22,8 +21,7 @@ class PortfolioTransactionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
+    public function create() {
         //
     }
 
@@ -33,8 +31,7 @@ class PortfolioTransactionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
         //
     }
 
@@ -44,8 +41,7 @@ class PortfolioTransactionController extends Controller
      * @param  \App\PortfolioTransaction  $portfolioTransaction
      * @return \Illuminate\Http\Response
      */
-    public function show(PortfolioTransaction $portfolioTransaction)
-    {
+    public function show(PortfolioTransaction $portfolioTransaction) {
         //
     }
 
@@ -55,8 +51,7 @@ class PortfolioTransactionController extends Controller
      * @param  \App\PortfolioTransaction  $portfolioTransaction
      * @return \Illuminate\Http\Response
      */
-    public function edit(PortfolioTransaction $portfolioTransaction)
-    {
+    public function edit(PortfolioTransaction $portfolioTransaction) {
         //
     }
 
@@ -67,8 +62,7 @@ class PortfolioTransactionController extends Controller
      * @param  \App\PortfolioTransaction  $portfolioTransaction
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, PortfolioTransaction $portfolioTransaction)
-    {
+    public function update(Request $request, PortfolioTransaction $portfolioTransaction) {
         //
     }
 
@@ -78,8 +72,15 @@ class PortfolioTransactionController extends Controller
      * @param  \App\PortfolioTransaction  $portfolioTransaction
      * @return \Illuminate\Http\Response
      */
-    public function destroy(PortfolioTransaction $portfolioTransaction)
-    {
-        //
+    public function destroy(PortfolioTransaction $portfolioTransaction) {
+        if ($portfolioTransaction->type == 2) {
+            if ($parent = $portfolioTransaction->parent_portfolio_transaction) {
+                $parent->shares +=$portfolioTransaction->shares;
+                $parent->amount+=$portfolioTransaction->amount;
+                $parent->save();
+            }
+        }
+        $portfolioTransaction->delete();
     }
+
 }
