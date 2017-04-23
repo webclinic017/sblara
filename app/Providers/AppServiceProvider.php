@@ -30,6 +30,9 @@ class AppServiceProvider extends ServiceProvider {
                 'block.significant_movement', 'App\Http\ViewComposers\SignificantMovement'
         );
         View::composer(
+            'block.advance_chart', 'App\Http\ViewComposers\AdvanceChart'
+        );
+        View::composer(
                 'portfolio.create_transaction_item', 'App\Http\ViewComposers\CreateTransactionItem'
         );
 

@@ -13,8 +13,10 @@ class DataBanksIntraday extends Model {
      */
 
     protected $appends = array('price_change', 'price_change_per');
+
     protected $dates = [
         'lm_date_time',
+
     ];
 
     public function getTradeDateAttribute($value) {
@@ -46,6 +48,7 @@ class DataBanksIntraday extends Model {
         return $value;
     }
 
+
     /*
      * Return last minute trade data for all instruments  those have been traded.
      *
@@ -64,10 +67,15 @@ class DataBanksIntraday extends Model {
         $returnData = Cache::remember("$cacheVar", 1, function () use ($marketId, $batch) {
                     $returnData = static::where('market_id', $marketId)->where('batch', $batch)->get();
                     return $returnData;
+
                 });
 
         return $returnData;
+
+
+
     }
+
 
     /*
      * Return N minute ago trade data for all instruments those have been traded.
@@ -85,10 +93,12 @@ class DataBanksIntraday extends Model {
         $returnData = Cache::remember("$cacheVar", 1, function () use ($marketId, $batch) {
                     $returnData = static::where('market_id', $marketId)->where('batch', $batch)->get();
                     return $returnData;
+
                 });
 
         return $returnData;
     }
+
 
     /*
      * $trade_date: null will return last day data
@@ -123,6 +133,8 @@ class DataBanksIntraday extends Model {
                 });
 
         return $returnData;
+
+
     }
 
     /*

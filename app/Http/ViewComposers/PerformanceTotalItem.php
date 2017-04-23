@@ -33,6 +33,7 @@ class PerformanceTotalItem {
         $gainLossTotal = 0;
         $sellValue = 0;
         $gainLossToday = 0;
+        $changePercentTotal = 0;
         foreach ($transactions as $transaction) {
             $shares = $transaction->shares;
             $buyPrice = $transaction->rate;
@@ -55,7 +56,8 @@ class PerformanceTotalItem {
                 $sellValue += $lastTradePrice * $shares;
             }
         }
-        $view->with('change', round($gainLossTotal / $totalPurchase * 100, 2));
+        $change = $totalPurchase ? $gainLossTotal / $totalPurchase * 100 : 0;
+        $view->with('change', round($change, 2));
         $view->with('totalPurchase', round($totalPurchase, 2));
         $view->with('gainLossToday', round($gainLossToday, 2));
         $view->with('gainLossTotal', round($gainLossTotal, 2));
