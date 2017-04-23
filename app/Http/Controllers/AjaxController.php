@@ -18,22 +18,43 @@ class AjaxController extends Controller
     	if ($period < 0) $period = 15;
     	$data = DataBanksIntradayRepository::getMinuteData($inst_ids, $period);
 
-    	$volumeData = array();
+    	$bearVolumeData = array();
+    	$neutVolumeData = array();
+    	$bullVolumeData = array();
     	$priceData = array();
     	$bull = $neutral = $bear = 0;
     	$lastprice = $data[$inst_id][0]->close_price;
     	foreach ($data[$inst_id] as $row) {    		
-    		$volumeData[] = [$row->lm_date_time->timestamp*1000, $row->total_volume_difference];
+    		
+			if(($lastprice - $row->close_price) < 0) {
+				$bear += $row->total_volume_difference;
+				//$clr = '#d9534f';
+				$bearVolumeData[] = [$row->lm_date_time->timestamp*1000, $row->total_volume_difference];
+			}
+    		elseif(($lastprice - $row->close_price) == 0) {
+    			$neutral += $row->total_volume_difference;
+    			$clr = '#5bc0de';
+    			$neutVolumeData[] = [$row->lm_date_time->timestamp*1000, $row->total_volume_difference];
+			}
+    		elseif(($lastprice - $row->close_price) > 0) {
+    			$bull += $row->total_volume_difference;
+    			$clr = '#5cb85c';
+    			$bullVolumeData[] = [$row->lm_date_time->timestamp*1000, $row->total_volume_difference];
+    		}
+
+
+    		// $volumeData .= '{"x":' . $row->lm_date_time->timestamp*1000 . ',"color":"' . $clr . '","y":' . $row->total_volume_difference . '},';
+    		
     		$priceData[] = [$row->lm_date_time->timestamp*1000, $row->close_price];
 
-    		if(($lastprice - $row->close_price) < 0) $bear += $row->total_volume_difference;
-    		elseif(($lastprice - $row->close_price) == 0) $neutral += $row->total_volume_difference;
-    		elseif(($lastprice - $row->close_price) > 0) $bull += $row->total_volume_difference;
-
+    		
     		$lastprice = $row->close_price;
     	}
+    	
     	$returnData = array();
-    	$returnData['volumeData'] = $volumeData;
+    	$returnData['bearVolumeData'] = $bearVolumeData;
+    	$returnData['bullVolumeData'] = $bullVolumeData;
+    	$returnData['neutVolumeData'] = $neutVolumeData;
     	$returnData['priceData'] = $priceData;
     	$returnData['bull'] = $bull;
     	$returnData['bear'] = $bear;
@@ -69,22 +90,43 @@ class AjaxController extends Controller
     	if ($period < 0) $period = 15;
     	$data = DataBanksIntradayRepository::getYdayMinuteData($inst_ids, $period);
 
-    	$volumeData = array();
+    	$bearVolumeData = array();
+    	$neutVolumeData = array();
+    	$bullVolumeData = array();
     	$priceData = array();
     	$bull = $neutral = $bear = 0;
     	$lastprice = $data[$inst_id][0]->close_price;
     	foreach ($data[$inst_id] as $row) {    		
-    		$volumeData[] = [$row->lm_date_time->timestamp*1000, $row->total_volume_difference];
+    		
+			if(($lastprice - $row->close_price) < 0) {
+				$bear += $row->total_volume_difference;
+				//$clr = '#d9534f';
+				$bearVolumeData[] = [$row->lm_date_time->timestamp*1000, $row->total_volume_difference];
+			}
+    		elseif(($lastprice - $row->close_price) == 0) {
+    			$neutral += $row->total_volume_difference;
+    			$clr = '#5bc0de';
+    			$neutVolumeData[] = [$row->lm_date_time->timestamp*1000, $row->total_volume_difference];
+			}
+    		elseif(($lastprice - $row->close_price) > 0) {
+    			$bull += $row->total_volume_difference;
+    			$clr = '#5cb85c';
+    			$bullVolumeData[] = [$row->lm_date_time->timestamp*1000, $row->total_volume_difference];
+    		}
+
+
+    		// $volumeData .= '{"x":' . $row->lm_date_time->timestamp*1000 . ',"color":"' . $clr . '","y":' . $row->total_volume_difference . '},';
+    		
     		$priceData[] = [$row->lm_date_time->timestamp*1000, $row->close_price];
 
-    		if(($lastprice - $row->close_price) < 0) $bear += $row->total_volume_difference;
-    		elseif(($lastprice - $row->close_price) == 0) $neutral += $row->total_volume_difference;
-    		elseif(($lastprice - $row->close_price) > 0) $bull += $row->total_volume_difference;
-
+    		
     		$lastprice = $row->close_price;
     	}
+    	
     	$returnData = array();
-    	$returnData['volumeData'] = $volumeData;
+    	$returnData['bearVolumeData'] = $bearVolumeData;
+    	$returnData['bullVolumeData'] = $bullVolumeData;
+    	$returnData['neutVolumeData'] = $neutVolumeData;
     	$returnData['priceData'] = $priceData;
     	$returnData['bull'] = $bull;
     	$returnData['bear'] = $bear;

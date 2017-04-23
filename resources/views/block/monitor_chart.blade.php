@@ -146,7 +146,12 @@ $(document).ready(function(){
             $("#monitor_chart").highcharts({
                 chart: {
                     zoomType: 'xy',
-                    height: 400
+                    height: 400,
+                    events: {
+                        load: function() {
+                            this.renderer.image('{{ url('/img/chart_logo.gif') }}', this.chartWidth/2.5, this.chartHeight/2.5, 86, 63).add(); 
+                        }
+                    }
                 },
                 title: {
                     text: null
@@ -154,9 +159,10 @@ $(document).ready(function(){
                 subtitle: {
 
                 },
-
+                            
                 xAxis: {
                     type: 'datetime',
+                    tickInterval: 1,
                     dateTimeLabelFormats: { // don't display the dummy year
                         day: '%e of %b',
                         minute: '%H:%M',
@@ -226,11 +232,30 @@ $(document).ready(function(){
                     }
                 },
                 series: [ {
-                    name: 'Volume',
+                    name: 'Bear Volume',
                     type: 'column',
-                    color: '#4572A7',
+                    color: '#d9534f',
                     yAxis: 1,
-                    data: returnData.volumeData
+                    pointWidth: 5,
+                    data: returnData.bearVolumeData
+
+                }, 
+                {
+                    name: 'Bull Volume',
+                    type: 'column',
+                    color: '#5bc0de',
+                    yAxis: 1,
+                    pointWidth: 5,
+                    data: returnData.neutVolumeData
+
+                }, 
+                {
+                    name: 'Neutral Volume',
+                    type: 'column',
+                    color: '#5cb85c',
+                    yAxis: 1,
+                    pointWidth: 5,
+                    data: returnData.bullVolumeData
 
                 }, {
                     name: 'Close Price',
@@ -301,6 +326,13 @@ $(document).ready(function(){
     
     if(document.getElementById('symbol').value != -1) 
         $("#symbol").trigger('change');
+    
+    function ref() {
+        if(document.getElementById('symbol').value != -1) 
+            $("#symbol").trigger('change');
+    }
+
+    var myInt = setInterval(ref, 60000);
     
 });
 
