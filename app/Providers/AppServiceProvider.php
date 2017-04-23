@@ -36,6 +36,10 @@ class AppServiceProvider extends ServiceProvider
             'block.advance_chart', 'App\Http\ViewComposers\AdvanceChart'
         );
 
+        View::composer(
+            'block.monitor_chart', 'App\Http\ViewComposers\MonitorChart'
+        );
+
 
     }
 

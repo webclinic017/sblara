@@ -114,7 +114,7 @@ class DataBanksIntraday extends Model
 
     public static function getWholeDayData($instrumentsIdArr=array(),$minute=0,$tradeDate=null,$exchangeId=0)
     {
-        $instrumentIdHash=$instrumentsIdArr->sum();
+        $instrumentIdHash=array_sum($instrumentsIdArr);//->sum();
 
         $cacheVar="IntraDataByInstrument$tradeDate$exchangeId$instrumentIdHash$minute";
 
