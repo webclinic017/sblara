@@ -60,6 +60,17 @@ class Instrument extends Model
         return $returnData;
     }
 
+    public static function getInstrumentsById($instrumentId=array(),$exchangeId=0)
+    {
+
+        /*We will use session value of active_exchange_id as default if exist*/
+        if(!$exchangeId) {
+            $exchangeId = session('active_exchange_id', 1);
+        }
+        $returnData=self::getInstrumentsAll($exchangeId)->whereInStrict('id',$instrumentId);
+        return $returnData;
+    }
+
     /*
      * It will avoid index.
      * */
