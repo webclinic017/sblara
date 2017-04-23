@@ -29,7 +29,7 @@
             
         </div>
         <div class="portlet-body">
-            <div class="row">
+            <div class="row" style="padding: 10px;">
                 <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                     <label>Select Symbol</label>
                     <select name="symbol" id="symbol" class="form-control selectpicker" data-live-search="true">
