@@ -10,7 +10,7 @@
      @include('block.index_chart')
      </div>
 </div>
-@include('block.advance_chart')
+@include('block.market_summary')
 @include('block.market_summary')
 @include('block.market_summary')
 @endsection
