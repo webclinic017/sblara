@@ -129,11 +129,12 @@ class DataBanksIntraday extends Model {
      * By default it will return last 1 batch data of previous day
      * */
 
-    public static function getPreviousDayData($tradeDate = null, $minute = 1, $exchangeId = 0) {
+    public static function getPreviousDayData($instrumentsIdArr=array(),$tradeDate = null, $minute = 1, $exchangeId = 0) {
+        $instrumentIdHash=array_sum($instrumentsIdArr);
 
-        $cacheVar = "PreviousDayIntraData$tradeDate$exchangeId";
+        $cacheVar = "PreviousDayIntraData$tradeDate$exchangeId$instrumentIdHash$minute";
 
-        $returnData = Cache::remember("$cacheVar", 1, function () use ($tradeDate, $exchangeId, $minute) {
+        $returnData = Cache::remember("$cacheVar", 1, function () use ($tradeDate, $exchangeId, $minute, $instrumentsIdArr) {
 
                     $m = new Market();
                     $activeDate = $m->getActiveDates(2, $tradeDate, $exchangeId);
@@ -144,6 +145,9 @@ class DataBanksIntraday extends Model {
                     if ($minute) {
                         $batch = $activeDate[1]->data_bank_intraday_batch - ($minute - 1);
                         $query->where('batch', '>=', $batch);
+                    }
+                    if (!empty($instrumentsIdArr)) {
+                        $query->whereIn('instrument_id', $instrumentsIdArr);
                     }
 
                     $returnData = $query->get();

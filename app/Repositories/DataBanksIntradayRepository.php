@@ -83,6 +83,21 @@ class DataBanksIntradayRepository {
         return collect($returnData);
     }
 
+    public static function getYdayMinuteData($instrumentsIdArr=array(),$minute=15,$field='total_volume')
+    {
+
+        $minuteData=DataBanksIntraday::getPreviousDayData($instrumentsIdArr,null,$minute);
+        $minuteData=$minuteData->groupBy('instrument_id');
+
+        $returnData=array();
+
+        foreach($minuteData as $instrument_id=>$dataObj) {
+            $returnData[$instrument_id]=self::calculateDifference($dataObj,$field);
+        }
+
+        return collect($returnData);
+    }
+
     /*
      * This is to calculate the difference between 2 object data
      *

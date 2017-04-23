@@ -24,6 +24,9 @@ Route::get('/hitest', function () {
     return view('hitest');
 });
 Route::get('/ajax/monitor/{inst_id}/{period}', 'AjaxController@monitor')->name('Ajax.Monitor');
+Route::get('/ajax/yDay/{inst_id}/{period}', 'AjaxController@yDay')->name('Ajax.yDay');
+
+Route::get('/ajax/market', 'AjaxController@market')->name('Ajax.Market');
 
 //trading view
 Route::get('/config', function () {

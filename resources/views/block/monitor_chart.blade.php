@@ -55,7 +55,7 @@
             </div>
             <div class="row" id="chart_placeholder" style="display: none;">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <div class="row">
+                    <div class="row" id="displayDiv" style="padding: 5px;">
                         <div id="monitor_chart"></div>
                     </div>
                     <div class="row">
@@ -68,6 +68,20 @@
                         <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3" 
                         style="background: #d9534f !important; color: white; min-height: 1.8em;padding-top: 2px;" id="bear">Bear: </div>
                         
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3" style="padding: 5px;">
+                            <button type="button" class="btn btn-success" style="width: 100%" id="todayBtn">&nbsp; Today</button>
+                        </div>
+                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3" style="padding: 5px;">
+                            <button type="button" class="btn btn-primary" style="width: 100%" id="stockBtn">&nbsp; Stock Shart</button>
+                        </div>                        
+                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3" style="padding: 5px;">
+                            <button type="button" class="btn btn-primary" style="width: 100%" id="marketBtn">&nbsp; Market Depth</button>
+                        </div>
+                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3" style="padding: 5px;">
+                            <button type="button" class="btn btn-primary" style="width: 100%" id="yDayBtn">&nbsp; Yesterday</button>
+                        </div>
                     </div>
                 </div>
                 
@@ -83,15 +97,19 @@
 
 <script>
 $(document).ready(function(){
-    $("select").change(function(){
-        inst = document.getElementById('symbol').value;
-        if(inst < 0) {
-            document.getElementById('chart_placeholder').style.display = 'none';
-            return;
-        }
-        period = document.getElementById('period').value;
-        get_url = "{{ url('/ajax/monitor/') }}/" + inst + "/" + period;
+    $("#stockBtn").click(function(){
+       document.getElementById('displayDiv').innerHTML = '<img src="" width="100%"></img>'; 
+    });
+    $("#marketBtn").click(function(){
+       get_url = "{{ url('/ajax/market') }}";
         
+        $.ajax({url: get_url, success: function(result){ 
+            document.getElementById('displayDiv').innerHTML = result;
+            }
+        }); 
+    });
+
+    function drawChart(get_url) {
         $.ajax({url: get_url, success: function(result){
             document.getElementById('chart_placeholder').style.display = 'block';
 
@@ -102,130 +120,159 @@ $(document).ready(function(){
             document.getElementById('neutral').innerHTML = 'Neutral: ' + returnData.neutral;
             document.getElementById('bear').innerHTML = 'Bear: ' + returnData.bear;
             $("#monitor_chart").highcharts({
-            chart: {
-                zoomType: 'xy',
-                height: 400
-            },
-            title: {
-                text: null
-            },
-            subtitle: {
+                chart: {
+                    zoomType: 'xy',
+                    height: 400
+                },
+                title: {
+                    text: null
+                },
+                subtitle: {
 
-            },
-
-            xAxis: {
-                type: 'datetime',
-                dateTimeLabelFormats: { // don't display the dummy year
-                    day: '%e of %b',
-                    minute: '%H:%M',
-                    hour: '%H:%M'
                 },
 
-                title: null
-            },
-            yAxis: [{ // Primary yAxis
-                gridLineDashStyle: 'longdash',
-                lineColor: '#d2d2d2',
-                lineWidth: 1,
-                tickInterval: null,
-                maxPadding: 0.1,
-                labels: {
-                    format: '{value}',
-                    
+                xAxis: {
+                    type: 'datetime',
+                    dateTimeLabelFormats: { // don't display the dummy year
+                        day: '%e of %b',
+                        minute: '%H:%M',
+                        hour: '%H:%M'
+                    },
+
+                    title: null
+                },
+                yAxis: [{ // Primary yAxis
+                    gridLineDashStyle: 'longdash',
+                    lineColor: '#d2d2d2',
+                    lineWidth: 1,
+                    tickInterval: null,
+                    maxPadding: 0.1,
+                    labels: {
+                        format: '{value}',
+                        
+                        style: {
+                            color: Highcharts.getOptions().colors[1]
+                        }
+                    },
+                    title: null
+                }, { // Secondary yAxis
+                    gridLineDashStyle: 'longdash',
+                    lineColor: '#d2d2d2',
+                    lineWidth: 1,
+                    tickInterval: null,
+                    maxPadding: 0.8,
+                    title: null,
+                    labels: {
+                        format: '{value}',
+                        
+                        style: {
+                            color: Highcharts.getOptions().colors[0]
+                        }
+                    },
+                    opposite: true
+                }],
+                tooltip: {
+                    shared: false,
+                    headerFormat: '<b>{series.name}</b><br>',
+                    pointFormat: '{point.x: %H:%M}  {point.name} | {point.y:.2f} '
+                },
+                credits: {
+                    enabled: true,
+                    href: "http://www.stockbangladesh.com",
+                    text: "stockbangladesh.com",
                     style: {
-                        color: Highcharts.getOptions().colors[1]
+                        color: '#4572A7'
+
+                    },
+                    position: {
+                        align: 'left',
+                        verticalAlign: 'top',
+                        x: 5,
+                        y: 395
                     }
                 },
-                title: null
-            }, { // Secondary yAxis
-                gridLineDashStyle: 'longdash',
-                lineColor: '#d2d2d2',
-                lineWidth: 1,
-                tickInterval: null,
-                maxPadding: 0.8,
-                title: null,
-                labels: {
-                    format: '{value}',
-                    
-                    style: {
-                        color: Highcharts.getOptions().colors[0]
-                    }
-                },
-                opposite: true
-            }],
-            tooltip: {
-                shared: false,
-                headerFormat: '<b>{series.name}</b><br>',
-                pointFormat: '{point.x: %H:%M}  {point.name} | {point.y:.2f} '
-            },
-            credits: {
-                enabled: true,
-                href: "http://www.stockbangladesh.com",
-                text: "stockbangladesh.com",
-                style: {
-                    color: '#4572A7'
-
-                },
-                position: {
-                    align: 'left',
-                    verticalAlign: 'top',
-                    x: 5,
-                    y: 395
-                }
-            },
-            legend: {
-                enabled: false
-
-            },
-            plotOptions: {
-                series: {
-                    pointWidth: 20,
-                    groupPadding: 0
-                }
-            },
-            series: [ {
-                name: 'Volume',
-                type: 'column',
-                color: '#4572A7',
-                yAxis: 1,
-                data: returnData.volumeData
-
-            }, {
-                name: 'Close Price',
-                type: 'line',
-                color: '#89A54E',
-                marker: {
-                    radius: 1
-                },
-                data: returnData.priceData
-            }, {
-                type: 'pie',
-                name: 'Summary',
-                data: [{
-                    name: 'Bear',
-                    y: returnData.bear,
-                    color: '#d9534f'
-                }, {
-                    name: 'Bull',
-                    y: returnData.bull,
-                    color: '#5cb85c'
-                }, {
-                    name: 'Neutral',
-                    y: returnData.neutral,
-                    color: '#5bc0de' 
-                }
-                ],
-                center: [500, 60],
-                size: 150,
-                showInLegend: true,
-                legend: true,
-                dataLabels: {
+                legend: {
                     enabled: false
-                }
-            }]
-        });
-            
-        }}); 
+
+                },
+                plotOptions: {
+                    series: {
+                        pointWidth: 20,
+                        groupPadding: 0
+                    }
+                },
+                series: [ {
+                    name: 'Volume',
+                    type: 'column',
+                    color: '#4572A7',
+                    yAxis: 1,
+                    data: returnData.volumeData
+
+                }, {
+                    name: 'Close Price',
+                    type: 'line',
+                    color: '#89A54E',
+                    marker: {
+                        radius: 1
+                    },
+                    data: returnData.priceData
+                }, {
+                    type: 'pie',
+                    name: 'Summary',
+                    data: [{
+                        name: 'Bear',
+                        y: returnData.bear,
+                        color: '#d9534f'
+                    }, {
+                        name: 'Bull',
+                        y: returnData.bull,
+                        color: '#5cb85c'
+                    }, {
+                        name: 'Neutral',
+                        y: returnData.neutral,
+                        color: '#5bc0de' 
+                    }
+                    ],
+                    center: [500, 60],
+                    size: 150,
+                    showInLegend: true,
+                    legend: true,
+                    dataLabels: {
+                        enabled: false
+                    }
+                }]
+            });
+        }});
+    }
+
+    $("#yDayBtn").click(function(){
+        inst = document.getElementById('symbol').value;
+        if(inst < 0) {
+            document.getElementById('chart_placeholder').style.display = 'none';
+            return;
+        }
+        document.getElementById('displayDiv').innerHTML = '<div id="monitor_chart"></div>';
+
+        period = document.getElementById('period').value;
+        get_url = "{{ url('/ajax/yDay/') }}/" + inst + "/" + period;
+        drawChart(get_url);
+
+    });
+    $("#todayBtn").click(function(){
+        $("#symbol").trigger('change');
+    });
+    $("select").change(function(){
+        inst = document.getElementById('symbol').value;
+        if(inst < 0) {
+            document.getElementById('chart_placeholder').style.display = 'none';
+            return;
+        }
+        document.getElementById('displayDiv').innerHTML = '<div id="monitor_chart"></div>';
+
+        period = document.getElementById('period').value;
+        get_url = "{{ url('/ajax/monitor/') }}/" + inst + "/" + period;
+        
+        drawChart(get_url);
     });
     
     if(document.getElementById('symbol').value != -1) 
