@@ -27,6 +27,11 @@ class Meta extends Model
         $data=self::with('meta_group')->whereIn('meta_key',$meta)->get();
         return $data->keyBy('meta_key');
     }
+    public static function getMetaInfoById($meta=array())
+    {
+        $data=self::with('meta_group')->whereIn('id',$meta)->get();
+        return $data->keyBy('id');
+    }
     public static function getMetaKeyByGroup($metaGroup=array())
     {
         $returnData = static::whereHas('meta_group', function($q) use($metaGroup) {

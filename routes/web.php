@@ -19,6 +19,7 @@ Route::get('/test', function () {
     return view('test');
 });
 
+Route::get('/dd', 'TestController@funtest');
 
 Route::get('/hitest', function () {
     return view('hitest');
