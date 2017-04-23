@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
 		$this->call(TradesTableSeeder::class);
 		$this->call(NewsTableSeeder::class);
 		$this->call(IndexValuesTableSeeder::class);
-        
+		$this->call(TransactionTypeTableSeeder::class);
+
     }
 }
