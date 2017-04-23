@@ -53,39 +53,63 @@
                     </select>
                 </div>
             </div>
-            <div class="row" id="chart_placeholder" style="display: none;">
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <div class="row" id="displayDiv" style="padding: 5px;">
-                        <div id="monitor_chart"></div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3" 
-                        style="background: black; color: white; min-height: 1.8em;padding-top: 2px;" id="total">Total: </div>
-                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3" 
-                        style="background: #5cb85c !important; color: white; min-height: 1.8em;padding-top: 2px;" id="bull">Bull: </div>
-                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3" 
-                        style="background: #5bc0de !important; color: white; min-height: 1.8em;padding-top: 2px;" id="neutral">Neutral: </div>
-                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3" 
-                        style="background: #d9534f !important; color: white; min-height: 1.8em;padding-top: 2px;" id="bear">Bear: </div>
+            <div role="tabpanel">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active">
+                        <a href="#chart" aria-controls="chart" role="tab" data-toggle="tab">Chart</a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#Market_depth" aria-controls="Market_depth" role="tab" data-toggle="tab" id="marketBtn">Market Depth</a>
+                    </li>
+                </ul>
+            
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="chart">
+                        <div class="row" id="chart_placeholder" style="display: none;">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="row" id="displayDiv" style="padding: 5px;">
+                                <div id="monitor_chart"></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3" 
+                                style="background: black; color: white; min-height: 1.8em;padding-top: 2px;" id="total">Total: </div>
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3" 
+                                style="background: #5cb85c !important; color: white; min-height: 1.8em;padding-top: 2px;" id="bull">Bull: </div>
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3" 
+                                style="background: #5bc0de !important; color: white; min-height: 1.8em;padding-top: 2px;" id="neutral">Neutral: </div>
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3" 
+                                style="background: #d9534f !important; color: white; min-height: 1.8em;padding-top: 2px;" id="bear">Bear: </div>
+                                
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3" style="padding: 5px;">
+                                    <button type="button" class="btn btn-success" style="width: 100%" id="todayBtn">&nbsp; Today</button>
+                                </div>
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3" style="padding: 5px;">
+                                    <button type="button" class="btn btn-primary" style="width: 100%" id="stockBtn">&nbsp; Stock Shart</button>
+                                </div>                        
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3" style="padding: 5px;">
+                                    <button type="button" class="btn btn-primary" style="width: 100%" >&nbsp; Full VPA</button>
+                                </div>
+                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3" style="padding: 5px;">
+                                    <button type="button" class="btn btn-primary" style="width: 100%" id="yDayBtn">&nbsp; Yesterday</button>
+                                </div>
+                            </div>
+                        </div>
                         
                     </div>
-                    <div class="row">
-                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3" style="padding: 5px;">
-                            <button type="button" class="btn btn-success" style="width: 100%" id="todayBtn">&nbsp; Today</button>
-                        </div>
-                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3" style="padding: 5px;">
-                            <button type="button" class="btn btn-primary" style="width: 100%" id="stockBtn">&nbsp; Stock Shart</button>
-                        </div>                        
-                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3" style="padding: 5px;">
-                            <button type="button" class="btn btn-primary" style="width: 100%" id="marketBtn">&nbsp; Market Depth</button>
-                        </div>
-                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3" style="padding: 5px;">
-                            <button type="button" class="btn btn-primary" style="width: 100%" id="yDayBtn">&nbsp; Yesterday</button>
-                        </div>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="Market_depth">
+                    <div class="row" id="marketDiv" style="padding: 5px;">
+                                
                     </div>
                 </div>
-                
+                </div>
             </div>
+            
+                
             
         </div>
     </div>
@@ -104,7 +128,7 @@ $(document).ready(function(){
        get_url = "{{ url('/ajax/market') }}";
         
         $.ajax({url: get_url, success: function(result){ 
-            document.getElementById('displayDiv').innerHTML = result;
+            document.getElementById('marketDiv').innerHTML = result;
             }
         }); 
     });
