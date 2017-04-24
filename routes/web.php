@@ -21,13 +21,14 @@ Route::get('/test', function () {
 
 Route::get('/dd', 'TestController@funtest');
 
-Route::get('/hitest', function () {
-    return view('hitest');
+Route::get('/monitor', function () {
+    return view('monitor');
 });
 Route::get('/ajax/monitor/{inst_id}/{period}', 'AjaxController@monitor')->name('Ajax.Monitor');
 Route::get('/ajax/yDay/{inst_id}/{period}', 'AjaxController@yDay')->name('Ajax.yDay');
 
 Route::get('/ajax/market', 'AjaxController@market')->name('Ajax.Market');
+Route::post('/monitor/save_data', 'AjaxController@saveData')->name('Ajax.saveData');
 
 
 //trading view

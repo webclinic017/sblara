@@ -8,10 +8,10 @@ namespace App\Http\ViewComposers;
 
 
 use Illuminate\View\View;
-use App\Repositories\IndexRepository;
 use App\Repositories\InstrumentRepository;
+use App\Repositories\UserRepository;
 use Log;
-
+use Auth;
 class MonitorChart
 {
     /**
@@ -38,9 +38,14 @@ class MonitorChart
     {
         date_default_timezone_set('UTC');
         $instruments = InstrumentRepository::getInstrumentList();
-        
-        $view->with('instruments', $instruments);
-    }
 
+        date_default_timezone_set('asia/dhaka');
+        $savedUserData = ['symbols'=>array(),'periods' => array()];
+        if (!Auth::guest()) {
+            $savedUserData = unserialize(UserRepository::getUserInfo(array('market_monitor_settings'),5)[0]->meta_value);
+        }
+        $view->with('instruments', $instruments)
+             ->with('savedUserData', $savedUserData);
+    }
 
 }
