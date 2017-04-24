@@ -104,10 +104,11 @@ $(document).ready(function(){
             {{ (isset($savedUserData['symbols'][$id]))? $savedUserData['symbols'][$id]: -1 }};
         document.getElementById('period{{ $id }}').value = 
         {{ (isset($savedUserData['periods'][$id]))? $savedUserData['periods'][$id]: -1 }};
+    
+    @else
+        document.getElementById('symbol{{ $id }}').value = getCookie('symbol{{ $id }}');
+        document.getElementById('period{{ $id }}').value = getCookie('period{{ $id }}');
     @endif
-
-    document.getElementById('symbol{{ $id }}').value = getCookie('symbol{{ $id }}');
-    document.getElementById('period{{ $id }}').value = getCookie('period{{ $id }}');
     $("#stockBtn{{ $id }}").click(function(){
        document.getElementById('displayDiv{{ $id }}').innerHTML = '<img src="{{ url('img/candlestick.jpg')}}" width="100%" height = "200"></img>'; 
     });
