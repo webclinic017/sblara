@@ -42,7 +42,10 @@ class MonitorChart
         date_default_timezone_set('asia/dhaka');
         $savedUserData = ['symbols'=>array(),'periods' => array()];
         if (!Auth::guest()) {
-            $savedUserData = unserialize(UserRepository::getUserInfo(array('market_monitor_settings'),5)[0]->meta_value);
+            $data = UserRepository::getUserInfo(array('market_monitor_settings'),5);
+            if(isset($data[0])){
+                $savedUserData = unserialize(UserRepository::getUserInfo(array('market_monitor_settings'),5)[0]->meta_value);
+            }
         }
         $view->with('instruments', $instruments)
              ->with('savedUserData', $savedUserData);
