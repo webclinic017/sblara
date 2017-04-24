@@ -109,13 +109,18 @@ class DataBanksIntraday extends Model {
 
     public static function getWholeDayData($instrumentsIdArr=array(),$minute=0,$tradeDate=null,$exchangeId=0)
     {
-        $instrumentIdHash=array_sum($instrumentsIdArr);//->sum();
+        if(is_object($instrumentsIdArr))
+            $instrumentIdHash=$instrumentsIdArr->sum();
+
+        if(is_array($instrumentsIdArr))
+            $instrumentIdHash=array_sum($instrumentsIdArr);
 
         $cacheVar = "IntraDataByInstrument$tradeDate$exchangeId$instrumentIdHash$minute";
 
         $returnData = Cache::remember("$cacheVar", 1, function () use ($tradeDate, $exchangeId, $minute, $instrumentsIdArr) {
                     $m = new Market();
-                    $activeDate = $m->getActiveDates(1, $tradeDate, $exchangeId)->first();
+                    $activeDate = $m->getActiveDates(1,$tradeDate , $exchangeId)->first();
+
                     $marketId = $activeDate->id;
                     $query = static::where('market_id', $marketId)->orderBy('lm_date_time', 'desc');
 
@@ -142,7 +147,11 @@ class DataBanksIntraday extends Model {
      * */
 
     public static function getPreviousDayData($instrumentsIdArr=array(),$tradeDate = null, $minute = 1, $exchangeId = 0) {
-        $instrumentIdHash=array_sum($instrumentsIdArr);
+
+        if(is_object($instrumentsIdArr))
+            $instrumentIdHash=$instrumentsIdArr->sum();
+        if(is_array($instrumentsIdArr))
+            $instrumentIdHash=array_sum($instrumentsIdArr);
 
         $cacheVar = "PreviousDayIntraData$tradeDate$exchangeId$instrumentIdHash$minute";
 
@@ -166,6 +175,37 @@ class DataBanksIntraday extends Model {
 
                     return $returnData;
                 });
+
+        return $returnData;
+    }
+
+    /*
+    * By default it will return last 1 batch data of previous day. $tradeDate needed for make cache variable only
+    * */
+
+    public static function getIntraDayDataByMarketId($marketId=array(),$instrumentId=array(),$tradeDate=null) {
+
+        if(is_object($marketId)) {
+            $marketId=$marketId->toArray();
+        }
+        $hash=array_sum($marketId);
+
+        if(is_object($instrumentId)) {
+            $instrumentId=$instrumentId->toArray();
+        }
+        $hash2=array_sum($instrumentId);
+
+
+        $cacheVar = "IntraDayDataByMarketId$hash$hash2$tradeDate";
+
+        $returnData = Cache::remember("$cacheVar", 1, function () use ($marketId,$instrumentId) {
+
+            $query = static::whereIn('market_id', $marketId)->orderBy('lm_date_time', 'desc');
+            $query->whereIn('instrument_id', $instrumentId);
+            $returnData = $query->get();
+            $returnData=$returnData->groupBy('market_id');
+            return $returnData;
+        });
 
         return $returnData;
     }

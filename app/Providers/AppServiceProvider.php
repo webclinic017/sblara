@@ -18,28 +18,13 @@ class AppServiceProvider extends ServiceProvider {
             $view->with('dsex', 777);
         });
 
-        View::composer(
-                'block.index_chart', 'App\Http\ViewComposers\IndexChart'
-        );
-
-        View::composer(
-                'block.market_summary', 'App\Http\ViewComposers\MarketSummary'
-        );
-
-        View::composer(
-                'block.significant_movement', 'App\Http\ViewComposers\SignificantMovement'
-        );
-        View::composer(
-            'block.advance_chart', 'App\Http\ViewComposers\AdvanceChart'
-        );
-        View::composer(
-                'portfolio.create_transaction_item', 'App\Http\ViewComposers\CreateTransactionItem'
-        );
-
-
-        View::composer(
-            'block.monitor_chart', 'App\Http\ViewComposers\MonitorChart'
-        );
+        View::composer('block.index_chart', 'App\Http\ViewComposers\IndexChart');
+        View::composer('block.market_summary', 'App\Http\ViewComposers\MarketSummary');
+        View::composer('block.minute_chart', 'App\Http\ViewComposers\MinuteChart');
+        View::composer('block.significant_movement', 'App\Http\ViewComposers\SignificantMovement');
+        View::composer('block.advance_chart', 'App\Http\ViewComposers\AdvanceChart');
+        View::composer('portfolio.create_transaction_item', 'App\Http\ViewComposers\CreateTransactionItem');
+        View::composer('block.monitor_chart', 'App\Http\ViewComposers\MonitorChart');
 
 
         View::composer('portfolio.transaction_item', 'App\Http\ViewComposers\TransactionItem');

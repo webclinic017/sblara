@@ -55,12 +55,11 @@ class DataBanksIntradayRepository {
         return $returnData;
     }
 
-    public static function significantValueLastMinute($field='price_change',$limit=10)
+    public static function significantValueLastMinute($field='price_change',$limit=10,$tradeDate = null, $exchangeId = 0)
     {
-        $lastMinuteData=DataBanksIntraday::getLatestTradeDataAll();
+        $lastMinuteData=DataBanksIntraday::getLatestTradeDataAll($tradeDate,$exchangeId);
         $lastMinuteData=$lastMinuteData->keyBy('instrument_id');
-
-        $prevMinuteData=DataBanksIntraday::getMinuteAgoTradeDataAll();
+        $prevMinuteData=DataBanksIntraday::getMinuteAgoTradeDataAll($tradeDate,1,$exchangeId);
         $prevMinuteData = $prevMinuteData->keyBy('instrument_id');
 
         $lastMinuteData=self::growthCalculate($lastMinuteData,$prevMinuteData,$field,$limit);
@@ -68,10 +67,10 @@ class DataBanksIntradayRepository {
         return $lastMinuteData;
     }
 
-    public static function getMinuteData($instrumentsIdArr=array(),$minute=15,$field='total_volume')
+    public static function getMinuteData($instrumentsIdArr=array(),$minute=15,$field='total_volume',$tradeDate=null,$exchangeId=0)
     {
 
-        $minuteData=DataBanksIntraday::getWholeDayData($instrumentsIdArr,$minute);
+        $minuteData=DataBanksIntraday::getWholeDayData($instrumentsIdArr,$minute,$tradeDate,$exchangeId);
         $minuteData=$minuteData->groupBy('instrument_id');
 
         $returnData=array();
@@ -82,11 +81,16 @@ class DataBanksIntradayRepository {
 
         return collect($returnData);
     }
-
-    public static function getYdayMinuteData($instrumentsIdArr=array(),$minute=15,$field='total_volume')
+    //$tradeDate needed for make cache variable only
+    public static function getMinuteDataByMarketId($marketId=array(),$instrumentId=array(),$field=null,$tradeDate=null)
     {
+        $minuteData=DataBanksIntraday::getIntraDayDataByMarketId($marketId,$instrumentId,$tradeDate);
+        return $minuteData;
+    }
 
-        $minuteData=DataBanksIntraday::getPreviousDayData($instrumentsIdArr,null,$minute);
+    public static function getYdayMinuteData($instrumentsIdArr=array(),$minute=15,$field='total_volume',$exchangeId=0)
+    {
+        $minuteData=DataBanksIntraday::getPreviousDayData($instrumentsIdArr,null,$minute,$exchangeId);
         $minuteData=$minuteData->groupBy('instrument_id');
 
         $returnData=array();
@@ -123,6 +127,9 @@ class DataBanksIntradayRepository {
     /*
      * This is to calculate the difference between 2 consecutive row of same object data
      *
+     * If we dont take whole day data. 1st difference (last value of the obj) will be incorrect. So we have to discard this
+     * For example. If we pass 35 minutes data from 1.55 PM. It will assume 1.54 data 0 (which is not true). As a result
+     * It will return (all data i.e: volume -0 ). In this case we can discard 1st va;ue and start using from next
      * */
     public static function calculateDifference($data,$field='total_volume')
     {
@@ -131,9 +138,9 @@ class DataBanksIntradayRepository {
 
         // copy total separate obj
         $data1=clone $data;
-
         //removing 1st element from the obj
         $data1->shift();
+
         $data2=$data;
 
         $collection = $data2->each(function ($item, $key) use($data1,$field,$new_property) {
@@ -142,7 +149,10 @@ class DataBanksIntradayRepository {
             if(isset($data1[$key])) {
                 $change=$item->$field-$data1[$key]->$field;
                 $item->$new_property=(float) number_format($change, 2, '.', '');
-            }
+            }else
+            // very 1st data (10.30) has no previous data. so we are subtracting 0
+                $change=$item->$field-0;
+                $item->$new_property=(float) number_format($change, 2, '.', '');
 
         });
 
