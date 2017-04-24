@@ -24,6 +24,7 @@ class Meta extends Model
     }
     public static function getMetaInfo($meta=array())
     {
+
         $data=self::with('meta_group')->whereIn('meta_key',$meta)->get();
         return $data->keyBy('meta_key');
     }
