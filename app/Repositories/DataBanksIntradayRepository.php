@@ -55,6 +55,11 @@ class DataBanksIntradayRepository {
         return $returnData;
     }
 
+    public static function getLatestTradeDataAll($tradeDate = null, $exchangeId = 0)
+    {
+        return DataBanksIntraday::getLatestTradeDataAll($tradeDate,$exchangeId);
+    }
+
     public static function significantValueLastMinute($field='price_change',$limit=10,$tradeDate = null, $exchangeId = 0)
     {
         $lastMinuteData=DataBanksIntraday::getLatestTradeDataAll($tradeDate,$exchangeId);
