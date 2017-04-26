@@ -17,6 +17,18 @@ class InstrumentRepository {
         return $returnData;
     }
 
+    public static function getInstrumentsByCode($instrumentCode=array(),$exchangeId=0)
+    {
+        $returnData=Instrument::getInstrumentsAll($exchangeId)->whereInStrict('instrument_code',$instrumentCode);
+        return $returnData;
+    }
+
+    public static function getInstrumentsById($instrumentId=array(),$exchangeId=0)
+    {
+        $returnData=Instrument::getInstrumentsAll($exchangeId)->whereInStrict('id',$instrumentId);
+        return $returnData;
+    }
+
     //{"symbol":"APC","full_name":"APC","description":"Anadarko Petroleum Corporation","exchange":"NYSE","type":"stock"}
     public static function getTradingViewInstrumentList($limit,$query,$type,$exchangeDetails)
     {

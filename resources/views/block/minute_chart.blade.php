@@ -1,7 +1,11 @@
+<div id="{{$chartData["div"]}}"></div>
+@push('scripts')
+<script src="{{ URL::asset('metronic_custom/highstock/code/js/highstock.js') }}"></script>
+
 <script>
     $(function () {
 
-        $('#<?php echo $chartData["div"]; ?>').highcharts({
+        $('#{{$chartData["div"]}}').highcharts({
             chart: {
                 zoomType: 'xy',
                 defaultSeriesType: 'spline',
@@ -18,7 +22,7 @@
 
                 spacingLeft: 2,
                 spacingRight: 2,
-                height:<?php echo $chartData["height"]; ?>    // if height defined, scalling is not taking full canvas
+                height:{{$chartData["height"]}}   // if height defined, scalling is not taking full canvas
 
 
             },
@@ -37,7 +41,7 @@
                 }
             },
             title: {
-                text: '<?php echo $chartData["instrument_code"]; ?>',
+                text: '{{$chartData['instrumentInfo']->instrument_code}}',
                 style: {
                     fontSize: '12px'
                 },
@@ -45,8 +49,7 @@
 
             },
             subtitle: {
-                text: '<?php echo 'Total Vol :'.$chartData['day_total_volume'].' Bull V :'.$chartData['bullVolume'].' Bear Vol : '. $chartData['bearVolume'].' Neutral Vol : '. $chartData['neutralVolume']
-                .' Bull Strength : '. $chartData['totalBullStrength'].''.' Bear Strength : '. $chartData['totalBearStrength'].'';?>   '+'<a href=' + window.baseURL + 'minute_chart?symbol=<?php echo $chartData["subtitle"]; ?> target="_blank" >'+'browse' + '</a>',
+                text: 'Total Vol:{{$chartData['day_total_volume']}}',
                 useHTML: true,
 //floating: true,
                 y: 23,
@@ -58,15 +61,11 @@
 
             xAxis: [
                 {
-                    categories: [
+                    categories:
+                       {!! $chartData["xcat"] !!}
 
-                        <?php echo $this->Text->toList($chartData["xcat"],','); ?>
                         //'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun','Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-
-
-
-
-                    ],
+                    ,
                     tickInterval: 1,
                     crosshair: true,
                     labels: {
@@ -142,7 +141,7 @@
                     type: 'column',
                     color: '#8CC152',
                     yAxis: 0,
-                    data: <?php echo $chartData["ydata"] ?>,
+                    data: {!! $chartData["ydata"] !!},
                     tooltip: {
                         valueSuffix: ''
                     }
@@ -151,195 +150,44 @@
                 {
                     name: 'Price',
                     type: 'spline',
-                    color: '<?php echo $chartData['price_chart_color'];?>',
+                    color: '{!! $chartData["price_chart_color"] !!}',
                     yAxis: 1,
                     marker: {
                         radius: 3
                     },
-                    data: <?php echo $chartData["xdata"] ?>,
+                    data: {!! $chartData["xdata"] !!},
                     tooltip: {
                         valueSuffix: ''
                     }
-                },
+                }
+                @for($i=0;$i<count($chartData['bullBear']);$i++)
+                ,
                 {
                     type: 'pie',
-                    name: '<?php echo $chartData['last5daysBullBearStrength'][0]['trade_date'];?>',
+                    name: '{{$chartData['bullBear'][$i]['trade_date']}}',
                     data: [{
                         name: 'Bull Vol',
-                        y: <?php echo $chartData['last5daysBullBearStrength'][0]['totalBullStrength'];?>,
+                        y: {{$chartData['bullBear'][$i]['totalBull']}},
                         color: '#1BA39C' // bear
                     }, {
                         name: 'Bear Vol',
-                        y: <?php echo $chartData['last5daysBullBearStrength'][0]['totalBearStrength'];?>,
+                        y: {{$chartData['bullBear'][$i]['totalBear']}},
                         color: '#EF4836' // Bear color
                     }, {
                         name: 'Neutral Vol',
-                        y: <?php echo $chartData['neutralVolume'];?>,
+                        y: {{$chartData['bullBear'][$i]['totalNeutral']}},
                         color: '#ACB5C3'// Neutral
                     }],
-                    center: [0, 0],
-                    size: 30,
-                    showInLegend: false,
-                    dataLabels: {
-                        enabled: false
-                    }
-                },
-                {
-                    type: 'pie',
-                    name: '<?php echo $chartData['last5daysBullBearStrength'][1]['trade_date'];?>',
-                    data: [{
-                        name: 'Bull Vol',
-                        y: <?php echo $chartData['last5daysBullBearStrength'][1]['totalBullStrength'];?>,
-                        color: '#1BA39C' // bear
-                    }, {
-                        name: 'Bear Vol',
-                        y: <?php echo $chartData['last5daysBullBearStrength'][1]['totalBearStrength'];?>,
-                        color: '#EF4836' // Bear color
-                    }, {
-                        name: 'Neutral Vol',
-                        y: <?php echo $chartData['neutralVolume'];?>,
-                        color: '#ACB5C3'// Neutral
-                    }],
-                    center: [30, 0],
-                    size: 30,
-                    showInLegend: false,
-                    dataLabels: {
-                        enabled: false
-                    }
-                },
-                {
-                    type: 'pie',
-                    name: '<?php echo $chartData['last5daysBullBearStrength'][2]['trade_date'];?>',
-                    data: [{
-                        name: 'Bull Vol',
-                        y: <?php echo $chartData['last5daysBullBearStrength'][2]['totalBullStrength'];?>,
-                        color: '#1BA39C' // bear
-                    }, {
-                        name: 'Bear Vol',
-                        y: <?php echo $chartData['last5daysBullBearStrength'][2]['totalBearStrength'];?>,
-                        color: '#EF4836' // Bear color
-                    }, {
-                        name: 'Neutral Vol',
-                        y: <?php echo $chartData['neutralVolume'];?>,
-                        color: '#ACB5C3'// Neutral
-                    }],
-                    center: [60, 0],
-                    size: 30,
-                    showInLegend: false,
-                    dataLabels: {
-                        enabled: false
-                    }
-                },
-                {
-                    type: 'pie',
-                    name: '<?php echo $chartData['last5daysBullBearStrength'][3]['trade_date'];?>',
-                    data: [{
-                        name: 'Bull Vol',
-                        y: <?php echo $chartData['last5daysBullBearStrength'][3]['totalBullStrength'];?>,
-                        color: '#1BA39C' // bear
-                    }, {
-                        name: 'Bear Vol',
-                        y: <?php echo $chartData['last5daysBullBearStrength'][3]['totalBearStrength'];?>,
-                        color: '#EF4836' // Bear color
-                    }, {
-                        name: 'Neutral Vol',
-                        y: <?php echo $chartData['neutralVolume'];?>,
-                        color: '#ACB5C3'// Neutral
-                    }],
-                    center: [90, 0],
-                    size: 30,
-                    showInLegend: false,
-                    dataLabels: {
-                        enabled: false
-                    }
-                },
-                {
-                    type: 'pie',
-                    name: '<?php echo $chartData['last5daysBullBearStrength'][4]['trade_date'];?>',
-                    data: [{
-                        name: 'Bull Vol',
-                        y: <?php echo $chartData['last5daysBullBearStrength'][4]['totalBullStrength'];?>,
-                        color: '#1BA39C' // bear
-                    }, {
-                        name: 'Bear Vol',
-                        y: <?php echo $chartData['last5daysBullBearStrength'][4]['totalBearStrength'];?>,
-                        color: '#EF4836' // Bear color
-                    }],
-                    center: [120, 0],
-                    size: 30,
-                    showInLegend: false,
-                    dataLabels: {
-                        enabled: false
-                    }
-                },
-                {
-                    type: 'pie',
-                    name: '<?php echo $chartData['last5daysBullBearStrength'][5]['trade_date'];?>',
-                    data: [{
-                        name: 'Bull Vol',
-                        y: <?php echo $chartData['last5daysBullBearStrength'][5]['totalBullStrength'];?>,
-                        color: '#1BA39C' // bear
-                    }, {
-                        name: 'Bear Vol',
-                        y: <?php echo $chartData['last5daysBullBearStrength'][5]['totalBearStrength'];?>,
-                        color: '#EF4836' // Bear color
-                    }, {
-                        name: 'Neutral Vol',
-                        y: <?php echo $chartData['neutralVolume'];?>,
-                        color: '#ACB5C3'// Neutral
-                    }],
-                    center: [150, 0],
-                    size: 30,
-                    showInLegend: false,
-                    dataLabels: {
-                        enabled: false
-                    }
-                },
-                /*{
-                    type: 'pie',
-                    name: '<?php echo $chartData['trade_date'];?>',
-                    data: [{
-                        name: 'Bull Vol',
-                        y: <?php echo $chartData['totalBullStrength'];?>,
-                        color: '#1BA39C' // bear
-                    }, {
-                        name: 'Bear Vol',
-                        y: <?php echo $chartData['totalBearStrength'];?>,
-                        color: '#EF4836' // Bear color
-                    }, {
-                        name: 'Neutral Vol',
-                        y: <?php echo $chartData['neutralVolume'];?>,
-                        color: '#ACB5C3'// Neutral
-                    }],
-                    center: [180, 0],
-                    size: 30,
-                    showInLegend: false,
-                    dataLabels: {
-                        enabled: false
-                    }
-                },*/{
-                    type: 'pie',
-                    name: 'Bull Bear Chart',
-                    data: [{
-                        name: 'Bull Vol',
-                        y: <?php echo $chartData['bullVolume'];?>,
-                        color: '#32c5d2' // Bull
-                    }, {
-                        name: 'Bear Vol',
-                        y: <?php echo $chartData['bearVolume'];?>,
-                        color: '#f2784b' // Bear color
-                    }, {
-                        name: 'Neutral Vol',
-                        y: <?php echo $chartData['neutralVolume'];?>,
-                        color: '#ACB5C3'// Neutral
-                    }],
-                    center: [180, 0],
+                    center: [{{30*($i+1)}}, 0],
                     size: 30,
                     showInLegend: false,
                     dataLabels: {
                         enabled: false
                     }
                 }
+
+                @endfor
+
             ],
             responsive: {
                 rules: [{
@@ -352,22 +200,9 @@
         });
 
 
-
-        var chart = $('#<?php echo $chartData["div"]; ?>').highcharts();
-        var y_volume =chart.yAxis[0];
-        var y_price =chart.yAxis[1];
-
-        <?php
-        $y_price_min=$chartData["price_low"];
-        $y_price_max=$chartData["price_high"];
-         $y_price_max=$y_price_max+(($y_price_max-$y_price_min)*10)/100;
-        $y_price_min=$y_price_min-(($y_price_max-$y_price_min)*10)/100;
-        ?>;
-        // setting axis max & min to look the chart big and nice
-        y_price.setExtremes(<?php echo $y_price_min?>,<?php echo $y_price_max?>);
-        y_volume.setExtremes(<?php echo$chartData["volume_low"]?>,<?php echo $chartData["volume_high"]?>);
-
+       
 
     });
 
 </script>
+@endpush

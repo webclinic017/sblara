@@ -1,101 +1,88 @@
 <!-- following style is to solve highchart problem in hidden tab-->
 
-<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding: 5px; !important">
-    <div class="portlet light" id="chart_portlet{{ $id }}">
-        <div class="portlet-title tabbable-line">
-            <div class="caption">
-                <i class="icon-pin font-green-sharp"></i>
-                    <span class="caption-subject font-green-sharp bold uppercase">
-                                     1 Minute Volume Price Analysis </span>
-            </div>
-            
-        </div>
-        <div class="portlet-body">
-            <div class="row" style="padding: 10px;">
-                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                    <label>Select Symbol</label>
-                    <select name="symbol{{ $id }}" id="symbol{{ $id }}" class="form-control selectpicker" data-live-search="true">
-                        <option value="-1">-- Select One --</option>
-                        @foreach ($instruments as $element)
-                            <option value="{{ $element->id }}">{{ $element->instrument_code }}</option>
-                        @endforeach
-                        
-                    </select>
+        <div class="portlet light " id="chart_portlet{{ $id }}">
+            <div class="portlet-title tabbable-line">
+                <div class="caption">
+                    <i class="icon-globe font-green-sharp"></i>
+                    <span class="caption-subject font-green-sharp bold uppercase"></span>
                 </div>
-                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                    <label>Select Interval</label>
-                    <select name="period{{ $id }}" id="period{{ $id }}" class="form-control selectpicker" data-live-search="true">
-                        <option value="-1">-- Select One --</option>
-                        <option value="15">15 Minute</option>
-                        <option value="30">30 Minute</option>
-                        <option value="45">45 Minute</option>
-                        <option value="60">1 Hour</option>
-                        <option value="120">2 Hour</option>
-                        <option value="1440">Full Day</option>
-                    </select>
-                </div>
-            </div>
-            <div role="tabpanel">
-                <!-- Nav tabs -->
-                <ul class="nav nav-tabs" role="tablist">
-                    <li role="presentation" class="active">
-                        <a href="#chart{{ $id }}" aria-controls="chart{{ $id }}" role="tab" data-toggle="tab">Chart</a>
+                <ul class="nav nav-tabs">
+                    <li class="active">
+                        <a href="#chart{{ $id }}" aria-controls="chart{{ $id }}" class="active" data-toggle="tab" aria-expanded="true"> Minute chart </a>
                     </li>
-                    <li role="presentation">
-                        <a href="#Market_depth{{ $id }}" aria-controls="Market_depth{{ $id }}" role="tab" data-toggle="tab" id="marketBtn{{ $id }}">Market Depth</a>
+                    <li class="">
+                        <a href="#Market_depth{{ $id }}" aria-controls="Market_depth{{ $id }}" data-toggle="tab" aria-expanded="false" id="marketBtn{{ $id }}"> Market Depth </a>
                     </li>
                 </ul>
-            
-                <!-- Tab panes -->
-                <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane active" id="chart{{ $id }}">
-                        <div class="row" id="chart_placeholder{{ $id }}" style="display: none;margin: 0px;">
-                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                            <div class="row" id="displayDiv{{ $id }}" style="padding: 5px;">
-                                <div id="monitor_chart{{ $id }}"></div>
-                            </div>
-                            <div class="row">
-                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3" 
-                                style="background: black; color: white; min-height: 1.8em;padding-top: 2px;" id="total{{ $id }}">Total: </div>
-                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3" 
-                                style="background: #5cb85c !important; color: white; min-height: 1.8em;padding-top: 2px;" id="bull{{ $id }}">Bull: </div>
-                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3" 
-                                style="background: #5bc0de !important; color: white; min-height: 1.8em;padding-top: 2px;" id="neutral{{ $id }}">Neutral: </div>
-                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3" 
-                                style="background: #d9534f !important; color: white; min-height: 1.8em;padding-top: 2px;" id="bear{{ $id }}">Bear: </div>
-                                
-                            </div>
-                            <div class="row">
-                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3" style="padding: 1px;">
-                                    <button type="button" class="btn btn-success" style="width: 100%" id="todayBtn{{ $id }}">Today</button>
-                                </div>
-                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3" style="padding: 1px;">
-                                    <button type="button" class="btn btn-primary" style="width: 100%" id="stockBtn{{ $id }}">Stock Ch.</button>
-                                </div>                        
-                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3" style="padding: 1px;">
-                                    <button type="button" class="btn btn-primary" style="width: 100%" >Full VPA</button>
-                                </div>
-                                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3" style="padding: 1px;">
-                                    <button type="button" class="btn btn-primary" style="width: 100%" id="yDayBtn{{ $id }}">Yesterday</button>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    </div>
-                </div>
-                <div role="tabpanel" class="tab-pane" id="Market_depth{{ $id }}">
-                    <div class="row" id="marketDiv{{ $id }}" style="padding: 5px; margin-left: -15%">
-                                
-                    </div>
-                </div>
-                </div>
             </div>
-            
-                
-            
-        </div>
+            <div class="portlet-body">
+
+
+                <!--BEGIN TABS-->
+                <div class="tab-content">
+                    <div class="tab-pane active" id="chart{{ $id }}">
+                                    <div class="row" >
+                                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                            <select name="symbol{{ $id }}" id="symbol{{ $id }}" class="form-control selectpicker" data-live-search="true">
+                                                <option value="-1">-- Select Symbol --</option>
+                                                @foreach ($instruments as $element)
+                                                    <option value="{{ $element->id }}">{{ $element->instrument_code }}</option>
+                                                @endforeach
+
+                                            </select>
+                                        </div>
+                                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+
+                                            <select name="period{{ $id }}" id="period{{ $id }}" class="form-control selectpicker" data-live-search="true">
+                                                <option value="-1">Time range</option>
+                                                <option value="15">15 Minute</option>
+                                                <option value="30">30 Minute</option>
+                                                <option value="45">45 Minute</option>
+                                                <option value="60">1 Hour</option>
+                                                <option value="120">2 Hour</option>
+                                                <option value="1440">Full Day</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                    <div class="clearfix margin-bottom-10"> </div>
+
+<div id="chart_placeholder{{ $id }}" >
+
+    <div id="displayDiv{{ $id }}">
+        <div id="monitor_chart{{ $id }}"></div>
     </div>
+
+    <div class="btn-group btn-group-xs btn-group-justified">
+        <a href="javascript:;" class="btn red" id="todayBtn{{ $id }}">Today </a>
+        <a href="javascript:;" class="btn blue" id="stockBtn{{ $id }}">Stock Ch. </a>
+        <a href="javascript:;" class="btn red"  >Full VPA</a>
+        <a href="javascript:;" class="btn green" id="yDayBtn{{ $id }}"> Yday </a>
+    </div>
+   {{-- <div class="clearfix margin-bottom-10"> </div>
+
+    <div class="btn-group btn-group-xs btn-group-justified">
+        <a href="javascript:;" class="btn red" id="total{{ $id }}"> T: </a>
+        <a href="javascript:;" class="btn blue" id="bull{{ $id }}"> B: </a>
+        <a href="javascript:;" class="btn red"  id="neutral{{ $id }}">N: </a>
+        <a href="javascript:;" class="btn green" id="bear{{ $id }}"> Be: </a>
+    </div>--}}
+
 </div>
+                                    </div>
+
+
+                    </div>
+                    <div class="tab-pane" id="Market_depth{{ $id }}">
+                        <div class="row" id="marketDiv{{ $id }}" >
+
+                        </div>
+                    </div>
+                </div>
+                <!--END TABS-->
+            </div>
+        </div>
+
 
 <script>
 $(document).ready(function(){
@@ -113,7 +100,8 @@ $(document).ready(function(){
        document.getElementById('displayDiv{{ $id }}').innerHTML = '<img src="{{ url('img/candlestick.jpg')}}" width="100%" height = "200"></img>'; 
     });
     $("#marketBtn{{ $id }}").click(function(){
-       get_url = "{{ url('/ajax/market') }}";
+    inst = document.getElementById('symbol{{ $id }}').value;
+       get_url = "{{ url('/ajax/market/') }}"+'/'+inst;
         
         $.ajax({url: get_url, success: function(result){ 
             document.getElementById('marketDiv{{ $id }}').innerHTML = result;
@@ -126,163 +114,211 @@ $(document).ready(function(){
             document.getElementById('chart_placeholder{{ $id }}').style.display = 'block';
 
             var returnData = JSON.parse(result);
-            var total = 0 + returnData.bear + returnData.neutral + returnData.bull;
+           /* var total = 0 + returnData.bear + returnData.neutral + returnData.bull;
             document.getElementById('total{{ $id }}').innerHTML = '<center>Total </center><center>' + total + '</center>';
             document.getElementById('bull{{ $id }}').innerHTML = '<center>Bull </center><center>' + returnData.bull + '</center>';
             document.getElementById('neutral{{ $id }}').innerHTML = '<center>Neutral </center><center>' + returnData.neutral + '</center>';
-            document.getElementById('bear{{ $id }}').innerHTML = '<center>Bear </center><center>' + returnData.bear + '</center>';
-            //alert('test');
+            document.getElementById('bear{{ $id }}').innerHTML = '<center>Bear </center><center>' + returnData.bear + '</center>';*/
+            //alert(returnData.bullBear[0].totalBull+' bera='+returnData.bullBear[0].totalBear+'neu '+returnData.bullBear[0].totalNeutral);
             $("#monitor_chart{{ $id }}").highcharts({
-                chart: {
-                    zoomType: 'xy',
-                    height: 200,
-                    events: {
-                        load: function() {
-                            this.renderer.image('{{ url('/img/chart_logo.gif') }}', this.chartWidth/3.5, this.chartHeight/5, 86, 63).add(); 
-                        }
-                    }
-                },
-                title: {
-                    text: null
-                },
-                subtitle: {
+                                                     chart: {
+                                                         zoomType: 'xy',
+                                                         defaultSeriesType: 'spline',
+                                                        // plotBackgroundImage: 'http://www.new.stockbangladesh.com/img/chart_logo.gif',
+                                                         events: {
+                                                             load: function() {
+                                                                 this.renderer.image('http://www.new.stockbangladesh.com/img/chart_logo.gif', this.chartWidth/2.5, this.chartHeight/2.5, 86, 63).add();  // add image(url, x, y, w, h)
+                                                             }
+                                                         },
+                                                         showAxes: true,
+                                                         shadow: false,
+                                                         borderWidth: 1,
+                                                         borderColor: "#D5DAE0",
 
-                },
-                            
-                xAxis: {
-                    type: 'datetime',
-                    tickInterval: 1,
-                    dateTimeLabelFormats: { // don't display the dummy year
-                        day: '%e of %b',
-                        minute: '%H:%M',
-                        hour: '%H:%M'
-                    },
+                                                         spacingLeft: 2,
+                                                         spacingRight: 2
+                                                       //  ,height: returnData.height   // if height defined, scalling is not taking full canvas
 
-                    title: null
-                },
-                yAxis: [{ // Primary yAxis
-                    gridLineDashStyle: 'longdash',
-                    lineColor: '#d2d2d2',
-                    lineWidth: 1,
-                    tickInterval: null,
-                    maxPadding: 0.1,
-                    labels: {
-                        format: '{value}',
-                        
-                        style: {
-                            color: Highcharts.getOptions().colors[1]
-                        }
-                    },
-                    title: null
-                }, { // Secondary yAxis
-                    gridLineDashStyle: 'longdash',
-                    lineColor: '#d2d2d2',
-                    lineWidth: 1,
-                    tickInterval: null,
-                    maxPadding: 0.8,
-                    title: null,
-                    labels: {
-                        format: '{value}',
-                        
-                        style: {
-                            color: Highcharts.getOptions().colors[0]
-                        }
-                    },
-                    opposite: true
-                }],
-                tooltip: {
-                    shared: false,
-                    headerFormat: '<b>{series.name}</b><br>',
-                    pointFormat: '{point.x: %H:%M}  {point.name} | {point.y:.2f} '
-                },
-                credits: {
-                    enabled: true,
-                    href: "http://www.stockbangladesh.com",
-                    text: "stockbangladesh.com",
-                    style: {
-                        color: '#4572A7'
 
-                    },
-                    position: {
-                        align: 'left',
-                        verticalAlign: 'top',
-                        x: 5,
-                        y: 395
-                    }
-                },
-                legend: {
-                    enabled: false
+                                                     },
+                                                     exporting: {
+                                                         buttons: {
+                                                             contextButton: {
+                                                                 menuItems: [
 
-                },
-                plotOptions: {
-                    series: {
-                        pointWidth: 20,
-                        groupPadding: 0
-                    }
-                },
-                series: [ {
-                    name: 'Bear Volume',
-                    type: 'column',
-                    color: '#d9534f',
-                    yAxis: 1,
-                    pointWidth: 5,
-                    data: returnData.bearVolumeData
+                                                                     {
+                                                                         textKey: 'downloadPNG',
+                                                                         onclick: function () {
+                                                                             this.exportChart({filename: 'StockBangladesh_minute-chart'});
+                                                                         }
+                                                                     }]
+                                                             }
+                                                         }
+                                                     },
+                                                     title: {
+                                                         //text: '"'+returnData.instrumentInfo+'"',
+                                                         text: '<b>'+returnData.instrumentInfo+'</b>: '+returnData.lm_date_time,
+                                                         style: {
+                                                             fontSize: '12px'
+                                                         },
+                                                         margin: 1
 
-                }, 
-                {
-                    name: 'Bull Volume',
-                    type: 'column',
-                    color: '#5bc0de',
-                    yAxis: 1,
-                    pointWidth: 5,
-                    data: returnData.neutVolumeData
+                                                     },
+                                                     subtitle: {
+                                                         text: 'Total Vol: <b>'+returnData.day_total_volume+'</b> Bull: '+returnData.bullBear[0].totalBull+' Bear: '+returnData.bullBear[0].totalBear+' Neutral: '+returnData.bullBear[0].totalNeutral,
+                                                         useHTML: true,
+                                         //floating: true,
+                                                         y: 23,
+                                                         style: {
+                                                             fontSize: '10px'
+                                                         }
+                                         //margin: 50
+                                                     },
 
-                }, 
-                {
-                    name: 'Neutral Volume',
-                    type: 'column',
-                    color: '#5cb85c',
-                    yAxis: 1,
-                    pointWidth: 5,
-                    data: returnData.bullVolumeData
+                                                     xAxis: [
+                                                         {
+                                                             categories: returnData.xcat
+                                                                 //'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun','Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+                                                             ,
+                                                             tickInterval: 1,
+                                                             crosshair: true,
+                                                             labels: {
+                                                                 enabled: true,
+                                                                 rotation: -90,
+                                                                 align: 'right'
 
-                }, {
-                    name: 'Close Price',
-                    type: 'line',
-                    color: '#89A54E',
-                    marker: {
-                        radius: 1
-                    },
-                    data: returnData.priceData
-                }, {
-                    type: 'pie',
-                    name: 'Summary',
-                    data: [{
-                        name: 'Bear',
-                        y: returnData.bear,
-                        color: '#d9534f'
-                    }, {
-                        name: 'Bull',
-                        y: returnData.bull,
-                        color: '#5cb85c'
-                    }, {
-                        name: 'Neutral',
-                        y: returnData.neutral,
-                        color: '#5bc0de' 
-                    }
-                    ],
-                    center: [200, 0],
-                    size: 50,
-                    showInLegend: true,
-                    legend: true,
-                    dataLabels: {
-                        enabled: false
-                    }
-                }]
-            });
+                                                                 //x:10,
+                                                             }
+
+                                                         }
+                                                     ],
+                                                     yAxis: [
+                                                         { // Primary yAxis
+
+                                                             title: {
+                                                                 /* text: 'Price',
+                                                                  style: {
+                                                                  color: Highcharts.getOptions().colors[1]
+                                                                  }*/
+                                                                 text: ''
+                                                             },
+                                                             id: 'y_price',
+                                                             enabled: false
+                                                         },
+                                                         { // Secondary yAxis
+                                                             title: {
+                                                                 text: ''
+                                                             },
+                                                             enabled: false,
+                                                             labels: {
+                                                                 format: '{value}',
+                                                                 style: {
+                                                                     color: '#1BA39C'
+                                                                 }
+                                                             },
+                                                             id: 'y_volume',
+                                                             opposite: true
+                                                         }
+                                                     ],
+                                                     tooltip: {
+                                                         shared: true
+                                                     },
+                                                     credits: {
+                                                         enabled: true,
+                                                         href: "http://www.stockbangladesh.com",
+                                                         text: "stockbangladesh.com",
+                                                         style: {
+                                                             color: '#4572A7'
+
+                                                         },
+                                                         position: {
+                                                             align: 'right',
+                                                             verticalAlign: 'bottom'
+                                                             /*  x: 5,
+                                                              y: 15*/
+                                                         }
+                                                     },
+                                                     legend: {
+                                                         enabled: false
+                                                         //layout: 'vertical',
+                                                         /*   align: 'left',
+                                                          verticalAlign: 'bottom'*/
+                                                         /* x: 120,
+                                                          verticalAlign: 'top',
+                                                          y: 100,*/
+                                                         /*  floating: true,
+                                                          backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'*/
+                                                     },
+                                                     series: [
+                                                         {
+                                                             name: 'Volume',
+                                                             type: 'column',
+                                                             color: '#8CC152',
+                                                             yAxis: 0,
+                                                             data: returnData.ydata,
+                                                             tooltip: {
+                                                                 valueSuffix: ''
+                                                             }
+
+                                                         },
+                                                         {
+                                                             name: 'Price',
+                                                             type: 'spline',
+                                                             //color: '"'+returnData.price_chart_color+'"',
+                                                             color: returnData.price_chart_color,
+                                                             //color: '#26C281',
+                                                             yAxis: 1,
+                                                             marker: {
+                                                                 radius: 3
+                                                             },
+                                                             data: returnData.xdata,
+                                                             tooltip: {
+                                                                 valueSuffix: ''
+                                                             }
+                                                         }
+                                                         ,
+                                                         {
+                                                             type: 'pie',
+                                                             name: 'BullBear',
+                                                             data: [{
+                                                                 name: 'Bull Vol',
+                                                                 y: returnData.bullBear[0].totalBull,
+                                                                 color: '#1BA39C' // bear
+                                                             }, {
+                                                                 name: 'Bear Vol',
+                                                                 y: returnData.bullBear[0].totalBear,
+                                                                 color: '#EF4836' // Bear color
+                                                             }, {
+                                                                 name: 'Neutral Vol',
+                                                                 y: returnData.bullBear[0].totalNeutral,
+                                                                 color: '#ACB5C3'// Neutral
+                                                             }],
+                                                             center: [30, 20],
+                                                             size: 60,
+                                                             showInLegend: false,
+                                                             dataLabels: {
+                                                                 enabled: false
+                                                             }
+                                                         }
+
+
+
+                                                     ],
+                                                     responsive: {
+                                                         rules: [{
+                                                             condition: {
+                                                                 maxWidth: 500
+                                                             }
+
+                                                         }]
+                                                     }
+                                                 });
+
+
             //alert('test2');
         }});
     }
+
 
     $("#yDayBtn{{ $id }}").click(function(){
         inst = document.getElementById('symbol{{ $id }}').value;
@@ -293,7 +329,7 @@ $(document).ready(function(){
         document.getElementById('displayDiv{{ $id }}').innerHTML = '<div id="monitor_chart{{ $id }}"></div>';
 
         period = document.getElementById('period{{ $id }}').value;
-        get_url = "{{ url('/ajax/yDay/') }}/" + inst + "/" + period;
+        get_url = "{{ url('/ajax/monitor/') }}/" + inst + "/" + period+"/1";
         drawChart{{ $id }}(get_url);
 
     });

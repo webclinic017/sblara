@@ -11,74 +11,43 @@ use Log;
 class AjaxController extends Controller
 {
     //
-    public function monitor($inst_id, $period)
+    public function monitor($inst_id, $period,$dayBefore=0)
     {
-    	# code...
-    	date_default_timezone_set('UTC');
-    	$inst_ids = array();
-    	$inst_ids[] = $inst_id;
-    	if ($period < 0) $period = 15;
-    	$data = DataBanksIntradayRepository::getMinuteData($inst_ids, $period);
+        $minuteChartData = DataBanksIntradayRepository::getDataForMinuteChart($inst_id,1,$dayBefore);
 
-    	$bearVolumeData = array();
-    	$neutVolumeData = array();
-    	$bullVolumeData = array();
-    	$priceData = array();
-    	$bull = $neutral = $bear = 0;
-    	$lastprice = $data[$inst_id][0]->close_price;
-    	$lasttime = 0;
-    	//Log::info($inst_id);
-    	foreach ($data[$inst_id] as $row) {    		
-    		// Log::info("$row->lm_date_time");
-    		// Log::info('close_price: ' . $row->close_price);
-    		// Log::info('total_volume_difference: ' . $row->total_volume_difference);
-			
-				if(($lastprice - $row->close_price) < 0) {
-					$bear += $row->total_volume_difference;
-					//$clr = '#d9534f';
-					$bearVolumeData[] = [$row->lm_date_time->timestamp*1000, $row->total_volume_difference];
-				}
-	    		elseif(($lastprice - $row->close_price) == 0) {
-	    			$neutral += $row->total_volume_difference;
-	    			$clr = '#5bc0de';
-	    			$neutVolumeData[] = [$row->lm_date_time->timestamp*1000, $row->total_volume_difference];
-				}
-	    		elseif(($lastprice - $row->close_price) > 0) {
-	    			$bull += $row->total_volume_difference;
-	    			$clr = '#5cb85c';
-	    			$bullVolumeData[] = [$row->lm_date_time->timestamp*1000, $row->total_volume_difference];
-	    		}
+        $instrumentIdArr=array();
+        $instrumentIdArr[]=(int) $inst_id;
 
+        $instrumentInfo=InstrumentRepository::getInstrumentsById($instrumentIdArr)->first();
 
-	    		// $volumeData .= '{"x":' . $row->lm_date_time->timestamp*1000 . ',"color":"' . $clr . '","y":' . $row->total_volume_difference . '},';
-	    	//if ($lasttime != $row->lm_date_time->timestamp*1000) {	
-	    		$priceData[] = [$row->lm_date_time->timestamp*1000, $row->close_price];
+        $returnData=array();
+        $returnData['div'] ='mm_div_'.rand(1111,1111111); // required
+        $returnData['height'] = 200; // required
+        $returnData['title'] = 'name';
+        $returnData['instrumentInfo'] = $instrumentInfo->instrument_code;
 
-	    		
-	    		$lastprice = $row->close_price;
-			//}
-			$lasttime = $row->lm_date_time->timestamp*1000;
+        $returnData['xcat'] =array_slice($minuteChartData['date_data'],(-1)*$period);
+        $returnData['ydata']=array_slice($minuteChartData['volume_data'],(-1)*$period);
+        $returnData['xdata']=array_slice($minuteChartData['close_data'],(-1)*$period);
 
-    	}
-    	
-    	$returnData = array();
-    	$returnData['bearVolumeData'] = $bearVolumeData;
-    	$returnData['bullVolumeData'] = $bullVolumeData;
-    	$returnData['neutVolumeData'] = $neutVolumeData;
-    	$returnData['priceData'] = $priceData;
-    	$returnData['bull'] = $bull;
-    	$returnData['bear'] = $bear;
-    	$returnData['neutral'] = $neutral;
-    	date_default_timezone_set('asia/dhaka');
-    	return json_encode($returnData);
+        $returnData['price_chart_color'] = $minuteChartData['yday_close_price']<$minuteChartData['cp']?'#26C281':'#D91E18';
+        $returnData['lm_date_time'] = $minuteChartData['lm_date_time'];
+        $returnData['bullBear'] = array_reverse($minuteChartData['bullBear']);
+        $returnData['day_total_volume'] = $minuteChartData['day_total_volume'];
+
+        return collect($returnData)->toJson(JSON_NUMERIC_CHECK);
     }
 
-    public function market()
-    {	
+    public function market($inst_id)
+    {
+        $instrumentIdArr=array();
+        $instrumentIdArr[]=(int) $inst_id;
 
+        $instrumentInfo=InstrumentRepository::getInstrumentsById($instrumentIdArr)->first();
+        $instrumentCode=$instrumentInfo->instrument_code;
     	$ch = curl_init();
         $timeout = 5;
-        curl_setopt($ch, CURLOPT_URL, "http://www.dsebd.org/bshis_new1_old.php?w=AGRANINS&sid=0.3340593789410694");
+        curl_setopt($ch, CURLOPT_URL, "http://www.dsebd.org/bshis_new1_old.php?w=$instrumentCode&sid=0.3340593789410694");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
         $data = curl_exec($ch);

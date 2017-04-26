@@ -7,10 +7,12 @@ use App\Repositories\FundamentalRepository;
 use App\Repositories\DataBanksIntradayRepository;
 use App\Repositories\UserRepository;
 
+
 class TestController extends Controller
 {
     public function funtest()
     {
+
         dd(UserRepository::getUserInfo(array('market_monitor_settings'),5));
         dd(UserRepository::saveUserInfo(array('market_monitor_settings'),'cccc'));
 
