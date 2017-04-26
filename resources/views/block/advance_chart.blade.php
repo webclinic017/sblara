@@ -1,3 +1,5 @@
+{{--http://demo_chart.tradingview.com/--}}
+
 
 <div id="tv_chart_container"></div>
 @push('scripts')

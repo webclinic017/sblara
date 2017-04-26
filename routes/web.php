@@ -24,10 +24,10 @@ Route::get('/dd', 'TestController@funtest');
 Route::get('/monitor', function () {
     return view('monitor');
 });
-Route::get('/ajax/monitor/{inst_id}/{period}', 'AjaxController@monitor')->name('Ajax.Monitor');
+Route::get('/ajax/monitor/{inst_id}/{period}/{day_before?}', 'AjaxController@monitor')->name('Ajax.Monitor');
 Route::get('/ajax/yDay/{inst_id}/{period}', 'AjaxController@yDay')->name('Ajax.yDay');
 
-Route::get('/ajax/market', 'AjaxController@market')->name('Ajax.Market');
+Route::get('/ajax/market/{inst_id}', 'AjaxController@market')->name('Ajax.Market');
 Route::post('/monitor/save_data', 'AjaxController@saveData')->name('Ajax.saveData');
 
 

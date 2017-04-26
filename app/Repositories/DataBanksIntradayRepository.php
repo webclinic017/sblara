@@ -8,7 +8,7 @@
 
 namespace App\Repositories;
 Use App\DataBanksIntraday;
-Use App\Instrument;
+Use App\Market;
 
 class DataBanksIntradayRepository {
 
@@ -90,6 +90,16 @@ class DataBanksIntradayRepository {
     public static function getMinuteDataByMarketId($marketId=array(),$instrumentId=array(),$field=null,$tradeDate=null)
     {
         $minuteData=DataBanksIntraday::getIntraDayDataByMarketId($marketId,$instrumentId,$tradeDate);
+
+        $returnData=array();
+        if(!is_null($field))
+        {
+            foreach($minuteData as $market_id=>$dataObj) {
+                $returnData[$market_id]=self::calculateDifference($dataObj,$field);
+            }
+
+            return($returnData);
+        }
         return $minuteData;
     }
 
@@ -126,6 +136,160 @@ class DataBanksIntradayRepository {
         });
         $collection = $collection->sortByDesc($new_property)->take($limit);
         return $collection;
+    }
+
+    /*
+     * $dayBefore mainly used to get market monitor yesterday data
+     * */
+    public static function getDataForMinuteChart($inst_id,$days=1,$dayBefore=0)
+    {
+
+        $instrumentsIdArr=array();
+        $instrumentsIdArr[]=$inst_id;
+
+        $totalDay=$days+$dayBefore;
+        $activeDate = Market::getActiveDates($totalDay);
+
+        $marketIdArr=$activeDate->pluck('id');
+        $marketId=array();
+
+        if($dayBefore)
+        {
+            $marketId[]=$marketIdArr[$dayBefore];
+        }else
+        {
+            $marketId=$marketIdArr;
+        }
+
+        $multipleDaydata=DataBanksIntradayRepository::getMinuteDataByMarketId($marketId,$instrumentsIdArr,'total_volume');
+        $bullBear=self::lastNdaysBullBear($multipleDaydata);
+
+        $intradayData=$multipleDaydata[$marketId[0]];
+
+        $close_price=$intradayData->pluck('close_price')->toArray();
+        $dateTime=$intradayData->pluck('lm_date_time')->toArray();
+        $total_volume_diff=$intradayData->pluck('total_volume_difference')->toArray();
+
+        $total_volume_data=array();
+        $close_data=array();
+        $date_data=array();
+
+        $no_of_bar=count($close_price)-2;
+
+        for($i=$no_of_bar;$i>=0;--$i)
+        {
+            if(!isset($close_price[$i]))
+                continue;
+
+            $temp=array();
+
+
+            if($close_price[$i+1]>$close_price[$i]) // if price fall
+            {
+                $temp['color']='#EF4836';
+            }
+            if($close_price[$i+1]<$close_price[$i]) // if price increases
+            {
+                $temp['color']='#1BA39C';
+            }
+            if($close_price[$i+1]==$close_price[$i]) // if price equal
+            {
+                $temp['color']='#ACB5C3';
+            }
+
+            $temp['y']=$total_volume_diff[$i];
+            $total_volume_data[]=$temp;
+
+            $temp['y']=$close_price[$i]+0;
+            $close_data[]=$temp;
+
+            $date_data[]=$dateTime[$i]->format('h:i');
+
+        }
+        $yday_close_price=$intradayData->first()->yday_close_price;
+        $cp=$intradayData->first()->close_price;
+        $day_total_volume=$intradayData->first()->total_volume;
+        $trade_date=$intradayData->first()->trade_date;
+        $lm_date_time=$intradayData->first()->lm_date_time->format('jS M,D h:i');
+
+
+        $returnData=array();
+        $returnData['date_data']=$date_data;
+        $returnData['trade_date']=$trade_date;
+        $returnData['lm_date_time']=$lm_date_time;
+        $returnData['volume_data']=$total_volume_data;
+        $returnData['close_data']=$close_data;
+        $returnData['yday_close_price']=$yday_close_price;
+        $returnData['cp']=$cp;
+        $returnData['day_total_volume']=$day_total_volume;
+        $returnData['bullBear'] = $bullBear;
+
+        return $returnData;
+
+    }
+
+    public static function lastNdaysBullBear($data=array())
+    {
+        $return=array();
+
+        foreach($data as $market_id=>$dataCollection)
+        {
+
+            $bullVolume=0;
+            $bearVolume=0;
+            $neutralVolume=0;
+
+            $reverse_close_price= $dataCollection->reverse()->pluck('close_price')->toArray();  // 10.30 am fast
+            $yday_close_price=$dataCollection->first()->yday_close_price;
+            $trade_date=$dataCollection->first()->trade_date->format('Y-m-d');
+
+            array_unshift($reverse_close_price, $yday_close_price); // adding yclose to compare starting volume at 10.30 am
+
+            $reverse_total_volume_diff=$dataCollection->reverse()->pluck('total_volume_difference')->toArray(); // 10:30 minute data first ($close_price[0)
+
+            for($i=0;$i<count($reverse_close_price)-1;$i++)
+            {
+
+                if(!isset($reverse_close_price[$i]))
+                    continue;
+
+                if(isset($reverse_close_price[$i+1]))
+                    $temp=$reverse_close_price[$i+1];
+                else
+                    $temp=$yday_close_price;
+
+                if($temp<$reverse_close_price[$i]) // if price fall
+                {
+                    $bearVolume=$bearVolume+$reverse_total_volume_diff[$i];
+                }
+                if($temp>$reverse_close_price[$i]) // if price increases
+                {
+                    $bullVolume=$bullVolume+$reverse_total_volume_diff[$i];
+                }
+                if($temp==$reverse_close_price[$i]) // if price equal
+                {
+                    $neutralVolume=$neutralVolume+$reverse_total_volume_diff[$i];
+                }
+
+
+            }
+            $temp=array();
+           /* $temp['totalBull']=number_format($bullVolume, 0, '.', '');
+            $temp['totalBear']=number_format($bearVolume, 0, '.', '');
+            $temp['totalNeutral']=number_format($neutralVolume, 0, '.', '');*/
+
+            $temp['totalBull']=$bullVolume;
+            $temp['totalBear']=$bearVolume;
+            $temp['totalNeutral']=$neutralVolume;
+            $temp['trade_date']=$trade_date;
+            $return[]=$temp;
+
+        }
+
+        return $return;
+
+
+
     }
 
 

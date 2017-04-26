@@ -4,9 +4,8 @@
 {{-- @include('block.market_summary') --}}
 <script src="{{ url('/js/jquery-2.2.4.js')}}"></script>
 
-<link rel="stylesheet" href="{{ url('/bootstrap-select/css/bootstrap-select.min.css') }}">
-<script src="{{ url('/bootstrap-select/js/bootstrap-select.min.js')}}"></script>
-<script src="{{ url('/bootstrap-select/js/i18n/defaults-*.min.js')}}"></script>
+<link rel="stylesheet" href="{{ url('/metronic/assets/global/plugins/bootstrap-select/css/bootstrap-select.min.css') }}">
+<script src="{{ url('/metronic/assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js')}}"></script>
 <script src="{{ url('/js/html2canvas.js')}}"></script>
 <script type="text/javascript">
 	function setCookie(cname, cvalue, exdays) {
@@ -32,19 +31,7 @@
 	}
 
 </script>
-<style>
-    .tab-content > .tab-pane,
-    .pill-content > .pill-pane {
-        display: block;     /* undo display:none          */
-        height: 0;          /* height:0 is also invisible */
-        overflow-y: hidden; /* no-overflow                */
-    }
-    .tab-content > .active,
-    .pill-content > .active {
-        height: auto;       /* let the content decide it  */
-    } /* bootstrap hack end */
 
-</style>
 @push('scripts')
 <script src="{{ URL::asset('metronic_custom/highstock/code/js/highstock.js') }}"></script>
 @endpush
