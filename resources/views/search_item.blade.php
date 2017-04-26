@@ -15,6 +15,17 @@
         Day Close Price: (<span class="price">{{$databank->yday_close_price}}</span>)
         Price Change: (<span class="price">{{$databank->price_change}}</span>)
         Price Change Per (<span class="price">{{$databank->price_change_per}}</span>)
+        <div class="pull-right">
+            <a href="/yourlinkhere">
+                <button class="btn btn-small btn-success">Get Price</button>
+            </a>
+            <a href="/yourlinkhere">
+                <button class="btn btn-small btn-warning">Get Next</button>
+            </a>
+            <a href="/yourlinkhere">
+                <button class="btn btn-small btn-success">Detilas</button>
+            </a>
+        </div>
     </div>
     <div class="clear"></div>
 </div>
