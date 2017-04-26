@@ -8,24 +8,20 @@ use Illuminate\Http\Request;
 class SearchController extends Controller {
 
     public function __construct() {
-        $this->middleware('auth');
+//        $this->middleware('auth');
     }
 
     function search(Request $request) {
         $search = $request->search;
 //        $intradays = \App\Repositories\DataBanksIntradayRepository::getLatestTradeDataAll();
-//        foreach ($intradays as $day) {
-//            dd($day);
-//        }
+        $intradays = \App\DataBanksIntraday::take(10)->get();
+        $searchData = [];
         $searchItems = [];
-        $searchItems[] = view('search_item')->render();
-        $searchItems[] = view('search_item')->render();
-        $searchItems[] = view('search_item')->render();
-        $searchItems[] = view('search_item')->render();
-        $searchItems[] = view('search_item')->render();
-        $searchItems[] = view('search_item')->render();
+        foreach ($intradays as $day) {
+            $searchItems[] = view('search_item', ['databank' => $day])->render();
+        }
         $data = [
-            'count' => 10,
+            'count' => $intradays->count(),
             'data' => $searchItems,
         ];
         return response()->json($data);

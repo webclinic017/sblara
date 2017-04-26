@@ -1,16 +1,21 @@
 <div class="item asp_result_pagepost opacityOne asp_an_voidanim">
     <div class="asp_content">
-        <a class="asp_res_image_url" href="https://ajaxsearchpro.com/demodata/hugh-jackman/">
-            <div class="asp_image" style="background-image: url(&quot;https://ajaxsearchpro.com/wp-content/uploads/bfi_thumb/Hugh_Jackman_2014-mzaes5qbqv11a5ndtyr8d98aol5o8jla7b8ezjtbuk.jpg&quot;);">
+        <a class="asp_res_image_url" href="/yourlink">
+            <div class="asp_image" style="background-image: url(https://placeholdit.imgix.net/~text?txtsize=28&txt=300%C3%97300&w=300&h=300);">
                 <div class="void"></div>
             </div>
         </a>
-        <h3><a class="asp_res_url" href="https://ajaxsearchpro.com/demodata/hugh-jackman/">
-                Hugh Jackman <span class="overlap"></span>
+        <h3><a class="asp_res_url" href="/youlink">
+                {{$databank->instrument->instrument_code}} <span class="overlap"></span>
             </a></h3>
         <div class="etc">
         </div>
-        <b>Hugh Michael Jackman</b>&nbsp;(born 12 October 1968)&nbsp;is an&nbsp;Australian&nbsp;actor and producer who is involved in film, musical theatre,...
+        <b>{{$databank->instrument->name}} : </b> High Price: (<span class="price">{{$databank->high_price}}</span>)
+        Close Price: (<span class="price">{{$databank->close_price}}</span>)
+        Day Close Price: (<span class="price">{{$databank->yday_close_price}}</span>)
+        Price Change: (<span class="price">{{$databank->price_change}}</span>)
+        Price Change Per (<span class="price">{{$databank->price_change_per}}</span>)
     </div>
     <div class="clear"></div>
 </div>
+<!--code, closeprice, y day close price, change, change_per, volume , trade value etc-->

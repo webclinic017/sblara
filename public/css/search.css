@@ -133,3 +133,6 @@ a.asp_res_image_url,  a.asp_res_image_url:hover,  a.asp_res_image_url:focus, a.a
     margin-top: 30px;
     text-align:  center;
 }
+.asp_content span{
+    color: green;
+}
