@@ -13,10 +13,10 @@ class SearchController extends Controller {
 
     function search(Request $request) {
         $search = $request->search;
-        $intradays = \App\Repositories\DataBanksIntradayRepository::getLatestTradeDataAll();
-        foreach ($intradays as $day) {
-            dd($day);
-        }
+//        $intradays = \App\Repositories\DataBanksIntradayRepository::getLatestTradeDataAll();
+//        foreach ($intradays as $day) {
+//            dd($day);
+//        }
         $searchItems = [];
         $searchItems[] = view('search_item')->render();
         $searchItems[] = view('search_item')->render();
