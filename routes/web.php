@@ -31,3 +31,4 @@ Route::get('/portfolio_diversity/{portfolio_id}', 'PortfolioController@diversity
 Route::get('/portfolio_market_summary/{portfolio_id}', 'PortfolioController@marketSummary');
 Route::get('/portfolio_gain_loss/{portfolio_id}', 'PortfolioController@gainLoss');
 Route::get('/portfolio_performance/{portfolio_id}', 'PortfolioController@performance');
+Route::post('search_json', 'SearchController@search');
