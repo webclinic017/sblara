@@ -54,11 +54,18 @@
     </div>
 
     <div class="btn-group btn-group-xs btn-group-justified">
+            <a href="javascript:;" class="btn red" id="todayBtn{{ $id }}">Today </a>
+            <a href="javascript:;" class="btn green" id="yDayBtn{{ $id }}"> Yday </a>
+            <a href="javascript:;" class="btn green" id="2DayBtn{{ $id }}"> 2 day ago </a>
+            <a href="javascript:;" class="btn green" id="3DayBtn{{ $id }}"> 3 day ago </a>
+   </div>
+
+   {{-- <div class="btn-group btn-group-xs btn-group-justified">
         <a href="javascript:;" class="btn red" id="todayBtn{{ $id }}">Today </a>
         <a href="javascript:;" class="btn blue" id="stockBtn{{ $id }}">Stock Ch. </a>
         <a href="javascript:;" class="btn red"  >Full VPA</a>
         <a href="javascript:;" class="btn green" id="yDayBtn{{ $id }}"> Yday </a>
-    </div>
+    </div>--}}
    {{-- <div class="clearfix margin-bottom-10"> </div>
 
     <div class="btn-group btn-group-xs btn-group-justified">
@@ -333,6 +340,37 @@ $(document).ready(function(){
         drawChart{{ $id }}(get_url);
 
     });
+
+    $("#2DayBtn{{ $id }}").click(function(){
+            inst = document.getElementById('symbol{{ $id }}').value;
+            if(inst < 0) {
+                document.getElementById('chart_placeholder{{ $id }}').style.display = 'none';
+                return;
+            }
+            document.getElementById('displayDiv{{ $id }}').innerHTML = '<div id="monitor_chart{{ $id }}"></div>';
+
+            period = document.getElementById('period{{ $id }}').value;
+            get_url = "{{ url('/ajax/monitor/') }}/" + inst + "/" + period+"/2";
+            drawChart{{ $id }}(get_url);
+
+        });
+
+    $("#3DayBtn{{ $id }}").click(function(){
+            inst = document.getElementById('symbol{{ $id }}').value;
+            if(inst < 0) {
+                document.getElementById('chart_placeholder{{ $id }}').style.display = 'none';
+                return;
+            }
+            document.getElementById('displayDiv{{ $id }}').innerHTML = '<div id="monitor_chart{{ $id }}"></div>';
+
+            period = document.getElementById('period{{ $id }}').value;
+            get_url = "{{ url('/ajax/monitor/') }}/" + inst + "/" + period+"/3";
+            drawChart{{ $id }}(get_url);
+
+        });
+
+
+
     $("#todayBtn{{ $id }}").click(function(){
         $("#symbol{{ $id }}").trigger('change');
     });
