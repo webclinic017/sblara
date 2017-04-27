@@ -37,7 +37,7 @@
 @endpush
 
 <div class="row">
-	<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3" style="padding: 1px;">
+	<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3" style="padding: 1px;">
 	<form name="form1" action="/monitor/save_data" method="POST">
 	{{ Form::open(array('action' => array('AjaxController@saveData', 'name'=>'form1'))) }}
 		<input type="HIDDEN" name="symbols" id="symbols">
@@ -45,27 +45,27 @@
         <button type="button" id="saveBtn" class="btn btn-primary" style="width: 100%" >Save My Watch List</button>
     {{ Form::close() }}
     </div>
-    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3" style="padding: 1px;">
+    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3" style="padding: 1px;">
 		<button type="button" id="shotBtn" class="btn btn-primary" style="width: 100%" >Screen Shot</button>
     </div>
 </div>
 <div class="row">
 	@for ($id = 0; $id < 3; $id++)
-		<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="padding: 5px; !important">
+		<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12" style="padding: 5px; !important">
 	     	@include('block.monitor_chart')
 	    </div>
 	@endfor
 </div>
 <div class="row">
      @for ($id = 3; $id < 6; $id++)
-		<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="padding: 5px; !important">
+		<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12" style="padding: 5px; !important">
 	     	@include('block.monitor_chart')
 	    </div>
 	@endfor
 </div>
 <div class="row">
 	@for ($id = 6; $id < 9; $id++)
-		<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4" style="padding: 5px; !important">
+		<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12" style="padding: 5px; !important">
 	     	@include('block.monitor_chart')
 	    </div>
 	@endfor

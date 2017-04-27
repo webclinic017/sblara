@@ -52,5 +52,16 @@ class InstrumentRepository {
         return collect($returnData);
     }
 
+    /*
+     * It will avoid index.
+     * */
+    public static function getInstrumentsScripOnly($exchangeId=0)
+    {
+        return Instrument::getInstrumentsScripOnly($exchangeId);
+
+    }
+
+
+
 
 } 
