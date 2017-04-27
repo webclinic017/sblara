@@ -7,6 +7,7 @@
 <script src="/js/application.js"></script>
 <!--<script src="https://code.jquery.com/jquery-1.12.4.js"></script>-->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="{{ URL::asset('metronic_custom/highstock/code/js/highstock.js') }}"></script>
 
 <script>
 $(document).ready(function ()

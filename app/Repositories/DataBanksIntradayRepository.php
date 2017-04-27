@@ -14,7 +14,9 @@ class DataBanksIntradayRepository {
 
     public static function upDownStats()
     {
+
         $allTradeData=DataBanksIntraday::getLatestTradeDataAll();
+
         $up = $allTradeData->filter(function ($value, $key) {
             return $value->price_change > 0;
         });
@@ -24,7 +26,11 @@ class DataBanksIntradayRepository {
         });
 
         $eq = $allTradeData->filter(function ($value, $key) {
-            return $value->price_change = 0;
+            if($value->price_change == 0)
+                return true;
+            else
+               return false;
+
         });
 
         $returnData=array();
@@ -43,7 +49,10 @@ class DataBanksIntradayRepository {
         });
 
         $eq = $prevDayData->filter(function ($value, $key) {
-            return $value->price_change = 0;
+            if($value->price_change == 0)
+                return true;
+            else
+                return false;
         });
 
 
@@ -63,7 +72,30 @@ class DataBanksIntradayRepository {
         $prevMinuteData = $prevMinuteData->keyBy('instrument_id');
 
         $lastMinuteData=self::growthCalculate($lastMinuteData,$prevMinuteData,$field,$limit);
+        return $lastMinuteData;
+    }
 
+
+    // growth per %
+    public static function significantValueLastMinutePer($field='price_change',$limit=10,$tradeDate = null, $exchangeId = 0)
+    {
+        $lastMinuteData=DataBanksIntraday::getLatestTradeDataAll($tradeDate,$exchangeId);
+        $lastMinuteData=$lastMinuteData->keyBy('instrument_id');
+        $prevMinuteData=DataBanksIntraday::getMinuteAgoTradeDataAll($tradeDate,1,$exchangeId);
+        $prevMinuteData = $prevMinuteData->keyBy('instrument_id');
+
+        $lastMinuteData=self::growthCalculatePer($lastMinuteData,$prevMinuteData,$field,$limit);
+        return $lastMinuteData;
+    }
+
+    public static function significantValue2Days($field='price_change',$limit=10,$tradeDate = null, $exchangeId = 0)
+    {
+        $lastMinuteData=DataBanksIntraday::getLatestTradeDataAll($tradeDate,$exchangeId);
+        $lastMinuteData=$lastMinuteData->keyBy('instrument_id');
+        $prevDayData=DataBanksIntraday::getPreviousDayData(array(),$tradeDate,1,$exchangeId);
+        $prevDayData = $prevDayData->keyBy('instrument_id');
+
+        $lastMinuteData=self::growthCalculate($lastMinuteData,$prevDayData,$field,$limit);
         return $lastMinuteData;
     }
 
@@ -74,7 +106,6 @@ class DataBanksIntradayRepository {
         $minuteData=$minuteData->groupBy('instrument_id');
 
         $returnData=array();
-
         foreach($minuteData as $instrument_id=>$dataObj) {
             $returnData[$instrument_id]=self::calculateDifference($dataObj,$field);
         }
@@ -125,6 +156,22 @@ class DataBanksIntradayRepository {
             // checking if it has traded previous minute
             if(isset($prevMinuteData[$key])) {
                 $change=$item->$field-$prevMinuteData[$key]->$field;
+                $item->$new_property=(float) number_format($change, 2, '.', '');
+            }
+
+        });
+        $collection = $collection->sortByDesc($new_property)->take($limit);
+        return $collection;
+    }
+    public static function growthCalculatePer($lastMinuteData,$prevMinuteData,$field='price_change',$limit=10)
+    {
+        // writing the new property name to add in object.
+        $new_property=$field."_growth_per";
+        $collection = $lastMinuteData->each(function ($item, $key) use($prevMinuteData,$field,$new_property) {
+
+            // checking if it has traded previous minute
+            if(isset($prevMinuteData[$key])) {
+                $change=($item->$field-$prevMinuteData[$key]->$field)/$prevMinuteData[$key]->$field*100;
                 $item->$new_property=(float) number_format($change, 2, '.', '');
             }
 

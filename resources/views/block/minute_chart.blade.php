@@ -1,6 +1,5 @@
 <div id="{{$chartData["div"]}}"></div>
 @push('scripts')
-<script src="{{ URL::asset('metronic_custom/highstock/code/js/highstock.js') }}"></script>
 
 <script>
     $(function () {
@@ -21,8 +20,8 @@
                 borderColor: "#D5DAE0",
 
                 spacingLeft: 2,
-                spacingRight: 2,
-                height:{{$chartData["height"]}}   // if height defined, scalling is not taking full canvas
+                spacingRight: 2
+                //,height:{{$chartData["height"]}}   // if height defined, scalling is not taking full canvas
 
 
             },
@@ -178,8 +177,8 @@
                         y: {{$chartData['bullBear'][$i]['totalNeutral']}},
                         color: '#ACB5C3'// Neutral
                     }],
-                    center: [{{30*($i+1)}}, 0],
-                    size: 30,
+                    center: [{{40*($i+1)}}, 10],
+                    size: 40,
                     showInLegend: false,
                     dataLabels: {
                         enabled: false

@@ -44,9 +44,6 @@
 
 
 @push('scripts')
-<script src="{{ URL::asset('metronic_custom/highstock/code/js/highstock.js') }}"></script>
-
-
 <script>
 @foreach($indexData['index'] as $row)
 
