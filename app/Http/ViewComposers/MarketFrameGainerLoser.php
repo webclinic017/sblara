@@ -57,22 +57,62 @@ class MarketFrameGainerLoser
             $eq=$set_of_eq_instrument_id->intersect($set_of_sectors_instrumentid)->count();
             $category[]=$sector_name;
 
-            $data=array();
-            $data['playcount']=$up;
-            $data['$color']='#1BA39C';
-            $data['image']='#';
-            $data['$area']=$up;
+            $sector_data=array();
+            $sector_data['playcount']=$up;
+            $sector_data['$color']='blue';
+            $sector_data['image']='#';
+            //$sector_data['$area']=$up+$down+$eq;
+            $sector_data['$area']=$up;
 
-            $node['children']=Array();
-            $node['data']=$data;
-            $node['id']="$sector_name";
-            $node['name']="$sector_name";
+            $sector_node['children']=Array();
+            $sector_node['data']=$sector_data;
+            $sector_node['id']="$sector_name";
+            $sector_node['name']="$sector_name";
 
-            $mainnode['children'][]=$node;
+
+            $up_data=array();
+            $up_data['playcount']=$up;
+            $up_data['$color']='#1BA39C';
+            $up_data['image']='#';
+            $up_data['$area']=$up;
+
+            $up_node['children']=Array();
+            $up_node['data']=$up_data;
+            $up_node['id']="up_$sector_name";
+            $up_node['name']="Up";
+
+            $down_data=array();
+            $down_data['playcount']=$down;
+            $down_data['$color']='#EF4836';
+            $down_data['image']='#';
+            $down_data['$area']=$down;
+
+            $down_node['children']=Array();
+            $down_node['data']=$down_data;
+            $down_node['id']="down_$sector_name";
+            $down_node['name']="Down";
+
+
+            $eq_data=array();
+            $eq_data['playcount']=$eq;
+            $eq_data['$color']='#ACB5C3';
+            $eq_data['image']='#';
+            $eq_data['$area']=$eq;
+
+            $eq_node['children']=Array();
+            $eq_node['data']=$eq_data;
+            $eq_node['id']="equal_$sector_name";
+            $eq_node['name']="Equal";
+
+
+            $sector_node['children'][]=$up_node;
+            $sector_node['children'][]=$down_node;
+            $sector_node['children'][]=$eq_node;
+            $mainnode['children'][]=$sector_node;
 
         }
 
-        //dd(collect($mainnode)->toJson());
+        //dd(collect($mainnode));
 
 
 
