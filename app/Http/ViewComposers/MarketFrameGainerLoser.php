@@ -13,7 +13,7 @@ use Illuminate\View\View;
 use App\Repositories\InstrumentRepository;
 use App\Repositories\DataBanksIntradayRepository;
 
-class SectorGainerLoser
+class MarketFrameGainerLoser
 {
 
     /**
@@ -26,15 +26,23 @@ class SectorGainerLoser
     {
 
         $instrumentList=InstrumentRepository::getInstrumentsScripOnly();
-
         $instrumentList=$instrumentList->groupBy('sector_list_id');
 
         $upDownData=DataBanksIntradayRepository::upDownStats();
+
 
         $upArr=array();
         $downArr=array();
         $eqArr=array();
         $category=array();
+
+
+        $mainnode['children']=Array();
+        $mainnode['data']=array();
+        $mainnode['id']="top";
+        $mainnode['name']="Sector wise Gainer loser";
+
+
         foreach($instrumentList as $sector_id=>$instrument_arr)
         {
             $sector_name=$instrument_arr->first()->sector_list->name;
@@ -44,19 +52,31 @@ class SectorGainerLoser
             $set_of_down_instrument_id=$upDownData['down']->pluck('instrument_id');
             $set_of_eq_instrument_id=$upDownData['eq']->pluck('instrument_id');
 
-            $upArr[]=$set_of_up_instrument_id->intersect($set_of_sectors_instrumentid)->count();
-            $downArr[]=$set_of_down_instrument_id->intersect($set_of_sectors_instrumentid)->count();
-            $eqArr[]=$set_of_eq_instrument_id->intersect($set_of_sectors_instrumentid)->count();
+            $up=$set_of_up_instrument_id->intersect($set_of_sectors_instrumentid)->count();
+            $down=$set_of_down_instrument_id->intersect($set_of_sectors_instrumentid)->count();
+            $eq=$set_of_eq_instrument_id->intersect($set_of_sectors_instrumentid)->count();
             $category[]=$sector_name;
+
+            $data=array();
+            $data['playcount']=$up;
+            $data['$color']='#1BA39C';
+            $data['image']='#';
+            $data['$area']=$up;
+
+            $node['children']=Array();
+            $node['data']=$data;
+            $node['id']="$sector_name";
+            $node['name']="$sector_name";
+
+            $mainnode['children'][]=$node;
+
         }
 
-        $category=json_encode($category);
-        $upArr=json_encode($upArr);
-        $downArr=json_encode($downArr);
-        $eqArr=json_encode($eqArr);
-        $view->with('category', $category)->with('upArr',$upArr)->with('downArr',$downArr)->with('eqArr',$eqArr);
+        //dd(collect($mainnode)->toJson());
 
 
 
+        //dd($viewData);
+        $view->with('sectorGainerLoserNode', collect($mainnode)->toJson());
     }
 }
