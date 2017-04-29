@@ -16,6 +16,8 @@
             <link href="{{ URL::asset('metronic/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css') }}" rel="stylesheet" type="text/css" />
             <!-- END GLOBAL MANDATORY STYLES -->
             <!-- BEGIN PAGE LEVEL PLUGINS -->
+            <link href="{{ URL::asset('metronic/assets/global/plugins/bootstrap-select/css/bootstrap-select.min.css') }}" rel="stylesheet" type="text/css" />
+
             @stack('css')
             <!-- END PAGE LEVEL PLUGINS -->
             <!-- BEGIN THEME GLOBAL STYLES -->

@@ -19,6 +19,12 @@ Route::get('/test', function () {
     return view('test');
 });
 
+/*Route::get('/ta', function () {
+    return view('ta_chart/chart_img');
+});*/
+
+Route::get('/ta', 'DataBanksEodController@chart_img_trac');
+
 Route::get('/dd', 'TestController@funtest');
 
 Route::get('/monitor', function () {

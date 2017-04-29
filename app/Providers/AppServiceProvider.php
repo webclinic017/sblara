@@ -18,6 +18,8 @@ class AppServiceProvider extends ServiceProvider {
             $view->with('dsex', 777);
         });
 
+        View::composer('html.instrument_list_bs_select', 'App\Http\ViewComposers\InstrumentListBsSelect');
+
         View::composer('block.index_chart', 'App\Http\ViewComposers\IndexChart');
         View::composer('block.market_summary', 'App\Http\ViewComposers\MarketSummary');
         View::composer('block.up_down', 'App\Http\ViewComposers\UpDownChart');

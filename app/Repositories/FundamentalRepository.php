@@ -9,39 +9,88 @@
 namespace App\Repositories;
 use App\Meta;
 use App\Fundamental;
-use App\Instrument;
+use App\Repositories\InstrumentRepository;
 class FundamentalRepository {
 
 
     /*
-     * Sample parameter
-     * $metaKey=array('stock_dividend','no_of_securities');
-     * $instrumentCode=array('ABBANK','ACI')
+     * Sample call
+     * dump(FundamentalRepository::getFundamentalData(array('stock_dividend','no_of_securities'),array('ABBANK','ACI'))->toArray());
+        dump(FundamentalRepository::getFundamentalData(array(13,211),array('ABBANK','ACI'))->toArray());
+        dump(FundamentalRepository::getFundamentalData(array('stock_dividend','no_of_securities'),array(12,13))->toArray());
+        dd(FundamentalRepository::getFundamentalData(array(13,211),array(12,13))->toArray());
      *
      * sample return
-     * Collection {#869 ▼
-         #items: array:2 [▼
-        "stock_dividend" => Fundamental {#863 ▶}
-        "no_of_securities" => Fundamental {#859 ▶}
+     * array:2 [▼
+  "stock_dividend" => array:9 [▼
+    "id" => 154788
+    "instrument_id" => 12
+    "meta_id" => 211
+    "meta_value" => "12.50"
+    "meta_date" => Carbon {#879 ▶}
+    "created" => "2017-03-19 16:14:35"
+    "updated" => "2017-03-19 16:14:35"
+    "meta_key" => "stock_dividend"
+    "instrument_code" => "ABBANK"
   ]
-}
+  "no_of_securities" => array:9 [▼
+    "id" => 3389
+    "instrument_id" => 13
+    "meta_id" => 13
+    "meta_value" => "34394122"
+    "meta_date" => Carbon {#893 ▶}
+    "created" => "2014-10-29 11:38:31"
+    "updated" => "2014-10-29 11:38:31"
+    "meta_key" => "no_of_securities"
+    "instrument_code" => "ACI"
+  ]
+]
      * */
-    public static function getFundamentalData($metaKey=array(),$instrumentCode=array())
+    public static function getFundamentalData($meta=array(),$ins=array(),$metaKey=array(),$instrumentCode=array(),$metaId=array(),$instrumentId=array())
     {
 
-        $metaInfo=Meta::getMetaInfo($metaKey);
-        $metaId=$metaInfo->pluck('id')->toArray();
+        // if id provided
+        if(is_int($meta[0]))
+        {
+            //Meta id provided
+            $metaId = $meta;
+            $metaInfo = Meta::getMetaInfoById($metaId);
 
-        $instrumentInfo=Instrument::getInstrumentsByCode($instrumentCode);
-        $instrumentId=$instrumentInfo->pluck('id')->toArray();
-       // $instrumentInfo=$instrumentInfo->keyBy('instrument_id');
+        }else
+        {
+            // metaKey provided
+
+            $metaInfo = Meta::getMetaInfo($meta);
+            $metaId = $metaInfo->pluck('id')->toArray();
+
+        }
+
+
+        if(is_int($ins[0]))
+        {
+            // instrument id provided
+            $instrumentId=$ins;
+            $instrumentInfo = InstrumentRepository::getInstrumentsById($instrumentId);
+
+        }else
+        {
+            // instrument code provided
+
+            $instrumentInfo = InstrumentRepository::getInstrumentsByCode($ins);
+            $instrumentId = $instrumentInfo->pluck('id')->toArray();
+
+        }
+
 
         $groupByMetaData = Fundamental::getData($metaId,$instrumentId)->groupby('meta_id');
+
+
 
         $fundamentalData=array();
         foreach($groupByMetaData as $metaId=>$metaData)
         {
             $groupByInstrumentData=$metaData->groupby('instrument_id');
+
             foreach($groupByInstrumentData as $instrumentId=>$instrumentData)
             {
                 $latestData=$instrumentData->first();
@@ -51,45 +100,7 @@ class FundamentalRepository {
 
             }
         }
-        return collect($fundamentalData)->keyBy('meta_key');
 
-    }
-
-    /*
-     * Sample parameter
-     * $metaKey=array(13,211);
-     * $instrumentCode=array(12,13)
-     *
-     * sample return
-     * Collection {#869 ▼
-         #items: array:2 [▼
-        "stock_dividend" => Fundamental {#863 ▶}
-        "no_of_securities" => Fundamental {#859 ▶}
-  ]
-}
-     * */
-
-    public static function getFundamentalDataById($metaId=array(),$instrumentId=array())
-    {
-
-        $metaInfo=Meta::getMetaInfoById($metaId);
-        $instrumentInfo=Instrument::getInstrumentsById($instrumentId);
-
-        $groupByMetaData = Fundamental::getData($metaId,$instrumentId)->groupby('meta_id');
-
-        $fundamentalData=array();
-        foreach($groupByMetaData as $metaId=>$metaData)
-        {
-            $groupByInstrumentData=$metaData->groupby('instrument_id');
-            foreach($groupByInstrumentData as $instrumentId=>$instrumentData)
-            {
-                $latestData=$instrumentData->first();
-                $latestData['meta_key']=$metaInfo->where('id',$latestData->meta_id)->first()->meta_key;
-                $latestData['instrument_code']=$instrumentInfo->where('id',$latestData->instrument_id)->first()->instrument_code;
-                $fundamentalData[]=$latestData;
-
-            }
-        }
         return collect($fundamentalData)->keyBy('meta_key');
 
     }
