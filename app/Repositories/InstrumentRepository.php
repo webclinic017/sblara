@@ -53,11 +53,21 @@ class InstrumentRepository {
     }
 
     /*
-     * It will avoid index.
+     * It will avoid index and debenture and others unnecessary code.
      * */
     public static function getInstrumentsScripOnly($exchangeId=0)
     {
         return Instrument::getInstrumentsScripOnly($exchangeId);
+
+    }
+
+
+    /*
+     * It will avoid  debenture and others unnecessary code but include index.
+     * */
+    public static function getInstrumentsScripWithIndex($exchangeId=0)
+    {
+        return Instrument::getInstrumentsScripWithIndex($exchangeId);
 
     }
 

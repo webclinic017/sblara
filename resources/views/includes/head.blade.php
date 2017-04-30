@@ -18,7 +18,6 @@
             <!-- BEGIN PAGE LEVEL PLUGINS -->
             <link href="{{ URL::asset('metronic/assets/global/plugins/bootstrap-select/css/bootstrap-select.min.css') }}" rel="stylesheet" type="text/css" />
 
-            @stack('css')
             <!-- END PAGE LEVEL PLUGINS -->
             <!-- BEGIN THEME GLOBAL STYLES -->
             <link href="{{ URL::asset('metronic/assets/global/css/components-md.min.css') }}" rel="stylesheet" id="style_components" type="text/css" />
@@ -26,8 +25,11 @@
             <!-- END THEME GLOBAL STYLES -->
             <!-- BEGIN THEME LAYOUT STYLES -->
             <link href="{{ URL::asset('metronic/assets/layouts/layout5/css/layout.min.css') }}" rel="stylesheet" type="text/css" />
-            <link href="{{ URL::asset('metronic_custom/custom.css') }}" rel="stylesheet" type="text/css" />
+
             <!-- END THEME LAYOUT STYLES -->
+            @stack('css')
+
+            <link href="{{ URL::asset('metronic_custom/custom.css') }}" rel="stylesheet" type="text/css" />
 
             <link rel="shortcut icon" href="favicon.ico" />
     </head>

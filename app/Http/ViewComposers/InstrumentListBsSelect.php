@@ -25,7 +25,7 @@ class InstrumentListBsSelect
     {
         $viewdata= $view->getData();
         $bs_select_id=$viewdata['bs_select_id'];
-        $instrumentList=InstrumentRepository::getInstrumentsScripOnly();
+        $instrumentList=InstrumentRepository::getInstrumentsScripWithIndex();
        // dd($instrumentList->toArray());
         $view->with('instrumentList', $instrumentList)->with('bs_select_id',$bs_select_id);
     }

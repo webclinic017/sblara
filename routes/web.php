@@ -19,21 +19,22 @@ Route::get('/test', function () {
     return view('test');
 });
 
-/*Route::get('/ta', function () {
-    return view('ta_chart/chart_img');
-});*/
 
-Route::get('/ta', 'DataBanksEodController@chart_img_trac');
+Route::get('/taChart', 'DataBanksEodController@panel');
+Route::get('/ta/ajax/{reportrange?}/{instrument?}/{comparewith?}/{Indicators?}/{configure?}/{charttype?}/{overlay?}/{mov1?}/{avgPeriod1?}/{mov2?}/{avgPeriod2?}/{adj?}/', 'DataBanksEodController@chart_img_trac');
+Route::get('/getchart/{img}', 'DataBanksEodController@getchart');
+
 
 Route::get('/dd', 'TestController@funtest');
-
 Route::get('/monitor', function () {
     return view('monitor');
 });
+
 Route::get('/ajax/monitor/{inst_id}/{period}/{day_before?}', 'AjaxController@monitor')->name('Ajax.Monitor');
 Route::get('/ajax/yDay/{inst_id}/{period}', 'AjaxController@yDay')->name('Ajax.yDay');
 
 Route::get('/ajax/market/{inst_id}', 'AjaxController@market')->name('Ajax.Market');
+
 Route::post('/monitor/save_data', 'AjaxController@saveData')->name('Ajax.saveData');
 
 
@@ -47,7 +48,7 @@ Route::get('/time', function () {
 });
 
 //tradingview function to get symbol details
-https://demo_feed.tradingview.com/symbols?symbol=AAPL
+
 Route::get('symbols/', 'TradingViewController@symbols');
 
 //tradingview function to search symbol

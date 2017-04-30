@@ -23,7 +23,7 @@ class ChartRepository {
 
         if ($extraPoint) {
             //trade date of extraPoint before $from
-           $tradeDate=Market::getActiveDates($extraPoint,$from)->last()->trade_date;
+           $tradeDate=Market::getChartActiveDates($extraPoint,$from)->last()->trade_date;
            $from=$tradeDate->format('Y-m-d');
         }
         $data=DataBankEodRepository::getEodData($instrumentId,$from,$to);
@@ -62,7 +62,7 @@ class ChartRepository {
 
         if ($extraPoint) {
             //trade date of extraPoint before $from
-            $tradeDate=Market::getActiveDates($extraPoint,$from)->last()->trade_date;
+            $tradeDate=Market::getChartActiveDates($extraPoint,$from)->last()->trade_date;
             $from=$tradeDate->format('Y-m-d');
         }
         $data=DataBankEodRepository::getEodDataAdjusted($instrumentId,$from,$to);

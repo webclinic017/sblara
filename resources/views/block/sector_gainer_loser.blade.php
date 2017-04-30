@@ -34,7 +34,7 @@ Highcharts.chart('sector_gainer_loser', {
         type: 'bar'
     },
     title: {
-        text: 'Stacked bar chart'
+        text: null
     },
     xAxis: {
         categories: {!! $category !!}
@@ -43,7 +43,7 @@ Highcharts.chart('sector_gainer_loser', {
     yAxis: {
         min: 0,
         title: {
-            text: 'Total fruit consumption'
+            text: null
         }
     },
     legend: {

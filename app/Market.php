@@ -71,6 +71,50 @@ class Market extends Model
                 })->whereDate('trade_date','<=',$tradeDate)->where('data_bank_intraday_batch','>',0)->orderBy('trade_date', 'desc')->skip(0)->take($limit)->get();
 
             }
+
+            return $returnData;
+
+        });
+
+
+        return $returnData;
+
+    }
+    public static function getChartActiveDates($limit=1,$tradeDate=null,$exchangeId=0)
+    {
+        /*We will use session value of active_trade_date as default if exist*/
+
+        if(is_null($tradeDate)) {
+            $tradeDate = session('active_trade_date', null);
+        }
+
+
+        /*We will use session value of active_exchange_id as default if exist*/
+        if(!$exchangeId) {
+            $exchangeId = session('active_exchange_id', 1);
+        }
+
+
+        $cacheVar="chartTradeDateList$tradeDate$limit$exchangeId";
+
+        $returnData = Cache::remember("$cacheVar", 1, function ()  use ($exchangeId,$tradeDate,$limit)  {
+
+            if(is_null($tradeDate))
+            {
+
+                $returnData = static::whereHas('exchange', function($q) use($exchangeId) {
+                    $q->where('exchange_id',$exchangeId);
+                })->whereDate('trade_date','<=',DB::raw('CURDATE()'))->where('data_bank_intraday_batch','>',0)->orderBy('trade_date', 'desc')->skip(0)->take($limit)->get();
+
+
+            }else
+            {
+                $returnData = static::whereHas('exchange', function($q) use($exchangeId) {
+                    $q->where('exchange_id',$exchangeId);
+                })->whereDate('trade_date','<=',$tradeDate)->orderBy('trade_date', 'desc')->skip(0)->take($limit)->get();
+
+            }
+
             return $returnData;
 
         });
