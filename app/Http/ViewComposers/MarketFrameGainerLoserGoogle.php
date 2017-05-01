@@ -13,7 +13,7 @@ use Illuminate\View\View;
 use App\Repositories\InstrumentRepository;
 use App\Repositories\DataBanksIntradayRepository;
 
-class MarketFrameGainerLoser
+class MarketFrameGainerLoserGoogle
 {
 
     /**
@@ -22,6 +22,35 @@ class MarketFrameGainerLoser
      * @param  View  $view
      * @return void
      */
+    /*
+     * {
+                      id: 'Bank',
+                      name: 'Bank'
+
+                  }, {
+                     id: 'bank-up',
+                      name: 'Up',
+                      parent: 'Bank',
+                      color: "#1BA39C",
+                      value: 5
+                  }, {
+                  id: 'bank-down',
+                      name: 'bank-down',
+                      parent: 'Bank',
+                      color: "#EF4836",
+                      value: 3
+                  }, {
+                  id: 'bank-eq',
+                      name: 'bank-eq',
+                      parent: 'Bank',
+                      color: "#ACB5C3",
+                      value: 4
+                  }, {
+                      name: 'Abbank',
+                      parent: 'bank-up',
+                      value: 4
+                  }
+     * */
     public function compose(View $view)
     {
 
@@ -38,7 +67,12 @@ class MarketFrameGainerLoser
 
 
         $mainnode['children']=Array();
+
         $mainnode['data']=array();
+        $mainnode['data']['$area']=300;
+        $mainnode['data']['$dim']=300;
+        $mainnode['data']['$color']="#001eff";
+
         $mainnode['id']="top";
         $mainnode['name']="Sector wise Gainer loser";
 
@@ -68,7 +102,6 @@ class MarketFrameGainerLoser
             $sector_data['playcount']=$up;
             $sector_data['$color']='blue';
             $sector_data['image']='#';
-            //$sector_data['$area']=$up+$down+$eq;
             $sector_data['$area']=$up;
 
             $sector_node['children']=Array();

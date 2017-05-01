@@ -1,30 +1,4 @@
-
-            <div class="portlet light bordered">
-                <div class="portlet-title">
-                    <div class="caption">
-                        <i class="icon-graph font-yellow-casablanca"></i>
-								<span class="caption-subject bold font-yellow-casablanca uppercase">
-								Sector Gainer Loser </span>
-                        <span class="caption-helper">Sectorwise gainer loser</span>
-                    </div>
-                    <div class="tools">
-                        <a href="" class="collapse">
-                        </a>
-
-                        </a>
-                        <a href="#" data-url="#" id="minute_chart" class="reload"></a>
-                        <a href="" class="remove">
-                        </a>
-                    </div>
-
-                </div>
-                <div class="portlet-body">
-
-                    <div id="sector_gainer_loser">
-
-                </div>
-            </div>
-
+  <div id="sector_gainer_loser"></div>
 @push('scripts')
 
 <script>
