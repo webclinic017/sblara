@@ -19,6 +19,8 @@ $(document).ready(function ()
     });
 })
 </script>
+<script src="/js/slimscroll.min.js"></script>
+<script src="/js/search.js"></script>
 
 @stack('scripts')
 

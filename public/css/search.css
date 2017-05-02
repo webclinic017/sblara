@@ -1,0 +1,138 @@
+.search-result-ajax-top {
+    padding: 5px;
+    background-color: #337ab7;
+    position: fixed;
+}
+.search-result-ajax {
+    border-radius:  5px;
+    height: 300px;
+    background-color: white;
+    width: 500px!important;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+.search-result-ajax .asp_group_header {
+    background: #DDDDDD;
+    background: rgb(246,246,246);
+    border-radius: 3px 3px 0 0;
+    border-top: 1px solid rgb(248,248,248);
+    border-left: 1px solid rgb(248,248,248);
+    border-right: 1px solid rgb(248,248,248);
+    margin: 10px 0 -3px;
+    padding: 7px 0 7px 10px;
+    position: relative;
+    z-index: 98;
+    font-weight: bold;
+    font-family: 'Open Sans';
+    color: rgb(5,94,148);
+    font-size: 11px;
+    line-height: 13px;
+    text-shadow: 0px 0px 0px rgba(255,255,255,0);
+}
+.search-result-ajax .results .item {
+    overflow: hidden;
+    width: auto;
+    margin: 0;
+    padding: 3px;
+    position: relative;
+    background: #f4f4f4;
+    border-left: 1px solid rgba(255,255,255,0.6);
+    border-right: 1px solid rgba(255,255,255,0.4);
+    animation-delay: 0s;
+    animation-duration: 1s;
+    animation-fill-mode: both;
+    animation-timing-function: ease;
+    backface-visibility: hidden;
+    -webkit-animation-delay: 0s;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    -webkit-animation-timing-function: ease;
+    -webkit-backface-visibility: hidden;
+}
+.results .item .asp_content {
+    overflow: hidden;
+    width: auto;
+    height: auto;
+    background: transparent;
+    margin: 0;
+    padding: 0 10px;
+}
+.results .item div.asp_content {
+    margin: 0px;
+    padding: 0;
+    font-weight: normal;
+    font-family: 'Open Sans';
+    color: rgb(74,74,74);
+    font-size: 13px;
+    line-height: 1.35em;
+    text-shadow: 0px 0px 0px rgba(255,255,255,0);
+}
+.results .item .asp_image {
+    width: 70px;
+    height: 70px;
+    margin: 2px 8px 0px 0;
+}
+.results .item .asp_content h3 {
+    margin: 0;
+    padding: 0;
+    display: inline;
+    line-height: inherit;
+    font-weight: bold;
+    font-family: 'Lato';
+    color: rgb(5,94,148);
+    font-size: 15px;
+    line-height: 20px;
+    text-shadow: 0px 0px 0px rgba(255,255,255,0);
+}
+.results .item .asp_content h3 a {
+    margin: 0;
+    padding: 0;
+    line-height: inherit;
+    font-weight: bold;
+    font-family: 'Lato';
+    color: rgb(5,94,148);
+    font-size: 15px;
+    line-height: 20px;
+    text-shadow: 0px 0px 0px rgba(255,255,255,0);
+}
+.results a span.overlap {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+a.asp_res_image_url,  a.asp_res_image_url:hover,  a.asp_res_image_url:focus, a.asp_res_image_url:active {
+    box-shadow: none !important;
+    border: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    display: inline !important;
+}
+.results .item .asp_image {
+    overflow: hidden;
+    background: transparent;
+    margin: 4px auto 0px 0px;
+    padding: 0;
+    float: left;
+    background-position: center;
+    background-size: cover;
+}
+.results .asp_spacer {
+    background: none repeat scroll 0 0 rgba(255,255,255,0.55);
+    display: block;
+    height: 1px;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 500px;
+    background: #337ab7;
+}
+.results .loader{
+    margin: auto;
+    margin-top: 30px;
+    text-align:  center;
+}
+.asp_content span{
+    color: green;
+}

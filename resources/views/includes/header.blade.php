@@ -1,48 +1,46 @@
-            <header class="page-header">
-                <nav class="navbar mega-menu" role="navigation">
-                    <div class="container-fluid">
-                        <div class="clearfix navbar-fixed-top">
+<style>
 
-                            <!-- Brand and toggle get grouped for better mobile display -->
-                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
-                                <span class="sr-only">Toggle navigation</span>
-                                <span class="toggle-icon">
-                                    <span class="icon-bar"></span>
-                                    <span class="icon-bar"></span>
-                                    <span class="icon-bar"></span>
-                                </span>
-                            </button>
-                            <!-- End Toggle Button -->
+</style>
+<header class="page-header">
+    <nav class="navbar mega-menu" role="navigation">
+        <div class="container-fluid">
+            <div class="clearfix navbar-fixed-top">
 
-                            <!-- BEGIN LOGO -->
-                            <a id="index" class="page-logo" href="index.html">
-                                <img src="{{ URL::asset('metronic/assets/layouts/layout5/img/logo.jpg') }}" alt="Logo"> </a>
-                            <!-- END LOGO -->
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="toggle-icon">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </span>
+                </button>
+                <!-- End Toggle Button -->
 
-                            <!-- BEGIN SEARCH -->
-                            <form class="search" action="extra_search.html" method="GET">
-                                <input type="name" class="form-control" name="query" placeholder="Search...">
-                                <a href="javascript:;" class="btn submit md-skip">
-                                    <i class="fa fa-search"></i>
-                                </a>
-                            </form>
-                            <!-- END SEARCH -->
+                <!-- BEGIN LOGO -->
+                <a id="index" class="page-logo" href="index.html">
+                    <img src="{{ URL::asset('metronic/assets/layouts/layout5/img/logo.jpg') }}" alt="Logo"> </a>
+                <!-- END LOGO -->
 
-                            <!-- BEGIN TOPBAR ACTIONS -->
-                            @if (Auth::guest())
-                                 @include('includes.topbar_guest')
-                            @else
-                                 @include('includes.topbar_login')
-                            @endif
-                            <!-- END TOPBAR ACTIONS -->
+                <!-- BEGIN SEARCH -->
+                @include('search')
+                <!-- END SEARCH -->
 
-                        </div>
+                <!-- BEGIN TOPBAR ACTIONS -->
+                @if (Auth::guest())
+                @include('includes.topbar_guest')
+                @else
+                @include('includes.topbar_login')
+                @endif
+                <!-- END TOPBAR ACTIONS -->
 
-                        <!-- BEGIN HEADER MENU -->
-                        @include('includes.header_menu')
-                        <!-- END HEADER MENU -->
+            </div>
 
-                    </div>
-                    <!--/container-->
-                </nav>
-            </header>
+            <!-- BEGIN HEADER MENU -->
+            @include('includes.header_menu')
+            <!-- END HEADER MENU -->
+
+        </div>
+        <!--/container-->
+    </nav>
+</header>

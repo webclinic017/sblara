@@ -19,6 +19,10 @@ class DataBanksIntraday extends Model {
 
     ];
 
+    public function instrument() {
+        return $this->belongsTo('\App\Instrument');
+    }
+
     public function getTradeDateAttribute($value) {
         return Carbon::parse($value);
     }
@@ -39,7 +43,7 @@ class DataBanksIntraday extends Model {
 
     public function getPriceChangePerAttribute() {
         $change = $this->close_price - $this->yday_close_price;
-        $per = ($change / $this->yday_close_price) * 100;
+        $per = $this->yday_close_price ? ($change / $this->yday_close_price) * 100 : $change;
         return (float) number_format($per, 2, '.', '');
     }
 
