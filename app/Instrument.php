@@ -49,6 +49,8 @@ class Instrument extends Model
         return $returnData;
     }
 
+
+
     /*
      * It will avoid index.
      * */
@@ -67,6 +69,31 @@ class Instrument extends Model
             $returnData = static::whereHas('sector_list', function($q) use($exchangeId) {
                 $q->where('exchange_id', $exchangeId);
                 $q->where('name', 'not like', "Index");
+                $q->where('name', 'not like', "Debenture");
+                $q->where('name', 'not like', "Treasury Bond");
+            })->where('active','1')->orderBy('instrument_code', 'asc')->get();
+
+            return $returnData;
+        });
+
+        return $returnData;
+
+
+    }
+    public static function getInstrumentsScripWithIndex($exchangeId=0)
+    {
+
+        /*We will use session value of active_exchange_id as default if exist*/
+        if(!$exchangeId) {
+            $exchangeId = session('active_exchange_id', 1);
+        }
+
+        $cacheVar="InstrumentsScripWithIndex$exchangeId";
+
+        $returnData = Cache::remember("$cacheVar", 1, function ()  use ($exchangeId)  {
+
+            $returnData = static::whereHas('sector_list', function($q) use($exchangeId) {
+                $q->where('exchange_id', $exchangeId);
                 $q->where('name', 'not like', "Debenture");
                 $q->where('name', 'not like', "Treasury Bond");
             })->where('active','1')->orderBy('instrument_code', 'asc')->get();

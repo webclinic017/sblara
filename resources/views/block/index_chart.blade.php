@@ -44,9 +44,6 @@
 
 
 @push('scripts')
-<script src="{{ URL::asset('metronic_custom/highstock/code/js/highstock.js') }}"></script>
-
-
 <script>
 @foreach($indexData['index'] as $row)
 
@@ -137,14 +134,14 @@
             series: [ {
                 name: 'Volume',
                 type: 'column',
-                color: '#4572A7',
+                color: '#1BA39C',
                 yAxis: 1,
                 data: {{$indexData['trade']}}
 
             }, {
                 name: '{{$row['details']['instrument_code']}}',
                 type: 'spline',
-                color: '#89A54E',
+                color: '#EF4836',
                 marker: {
                     radius: 1
                 },
