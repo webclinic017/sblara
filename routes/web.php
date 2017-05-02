@@ -42,12 +42,11 @@ Route::post('/monitor/save_data', 'AjaxController@saveData')->name('Ajax.saveDat
 
 
 //trading view
-Route::get('/config', function () {
-    return '{"supports_search":true,"supports_group_request":false,"supports_marks":true,"supports_timescale_marks":true,"supports_time":true,"exchanges":[{"value":"","name":"All Exchanges","desc":""},{"value":"XETRA","name":"XETRA","desc":"XETRA"},{"value":"NSE","name":"NSE","desc":"NSE"},{"value":"NasdaqNM","name":"NasdaqNM","desc":"NasdaqNM"},{"value":"NYSE","name":"NYSE","desc":"NYSE"},{"value":"CDNX","name":"CDNX","desc":"CDNX"},{"value":"Stuttgart","name":"Stuttgart","desc":"Stuttgart"}],"symbolsTypes":[{"name":"All types","value":""},{"name":"Stock","value":"stock"},{"name":"Index","value":"index"}],"supportedResolutions":["D","2D","3D","W","3W","M","6M"]}';
-});
+Route::get('config/', 'TradingViewController@config');
 
+//tradingview function
 Route::get('/time', function () {
-    return time();
+    return json_encode(time());
 });
 
 //tradingview function to get symbol details

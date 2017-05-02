@@ -27,7 +27,8 @@ class DataBanksEod extends Model
     public static function getEodByInstrument($instrumentId=0,$toDate=null,$howManyDays=180)
     {
         $now = Carbon::now();
-
+//dump($toDate);
+//dump($howManyDays);
         // Setting today as to_date
         if(is_null($toDate))
         {
