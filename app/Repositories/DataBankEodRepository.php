@@ -20,9 +20,10 @@ class DataBankEodRepository {
     {
         $from=Carbon::createFromTimestamp($from);
         $to=Carbon::createFromTimestamp($to);
-
        $eodData=DataBanksEod::getEodByInstrument($instrumentId,$to->format('Y-m-d'),$from->format('Y-m-d'));
-       //$eodData=DataBanksEod::getEodByInstrument($instrumentId,'2017-04-01','2016-04-20');
+
+        //$to=Carbon::createFromTimestamp(time());
+      // $eodData=DataBanksEod::getEodByInstrument($instrumentId,'1999-01-01',$to->format('Y-m-d'));
 
         $eodData=$eodData->reverse();
        $dateArr=$eodData->pluck('date_timestamp')->toArray();

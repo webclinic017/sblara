@@ -24,7 +24,7 @@ class DataBanksEod extends Model
 
     // $howManyDays can be integer and date
     // simple date. no carbon obj
-    public static function getEodByInstrument($instrumentId=0,$toDate=null,$howManyDays=180)
+    public static function getEodByInstrument($instrumentId=0,$howManyDays=180,$toDate=null)
     {
         $now = Carbon::now();
 //dump($toDate);
