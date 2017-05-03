@@ -1,7 +1,14 @@
-.search-result-ajax-top {
+.search-result-ajax-top,.search-result-options {
     padding: 5px;
     background-color: #337ab7;
     position: fixed;
+}
+.search-result-options {
+    width: 250px;
+    background-color: white;
+    border-radius: 3px;
+    /* box-shadow: 10 10 10 10; */
+    /* border: 1px solid gray; */
 }
 .search-result-ajax {
     border-radius:  5px;
