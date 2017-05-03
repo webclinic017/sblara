@@ -12,7 +12,7 @@ class DataBanksIntraday extends Model {
      * Market_id is belongs to a exchange. So all data those belongs to market id must belongs to that exchange
      */
 
-    protected $appends = array('price_change', 'price_change_per');
+    protected $appends = array('price_change', 'price_change_per', 'date_timestamp');
 
     protected $dates = [
         'lm_date_time',
@@ -35,6 +35,10 @@ class DataBanksIntraday extends Model {
         return $this->belongsTo('App\Market');
     }
 
+    public function getDateTimestampAttribute()
+    {
+        return $this->lm_date_time->timestamp;
+    }
     public function getPriceChangeAttribute() {
         $change = $this->close_price - $this->yday_close_price;
         number_format($change, 2, '.', '');
@@ -211,6 +215,11 @@ class DataBanksIntraday extends Model {
             return $returnData;
         });
 
+        return $returnData;
+    }
+
+    public static function getIntraDayDataByRange($instrumentId=12,$from,$to) {
+        $returnData= static::select('pub_last_traded_price','lm_date_time','total_volume','market_id','batch')->whereBetween('lm_date_time', [$from, $to])->where('instrument_id',$instrumentId)->orderBy('lm_date_time', 'desc')->get();
         return $returnData;
     }
 

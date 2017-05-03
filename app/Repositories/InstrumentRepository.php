@@ -34,7 +34,7 @@ class InstrumentRepository {
     {
         $exchangeName=$exchangeDetails->name;
         $exchangeDetails=Exchange::where('name','like',"$exchangeName")->get()->first();
-        $instrumentList=Instrument::getInstrumentsScripOnly($exchangeDetails->id);
+        $instrumentList=Instrument::queryInstruments($query,$exchangeDetails->id);
 
         $returnData=array();
         foreach($instrumentList as $instrument)
@@ -49,7 +49,7 @@ class InstrumentRepository {
         }
 
 
-        return collect($returnData);
+        return collect($returnData)->take($limit);
     }
 
     /*

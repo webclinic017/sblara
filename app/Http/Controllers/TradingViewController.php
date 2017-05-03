@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Repositories\DataBankEodRepository;
+use App\Repositories\DataBanksIntradayRepository;
 use App\Repositories\ExchangeRepository;
 use App\Repositories\InstrumentRepository;
 
@@ -26,9 +27,7 @@ class TradingViewController extends Controller
         return $instrumentList->toJson();
     }
 
-// {"name":"AAPL","exchange-traded":"NasdaqNM","exchange-listed":"NasdaqNM","timezone":"America/New_York","minmov":1,"minmov2":0,
-//"pricescale":10,"pointvalue":1,"session":"0930-1630","has_intraday":false,"has_no_volume":false,"ticker":"AAPL",
-//"description":"Apple Inc.","type":"stock","supported_resolutions":["D","2D","3D","W","3W","M","6M"]}
+
     public function symbols(Request $request)
     {
         $instrumentCode = $request->input('symbol','DSEX');
@@ -42,7 +41,7 @@ class TradingViewController extends Controller
         $returnData['exchange-traded']="$exchangeName";
         $returnData['exchange-listed']="$exchangeName";
         //$returnData['timezone']='UTC';
-        $returnData['timezone']='Asia/Dhaka';
+        $returnData['timezone']='Asia/Almaty';
         $returnData['minmov']=1;
         $returnData['minmov2']=2;
         $returnData['pricescale']=10;
@@ -56,7 +55,7 @@ class TradingViewController extends Controller
         $returnData['description']="$instrumentCode-SB";
         $returnData['sector']='sector';
         $returnData['type']='stock';
-        $returnData['supported_resolutions']=Array("D","2D","3D","W","3W","M","6M");
+        $returnData['supported_resolutions']=array("5","15","30","60","D","2D","3D","W","2W","M");
 
         return collect($returnData)->toJson();
 
@@ -78,7 +77,12 @@ class TradingViewController extends Controller
         $from=(int) $request->input('from');
         $to=(int) $request->input('to',time());
 
-        $data=DataBankEodRepository::getDataForTradingView($instrumentInfo->id,$from,$to);
+        if($resolution=='D') {
+            $data = DataBankEodRepository::getDataForTradingView($instrumentInfo->id, $from, $to, $resolution);
+        }else
+        {
+            $data = DataBanksIntradayRepository::getDataForTradingView($instrumentInfo->id, $from, $to, $resolution);
+        }
 
         return $data;
 
@@ -91,7 +95,7 @@ class TradingViewController extends Controller
         $config=array();
         $config['supports_search']=true;
         $config['supports_group_request']=false;
-        $config['supported_resolutions']=array("1","5","30","60","1D","1W","1M");
+        $config['supported_resolutions']=array("5","15","30","60","D","2D","3D","W","2W","M");
         $config['supports_marks']=false;
         $config['supports_time']=true;
 

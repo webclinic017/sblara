@@ -106,4 +106,16 @@ class Instrument extends Model
 
     }
 
+    public static function queryInstruments($query,$exchangeId=0)
+    {
+        $instrumentList=self::getInstrumentsScripWithIndex($exchangeId);
+        $result = $instrumentList->filter(function ($value, $key) use ($query) {
+            // select this row if strstr is true
+            return strstr($value->instrument_code,$query);
+        });
+
+        return $result;
+
+    }
+
 }

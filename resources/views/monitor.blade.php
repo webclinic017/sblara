@@ -4,8 +4,7 @@
 {{-- @include('block.market_summary') --}}
 <script src="{{ url('/js/jquery-2.2.4.js')}}"></script>
 
-<link rel="stylesheet" href="{{ url('/metronic/assets/global/plugins/bootstrap-select/css/bootstrap-select.min.css') }}">
-<script src="{{ url('/metronic/assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js')}}"></script>
+
 <script src="{{ url('/js/html2canvas.js')}}"></script>
 <script type="text/javascript">
 	function setCookie(cname, cvalue, exdays) {

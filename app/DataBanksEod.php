@@ -26,9 +26,8 @@ class DataBanksEod extends Model
     // simple date. no carbon obj
     public static function getEodByInstrument($instrumentId=0,$howManyDays=180,$toDate=null)
     {
+        //dd("$howManyDays -> $toDate");
         $now = Carbon::now();
-//dump($toDate);
-//dump($howManyDays);
         // Setting today as to_date
         if(is_null($toDate))
         {
@@ -43,7 +42,27 @@ class DataBanksEod extends Model
             $fromDate=$howManyDays;
         }
 
-        return static::whereBetween('date', [$fromDate, $toDate])->where('instrument_id',$instrumentId)->orderBy('date', 'desc')->get();
+        $eodData= static::whereBetween('date', [$fromDate, $toDate])->where('instrument_id',$instrumentId)->orderBy('date', 'desc')->get();
+
+        $dataBankallGroup = $eodData->groupBy('market_id');
+
+        $eodData=array();
+        //eliminating duplicate if exist (some duplicate data available. We have to prevent this in future)
+        foreach ($dataBankallGroup as $eachTradeDate) {
+            $volume=0;
+            foreach($eachTradeDate as $eachData)  // to eliminate duplicate data. We will take higher volume data
+            {
+
+                if($eachData->volume>$volume)
+                {
+                    $data=clone $eachData;
+                    $volume=$eachData->volume;
+                }
+            }
+            $eodData[]=$data;
+        }
+
+        return collect($eodData);
 
     }
 

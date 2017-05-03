@@ -11,6 +11,7 @@ namespace App\Repositories;
 
 Use App\DataBanksIntraday;
 Use App\Market;
+use Carbon\Carbon;
 
 class DataBanksIntradayRepository {
 
@@ -71,7 +72,6 @@ class DataBanksIntradayRepository {
 
         return $returnData;
     }
-
 
 
 
@@ -384,6 +384,62 @@ class DataBanksIntradayRepository {
         });
 
         return $collection;
+    }
+
+    public static function getDataForTradingView($instrumentId,$from,$to,$resolution)
+    {
+        $from=Carbon::createFromTimestamp($from);
+        $to=Carbon::createFromTimestamp($to);
+
+        $rawdata = DataBanksIntraday::getIntraDayDataByRange($instrumentId, $from->format('Y-m-d'), $to->format('Y-m-d'));
+        $rawdata = $rawdata->reverse();
+        $rawdata=$rawdata->keyBy('batch');
+        $rawdata=$rawdata->groupBy('market_id');
+
+       // dd($rawdata);
+
+        //$data=$data->chunk(5);
+
+
+        $returnData=array();
+        foreach($rawdata as $market_id=>$wholeDayData)
+        {
+            foreach ($wholeDayData->chunk($resolution) as $chunk)
+            {
+                $start=$chunk->first()->toArray();
+                $end=$chunk->last()->toArray();
+
+                /*  $candle=array();
+                  $candle['t']=$end['date_timestamp'];
+                  $candle['o']=$start['pub_last_traded_price'];
+                  $candle['h']=$chunk->max('pub_last_traded_price');
+                  $candle['l']=$chunk->min('pub_last_traded_price');
+                  $candle['c']=$end['pub_last_traded_price'];
+                  $candle['v']=$end['total_volume']-$start['total_volume'];
+                  $data[]=$candle;*/
+
+                $returnData['t'][] = $end['date_timestamp'];;
+                $returnData['c'][] = $end['pub_last_traded_price'];;
+                $returnData['o'][] = $start['pub_last_traded_price'];;
+                $returnData['h'][] = $chunk->max('pub_last_traded_price');;
+                $returnData['l'][] = $chunk->min('pub_last_traded_price');;
+                $returnData['v'][] = $end['total_volume']-$start['total_volume'];
+
+
+            }
+        }
+
+
+        if(count($returnData)) {
+            $returnData['s'] = "ok";
+        }else
+        {
+           // $returnData['s'] = "no_data";
+          //  $returnData['nextTime'] = strtotime('1999-01-01');
+        }
+
+        return collect($returnData)->toJson();
+
     }
 
 }

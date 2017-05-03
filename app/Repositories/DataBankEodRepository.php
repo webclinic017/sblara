@@ -16,62 +16,47 @@ class DataBankEodRepository {
 
 
 
-    public static function getDataForTradingView($instrumentId,$from,$to)
+    public static function getDataForTradingView($instrumentId,$from,$to,$resolution)
     {
         $from=Carbon::createFromTimestamp($from);
         $to=Carbon::createFromTimestamp($to);
-       $eodData=DataBanksEod::getEodByInstrument($instrumentId,$to->format('Y-m-d'),$from->format('Y-m-d'));
 
-        //$to=Carbon::createFromTimestamp(time());
-      // $eodData=DataBanksEod::getEodByInstrument($instrumentId,'1999-01-01',$to->format('Y-m-d'));
+        $returnData = array();
 
-        $eodData=$eodData->reverse();
-       $dateArr=$eodData->pluck('date_timestamp')->toArray();
-       $closeArr=$eodData->pluck('close')->toArray();
-       $openArr=$eodData->pluck('open')->toArray();
-       $highArr=$eodData->pluck('high')->toArray();
-       $lowArr=$eodData->pluck('low')->toArray();
-       $volumeArr=$eodData->pluck('volume')->toArray();
+            $eodData = DataBanksEod::getEodByInstrument($instrumentId, $from->format('Y-m-d'), $to->format('Y-m-d'));
+            if(count($eodData)) {
+                $eodData = $eodData->reverse();
+                $dateArr = $eodData->pluck('date_timestamp')->toArray();
+                $closeArr = $eodData->pluck('close')->toArray();
+                $openArr = $eodData->pluck('open')->toArray();
+                $highArr = $eodData->pluck('high')->toArray();
+                $lowArr = $eodData->pluck('low')->toArray();
+                $volumeArr = $eodData->pluck('volume')->toArray();
 
-        $returnData=array();
-        $returnData['t']=$dateArr;
-        $returnData['c']=$closeArr;
-        $returnData['o']=$openArr;
-        $returnData['h']=$highArr;
-        $returnData['l']=$lowArr;
-        $returnData['v']=$volumeArr;
-        $returnData['s']="ok";
+                $returnData['t'] = $dateArr;
+                $returnData['c'] = $closeArr;
+                $returnData['o'] = $openArr;
+                $returnData['h'] = $highArr;
+                $returnData['l'] = $lowArr;
+                $returnData['v'] = $volumeArr;
+                $returnData['s'] = "ok";
+            }else
+            {
+                $returnData['s'] = "no_data";
+                $returnData['nextTime'] = strtotime('yesterday');
+            }
+
 
         return collect($returnData)->toJson();
 
     }
 
-    public static function getEodData($instrumentId,$form,$to)
+    public static function getEodData($instrumentId,$from,$to)
     {
 
-        $form=Carbon::parse($form);
+        $form=Carbon::parse($from);
         $to=Carbon::parse($to);
-       $eodData=DataBanksEod::getEodByInstrument($instrumentId,$to->format('Y-m-d'),$form->format('Y-m-d'));
-
-        $dataBankallGroup = $eodData->groupBy(function($item){ return $item->date->format('Y-m-d'); });
-
-        $eodData=array();
-        //eliminating duplicate if exist
-        foreach ($dataBankallGroup as $eachTradeDate) {
-            $volume=0;
-            foreach($eachTradeDate as $eachData)  // to eliminate duplicate data. We will take higher volume data
-            {
-
-                if($eachData->volume>$volume)
-                {
-                    $data=clone $eachData;
-                    $volume=$eachData->volume;
-                }
-            }
-            $eodData[]=$data;
-        }
-
-       $eodData=collect($eodData);
+       $eodData=DataBanksEod::getEodByInstrument($instrumentId,$from->format('Y-m-d'),$to->format('Y-m-d'));
 
 
        $dateArr=$eodData->pluck('date_timestamp')->toArray();
@@ -97,27 +82,7 @@ class DataBankEodRepository {
 
         $form=Carbon::parse($form);
         $to=Carbon::parse($to);
-       $eodData=DataBanksEod::getEodByInstrument($instrumentId,$to->format('Y-m-d'),$form->format('Y-m-d'));
-
-        $dataBankallGroup = $eodData->groupBy(function($item){ return $item->date->format('Y-m-d'); });
-
-        $eodData=array();
-        //eliminating duplicate if exist
-        foreach ($dataBankallGroup as $eachTradeDate) {
-            $volume=0;
-            foreach($eachTradeDate as $eachData)  // to eliminate duplicate data. We will take higher volume data
-            {
-
-                if($eachData->volume>$volume)
-                {
-                    $data=clone $eachData;
-                    $volume=$eachData->volume;
-                }
-            }
-            $eodData[]=$data;
-        }
-
-       $eodData=collect($eodData);
+       $eodData=DataBanksEod::getEodByInstrument($instrumentId,$form->format('Y-m-d'),$to->format('Y-m-d'));
 
         $faceValue=FundamentalRepository::getFundamentalData(array('face_value'),array($instrumentId))->toArray();
         $corporateActionData=CorporateActionRepository::getCorporateAction(array($instrumentId));
