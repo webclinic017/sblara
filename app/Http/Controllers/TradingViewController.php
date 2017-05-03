@@ -23,7 +23,7 @@ class TradingViewController extends Controller
             $exchangeName='DSE';
         $exchangeDetails=ExchangeRepository::getExchangeInfo($exchangeName);
         $instrumentList=InstrumentRepository::getTradingViewInstrumentList($limit,$query,$type,$exchangeDetails);
-        return $instrumentList;
+        return $instrumentList->toJson();
     }
 
 // {"name":"AAPL","exchange-traded":"NasdaqNM","exchange-listed":"NasdaqNM","timezone":"America/New_York","minmov":1,"minmov2":0,
@@ -31,54 +31,89 @@ class TradingViewController extends Controller
 //"description":"Apple Inc.","type":"stock","supported_resolutions":["D","2D","3D","W","3W","M","6M"]}
     public function symbols(Request $request)
     {
-        $instrumentCode = $request->input('symbol','DSEX:DSE');
-        dd($instrumentCode);
-        $explodeArr=explode(':',$instrumentCode);
-        $exchangeName=$explodeArr[1];
-        $instrumentCode=$explodeArr[0];
+        $instrumentCode = $request->input('symbol','DSEX');
+        $exchangeName="DSE";
         $exchangeDetails=ExchangeRepository::getExchangeInfo($exchangeName);
-        $instrumentList=InstrumentRepository::getInstrumentList($exchangeDetails->id);
+        $instrumentList=InstrumentRepository::getInstrumentsScripWithIndex($exchangeDetails->id);
 
         $instrumentInfo=$instrumentList->where('instrument_code',"$instrumentCode")->first();
 
         $returnData['name']="$instrumentCode";
         $returnData['exchange-traded']="$exchangeName";
         $returnData['exchange-listed']="$exchangeName";
+        //$returnData['timezone']='UTC';
         $returnData['timezone']='Asia/Dhaka';
         $returnData['minmov']=1;
-        $returnData['minmov2']=0;
+        $returnData['minmov2']=2;
         $returnData['pricescale']=10;
         $returnData['pointvalue']=1;
+        //$returnData['session']='24x7';
         $returnData['session']='1030-1430';
-        $returnData['has_intraday']=false;
+        $returnData['has_daily']=true;
+        $returnData['has_intraday']=true;
+        $returnData['has_no_volume']=false;
         $returnData['ticker']="$instrumentCode";
-        $returnData['description']="$instrumentCode";
+        $returnData['description']="$instrumentCode-SB";
+        $returnData['sector']='sector';
         $returnData['type']='stock';
         $returnData['supported_resolutions']=Array("D","2D","3D","W","3W","M","6M");
 
         return collect($returnData)->toJson();
+
 
     }
 
 
     public function history(Request $request)
     {
-        $instrumentCode = $request->input('symbol','DSEX:DSE');
-        $explodeArr=explode(':',$instrumentCode);
-        $exchangeName=$explodeArr[1];
-        $instrumentCode=$explodeArr[0];
+        $instrumentCode = $request->input('symbol','DSEX');
+        $resolution = $request->input('resolution');
+        $exchangeName="DSE";
         $exchangeDetails=ExchangeRepository::getExchangeInfo($exchangeName);
-        $instrumentList=InstrumentRepository::getInstrumentList($exchangeDetails->id);
+        $instrumentList=InstrumentRepository::getInstrumentsScripWithIndex($exchangeDetails->id);
 
         $instrumentInfo=$instrumentList->where('instrument_code',"$instrumentCode")->first();
 
 
-        $form=(int) $request->input('from');
+        $from=(int) $request->input('from');
         $to=(int) $request->input('to',time());
 
-
-        $data=DataBankEodRepository::getDataForTradingView($instrumentInfo->id,$form,$to);
+        $data=DataBankEodRepository::getDataForTradingView($instrumentInfo->id,$from,$to);
 
         return $data;
+
+    }
+
+    public function config()
+    {
+        //https://github.com/tradingview/charting_library/wiki/Customization-Overview
+        //old config:   {"supports_search":true,"supports_group_request":false,"supports_marks":true,"supports_timescale_marks":true,"supports_time":true,"exchanges":[{"value":"","name":"All Exchanges","desc":""},{"value":"XETRA","name":"XETRA","desc":"XETRA"},{"value":"NSE","name":"NSE","desc":"NSE"},{"value":"NasdaqNM","name":"NasdaqNM","desc":"NasdaqNM"},{"value":"NYSE","name":"NYSE","desc":"NYSE"},{"value":"CDNX","name":"CDNX","desc":"CDNX"},{"value":"Stuttgart","name":"Stuttgart","desc":"Stuttgart"}],"symbolsTypes":[{"name":"All types","value":""},{"name":"Stock","value":"stock"},{"name":"Index","value":"index"}],"supportedResolutions":["D","2D","3D","W","3W","M","6M"]}
+        $config=array();
+        $config['supports_search']=true;
+        $config['supports_group_request']=false;
+        $config['supported_resolutions']=array("1","5","30","60","1D","1W","1M");
+        $config['supports_marks']=false;
+        $config['supports_time']=true;
+
+        $exchange_dse=array();
+        $exchange_dse['value']="DSE";
+        $exchange_dse['name']="DSE";
+        $exchange_dse['desc']="Dhaka Stock Exchange";
+
+        $exchange_cse=array();
+        $exchange_cse['value']="CSE";
+        $exchange_cse['name']="CSE";
+        $exchange_cse['desc']="Chittagong Stock Exchange";
+
+        $config['exchanges'][]=$exchange_dse;
+        $config['exchanges'][]=$exchange_cse;
+
+        $symbolType=array();
+        $symbolType['name']="Stock";
+        $symbolType['value']="Stock";
+
+        $config['symbolsTypes'][]=$symbolType;
+
+        return collect($config)->toJson();
     }
 }

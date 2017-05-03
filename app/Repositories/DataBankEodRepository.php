@@ -16,14 +16,16 @@ class DataBankEodRepository {
 
 
 
-    public static function getDataForTradingView($instrumentId,$form,$to)
+    public static function getDataForTradingView($instrumentId,$from,$to)
     {
-
-
-        $form=Carbon::createFromTimestamp($form);
+        $from=Carbon::createFromTimestamp($from);
         $to=Carbon::createFromTimestamp($to);
+       $eodData=DataBanksEod::getEodByInstrument($instrumentId,$to->format('Y-m-d'),$from->format('Y-m-d'));
 
-       $eodData=DataBanksEod::getEodByInstrument($instrumentId,$to->format('Y-m-d'),$form->format('Y-m-d'));
+        //$to=Carbon::createFromTimestamp(time());
+      // $eodData=DataBanksEod::getEodByInstrument($instrumentId,'1999-01-01',$to->format('Y-m-d'));
+
+        $eodData=$eodData->reverse();
        $dateArr=$eodData->pluck('date_timestamp')->toArray();
        $closeArr=$eodData->pluck('close')->toArray();
        $openArr=$eodData->pluck('open')->toArray();
@@ -39,6 +41,7 @@ class DataBankEodRepository {
         $returnData['l']=$lowArr;
         $returnData['v']=$volumeArr;
         $returnData['s']="ok";
+
         return collect($returnData)->toJson();
 
     }
