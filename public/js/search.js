@@ -4,7 +4,9 @@ $(function () {
     $('.search-result-ajax').slimScroll({
         height: '300px'
     });
+    $(".search-result-options").hide();
     $(".search-result-ajax-top").hide();
+    $(".search-result-options").removeClass('hidden');
     $(".search-result-ajax-top").removeClass('hidden');
     $("#top-search").keyup(function () {
         if ($(this).val().length >= 2)
@@ -42,9 +44,17 @@ $(function () {
     })
     $(window).click(function () {
         $(".search-result-ajax-top").hide();
+        $(".search-result-options").hide();
     });
 
     $('.search-result-ajax-top').click(function (event) {
         event.stopPropagation();
     });
+    $('.search-result-options').click(function (event) {
+        event.stopPropagation();
+    });
+    $(".show-search-options").click(function (event) {
+        $(".search-result-options").show();
+        event.stopPropagation();
+    })
 });
