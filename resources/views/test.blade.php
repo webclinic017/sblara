@@ -1,7 +1,13 @@
 @extends('layouts.default')
 
 @section('content')
-@include('block.advance_chart')
+
+
+@include('block.price_tree',['base'=>'total_value'])
+{{--@include('block.market_depth')--}}
+{{--@include('block.market_frame_old_site',['base'=>'total_value'])--}}
+
+{{--@include('block.advance_chart')--}}
 {{--@include('block.market_summary')--}}
 <div class="row">
      <div class="col-lg-5 col-md-5 col-sm-6 col-xs-12">

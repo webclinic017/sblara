@@ -37,6 +37,7 @@ Route::get('/ajax/monitor/{inst_id}/{period}/{day_before?}', 'AjaxController@mon
 Route::get('/ajax/yDay/{inst_id}/{period}', 'AjaxController@yDay')->name('Ajax.yDay');
 
 Route::get('/ajax/market/{inst_id}', 'AjaxController@market')->name('Ajax.Market');
+Route::get('/ajax/marketDepthData/{inst_id}', 'AjaxController@marketDepthData')->name('Ajax.MarketDepthData');
 
 Route::post('/monitor/save_data', 'AjaxController@saveData')->name('Ajax.saveData');
 

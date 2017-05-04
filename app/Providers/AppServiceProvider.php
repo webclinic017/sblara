@@ -26,9 +26,11 @@ class AppServiceProvider extends ServiceProvider {
         View::composer('block.sector_gainer_loser', 'App\Http\ViewComposers\SectorGainerLoser');
 
         View::composer('block.market_frame_by_gainer_lose', 'App\Http\ViewComposers\MarketFrameGainerLoser');
-        View::composer('block.market_frame_by_gainer_lose_google', 'App\Http\ViewComposers\MarketFrameGainerLoserGoogle');
+        View::composer('block.market_frame_old_site', 'App\Http\ViewComposers\MarketFrameOldSite');
+        View::composer('block.price_tree', 'App\Http\ViewComposers\PriceTree');
 
         View::composer('block.minute_chart', 'App\Http\ViewComposers\MinuteChart');
+        View::composer('block.market_depth', 'App\Http\ViewComposers\MarketDepth');
 
         View::composer('block.significant_movement_value', 'App\Http\ViewComposers\SignificantMovementValue');
         View::composer('block.significant_movement_trade', 'App\Http\ViewComposers\SignificantMovementTrade');

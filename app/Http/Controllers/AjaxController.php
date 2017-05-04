@@ -116,4 +116,21 @@ class AjaxController extends Controller
     	UserRepository::saveUserInfo(array('market_monitor_settings'),serialize($savedUserData),5);
     	return view('monitor');
     }
+
+    public function marketDepthData($inst_id)
+    {
+        $instrumentInfo=InstrumentRepository::getInstrumentsById(array((int) $inst_id))->first();
+        $code=$instrumentInfo->instrument_code;
+        $getText = getWebPage('http://www.dsebd.org/bshis_new1_old.php?w=' . $code);
+        //dd($getText);
+        $getText = preg_replace('/Please click on the button to refresh/', ' ', $getText);
+        $getText = preg_replace('/<INPUT\b[^>]*>(.*?)[^>]/', ' ', $getText);
+        $getText = preg_replace('/<META\b[^>]*>(.*?)[^>]/', ' ', $getText);
+        $getText = preg_replace('/<script async\b[^>]*>(.*?)script>/', ' ', $getText);
+
+        $sendData['dsePage']=$getText;
+        $sendData['code']=$code;
+        $data=json_encode($sendData, JSON_HEX_QUOT | JSON_HEX_TAG);
+        return $data;
+    }
 }
