@@ -7,7 +7,7 @@
                                             <span data-counter="counterup" data-value="{{$viewData['dsexData']->capital_value}}">0</span>
                                             <small class="font-green-sharp"></small>
                                         </h3>
-                                        <small id="update">DSEX {{$viewData['dsexData']->deviation}}</small>
+                                        <small id="update">DSEXSSS {{$viewData['dsexData']->deviation}}</small>
                                     </div>
                                     <div class="icon">
                                         <i class="fa fa-bar-chart-o" id="ajax"></i>

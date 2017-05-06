@@ -51,23 +51,56 @@ class DataBankEodRepository {
 
     }
 
+    // return data desc
     public static function getEodData($instrumentId,$from,$to)
     {
 
-        $form=Carbon::parse($from);
+        $from=Carbon::parse($from);
         $to=Carbon::parse($to);
        $eodData=DataBanksEod::getEodByInstrument($instrumentId,$from->format('Y-m-d'),$to->format('Y-m-d'));
+       $eodData=$eodData->sortByDesc('date_timestamp');
 
 
-       $dateArr=$eodData->pluck('date_timestamp')->toArray();
+       $timestampArr=$eodData->pluck('date_timestamp')->toArray();
        $closeArr=$eodData->pluck('close')->toArray();
        $openArr=$eodData->pluck('open')->toArray();
        $highArr=$eodData->pluck('high')->toArray();
        $lowArr=$eodData->pluck('low')->toArray();
        $volumeArr=$eodData->pluck('volume')->toArray();
 
+
         $returnData=array();
-        $returnData['t']=$dateArr;
+        $returnData['t']=$timestampArr;
+        $returnData['c']=$closeArr;
+        $returnData['o']=$openArr;
+        $returnData['h']=$highArr;
+        $returnData['l']=$lowArr;
+        $returnData['v']=$volumeArr;
+        $returnData['s']="ok";
+        return collect($returnData);
+
+    }
+
+    // return data asc. This is needed for highchart candle. Otherwise candle chart will not be shown
+    public static function getEodDataAsc($instrumentId,$from,$to)
+    {
+
+        $from=Carbon::parse($from);
+        $to=Carbon::parse($to);
+       $eodData=DataBanksEod::getEodByInstrument($instrumentId,$from->format('Y-m-d'),$to->format('Y-m-d'));
+       $eodData=$eodData->sortBy('date_timestamp');
+
+
+       $timestampArr=$eodData->pluck('date_timestamp')->toArray();
+       $closeArr=$eodData->pluck('close')->toArray();
+       $openArr=$eodData->pluck('open')->toArray();
+       $highArr=$eodData->pluck('high')->toArray();
+       $lowArr=$eodData->pluck('low')->toArray();
+       $volumeArr=$eodData->pluck('volume')->toArray();
+
+
+        $returnData=array();
+        $returnData['t']=$timestampArr;
         $returnData['c']=$closeArr;
         $returnData['o']=$openArr;
         $returnData['h']=$highArr;

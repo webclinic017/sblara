@@ -15,7 +15,7 @@ Route::get('my-page', function(){
 });
 Route::get('/', function () {
     //return view('dashboard');
-    return response()->view('dashboard')->setTtl(60);
+    return response()->view('dashboard')->setTtl(1);
 });
 
 Route::get('/test', function () {

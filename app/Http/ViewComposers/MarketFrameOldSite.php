@@ -28,8 +28,16 @@ class MarketFrameOldSite
         $viewdata= $view->getData();
         $base=$viewdata['base'];
 
+
+
         $instrumentListMain=InstrumentRepository::getInstrumentsScripOnly();
         $instrumentList=$instrumentListMain->groupBy('sector_list_id');
+
+        $sector_list_id=0;
+        if(isset($viewdata['instrument_id']))
+        {
+            $sector_list_id=$instrumentListMain->where('id',$viewdata['instrument_id'])->first()->sector_list_id;
+        }
 
         $instrumentTradeData=DataBanksIntradayRepository::getLatestTradeDataAll();
         $instrumentTradeData=$instrumentTradeData->keyBy('instrument_id');
@@ -42,6 +50,13 @@ class MarketFrameOldSite
         $market_turnover=0;
         foreach($instrumentList as $sector_id=>$instrument_arr)
         {
+            //if $sector_list_id found it will skip other sector and market frame will return only that sector.
+            if($sector_list_id)
+            {
+                if($sector_id!=$sector_list_id)
+                    continue;
+            }
+
             $sector_node['children']=array();
             $sector_name=$instrument_arr->first()->sector_list->name;
 

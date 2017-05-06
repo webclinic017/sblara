@@ -28,6 +28,13 @@ class MarketDepth
 
     public function compose(View $view)
     {
+        $viewdata= $view->getData();
+
+        $instrument_id=13;
+        if(isset($viewdata['instrument_id']))
+            $instrument_id=$viewdata['instrument_id'];
+
+        $view->with('instrument_code', $instrument_id);
 
     }
 

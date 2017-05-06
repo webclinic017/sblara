@@ -2,10 +2,24 @@
 
 @section('content')
 
+@include('block.news_chart',['instrument_id'=>13])
 
-@include('block.price_tree',['base'=>'total_value'])
-{{--@include('block.market_depth')--}}
-{{--@include('block.market_frame_old_site',['base'=>'total_value'])--}}
+{{--@include('block.sector_minute_chart',['sector_list_id'=>1])--}}
+
+{{--@include('block.sector_gain_loser_column',['height'=>500])--}}
+
+{{--@include('block.gain_loser_depth',['height'=>500])--}}
+
+{{--@include('block.market_composition_bar_per',['base'=>'total_value','height'=>1000])--}}
+
+{{--@include('block.market_composition_bar_total',['base'=>'total_value','height'=>1000])--}}
+
+{{--@include('block.market_composition_pie',['base'=>'total_value'])--}}
+{{--@include('block.market_composition_pie',['base'=>'total_volume','height'=>500])--}}
+
+{{--@include('block.price_tree',['base'=>'total_value'])--}}
+@include('block.market_depth_single',['instrument_id'=>13])
+@include('block.market_frame_old_site',['base'=>'total_value','instrument_id'=>13])
 
 {{--@include('block.advance_chart')--}}
 {{--@include('block.market_summary')--}}
