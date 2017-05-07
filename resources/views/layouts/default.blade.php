@@ -21,7 +21,7 @@
 
             <div class="container-fluid">
                 <div class="page-content">
-
+                {{ Session::get('message') }}
                     <!-- BEGIN BREADCRUMBS -->
                     @include('includes.breadcrumbs')
 
@@ -43,7 +43,7 @@
 
 
         <!-- BEGIN QUICK SIDEBAR -->
-        @include('includes.quick_sidebar')
+        {{--@include('includes.quick_sidebar')--}}
         <!-- END QUICK SIDEBAR -->
 
         <!-- BEGIN QUICK NAV -->

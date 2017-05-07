@@ -1,8 +1,8 @@
-@extends('layouts.default')
+@extends('layouts.metronic.default')
 
 @section('content')
 
-@include('block.news_chart',['instrument_id'=>13])
+{{--@include('block.news_chart',['instrument_id'=>13])--}}
 
 {{--@include('block.sector_minute_chart',['sector_list_id'=>1])--}}
 
@@ -18,17 +18,17 @@
 {{--@include('block.market_composition_pie',['base'=>'total_volume','height'=>500])--}}
 
 {{--@include('block.price_tree',['base'=>'total_value'])--}}
-@include('block.market_depth_single',['instrument_id'=>13])
-@include('block.market_frame_old_site',['base'=>'total_value','instrument_id'=>13])
+{{--@include('block.market_depth_single',['instrument_id'=>13])--}}
+{{--@include('block.market_frame_old_site',['base'=>'total_value','instrument_id'=>13])--}}
 
 {{--@include('block.advance_chart')--}}
-{{--@include('block.market_summary')--}}
+@include('block.market_summary')
 <div class="row">
      <div class="col-lg-5 col-md-5 col-sm-6 col-xs-12">
-
+@include('block.top_by_price_change')
      </div>
      <div class="col-lg-5 col-md-5 col-sm-6 col-xs-12">
-    {{--@include('block.significant_movement_trade')--}}
+    @include('block.significant_movement_trade')
     {{--@include('html.instrument_list_bs_select',['bs_select_id'=>'bsselect_ggf'])--}}
      </div>
 </div>

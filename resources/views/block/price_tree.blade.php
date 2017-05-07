@@ -60,7 +60,6 @@ Highcharts.chart('price_tree', {
     tooltip: {
         valueSuffix: '%'
     },
-
     plotOptions: {
         series: {
             stacking: 'normal',

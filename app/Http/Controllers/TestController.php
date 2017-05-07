@@ -6,12 +6,19 @@ use Illuminate\Http\Request;
 use App\Repositories\FundamentalRepository;
 use App\Repositories\DataBanksIntradayRepository;
 use App\Repositories\UserRepository;
-
+use App\Navigation;
 
 class TestController extends Controller
 {
     public function funtest()
     {
+
+        $items = Navigation::tree();
+
+        dd($items);
+
+        $menu = View::make('layouts.home.index')->withItems($items);
+
 
         dump(FundamentalRepository::getFundamentalData(array('stock_dividend','no_of_securities'),array('ABBANK','ACI'))->toArray());
         dump(FundamentalRepository::getFundamentalData(array(13,211),array('ABBANK','ACI'))->toArray());

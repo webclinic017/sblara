@@ -10,12 +10,15 @@
   | contains the "web" middleware group. Now create something great!
   |
  */
+
+//Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout'); //Just added to fix issue. By default logout is post
+
 Route::get('my-page', function(){
     return Response::make('Hello!')->setTtl(60); // Cache 1 minute
 });
 Route::get('/', function () {
     //return view('dashboard');
-    return response()->view('dashboard')->setTtl(1);
+    return response()->view('dashboard')->setTtl(60);
 });
 
 Route::get('/test', function () {

@@ -1,4 +1,4 @@
-@extends('layouts.default')
+@extends('layouts.metronic.default')
 
 @section('content')
 {{-- @include('block.market_summary') --}}

@@ -1,6 +1,6 @@
 <div class="nav-collapse collapse navbar-collapse navbar-responsive-collapse">
     <ul class="nav navbar-nav">
-        <li class="dropdown dropdown-fw dropdown-fw-disabled ">
+        <li class="dropdown dropdown-fw dropdown-fw-disabled open">
             <a href="javascript:;" class="text-uppercase">
                 <i class="icon-home"></i> Dashboard </a>
             <ul class="dropdown-menu dropdown-menu-fw">
