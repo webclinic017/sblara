@@ -52,7 +52,6 @@ Route::get('/', function () {
 Route::get('/test', function () {return view('test');});
 
 
-
 Route::get('/market-depth', function () {return view('market_depth_page');})->name('market-depth');
 Route::get('/market-frame', function () {return view('market_frame_page');})->name('market-frame');
 Route::get('/market-composition', function () {return view('market_composition_page');})->name('market-composition');
