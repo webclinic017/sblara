@@ -1,28 +1,6 @@
 <div class="row">
     <div class="col-md-12">
-        <!-- BEGIN Portlet PORTLET-->
-        <div class="portlet light">
-            <div class="portlet-title">
-                <div class="caption">
-                    <i class="fa fa-cogs font-green-sharp"></i>
-                    <span class="caption-subject font-green-sharp bold uppercase">Market Frame</span>
-                </div>
-                <div class="tools">
-                    <a href="javascript:;" class="collapse" data-original-title="" title="">
-                    </a>
-                    <a href="javascript:;" class="fullscreen" data-original-title="" title="">
-                    </a>
-                    <a href="javascript:;" class="reload" data-original-title="" title="">
-                    </a>
-                    <a href="javascript:;" class="remove" data-original-title="" title="">
-                    </a>
-                </div>
-            </div>
-            <div class="portlet-body portlet-empty">
-                <div style="padding-top:15px;" id="infovis"></div>
-            </div>
-        </div>
-        <!-- END Portlet PORTLET-->
+       <div style="padding-top:15px;" id="infovis"></div>
     </div>
 
 </div>

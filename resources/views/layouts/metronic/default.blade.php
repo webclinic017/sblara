@@ -23,11 +23,7 @@
                     <!-- END BREADCRUMBS -->
                     <!-- BEGIN SIDEBAR CONTENT LAYOUT -->
                     <div class="page-content-container">
-                        <div class="page-content-row">
-                            <div class="page-content-col">
-                                @yield('content')
-                            </div>
-                        </div>
+                         @yield('content')
                     </div>
                     <!-- END SIDEBAR CONTENT LAYOUT -->
                 </div>

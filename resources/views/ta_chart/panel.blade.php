@@ -1,4 +1,4 @@
-@extends('layouts.default')
+@extends('layouts.metronic.default')
 @section('content')
 <div class="row widget-row">
 <div class="col-md-12 margin-bottom-20">

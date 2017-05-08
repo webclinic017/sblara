@@ -9,7 +9,7 @@
 
 <script>
 $('.bs-select').selectpicker({
-  size: 4
+  size: 10
 });
 
 

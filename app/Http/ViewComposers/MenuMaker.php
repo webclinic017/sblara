@@ -38,18 +38,20 @@ class MenuMaker
     public function compose(View $view)
     {
         $items = Navigation::tree();
+        $currentPath= Route::currentRouteName();
 
-        $currentPath= Route::getFacadeRoot()->current()->uri();
+        foreach($items as $item)
+        {
+            $found=$item['children']->where('route',$currentPath);
+            if(count($found))
+                $selected_node=$found->first();
 
-        $view->with('items', $items)->with('currentPath', $currentPath);
+        }
 
-       /* $view->with('ohlc', collect($ohlc)->toJson(JSON_NUMERIC_CHECK))
-            ->with('volume', collect($volume)->toJson(JSON_NUMERIC_CHECK))
-            ->with('instrument_code', $instrument_code)
-            ->with('news_flags', json_encode($news_flags))
-            ->with('news_flags2', json_encode($news_flags2))
-            ->with('height', $height)
-            ->with('renderTo', 'news_chart_div');*/
+
+        $view->with('items', $items)->with('currentPath', $currentPath)->with('selected_node', $selected_node);
+
+
 
 
     }
