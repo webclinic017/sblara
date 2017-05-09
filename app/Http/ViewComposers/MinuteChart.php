@@ -110,7 +110,6 @@ class MinuteChart
         $chartData['bullBear'] = array_reverse($minuteChartData['bullBear']);
         $chartData['day_total_volume'] = $minuteChartData['day_total_volume'];
 
-
         $view->with('chartData', $chartData);
     }
 

@@ -116,6 +116,7 @@ class DataBanksIntradayRepository {
         return $lastMinuteData;
     }
 
+    // this should be use to get last minute trade data for a share
     public static function getMinuteData($instrumentsIdArr=array(),$minute=15,$field='total_volume',$tradeDate=null,$exchangeId=0)
     {
 

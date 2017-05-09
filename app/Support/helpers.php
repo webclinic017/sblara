@@ -71,3 +71,14 @@ function calculateDifference($data, $field = 'total_volume') {
 
     return $collection;
 }
+
+function fontCss($val)
+{
+    $css = ($val < 0) ? "font-red-haze" : "font-green-jungle";
+    return $css;
+}
+function barCss($val)
+{
+    $css = ($val < 0) ? "red-haze" : "green-jungle";
+    return $css;
+}

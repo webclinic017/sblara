@@ -1,6 +1,7 @@
 @extends('layouts.metronic.default')
 
 @section('content')
+it will not show in aftab
 <div class="row">
     <div class="col-md-12">
         <!-- BEGIN Portlet PORTLET-->
