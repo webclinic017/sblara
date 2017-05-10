@@ -9,6 +9,7 @@
 
 <script>
 $('.bs-select').selectpicker({
+  dropupAuto: false,
   size: 10
 });
 

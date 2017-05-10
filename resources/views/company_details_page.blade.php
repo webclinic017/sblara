@@ -10,7 +10,6 @@
 </div>
 
 </div>
-
 <div class="mt-element-step">
     <div class="row step-thin margin-bottom-20">
 
@@ -275,15 +274,15 @@
         </div>
     </div>
 <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-6">
             <!-- BEGIN Portlet PORTLET-->
             <div class="portlet light bordered">
                 <div class="portlet-title">
                     <div class="caption">
                         <i class="icon-graph font-yellow-casablanca"></i>
 								<span class="caption-subject bold font-yellow-casablanca uppercase">
-								Sector detail chart </span>
-                        <span class="caption-helper">Eagle view of the sector</span>
+								News</span>
+                        <span class="caption-helper">News by tag</span>
                     </div>
                     <div class="tools">
                         <a href="" class="collapse">
@@ -296,8 +295,9 @@
 
                 </div>
                 <div class="portlet-body">
-                     @include('block.news_time_line', array('height' =>'400','base' =>'total_value','instrument_id' => $instrumentInfo->id))
-
+                     {{--@include('block.news_box', array('instrument_id' => $instrumentInfo->id,'limit' =>30))--}}
+                     @include('block.news_box_today')
+                     {{--@include('block.news_box', array('instrument_id' => array(12,13),'limit' =>5))--}}
                 </div>
             </div>
             <!-- END Portlet PORTLET-->
@@ -311,7 +311,6 @@
 <script type="text/javascript">
 
    $( "#instruments" ).change(function() {
-
       var insId = $("#instruments").selectpicker("val");
       var url = "{{ url('/company-details/') }}/"+insId;
       window.location = url;

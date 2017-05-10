@@ -11,9 +11,10 @@ use App\News;
 
 class NewsRepository {
 
-    public static function getAllNewsByInstrumentId($instrument_id=0)
+    public static function getAllNewsByInstrumentId($instrument_id=0,$limit=1000)
     {
-        $allNews=News::getAllNewsByInstrumentId($instrument_id);
+        $allNews=News::getAllNewsByInstrumentId($instrument_id,$limit);
+        //dd($allNews);
         return $allNews;
     }
 

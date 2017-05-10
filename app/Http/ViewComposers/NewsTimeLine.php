@@ -133,9 +133,18 @@ class NewsTimeLine
             $r['text'] = utf8_encode($r['text']);
             return $r;
         }, $news_flags2);
+        $allnews=NewsRepository::getAllNewsByInstrumentId($instrument_id)->sortByDesc('post_date')->take(20);
+
+       $groupedNews=array();
+      foreach($allnews as $news)
+      {
+          $groupedNews[$news->post_date->format('m/Y')][]=$news;
+      }
+
+       // dd($groupedNews);
 
         $view->with('instrument_code', $instrument_code)
-            ->with('news_flags', NewsRepository::getAllNewsByInstrumentId($instrument_id)->sortBy('post_date'))
+            ->with('news_flags', $groupedNews)
             ->with('news_flags2', $news_flags2)
             ->with('height', $height)
             ->with('renderTo', 'news_chart_div');

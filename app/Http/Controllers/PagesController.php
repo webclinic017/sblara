@@ -55,8 +55,9 @@ class PagesController extends Controller
                 'currentVolDiffThenYday' => $currentVolDiffThenYday,
                 'currentVolDiffThenYdayPer' => $currentVolDiffThenYdayPer
             ]
+        );
+        //)->setTtl(60);
 
-        )/*->setTtl(60)*/;
     }
 
 
