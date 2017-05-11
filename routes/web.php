@@ -11,6 +11,14 @@
   |
  */
 
+/*
+ |--------------------------------------------------------------------------
+ | Passport routes.
+ |--------------------------------------------------------------------------
+ */
+
+Route::get('/passport', 'Passport\PassportController@show');
+
 //Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout'); //Just added to fix issue. By default logout is post
 Route::get('/filter', 'FilterController@index');
 Route::get('/filter/debug', 'FilterController@debug');

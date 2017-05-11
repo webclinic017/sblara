@@ -9,6 +9,7 @@
         "barryvdh/laravel-debugbar": "^2.3",
         "barryvdh/laravel-httpcache": "0.2.x@dev",
         "laravel/framework": "5.4.*",
+        "laravel/passport": "^2.0",
         "laravel/tinker": "~1.0",
         "laravelcollective/html": "^5.4"
     },
