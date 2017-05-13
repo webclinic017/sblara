@@ -10,6 +10,7 @@ use App\Library\Functions;
 use App\Library\Operation;
 use App\Library\Logger;
 use App\DataBanksEod;
+use DB;
 
 
 class FilterController extends Controller
@@ -52,10 +53,175 @@ class FilterController extends Controller
         return $arr;
     }
 
+    public function get_index_data($instrument_id, $group_count, $limit){
+      $offset = 0;
+      $cur_count = 0;
+      foreach ($group_count as $gc) {
+        if($gc['instrument_id'] == $instrument_id){
+          $cur_count = $gc['count'];
+          break;
+        }
+        $offset = $offset + $gc['count'];
+      }
+      //echo "instrument_id: $instrument_id ||| count: $cur_count<br>";
+      if($cur_count  >= $limit){
+        //echo "true<br>";
+        return $offset;
+      }
+      return -1;
+    }
+
+    public function parce_data($data, $group_count, $need_instruments, $filter, $limit = 250){
+      //dd($group_count);
+      $counter = 0;
+      $array_result = array();
+
+      foreach($need_instruments as $instrument){
+
+      //  dd($instrument);
+        //if($counter < 100) {$counter++; continue;}
+        $new_data = array();
+        $offset = $this->get_index_data($instrument->id, $group_count, $limit);
+        if($offset == -1) { /*echo "ERROR $offset <br>";*/ continue;}
+
+        //echo "<p>";
+        //echo 'instrument_id: '.$instrument->id."<br>";
+        ////echo '$i: '.$i."<br>";
+        //echo '$offset: '.$offset."<br>";
+        //echo '$limit: '.$limit."<br>";
+        //echo '$counter: '.$counter."<br>";
+        for($i = $offset + $limit - 1, $j = 0; $i >= $offset; $i--, $j++){
+          //$new_data[$j] = $data[$i];
+          try{
+
+          $new_data[$j]['instrument_id'] = $data[$i]->instrument_id;
+          $new_data[$j]['date'] = $data[$i]->date;
+          $new_data[$j]['open'] = $data[$i]->open;
+          $new_data[$j]['close'] = $data[$i]->close;
+          $new_data[$j]['high'] = $data[$i]->high;
+          $new_data[$j]['low'] = $data[$i]->low;
+          }
+          catch(Exception $e){
+
+
+            //return;
+          }
+        }
+        $counter++;
+
+        // filter
+        //echo "counter: $counter<br>";
+        if($this->caclulate($new_data, $filter, $instrument->id)){
+        //  echo "asfsd<br>";
+      //    if($request->input('debug')){
+      //      return redirect('filter/debug');
+      //      //echo 'DEBUG<br>';
+      //      return ;
+
+      //    }
+          $array_result[] = $instrument;
+          // display
+        //  echo $instrument->id." good<br>";
+          //break;
+        }
+        else{
+          //echo $instrument->id." BAD<br>";
+        }
+      }
+      return $array_result;
+    }
+
+    public function parce_data_bakck($data, $group_count, $need_instruments, $filter, $limit = 250){
+      //dd($group_count);
+      $counter = 0;
+      $array_result = array();
+
+      foreach($need_instruments as $instrument){
+
+      //  dd($instrument);
+        //if($counter < 100) {$counter++; continue;}
+        $new_data = array();
+        $offset = 0;
+        $found = false;
+
+        foreach($group_count as $gc){
+        //  print_r($gc['instrument_id']);
+        //  echo ($gc['instrument_id']);
+          if($gc['instrument_id'] == $instrument->id) {
+            $found = true;
+            if($gc['count'] < $limit) {
+              $offset == -1;
+            }
+            break;
+          }
+          /*
+          if($gc->count < $limit) {
+            $offset == -1;
+            echo $gc->instrument_id." <b>".$gc->count." <$limit</b><br>";
+            break;
+          }
+          */
+          $offset = $offset + $gc['count'];
+        }
+
+        if(!$found) {echo "NOT FOUND!"; continue;}
+        if($offset == -1) {echo "EROR instrument_id: $instrument<br>"; continue;}
+
+        echo "<p>";
+        echo 'instrument_id: '.$instrument->id."<br>";
+        //echo '$i: '.$i."<br>";
+        echo '$offset: '.$offset."<br>";
+        echo '$limit: '.$limit."<br>";
+        echo '$counter: '.$counter."<br>";
+        for($i = $offset + $limit - 1, $j = 0; $i >= $offset; $i--, $j++){
+          //$new_data[$j] = $data[$i];
+          try{
+
+          $new_data[$j]['instrument_id'] = $data[$i]->instrument_id;
+          $new_data[$j]['date'] = $data[$i]->date;
+          $new_data[$j]['open'] = $data[$i]->open;
+          $new_data[$j]['close'] = $data[$i]->close;
+          $new_data[$j]['high'] = $data[$i]->high;
+          $new_data[$j]['low'] = $data[$i]->low;
+          }
+          catch(Exception $e){
+
+
+            //return;
+          }
+        }
+        $counter++;
+
+        // filter
+        echo "counter: $counter<br>";
+        if($this->caclulate($new_data, $filter, $instrument->id)){
+          echo "asfsd<br>";
+      //    if($request->input('debug')){
+      //      return redirect('filter/debug');
+      //      //echo 'DEBUG<br>';
+      //      return ;
+
+      //    }
+          $array_result[] = $instrument;
+          // display
+          echo $instrument->id." good<br>";
+          //break;
+        }
+        else{
+          echo $instrument->id." BAD<br>";
+        }
+      }
+      return $array_result;
+    }
 
     public function filter(Request $request)
     {
       //
+      $table = 'data_banks_eods';
+      $limit=250;
+      $date_b="2016-04-12";
+      $date_e="2017-04-20";
+
       $time_start = $this->microtime_float();
       $array_result = array();
       $inputs = $request->all();
@@ -71,48 +237,46 @@ class FilterController extends Controller
         $this->parser = new Parser(true);
         $this->functions = new Functions(true);
         $this->operation = new Operation(true);
-        $instruments = Instrument::where('id', $request->input('instrument'))->get();
+        //$instruments = Instrument::where('id', $request->input('instrument'))->get();
       }
-      else{
-        $instruments = Instrument::get();
+
+      ////
+      ////
+      //$sql = "select * from `instruments` where exists (select * from `sector_lists` where `instruments`.`sector_list_id` = `sector_lists`.`id` and `exchange_id` = '1' and `name` not like 'Index' and `name` not like 'Debenture' and `name` not like 'Treasury Bond') and `active` = '1' order by `id` asc";
+      $sql = "select `id` ,`instrument_code` from `instruments` where exists (select * from `sector_lists` where `instruments`.`sector_list_id` = `sector_lists`.`id` and `exchange_id` = '1' and `name` not like 'Index' and `name` not like 'Debenture' and `name` not like 'Treasury Bond') and `active` = '1' order by `id` asc";
+      $need_instruments = DB::Select($sql);
+
+      $str = "";
+      foreach ($need_instruments as $instrument){
+        $str = $str.$instrument->id.",";
       }
-      //dd($instruments);
-      foreach ($instruments as $instrument) {
-        //echo "id: ".$instrument->id."<br>";
-        //echo $instrument->id." I<br>";
-        $data = DataBanksEod::take(250)->where('instrument_id', $instrument->id)->select('close','high','low','volume', 'date')->orderBy('date', 'desc')->get();
+      $str = substr ($str, 0, strlen($str)-2);
+      //echo $str."<br>";
+      $sql = "SELECT `instrument_id`, `close`,`open`,`high`, `low`, `date` FROM $table WHERE date between '".$date_b."' and '".$date_e."' and `instrument_id` in (".$str.")  order by `instrument_id`  asc, `date` desc";
+      $datas = DB::Select($sql);
+      //dd($datas);
+      $sql = "SELECT `instrument_id`, count(*) as count FROM $table WHERE date between '".$date_b."' and '".$date_e."' and `instrument_id` in (".$str.")  group by `instrument_id`";
+      $group_index = DB::Select($sql);
 
-        $this->log->insert("$instrument->id","instrument->id",__FUNCTION__.__CLASS__);
-        $this->log->insert("$instrument->instrument_code","instrument->instrument_code",__FUNCTION__.__CLASS__);
-        $this->log->insert($data,"data",__FUNCTION__."|".__CLASS__);
-        if(empty($data[0]) || count($data) < 250){
-        //  echo "empty<br>";
-          continue;
-        }
-
-        $this->log->insert("","",__FUNCTION__.__CLASS__);
-
-        $data = $this->prepare($data);
-        //dd($request->input('debug'));
-        if($this->caclulate($data, $filter, $instrument->id)){
-
-          if($request->input('debug')){
-            return redirect('filter/debug');
-            //echo 'DEBUG<br>';
-            return ;
-
+    //  dd($group_index);
+      $group_count = array();
+      $i = 0;
+      foreach ($need_instruments as $instrument) {
+        $group_count[$i] = array('instrument_id' => $instrument->id, 'count' => 0);
+        foreach ($group_index as $gi) {
+          if($gi->instrument_id == $instrument->id){
+            $group_count[$i] = array('instrument_id' => $instrument->id, 'count' => $gi->count);
           }
-          $array_result[] = $instrument;
-          // display
-        //  echo $instrument->id." good<br>";
-          //break;
         }
-        else{
-        //  echo $instrument->id." BAD<br>";
-        }
-
-
+        $i++;
       }
+
+      //print_r($group_count);
+      //dd($group_index);
+      $array_result = $this->parce_data($datas, $group_count, $need_instruments, $filter, $limit);
+
+      ////
+      ////
       $time_end = $this->microtime_float();
       $time = $time_end - $time_start;
       //echo "Spend time: $time second<br>";

@@ -55,6 +55,9 @@
               <div class="col-md-2">
                 <button type="submit" id="bnt_debug" form="filter" class="btn btn-md red disabled">Debug</button>
               </div>
+              <div class="col-md-2">
+                <button type="submit" id="bnt_debug2" form="filter" class="btn btn-md red ">Debug2</button>
+              </div>
             </div>
             <div class="row">
 
