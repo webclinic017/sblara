@@ -11,6 +11,14 @@
   |
  */
 
+/*
+ |--------------------------------------------------------------------------
+ | Passport routes.
+ |--------------------------------------------------------------------------
+ */
+
+Route::get('/passport', 'Passport\PassportController@show');
+
 //Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout'); //Just added to fix issue. By default logout is post
 Route::get('/filter', 'FilterController@index');
 Route::get('/filter/debug', 'FilterController@debug');
@@ -38,31 +46,44 @@ Route::post('/filter', 'FilterController@filter');
 Route::get('my-page', function(){
     return Response::make('Hello!')->setTtl(60); // Cache 1 minute
 });
+
+
+Route::get('head', function(){
+    return response()->view('includes.metronic.head')->setTtl(60);
+});
+
 Route::get('/', function () {
     //return view('dashboard');
     return response()->view('dashboard')->setTtl(60);
-});
+})->name('/');
 
-Route::get('/test', function () {
-    return view('test');
-});
+Route::get('/test', function () {return view('test');});
 
 
-Route::get('/taChart', 'DataBanksEodController@panel');
+Route::get('/market-depth', function () {return view('market_depth_page');})->name('market-depth');
+Route::get('/market-frame', function () {return view('market_frame_page');})->name('market-frame');
+Route::get('/market-composition', function () {return view('market_composition_page');})->name('market-composition');
+Route::get('news-chart/{instrument_id?}', 'PagesController@newsChart')->name('news-chart');
+Route::get('minute-chart/{instrument_id?}', 'PagesController@minuteChart')->name('minute-chart')->middleware('httpcache'); //httpcache implemented in PagesController@minuteChart
+Route::get('company-details/{instrument_id?}', 'PagesController@companyDetails')->name('company-details')->middleware('httpcache');
+
+
+
+Route::get('/advance-ta-chart', function () {return view('ta_chart.advance_ta_chart');})->name('advance-ta-chart');
+Route::get('/ta-chart', 'DataBanksEodController@panel')->name('ta-chart');
 Route::get('/ta/ajax/{reportrange?}/{instrument?}/{comparewith?}/{Indicators?}/{configure?}/{charttype?}/{overlay?}/{mov1?}/{avgPeriod1?}/{mov2?}/{avgPeriod2?}/{adj?}/', 'DataBanksEodController@chart_img_trac');
 Route::get('/getchart/{img}', 'DataBanksEodController@getchart');
 
 
 Route::get('/dd', 'TestController@funtest');
-Route::get('/monitor', function () {
-    return view('monitor');
-});
+Route::get('/monitor', function () {return view('monitor');})->name('monitor');
 
 Route::get('/ajax/monitor/{inst_id}/{period}/{day_before?}', 'AjaxController@monitor')->name('Ajax.Monitor');
 Route::get('/ajax/yDay/{inst_id}/{period}', 'AjaxController@yDay')->name('Ajax.yDay');
 
 Route::get('/ajax/market/{inst_id}', 'AjaxController@market')->name('Ajax.Market');
 Route::get('/ajax/marketDepthData/{inst_id}', 'AjaxController@marketDepthData')->name('Ajax.MarketDepthData');
+
 
 Route::post('/monitor/save_data', 'AjaxController@saveData')->name('Ajax.saveData');
 

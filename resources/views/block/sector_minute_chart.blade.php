@@ -24,7 +24,7 @@
 
             },
             title: {
-                text: 'Sector Minute Chart'
+                text: '{{$sector_name}}'
             },
             subtitle: {
                 text: ''

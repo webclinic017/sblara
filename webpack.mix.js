@@ -54,6 +54,9 @@ mix.scripts([
 ], 'public/metronic_home.js');
 
 
+mix.js('resources/assets/js/app.js', 'public/js/passport-vue.js');
+
+
 /*
 *
 * =>1st install node for windows

@@ -23,11 +23,7 @@
                     <!-- END BREADCRUMBS -->
                     <!-- BEGIN SIDEBAR CONTENT LAYOUT -->
                     <div class="page-content-container">
-                        <div class="page-content-row">
-                            <div class="page-content-col">
-                                @yield('content')
-                            </div>
-                        </div>
+                         @yield('content')
                     </div>
                     <!-- END SIDEBAR CONTENT LAYOUT -->
                 </div>
@@ -58,6 +54,10 @@
                 });
             })
         </script>
+
+        <!-- Passport mixed components -->
+        <script src="{{ asset('js/passport-vue.js') }}"></script>
+
     </body>
 
 </html>

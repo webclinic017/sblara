@@ -10,6 +10,7 @@ namespace App\Http\ViewComposers;
 
 
 use Illuminate\View\View;
+use App\Repositories\SectorListRepository;
 use App\Repositories\SectorIntradayRepository;
 
 class SectorMinuteChart
@@ -38,14 +39,17 @@ class SectorMinuteChart
     {
         $viewdata= $view->getData();
 
-        $sector_list_id=1;
-        if(isset($viewdata['sector_list_id']))
-        $sector_list_id=$viewdata['sector_list_id'];
+        $instrument_id=12;
+        if(isset($viewdata['instrument_id']))
+            $instrument_id=$viewdata['instrument_id'];
 
         $height=400;
         if(isset($viewdata['height']))
             $height=$viewdata['height'];
 
+        $sectorList=SectorListRepository::getSectorDetailsByInstrumentId($instrument_id);
+        $sector_list_id=$sectorList->first()->id;
+        $sector_name=$sectorList->first()->name;
 
         $data=SectorIntradayRepository::getWholeDayData()->where('sector_list_id',$sector_list_id);
         $data=$data->reverse();
@@ -57,6 +61,7 @@ class SectorMinuteChart
             ->with('volumeData', collect($volumeData)->toJson(JSON_NUMERIC_CHECK))
             ->with('category', collect($category)->toJson())
             ->with('height', $height)
+            ->with('sector_name', $sector_name)
             ->with('renderTo', 'secotr_intraday_div');
     }
 

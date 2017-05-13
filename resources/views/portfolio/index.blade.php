@@ -1,4 +1,4 @@
-@extends('layouts.default')
+@extends('layouts.metronic.default')
 @section('content')
 <link href="/css/portfolio.css" rel="stylesheet">
 <div class="portlet light bordered ">

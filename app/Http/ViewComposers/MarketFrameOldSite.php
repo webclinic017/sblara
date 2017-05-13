@@ -27,6 +27,12 @@ class MarketFrameOldSite
 
         $viewdata= $view->getData();
         $base=$viewdata['base'];
+        $height_css='';
+        if(isset($viewdata['height']))
+        {
+            $height=$viewdata['height'];
+            $height_css="height: ".$height."px";
+        }
 
 
 
@@ -107,6 +113,7 @@ class MarketFrameOldSite
         }
 
       $view->with('frameData', collect($mainnode)->toJson())
+          ->with('height_css',$height_css)
           ->with('market_turnover',$market_turnover);
     //          ->with('frame_id',$base."_frame");  // its not working because css is written for infovis
     }

@@ -26,7 +26,7 @@
             },
 
             title: {
-                text: 'News Chart'
+                text: 'News Chart-{{$instrument_code}}'
             },
 
             yAxis: [{

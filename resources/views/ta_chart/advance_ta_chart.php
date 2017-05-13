@@ -1,0 +1,1 @@
+<?php echo $viewer->renderHTML('usemap="#map1"'); ?>

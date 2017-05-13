@@ -24,5 +24,10 @@ class SectorListRepository {
         return $sectorList;
     }
 
+    public static function getSectorDetailsByInstrumentId($instrumentId=0)
+    {
+        return SectorList::getSectorDetailsByInstrumentId($instrumentId);
+    }
+
 
 } 

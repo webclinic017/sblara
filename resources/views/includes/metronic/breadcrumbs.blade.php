@@ -1,4 +1,4 @@
-<div class="breadcrumbs">
+<div class="breadcrumbs hidden-xs hidden-sm">
                         <h1>Blank Page Layout</h1>
                         <ol class="breadcrumb">
                             <li>

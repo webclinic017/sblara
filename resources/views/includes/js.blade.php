@@ -17,6 +17,7 @@
 <script src="{{ URL::asset('metronic/assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
 <script src="{{ URL::asset('metronic/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
 <script src="{{ URL::asset('metronic/assets/pages/scripts/table-datatables-buttons.min.js') }}" type="text/javascript"></script>
+<script src="{{ URL::asset('metronic/assets/global/plugins/horizontal-timeline/horizontal-timeline.js') }}" type="text/javascript"></script>
 
 
 <script>
