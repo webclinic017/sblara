@@ -11,7 +11,7 @@ use App\Repositories\ChartRepository;
 use App\Repositories\FundamentalRepository;
 //use App\ChartDirector\FinanceChart;
 
-class DataBanksEodController extends Controller
+class NewsController extends Controller
 {
     /**
      * Display a listing of the resource.

@@ -2,7 +2,7 @@
                          <div class="nav-collapse collapse navbar-collapse navbar-responsive-collapse">
                             <ul class="nav navbar-nav">
                             @foreach($items as $item)
-                            @if($item->id==$selected_node->parent_id)
+                            @if($item->id==$selected_node_parent_id)
                             <li class="dropdown dropdown-fw dropdown-fw-disabled active open selected">
 
                             @else
@@ -13,7 +13,7 @@
 
                                     <ul class="dropdown-menu dropdown-menu-fw">
                                     @foreach($item['children'] as $child)
-                                         @if($child->id==$selected_node->id)
+                                         @if($child->id==$selected_node_id)
                                             <li class="active">
                                          @else
                                             <li>

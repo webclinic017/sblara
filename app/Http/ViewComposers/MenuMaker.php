@@ -43,13 +43,17 @@ class MenuMaker
         foreach($items as $item)
         {
             $found=$item['children']->where('route',$currentPath);
-            if(count($found))
-                $selected_node=$found->first();
+            $selected_node_parent_id=0;
+            $selected_node_id=0;
+            if(count($found)) {
+                $selected_node_parent_id = $found->first()->parent_id;
+                $selected_node_id=$found->first()->id;
+            }
 
         }
 
 
-        $view->with('items', $items)->with('currentPath', $currentPath)->with('selected_node', $selected_node);
+        $view->with('items', $items)->with('currentPath', $currentPath)->with('selected_node_parent_id', $selected_node_parent_id)->with('selected_node_id', $selected_node_id);
 
 
 

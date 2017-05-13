@@ -55,8 +55,6 @@
             })
         </script>
 
-        <!-- Passport mixed components -->
-        <script src="{{ asset('js/passport-vue.js') }}"></script>
 
     </body>
 
