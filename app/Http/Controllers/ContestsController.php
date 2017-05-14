@@ -101,6 +101,7 @@ class ContestsController extends Controller
      */
     public function edit(Contest $contest)
     {
+        // Only the creator can edit his/here contest.
         $this->authorize('edit', $contest);
 
         $data = [
@@ -122,6 +123,7 @@ class ContestsController extends Controller
      */
     public function update(Request $request, Contest $contest)
     {
+        // Only the creator can update his/here contest.
         $this->authorize('update', $contest);
 
         // validate all request
