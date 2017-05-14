@@ -30,6 +30,7 @@ class Fundamental extends Model
     public static function getData($metaId=array(),$instrumentId=array())
     {
         $query=self::whereIn('meta_id',$metaId);
+
         if(!empty($instrumentId))
         $query->whereIn('instrument_id',$instrumentId);
 

@@ -3,6 +3,7 @@
 namespace App;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use App\Repositories\InstrumentRepository;
 
 class DataBanksEod extends Model
 {
@@ -63,6 +64,71 @@ class DataBanksEod extends Model
         }
 
         return collect($eodData);
+
+    }
+    public static function getEodForCSV($howManyDays=180,$toDate=null,$instrumentIdArr=array())
+    {
+        //dd("$howManyDays -> $toDate");
+        $now = Carbon::now();
+        // Setting today as to_date
+        if(is_null($toDate))
+        {
+            $toDate=$now->format('Y-m-d');
+        }
+
+        if(is_int($howManyDays)) {
+        $d=$now->subDays($howManyDays);
+        $fromDate=$d->format('Y-m-d');
+        }else
+        {
+            $fromDate=$howManyDays;
+        }
+
+        $query= static::whereBetween('date', [$fromDate, $toDate])->orderBy('date', 'desc');
+
+        if(!empty($instrumentIdArr))
+            $query->whereIn('instrument_id',$instrumentIdArr);
+
+        $dataBankall=$query->get();
+        $dataBankall = $dataBankall->groupBy('instrument_id');
+
+        //eliminating duplicate if exist (some duplicate data available. We have to prevent this in future)
+
+        $eodData=array();
+        foreach($dataBankall as $instrument_id=>$dataBankallGroup)
+        {
+
+            $instrumentInfo=InstrumentRepository::getInstrumentsById($instrument_id);
+            if(count($instrumentInfo)) {
+                $instrument_code=$instrumentInfo->first()->instrument_code;
+            }
+            else
+            {
+                continue;
+            }
+            $dataBankallGroup = $dataBankallGroup->groupBy('market_id');
+            foreach ($dataBankallGroup as $eachTradeDate) {
+                $volume=0;
+                foreach($eachTradeDate as $eachData)  // to eliminate duplicate data. We will take higher volume data
+                {
+
+                    if($eachData->volume>$volume)
+                    {
+                        $data=clone $eachData;
+                        $data->code=$instrument_code;
+                        $data->ndate=$data->date->format('d/m/Y');
+                        $volume=$eachData->volume;
+
+                    }
+                }
+                $eodData[$instrument_id][]=$data;
+            }
+           // dd($eodData[$instrument_id][0]);
+        }
+
+
+
+        return $eodData;
 
     }
 

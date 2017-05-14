@@ -46,7 +46,7 @@ class FundamentalRepository {
   ]
 ]
      * */
-    public static function getFundamentalData($meta=array(),$ins=array(),$metaKey=array(),$instrumentCode=array(),$metaId=array(),$instrumentId=array())
+    public static function getFundamentalData($meta=array(),$ins=array())
     {
 
         // if id provided
@@ -102,6 +102,54 @@ class FundamentalRepository {
         }
 
         return collect($fundamentalData)->keyBy('meta_key');
+
+    }
+
+    /*
+     * for all instrument
+     * */
+    public static function getFundamentalDataAll($meta=array())
+    {
+
+        // if id provided
+        if(is_int($meta[0]))
+        {
+            //Meta id provided
+            $metaId = $meta;
+            $metaInfo = Meta::getMetaInfoById($metaId);
+
+        }else
+        {
+            // metaKey provided
+
+            $metaInfo = Meta::getMetaInfo($meta);
+            $metaId = $metaInfo->pluck('id')->toArray();
+
+        }
+
+
+
+
+        $groupByMetaData = Fundamental::getData($metaId,array())->groupby('meta_id');
+
+
+
+        $fundamentalData=array();
+        foreach($groupByMetaData as $metaId=>$metaData)
+        {
+            $groupByInstrumentData=$metaData->groupby('instrument_id');
+
+
+            foreach($groupByInstrumentData as $instrumentId=>$instrumentData)
+            {
+                $latestData=$instrumentData->first();
+
+                $latestData['meta_key']=$metaInfo->where('id',$latestData->meta_id)->first()->meta_key;
+                $fundamentalData[$instrumentId]=$latestData;
+
+            }
+        }
+        return collect($fundamentalData)->groupBy('meta_key');
 
     }
 
