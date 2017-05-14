@@ -1,4 +1,4 @@
-@extends('layouts.default')
+@extends('layouts.metronic.default')
 
 @section('content')
 <div class="row">
@@ -104,8 +104,4 @@
         </div>
     </div>
 </div>
-@endsection
-
-@section('js')
-    <script src="{{ asset('metronic/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
 @endsection

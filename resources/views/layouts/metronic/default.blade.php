@@ -41,9 +41,9 @@
         <!-- END QUICK NAV -->
 
          <!-- BEGIN ALL JS SCRIPTS -->
-                @include('includes.metronic.js')
-                @yield('js')
-                <!-- END ALL JS SCRIPTS -->
+            @include('includes.metronic.js')
+            @yield('js')
+        <!-- END ALL JS SCRIPTS -->
 
         <script>
             $(document).ready(function()

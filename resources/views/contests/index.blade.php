@@ -1,8 +1,8 @@
-@extends('layouts.default')
+@extends('layouts.metronic.default')
 
 @section('content')
     <!-- Show All Contest -->
-    @include('block.contests_index')
+    @include('block.contests.index')
 
 @endsection
 

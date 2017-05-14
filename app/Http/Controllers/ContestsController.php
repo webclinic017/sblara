@@ -79,7 +79,7 @@ class ContestsController extends Controller
             'max_member'     => $request->max_member
         ]);
 
-        return back();
+        return redirect()->route('contests.index');
     }
 
     /**

@@ -58,7 +58,7 @@ class AppServiceProvider extends ServiceProvider {
         View::composer('portfolio.performance_total_item', 'App\Http\ViewComposers\PerformanceTotalItem');
         View::composer('portfolio.gain_loss_item', 'App\Http\ViewComposers\GainLossItem');
 
-        View::composer('block.contests_index', 'App\Http\ViewComposers\Contests');
+        View::composer('block.contests.index', 'App\Http\ViewComposers\Contests');
 
     }
 

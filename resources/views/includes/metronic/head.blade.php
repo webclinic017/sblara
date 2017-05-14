@@ -16,10 +16,19 @@
             <link href="{{ URL::asset('metronic/assets/global/plugins/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
             <link href="{{ URL::asset('metronic/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css') }}" rel="stylesheet" type="text/css" />
             <!-- END GLOBAL MANDATORY STYLES -->
+
             <!-- BEGIN PAGE LEVEL PLUGINS -->
             <link href="{{ URL::asset('metronic/assets/global/plugins/bootstrap-select/css/bootstrap-select.min.css') }}" rel="stylesheet" type="text/css" />
 
+            <!-- Datepicker -->
+            <link href="{{ asset('metronic/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css') }}" rel="stylesheet" type="text/css" />
+            <link href="{{ asset('metronic/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" />
+            <link href="{{ asset('metronic/assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}" rel="stylesheet" type="text/css" />
+            <link href="{{ asset('metronic/assets/global/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet" type="text/css" />
+            <link href="{{ asset('metronic/assets/global/plugins/clockface/css/clockface.css') }}" rel="stylesheet" type="text/css" />
             <!-- END PAGE LEVEL PLUGINS -->
+
+
             <!-- BEGIN THEME GLOBAL STYLES -->
             <link href="{{ URL::asset('metronic/assets/global/css/components-md.min.css') }}" rel="stylesheet" id="style_components" type="text/css" />
             <link href="{{ URL::asset('metronic/assets/global/css/plugins-md.min.css') }}" rel="stylesheet" type="text/css" />
