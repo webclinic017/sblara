@@ -1,5 +1,5 @@
 <?php
-
+use App\Repositories\DataBankEodRepository;
 /*
   |--------------------------------------------------------------------------
   | Web Routes
@@ -57,7 +57,9 @@ Route::get('/', function () {
     return response()->view('dashboard')->setTtl(60);
 })->name('/');
 
-Route::get('/test', function () {return view('test');});
+Route::get('/test', function () {
+    return view('test');
+});
 
 
 Route::get('/market-depth', function () {return view('market_depth_page');})->name('market-depth');
