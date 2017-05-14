@@ -38,7 +38,7 @@
                                 </td>
                                 <td>Own</td>
                                 <td>
-                                    <a href="" class="btn btn-primary btn-xs">Edit</a>
+                                    <a href="{{ route('contests.edit', $contest) }}" class="btn btn-primary btn-xs">Edit</a>
 
                                     <button class="btn btn-danger btn-xs" 
                                             data-toggle="confirmation" 

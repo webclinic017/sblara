@@ -101,7 +101,16 @@ class ContestsController extends Controller
      */
     public function edit(Contest $contest)
     {
-        //
+        $this->authorize('edit', $contest);
+
+        $data = [
+            'navigation' => [
+                'Contests',
+                'Edit Contest',
+            ]
+        ];
+
+        return view('contests.edit', compact('data', 'contest'));
     }
 
     /**
@@ -113,7 +122,30 @@ class ContestsController extends Controller
      */
     public function update(Request $request, Contest $contest)
     {
-        //
+        $this->authorize('update', $contest);
+
+        // validate all request
+        $this->validate($request, [
+            'name'           => 'required|unique:contests,id,'.$contest->id,
+            'start_date'     => 'required|date',
+            'end_date'       => 'required|date',
+            'access_level'   => 'required',
+            'contest_amount' => 'required|numeric',
+            'max_amount'     => 'required|numeric',
+            'max_member'     => 'required|numeric'
+        ]);
+
+        $contest->update([
+            'name'           => $request->name,
+            'start_date'     => Carbon::parse($request->start_date),
+            'end_date'       => Carbon::parse($request->end_date),
+            'access_level'   => $request->access_level,
+            'contest_amount' => $request->contest_amount,
+            'max_amount'     => $request->max_amount,
+            'max_member'     => $request->max_member
+        ]);
+
+        return redirect('contests/dashboard');
     }
 
     /**
