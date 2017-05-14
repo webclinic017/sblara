@@ -28,8 +28,15 @@ class User extends Authenticatable {
         'password', 'remember_token',
     ];
 
-    function portfolios() {
+    public function portfolios() {
         return $this->hasMany('\App\Portfolio');
     }
 
+    /**
+     * Get all of the contests for the user.
+     */
+    public function contests()
+    {
+        return $this->hasMany(Contest::class);
+    }
 }

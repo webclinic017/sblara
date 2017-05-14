@@ -109,7 +109,7 @@
                 "httpcache",
                 "laravel"
             ],
-            "time": "2017-04-06 16:10:34"
+            "time": "2017-04-06T16:10:34+00:00"
         },
         {
             "name": "barryvdh/laravel-stack-middleware",

@@ -121,3 +121,6 @@ Route::get('/portfolio_market_summary/{portfolio_id}', 'PortfolioController@mark
 Route::get('/portfolio_gain_loss/{portfolio_id}', 'PortfolioController@gainLoss');
 Route::get('/portfolio_performance/{portfolio_id}', 'PortfolioController@performance');
 Route::post('search_json', 'SearchController@search');
+
+// Contests routes..
+Route::resource('/contests', 'ContestsController');
