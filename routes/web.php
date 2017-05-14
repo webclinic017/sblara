@@ -1,5 +1,7 @@
 <?php
 use App\Repositories\DataBankEodRepository;
+use Illuminate\Support\Facades\Route;
+
 /*
   |--------------------------------------------------------------------------
   | Web Routes
@@ -17,11 +19,18 @@ use App\Repositories\DataBankEodRepository;
  |--------------------------------------------------------------------------
  */
 
+
+// User routes
+Route::get('user-information', 'UserController@userInformationChange')->name('user-information');
+Route::get('user-name-change', 'UserController@userNameChange')->name('user-name-change');
+Route::get('user-password-change', 'UserController@passwordChange')->name('user-password-change');
+
 Route::get('/passport', 'Passport\PassportController@show');
 
 //Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout'); //Just added to fix issue. By default logout is post
 Route::get('/filter', 'FilterController@index');
 Route::get('/filter/debug', 'FilterController@debug');
+
 
 Route::get('/parce/{save}', 'ParcerController@index');
 Route::get('/parce2/{save}', 'ParcerController@index2');
@@ -126,3 +135,7 @@ Route::post('search_json', 'SearchController@search');
 
 // Contests routes..
 Route::resource('/contests', 'ContestsController');
+
+
+
+
