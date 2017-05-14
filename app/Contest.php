@@ -24,6 +24,8 @@ class Contest extends Model
 
     /**
      * Get the creator that owns the contest.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function creator() 
     {

@@ -8,7 +8,7 @@ use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable {
 
-    use Notifiable, HasApiTokens;
+    use Notifiable, HasApiTokens, HasRole;
 
     /**
      * The attributes that are mass assignable.
@@ -34,6 +34,8 @@ class User extends Authenticatable {
 
     /**
      * Get all of the contests for the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function contests()
     {
