@@ -1,5 +1,6 @@
 <?php
 use App\Repositories\DataBankEodRepository;
+
 /*
   |--------------------------------------------------------------------------
   | Web Routes
@@ -124,5 +125,7 @@ Route::get('/portfolio_gain_loss/{portfolio_id}', 'PortfolioController@gainLoss'
 Route::get('/portfolio_performance/{portfolio_id}', 'PortfolioController@performance');
 Route::post('search_json', 'SearchController@search');
 
+// My Contests Dashboard routes..
+Route::get('/contests/dashboard', 'MyContestsController@index');
 // Contests routes..
 Route::resource('/contests', 'ContestsController');

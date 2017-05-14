@@ -5,7 +5,3 @@
     @include('block.contests.index')
 
 @endsection
-
-@section('js')
-
-@endsection

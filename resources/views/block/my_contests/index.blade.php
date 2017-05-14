@@ -4,7 +4,7 @@
             <div class="portlet-title">
                 <div class="caption font-green-haze">
                     <i class="icon-badge font-green-haze"></i>
-                    <span class="caption-subject bold uppercase"> List of Contest</span>
+                    <span class="caption-subject bold uppercase"> My Contest</span>
                 </div>
             </div>
 
@@ -12,10 +12,10 @@
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <td>Name</td>
+                            <td>Contest Name</td>
+                            <td>Portfolio</td>
                             <td>Start Date</td>
                             <td>End Date</td>
-                            <td>Amount (Max/Share)</td>
                             <td>Access</td>
                             <td>Creator Name</td>
                             <td></td>
@@ -36,8 +36,17 @@
                                         <span class="text-success">Public</span>
                                     @endif
                                 </td>
-                                <td>{{ $contest->creator->name }}</td>
-                                <td><a href="" class="btn btn-primary btn-xs">Join</a></td>
+                                <td>Own</td>
+                                <td>
+                                    <a href="" class="btn btn-primary btn-xs">Edit</a>
+
+                                    <button class="btn btn-danger btn-xs" 
+                                            data-toggle="confirmation" 
+                                            data-original-title="Are you sure ?" 
+                                            title="">
+                                            <span class="md-click-circle md-click-animate" style="height: 184px; width: 184px;"></span>Block
+                                    </button>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
