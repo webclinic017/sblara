@@ -20,6 +20,10 @@
 <script src="{{ asset('metronic/assets/global/plugins/clockface/js/clockface.js') }}"></script>
 <script src="{{ asset('metronic/assets/pages/scripts/components-date-time-pickers.min.js') }}"></script>
 
+<!-- UI Button Confirmation -->
+<script src="{{ asset('metronic/assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}"></script>
+<script src="{{ asset('metronic/assets/pages/scripts/ui-confirmations.min.js') }}"></script>
+
 <script>
 $(document).ready(function ()
 {

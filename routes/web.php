@@ -1,5 +1,6 @@
 <?php
 use App\Repositories\DataBankEodRepository;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -133,9 +134,17 @@ Route::get('/portfolio_gain_loss/{portfolio_id}', 'PortfolioController@gainLoss'
 Route::get('/portfolio_performance/{portfolio_id}', 'PortfolioController@performance');
 Route::post('search_json', 'SearchController@search');
 
+// My Contests Dashboard routes..
+Route::get('/contests/dashboard', 'MyContestsController@index');
+// Join Contest routes..
+Route::post('/contests/{contest}/join', 'MyContestsController@store')->name('contests.join');
 // Contests routes..
 Route::resource('/contests', 'ContestsController');
 
 
 
-
+Route::get('/test2', function () {
+  // return \App\User::with('contestPortfolios')->get();
+  // return \App\ContestPortfolio::with('contestUsers')->get();
+  return \App\Contest::with('contestUsers')->get();
+});

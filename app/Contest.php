@@ -23,6 +23,16 @@ class Contest extends Model
     ];
 
     /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = [
+        'start_date', 
+        'end_date'
+    ];
+
+    /**
      * Get the creator that owns the contest.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -30,5 +40,27 @@ class Contest extends Model
     public function creator() 
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    /**
+     * The users that belong to the contest.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function contestUsers()
+    {
+        return $this->belongsToMany(User::class, 'contest_portfolios', 'contest_id', 'user_id')
+                    ->withPivot('join_date', 'approved')
+                    ->withTimestamps();
+    }
+
+    /**
+     * Determine if the current contest has been joined.
+     *
+     * @return boolean
+     */
+    public function isJoined()
+    {
+        return !! $this->contestUsers()->wherePivot('user_id', auth()->id())->count();
     }
 }
