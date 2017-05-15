@@ -15,13 +15,7 @@ class SectorListRepository {
 
     public static function getSectorList($exchangeId=0)
     {
-        /*We will use session value of active_exchange_id as default if exist*/
-        if(!$exchangeId) {
-            $exchangeId = session('active_exchange_id', 1);
-        }
-
-        $sectorList=SectorList::where('exchange_id',$exchangeId)->get();
-        return $sectorList;
+        return SectorList::getSectorList($exchangeId);
     }
 
     public static function getSectorDetailsByInstrumentId($instrumentId=0)

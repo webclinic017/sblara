@@ -438,4 +438,43 @@ class DataBankEodRepository {
     }
 
 
+
+
+    public static function getPriceChangeHistory($from,$to,$resolutionArr=array(),$instrumentIdArr=array(),$select=array())
+    {
+
+        $from=Carbon::parse($from);
+        $to=Carbon::parse($to);
+
+
+        $eodDataGrouped=DataBanksEod::getEodForCSV($from->format('Y-m-d'),$to->format('Y-m-d'),$instrumentIdArr,$select);
+
+
+        $returnArr=array();
+
+        foreach($eodDataGrouped as $instrument_id=>$allDataOfThisInstrument)
+        {
+
+            foreach($resolutionArr as $period)
+            {
+                $chunk=collect($allDataOfThisInstrument)->chunk($period);
+                $latest=$chunk->first()->first()->toArray();
+                $oldest=$chunk->last()->first()->toArray();
+
+                $price_change=$latest['close']-$oldest['close'];
+                $price_change_per=$price_change/$oldest['close']*100;
+                $latest['price_change']=$price_change;
+                $latest['price_change_per']= (float) number_format($price_change_per, 2, '.', '');
+
+                $returnArr[$instrument_id][$period]=$latest;
+
+            }
+
+        }
+        return collect($returnArr);
+
+    }
+
+
+
 } 

@@ -66,7 +66,7 @@ class DataBanksEod extends Model
         return collect($eodData);
 
     }
-    public static function getEodForCSV($howManyDays=180,$toDate=null,$instrumentIdArr=array())
+    public static function getEodForCSV($howManyDays=180,$toDate=null,$instrumentIdArr=array(),$select=array())
     {
         //dd("$howManyDays -> $toDate");
         $now = Carbon::now();
@@ -88,6 +88,14 @@ class DataBanksEod extends Model
 
         if(!empty($instrumentIdArr))
             $query->whereIn('instrument_id',$instrumentIdArr);
+
+        if(!empty($select)) {
+            $select[]='instrument_id';
+            $select[]='market_id';
+            $select[]='volume';
+            $select[]='date';
+            $query->select($select);
+        }
 
         $dataBankall=$query->get();
         $dataBankall = $dataBankall->groupBy('instrument_id');

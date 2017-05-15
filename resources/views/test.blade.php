@@ -1,7 +1,8 @@
 @extends('layouts.metronic.default')
 
 @section('content')
-@include('block.index_chart')
+{{--@include('block.price_matrix')--}}
+@include('block.data_matrix')
 
 {{--@include('block.news_chart',['instrument_id'=>13])--}}
 
