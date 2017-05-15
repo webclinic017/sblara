@@ -14,7 +14,9 @@ class ContestRepository
     public static function index()
     {
     	// get all contest
-        $contests = Contest::with('creator')->get();
+        $contests = Contest::with('creator')
+                            ->where('is_active', true)
+                            ->latest('created_at')->get();
 
         return $contests;
     }

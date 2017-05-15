@@ -56,7 +56,7 @@
                                 </td>
                             </tr>
                         @empty
-                            <tr class="no-records-found text-cente">
+                            <tr class="no-records-found text-center">
                                 <td colspan="7">No matching records found</td>
                             </tr>
                         @endforelse

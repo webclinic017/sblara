@@ -40,7 +40,36 @@ class MyContestsController extends Controller
             auth()->user()->contestPortfolios()->attach($contest, ['approved' => true]);
             // // return session msg
         }
-        // auth()->user()->contestPortfolios()->attach($contest, ['approved' => true]);
+
+        return back();
+    }
+
+    /**
+     * Block contest.
+     *
+     * @param  \App\Contest  $contest
+     * @return \Illuminate\Http\Response
+     */
+    public function block(Contest $contest)
+    {
+        $contest->update([
+            'is_active' => false
+        ]);
+
+        return back();
+    }
+
+    /**
+     * Unblock contest.
+     *
+     * @param  \App\Contest  $contest
+     * @return \Illuminate\Http\Response
+     */
+    public function unblock(Contest $contest)
+    {
+        $contest->update([
+            'is_active' => true
+        ]);
 
         return back();
     }

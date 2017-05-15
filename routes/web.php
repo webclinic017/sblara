@@ -140,7 +140,9 @@ Route::get('/portfolio_performance/{portfolio_id}', 'PortfolioController@perform
 Route::post('search_json', 'SearchController@search');
 
 // My Contests Dashboard routes..
-Route::get('/contests/dashboard', 'MyContestsController@index');
+Route::get('/mycontests', 'MyContestsController@index');
+Route::patch('/mycontests/{contest}/block', 'MyContestsController@block')->name('mycontests.block');
+Route::patch('/mycontests/{contest}/unblock', 'MyContestsController@unblock')->name('mycontests.unblock');
 // Join Contest routes..
 Route::post('/contests/{contest}/join', 'MyContestsController@store')->name('contests.join');
 // Contests routes..

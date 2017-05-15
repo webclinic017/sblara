@@ -43,16 +43,33 @@
                                 <td>
                                     <a href="{{ route('contests.edit', $contest) }}" class="btn btn-primary btn-xs">Edit</a>
 
-                                    <button class="btn btn-danger btn-xs" 
-                                            data-toggle="confirmation" 
-                                            data-original-title="Are you sure ?" 
-                                            title="">
-                                            <span class="md-click-circle md-click-animate" style="height: 184px; width: 184px;"></span>Block
-                                    </button>
+                                    @if ($contest->is_active)
+                                        <form method="POST" action="{{ route('mycontests.block', $contest) }}" style="display: inline-block;">
+                                            {{ csrf_field() }}
+                                            {{ method_field('PATCH') }}
+                                            <button class="btn btn-danger btn-xs" 
+                                                    data-toggle="confirmation" 
+                                                    data-original-title="Are you sure ?" 
+                                                    title="">
+                                                    <span class="md-click-circle md-click-animate" style="height: 184px; width: 184px;"></span>Block
+                                            </button>
+                                        </form>
+                                    @else
+                                        <form method="POST" action="{{ route('mycontests.unblock', $contest) }}" style="display: inline-block;">
+                                            {{ csrf_field() }}
+                                            {{ method_field('PATCH') }}
+                                            <button class="btn btn-primary btn-xs" 
+                                                    data-toggle="confirmation" 
+                                                    data-original-title="Are you sure ?" 
+                                                    title="">
+                                                    <span class="md-click-circle md-click-animate" style="height: 184px; width: 184px;"></span>Unblock
+                                            </button>
+                                        </form>
+                                    @endif
                                 </td>
                             </tr>
                         @empty
-                            <tr class="no-records-found text-cente">
+                            <tr class="no-records-found text-center">
                                 <td colspan="7">No matching records found</td>
                             </tr>
                         @endforelse
