@@ -132,7 +132,7 @@
                                 <div class="btn-group-img btn-group">
                                     <button type="button" class="btn btn-sm md-skip dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                                         <span>Hi, {{ Auth::user()->name }}</span>
-                                        <img src="{{ URL::asset('metronic/assets/layouts/layout5/img/avatar1.jpg') }}" alt=""> </button>
+                                        <img src="{{ Auth::user()->image ? URL::asset("img/35x35/".Auth::user()->image) : URL::asset('metronic/assets/layouts/layout5/img/avatar1.jpg') }}" alt=""> </button>
                                     <ul class="dropdown-menu-v2" role="menu">
                                         <li>
                                             <a href="{{ route('user-information') }}">

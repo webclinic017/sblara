@@ -2,11 +2,7 @@
 
 @section('content')
     <div class="container-fluid">
-        <div class="page-content">
-
-            <!-- BEGIN SIDEBAR CONTENT LAYOUT -->
-            <div class="page-content-container">
-                <div class="page-content-row">
+            <div class="page-content-row">
                     <!-- BEGIN PAGE SIDEBAR -->
                     <div class="page-sidebar">
                         <nav class="navbar" role="navigation">
@@ -70,7 +66,7 @@
                                     <div class="portlet light profile-sidebar-portlet bordered">
                                         <!-- SIDEBAR USERPIC -->
                                         <div class="profile-userpic">
-                                            <img src="../assets/pages/media/profile/profile_user.jpg" class="img-responsive" alt=""> </div>
+                                            <img src="{{ Auth::user()->image ? URL::asset("img/149x149/".Auth::user()->image) : url('/metronic/assets/pages/media/profile/profile_user.jpg') }}" class="img-responsive" alt=""> </div>
                                         <!-- END SIDEBAR USERPIC -->
                                         <!-- SIDEBAR USER TITLE -->
                                         <div class="profile-usertitle">
@@ -205,7 +201,9 @@
                                                         <div class="tab-pane" id="tab_1_2">
                                                             <p> Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt
                                                                 laborum eiusmod. </p>
-                                                            <form action="#" role="form">
+                                                            <form action="{{ route('change-image') }}" method="POST" role="form" enctype="multipart/form-data">
+                                                                {{ csrf_field() }}
+
                                                                 <div class="form-group">
                                                                     <div class="fileinput fileinput-new" data-provides="fileinput">
                                                                         <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
@@ -215,8 +213,9 @@
                                                                                     <span class="btn default btn-file">
                                                                                         <span class="fileinput-new"> Select image </span>
                                                                                         <span class="fileinput-exists"> Change </span>
-                                                                                        <input type="file" name="..."> </span>
-                                                                            <a href="javascript:;" class="btn default fileinput-exists" data-dismiss="fileinput"> Remove </a>
+                                                                                        <input type="file" name="image">
+                                                                                    </span>
+                                                                            <input type="submit" class="btn default fileinput-exists" data-dismiss="fileinput" value="Remove">
                                                                         </div>
                                                                     </div>
                                                                     <div class="clearfix margin-top-10">
@@ -335,9 +334,6 @@
                         <!-- END PAGE BASE CONTENT -->
                     </div>
                 </div>
-            </div>
-            <!-- END SIDEBAR CONTENT LAYOUT -->
-        </div>
         <!-- BEGIN FOOTER -->
         <p class="copyright"> 2016 &copy; Metronic Theme By
             <a target="_blank" href="http://keenthemes.com">Keenthemes</a> &nbsp;|&nbsp;

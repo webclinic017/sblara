@@ -1,6 +1,7 @@
 <?php
 use App\Repositories\DataBankEodRepository;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,6 +26,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('user-information', 'UserController@userInformationChange')->name('user-information');
 Route::get('user-name-change', 'UserController@userNameChange')->name('user-name-change');
 Route::get('user-password-change', 'UserController@passwordChange')->name('user-password-change');
+
+// Image routes
+Route::post('change-image', 'ImageController@changeImage')->name('change-image');
+
 
 Route::get('/passport', 'Passport\PassportController@show');
 
