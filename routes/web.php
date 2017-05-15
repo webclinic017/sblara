@@ -4,6 +4,8 @@ use App\Repositories\DataBankEodRepository;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
+// Auth::loginUsingId(1);
+
 /*
   |--------------------------------------------------------------------------
   | Web Routes

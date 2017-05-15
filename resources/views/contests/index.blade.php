@@ -30,7 +30,7 @@
                             <tr>
                                 <td>
                                     <a href="{{ route('contests.show', $contest) }}">
-                                        {{ $contest->name }} ({{ $contest->contest_users_count }})
+                                        {{ $contest->name }} ({{ $contest->approved_contest_users_count }})
                                     </a>
                                 </td>
                                 <td>{{ $contest->start_date->format('d-M-Y') }}</td>

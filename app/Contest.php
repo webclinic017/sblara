@@ -55,6 +55,17 @@ class Contest extends Model
     }
 
     /**
+     * The all approved users that belong to the contest.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function approvedContestUsers()
+    {
+        return $this->belongsToMany(User::class, 'contest_portfolios', 'contest_id', 'user_id')
+                    ->wherePivot('approved', true);
+    }
+
+    /**
      * Determine if the current contest has been joined.
      *
      * @return boolean
