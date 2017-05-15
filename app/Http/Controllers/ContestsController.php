@@ -79,6 +79,8 @@ class ContestsController extends Controller
             'max_member'     => $request->max_member
         ]);
 
+        // return session msg
+
         return redirect('contests/dashboard');
     }
 
@@ -152,6 +154,8 @@ class ContestsController extends Controller
             'max_member'     => $request->max_member
         ]);
 
+        // return session msg
+        
         return redirect('contests/dashboard');
     }
 

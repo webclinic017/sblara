@@ -2,18 +2,18 @@
 
 namespace App\Http\ViewComposers;
 
-use Illuminate\View\View;
 use App\Repositories\ContestRepository;
+use Illuminate\View\View;
 
-class Contests
+class ContestsView
 {
-	/**
-     * Bind data to the view.
+    /**
+     * Bind data to the index view.
      *
      * @param  View  $view
      * @return void
      */
-    public function compose(View $view)
+    public function index(View $view)
     {
         // Show all contests.
         $contests = ContestRepository::index();
