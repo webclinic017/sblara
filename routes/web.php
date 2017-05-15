@@ -21,6 +21,11 @@ use Illuminate\Support\Facades\Route;
  |--------------------------------------------------------------------------
  */
 
+/* -------------------------ADDED----START------David------------*/
+Route::get('/download', 'DownloadController@index');
+Route::get('/jsonData', 'DownloadController@getJsonData');
+Route::get('/downloadZip', 'DownloadController@downloadZip');
+/* -------------------------ADDED----END------------------*/
 
 // User routes
 Route::get('user-information', 'UserController@userInformationChange')->name('user-information')->middleware('auth');
@@ -101,6 +106,8 @@ Route::get('/ajax/yDay/{inst_id}/{period}', 'AjaxController@yDay')->name('Ajax.y
 Route::get('/ajax/market/{inst_id}', 'AjaxController@market')->name('Ajax.Market');
 Route::get('/ajax/marketDepthData/{inst_id}', 'AjaxController@marketDepthData')->name('Ajax.MarketDepthData');
 
+Route::get('/ajax/data_matrix', 'AjaxController@data_matrix')->name('Ajax.data_matrix');
+Route::get('/ajax/price_matrix_data', 'AjaxController@price_matrix_data')->name('Ajax.price_matrix_data');
 
 Route::post('/monitor/save_data', 'AjaxController@saveData')->name('Ajax.saveData');
 
@@ -145,11 +152,3 @@ Route::get('/contests/dashboard', 'MyContestsController@index');
 Route::post('/contests/{contest}/join', 'MyContestsController@store')->name('contests.join');
 // Contests routes..
 Route::resource('/contests', 'ContestsController');
-
-
-
-Route::get('/test2', function () {
-  // return \App\User::with('contestPortfolios')->get();
-  // return \App\ContestPortfolio::with('contestUsers')->get();
-  return \App\Contest::with('contestUsers')->get();
-});

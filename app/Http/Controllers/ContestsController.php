@@ -13,7 +13,7 @@ class ContestsController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth')->except('index', 'show');
     }
     
     /**
@@ -78,6 +78,8 @@ class ContestsController extends Controller
             'max_amount'     => $request->max_amount,
             'max_member'     => $request->max_member
         ]);
+
+        // return session msg
 
         return redirect('contests/dashboard');
     }
@@ -152,6 +154,8 @@ class ContestsController extends Controller
             'max_member'     => $request->max_member
         ]);
 
+        // return session msg
+        
         return redirect('contests/dashboard');
     }
 

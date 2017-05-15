@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Repositories\InstrumentRepository;
 use App\Repositories\DataBanksIntradayRepository;
+use App\Repositories\DataBankEodRepository;
+use App\Repositories\FundamentalRepository;
+use App\Repositories\SectorListRepository;
 use App\Repositories\UserRepository;
 use Log;
 
@@ -133,4 +136,106 @@ class AjaxController extends Controller
         $data=json_encode($sendData, JSON_HEX_QUOT | JSON_HEX_TAG);
         return $data;
     }
+    public function data_matrix()
+    {
+        $latestData=DataBanksIntradayRepository::getLatestTradeDataAll();
+
+        $metaKey=array("market_lot","face_value");
+        $fundamentaInfo=FundamentalRepository::getFundamentalDataAll($metaKey);
+
+        $instrumentList=InstrumentRepository::getInstrumentsScripOnly();
+        $sectorList=SectorListRepository::getSectorList();
+
+        $maingrid=array();
+        foreach($latestData as $arr)
+        {
+            $temp=array();
+            $instrument_id=$arr->instrument_id;
+            $quote_bases=explode('-',$arr->quote_bases);
+            $category=$quote_bases[0];
+
+            $sector_list_id=$instrumentList->where('id',$instrument_id)->first()->sector_list_id;
+            $temp['id']=$arr->instrument_id;
+            $temp['code']=$instrumentList->where('id',$instrument_id)->first()->instrument_code;
+            $temp['sector']=$sectorList->where('id',$sector_list_id)->first()->name;
+            
+            $temp['category']=$category;
+            $temp['market_lot']=1;
+            $temp['face_value']=10;
+            $temp['nav']=0;
+            $temp['lastprice']=$arr->close_price;
+            $temp['open']=$arr->open_price;
+            $temp['high']=$arr->high_price;
+            $temp['low']=$arr->low_price;
+            $temp['volume']=$arr->total_volume;
+            $temp['value']=$arr->total_value;
+            $temp['trade']=$arr->total_trades;
+            $temp['ycp']=$arr->yday_close_price;
+            $temp['pchange']=$arr->price_change_per;
+            $temp['change']=$arr->price_change;
+            $temp['pe']=0;
+            $temp['eps']=0;
+            $maingrid[]=$temp;
+        }
+
+
+        $jsonArr=array();
+        $firstgrid=array();
+        $secondgrid=array();
+        $thirdgrid=array();
+
+        $jsonArr['maingrid'] = $maingrid;
+        $jsonArr['firstgrid'] = $firstgrid;
+        $jsonArr['secondgrid'] = $secondgrid;
+        $jsonArr['thirdgrid'] = $thirdgrid;
+
+        $jsonresult = json_encode($jsonArr,JSON_NUMERIC_CHECK);
+
+        return  $jsonresult;
+    }
+    public function price_matrix_data()
+    {
+
+        $from_date=date("Y-m-d", strtotime("-3 month"));
+        $to_date=date("Y-m-d");
+        $instrumentList=InstrumentRepository::getInstrumentsScripOnly();
+        $sectorList=SectorListRepository::getSectorList();
+
+        $eodData=DataBankEodRepository::getPriceChangeHistory($from_date,$to_date,array(1,2,3,7,15,21,30),array(),array('close','high'));
+
+        $returnData=array();
+        foreach($eodData as $instrument_id=>$data)
+        {
+            $instrumentInfo=$instrumentList->where('id',$instrument_id)->first();
+            if(count($instrumentInfo))
+            {
+                $sector_list_id=$instrumentInfo->sector_list_id;
+            }
+            else
+            {
+                // we dont want index data those are exist in $eodData
+               continue;
+            }
+
+            $sector_name=$sectorList->where('id',$sector_list_id)->first()->name;
+            $temp=array();
+            $temp['code']=$data[1]['code'];
+            $temp['lastprice']=$data[1]['close'];
+            $temp['sector']=$sector_name;
+            $temp['oneDay']=$data[1]['price_change_per'];
+            $temp['twoDay']=$data[2]['price_change_per'];
+            $temp['threeDay']=$data[3]['price_change_per'];
+            $temp['oneWeek']=$data[7]['price_change_per'];
+            $temp['twoWeek']=$data[15]['price_change_per'];
+            $temp['threeWeek']=$data[21]['price_change_per'];
+            $temp['oneMonth']=$data[30]['price_change_per'];
+
+            $returnData[]=$temp;
+        }
+
+        return json_encode($returnData,JSON_NUMERIC_CHECK);
+
+    }
+
+
 }

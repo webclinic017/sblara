@@ -41,10 +41,10 @@ class MyContestsController extends Controller
             } else {
                 auth()->user()->contestPortfolios()->attach($contest, ['approved' => true]);
 
-                // return msg 
+                // // return session msg
             }
         } catch (Exception $e) {
-            // return msg waiting for approval
+            // return session msg
         }
 
         return back();
