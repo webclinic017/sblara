@@ -66,11 +66,11 @@
                                     <div class="portlet light profile-sidebar-portlet bordered">
                                         <!-- SIDEBAR USERPIC -->
                                         <div class="profile-userpic">
-                                            <img src="{{ Auth::user()->image ? URL::asset("img/149x149/".Auth::user()->image) : url('/metronic/assets/pages/media/profile/profile_user.jpg') }}" class="img-responsive" alt=""> </div>
+                                            <img src="{{ Auth::user()->image ? URL::asset("img/149x149/" . Auth::user()->image) : url('metronic/assets/layouts/layout5/img/avatar1.jpg') }}" class="img-responsive" alt=""> </div>
                                         <!-- END SIDEBAR USERPIC -->
                                         <!-- SIDEBAR USER TITLE -->
                                         <div class="profile-usertitle">
-                                            <div class="profile-usertitle-name"> Marcus Doe </div>
+                                            <div class="profile-usertitle-name"> {{ Auth::user()->name }} </div>
                                             <div class="profile-usertitle-job"> Developer </div>
                                         </div>
                                         <!-- END SIDEBAR USER TITLE -->
@@ -215,7 +215,7 @@
                                                                                         <span class="fileinput-exists"> Change </span>
                                                                                         <input type="file" name="image" id="imgInp">
                                                                                     </span>
-                                                                            <input type="submit" class="btn default fileinput-exists" data-dismiss="fileinput" value="Remove">
+                                                                            <a class="btn default fileinput-exists" id="remove">Remove</a>
                                                                         </div>
                                                                     </div>
                                                                     <div class="clearfix margin-top-10">
