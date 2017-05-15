@@ -50,7 +50,7 @@ class Contest extends Model
     public function contestUsers()
     {
         return $this->belongsToMany(User::class, 'contest_portfolios', 'contest_id', 'user_id')
-                    ->withPivot('join_date', 'approved')
+                    ->withPivot('user_id', 'join_date', 'approved')
                     ->withTimestamps();
     }
 
@@ -61,6 +61,8 @@ class Contest extends Model
      */
     public function isJoined()
     {
-        return !! $this->contestUsers()->wherePivot('user_id', auth()->id())->count();
+        return !! $this->contestUsers()
+                        ->wherePivot('user_id', auth()->id())
+                        ->count();
     }
 }

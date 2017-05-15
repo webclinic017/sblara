@@ -2,8 +2,9 @@
 
 namespace App;
 
-use Illuminate\Notifications\Notifiable;
+use Carbon\Carbon;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable {
@@ -49,8 +50,13 @@ class User extends Authenticatable {
      */
     public function contestPortfolios()
     {
-        return $this->belongsToMany(Contest::class, 'contest_portfolios', 'contest_id', 'user_id')
+        return $this->belongsToMany(Contest::class, 'contest_portfolios', 'user_id', 'contest_id')
                     ->withPivot('join_date', 'approved')
                     ->withTimestamps();
+    }
+
+    public function getJoinDateAttribute($join_date)
+    {
+        return Carbon::parse($join_date)->format('d-M-Y');
     }
 }

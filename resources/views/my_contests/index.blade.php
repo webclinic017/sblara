@@ -26,7 +26,7 @@
                     </thead>
 
                     <tbody>
-                        @foreach ($contests as $contest)
+                        @forelse ($contests as $contest)
                             <tr>
                                 <td>{{ $contest->name }}</td>
                                 <td>{{ $contest->start_date }}</td>
@@ -51,7 +51,11 @@
                                     </button>
                                 </td>
                             </tr>
-                        @endforeach
+                        @empty
+                            <tr class="no-records-found text-cente">
+                                <td colspan="7">No matching records found</td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>

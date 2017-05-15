@@ -33,19 +33,14 @@ class MyContestsController extends Controller
      */
     public function store(Contest $contest)
     {
-    	try {
-            if ($contest->access_level) {
-                auth()->user()->contestPortfolios()->attach($contest, ['approved' => false]);
-
-                // return msg waiting for approval
-            } else {
-                auth()->user()->contestPortfolios()->attach($contest, ['approved' => true]);
-
-                // // return session msg
-            }
-        } catch (Exception $e) {
-            // return session msg
+        if ($contest->access_level) {
+            auth()->user()->contestPortfolios()->attach($contest, ['approved' => false]);
+            // return msg waiting for approval
+        } else {
+            auth()->user()->contestPortfolios()->attach($contest, ['approved' => true]);
+            // // return session msg
         }
+        // auth()->user()->contestPortfolios()->attach($contest, ['approved' => true]);
 
         return back();
     }

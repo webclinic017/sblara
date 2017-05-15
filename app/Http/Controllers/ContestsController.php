@@ -97,7 +97,7 @@ class ContestsController extends Controller
             $q->wherePivot('approved', true);
         }]);
 
-        return $contest;
+        return view('contests.show', compact('contest'));
     }
 
     /**

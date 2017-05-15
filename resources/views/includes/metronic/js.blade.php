@@ -9,7 +9,6 @@
 {{--<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>--}}
 <script src="{{ URL::asset('metronic_custom/highstock/code/js/highstock.js') }}"></script>
 <script src="{{ URL::asset('metronic/assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}"></script>
-<script src="{{ asset('metronic/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js') }}"></script>
 
 <!-- Datepicker -->
 <script src="{{ asset('metronic/assets/global/plugins/moment.min.js') }}"></script>

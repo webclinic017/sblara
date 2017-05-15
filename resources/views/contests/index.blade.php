@@ -26,7 +26,7 @@
                     </thead>
 
                     <tbody>
-                        @foreach ($contests as $contest)
+                        @forelse ($contests as $contest)
                             <tr>
                                 <td>
                                     <a href="{{ route('contests.show', $contest) }}">{{ $contest->name }}</a>
@@ -46,7 +46,7 @@
                                     <form method="POST" action="{{ route('contests.join', $contest) }}">
                                         {{ csrf_field() }}
 
-                                        <button class="btn btn-primary btn-xs"  {{ $contest->isJoined() ? 'disabled' : '' }} 
+                                        <button class="btn btn-primary btn-xs"  {{ $contest->isJoined() ? 'disabled' : '' }}
                                                 data-toggle="confirmation" 
                                                 data-original-title="Are you sure ?" 
                                                 title="">
@@ -55,7 +55,11 @@
                                     </form>
                                 </td>
                             </tr>
-                        @endforeach
+                        @empty
+                            <tr class="no-records-found text-cente">
+                                <td colspan="7">No matching records found</td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>
