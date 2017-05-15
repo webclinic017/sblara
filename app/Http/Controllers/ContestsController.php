@@ -17,7 +17,7 @@ class ContestsController extends Controller
     }
     
     /**
-     * Display a listing of the resource.
+     * Show all contests.
      *
      * @return \Illuminate\Http\Response
      */
@@ -79,7 +79,7 @@ class ContestsController extends Controller
             'max_member'     => $request->max_member
         ]);
 
-        return redirect()->route('contests.index');
+        return redirect('contests/dashboard');
     }
 
     /**
@@ -90,7 +90,12 @@ class ContestsController extends Controller
      */
     public function show(Contest $contest)
     {
-        //
+        // Retrieve all contests that have at least one approved user..
+        $contest->load(['contestUsers' => function ($q) {
+            $q->wherePivot('approved', true);
+        }]);
+
+        return $contest;
     }
 
     /**

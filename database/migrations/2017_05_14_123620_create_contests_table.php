@@ -17,8 +17,8 @@ class CreateContestsTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned()->index();
             $table->string('name');
-            $table->date('start_date');
-            $table->date('end_date');
+            $table->timestamp('start_date');
+            $table->timestamp('end_date');
             $table->boolean('access_level')->default(0); // default public
             $table->integer('contest_amount');
             $table->integer('max_amount');

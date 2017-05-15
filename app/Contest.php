@@ -41,4 +41,26 @@ class Contest extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    /**
+     * The users that belong to the contest.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function contestUsers()
+    {
+        return $this->belongsToMany(User::class, 'contest_portfolios', 'contest_id', 'user_id')
+                    ->withPivot('join_date', 'approved')
+                    ->withTimestamps();
+    }
+
+    /**
+     * Determine if the current contest has been joined.
+     *
+     * @return boolean
+     */
+    public function isJoined()
+    {
+        return !! $this->contestUsers()->wherePivot('user_id', auth()->id())->count();
+    }
 }

@@ -25,9 +25,11 @@
                     <tbody>
                         @foreach ($contests as $contest)
                             <tr>
-                                <td>{{ $contest->name }}</td>
-                                <td>{{ $contest->start_date }}</td>
-                                <td>{{ $contest->end_date }}</td>
+                                <td>
+                                    <a href="{{ route('contests.show', $contest) }}">{{ $contest->name }}</a>
+                                </td>
+                                <td>{{ $contest->start_date->format('d-M-Y') }}</td>
+                                <td>{{ $contest->end_date->format('d-M-Y') }}</td>
                                 <td>{{ $contest->contest_amount }} ({{ $contest->max_amount }}%)</td>
                                 <td>
                                     @if ($contest->access_level)
@@ -37,7 +39,18 @@
                                     @endif
                                 </td>
                                 <td>{{ $contest->creator->name }}</td>
-                                <td><a href="" class="btn btn-primary btn-xs">Join</a></td>
+                                <td>
+                                    <form method="POST" action="{{ route('contests.join', $contest) }}">
+                                        {{ csrf_field() }}
+
+                                        <button class="btn btn-primary btn-xs"  {{ $contest->isJoined() ? 'disabled' : '' }} 
+                                                data-toggle="confirmation" 
+                                                data-original-title="Are you sure ?" 
+                                                title="">
+                                                <span class="md-click-circle md-click-animate" style="height: 184px; width: 184px;"></span>Join
+                                        </button>
+                                    </form>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>

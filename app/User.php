@@ -41,4 +41,16 @@ class User extends Authenticatable {
     {
         return $this->hasMany(Contest::class);
     }
+
+    /**
+     * Fetch all contest that the user has joined up.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function contestPortfolios()
+    {
+        return $this->belongsToMany(Contest::class, 'contest_portfolios', 'contest_id', 'user_id')
+                    ->withPivot('join_date', 'approved')
+                    ->withTimestamps();
+    }
 }
