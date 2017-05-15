@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserPasswordChangeFormRequest;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -24,14 +25,24 @@ class UserController extends Controller
         return redirect()->back();
     }
 
-    public function passwordChange()
+    public function passwordChange(UserPasswordChangeFormRequest $request)
     {
+
+
         if (Hash::check(request('password'), Auth::user()->password)) {
             if (request('newPassword') == request('rePassword')) {
                 $user = User::find(Auth::user()->id);
                 $user->password = bcrypt(request('newPassword'));
-                $user->save();
+                $result = $user->save();
+                if($result){
+                    $request->session()->flash('type', 'success');
+                    $request->session()->flash('msg', 'Your password has been successfully changed.');
+                }
+
             }
+        } else {
+            $request->session()->flash('type', 'error');
+            $request->session()->flash('msg', 'Previous password incorrect');
         }
 
         return redirect()->back();

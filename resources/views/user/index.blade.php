@@ -143,11 +143,32 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="portlet light bordered">
+                                                @if($errors->count() > 0)
+                                                    <div class="alert alert-danger">
+                                                        @foreach($errors->all() as $message)
+                                                            <strong>Danger!</strong> {{ $message }} <br />
+                                                        @endforeach
+                                                    </div>
+                                                @endif
+                                                @if(session('type') == 'success')
+                                                    <div class="alert alert-success">
+                                                        <strong>Success!</strong> {{ session('msg') }}
+                                                    </div>
+                                                @endif
+
+                                                @if(session('type') == 'error')
+                                                    <div class="alert alert-danger">
+                                                      <strong>Danger!</strong>  {{ session('msg') }}
+                                                    </div>
+                                                @endif
+
+
                                                 <div class="portlet-title tabbable-line">
                                                     <div class="caption caption-md">
                                                         <i class="icon-globe theme-font hide"></i>
                                                         <span class="caption-subject font-blue-madison bold uppercase">Profile Account</span>
                                                     </div>
+
                                                     <ul class="nav nav-tabs">
                                                         <li class="active">
                                                             <a href="#tab_1_1" data-toggle="tab">Personal Info</a>
