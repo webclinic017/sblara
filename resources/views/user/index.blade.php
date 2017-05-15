@@ -207,13 +207,13 @@
                                                                 <div class="form-group">
                                                                     <div class="fileinput fileinput-new" data-provides="fileinput">
                                                                         <div class="fileinput-new thumbnail" style="width: 200px; height: 150px;">
-                                                                            <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" alt="" /> </div>
+                                                                            <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image" id="output" alt="" /> </div>
                                                                         <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px;"> </div>
                                                                         <div>
                                                                                     <span class="btn default btn-file">
                                                                                         <span class="fileinput-new"> Select image </span>
                                                                                         <span class="fileinput-exists"> Change </span>
-                                                                                        <input type="file" name="image">
+                                                                                        <input type="file" name="image" id="imgInp">
                                                                                     </span>
                                                                             <input type="submit" class="btn default fileinput-exists" data-dismiss="fileinput" value="Remove">
                                                                         </div>
@@ -344,5 +344,22 @@
         </a>
         <!-- END FOOTER -->
     </div>
+
+    <script>
+
+
+        document.getElementById("imgInp").onchange = function () {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                // get loaded data and render thumbnail.
+                document.getElementById("output").src = e.target.result;
+            };
+
+            // read the image file as a data URL.
+            reader.readAsDataURL(this.files[0]);
+        };
+
+    </script>
 
 @endsection

@@ -5,13 +5,17 @@ namespace App\Http\Controllers;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
 
 class ImageController extends Controller
 {
     public function changeImage(Request $request)
     {
-        $name = uniqid(). $request->file('image')->getClientOriginalName();
+        File::delete('img/149x149/'.Auth::user()->image);
+        File::delete('img/35x35/'.Auth::user()->image);
+
+        $name = uniqid();
         $img = Image::make($request->file('image')->getRealPath());
         $img->resize(149, 149);
         $img->save("img/149x149/".$name);
