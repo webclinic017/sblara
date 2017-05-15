@@ -345,8 +345,13 @@
         <!-- END FOOTER -->
     </div>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
     <script>
 
+      $("#remove").click(function(){
+         $("#output").attr('src','http://www.placehold.it/200x150/EFEFEF/AAAAAA&amp;text=no+image');
+      });
 
         document.getElementById("imgInp").onchange = function () {
             var reader = new FileReader();
