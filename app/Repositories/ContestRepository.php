@@ -6,7 +6,12 @@ use App\Contest;
 
 class ContestRepository 
 {
-    public static function ContestData()
+	/**
+     * Show all contests.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public static function index()
     {
     	// get all contest
         $contests = Contest::with('creator')->get();

@@ -15,7 +15,8 @@ class Contests
      */
     public function compose(View $view)
     {
-        $contests = ContestRepository::ContestData();
+        // Show all contests.
+        $contests = ContestRepository::index();
 
         $view->with('contests', $contests);
     }
