@@ -79,9 +79,11 @@ class ContestsController extends Controller
             'max_member'     => $request->max_member
         ]);
 
+        auth()->user()->contestPortfolios()->attach($contest, ['approved' => true]);
+
         // return session msg
 
-        return redirect('contests/dashboard');
+        return redirect('mycontests');
     }
 
     /**

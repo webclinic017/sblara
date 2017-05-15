@@ -15,6 +15,7 @@ class ContestRepository
     {
     	// get all contest
         $contests = Contest::with('creator')
+                            ->withCount('contestUsers')
                             ->where('is_active', true)
                             ->latest('created_at')->get();
 

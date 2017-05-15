@@ -29,7 +29,9 @@
                         @forelse ($contests as $contest)
                             <tr>
                                 <td>
-                                    <a href="{{ route('contests.show', $contest) }}">{{ $contest->name }}</a>
+                                    <a href="{{ route('contests.show', $contest) }}">
+                                        {{ $contest->name }} ({{ $contest->contest_users_count }})
+                                    </a>
                                 </td>
                                 <td>{{ $contest->start_date->format('d-M-Y') }}</td>
                                 <td>{{ $contest->end_date->format('d-M-Y') }}</td>

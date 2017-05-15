@@ -28,7 +28,11 @@
                     <tbody>
                         @forelse ($contests as $contest)
                             <tr>
-                                <td>{{ $contest->name }}</td>
+                                <td>
+                                    <a href="">
+                                        {{ $contest->name }} ({{ $contest->contest_users_count }})
+                                    </a>
+                                </td>
                                 <td>{{ $contest->start_date }}</td>
                                 <td>{{ $contest->end_date }}</td>
                                 <td>{{ $contest->contest_amount }} ({{ $contest->max_amount }}%)</td>
