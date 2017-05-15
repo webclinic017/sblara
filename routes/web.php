@@ -23,7 +23,7 @@ use Illuminate\Support\Facades\Route;
 
 
 // User routes
-Route::get('user-information', 'UserController@userInformationChange')->name('user-information');
+Route::get('user-information', 'UserController@userInformationChange')->name('user-information')->middleware('auth');
 Route::get('user-name-change', 'UserController@userNameChange')->name('user-name-change');
 Route::get('user-password-change', 'UserController@passwordChange')->name('user-password-change');
 
