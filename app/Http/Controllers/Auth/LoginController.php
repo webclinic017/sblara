@@ -47,10 +47,10 @@ class LoginController extends Controller
      */
     protected function authenticated(Request $request, $user)
     {
-        if (auth()->check() && auth()->user()->isAdmin()) {
+        /*if (auth()->check() && auth()->user()->isAdmin()) {
             return 'Admin View.';
-        }
+        }*/
 
-        return redirect('/');
+        return redirect()->intended('/');
     }
 }
