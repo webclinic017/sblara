@@ -34,14 +34,22 @@ class MyContestsController extends Controller
      */
     public function store(Contest $contest)
     {
-        if ($contest->access_level) {
-            auth()->user()->contestPortfolios()->attach($contest, ['approved' => false]);
+        $contest->load('approvedContestUsers');
 
-            flash('Please wait for the approval!', 'success');
+        $current_member = $contest->approvedContestUsers->count();
+
+        if ($current_member < $contest->max_member) {
+            if ($contest->access_level) {
+                auth()->user()->contestPortfolios()->attach($contest, ['approved' => false]);
+
+                flash('Please wait for the approval!', 'success');
+            } else {
+                auth()->user()->contestPortfolios()->attach($contest, ['approved' => true]);
+
+                flash('You successfully joined in a contest!', 'success');
+            }
         } else {
-            auth()->user()->contestPortfolios()->attach($contest, ['approved' => true]);
-
-            flash('You successfully joined in a contest!', 'success');
+            flash('Sorry contest is already full!', 'error');
         }
 
         return back();
