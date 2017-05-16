@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Contest;
+use App\User;
 use Illuminate\Http\Request;
 
 class MyContestsController extends Controller
@@ -40,6 +41,35 @@ class MyContestsController extends Controller
             auth()->user()->contestPortfolios()->attach($contest, ['approved' => true]);
             // // return session msg
         }
+
+        return back();
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Contest  $contest
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Contest $contest)
+    {
+        // Retrieve all contests that have at least one approved user..
+        $contest->load('forApprovalContestUsers', 'approvedContestUsers');
+
+        return view('my_contests.show', compact('contest'));
+    }
+
+    /**
+     * Approve member.
+     *
+     * @param  \App\User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function approve(Contest $contest, User $user)
+    {
+        $user->contestPortfolios()->updateExistingPivot($contest->id, ['approved' => true]);
+
+        // return session msg..
 
         return back();
     }

@@ -62,7 +62,22 @@ class Contest extends Model
     public function approvedContestUsers()
     {
         return $this->belongsToMany(User::class, 'contest_portfolios', 'contest_id', 'user_id')
-                    ->wherePivot('approved', true);
+                    ->wherePivot('approved', true)
+                    ->withPivot('join_date', 'approved')
+                    ->withTimestamps();
+    }
+
+    /**
+     * The all for approval users that belong to the contest.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function forApprovalContestUsers()
+    {
+        return $this->belongsToMany(User::class, 'contest_portfolios', 'contest_id', 'user_id')
+                    ->wherePivot('approved', false)
+                    ->withPivot('join_date', 'approved')
+                    ->withTimestamps();
     }
 
     /**

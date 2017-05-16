@@ -143,6 +143,9 @@ Route::post('search_json', 'SearchController@search');
 
 // My Contests Dashboard routes..
 Route::get('/mycontests', 'MyContestsController@index');
+Route::get('/mycontests/{contest}', 'MyContestsController@show')->name('mycontests.show');
+
+Route::patch('/mycontests/{contest}/approve/{user}', 'MyContestsController@approve')->name('mycontests.user.approve');
 Route::patch('/mycontests/{contest}/block', 'MyContestsController@block')->name('mycontests.block');
 Route::patch('/mycontests/{contest}/unblock', 'MyContestsController@unblock')->name('mycontests.unblock');
 // Join Contest routes..

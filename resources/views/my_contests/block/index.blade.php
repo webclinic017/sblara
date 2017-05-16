@@ -26,7 +26,7 @@
                         @forelse ($contests as $contest)
                             <tr>
                                 <td>
-                                    <a href="">
+                                    <a href="{{ route('mycontests.show', $contest) }}">
                                         {{ $contest->name }} ({{ $contest->approved_contest_users_count }})
                                     </a>
                                 </td>
