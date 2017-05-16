@@ -16,7 +16,7 @@ class ContestPolicy
      * @param  Contest $contest
      * @return bool
      */
-    public function show(Contest $contest)
+    public function show(User $user, Contest $contest)
     {
         if ($contest->is_active) {
             return true;      
