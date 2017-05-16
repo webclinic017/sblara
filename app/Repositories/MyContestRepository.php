@@ -9,7 +9,10 @@ class MyContestRepository
     public static function myContestData()
     {
     	// get all own contests
-        $myContests = auth()->user()->contests()->withCount('approvedContestUsers')->latest()->get();
+        $myContests = auth()->user()->contests()
+        							->withCount('approvedContestUsers')
+        							->withCount('forApprovalContestUsers')
+        							->latest()->get();
 
         return $myContests;
     }

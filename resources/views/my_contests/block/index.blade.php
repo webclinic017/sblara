@@ -31,6 +31,10 @@
                                         <span class="badge badge-primary">
                                             {{ $contest->approved_contest_users_count }}
                                         </span>
+
+                                        <span class="badge badge-danger">
+                                            {{ $contest->for_approval_contest_users_count }}
+                                        </span>
                                     </a>
                                 </td>
                                 <td>{{ $contest->start_date }}</td>
