@@ -12,7 +12,7 @@
             </div>
 
             <div class="portlet-body form">
-                <form role="form" class="form-horizontal" method="POST" action="{{ route('contests.index') }}">
+                <form role="form" class="form-horizontal" method="POST" action="{{ route('mycontests.store') }}">
                     {{ csrf_field() }}
                     <div class="form-body">
                         {{-- Todo: Contest Category? --}}

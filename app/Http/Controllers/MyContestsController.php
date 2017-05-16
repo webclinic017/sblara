@@ -4,11 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Contest;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class MyContestsController extends Controller
 {
-	/**
+    /**
      * Create a new controller instance.
      */
     public function __construct()
@@ -23,105 +24,148 @@ class MyContestsController extends Controller
      */
     public function index()
     {
-    	return view('my_contests.index');
+        return view('my_contests.index');
     }
 
     /**
-     * Join a new contest.
+     * Show the form for creating a new contest.
      *
-     * @param  \App\Contest  $contest
      * @return \Illuminate\Http\Response
      */
-    public function store(Contest $contest)
+    public function create()
     {
-        $contest->load('approvedContestUsers');
+        $data = [
+            'navigation' => [
+                'My Contests',
+                'Create Contest',
+            ]
+        ];
 
-        $current_member = $contest->approvedContestUsers->count();
+        return view('my_contests.create', $data);
+    }
 
-        if ($current_member < $contest->max_member) {
-            if ($contest->access_level) {
-                auth()->user()->contestPortfolios()->attach($contest, ['approved' => false]);
+    /**
+     * Store a newly created contest.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        // validate all request
+        $this->validate($request, [
+            'name'           => 'required|unique:contests',
+            'start_date'     => 'required|date',
+            'end_date'       => 'required|date',
+            'access_level'   => 'required',
+            'contest_amount' => 'required|numeric',
+            'max_amount'     => 'required|numeric',
+            'max_member'     => 'required|numeric'
+        ]);
+        
+        // create contest
+        $contest = auth()->user()->contests()->create([
+            'name'           => $request->name,
+            'start_date'     => Carbon::parse($request->start_date),
+            'end_date'       => Carbon::parse($request->end_date),
+            'access_level'   => $request->access_level,
+            'contest_amount' => $request->contest_amount,
+            'max_amount'     => $request->max_amount,
+            'max_member'     => $request->max_member
+        ]);
 
-                flash('Please wait for the approval!', 'success');
-            } else {
-                auth()->user()->contestPortfolios()
+        $portfolio = auth()->user()
+                            ->contestPortfolios()
                             ->attach($contest, [
                                 'approved' => true, 
                                 'portfolio_value' => $contest->contest_amount
                             ]);
 
-                flash('You successfully joined in a contest!', 'success');
-            }
-        } else {
-            flash('Sorry contest is already full!', 'error');
-        }
+        flash('Contest successfully created!', 'success');
 
-        return back();
+        return redirect('mycontests');
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified contest.
      *
      * @param  \App\Contest  $contest
      * @return \Illuminate\Http\Response
      */
-    public function show(Contest $contest)
+    public function show(Contest $mycontest)
     {
         // Retrieve all contests that have at least one approved user..
-        $contest->load('forApprovalContestUsers', 'approvedContestUsers');
+        $mycontest->load('forApprovalContestUsers', 'approvedContestUsers');
 
-        return view('my_contests.show', compact('contest'));
+        return view('my_contests.show', compact('mycontest'));
     }
 
     /**
-     * Approve member.
-     *
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function approve(Contest $contest, User $user)
-    {
-        $user->contestPortfolios()->updateExistingPivot($contest->id, [
-                                'approved' => true, 
-                                'portfolio_value' => $contest->contest_amount
-                            ]);
-
-        flash('Member successfully approved!', 'success');
-
-        return back();
-    }
-
-    /**
-     * Block contest.
+     * Show the form for editing the specified resource.
      *
      * @param  \App\Contest  $contest
      * @return \Illuminate\Http\Response
      */
-    public function block(Contest $contest)
+    public function edit(Contest $mycontest)
     {
-        $contest->update([
-            'is_active' => false
-        ]);
+        $this->authorize('edit', $mycontest);
 
-        flash('Contest successfully blocked!', 'success');
+        $data = [
+            'navigation' => [
+                'Contests',
+                'Edit Contest',
+            ]
+        ];
 
-        return back();
+        return view('my_contests.edit', compact('data', 'mycontest'));
     }
 
     /**
-     * Unblock contest.
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Contest  $contest
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Contest $mycontest)
+    {
+        // Only the creator can update his/here contest.
+        $this->authorize('update', $mycontest);
+
+        // validate all request
+        $this->validate($request, [
+            'name'           => 'required|unique:contests,id,'.$mycontest->id,
+            'start_date'     => 'required|date',
+            'end_date'       => 'required|date',
+            'access_level'   => 'required',
+            'contest_amount' => 'required|numeric',
+            'max_amount'     => 'required|numeric',
+            'max_member'     => 'required|numeric'
+        ]);
+
+        $mycontest->update([
+            'name'           => $request->name,
+            'start_date'     => Carbon::parse($request->start_date),
+            'end_date'       => Carbon::parse($request->end_date),
+            'access_level'   => $request->access_level,
+            'contest_amount' => $request->contest_amount,
+            'max_amount'     => $request->max_amount,
+            'max_member'     => $request->max_member
+        ]);
+
+        flash('Contest successfully updated!', 'success');
+        
+        return redirect('mycontests');
+    }
+
+    /**
+     * Remove the specified resource from storage.
      *
      * @param  \App\Contest  $contest
      * @return \Illuminate\Http\Response
      */
-    public function unblock(Contest $contest)
+    public function destroy(Contest $contest)
     {
-        $contest->update([
-            'is_active' => true
-        ]);
-
-        flash('Contest successfully unblocked!', 'success');
-
-        return back();
+        //
     }
 }

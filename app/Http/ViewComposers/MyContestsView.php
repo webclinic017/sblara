@@ -5,7 +5,7 @@ namespace App\Http\ViewComposers;
 use App\Repositories\MyContestRepository;
 use Illuminate\View\View;
 
-class MyContests
+class MyContestsView
 {
 	/**
      * Bind data to the index view.

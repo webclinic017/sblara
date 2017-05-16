@@ -8,8 +8,8 @@
                 <div class="caption font-green-haze">
                     <i class="icon-badge font-green-haze"></i>
                     <span class="caption-subject bold uppercase"> 
-                        <a href="{{ route('contests.show', $contest) }}">
-                            <span class="text-primary">{{ $contest->name }}</span>
+                        <a href="{{ route('contests.show', $mycontest) }}">
+                            <span class="text-primary">{{ $mycontest->name }}</span>
                         </a>
                          Details
                     </span>
@@ -22,7 +22,7 @@
                         <tr>
                             <th colspan="6">
                                 <span class="caption-subject bold uppercase">
-                                    <span class="text-primary">{{ $contest->name }}</span>
+                                    <span class="text-primary">{{ $mycontest->name }}</span>
                                     Pending Request Member's List
                                 </span>
                             </th>
@@ -39,19 +39,19 @@
                     </thead>
 
                     <tbody>
-                        @forelse ($contest->forApprovalContestUsers as $user)
+                        @forelse ($mycontest->forApprovalContestUsers as $user)
                             <tr class="text-center">
                                 <td>{{ $user->name }}</td>
                                 <td>
-                                    <a href="{{ route('contests.show', $contest) }}">{{ $contest->name }}</a>
+                                    <a href="{{ route('contests.show', $mycontest) }}">{{ $mycontest->name }}</a>
                                 </td>
                                 <td>{{ $user->join_date }}</td>
-                                <td>{{ $contest->creator->name }}</td>
+                                <td>{{ $mycontest->creator->name }}</td>
                                 <td>
                                     <span class="label label-danger">Pending..</span>
                                 </td>
                                 <td>
-                                    <form method="POST" action="{{ route('mycontests.user.approve', [$contest, $user]) }}">
+                                    <form method="POST" action="{{ route('mycontests.approve.user', [$mycontest, $user]) }}">
                                         {{ csrf_field() }}
                                         {{ method_field('PATCH') }}
 
@@ -77,7 +77,7 @@
                         <tr>
                             <th colspan="6">
                                 <span class="caption-subject bold uppercase">
-                                    <span class="text-primary">{{ $contest->name }}</span>
+                                    <span class="text-primary">{{ $mycontest->name }}</span>
                                     Member's List
                                 </span>
                             </th>
@@ -94,14 +94,14 @@
                     </thead>
 
                     <tbody>
-                        @forelse ($contest->approvedContestUsers as $user)
+                        @forelse ($mycontest->approvedContestUsers as $user)
                             <tr class="text-center">
                                 <td>{{ $user->name }}</td>
                                 <td>
-                                    <a href="{{ route('contests.show', $contest) }}">{{ $contest->name }}</a>
+                                    <a href="{{ route('contests.show', $mycontest) }}">{{ $mycontest->name }}</a>
                                 </td>
                                 <td>{{ $user->join_date }}</td>
-                                <td>{{ $contest->creator->name }}</td>
+                                <td>{{ $mycontest->creator->name }}</td>
                                 <td>
                                     <span class="label label-primary">Approved</span>
                                 </td>

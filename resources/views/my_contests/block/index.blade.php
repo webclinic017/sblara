@@ -17,7 +17,7 @@
                             <td>Start Date</td>
                             <td>End Date</td>
                             <td>Access</td>
-                            <td>Creator Name</td>
+                            <td>Creator</td>
                             <td></td>
                         </tr>
                     </thead>
@@ -37,9 +37,9 @@
                                         </span>
                                     </a>
                                 </td>
-                                <td>{{ $contest->start_date }}</td>
-                                <td>{{ $contest->end_date }}</td>
-                                <td>{{ $contest->contest_amount }} ({{ $contest->max_amount }}%)</td>
+                                <td></td>
+                                <td>{{ $contest->start_date->format('d-M-Y') }}</td>
+                                <td>{{ $contest->end_date->format('d-M-Y') }}</td>
                                 <td>
                                     @if ($contest->access_level)
                                         <span class="text-danger">Private</span>
@@ -49,7 +49,7 @@
                                 </td>
                                 <td>Own</td>
                                 <td>
-                                    <a href="{{ route('contests.edit', $contest) }}" class="btn btn-primary btn-xs">Edit</a>
+                                    <a href="{{ route('mycontests.edit', $contest->id) }}" class="btn btn-primary btn-xs">Edit</a>
 
                                     @if ($contest->is_active)
                                         <form method="POST" action="{{ route('mycontests.block', $contest) }}" style="display: inline-block;">

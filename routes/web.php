@@ -1,27 +1,20 @@
 <?php
+
 use App\Repositories\DataBankEodRepository;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-// Auth::loginUsingId(1);
-
-/*
-  |--------------------------------------------------------------------------
-  | Web Routes
-  |--------------------------------------------------------------------------
-  |
-  | Here is where you can register web routes for your application. These
-  | routes are loaded by the RouteServiceProvider within a group which
-  | contains the "web" middleware group. Now create something great!
-  |
- */
-
-/*
- |--------------------------------------------------------------------------
- | Passport routes.
- |--------------------------------------------------------------------------
- */
+// My Contests Update Statuses routes..
+Route::patch('/mycontests/{contest}/approve/{user}', 'MyContestStatusesController@approve')->name('mycontests.approve.user');
+Route::patch('/mycontests/{contest}/block', 'MyContestStatusesController@block')->name('mycontests.block');
+Route::patch('/mycontests/{contest}/unblock', 'MyContestStatusesController@unblock')->name('mycontests.unblock');
+// Join Contest routes..
+Route::post('/contests/{contest}/join', 'JoinContestsController@store')->name('contests.join');
+// My Contests routes..
+Route::resource('/mycontests', 'MyContestsController');
+// Contests routes..
+Route::resource('/contests', 'ContestsController');
 
 
 // User routes
@@ -140,19 +133,3 @@ Route::get('/portfolio_market_summary/{portfolio_id}', 'PortfolioController@mark
 Route::get('/portfolio_gain_loss/{portfolio_id}', 'PortfolioController@gainLoss');
 Route::get('/portfolio_performance/{portfolio_id}', 'PortfolioController@performance');
 Route::post('search_json', 'SearchController@search');
-
-// My Contests Dashboard routes..
-Route::get('/mycontests', 'MyContestsController@index');
-Route::get('/mycontests/{contest}', 'MyContestsController@show')->name('mycontests.show');
-
-Route::patch('/mycontests/{contest}/approve/{user}', 'MyContestsController@approve')->name('mycontests.user.approve');
-Route::patch('/mycontests/{contest}/block', 'MyContestsController@block')->name('mycontests.block');
-Route::patch('/mycontests/{contest}/unblock', 'MyContestsController@unblock')->name('mycontests.unblock');
-// Join Contest routes..
-Route::post('/contests/{contest}/join', 'MyContestsController@store')->name('contests.join');
-// Contests routes..
-Route::resource('/contests', 'ContestsController');
-// Test routes..
-Route::get('/test2', function () {
-  return \App\Instrument::all();
-});

@@ -3,19 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Contest;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ContestsController extends Controller
-{
-    /**
-     * Create a new controller instance.
-     */
-    public function __construct()
-    {
-        $this->middleware('auth')->except('index', 'show');
-    }
-    
+{    
     /**
      * Show all contests.
      *
@@ -39,14 +30,7 @@ class ContestsController extends Controller
      */
     public function create()
     {
-        $data = [
-            'navigation' => [
-                'Contests',
-                'Create Contest',
-            ]
-        ];
-
-        return view('contests.create', $data);
+        //
     }
 
     /**
@@ -57,38 +41,7 @@ class ContestsController extends Controller
      */
     public function store(Request $request)
     {
-        // validate all request
-        $this->validate($request, [
-            'name'           => 'required|unique:contests',
-            'start_date'     => 'required|date',
-            'end_date'       => 'required|date',
-            'access_level'   => 'required',
-            'contest_amount' => 'required|numeric',
-            'max_amount'     => 'required|numeric',
-            'max_member'     => 'required|numeric'
-        ]);
-        
-        // create contest
-        $contest = auth()->user()->contests()->create([
-            'name'           => $request->name,
-            'start_date'     => Carbon::parse($request->start_date),
-            'end_date'       => Carbon::parse($request->end_date),
-            'access_level'   => $request->access_level,
-            'contest_amount' => $request->contest_amount,
-            'max_amount'     => $request->max_amount,
-            'max_member'     => $request->max_member
-        ]);
-
-        $portfolio = auth()->user()
-                            ->contestPortfolios()
-                            ->attach($contest, [
-                                'approved' => true, 
-                                'portfolio_value' => $contest->contest_amount
-                            ]);
-
-        flash('Contest successfully created!', 'success');
-
-        return redirect('mycontests');
+        //
     }
 
     /**
@@ -120,17 +73,7 @@ class ContestsController extends Controller
      */
     public function edit(Contest $contest)
     {
-        // Only the creator can edit his/here contest.
-        $this->authorize('edit', $contest);
-
-        $data = [
-            'navigation' => [
-                'Contests',
-                'Edit Contest',
-            ]
-        ];
-
-        return view('contests.edit', compact('data', 'contest'));
+        //
     }
 
     /**
@@ -142,33 +85,7 @@ class ContestsController extends Controller
      */
     public function update(Request $request, Contest $contest)
     {
-        // Only the creator can update his/here contest.
-        $this->authorize('update', $contest);
-
-        // validate all request
-        $this->validate($request, [
-            'name'           => 'required|unique:contests,id,'.$contest->id,
-            'start_date'     => 'required|date',
-            'end_date'       => 'required|date',
-            'access_level'   => 'required',
-            'contest_amount' => 'required|numeric',
-            'max_amount'     => 'required|numeric',
-            'max_member'     => 'required|numeric'
-        ]);
-
-        $contest->update([
-            'name'           => $request->name,
-            'start_date'     => Carbon::parse($request->start_date),
-            'end_date'       => Carbon::parse($request->end_date),
-            'access_level'   => $request->access_level,
-            'contest_amount' => $request->contest_amount,
-            'max_amount'     => $request->max_amount,
-            'max_member'     => $request->max_member
-        ]);
-
-        flash('Contest successfully updated!', 'success');
-        
-        return redirect('mycontests');
+       //
     }
 
     /**

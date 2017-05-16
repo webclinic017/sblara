@@ -39,7 +39,9 @@
                         @forelse ($contest->contestUsers as $user)
                             <tr class="text-center">
                                 <td></td>
-                                <td>{{ $user->name }}</td>
+                                <td>
+                                    <a href="">{{ $user->name }}</a>
+                                </td>
                                 <td>{{ $user->join_date }}</td>
                                 <td></td>
                                 <td></td>

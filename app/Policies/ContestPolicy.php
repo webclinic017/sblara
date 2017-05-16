@@ -16,12 +16,12 @@ class ContestPolicy
      * @param  Contest $contest
      * @return bool
      */
-    public function show(User $user, Contest $contest)
+    /*public function show(User $user, Contest $contest)
     {
         if ($contest->is_active) {
             return true;      
         }
-    }
+    }*/
 
     /**
      * Determine if the authenticated user has permission to edit a contest.
