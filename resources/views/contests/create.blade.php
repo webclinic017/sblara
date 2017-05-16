@@ -28,7 +28,7 @@
                         <div class="form-group form-md-line-input{{ $errors->has('start_date') ? ' has-error' : '' }}">
                             <label class="col-md-2 control-label" for="start_date">Contest Start Date</label>
                             <div class="col-md-10">
-                                <div class="input-group input-medium date date-picker" data-date-format="dd-mm-yyyy" data-date-start-date="+0d">
+                                <div class="input-group input-large date date-picker" data-date-format="dd-mm-yyyy" data-date-start-date="+0d">
                                     <input type="text" class="form-control" name="start_date" value="{{ old('start_date') }}">
                                     <span class="input-group-btn">
                                         <button class="btn default" type="button">
@@ -44,7 +44,7 @@
                         <div class="form-group form-md-line-input{{ $errors->has('end_date') ? ' has-error' : '' }}">
                             <label class="col-md-2 control-label" for="start_date">Contest End Date</label>
                             <div class="col-md-10">
-                                <div class="input-group input-medium date date-picker" data-date-format="dd-mm-yyyy" data-date-start-date="+0d">
+                                <div class="input-group input-large date date-picker" data-date-format="dd-mm-yyyy" data-date-start-date="+0d">
                                     <input type="text" class="form-control" name="end_date" value="{{ old('end_date') }}">
                                     <span class="input-group-btn">
                                         <button class="btn default" type="button">

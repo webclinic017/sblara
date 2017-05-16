@@ -94,6 +94,9 @@ class ContestsController extends Controller
      */
     public function show(Contest $contest)
     {
+        // Only Active contest can view/show.
+        $this->authorize('show', $contest);
+
         // Retrieve all contests that have at least one approved user..
         $contest->load(['contestUsers' => function ($q) {
             $q->wherePivot('approved', true);

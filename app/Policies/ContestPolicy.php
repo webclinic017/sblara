@@ -11,6 +11,19 @@ class ContestPolicy
     use HandlesAuthorization;
 
     /**
+     * Determine if the contest is blocked.
+     *
+     * @param  Contest $contest
+     * @return bool
+     */
+    public function show(Contest $contest)
+    {
+        if ($contest->is_active) {
+            return true;      
+        }
+    }
+
+    /**
      * Determine if the authenticated user has permission to edit a contest.
      *
      * @param  User  $user
