@@ -19,7 +19,7 @@
                         <tr>
                             <th colspan="6">
                                 <span class="caption-subject bold uppercase"> 
-                                    Top () Performers from the start of 
+                                    Top ({{ $contest->contestUsers->count() }}) Performers from the start of 
                                     <span class="text-primary">{{ $contest->name }}</span>
                                 </span>
                             </th>
