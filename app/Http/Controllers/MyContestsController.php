@@ -44,7 +44,11 @@ class MyContestsController extends Controller
 
                 flash('Please wait for the approval!', 'success');
             } else {
-                auth()->user()->contestPortfolios()->attach($contest, ['approved' => true]);
+                auth()->user()->contestPortfolios()
+                            ->attach($contest, [
+                                'approved' => true, 
+                                'portfolio_value' => $contest->contest_amount
+                            ]);
 
                 flash('You successfully joined in a contest!', 'success');
             }
@@ -77,7 +81,10 @@ class MyContestsController extends Controller
      */
     public function approve(Contest $contest, User $user)
     {
-        $user->contestPortfolios()->updateExistingPivot($contest->id, ['approved' => true]);
+        $user->contestPortfolios()->updateExistingPivot($contest->id, [
+                                'approved' => true, 
+                                'portfolio_value' => $contest->contest_amount
+                            ]);
 
         flash('Member successfully approved!', 'success');
 

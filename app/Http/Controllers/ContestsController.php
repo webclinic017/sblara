@@ -79,7 +79,12 @@ class ContestsController extends Controller
             'max_member'     => $request->max_member
         ]);
 
-        auth()->user()->contestPortfolios()->attach($contest, ['approved' => true]);
+        $portfolio = auth()->user()
+                            ->contestPortfolios()
+                            ->attach($contest, [
+                                'approved' => true, 
+                                'portfolio_value' => $contest->contest_amount
+                            ]);
 
         flash('Contest successfully created!', 'success');
 
@@ -94,7 +99,7 @@ class ContestsController extends Controller
      */
     public function show(Contest $contest)
     {
-        // Only Active contest can view/show.
+        // Only Active/Unblock contest can view/show.
         if ( ! $contest->is_active) {
             $this->authorize('show', $contest);
         }

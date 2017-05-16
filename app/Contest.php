@@ -19,7 +19,8 @@ class Contest extends Model
 		'contest_amount',
 		'max_amount',
 		'max_member',
-		'is_active'
+        'is_active',
+		'portfolio_value',
     ];
 
     /**
@@ -50,7 +51,7 @@ class Contest extends Model
     public function contestUsers()
     {
         return $this->belongsToMany(User::class, 'contest_portfolios', 'contest_id', 'user_id')
-                    ->withPivot('join_date', 'approved')
+                    ->withPivot('join_date', 'approved', 'portfolio_value')
                     ->withTimestamps();
     }
 

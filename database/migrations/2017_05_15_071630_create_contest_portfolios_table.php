@@ -19,6 +19,7 @@ class CreateContestPortfoliosTable extends Migration
             $table->integer('contest_id')->unsigned()->index();
             $table->timestamp('join_date');
             $table->boolean('approved')->default(0);
+            $table->integer('portfolio_value'); // Todo: decimal
             $table->timestamps();
         });
     }

@@ -54,15 +54,19 @@
                                     <form method="POST" action="{{ route('mycontests.user.approve', [$contest, $user]) }}">
                                         {{ csrf_field() }}
                                         {{ method_field('PATCH') }}
-                                        <button class="btn btn-primary btn-xs" {{ $user->pivot->approved ? 'disabled' : '' }}>
-                                            Approve
+
+                                        <button class="btn btn-primary btn-xs" {{ $user->pivot->approved ? 'disabled' : '' }}
+                                                data-toggle="confirmation" 
+                                                data-original-title="Are you sure ?" 
+                                                title="">
+                                                <span class="md-click-circle md-click-animate" style="height: 184px; width: 184px;"></span>Approve
                                         </button>
                                     </form>
                                 </td>
                             </tr>
                         @empty
                             <tr class="no-records-found text-center">
-                                <td colspan="5">No matching records found</td>
+                                <td colspan="6">No matching records found</td>
                             </tr>
                         @endforelse
                     </tbody>
@@ -105,7 +109,7 @@
                             </tr>
                         @empty
                             <tr class="no-records-found text-center">
-                                <td colspan="5">No matching records found</td>
+                                <td colspan="6">No matching records found</td>
                             </tr>
                         @endforelse
                     </tbody>

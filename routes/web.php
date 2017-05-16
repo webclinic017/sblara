@@ -152,3 +152,7 @@ Route::patch('/mycontests/{contest}/unblock', 'MyContestsController@unblock')->n
 Route::post('/contests/{contest}/join', 'MyContestsController@store')->name('contests.join');
 // Contests routes..
 Route::resource('/contests', 'ContestsController');
+// Test routes..
+Route::get('/test2', function () {
+  return \App\Instrument::all();
+});

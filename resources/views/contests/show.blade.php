@@ -43,7 +43,7 @@
                                 <td>{{ $user->join_date }}</td>
                                 <td></td>
                                 <td></td>
-                                <td></td>
+                                <td>{{ $user->pivot->portfolio_value }}</td>
                             </tr>
                         @empty
                             <tr class="no-records-found text-center">

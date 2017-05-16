@@ -18,6 +18,7 @@ class ContestRepository
                             ->withCount('approvedContestUsers')
                             ->where('is_active', true)
                             ->latest('created_at')->get();
+        // Todo: whereDate()
 
         return $contests;
     }
