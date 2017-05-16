@@ -36,10 +36,12 @@ class MyContestsController extends Controller
     {
         if ($contest->access_level) {
             auth()->user()->contestPortfolios()->attach($contest, ['approved' => false]);
-            // return msg waiting for approval
+
+            flash('Please wait for the approval!', 'success');
         } else {
             auth()->user()->contestPortfolios()->attach($contest, ['approved' => true]);
-            // // return session msg
+
+            flash('You successfully joined in a contest!', 'success');
         }
 
         return back();
@@ -69,7 +71,7 @@ class MyContestsController extends Controller
     {
         $user->contestPortfolios()->updateExistingPivot($contest->id, ['approved' => true]);
 
-        // return session msg..
+        flash('Member successfully approved!', 'success');
 
         return back();
     }
@@ -86,6 +88,8 @@ class MyContestsController extends Controller
             'is_active' => false
         ]);
 
+        flash('Contest successfully blocked!', 'success');
+
         return back();
     }
 
@@ -100,6 +104,8 @@ class MyContestsController extends Controller
         $contest->update([
             'is_active' => true
         ]);
+
+        flash('Contest successfully unblocked!', 'success');
 
         return back();
     }

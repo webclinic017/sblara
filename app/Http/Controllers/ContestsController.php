@@ -81,7 +81,7 @@ class ContestsController extends Controller
 
         auth()->user()->contestPortfolios()->attach($contest, ['approved' => true]);
 
-        // return session msg
+        flash('Contest successfully created!', 'success');
 
         return redirect('mycontests');
     }
@@ -156,9 +156,9 @@ class ContestsController extends Controller
             'max_member'     => $request->max_member
         ]);
 
-        // return session msg
+        flash('Contest successfully updated!', 'success');
         
-        return redirect('contests/dashboard');
+        return redirect('mycontests');
     }
 
     /**

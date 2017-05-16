@@ -23,6 +23,11 @@
 <script src="{{ asset('metronic/assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}"></script>
 <script src="{{ asset('metronic/assets/pages/scripts/ui-confirmations.min.js') }}"></script>
 
+<!-- Toastr -->
+<script src="{{ asset('metronic/assets/global/plugins/bootstrap-toastr/toastr.min.js') }}"></script>
+@include('includes.flash.toastr')
+
+
 <script>
 $(document).ready(function ()
 {
