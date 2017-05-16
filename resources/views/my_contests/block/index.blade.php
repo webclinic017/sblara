@@ -27,7 +27,10 @@
                             <tr>
                                 <td>
                                     <a href="{{ route('mycontests.show', $contest) }}">
-                                        {{ $contest->name }} ({{ $contest->approved_contest_users_count }})
+                                        {{ $contest->name }}
+                                        <span class="badge badge-primary">
+                                            {{ $contest->approved_contest_users_count }}
+                                        </span>
                                     </a>
                                 </td>
                                 <td>{{ $contest->start_date }}</td>
