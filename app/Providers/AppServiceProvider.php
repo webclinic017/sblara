@@ -32,6 +32,14 @@ class AppServiceProvider extends ServiceProvider {
         View::composer('block.news_box', 'App\Http\ViewComposers\NewsBox');
         View::composer('block.news_box_today', 'App\Http\ViewComposers\NewsBoxToday');
 
+        View::composer('block.fundamental_summary', 'App\Http\ViewComposers\FundamentalSummary');
+        View::composer('block.dividend_history', 'App\Http\ViewComposers\DividendHistory');
+        View::composer('block.share_holdings_chart', 'App\Http\ViewComposers\ShareHoldingsChart');
+        View::composer('block.dividend_possible', 'App\Http\ViewComposers\DividendPossible');
+        View::composer('block.share_holdings_history_chart', 'App\Http\ViewComposers\ShareHoldingsHistoryChart');
+        View::composer('block.eps_history_chart_quarter_to_quarter', 'App\Http\ViewComposers\EpsHistoryChartQuarterToQuarter');
+        View::composer('block.eps_history_chart_up_to_quarter', 'App\Http\ViewComposers\EpsHistoryChartUpToQuarter');
+
         View::composer('block.market_frame_by_gainer_lose', 'App\Http\ViewComposers\MarketFrameGainerLoser');
         View::composer('block.market_frame_old_site', 'App\Http\ViewComposers\MarketFrameOldSite');
         View::composer('block.price_tree', 'App\Http\ViewComposers\PriceTree');
