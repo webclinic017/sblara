@@ -86,7 +86,7 @@
             <div class="display">
                 <div class="number">
                     <h3 class="font-green-sharp">
-                        <span data-counter="counterup" data-value="{{$fundaData['agm_date']->first()->meta_value->format('d-m-Y')}}">{{$fundaData['agm_date']->first()->meta_value}}</span>
+                        <span >{{$fundaData['agm_date']->first()->meta_value->format('d-m-Y')}}</span>
                         <small class="font-green-sharp"></small>
                     </h3>
                     <small>Last agm held</small>
@@ -114,22 +114,6 @@
 @push('scripts')
 
 <script>
-                 // alert("here from composer of market_index");
 
-                  $('#ajax').click(function(){
-
-                          $.ajax({
-
-                              type: "GET",
-                              url: '/ajax',
-                              success: function (data) {
-                               // alert (data)
-                                 $("#update").html(data);
-                              },
-                              error: function (data) {
-                                  console.log('Error:', data);
-                              }
-                          });
-                      });
         </script>
 @endpush

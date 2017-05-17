@@ -33,7 +33,10 @@
 {{--@include('block.share_holdings_chart')--}}
 {{--@include('block.share_holdings_history_chart')--}}
 {{--@include('block.eps_history_chart_quarter_to_quarter')--}}
-@include('block.eps_history_chart_up_to_quarter')
+{{--@include('block.eps_history_chart_up_to_quarter')--}}
+{{--@include('block.net_profit_history_chart_quarter_to_quarter')--}}
+@include('block.net_profit_history_chart_up_to_quarter')
+
 {{--@include('block.dividend_possible')--}}
 
 <div class="row">

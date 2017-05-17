@@ -26,7 +26,7 @@ class ShareHoldingsHistoryChart
     {
         $viewdata= $view->getData();
         $instrument_id=12;
-        $render_to='dividend_possible';
+        $render_to='share_holding_hostory';
         if(isset($viewdata['instrument_id']))
         {
             $instrument_id=$viewdata['instrument_id'];
