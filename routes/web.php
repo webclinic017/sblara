@@ -5,14 +5,6 @@ use App\Repositories\DataBankEodRepository;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/test2', function () {
-return auth()->user()->load('contestPortfolios.creator');
-
-	/*return auth()->user()->load(['contestPortfolios.creator' => function ($q) {
-		$q->where('user_id', '!=', auth()->id());
-	}]);*/
-});
-
 // My Contests Update Statuses routes..
 Route::patch('/mycontests/{contest}/approve/{user}', 'MyContestStatusesController@approve')->name('mycontests.approve.user');
 Route::patch('/mycontests/{contest}/block', 'MyContestStatusesController@block')->name('mycontests.block');

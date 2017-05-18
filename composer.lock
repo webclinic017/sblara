@@ -971,16 +971,16 @@
         },
         {
             "name": "laravelcollective/html",
-            "version": "v5.4.3",
+            "version": "v5.4.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/LaravelCollective/html.git",
-                "reference": "023efce5fd8057cb3b5ce503f3391cc4effa7caa"
+                "reference": "4b493269d501485d4feb952cb380297290431680"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/LaravelCollective/html/zipball/023efce5fd8057cb3b5ce503f3391cc4effa7caa",
-                "reference": "023efce5fd8057cb3b5ce503f3391cc4effa7caa",
+                "url": "https://api.github.com/repos/LaravelCollective/html/zipball/4b493269d501485d4feb952cb380297290431680",
+                "reference": "4b493269d501485d4feb952cb380297290431680",
                 "shasum": ""
             },
             "require": {
@@ -1021,7 +1021,7 @@
             ],
             "description": "HTML and Form Builders for the Laravel Framework",
             "homepage": "http://laravelcollective.com",
-            "time": "2017-05-15T09:38:20+00:00"
+            "time": "2017-05-18T05:28:33+00:00"
         },
         {
             "name": "lcobucci/jwt",

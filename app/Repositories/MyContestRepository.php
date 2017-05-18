@@ -19,10 +19,9 @@ class MyContestRepository
 
     public static function myJoinContestData()
     {
-    	// get all join competitors contests
-        // $myJoinContests = auth()->user()->contestPortfolios()->get();
-
-    	$contests = auth()->user()->load('contestPortfolios.creator');
+        $contests = auth()->user()->load(['contestPortfolios.creator' => function ($q) {
+            $q->where('id', '!=', auth()->id());
+        }]);
 
         return $contests;
     }

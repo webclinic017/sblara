@@ -42,7 +42,7 @@ class User extends Authenticatable {
     {
         return $this->hasMany(Contest::class);
     }
-
+    
     /**
      * Fetch all contest that the user has joined up.
      *

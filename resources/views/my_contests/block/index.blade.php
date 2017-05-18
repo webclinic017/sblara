@@ -13,11 +13,10 @@
                     <thead>
                         <tr>
                             <td>Contest Name</td>
-                            <td>Portfolio</td>
                             <td>Start Date</td>
                             <td>End Date</td>
                             <td>Access</td>
-                            <td>Creator</td>
+                            <td>Portfolio</td>
                             <td></td>
                         </tr>
                     </thead>
@@ -37,7 +36,6 @@
                                         </span>
                                     </a>
                                 </td>
-                                <td></td>
                                 <td>{{ $contest->start_date->format('d-M-Y') }}</td>
                                 <td>{{ $contest->end_date->format('d-M-Y') }}</td>
                                 <td>
@@ -47,7 +45,7 @@
                                         <span class="text-success">Public</span>
                                     @endif
                                 </td>
-                                <td>Own</td>
+                                <td></td>
                                 <td>
                                     <a href="{{ route('mycontests.edit', $contest->id) }}" class="btn btn-primary btn-xs">Edit</a>
 
