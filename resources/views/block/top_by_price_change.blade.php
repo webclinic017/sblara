@@ -31,23 +31,9 @@
                 <tr>
                     <td>
 
+{{--<a class="popovers" data-container="body" data-html="true" data-trigger="hover" data-placement="top" data-content="<img src='{{url('/tooltip_chart/')}}/{{$instrumentId}}' />" data-original-title="Popover in top">{{$viewData['instrumentList'][$instrumentId]->instrument_code}}</a>--}}
+<a class="popovers" data-container="body" data-html="true" data-trigger="hover" data-placement="top" data-content="" data-original-title="Popover in top">{{$viewData['instrumentList'][$instrumentId]->instrument_code}}</a>
 
-                        <div class="btn-group">
-                            <a class="#" href="javascript:;" data-placement="right" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">  {{$viewData['instrumentList'][$instrumentId]->instrument_code}}
-                            </a>
-                            <ul class="dropdown-menu">
-
-                                <li>
-                                    <a href="javascript:;" target="_blank">TA Chart</a>
-                                </li>
-                                <li>
-                                    <a href="javascript:;" target="_blank">Minute Chart</a>
-                                </li>
-                                <li>
-                                    <a href="javascript:;" target="_blank">Company Details</a>
-                                </li>
-                            </ul>
-                        </div>
 
 
                     </td>
@@ -100,5 +86,7 @@
             height: '20px'
             //width: '100px'
         });
+
+
 </script>
 @endpush

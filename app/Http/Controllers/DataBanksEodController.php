@@ -517,9 +517,7 @@ class DataBanksEodController extends Controller
     public function getchart($chartQuery)
 
     {
-
         session_cache_limiter("private_no_expire");
-
         if (!session_id()) {
             session_start();
         }
@@ -558,6 +556,49 @@ class DataBanksEodController extends Controller
             header("Content-Disposition: inline; filename=$filename");
         print $image;
         exit;
+
+    }
+
+    public function tooltip_chart($instrumentId)
+    {
+        $instrumentId=(int) $instrumentId;
+        include(app_path() . '\ChartDirector\FinanceChart.php');
+        $from = date('Y-m-d', strtotime(' -120 days'));
+        $to = date('Y-m-d');
+        $extraDays=0;
+        $ohlcData = ChartRepository::getAdjustedDailyData($instrumentId,$from,$to,$extraDays);
+
+        $ohlcData['realtimeStamps']=array_reverse($ohlcData['realtimeStamps']);
+        $timeStamps = array_reverse($ohlcData['date']);
+        $closeData = array_reverse($ohlcData['close']);
+        $openData = array_reverse($ohlcData['open']);
+        $lowData = array_reverse($ohlcData['low']);
+        $highData = array_reverse($ohlcData['high']);
+        $volData = array_reverse($ohlcData['volume']);
+
+        $c = new \FinanceChart(450);
+
+
+# Add a title to the chart
+        $c->addTitle("Finance Chart Demonstration");
+
+# Set the data into the finance chart object
+        $c->setData($timeStamps, $highData, $lowData, $openData, $closeData, $volData, $extraDays);
+
+# Add the main chart with 240 pixels in height
+        $c->addMainChart(240);
+
+# Add candlestick symbols to the main chart, using green/red for up/down days
+        $c->addCandleStick(0x26C281, 0xff0000);
+
+        $c->addVolBars(75, 0x99ff99, 0xff9999, 0x808080);
+
+        header("Content-type: image/png");
+        print($c->makeChart2(PNG));
+
+//        return View::make("ta_chart/panel")->with('viewer',$viewer)->with('imageMap',$imageMap);
+
+
 
     }
 
