@@ -102,6 +102,7 @@ Route::get('/ajax/data_matrix', 'AjaxController@data_matrix')->name('Ajax.data_m
 Route::get('/ajax/price_matrix_data', 'AjaxController@price_matrix_data')->name('Ajax.price_matrix_data');
 Route::get('/ajax/load_block/{param}', 'AjaxController@load_block')->name('Ajax.load_block')->middleware('httpcache'); //example: /ajax/load_block/bock_name=block.minute_chart:instrument_id=13
 
+Route::get('/tooltip_chart/{instrumentId}', 'DataBanksEodController@tooltip_chart')->name('tooltip_chart');
 
 //trading view
 Route::get('config/', 'TradingViewController@config');
