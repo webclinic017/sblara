@@ -171,12 +171,11 @@
                         </a>
                         <a href="" class="remove">
                         </a>
+                        <a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.minute_chart:instrument_id={{$instrumentInfo->id}}" class="reload"></a>
                     </div>
 
                 </div>
                 <div class="portlet-body">
-
-                    @include('block.minute_chart', array('instrument_id' => $instrumentInfo->id))
 
                 </div>
             </div>
@@ -199,12 +198,11 @@
                         </a>
                         <a href="" class="remove">
                         </a>
+                        <a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.sector_minute_chart:instrument_id={{$instrumentInfo->id}}" class="reload"></a>
                     </div>
 
                 </div>
                 <div class="portlet-body">
-
-                     @include('block.sector_minute_chart', array('instrument_id' => $instrumentInfo->id))
 
                 </div>
             </div>
@@ -228,6 +226,7 @@
                         <span class="caption-helper">Watch every minute's price movement</span>
                     </div>
                     <div class="tools">
+                    <a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.news_chart:instrument_id={{$instrumentInfo->id}}" class="reload"></a>
                         <a href="" class="collapse">
                         </a>
 
@@ -238,8 +237,6 @@
 
                 </div>
                 <div class="portlet-body">
-
-                    @include('block.news_chart', array('instrument_id' => $instrumentInfo->id))
 
                 </div>
             </div>
@@ -256,6 +253,7 @@
                         <span class="caption-helper">Eagle view of the sector</span>
                     </div>
                     <div class="tools">
+                    <a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.market_frame_old_site:height=400:base=total_value:instrument_id={{$instrumentInfo->id}}" class="reload"></a>
                         <a href="" class="collapse">
                         </a>
 
@@ -266,7 +264,6 @@
 
                 </div>
                 <div class="portlet-body">
-                     @include('block.market_frame_old_site', array('height' =>'400','base' =>'total_value','instrument_id' => $instrumentInfo->id))
 
                 </div>
             </div>
@@ -291,12 +288,13 @@
                         </a>
                         <a href="" class="remove">
                         </a>
+                        <a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.news_box:limit=30:instrument_id={{$instrumentInfo->id}}" class="reload"></a>
                     </div>
 
                 </div>
                 <div class="portlet-body">
-                     {{--@include('block.news_box', array('instrument_id' => $instrumentInfo->id,'limit' =>30))--}}
-                     @include('block.news_box_today')
+                  {{--   @include('block.news_box', array('instrument_id' => $instrumentInfo->id,'limit' =>30))--}}
+                     {{--@include('block.news_box_today')--}}
                      {{--@include('block.news_box', array('instrument_id' => array(12,13),'limit' =>5))--}}
                 </div>
             </div>

@@ -13,7 +13,7 @@ use Illuminate\View\View;
 use App\Navigation;
 use Illuminate\Support\Facades\Route;
 
-class MenuMaker
+class BreadcrumbMaker
 {
     /**
      * The index repository implementation.
@@ -42,18 +42,31 @@ class MenuMaker
 
         $selected_node_parent_id=0;
         $selected_node_id=0;
+        $bread=array();
+
+
         foreach($items as $item)
         {
+
             $found=$item['children']->where('route',$currentPath);
+
             if(count($found)) {
-                $selected_node_parent_id = $found->first()->parent_id;
-                $selected_node_id=$found->first()->id;
+                $temp=array();
+                $temp['text']=$item->title;
+                $temp['url']='#';
+                $bread[]=$temp;
+
+
+                $temp=array();
+                $temp['text']=$found->first()->title;
+                $temp['url']=$found->first()->route;
+                $bread[]=$temp;
+
+
             }
 
         }
-
-
-        $view->with('items', $items)->with('currentPath', $currentPath)->with('selected_node_parent_id', $selected_node_parent_id)->with('selected_node_id', $selected_node_id);
+        $view->with('bread', $bread);
 
 
 

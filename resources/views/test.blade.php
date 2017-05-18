@@ -2,7 +2,7 @@
 
 @section('content')
 {{--@include('block.price_matrix')--}}
-@include('block.data_matrix')
+{{--@include('block.data_matrix')--}}
 
 {{--@include('block.news_chart',['instrument_id'=>13])--}}
 
@@ -25,6 +25,20 @@
 
 {{--@include('block.advance_chart')--}}
 {{--@include('block.market_summary')--}}
+
+{{--@include('block.advance_chart')--}}
+{{--@include('block.market_summary')--}}
+{{--@include('block.dividend_history')--}}
+{{--@include('block.fundamental_summary')--}}
+{{--@include('block.share_holdings_chart')--}}
+{{--@include('block.share_holdings_history_chart')--}}
+{{--@include('block.eps_history_chart_quarter_to_quarter')--}}
+{{--@include('block.eps_history_chart_up_to_quarter')--}}
+{{--@include('block.net_profit_history_chart_quarter_to_quarter')--}}
+@include('block.net_profit_history_chart_up_to_quarter')
+
+{{--@include('block.dividend_possible')--}}
+
 <div class="row">
      <div class="col-lg-5 col-md-5 col-sm-6 col-xs-12">
 {{--@include('block.top_by_price_change')--}}

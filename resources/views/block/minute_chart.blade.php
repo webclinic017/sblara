@@ -1,6 +1,4 @@
 <div id="{{$chartData["div"]}}"></div>
-@push('scripts')
-
 <script>
     $(function () {
 
@@ -204,4 +202,3 @@
     });
 
 </script>
-@endpush

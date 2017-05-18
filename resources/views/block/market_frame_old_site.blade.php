@@ -1,10 +1,5 @@
 <div style="{{$height_css}}" id="infovis"></div>
-
-@push('css')
 <link href="{{ URL::asset('metronic_custom/market_frame/treemap.css') }}" rel="stylesheet" type="text/css" />
-@endpush
-
-@push('scripts')
 <script src="{{ URL::asset('metronic_custom/market_frame/jit-yc.js') }}"></script>
 
 <script>
@@ -216,9 +211,5 @@ function init(){
 init();
 
 </script>
-
-
-
-@endpush
 
 

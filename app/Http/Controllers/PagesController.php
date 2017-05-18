@@ -59,6 +59,24 @@ class PagesController extends Controller
         //)->setTtl(60);
 
     }
+    public function fundamentalDetails($instrument_id=13)
+    {
+
+        $instrument_id=(int)$instrument_id;
+        $instrumentInfo=InstrumentRepository::getInstrumentsById(array($instrument_id))->first();
+
+        //dd(InstrumentRepository::getInstrumentsScripWithIndex());
+
+
+        return response()->view('fundamental_details_page',
+            [
+                'instrumentInfo' => $instrumentInfo
+
+            ]
+        );
+        //)->setTtl(60);
+
+    }
 
 
 

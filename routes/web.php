@@ -86,6 +86,7 @@ Route::get('/market-composition', function () {return view('market_composition_p
 Route::get('news-chart/{instrument_id?}', 'PagesController@newsChart')->name('news-chart');
 Route::get('minute-chart/{instrument_id?}', 'PagesController@minuteChart')->name('minute-chart')->middleware('httpcache'); //httpcache implemented in PagesController@minuteChart
 Route::get('company-details/{instrument_id?}', 'PagesController@companyDetails')->name('company-details')->middleware('httpcache');
+Route::get('fundamental-details/{instrument_id?}', 'PagesController@fundamentalDetails')->name('fundamental-details')/*->middleware('httpcache')*/;
 
 
 
@@ -103,9 +104,11 @@ Route::get('/ajax/yDay/{inst_id}/{period}', 'AjaxController@yDay')->name('Ajax.y
 
 Route::get('/ajax/market/{inst_id}', 'AjaxController@market')->name('Ajax.Market');
 Route::get('/ajax/marketDepthData/{inst_id}', 'AjaxController@marketDepthData')->name('Ajax.MarketDepthData');
-
-
 Route::post('/monitor/save_data', 'AjaxController@saveData')->name('Ajax.saveData');
+
+Route::get('/ajax/data_matrix', 'AjaxController@data_matrix')->name('Ajax.data_matrix');
+Route::get('/ajax/price_matrix_data', 'AjaxController@price_matrix_data')->name('Ajax.price_matrix_data');
+Route::get('/ajax/load_block/{param}', 'AjaxController@load_block')->name('Ajax.load_block')->middleware('httpcache'); //example: /ajax/load_block/bock_name=block.minute_chart:instrument_id=13
 
 
 //trading view

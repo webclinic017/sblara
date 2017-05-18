@@ -6,7 +6,7 @@
     <div class="portlet-title">
         <div class="caption font-green">
             <!--<i class="icon-pin font-green"></i>-->
-            <span class="caption-subject bold uppercase"> Portfolio Performance</span>
+            <span class="caption-subject bold uppercase"> Portfolio Performancess</span>
         </div>
     </div>
     <div class="portlet-body portfolio-content-area form">

@@ -19,6 +19,7 @@ class AppServiceProvider extends ServiceProvider {
         });
 
         View::composer('html.menu', 'App\Http\ViewComposers\MenuMaker');
+        View::composer('html.breadcrumbs', 'App\Http\ViewComposers\BreadcrumbMaker');
         View::composer('html.instrument_list_bs_select', 'App\Http\ViewComposers\InstrumentListBsSelect');
         View::composer('block.index_chart', 'App\Http\ViewComposers\IndexChart');
         View::composer('block.home_page_index', 'App\Http\ViewComposers\HomePageIndexChart');
@@ -31,6 +32,16 @@ class AppServiceProvider extends ServiceProvider {
         View::composer('block.news_time_line', 'App\Http\ViewComposers\NewsTimeLine');
         View::composer('block.news_box', 'App\Http\ViewComposers\NewsBox');
         View::composer('block.news_box_today', 'App\Http\ViewComposers\NewsBoxToday');
+
+        View::composer('block.fundamental_summary', 'App\Http\ViewComposers\FundamentalSummary');
+        View::composer('block.dividend_history', 'App\Http\ViewComposers\DividendHistory');
+        View::composer('block.share_holdings_chart', 'App\Http\ViewComposers\ShareHoldingsChart');
+        View::composer('block.dividend_possible', 'App\Http\ViewComposers\DividendPossible');
+        View::composer('block.share_holdings_history_chart', 'App\Http\ViewComposers\ShareHoldingsHistoryChart');
+        View::composer('block.eps_history_chart_quarter_to_quarter', 'App\Http\ViewComposers\EpsHistoryChartQuarterToQuarter');
+        View::composer('block.eps_history_chart_up_to_quarter', 'App\Http\ViewComposers\EpsHistoryChartUpToQuarter');
+        View::composer('block.net_profit_history_chart_quarter_to_quarter', 'App\Http\ViewComposers\NetProfitHistoryChartQuarterToQuarter');
+        View::composer('block.net_profit_history_chart_up_to_quarter', 'App\Http\ViewComposers\NetProfitHistoryChartUpToQuarter');
 
         View::composer('block.market_frame_by_gainer_lose', 'App\Http\ViewComposers\MarketFrameGainerLoser');
         View::composer('block.market_frame_old_site', 'App\Http\ViewComposers\MarketFrameOldSite');

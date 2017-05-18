@@ -18,7 +18,13 @@
             <div class="container-fluid">
                 <div class="page-content">
                     <!-- BEGIN BREADCRUMBS -->
-                    @include('includes.metronic.breadcrumbs')
+                    <div class="breadcrumbs hidden-xs hidden-sm">
+                        <h1>@yield('page_heading')</h1>
+                        @include('html.breadcrumbs')
+
+                     </div>
+
+
 
                     <!-- END BREADCRUMBS -->
                     <!-- BEGIN SIDEBAR CONTENT LAYOUT -->

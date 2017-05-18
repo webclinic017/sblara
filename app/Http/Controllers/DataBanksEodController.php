@@ -323,8 +323,13 @@ class DataBanksEodController extends Controller
         $instrumentCode = $request->input('instrumentCode','ABBANK');
         $cacheVar = "chartData$instrumentCode";
 
+        $instrumentCode = $request->input('instrumentCode','ABBANK');
+        $instrumentCodeArr[]=$instrumentCode;
+        $instrumentInfo=InstrumentRepository::getInstrumentsByCode($instrumentCodeArr)->first();
+        $instrumentId = $instrumentInfo->id;
+
         //disabling cache by setting time to 0
-        $chartData = Cache::remember("$cacheVar", 0, function () use($request,$extraPoints){
+        $chartData = Cache::remember("$cacheVar", 0, function () use($request,$extraPoints,$instrumentInfo){
 
             $reportrange = $request->input('reportrange');
             if ($reportrange == '') {
@@ -336,7 +341,7 @@ class DataBanksEodController extends Controller
                 $to = $datearr[1];
             }
 
-            $instrumentCode = $request->input('instrumentCode','ABBANK');
+
             $Indicators = $request->input('Indicators','RSI,MACD');
             $configure = $request->input('configure','VOLBAR');
             $charttype = $request->input('charttype','CandleStick');
@@ -347,15 +352,12 @@ class DataBanksEodController extends Controller
             $avgPeriod2 = $request->input('avgPeriod2',30);
             $adj = $request->input('adj',1);
 
+            $instrumentId = $instrumentInfo->id;
 
 
             $timeStamps = null; $volData = null; $highData = null; $lowData = null; $openData = null; $closeData = null;
 
             $instrumentCodeArr=array();
-            $instrumentCodeArr[]=$instrumentCode;
-
-            $instrumentInfo=InstrumentRepository::getInstrumentsByCode($instrumentCodeArr)->first();
-            $instrumentId = $instrumentInfo->id;
 
 
 
@@ -407,18 +409,16 @@ class DataBanksEodController extends Controller
             $metaKey[] = 'share_percentage_public';
 
             //$fundamentalDataOrganized = $StockBangladesh->getFundamentalInfo($instrumentId,$metaKey);
-            $fundamentalDataOrganized=FundamentalRepository::getFundamentalData($metaKey,array($instrumentId))->toArray();
-
-
-            $publicText = $fundamentalDataOrganized['share_percentage_public']['meta_value'] . '%';
+            $fundamentalDataOrganized=FundamentalRepository::getFundamentalData($metaKey,array($instrumentId));
+            $publicText = $fundamentalDataOrganized['share_percentage_public'][$instrumentId]['meta_value'] . '%';
 
             $topText =$instrumentInfo->name;
-            $topText .= '<*font=arial.ttf,size=9*> CAT:- ' . $fundamentalDataOrganized['category']['meta_value'] . ',';
-            $topText .= '<*font=arial.ttf,size=9*> LOT:- ' . $fundamentalDataOrganized['market_lot']['meta_value'] . ',';
-            $topText .= '<*font=arial.ttf,size=9*> YearEnd:- ' . $fundamentalDataOrganized['year_end']['meta_value'] . ',';
-            $topText .= '<*font=arial.ttf,size=9*> NAV:- ' . $fundamentalDataOrganized['net_asset_value_per_share']['meta_value'] . ',';
+            $topText .= '<*font=arial.ttf,size=9*> CAT:- ' . $fundamentalDataOrganized['category'][$instrumentId]['meta_value'] . ',';
+            $topText .= '<*font=arial.ttf,size=9*> LOT:- ' . $fundamentalDataOrganized['market_lot'][$instrumentId]['meta_value'] . ',';
+            $topText .= '<*font=arial.ttf,size=9*> YearEnd:- ' . $fundamentalDataOrganized['year_end'][$instrumentId]['meta_value'] . ',';
+            $topText .= '<*font=arial.ttf,size=9*> NAV:- ' . $fundamentalDataOrganized['net_asset_value_per_share'][$instrumentId]['meta_value'] . ',';
 
-            $share_percentage_public = ($fundamentalDataOrganized['no_of_securities']['meta_value'] * $fundamentalDataOrganized['share_percentage_public']['meta_value']) / 100;
+            $share_percentage_public = ($fundamentalDataOrganized['no_of_securities'][$instrumentId]['meta_value'] * $fundamentalDataOrganized['share_percentage_public'][$instrumentId]['meta_value']) / 100;
 
 
             $chartData['timeStamps']=$timeStamps;
@@ -471,7 +471,7 @@ class DataBanksEodController extends Controller
         }
 
 
-        $m->addPlotAreaTitle(BottomLeft, sprintf("<*font=arial.ttf,size=8*>%s - Open: %s High: %s Low: %s Close: %s Volume: %s   NOS: %s Public( %s ): %s", $chartData['lastday'], $chartData['open'],$chartData['high'],$chartData['low'],$chartData['close'],$chartData['volume'],$chartData['fundamentalDataOrganized']['no_of_securities']['meta_value'],$chartData['publicText'],$chartData['share_percentage_public']));
+        $m->addPlotAreaTitle(BottomLeft, sprintf("<*font=arial.ttf,size=8*>%s - Open: %s High: %s Low: %s Close: %s Volume: %s   NOS: %s Public( %s ): %s", $chartData['lastday'], $chartData['open'],$chartData['high'],$chartData['low'],$chartData['close'],$chartData['volume'],$chartData['fundamentalDataOrganized']['no_of_securities'][$instrumentId]['meta_value'],$chartData['publicText'],$chartData['share_percentage_public']));
 
         ChartRepository::addMovingAvg($m, $mov1, $avgPeriod1, 0x663300);
 
