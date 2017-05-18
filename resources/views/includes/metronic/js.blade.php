@@ -4,9 +4,10 @@
 <script src="{{ URL::asset('metronic/assets/global/plugins/ie8.fix.min.js') }}"></script>
 <![endif]-->
 <script src="{{ mix('/metronic_home.js') }}"></script>
+<script src="{{ URL::asset('metronic_custom/custom.js') }}" type="text/javascript"></script>
 <script src="/js/application.js"></script>
 <!--<script src="https://code.jquery.com/jquery-1.12.4.js"></script>-->
-{{--<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>--}}
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="{{ URL::asset('metronic_custom/highstock/code/js/highstock.js') }}"></script>
 
 <!-- Bootstrap Select -->
@@ -29,6 +30,7 @@
 <!-- Toastr -->
 <script src="{{ asset('metronic/assets/global/plugins/bootstrap-toastr/toastr.min.js') }}"></script>
 @include('includes.flash.toastr')
+
 
 
 <script>

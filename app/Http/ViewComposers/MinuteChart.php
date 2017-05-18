@@ -91,7 +91,7 @@ class MinuteChart
        // date_default_timezone_set('UTC');
         $viewdata= $view->getData();
 
-        $inst_id=$viewdata['instrument_id'];
+        $inst_id=(int)$viewdata['instrument_id'];
         $minuteChartData = DataBanksIntradayRepository::getDataForMinuteChart($inst_id,5);
         $instrumentInfo=InstrumentRepository::getInstrumentsById(array($inst_id))->first();
 
@@ -109,7 +109,6 @@ class MinuteChart
         $chartData['trade_date'] = '10-12-8656';
         $chartData['bullBear'] = array_reverse($minuteChartData['bullBear']);
         $chartData['day_total_volume'] = $minuteChartData['day_total_volume'];
-
         $view->with('chartData', $chartData);
     }
 

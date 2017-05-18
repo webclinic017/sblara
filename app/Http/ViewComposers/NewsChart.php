@@ -43,7 +43,7 @@ class NewsChart
 
         $instrument_id=13;
         if(isset($viewdata['instrument_id']))
-        $instrument_id=$viewdata['instrument_id'];
+        $instrument_id=(int)$viewdata['instrument_id'];
 
         $instrumentInfo=InstrumentRepository::getInstrumentsById(array($instrument_id))->first();
         $instrument_code=$instrumentInfo->instrument_code;

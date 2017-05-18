@@ -119,6 +119,30 @@ class AjaxController extends Controller
     	UserRepository::saveUserInfo(array('market_monitor_settings'),serialize($savedUserData),5);
     	return view('monitor');
     }
+    public function load_block($param)
+    {
+        $paramArr=explode(':',$param);
+        $viewData=array();
+        foreach($paramArr as $each_param)
+        {
+            $explodeArr=explode('=',$each_param);
+            $param_name=$explodeArr[0];
+            $param_value=$explodeArr[1];
+
+            $viewData[$param_name]=$param_value;
+
+        }
+        $viewData=r_collect($viewData);
+
+        return response()->view('load_block',
+            [
+                'viewData' => $viewData
+
+            ]
+        //);
+        )->setTtl(60);
+        //return view('load_block',['viewData' => $viewData,'insid' => 12]);
+    }
 
     public function marketDepthData($inst_id)
     {

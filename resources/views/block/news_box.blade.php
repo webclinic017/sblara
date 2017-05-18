@@ -29,34 +29,13 @@
         </div>
     </div>
 
-    {{--<div id="js-filters-lightbox-gallery1" class="cbp-l-filters-dropdown cbp-l-filters-dropdown-floated">
-                <div class="cbp-l-filters-dropdownWrap border-grey-salsa">
-                    <div class="cbp-l-filters-dropdownHeader uppercase">Sort News</div>
-                    <div class="cbp-l-filters-dropdownList">
-                        <div data-filter="*" class="cbp-filter-item-active cbp-filter-item uppercase"> All (
-                            <div class="cbp-filter-counter"></div> items) </div>
-
-                            @foreach($searchKeyArr as $row)
-                             <div data-filter=".{{$row['filter_key']}}" class="cbp-filter-item uppercase"> {{$row['label']}} (
-                            <div class="cbp-filter-counter"></div> items) </div>
-                            @endforeach
-
-                    </div>
-                </div>
-    </div>--}}
 
 </div>
 
-@push('css')
-
 <link href="{{ URL::asset('metronic/assets/global/plugins/cubeportfolio/css/cubeportfolio.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('metronic/assets/pages/css/portfolio.min.css') }}" rel="stylesheet" type="text/css" />
-@endpush
-
-@push('scripts')
 <script src="{{ URL::asset('metronic/assets/global/plugins/cubeportfolio/js/jquery.cubeportfolio.min.js') }}" type="text/javascript"></script>
 <script src="{{ URL::asset('metronic/assets/pages/scripts/portfolio-3.min.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
 
 </script>
-@endpush

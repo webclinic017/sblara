@@ -1,14 +1,11 @@
 @extends('layouts.metronic.default')
 
+@section('page_heading')
+{{$instrumentInfo->name}}
+@endsection
+
 @section('content')
-<div class="row margin-bottom-20">
-<div class="col-lg-6 col-md-3 col-sm-6 col-xs-12">
-<h4>{{$instrumentInfo->name}}</h4>
-</div>
-<div class="col-lg-6 col-md-3 col-sm-6 col-xs-12">
-@include('html.instrument_list_bs_select',['bs_select_id'=>'instruments'])
-</div>
-</div>
+
 
 <div class="clearfix"></div>
 
@@ -278,14 +275,13 @@
 @endsection
 
 @push('scripts')
-<script type="text/javascript">
 
+<script type="text/javascript">
    $( "#instruments" ).change(function() {
       var insId = $("#instruments").selectpicker("val");
       var url = "{{ url('/fundamental-details/') }}/"+insId;
       window.location = url;
-     });
-
+    });
 
 </script>
 @endpush
