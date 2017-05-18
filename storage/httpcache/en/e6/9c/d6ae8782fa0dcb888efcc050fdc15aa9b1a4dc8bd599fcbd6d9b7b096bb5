@@ -1,0 +1,217 @@
+<div style="height: 400px" id="infovis"></div>
+<link href="http://sblara.dev/metronic_custom/market_frame/treemap.css" rel="stylesheet" type="text/css" />
+<script src="http://sblara.dev/metronic_custom/market_frame/jit-yc.js"></script>
+
+<script>
+
+var labelType, useGradients, nativeTextSupport, animate;
+
+(function() {
+    var ua = navigator.userAgent,
+        iStuff = ua.match(/iPhone/i) || ua.match(/iPad/i),
+        typeOfCanvas = typeof HTMLCanvasElement,
+        nativeCanvasSupport = (typeOfCanvas == 'object' || typeOfCanvas == 'function'),
+        textSupport = nativeCanvasSupport
+            && (typeof document.createElement('canvas').getContext('2d').fillText == 'function');
+    //I'm setting this based on the fact that ExCanvas provides text support for IE
+    //and that as of today iPhone/iPad current text support is lame
+    labelType = (!nativeCanvasSupport || (textSupport && !iStuff))? 'Native' : 'HTML';
+    nativeTextSupport = labelType == 'Native';
+    useGradients = nativeCanvasSupport;
+    animate = !(iStuff || !nativeCanvasSupport);
+})();
+
+var Log = {
+    elem: false,
+    write: function(text){
+        if (!this.elem)
+            this.elem = document.getElementById('log');
+        this.elem.innerHTML = text;
+        this.elem.style.left = (500 - this.elem.offsetWidth / 2) + 'px';
+    }
+};
+
+function sbTip(tip, node, isLeaf, domElement) {
+    var data = node.data;
+    var arrowClass = 0 < data.$price_change_per ? 'priceUpHeaderSearch' : (0 == data.$price_change_per) ? 'priceStaticHeaderSearch' : 'priceDownHeaderSearch';
+    var html = "<div class=\"tip-wrap\"><span style='font-weight:bold'>" + node.name + "</span>";
+    if (data.$price_change_per != undefined) {
+        html += "&nbsp;<span class='" + arrowClass + "'>&nbsp;</span>&nbsp; &nbsp;&nbsp;<br>";
+    }
+    if (data.$sector != undefined) {
+        html += "<span class='tip-node-attributes-sector'>" + data.$sector + "</span><br>";
+    }
+    if (data.$volume) {
+        html += "<span class='tip-node-attributes-key'>Volume : <span class='tip-node-attributes-value'>" + data.$volume + "</span></span><br>";
+    } else if (data.$turn_over) {
+        html += "<span class='tip-node-attributes-key'>Turnover : <span class='tip-node-attributes-value'>" + data.$turn_over + "</span></span><br>";
+    } else if (data.$no_of_trade) {
+        html += "<span class='tip-node-attributes-key'>Trades : <span class='tip-node-attributes-value'>" + data.$no_of_trade + "</span></span><br>";
+    }
+    if (data.$price != undefined) {
+        html += "<span class='tip-node-attributes-key'>Current Price : <span class='tip-node-attributes-value'>" + data.$price + "</span></span><br>";
+    }
+    if (data.$price_change_per != undefined) {
+        html += "<span class='tip-node-attributes-key'>Change Percent : <span class='tip-node-attributes-value'>" + data.$price_change_per + " % </span></span><br>";
+    }
+    html += "</div>";
+    tip.innerHTML = html;
+}
+
+function setFontSize(node) {
+    var noOfCharacters = node.name.length;
+    var labelElementWidth = parseInt(node.endData.$width);
+    var proposingFontSize;
+    proposingFontSize = parseInt(labelElementWidth / noOfCharacters);
+    proposingFontSize = parseInt(proposingFontSize * (1.12));
+    return proposingFontSize;
+}
+
+function init(){
+    //init data
+    var LIGHT_RED = "light-red";
+    var DARK_RED = "deep-red";
+    var DARK = "dark";
+    var DARK_GREEN = "deep-green";
+    var LIGHT_GREEN = "light-green";
+    var EXCHANGE_AREA = 1197.443;
+
+    var FONT_THRESHOLD_MIN_SIZE = 7;
+    var REDUCE = 3;
+    var PUSH_VAL = 4;
+    var containerHeight = $jit.id('infovis').offsetHeight;
+    var containerWidth = $jit.id('infovis').offsetWidth;
+    var containerArea = containerHeight * containerWidth;
+
+    var json = {"data":{"$class":"exchnage"},"id":"root","name":"Dhaka Stock Exchange","children":[{"children":[{"children":[],"data":{"playcount":208,"$color":"#AA5432","$class":"stock","$symbol":"ACI","$price":500.8,"$sector":"Pharmaceuticals & Chemicals","$volume":182180,"$no_of_trade":844,"$turn_over":91.06,"$price_change":2.4,"$price_change_per":0.48,"$image":"#","$area":91.06},"id":"dse_16ACI","name":"ACI"},{"children":[],"data":{"playcount":208,"$color":"#AA5432","$class":"stock","$symbol":"ACIFORMULA","$price":210.9,"$sector":"Pharmaceuticals & Chemicals","$volume":349856,"$no_of_trade":1127,"$turn_over":74.152,"$price_change":-1.6,"$price_change_per":-0.75,"$image":"#","$area":74.152},"id":"dse_16ACIFORMULA","name":"ACIFORMULA"},{"children":[],"data":{"playcount":208,"$color":"#AA5432","$class":"stock","$symbol":"ACMELAB","$price":115.1,"$sector":"Pharmaceuticals & Chemicals","$volume":951020,"$no_of_trade":1585,"$turn_over":110.063,"$price_change":-1.2,"$price_change_per":-1.03,"$image":"#","$area":110.063},"id":"dse_16ACMELAB","name":"ACMELAB"},{"children":[],"data":{"playcount":208,"$color":"#AA5432","$class":"stock","$symbol":"ACTIVEFINE","$price":50.4,"$sector":"Pharmaceuticals & Chemicals","$volume":1890916,"$no_of_trade":1015,"$turn_over":95.699,"$price_change":-0.9,"$price_change_per":-1.75,"$image":"#","$area":95.699},"id":"dse_16ACTIVEFINE","name":"ACTIVEFINE"},{"children":[],"data":{"playcount":208,"$color":"#AA5432","$class":"stock","$symbol":"AMBEEPHA","$price":387.8,"$sector":"Pharmaceuticals & Chemicals","$volume":2430,"$no_of_trade":72,"$turn_over":0.946,"$price_change":-1.9,"$price_change_per":-0.49,"$image":"#","$area":0.946},"id":"dse_16AMBEEPHA","name":"AMBEEPHA"},{"children":[],"data":{"playcount":208,"$color":"#AA5432","$class":"stock","$symbol":"BEACONPHAR","$price":21.5,"$sector":"Pharmaceuticals & Chemicals","$volume":721688,"$no_of_trade":536,"$turn_over":15.57,"$price_change":-0.4,"$price_change_per":-1.83,"$image":"#","$area":15.57},"id":"dse_16BEACONPHAR","name":"BEACONPHAR"},{"children":[],"data":{"playcount":208,"$color":"#AA5432","$class":"stock","$symbol":"BXPHARMA","$price":118.5,"$sector":"Pharmaceuticals & Chemicals","$volume":1887257,"$no_of_trade":2060,"$turn_over":223.526,"$price_change":-0.1,"$price_change_per":-0.08,"$image":"#","$area":223.526},"id":"dse_16BXPHARMA","name":"BXPHARMA"},{"children":[],"data":{"playcount":208,"$color":"#AA5432","$class":"stock","$symbol":"BXSYNTH","$price":8,"$sector":"Pharmaceuticals & Chemicals","$volume":52767,"$no_of_trade":31,"$turn_over":0.422,"$price_change":0,"$price_change_per":0,"$image":"#","$area":0.422},"id":"dse_16BXSYNTH","name":"BXSYNTH"},{"children":[],"data":{"playcount":208,"$color":"#AA5432","$class":"stock","$symbol":"CENTRALPHL","$price":28.9,"$sector":"Pharmaceuticals & Chemicals","$volume":5539645,"$no_of_trade":2820,"$turn_over":162.342,"$price_change":-1.8,"$price_change_per":-5.86,"$image":"#","$area":162.342},"id":"dse_16CENTRALPHL","name":"CENTRALPHL"},{"children":[],"data":{"playcount":208,"$color":"#AA5432","$class":"stock","$symbol":"FARCHEM","$price":25.6,"$sector":"Pharmaceuticals & Chemicals","$volume":1783298,"$no_of_trade":1419,"$turn_over":45.848,"$price_change":-0.4,"$price_change_per":-1.54,"$image":"#","$area":45.848},"id":"dse_16FARCHEM","name":"FARCHEM"},{"children":[],"data":{"playcount":208,"$color":"#AA5432","$class":"stock","$symbol":"GHCL","$price":40.6,"$sector":"Pharmaceuticals & Chemicals","$volume":50269,"$no_of_trade":112,"$turn_over":2.05,"$price_change":-0.7,"$price_change_per":-1.69,"$image":"#","$area":2.05},"id":"dse_16GHCL","name":"GHCL"},{"children":[],"data":{"playcount":208,"$color":"#AA5432","$class":"stock","$symbol":"GLAXOSMITH","$price":1539.7,"$sector":"Pharmaceuticals & Chemicals","$volume":163,"$no_of_trade":10,"$turn_over":0.251,"$price_change":-0.5,"$price_change_per":-0.03,"$image":"#","$area":0.251},"id":"dse_16GLAXOSMITH","name":"GLAXOSMITH"},{"children":[],"data":{"playcount":208,"$color":"#AA5432","$class":"stock","$symbol":"IBNSINA","$price":246,"$sector":"Pharmaceuticals & Chemicals","$volume":31476,"$no_of_trade":300,"$turn_over":7.804,"$price_change":-3.1,"$price_change_per":-1.24,"$image":"#","$area":7.804},"id":"dse_16IBNSINA","name":"IBNSINA"},{"children":[],"data":{"playcount":208,"$color":"#AA5432","$class":"stock","$symbol":"IMAMBUTTON","$price":14.1,"$sector":"Pharmaceuticals & Chemicals","$volume":3000,"$no_of_trade":10,"$turn_over":0.042,"$price_change":-0.4,"$price_change_per":-2.76,"$image":"#","$area":0.042},"id":"dse_16IMAMBUTTON","name":"IMAMBUTTON"},{"children":[],"data":{"playcount":208,"$color":"#AA5432","$class":"stock","$symbol":"JMISMDL","$price":186.4,"$sector":"Pharmaceuticals & Chemicals","$volume":142839,"$no_of_trade":716,"$turn_over":26.53,"$price_change":1.8,"$price_change_per":0.98,"$image":"#","$area":26.53},"id":"dse_16JMISMDL","name":"JMISMDL"},{"children":[],"data":{"playcount":208,"$color":"#AA5432","$class":"stock","$symbol":"KEYACOSMET","$price":15.4,"$sector":"Pharmaceuticals & Chemicals","$volume":3611119,"$no_of_trade":1366,"$turn_over":55.914,"$price_change":-0.2,"$price_change_per":-1.28,"$image":"#","$area":55.914},"id":"dse_16KEYACOSMET","name":"KEYACOSMET"},{"children":[],"data":{"playcount":208,"$color":"#AA5432","$class":"stock","$symbol":"KOHINOOR","$price":385.7,"$sector":"Pharmaceuticals & Chemicals","$volume":886,"$no_of_trade":20,"$turn_over":0.342,"$price_change":-7,"$price_change_per":-1.78,"$image":"#","$area":0.342},"id":"dse_16KOHINOOR","name":"KOHINOOR"},{"children":[],"data":{"playcount":208,"$color":"#AA5432","$class":"stock","$symbol":"LIBRAINFU","$price":497.8,"$sector":"Pharmaceuticals & Chemicals","$volume":11233,"$no_of_trade":374,"$turn_over":5.636,"$price_change":-12,"$price_change_per":-2.35,"$image":"#","$area":5.636},"id":"dse_16LIBRAINFU","name":"LIBRAINFU"},{"children":[],"data":{"playcount":208,"$color":"#AA5432","$class":"stock","$symbol":"MARICO","$price":1034.2,"$sector":"Pharmaceuticals & Chemicals","$volume":4225,"$no_of_trade":300,"$turn_over":4.363,"$price_change":17.3,"$price_change_per":1.7,"$image":"#","$area":4.363},"id":"dse_16MARICO","name":"MARICO"},{"children":[],"data":{"playcount":208,"$color":"#AA5432","$class":"stock","$symbol":"ORIONINFU","$price":56.9,"$sector":"Pharmaceuticals & Chemicals","$volume":83268,"$no_of_trade":176,"$turn_over":4.755,"$price_change":-0.6,"$price_change_per":-1.04,"$image":"#","$area":4.755},"id":"dse_16ORIONINFU","name":"ORIONINFU"},{"children":[],"data":{"playcount":208,"$color":"#AA5432","$class":"stock","$symbol":"ORIONPHARM","$price":50.4,"$sector":"Pharmaceuticals & Chemicals","$volume":939790,"$no_of_trade":656,"$turn_over":47.596,"$price_change":-0.2,"$price_change_per":-0.4,"$image":"#","$area":47.596},"id":"dse_16ORIONPHARM","name":"ORIONPHARM"},{"children":[],"data":{"playcount":208,"$color":"#AA5432","$class":"stock","$symbol":"PHARMAID","$price":265.2,"$sector":"Pharmaceuticals & Chemicals","$volume":21592,"$no_of_trade":217,"$turn_over":5.745,"$price_change":-1.5,"$price_change_per":-0.56,"$image":"#","$area":5.745},"id":"dse_16PHARMAID","name":"PHARMAID"},{"children":[],"data":{"playcount":208,"$color":"#AA5432","$class":"stock","$symbol":"RECKITTBEN","$price":1530,"$sector":"Pharmaceuticals & Chemicals","$volume":11,"$no_of_trade":2,"$turn_over":0.017,"$price_change":0,"$price_change_per":0,"$image":"#","$area":0.017},"id":"dse_16RECKITTBEN","name":"RECKITTBEN"},{"children":[],"data":{"playcount":208,"$color":"#AA5432","$class":"stock","$symbol":"RENATA","$price":1108.9,"$sector":"Pharmaceuticals & Chemicals","$volume":4780,"$no_of_trade":106,"$turn_over":5.293,"$price_change":3.2,"$price_change_per":0.29,"$image":"#","$area":5.293},"id":"dse_16RENATA","name":"RENATA"},{"children":[],"data":{"playcount":208,"$color":"#AA5432","$class":"stock","$symbol":"SALVOCHEM","$price":26.8,"$sector":"Pharmaceuticals & Chemicals","$volume":3652021,"$no_of_trade":1279,"$turn_over":98.826,"$price_change":-0.4,"$price_change_per":-1.47,"$image":"#","$area":98.826},"id":"dse_16SALVOCHEM","name":"SALVOCHEM"},{"children":[],"data":{"playcount":208,"$color":"#AA5432","$class":"stock","$symbol":"SQURPHARMA","$price":286.9,"$sector":"Pharmaceuticals & Chemicals","$volume":391560,"$no_of_trade":1054,"$turn_over":112.651,"$price_change":1.2,"$price_change_per":0.42,"$image":"#","$area":112.651},"id":"dse_16SQURPHARMA","name":"SQURPHARMA"}],"data":{"playcount":208,"$class":"sector","$area":1197.443},"id":"16","name":"Pharmaceuticals & Chemicals"}]};
+    //end
+    //init TreeMap
+    var tm = new $jit.TM.Squarified({
+        //where to inject the visualization
+        injectInto: 'infovis',
+        //parent box title heights
+        titleHeight: 15,
+        //enable animations
+        animate: animate,
+        //box offsets
+        offset: 1,
+        //Attach left and right click events
+        Events: {
+            enable: true,
+            onClick: function(node) {
+                if(node) tm.enter(node);
+            },
+            onRightClick: function() {
+                tm.out();
+            }
+        },
+        duration: 1000,
+        //Enable tips
+        Tips: {
+            enable: true,
+            //add positioning offsets
+            offsetX: 20,
+            offsetY: 20,
+            //implement the onShow method to
+            //add content to the tooltip when a node
+            //is hovered
+            onShow:sbTip
+        },
+        //Add the name of the node in the correponding label
+        //This method is called once, on label creation.
+        /*
+         onCreateLabel: function(domElement, node){
+         domElement.innerHTML = node.name;
+         var style = domElement.style;
+         style.display = '';
+         style.border = '1px solid transparent';
+         domElement.onmouseover = function() {
+         style.border = '1px solid #9FD4FF';
+         };
+         domElement.onmouseout = function() {
+         style.border = '1px solid transparent';
+         };
+         }
+         });*/
+
+        onCreateLabel: function(domElement, node) {
+            if (node.data.$class == 'exchange') {
+                domElement.innerHTML = node.name;
+                domElement.className = "node exchange";
+            } else if (node.data.$class == 'sector') {
+                domElement.innerHTML = node.name;
+                domElement.className = "node sector";
+            } else if (node.data.$class == 'stock') {
+                var colorClass = LIGHT_GREEN;
+                if (node.data.$price_change_per < -2.0) {
+                    colorClass = DARK_RED;
+                } else if (node.data.$price_change_per < -0) {
+                    colorClass = LIGHT_RED;
+                } else if (node.data.$price_change_per < 0) {
+                    colorClass = LIGHT_GREEN;
+                } else if (node.data.$price_change_per < 2.0) {
+                    colorClass = DARK_GREEN;
+                } else {
+                    colorClass = LIGHT_GREEN;
+                }
+                var fontSizeBySector = parseInt((node.data.$area / node.data.$sectorArea) * 80) + PUSH_VAL;
+                var percent = node.data.$price_change_per;
+                var fontSize;
+                var fontSizeAccordingToSectorArea = parseInt(((node.data.$area / node.data.$sectorArea) * (node.data.$sectorArea / EXCHANGE_AREA)) * 750) + 4;
+
+                var fontSizeAccordingToElementWidth = setFontSize(node);
+                fontSize = fontSizeAccordingToElementWidth;
+
+                var Browser = {
+                    Version: function() {
+                        var version = 999; // we assume a sane browser
+                        if (navigator.appVersion.indexOf("MSIE") != -1)
+                        // bah, IE again, lets downgrade version number
+                            version = parseFloat(navigator.appVersion.split("MSIE")[1]);
+                        return version;
+                    }
+                }
+
+                if (Browser.Version() <= 8) {
+
+                    fontSize =parseInt(fontSizeAccordingToSectorArea * 40 / 100);
+                    var dataw = node.data;
+                    if (dataw.$noOfTrades) {
+                        fontSize =parseInt(fontSizeAccordingToSectorArea * 100 / 100);
+                    }
+                    else if(dataw.$volume){
+
+                        fontSize =parseInt(fontSizeAccordingToSectorArea * 90 / 100);
+
+                    }
+                }
+                fontSize = Math.max(fontSize, FONT_THRESHOLD_MIN_SIZE);
+                var labelHight = fontSize * 2.2;
+                var name = node.name;
+                var percentMark = "%";
+                if (node.endData.$height < labelHight) {
+                    name = "";
+                    percent = "";
+                    percentMark = "";
+                }
+                var distance = parseInt((node.endData.$height / 2) - (labelHight / 2));
+                var top = (0 < distance) ? distance : 5;
+                var fontSizePercentageLabel = ( FONT_THRESHOLD_MIN_SIZE < parseInt(fontSize * 0.75)) ? parseInt(fontSize * 0.75) : FONT_THRESHOLD_MIN_SIZE;
+                domElement.innerHTML = "<div style='line-height:" + fontSize + "px;font-size:" + fontSize + "px; position: relative; top:" + top + "px;color: #ffffff'>" + name + " <br><span class='percent-class' style='font-size:" + fontSizePercentageLabel + "px;'>" + percent + percentMark + "</span></div>";
+                domElement.className = colorClass + " node stock";
+            }
+        }
+    });
+    tm.loadJSON(json);
+    tm.refresh();
+    //end
+
+}
+
+init();
+
+</script>
+
+
+
+
