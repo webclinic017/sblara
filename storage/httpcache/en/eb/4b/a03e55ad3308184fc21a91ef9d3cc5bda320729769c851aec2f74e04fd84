@@ -1,0 +1,25 @@
+<div class="portfolio-content portfolio-3">
+    <div class="clearfix">
+
+        <div id="js-filters-lightbox-gallery2" class="cbp-l-filters-button cbp-l-filters-left">
+        <div data-filter="*" class="cbp-filter-item-active cbp-filter-item btn blue btn-outline uppercase">All</div>
+        
+        </div>
+    </div>
+    <div class="scroller" style="height:400px" data-rail-visible="1" data-rail-color="yellow" data-handle-color="#a1b2bd">
+        <div id="js-grid-lightbox-gallery" class="cbp">
+
+                </div>
+    </div>
+
+
+</div>
+
+<link href="http://sblara.dev/metronic/assets/global/plugins/cubeportfolio/css/cubeportfolio.css" rel="stylesheet" type="text/css" />
+<link href="http://sblara.dev/metronic/assets/pages/css/portfolio.min.css" rel="stylesheet" type="text/css" />
+<script src="http://sblara.dev/metronic/assets/global/plugins/cubeportfolio/js/jquery.cubeportfolio.min.js" type="text/javascript"></script>
+<script src="http://sblara.dev/metronic/assets/pages/scripts/portfolio-3.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+</script>
+
