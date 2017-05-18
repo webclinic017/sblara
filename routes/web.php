@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 
 // My Contests Update Statuses routes..
 Route::patch('/mycontests/{contest}/approve/{user}', 'MyContestStatusesController@approve')->name('mycontests.approve.user');
+Route::patch('/mycontests/{contest}/disapprove/{user}', 'MyContestStatusesController@disapprove')->name('mycontests.disapprove.user');
 Route::patch('/mycontests/{contest}/block', 'MyContestStatusesController@block')->name('mycontests.block');
 Route::patch('/mycontests/{contest}/unblock', 'MyContestStatusesController@unblock')->name('mycontests.unblock');
 // Join Contest routes..

@@ -27,6 +27,23 @@ class MyContestStatusesController extends Controller
     }
 
     /**
+     * Disapprove member.
+     *
+     * @param  \App\User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function disapprove(Contest $contest, User $user)
+    {
+        $user->contestPortfolios()->updateExistingPivot($contest->id, [
+                                'approved' => false
+                            ]);
+
+        flash('Member successfully disapprove!', 'success');
+
+        return back();
+    }
+
+    /**
      * Block contest.
      *
      * @param  \App\Contest  $contest

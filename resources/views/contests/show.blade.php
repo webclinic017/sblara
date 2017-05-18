@@ -40,7 +40,11 @@
                             <tr class="text-center">
                                 <td></td>
                                 <td>
-                                    <a href="">{{ $user->name }}</a>
+                                    @if (auth()->check() AND $user->name === auth()->user()->name)
+                                        <a href="">{{ $user->name }}</a>
+                                    @else
+                                        {{ $user->name }}
+                                    @endif
                                 </td>
                                 <td>{{ $user->join_date }}</td>
                                 <td></td>
