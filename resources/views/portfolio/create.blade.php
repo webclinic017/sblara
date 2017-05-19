@@ -1,4 +1,4 @@
-@extends('layouts.default')
+@extends('layouts.metronic.default')
 @section('content')
 <form role="form" action="/portfolio" method="post">
     <div class="portlet light bordered ">

@@ -41,7 +41,7 @@
                                         @endif
                                     </td>
                                     <td>
-                                        <a href="" class="btn btn-primary btn-xs">View</a>
+                                        <a href="{{ route('contests.portfolios', $contest->pivot->id) }}" class="btn btn-primary btn-xs">View</a>
                                     </td>
                                 </tr>
                             @endif
