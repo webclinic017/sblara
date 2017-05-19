@@ -43,7 +43,10 @@
 
             <!-- BEGIN THEME LAYOUT STYLES -->
             <link href="{{ URL::asset('metronic/assets/layouts/layout5/css/layout.min.css') }}" rel="stylesheet" type="text/css" />
-
+	  		<link href="{{ URL::asset('metronic/assets/global/plugins/jquery-file-upload/blueimp-gallery/blueimp-gallery.min.css') }}" rel="stylesheet" type="text/css" />
+            <link href="{{ URL::asset('metronic/assets/global/plugins/jquery-file-upload/css/jquery.fileupload.css') }}" rel="stylesheet" type="text/css" />
+            <link href="{{ URL::asset('metronic/assets/global/plugins/jquery-file-upload/css/jquery.fileupload-ui.css') }}" rel="stylesheet" type="text/css" />
+      
             <!-- END THEME LAYOUT STYLES -->
             @stack('css')
 

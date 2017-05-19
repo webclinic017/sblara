@@ -4,6 +4,7 @@ namespace App;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use App\Repositories\InstrumentRepository;
+use DB;
 
 class DataBanksEod extends Model
 {
@@ -140,5 +141,25 @@ class DataBanksEod extends Model
 
     }
 
+    public static function getEodData($instruments){
+      $table = 'data_banks_eods';
+
+      $date_e=Carbon::now()->format('Y-m-d');
+      $date_b=Carbon::now()->subDays(365)->format('Y-m-d');
+
+      $sql = "SELECT `instrument_id`, `close`,`open`,`high`, `low`, `volume`, `trade`, `date` FROM $table WHERE date between '".$date_b."' and '".$date_e."' and `instrument_id` in (".$instruments.")  order by `instrument_id`  asc, `date` desc";
+
+      return DB::Select($sql);
+    }
+
+    public static function getCountDataByGroup($instruments){
+      $table = 'data_banks_eods';
+
+      $date_e=Carbon::now()->format('Y-m-d');
+      $date_b=Carbon::now()->subDays(365)->format('Y-m-d');
+
+      $sql = "SELECT `instrument_id`, count(*) as count FROM $table WHERE date between '".$date_b."' and '".$date_e."' and `instrument_id` in (".$instruments.")  group by `instrument_id`";
+      return DB::Select($sql);
+    }
 
 }
