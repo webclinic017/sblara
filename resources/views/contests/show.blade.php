@@ -36,9 +36,13 @@
                     </thead>
 
                     <tbody>
+                        @php
+                            $rank = 1;
+                        @endphp
+                        
                         @forelse ($contest->contestUsers as $user)
                             <tr class="text-center">
-                                <td></td>
+                                <td>{{ $rank++ }}</td>
                                 <td>
                                     @if (auth()->check() AND $user->name === auth()->user()->name)
                                         <a href="">{{ $user->name }}</a>
