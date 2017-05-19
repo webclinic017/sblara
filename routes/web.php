@@ -32,28 +32,10 @@ Route::get('/passport', 'Passport\PassportController@show');
 
 //Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout'); //Just added to fix issue. By default logout is post
 Route::get('/filter', 'FilterController@index');
-Route::get('/filter/debug', 'FilterController@debug');
-
-
-Route::get('/parce/{save}', 'ParcerController@index');
-Route::get('/parce2/{save}', 'ParcerController@index2');
-Route::get('/adx/{save}', 'ParcerController@adx');
-Route::get('/atr/{save}', 'ParcerController@atr');
-Route::get('/volume/{save}', 'ParcerController@volume');
-Route::get('/vma/{save}', 'ParcerController@vma');
-Route::get('/obv/{save}', 'ParcerController@obv');
-Route::get('/price_change1/{save}', 'ParcerController@price_change1');
-Route::get('/price_change2/{save}', 'ParcerController@price_change2');
-Route::get('/HiLo/{save}', 'ParcerController@HiLo');
-Route::get('/supres/{save}', 'ParcerController@supres');
-
-Route::get('/macd/{save}', 'ParcerController@macd');
-Route::get('/bb/{save}', 'ParcerController@bb');
-Route::get('/divergence/{save}', 'ParcerController@divergence');
-Route::get('/candlestick/{save}', 'ParcerController@candlestick');
-Route::get('/william/{save}', 'ParcerController@william');
 
 Route::post('/filter', 'FilterController@filter');
+
+Route::post('/save_filter', 'FilterController@save_filter');
 
 Route::get('my-page', function(){
     return Response::make('Hello!')->setTtl(60); // Cache 1 minute

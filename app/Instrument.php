@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
+use DB;
 
 class Instrument extends Model
 {
@@ -80,6 +81,18 @@ class Instrument extends Model
 
 
     }
+
+    public static function getInstrumentsScripOnlyByDB($exchangeId=0){
+      if(!$exchangeId) {
+          $exchangeId = session('active_exchange_id', 1);
+      }
+
+      $sql = "select `id` ,`instrument_code` from `instruments` where exists (select * from `sector_lists` where `instruments`.`sector_list_id` = `sector_lists`.`id` and `exchange_id` = '".$exchangeId."' and `name` not like 'Index' and `name` not like 'Debenture' and `name` not like 'Treasury Bond') and `active` = '1' order by `id` asc";
+      $instruments = DB::Select($sql);
+
+      return $instruments;
+    }
+
     public static function getInstrumentsScripWithIndex($exchangeId=0)
     {
 

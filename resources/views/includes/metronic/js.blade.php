@@ -27,6 +27,15 @@
 <script src="{{ asset('metronic/assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}"></script>
 <script src="{{ asset('metronic/assets/pages/scripts/ui-confirmations.min.js') }}"></script>
 
+<!-- Datatables -->
+
+<script src="{{ URL::asset('metronic/assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
+<script src="{{ URL::asset('metronic/assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
+<script src="{{ URL::asset('metronic/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
+<script src="{{ URL::asset('metronic/assets/pages/scripts/table-datatables-buttons.min.js') }}" type="text/javascript"></script>
+<script src="{{ URL::asset('metronic/assets/global/plugins/horizontal-timeline/horizontal-timeline.js') }}" type="text/javascript"></script>
+
+
 <!-- Toastr -->
 <script src="{{ asset('metronic/assets/global/plugins/bootstrap-toastr/toastr.min.js') }}"></script>
 @include('includes.flash.toastr')

@@ -8,24 +8,16 @@ use App\Instrument;
 use App\Library\Parser;
 use App\Library\Functions;
 use App\Library\Operation;
-use App\Library\Logger;
 use App\DataBanksEod;
-use DB;
 
 
 class FilterController extends Controller
 {
-    //
-    private $log;
-
     protected $parser;
     protected $functions;
     protected $operation;
-    //     = new Parser();
 
     public function __construct(){
-      $this->log = new Logger;
-    //  $this->log->clear();
       $this->parser = new Parser;
       $this->functions = new Functions;
       $this->operation = new Operation;
@@ -35,12 +27,6 @@ class FilterController extends Controller
       $technical_filters = CategoryFilter::where('name','technical')->get();
       $fundamental_filters = CategoryFilter::where('name','fundamental')->get();
       $instruments = Instrument::all();
-
-      //print_r($category_filters[0]->name);
-      //print_r($category_filters[0]->kind_filters[0]->name);
-      //print_r($category_filters[0]->kind_filters[0]->filters[0]->name);
-      //print_r($category_filters[0]->kind_filter->);
-      //$list_content = $list_content->toArray();
 
       return view('filter', array('technical_filters' => $technical_filters, 'fundamental_filters' => $fundamental_filters, 'instruments' => $instruments));
     }
@@ -63,164 +49,79 @@ class FilterController extends Controller
         }
         $offset = $offset + $gc['count'];
       }
-      //echo "instrument_id: $instrument_id ||| count: $cur_count<br>";
       if($cur_count  >= $limit){
-        //echo "true<br>";
         return $offset;
       }
       return -1;
     }
 
-    public function parce_data($data, $group_count, $need_instruments, $filter, $limit = 250){
-      //dd($group_count);
+    public function parce_data($data, $group_count, $need_instruments, $filter, $limit = 210, $debug = false){
       $counter = 0;
+      $k = 0;
       $array_result = array();
 
       foreach($need_instruments as $instrument){
-
-      //  dd($instrument);
-        //if($counter < 100) {$counter++; continue;}
         $new_data = array();
         $offset = $this->get_index_data($instrument->id, $group_count, $limit);
+
         if($offset == -1) { /*echo "ERROR $offset <br>";*/ continue;}
 
-        //echo "<p>";
-        //echo 'instrument_id: '.$instrument->id."<br>";
-        ////echo '$i: '.$i."<br>";
-        //echo '$offset: '.$offset."<br>";
-        //echo '$limit: '.$limit."<br>";
-        //echo '$counter: '.$counter."<br>";
         for($i = $offset + $limit - 1, $j = 0; $i >= $offset; $i--, $j++){
-          //$new_data[$j] = $data[$i];
-          try{
-
           $new_data[$j]['instrument_id'] = $data[$i]->instrument_id;
           $new_data[$j]['date'] = $data[$i]->date;
           $new_data[$j]['open'] = $data[$i]->open;
           $new_data[$j]['close'] = $data[$i]->close;
           $new_data[$j]['high'] = $data[$i]->high;
           $new_data[$j]['low'] = $data[$i]->low;
-          }
-          catch(Exception $e){
-
-
-            //return;
-          }
+          $new_data[$j]['volume'] = $data[$i]->volume;
+          $new_data[$j]['trade'] = $data[$i]->trade;
         }
         $counter++;
 
-        // filter
-        //echo "counter: $counter<br>";
         if($this->caclulate($new_data, $filter, $instrument->id)){
-        //  echo "asfsd<br>";
-      //    if($request->input('debug')){
-      //      return redirect('filter/debug');
-      //      //echo 'DEBUG<br>';
-      //      return ;
+          if($debug){
+            return $this->debug();
+          }
+          $index = count($new_data) - 1;
+          $array_result[$k]['n'] = $k + 1;
+          $array_result[$k]['instrument_code'] = $instrument->instrument_code;
+          $array_result[$k]['m'] = "1M";
+          $array_result[$k]['open'] = $new_data[$index]['open'];
+          $array_result[$k]['high'] = $new_data[$index]['high'];
+          $array_result[$k]['low'] = $new_data[$index]['low'];
+          $array_result[$k]['close'] = $new_data[$index]['close'];
+          $array_result[$k]['trade'] = $new_data[$index]['trade'];
+          $array_result[$k]['volume'] = $new_data[$index]['volume'];
+          $array_result[$k]['change'] = $new_data[$index]['open'] - $new_data[$index - 1]['open'];
+          $array_result[$k]['change_p'] = 100 - $new_data[$index - 1]['open'] * 100 / $new_data[$index]['open'];
 
-      //    }
-          $array_result[] = $instrument;
-          // display
-        //  echo $instrument->id." good<br>";
-          //break;
+          $k++;
         }
         else{
-          //echo $instrument->id." BAD<br>";
         }
       }
       return $array_result;
     }
 
-    public function parce_data_bakck($data, $group_count, $need_instruments, $filter, $limit = 250){
-      //dd($group_count);
-      $counter = 0;
-      $array_result = array();
+    public function save_filter(Request $request){
+      $inputs = $request->all();
 
-      foreach($need_instruments as $instrument){
-
-      //  dd($instrument);
-        //if($counter < 100) {$counter++; continue;}
-        $new_data = array();
-        $offset = 0;
-        $found = false;
-
-        foreach($group_count as $gc){
-        //  print_r($gc['instrument_id']);
-        //  echo ($gc['instrument_id']);
-          if($gc['instrument_id'] == $instrument->id) {
-            $found = true;
-            if($gc['count'] < $limit) {
-              $offset == -1;
-            }
-            break;
-          }
-          /*
-          if($gc->count < $limit) {
-            $offset == -1;
-            echo $gc->instrument_id." <b>".$gc->count." <$limit</b><br>";
-            break;
-          }
-          */
-          $offset = $offset + $gc['count'];
-        }
-
-        if(!$found) {echo "NOT FOUND!"; continue;}
-        if($offset == -1) {echo "EROR instrument_id: $instrument<br>"; continue;}
-
-        echo "<p>";
-        echo 'instrument_id: '.$instrument->id."<br>";
-        //echo '$i: '.$i."<br>";
-        echo '$offset: '.$offset."<br>";
-        echo '$limit: '.$limit."<br>";
-        echo '$counter: '.$counter."<br>";
-        for($i = $offset + $limit - 1, $j = 0; $i >= $offset; $i--, $j++){
-          //$new_data[$j] = $data[$i];
-          try{
-
-          $new_data[$j]['instrument_id'] = $data[$i]->instrument_id;
-          $new_data[$j]['date'] = $data[$i]->date;
-          $new_data[$j]['open'] = $data[$i]->open;
-          $new_data[$j]['close'] = $data[$i]->close;
-          $new_data[$j]['high'] = $data[$i]->high;
-          $new_data[$j]['low'] = $data[$i]->low;
-          }
-          catch(Exception $e){
-
-
-            //return;
-          }
-        }
-        $counter++;
-
-        // filter
-        echo "counter: $counter<br>";
-        if($this->caclulate($new_data, $filter, $instrument->id)){
-          echo "asfsd<br>";
-      //    if($request->input('debug')){
-      //      return redirect('filter/debug');
-      //      //echo 'DEBUG<br>';
-      //      return ;
-
-      //    }
-          $array_result[] = $instrument;
-          // display
-          echo $instrument->id." good<br>";
-          //break;
-        }
-        else{
-          echo $instrument->id." BAD<br>";
-        }
+      $filter = "";
+      foreach ($inputs as $key => $input) {
+        if($input != "0" && $input[0] == '{') { $filter = $filter.$key.':'.$input."\r\n"; }
       }
-      return $array_result;
+      $filter = preg_replace("/\s*\r+/", '', $filter);
+      $myName = "filter.flt";
+      $headers = ['Content-type'=>'text/plain', 'test'=>'YoYo', 'Content-Disposition'=>sprintf('attachment; filename="%s"', $myName)];
+
+      return \Response::make($filter, 200, $headers);
     }
 
     public function filter(Request $request)
     {
-      //
-      $table = 'data_banks_eods';
-      $limit=250;
-      $date_b="2016-04-12";
-      $date_e="2017-04-20";
+      $debug = false;
+      $limit=220;
+
 
       $time_start = $this->microtime_float();
       $array_result = array();
@@ -229,36 +130,31 @@ class FilterController extends Controller
       foreach ($inputs as $input) {
         if($input != "0" && $input[0] == '{') { $filter = $filter.$input; }
       }
-      if($filter == "") {return false;}
+      if($filter == "") {return;}
 
-      $this->log->insert($filter,"filters",__FUNCTION__.__CLASS__);
       if($request->input('debug')){
+        $this->log = new Logger(true);
         $this->log->clear();
         $this->parser = new Parser(true);
         $this->functions = new Functions(true);
         $this->operation = new Operation(true);
-        //$instruments = Instrument::where('id', $request->input('instrument'))->get();
+
+        $need_instruments = Instrument::where('id', $request->input('instrument'))->get();
+        $debug = true;
       }
-
-      ////
-      ////
-      //$sql = "select * from `instruments` where exists (select * from `sector_lists` where `instruments`.`sector_list_id` = `sector_lists`.`id` and `exchange_id` = '1' and `name` not like 'Index' and `name` not like 'Debenture' and `name` not like 'Treasury Bond') and `active` = '1' order by `id` asc";
-      $sql = "select `id` ,`instrument_code` from `instruments` where exists (select * from `sector_lists` where `instruments`.`sector_list_id` = `sector_lists`.`id` and `exchange_id` = '1' and `name` not like 'Index' and `name` not like 'Debenture' and `name` not like 'Treasury Bond') and `active` = '1' order by `id` asc";
-      $need_instruments = DB::Select($sql);
-
-      $str = "";
+      else {
+        $need_instruments = Instrument::getInstrumentsScripOnlyByDB();
+      }
+      $instr = "";
       foreach ($need_instruments as $instrument){
-        $str = $str.$instrument->id.",";
-      }
-      $str = substr ($str, 0, strlen($str)-2);
-      //echo $str."<br>";
-      $sql = "SELECT `instrument_id`, `close`,`open`,`high`, `low`, `date` FROM $table WHERE date between '".$date_b."' and '".$date_e."' and `instrument_id` in (".$str.")  order by `instrument_id`  asc, `date` desc";
-      $datas = DB::Select($sql);
-      //dd($datas);
-      $sql = "SELECT `instrument_id`, count(*) as count FROM $table WHERE date between '".$date_b."' and '".$date_e."' and `instrument_id` in (".$str.")  group by `instrument_id`";
-      $group_index = DB::Select($sql);
 
-    //  dd($group_index);
+        $instr = $instr.$instrument->id.",";
+
+      }
+      $instr = substr ($instr, 0, strlen($instr)-1);
+      $datas = DataBanksEod::getEodData($instr);
+      $group_index = DataBanksEod::getCountDataByGroup($instr);
+
       $group_count = array();
       $i = 0;
       foreach ($need_instruments as $instrument) {
@@ -271,45 +167,33 @@ class FilterController extends Controller
         $i++;
       }
 
-      //print_r($group_count);
-      //dd($group_index);
-      $array_result = $this->parce_data($datas, $group_count, $need_instruments, $filter, $limit);
+      $array_result = $this->parce_data($datas, $group_count, $need_instruments, $filter, $limit, $debug);
 
-      ////
-      ////
       $time_end = $this->microtime_float();
       $time = $time_end - $time_start;
-      //echo "Spend time: $time second<br>";
-      return response()->json($array_result);
+
+      if(!$debug){
+        return response()->json($array_result);
+      }
+
     }
 
     private function caclulate($data, $filter, $instrument_id){
 
       $sentence = $this->parser->parse_sentence($filter);
       foreach ($sentence as $word) {
-        //$id_query, $comment = "", $result = "", $function = ""
-        $this->log->insert("$word","word",__FUNCTION__.__CLASS__);
-
         $conditions = $this->parser->parse_and($word);
         foreach ($conditions as $condition) {
-          $this->log->insert("$condition","condition",__FUNCTION__.__CLASS__);
-
           $function = $this->parser->parse_function($condition);
 
           $func = $function[1];  //compare increasing decreasing cross
           $arg = $function[2];
-          $this->log->insert($func,"func",__FUNCTION__.__CLASS__);
-          $this->log->insert($arg,"arg",__FUNCTION__.__CLASS__);
 
           $result = $this->operation->$func($data, $arg, $instrument_id);   // true or false
-          //dd($result);
           if($result || is_array($result)){     //is_array for candlestick
-            $this->log->insert('true',"result",__FUNCTION__.__CLASS__);
           }
           else{
-            $this->log->insert('false',"result",__FUNCTION__.__CLASS__);
             return false;
-
           }
         }
       }
@@ -319,7 +203,6 @@ class FilterController extends Controller
 
     public function debug(){
       $logs = $this->log->all();
-      //dd($logs);
       echo "<table border='1'>";
       foreach($logs as $log){
         echo "<tr><td><div style='width: 710px;word-wrap: break-word; max-height: 200px; overflow-y: scroll;'>".$log->comment."</div></td><td>".$log->result."</td><td>".$log->function."</td></tr>";
