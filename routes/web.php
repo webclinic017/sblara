@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('test2', function () {
-	return \App\Instrument::all();
+	return \App\Instrument::with('intraday')->get();
 });
 //
 Route::get('/portfolios/shares', 'PortfolioSharesController@create');

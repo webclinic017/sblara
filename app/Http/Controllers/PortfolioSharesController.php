@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\DataBanksIntraday;
+use App\Instrument;
 use Illuminate\Http\Request;
 
 class PortfolioSharesController extends Controller
@@ -23,13 +25,19 @@ class PortfolioSharesController extends Controller
      */
     public function create()
     {
-        $instruments = \App\Instrument::pluck('instrument_code', 'id');
+        $instruments = Instrument::pluck('instrument_code', 'id');
 
-        if (request()->company) {
+        if ($id = request()->company_info) {
+            // $company_info = Instrument::find($id);
 
+            $company_info = DataBanksIntraday::with('instrument', 'market')
+                                                  ->where('instrument_id', $id)
+                                                  ->latest('id')
+                                                  ->first();
+            // return $dataBankIntraDays;
         }
-        
-        return view('contest_portfolio_shares.create', compact('instruments'));
+
+        return view('contest_portfolio_shares.create', compact('instruments', 'company_info'));
     }
 
     /**
