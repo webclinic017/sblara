@@ -1,18 +1,20 @@
 <!--[if lt IE 9]>
-<script src="{{ URL::asset('metronic/assets/global/plugins/respond.min.js') }}"></script>
-<script src="{{ URL::asset('metronic/assets/global/plugins/excanvas.min.js') }}"></script>
-<script src="{{ URL::asset('metronic/assets/global/plugins/ie8.fix.min.js') }}"></script>
+<script src="{{ asset('metronic/assets/global/plugins/respond.min.js') }}"></script>
+<script src="{{ asset('metronic/assets/global/plugins/excanvas.min.js') }}"></script>
+<script src="{{ asset('metronic/assets/global/plugins/ie8.fix.min.js') }}"></script>
 <![endif]-->
-<script src="{{ mix('/metronic_home.js') }}"></script>
-<script src="{{ URL::asset('metronic_custom/custom.js') }}" type="text/javascript"></script>
-<script src="/js/application.js"></script>
-<!--<script src="https://code.jquery.com/jquery-1.12.4.js"></script>-->
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script src="{{ URL::asset('metronic_custom/highstock/code/js/highstock.js') }}"></script>
+<script src="{{ mix('metronic_home.js') }}"></script>
+<script src="{{ asset('metronic_custom/custom.js') }}"></script>
+<script src="{{ asset('js/application.js') }}"></script>
+<script src="{{ asset('metronic_custom/highstock/code/js/highstock.js') }}"></script>
 
 <!-- Bootstrap Select -->
 <script src="{{ asset('metronic/assets/global/plugins/bootstrap-select/js/bootstrap-select.min.js') }}"></script>
 <script src="{{ asset('metronic/assets/pages/scripts/components-bootstrap-select.min.js') }}"></script>
+
+<!-- Select2 -->
+<script src="{{ asset('metronic/assets/global/plugins/select2/js/select2.full.min.js') }}"></script>
+<script src="{{ asset('metronic/assets/pages/scripts/components-select2.min.js') }}"></script>
 
 <!-- Datepicker -->
 <script src="{{ asset('metronic/assets/global/plugins/moment.min.js') }}"></script>
@@ -28,34 +30,27 @@
 <script src="{{ asset('metronic/assets/pages/scripts/ui-confirmations.min.js') }}"></script>
 
 <!-- Datatables -->
-
-<script src="{{ URL::asset('metronic/assets/global/scripts/datatable.js') }}" type="text/javascript"></script>
-<script src="{{ URL::asset('metronic/assets/global/plugins/datatables/datatables.min.js') }}" type="text/javascript"></script>
-<script src="{{ URL::asset('metronic/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
-<script src="{{ URL::asset('metronic/assets/pages/scripts/table-datatables-buttons.min.js') }}" type="text/javascript"></script>
-<script src="{{ URL::asset('metronic/assets/global/plugins/horizontal-timeline/horizontal-timeline.js') }}" type="text/javascript"></script>
-
+<script src="{{ asset('metronic/assets/global/scripts/datatable.js') }}"></script>
+<script src="{{ asset('metronic/assets/global/plugins/datatables/datatables.min.js') }}"></script>
+<script src="{{ asset('metronic/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}"></script>
+<script src="{{ asset('metronic/assets/pages/scripts/table-datatables-buttons.min.js') }}"></script>
+<script src="{{ asset('metronic/assets/global/plugins/horizontal-timeline/horizontal-timeline.js') }}"></script>
 
 <!-- Toastr -->
 <script src="{{ asset('metronic/assets/global/plugins/bootstrap-toastr/toastr.min.js') }}"></script>
 @include('includes.flash.toastr')
-
-
+<!-- END PAGE LEVEL SCRIPTS -->
 
 <script>
-$(document).ready(function ()
-{
-    $('#clickmewow').click(function ()
-    {
-        $('#radio1003').attr('checked', 'checked');
-    });
-})
+	$(document).ready(function ()
+	{
+	    $('#clickmewow').click(function ()
+	    {
+	        $('#radio1003').attr('checked', 'checked');
+	    });
+	})
 </script>
-<script src="/js/slimscroll.min.js"></script>
-<script src="/js/search.js"></script>
 
+<script src="{{ asset('js/slimscroll.min.js') }}"></script>
+<script src="{{ asset('js/search.js') }}"></script>
 @stack('scripts')
-
-
-
-

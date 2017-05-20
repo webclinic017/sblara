@@ -72,7 +72,7 @@
                             </tr>
                         @else
                             <tr class="no-records-found text-center">
-                                <td colspan="13">No portfolio available. Please <a href="">buy share</a> to create your portfolio.</td>
+                                <td colspan="13">No portfolio available. Please <a href="{{ route('portfolios.shares.create') }}">buy share</a> to create your portfolio.</td>
                             </tr>
                         @endif
                     </tbody>

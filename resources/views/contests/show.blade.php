@@ -45,7 +45,7 @@
                                 <td>{{ $rank++ }}</td>
                                 <td>
                                     @if (auth()->check() AND $user->name === auth()->user()->name)
-                                        <a href="{{ route('contests.portfolios', $user->pivot->id) }}">{{ $user->name }}</a>
+                                        <a href="{{ route('contests.portfolios.show', $user->pivot->id) }}">{{ $user->name }}</a>
                                     @else
                                         {{ $user->name }}
                                     @endif

@@ -1,0 +1,232 @@
+<div id="mm_div_637877"></div>
+<script>
+    $(function () {
+
+        $('#mm_div_637877').highcharts({
+            chart: {
+                zoomType: 'xy',
+                defaultSeriesType: 'spline',
+               // plotBackgroundImage: 'http://www.new.stockbangladesh.com/img/chart_logo.gif',
+                events: {
+                    load: function() {
+                        this.renderer.image('http://www.new.stockbangladesh.com/img/chart_logo.gif', this.chartWidth/2.5, this.chartHeight/2.5, 86, 63).add();  // add image(url, x, y, w, h)
+                    }
+                },
+                showAxes: true,
+                shadow: false,
+                borderWidth: 1,
+                borderColor: "#D5DAE0",
+
+                spacingLeft: 2,
+                spacingRight: 2
+                //,height:300   // if height defined, scalling is not taking full canvas
+
+
+            },
+            exporting: {
+                buttons: {
+                    contextButton: {
+                        menuItems: [
+
+                            {
+                                textKey: 'downloadPNG',
+                                onclick: function () {
+                                    this.exportChart({filename: 'StockBangladesh_minute-chart'});
+                                }
+                            }]
+                    }
+                }
+            },
+            title: {
+                text: '1STPRIMFMF',
+                style: {
+                    fontSize: '12px'
+                },
+                margin: 1
+
+            },
+            subtitle: {
+                text: 'Total Vol:188590',
+                useHTML: true,
+//floating: true,
+                y: 23,
+                style: {
+                    fontSize: '10px'
+                }
+//margin: 50
+            },
+
+            xAxis: [
+                {
+                    categories:
+                       ["10:38","10:38","10:38","10:38","10:38","10:38","10:38","10:46","10:46","10:48","10:49","10:49","10:52","10:52","10:52","10:55","10:55","10:55","10:55","10:55","10:55","10:55","11:03","11:03","11:03","11:03","11:03","11:03","11:03","11:03","11:03","11:03","11:03","11:03","11:03","11:03","11:19","11:21","11:21","11:23","11:23","11:23","11:23","11:23","11:23","11:23","11:23","11:23","11:23","11:23","11:23","11:23","11:23","11:23","11:23","11:42","11:42","11:44","11:45","11:47","11:47","11:47","11:47","11:51","11:52","11:52","11:52","11:52","11:52","11:52","11:52","11:52","12:02","12:02","12:02","12:02","12:02","12:02","12:02","12:02","12:12","12:12","12:12","12:14","12:14","12:16","12:16","12:16","12:20","12:20","12:20","12:20","12:20","12:20","12:20","12:20","12:20","12:20","12:20","12:34","12:34","12:34","12:34","12:34","12:34","12:34","12:41","12:41","12:41","12:41","12:41","12:41","12:41","12:49","12:49","12:49","12:53","12:53","12:54","12:54","12:54","12:54","12:59","12:59","12:59","12:59","12:59","12:59","12:59","12:59","01:09","01:09","01:09","01:09","01:13","01:13","01:13","01:13","01:18","01:19","01:19","01:19","01:19","01:19","01:19","01:19","01:19","01:19","01:19","01:19","01:19","01:19","01:19","01:19","01:19","01:19","01:39","01:39","01:39","01:39","01:43","01:43","01:43","01:43","01:43","01:43","01:43","01:43","01:43","01:43","01:43","01:43","01:43","01:43","01:43","01:43","01:43","01:43","01:43","01:43","01:43","02:08","02:08","02:08","02:08","02:08","02:08","02:16","02:17","02:18","02:18","02:18","02:18","02:18","02:18","02:18","02:25","02:26","02:28","02:30"]
+
+                        //'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun','Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+                    ,
+                    tickInterval: 1,
+                    crosshair: true,
+                    labels: {
+                        enabled: true,
+                        rotation: -90,
+                        align: 'right'
+
+                        //x:10,
+                    }
+
+                }
+            ],
+            yAxis: [
+                { // Primary yAxis
+
+                    title: {
+                        /* text: 'Price',
+                         style: {
+                         color: Highcharts.getOptions().colors[1]
+                         }*/
+                        text: ''
+                    },
+                    id: 'y_price',
+                    enabled: false
+                },
+                { // Secondary yAxis
+                    title: {
+                        text: ''
+                    },
+                    enabled: false,
+                    labels: {
+                        format: '{value}',
+                        style: {
+                            color: '#1BA39C'
+                        }
+                    },
+                    id: 'y_volume',
+                    opposite: true
+                }
+            ],
+            tooltip: {
+                shared: true
+            },
+            credits: {
+                enabled: true,
+                href: "http://www.stockbangladesh.com",
+                text: "stockbangladesh.com",
+                style: {
+                    color: '#4572A7'
+
+                },
+                position: {
+                    align: 'right',
+                    verticalAlign: 'bottom'
+                    /*  x: 5,
+                     y: 15*/
+                }
+            },
+            legend: {
+                enabled: false
+                //layout: 'vertical',
+                /*   align: 'left',
+                 verticalAlign: 'bottom'*/
+                /* x: 120,
+                 verticalAlign: 'top',
+                 y: 100,*/
+                /*  floating: true,
+                 backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'*/
+            },
+            series: [
+                {
+                    name: 'Volume',
+                    type: 'column',
+                    color: '#8CC152',
+                    yAxis: 0,
+                    data: [{"color":"#ACB5C3","y":10000},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":500},{"color":"#ACB5C3","y":0},{"color":"#1BA39C","y":100},{"color":"#ACB5C3","y":50},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":19600},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":5000},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#EF4836","y":50},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":2000},{"color":"#ACB5C3","y":1000},{"color":"#ACB5C3","y":0},{"color":"#1BA39C","y":2200},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#EF4836","y":24980},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":20},{"color":"#ACB5C3","y":4980},{"color":"#ACB5C3","y":250},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":500},{"color":"#ACB5C3","y":170},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":2500},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":830},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":1170},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":1150},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#1BA39C","y":50},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#EF4836","y":1600},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":1000},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":80},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":3000},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":420},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#1BA39C","y":20},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#EF4836","y":2000},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#1BA39C","y":20},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#EF4836","y":1000},{"color":"#1BA39C","y":50},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#EF4836","y":12580},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#1BA39C","y":20},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#EF4836","y":5000},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#EF4836","y":10700},{"color":"#ACB5C3","y":20500},{"color":"#ACB5C3","y":900},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":0},{"color":"#ACB5C3","y":1000},{"color":"#1BA39C","y":3000},{"color":"#EF4836","y":10600},{"color":"#ACB5C3","y":11500}],
+                    tooltip: {
+                        valueSuffix: ''
+                    }
+
+                },
+                {
+                    name: 'Price',
+                    type: 'spline',
+                    color: '#D91E18',
+                    yAxis: 1,
+                    marker: {
+                        radius: 3
+                    },
+                    data: [{"color":"#ACB5C3","y":12},{"color":"#ACB5C3","y":12},{"color":"#ACB5C3","y":12},{"color":"#ACB5C3","y":12},{"color":"#ACB5C3","y":12},{"color":"#ACB5C3","y":12},{"color":"#ACB5C3","y":12},{"color":"#ACB5C3","y":12},{"color":"#ACB5C3","y":12},{"color":"#1BA39C","y":12.1},{"color":"#ACB5C3","y":12.1},{"color":"#ACB5C3","y":12.1},{"color":"#ACB5C3","y":12.1},{"color":"#ACB5C3","y":12.1},{"color":"#ACB5C3","y":12.1},{"color":"#ACB5C3","y":12.1},{"color":"#ACB5C3","y":12.1},{"color":"#ACB5C3","y":12.1},{"color":"#ACB5C3","y":12.1},{"color":"#ACB5C3","y":12.1},{"color":"#ACB5C3","y":12.1},{"color":"#ACB5C3","y":12.1},{"color":"#EF4836","y":12},{"color":"#ACB5C3","y":12},{"color":"#ACB5C3","y":12},{"color":"#ACB5C3","y":12},{"color":"#ACB5C3","y":12},{"color":"#ACB5C3","y":12},{"color":"#ACB5C3","y":12},{"color":"#ACB5C3","y":12},{"color":"#ACB5C3","y":12},{"color":"#ACB5C3","y":12},{"color":"#ACB5C3","y":12},{"color":"#ACB5C3","y":12},{"color":"#ACB5C3","y":12},{"color":"#ACB5C3","y":12},{"color":"#ACB5C3","y":12},{"color":"#ACB5C3","y":12},{"color":"#ACB5C3","y":12},{"color":"#1BA39C","y":12.1},{"color":"#ACB5C3","y":12.1},{"color":"#ACB5C3","y":12.1},{"color":"#ACB5C3","y":12.1},{"color":"#ACB5C3","y":12.1},{"color":"#ACB5C3","y":12.1},{"color":"#ACB5C3","y":12.1},{"color":"#ACB5C3","y":12.1},{"color":"#ACB5C3","y":12.1},{"color":"#ACB5C3","y":12.1},{"color":"#ACB5C3","y":12.1},{"color":"#ACB5C3","y":12.1},{"color":"#ACB5C3","y":12.1},{"color":"#ACB5C3","y":12.1},{"color":"#ACB5C3","y":12.1},{"color":"#ACB5C3","y":12.1},{"color":"#EF4836","y":11.9},{"color":"#ACB5C3","y":11.9},{"color":"#ACB5C3","y":11.9},{"color":"#ACB5C3","y":11.9},{"color":"#ACB5C3","y":11.9},{"color":"#ACB5C3","y":11.9},{"color":"#ACB5C3","y":11.9},{"color":"#ACB5C3","y":11.9},{"color":"#ACB5C3","y":11.9},{"color":"#ACB5C3","y":11.9},{"color":"#ACB5C3","y":11.9},{"color":"#ACB5C3","y":11.9},{"color":"#ACB5C3","y":11.9},{"color":"#ACB5C3","y":11.9},{"color":"#ACB5C3","y":11.9},{"color":"#ACB5C3","y":11.9},{"color":"#ACB5C3","y":11.9},{"color":"#ACB5C3","y":11.9},{"color":"#ACB5C3","y":11.9},{"color":"#ACB5C3","y":11.9},{"color":"#ACB5C3","y":11.9},{"color":"#ACB5C3","y":11.9},{"color":"#ACB5C3","y":11.9},{"color":"#ACB5C3","y":11.9},{"color":"#ACB5C3","y":11.9},{"color":"#ACB5C3","y":11.9},{"color":"#ACB5C3","y":11.9},{"color":"#ACB5C3","y":11.9},{"color":"#ACB5C3","y":11.9},{"color":"#ACB5C3","y":11.9},{"color":"#ACB5C3","y":11.9},{"color":"#ACB5C3","y":11.9},{"color":"#ACB5C3","y":11.9},{"color":"#1BA39C","y":12},{"color":"#ACB5C3","y":12},{"color":"#ACB5C3","y":12},{"color":"#ACB5C3","y":12},{"color":"#ACB5C3","y":12},{"color":"#ACB5C3","y":12},{"color":"#ACB5C3","y":12},{"color":"#ACB5C3","y":12},{"color":"#ACB5C3","y":12},{"color":"#ACB5C3","y":12},{"color":"#ACB5C3","y":12},{"color":"#EF4836","y":11.9},{"color":"#ACB5C3","y":11.9},{"color":"#ACB5C3","y":11.9},{"color":"#ACB5C3","y":11.9},{"color":"#ACB5C3","y":11.9},{"color":"#ACB5C3","y":11.9},{"color":"#ACB5C3","y":11.9},{"color":"#ACB5C3","y":11.9},{"color":"#ACB5C3","y":11.9},{"color":"#ACB5C3","y":11.9},{"color":"#ACB5C3","y":11.9},{"color":"#ACB5C3","y":11.9},{"color":"#ACB5C3","y":11.9},{"color":"#ACB5C3","y":11.9},{"color":"#ACB5C3","y":11.9},{"color":"#ACB5C3","y":11.9},{"color":"#ACB5C3","y":11.9},{"color":"#ACB5C3","y":11.9},{"color":"#ACB5C3","y":11.9},{"color":"#ACB5C3","y":11.9},{"color":"#ACB5C3","y":11.9},{"color":"#ACB5C3","y":11.9},{"color":"#ACB5C3","y":11.9},{"color":"#1BA39C","y":12},{"color":"#ACB5C3","y":12},{"color":"#ACB5C3","y":12},{"color":"#ACB5C3","y":12},{"color":"#ACB5C3","y":12},{"color":"#ACB5C3","y":12},{"color":"#ACB5C3","y":12},{"color":"#ACB5C3","y":12},{"color":"#EF4836","y":11.9},{"color":"#ACB5C3","y":11.9},{"color":"#ACB5C3","y":11.9},{"color":"#ACB5C3","y":11.9},{"color":"#1BA39C","y":12},{"color":"#ACB5C3","y":12},{"color":"#ACB5C3","y":12},{"color":"#ACB5C3","y":12},{"color":"#EF4836","y":11.9},{"color":"#1BA39C","y":12},{"color":"#ACB5C3","y":12},{"color":"#ACB5C3","y":12},{"color":"#ACB5C3","y":12},{"color":"#ACB5C3","y":12},{"color":"#ACB5C3","y":12},{"color":"#ACB5C3","y":12},{"color":"#ACB5C3","y":12},{"color":"#ACB5C3","y":12},{"color":"#ACB5C3","y":12},{"color":"#ACB5C3","y":12},{"color":"#ACB5C3","y":12},{"color":"#ACB5C3","y":12},{"color":"#ACB5C3","y":12},{"color":"#ACB5C3","y":12},{"color":"#ACB5C3","y":12},{"color":"#ACB5C3","y":12},{"color":"#EF4836","y":11.9},{"color":"#ACB5C3","y":11.9},{"color":"#ACB5C3","y":11.9},{"color":"#ACB5C3","y":11.9},{"color":"#1BA39C","y":12},{"color":"#ACB5C3","y":12},{"color":"#ACB5C3","y":12},{"color":"#ACB5C3","y":12},{"color":"#ACB5C3","y":12},{"color":"#ACB5C3","y":12},{"color":"#ACB5C3","y":12},{"color":"#ACB5C3","y":12},{"color":"#ACB5C3","y":12},{"color":"#ACB5C3","y":12},{"color":"#ACB5C3","y":12},{"color":"#ACB5C3","y":12},{"color":"#ACB5C3","y":12},{"color":"#ACB5C3","y":12},{"color":"#ACB5C3","y":12},{"color":"#ACB5C3","y":12},{"color":"#ACB5C3","y":12},{"color":"#ACB5C3","y":12},{"color":"#ACB5C3","y":12},{"color":"#ACB5C3","y":12},{"color":"#ACB5C3","y":12},{"color":"#EF4836","y":11.9},{"color":"#ACB5C3","y":11.9},{"color":"#ACB5C3","y":11.9},{"color":"#ACB5C3","y":11.9},{"color":"#ACB5C3","y":11.9},{"color":"#ACB5C3","y":11.9},{"color":"#EF4836","y":11.8},{"color":"#ACB5C3","y":11.8},{"color":"#ACB5C3","y":11.8},{"color":"#ACB5C3","y":11.8},{"color":"#ACB5C3","y":11.8},{"color":"#ACB5C3","y":11.8},{"color":"#ACB5C3","y":11.8},{"color":"#ACB5C3","y":11.8},{"color":"#ACB5C3","y":11.8},{"color":"#ACB5C3","y":11.8},{"color":"#1BA39C","y":11.9},{"color":"#EF4836","y":11.8},{"color":"#ACB5C3","y":11.8}],
+                    tooltip: {
+                        valueSuffix: ''
+                    }
+                }
+                                ,
+                {
+                    type: 'pie',
+                    name: '2017-04-05',
+                    data: [{
+                        name: 'Bull Vol',
+                        y: 110250,
+                        color: '#1BA39C' // bear
+                    }, {
+                        name: 'Bear Vol',
+                        y: 51102,
+                        color: '#EF4836' // Bear color
+                    }, {
+                        name: 'Neutral Vol',
+                        y: 287348,
+                        color: '#ACB5C3'// Neutral
+                    }],
+                    center: [40, 10],
+                    size: 40,
+                    showInLegend: false,
+                    dataLabels: {
+                        enabled: false
+                    }
+                }
+
+                                ,
+                {
+                    type: 'pie',
+                    name: '2017-04-06',
+                    data: [{
+                        name: 'Bull Vol',
+                        y: 5460,
+                        color: '#1BA39C' // bear
+                    }, {
+                        name: 'Bear Vol',
+                        y: 68510,
+                        color: '#EF4836' // Bear color
+                    }, {
+                        name: 'Neutral Vol',
+                        y: 114620,
+                        color: '#ACB5C3'// Neutral
+                    }],
+                    center: [80, 10],
+                    size: 40,
+                    showInLegend: false,
+                    dataLabels: {
+                        enabled: false
+                    }
+                }
+
+                
+            ],
+            responsive: {
+                rules: [{
+                    condition: {
+                        maxWidth: 500
+                    }
+
+                }]
+            }
+        });
+
+
+       
+
+    });
+
+</script>
+
+
+
+
+

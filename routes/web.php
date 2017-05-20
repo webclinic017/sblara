@@ -5,7 +5,14 @@ use App\Repositories\DataBankEodRepository;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/contests/portfolios/{portfolio}', 'ContestPortfoliosController@show')->name('contests.portfolios');
+Route::get('test2', function () {
+	return \App\Instrument::all();
+});
+//
+Route::get('/portfolios/shares', 'PortfolioSharesController@create');
+Route::get('/portfolios/shares/create', 'PortfolioSharesController@create')->name('portfolios.shares.create');
+
+Route::get('/contests/portfolios/{portfolio}', 'ContestPortfoliosController@show')->name('contests.portfolios.show');
 // My Contests Update Statuses routes..
 Route::patch('/mycontests/{contest}/approve/{user}', 'MyContestStatusesController@approve')->name('mycontests.approve.user');
 Route::patch('/mycontests/{contest}/disapprove/{user}', 'MyContestStatusesController@disapprove')->name('mycontests.disapprove.user');
