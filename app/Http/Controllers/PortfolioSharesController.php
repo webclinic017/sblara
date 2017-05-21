@@ -25,16 +25,12 @@ class PortfolioSharesController extends Controller
      */
     public function create()
     {
-        $instruments = Instrument::pluck('instrument_code', 'id')->prepend('Select a company', '');
+        $instruments = Instrument::where('active', true)
+                                 ->pluck('instrument_code', 'id')
+                                 ->prepend('Select a company', '');
 
         if ($id = request()->company_info) {
-            // $company_info = Instrument::find($id);
-
-            $company_info = DataBanksIntraday::with('instrument', 'market')
-                                                  ->where('instrument_id', $id)
-                                                  ->latest('id')
-                                                  ->first();
-            // return $dataBankIntraDays;
+            $company_info = Instrument::with('data_banks_intraday')->find($id);
         }
 
         return view('contest_portfolio_shares.create', compact('instruments', 'company_info'));

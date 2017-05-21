@@ -8,6 +8,16 @@ use DB;
 
 class Instrument extends Model
 {
+    /**
+     * Get the latest data bank intraday associated with the instrument.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function data_banks_intraday()
+    {
+        return $this->hasOne(DataBanksIntraday::class)
+                    ->latest('id');
+    }
 
     public function sector_list()
     {

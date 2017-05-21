@@ -51,7 +51,7 @@
                 <div class="portlet-title">
                     <div class="caption font-green-haze">
                         <i class="icon-badge font-green-haze"></i>
-                        <span class="caption-subject bold uppercase"> Buy {{ $company_info->instrument->instrument_code }}</span>
+                        <span class="caption-subject bold uppercase"> Buy {{ $company_info->instrument_code }}</span>
                     </div>
                 </div>
 
@@ -75,7 +75,7 @@
 
                             <tr>
                                 <th>Last Trade Price:</th>
-                                <th>{{ $company_info->close_price }}</th>
+                                <th>{{ $company_info->data_banks_intraday->close_price }}</th>
                             </tr>
 
                             <tr>
@@ -95,7 +95,7 @@
                     <div class="caption font-green-haze">
                         <i class="icon-badge font-green-haze"></i>
                         <span class="caption-subject bold uppercase"> Market Price: 
-                            <span class="text-danger">{{ $company_info->close_price }}</span>
+                            <span class="text-danger">{{ $company_info->data_banks_intraday->close_price }}</span>
                         </span>
                     </div>
                 </div>
