@@ -14,7 +14,6 @@
 
 <!-- Select2 -->
 <script src="{{ asset('metronic/assets/global/plugins/select2/js/select2.full.min.js') }}"></script>
-<script src="{{ asset('metronic/assets/pages/scripts/components-select2.min.js') }}"></script>
 
 <!-- Datepicker -->
 <script src="{{ asset('metronic/assets/global/plugins/moment.min.js') }}"></script>

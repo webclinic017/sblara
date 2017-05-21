@@ -18,7 +18,7 @@
                             <label for="single-append-text" class="col-md-2 control-label">Select Company</label>
                             <div class="col-md-10">
                                 <div class="input-group select2-bootstrap-append">
-                                    <select id="single-append-text" class="form-control select2-allow-clear" name="company_info">
+                                    <select id="single-append-text" class="form-control basic-single-select2" name="company_info">
                                         @foreach ($instruments as $id => $company)
                                             <option value="{{ $id }}">{{ $company }}</option>
                                         @endforeach
@@ -75,7 +75,7 @@
 
                             <tr>
                                 <th>Last Trade Price:</th>
-                                <th>{{ $company_info->close_price }} </th>
+                                <th>{{ $company_info->close_price }}</th>
                             </tr>
 
                             <tr>
@@ -90,8 +90,45 @@
                         </thead>
                     </table>
                 </div>
+
+                <div class="portlet-title">
+                    <div class="caption font-green-haze">
+                        <i class="icon-badge font-green-haze"></i>
+                        <span class="caption-subject bold uppercase"> Market Price: 
+                            <span class="text-danger">{{ $company_info->close_price }}</span>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="portlet-body form">
+                    <form method="POST" action="">
+                        {{ csrf_field() }}
+                        <div class="form-group form-md-line-input">
+                            <div class="input-group">
+                                <div class="input-group-control">
+                                    <input type="text" class="form-control" name="buy_quantity">
+                                    <label for="buy_quantity">Buy Quantity (maximum no. of shares you can buy)</label>
+                                </div>
+                                <span class="input-group-btn btn-right">
+                                    <button type="submit" class="btn blue">Confirm</button>
+                                </span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     @endif
 </div>
+@endsection
+
+@section('js')
+<script type="text/javascript">
+    $(document).ready(function() {
+      $(".basic-single-select2").select2({
+        placeholder: "Select a company",
+        allowClear: true
+      });
+    });
+</script>
 @endsection

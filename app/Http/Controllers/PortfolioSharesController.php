@@ -25,7 +25,7 @@ class PortfolioSharesController extends Controller
      */
     public function create()
     {
-        $instruments = Instrument::pluck('instrument_code', 'id');
+        $instruments = Instrument::pluck('instrument_code', 'id')->prepend('Select a company', '');
 
         if ($id = request()->company_info) {
             // $company_info = Instrument::find($id);
