@@ -9,8 +9,9 @@ Route::get('test2', function () {
 	return \App\Instrument::with('data_banks_intraday')->find(1);
 });
 //
-Route::get('/portfolios/shares', 'PortfolioSharesController@create');
-Route::get('/portfolios/shares/create', 'PortfolioSharesController@create')->name('portfolios.shares.create');
+Route::post('/portfolios/{portfolio}/shares/create', 'PortfolioSharesController@store')->name('portfolios.shares.store');
+Route::get('/portfolios/{portfolio}/shares/create', 'PortfolioSharesController@create')->name('portfolios.shares.create');
+
 
 Route::get('/contests/portfolios/{portfolio}', 'ContestPortfoliosController@show')->name('contests.portfolios.show');
 // My Contests Update Statuses routes..

@@ -15,19 +15,45 @@ class ContestPortfoliosController extends Controller
      */
     public function show(ContestPortfolio $portfolio)
     {
-        $portfolio->load('share.intrument', 'share.transactionType', 'share.portfolio.portfolio_transactions');
+        $portfolio->load('share.intrument.data_banks_intraday');
+//        return $portfolio;
 
-        /*$amountSumOfPortfolio = \App\PortfolioTransaction::where('portfolio_id', $transaction->portfolio_id)
-        												 ->where('transaction_type_id', 1)
-        												 ->sum('amount');*/
+        $shares        = $portfolio->share->amount;
+        $buyPrice      = $portfolio->share->rate;
+        $totalBuyCost  = $shares * $buyPrice;
+        $buyCommission = $portfolio->share->commission * $totalBuyCost / 100;
+        $amount        = $portfolio->share->amount;
+        $totalPurchase = $buyPrice * $shares + $buyCommission;
 
-        // test
-      	if ($portfolio->share) {
-	        $dataBankIntraDays = \App\DataBanksIntraday::where('instrument_id', $portfolio->share->instrument_id)
-	        										   ->latest('id')->first();
-      	}
-		// return $portfolio;
+        $lastTradePrice     = $portfolio->share->intrument->data_banks_intraday->close_price;
+        $lastTradeDate      = $portfolio->share->intrument->data_banks_intraday->lm_date_time->format('Y-m-d');
+        $change             = $portfolio->share->intrument->data_banks_intraday->price_change;
+        $changePercent      = $buyPrice ? $change / $buyPrice * 100 : 0;
+        $gainLossToday      = $change * $shares;
+        $changeTotal        = $lastTradePrice - $buyPrice;
+        $changePercentTotal = $buyPrice ? $changeTotal / $buyPrice * 100 : 0;
+        $gainLossTotal      = $changeTotal * $shares;
+        $sellValue          = $lastTradePrice * $shares;
 
-        return view('contest_portfolio_shares.show', compact('portfolio', 'dataBankIntraDays'));
+        /*$amountSumOfPortfolio = \App\PortfolioTransaction::where('portfolio_id', $portfolio->share->portfolio_id)
+                                                         ->where('transaction_type_id', 1)
+                                                         ->sum('amount');
+        $portfolioPercent   = $amount / $amountSumOfPortfolio * 100;*/
+
+        return view('contest_portfolio_shares.show', [
+            'portfolio'        => $portfolio,
+            'lastTradePrice'   => $lastTradePrice,
+            'lastTradeDate'    => $lastTradeDate,
+            'change'           => $change,
+            'gainLossToday'    => $gainLossToday,
+            'amount'           => $amount,
+            'buyPrice'         => $buyPrice,
+            'commission'       => $buyCommission,
+            'totalPurchase'    => $totalPurchase,
+            'gainLossTotal'    => $gainLossTotal,
+            'percentChange'    => $changePercentTotal,
+            'percentPortfolio' => 0, // Todo portfolioPercent,
+            'sellValue'        => $sellValue,
+        ]);
     }
 }

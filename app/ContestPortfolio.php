@@ -29,10 +29,32 @@ class ContestPortfolio extends Model
     /**
      * Get share for the contest portfolio.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function share()
     {
         return $this->hasOne(ContestPortfolioShare::class);
+    }
+
+    /**
+     * Get shares for the contest portfolio.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function shares()
+    {
+        return $this->hasMany(ContestPortfolioShare::class);
+    }
+
+    /**
+     * 
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function portfolioShares()
+    {
+        return $this->belongsToMany(ContestPortfolioShare::class, 'contest_portfolio_shares', 'contest_portfolio_id', 'instrument_id')
+                    ->withPivot('amount', 'rate', 'transaction_time', 'commision')
+                    ->withTimestamps();
     }
 }

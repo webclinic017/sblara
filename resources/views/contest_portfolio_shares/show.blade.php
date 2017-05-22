@@ -50,29 +50,27 @@
                             <tr>
                                 <td>
                                     {{ $portfolio->share->intrument->instrument_code }}
-                                    <small class="instrument-name">
-                                    {{ $portfolio->share->intrument->name }}
-                                    </small>
+                                    <small class="instrument-name">{{ $portfolio->share->intrument->name }}</small>
                                 </td>
                                 <td>
-                                    {{ $dataBankIntraDays->close_price }} 
-                                    ({{ $dataBankIntraDays->lm_date_time->format('Y-m-d') }})
+                                    {{ $lastTradePrice }}
+                                    <small class="instrument-name">({{ $lastTradeDate }})</small>
                                 </td>
-                                <td>{{ $dataBankIntraDays->price_change }}</td>
-                                <td>change * shares</td>
-                                <td>amount column</td>
-                                <td>rate column</td>
-                                <td>transaction time column</td>
-                                <td>commision column</td>
-                                <td>buy price * shares + buy commission</td>
-                                <td>changeTotal * shares</td>
-                                <td>changeTotal / buyPrice * 100</td>
-                                <td>amount / amountSumOfPortfolio * 100</td>
-                                <td>lastTradePrice * shares</td>
+                                <td>{{ $change }}</td>
+                                <td>{{ $gainLossToday }}</td>
+                                <td>{{ $amount }}</td>
+                                <td>{{ $buyPrice }}</td>
+                                <td>{{ $portfolio->share->transaction_time->format('Y-m-d') }}</td>
+                                <td>{{ $commission }}</td>
+                                <td>{{ $totalPurchase }}</td>
+                                <td>{{ $gainLossTotal }}</td>
+                                <td>{{ $percentChange }}</td>
+                                <td>{{ $percentPortfolio }}</td>
+                                <td>{{ $sellValue }}</td>
                             </tr>
                         @else
                             <tr class="no-records-found text-center">
-                                <td colspan="13">No portfolio available. Please <a href="{{ route('portfolios.shares.create') }}">buy share</a> to create your portfolio.</td>
+                                <td colspan="13">No portfolio available. Please <a href="{{ route('portfolios.shares.create', $portfolio) }}">buy share</a> to create your portfolio.</td>
                             </tr>
                         @endif
                     </tbody>

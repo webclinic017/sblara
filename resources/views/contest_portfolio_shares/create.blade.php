@@ -12,7 +12,7 @@
             </div>
 
             <div class="portlet-body form">
-                <form role="form" class="form-horizontal" method="GET" action="{{ url('/portfolios/shares/create') }}">
+                <form role="form" class="form-horizontal" method="GET" action="{{ route('portfolios.shares.create', $portfolio) }}">
                     <div class="form-body">
                         <div class="form-group">
                             <label for="single-append-text" class="col-md-2 control-label">Select Company</label>
@@ -60,7 +60,7 @@
                         <thead>
                             <tr>
                                 <th>Total Purchase Power:</th>
-                                <th></th>
+                                <th>{{ $portfolio->contest->contest_amount }}</th>
                             </tr>
 
                             <tr>
@@ -70,17 +70,18 @@
 
                             <tr>
                                 <th>Category:</th>
-                                <th></th>
+                                <th>
+                                    {{-- @php
+                                        $cat = explode('-', $company_info->data_banks_intraday->quote_bases);
+                                    @endphp
+                                    {{ $cat[0] }} --}}
+                                    {{ $company_info->data_banks_intraday->quote_bases[0] }}
+                                </th>
                             </tr>
 
                             <tr>
                                 <th>Last Trade Price:</th>
                                 <th>{{ $company_info->data_banks_intraday->close_price }}</th>
-                            </tr>
-
-                            <tr>
-                                <th>Market Lot:</th>
-                                <th></th>
                             </tr>
 
                             <tr>
@@ -101,8 +102,11 @@
                 </div>
 
                 <div class="portlet-body form">
-                    <form method="POST" action="">
+                    <form method="POST" action="{{ route('portfolios.shares.store', $portfolio) }}">
                         {{ csrf_field() }}
+                        
+                        <input type="hidden" class="form-control" name="instrument_id" value="{{ $company_info->id }}">
+
                         <div class="form-group form-md-line-input">
                             <div class="input-group">
                                 <div class="input-group-control">

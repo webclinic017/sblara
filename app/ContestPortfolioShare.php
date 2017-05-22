@@ -6,11 +6,25 @@ use Illuminate\Database\Eloquent\Model;
 
 class ContestPortfolioShare extends Model
 {
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = [
+        'transaction_time'
+    ];
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = [
-    	'contest_portfolio_id',
-		'instrument_id',
-		'portfolio_id',
-		'transaction_type_id'
+        'amount', 
+        'rate', 
+        'transaction_time',
+        'commission',
     ];
 
     /**
@@ -20,7 +34,7 @@ class ContestPortfolioShare extends Model
      */
     public function intrument() 
     {
-        return $this->belongsTo(Instrument::class, 'id');
+        return $this->belongsTo(Instrument::class, 'instrument_id');
     }
 
     /**

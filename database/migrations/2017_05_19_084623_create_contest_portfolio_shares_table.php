@@ -21,8 +21,8 @@ class CreateContestPortfolioSharesTable extends Migration
             $table->integer('transaction_type_id')->unsigned()->index();
 
             $table->integer('amount');
-            $table->integer('rate');
-            $table->integer('commision');
+            $table->decimal('rate', 9,2);
+            $table->decimal('commission', 9,2);
             $table->timestamp('transaction_time');
             $table->timestamps();
         });
