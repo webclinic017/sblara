@@ -9,6 +9,14 @@ use Illuminate\Http\Request;
 class MyContestStatusesController extends Controller
 {
     /**
+     * Create a new controller instance.
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
+    /**
      * Approve member.
      *
      * @param  \App\User  $user

@@ -8,6 +8,14 @@ use Illuminate\Http\Request;
 class JoinContestsController extends Controller
 {
     /**
+     * Create a new controller instance.
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
+    /**
      * Join a new contest.
      *
      * @param  \App\Contest  $contest

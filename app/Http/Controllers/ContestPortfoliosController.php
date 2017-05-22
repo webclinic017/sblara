@@ -8,6 +8,14 @@ use Illuminate\Http\Request;
 class ContestPortfoliosController extends Controller
 {
     /**
+     * Create a new controller instance.
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
+    /**
      * Display the specified resource.
      *
      * @param  \App\Contest  $contest
@@ -53,7 +61,6 @@ class ContestPortfoliosController extends Controller
             $portfolioPercent   = $amount / $amountSumOfPortfolio * 100;*/
         }
         
-
         return view('contest_portfolio_shares.show', [
             'portfolio'        => $portfolio,
             'lastTradePrice'   => $lastTradePrice,

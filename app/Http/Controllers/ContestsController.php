@@ -14,13 +14,7 @@ class ContestsController extends Controller
      */
     public function index()
     {
-        $data = [
-            'navigation' => [
-                'List of Contest'
-            ]
-        ];
-
-        return view('contests.index', $data);
+        return view('contests.index');
     }
 
     /**
