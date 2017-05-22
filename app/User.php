@@ -56,7 +56,9 @@ class User extends Authenticatable {
     }
 
     /**
-     * 
+     * Get all of the shares for the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
      */
     public function shares()
     {
