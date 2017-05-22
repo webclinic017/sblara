@@ -1,18 +1,9 @@
 <?php
 
-use App\Repositories\DataBankEodRepository;
-
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Route;
-
-Route::get('test2', function () {
-	return \App\Instrument::with('data_banks_intraday')->find(1);
-});
-//
+// Contest Portfolio Shares routes..
 Route::post('/portfolios/{portfolio}/shares/create', 'PortfolioSharesController@store')->name('portfolios.shares.store');
 Route::get('/portfolios/{portfolio}/shares/create', 'PortfolioSharesController@create')->name('portfolios.shares.create');
-
-
+// Contest Portfolio routes..
 Route::get('/contests/portfolios/{portfolio}', 'ContestPortfoliosController@show')->name('contests.portfolios.show');
 // My Contests Update Statuses routes..
 Route::patch('/mycontests/{contest}/approve/{user}', 'MyContestStatusesController@approve')->name('mycontests.approve.user');

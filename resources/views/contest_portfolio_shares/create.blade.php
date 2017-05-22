@@ -60,7 +60,7 @@
                         <thead>
                             <tr>
                                 <th>Total Purchase Power:</th>
-                                <th>{{ $portfolio->contest->contest_amount }}</th>
+                                <th>{{ $portfolio->portfolio_value }}</th>
                             </tr>
 
                             <tr>

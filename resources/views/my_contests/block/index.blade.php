@@ -45,7 +45,9 @@
                                         <span class="text-success">Public</span>
                                     @endif
                                 </td>
-                                <td></td>
+                                <td>
+                                    <a href="{{ route('contests.portfolios.show', $contest->id) }}">Portfolio</a>
+                                </td>
                                 <td>
                                     <a href="{{ route('mycontests.edit', $contest->id) }}" class="btn btn-primary btn-xs">Edit</a>
 
