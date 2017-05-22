@@ -54,7 +54,7 @@
             @stack('css')
 
             <link href="{{ URL::asset('metronic_custom/custom.css') }}" rel="stylesheet" type="text/css" />
-
+			<link href="{{ URL::asset('css/filter.css') }}" rel="stylesheet" type="text/css" />
 
             <link rel="shortcut icon" href="favicon.ico" />
 

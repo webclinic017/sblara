@@ -1,11 +1,6 @@
 @extends('layouts.metronic.default')
 <!-- BEGIN GLOBAL MANDATORY STYLES -->
 
-<!-- USER CSS -->
-
-<link href="css/filter.css" rel="stylesheet" type="text/css" />
-<!-- END USER CSS-->
-
 @section('content')
 <div class="row">
   <div class="col-md-12">
@@ -129,8 +124,3 @@
 
   </script>
 @endpush
-<!-- BEGIN CORE PLUGINS -->
-<script src="http://keenthemes.com/preview/metronic/theme/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
-
-<script src="js/filter.js" type="text/javascript"></script>
-<!-- END USER SCRIPT-->

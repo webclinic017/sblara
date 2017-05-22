@@ -70,4 +70,5 @@
 
 <script src="{{ asset('js/slimscroll.min.js') }}"></script>
 <script src="{{ asset('js/search.js') }}"></script>
+<script src="{{ asset('js/filter.js') }}" type="text/javascript"></script>
 @stack('scripts')
