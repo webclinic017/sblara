@@ -113,7 +113,7 @@ class DataBankEodRepository {
     public static function getEodDataAdjusted($instrumentId,$form,$to)
     {
        $form=Carbon::parse($form);
-       $to=Carbon::parse($to);
+        $to=Carbon::parse($to);
        $eodData=DataBanksEod::getEodByInstrument($instrumentId,$form->format('Y-m-d'),$to->format('Y-m-d'));
 
         $faceValue=FundamentalRepository::getFundamentalData(array('face_value'),array($instrumentId))->toArray();

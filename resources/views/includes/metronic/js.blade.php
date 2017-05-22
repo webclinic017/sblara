@@ -3,7 +3,25 @@
 <script src="{{ asset('metronic/assets/global/plugins/excanvas.min.js') }}"></script>
 <script src="{{ asset('metronic/assets/global/plugins/ie8.fix.min.js') }}"></script>
 <![endif]-->
-<script src="{{ mix('metronic_home.js') }}"></script>
+{{--<script src="{{ mix('metronic_home.js') }}"></script>--}}
+
+<script src="{{ asset('metronic/assets/global/plugins/jquery.min.js') }}"></script>
+<script src="{{ asset('metronic/assets/global/plugins/bootstrap/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('metronic/assets/global/plugins/js.cookie.min.js') }}"></script>
+<script src="{{ asset('metronic/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
+<script src="{{ asset('metronic/assets/global/plugins/jquery.blockui.min.js') }}"></script>
+<script src="{{ asset('metronic/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js') }}"></script>
+<script src="{{ asset('metronic/assets/global/plugins/counterup/jquery.waypoints.min.js') }}"></script>
+<script src="{{ asset('metronic/assets/global/plugins/counterup/jquery.counterup.min.js') }}"></script>
+<script src="{{ asset('metronic/assets/global/plugins/horizontal-timeline/horizontal-timeline.js') }}"></script>
+<script src="{{ asset('metronic/assets/global/plugins/jquery.sparkline.min.js') }}"></script>
+<script src="{{ asset('metronic/assets/global/scripts/app.min.js') }}"></script>
+<script src="{{ asset('metronic/assets/layouts/layout5/scripts/layout.min.js') }}"></script>
+<script src="{{ asset('metronic/assets/layouts/global/scripts/quick-sidebar.min.js') }}"></script>
+<script src="{{ asset('metronic/assets/layouts/global/scripts/quick-nav.min.js') }}"></script>
+{{--<script src="{{ asset('') }}"></script>--}}
+
+
 <script src="{{ asset('metronic_custom/custom.js') }}"></script>
 <script src="{{ asset('js/application.js') }}"></script>
 <script src="{{ asset('metronic_custom/highstock/code/js/highstock.js') }}"></script>

@@ -1,7 +1,6 @@
 @extends('layouts.metronic.default')
 
 @section('content')
-it will not show in aftab
 <div class="row">
     <div class="col-md-12">
         <!-- BEGIN Portlet PORTLET-->
@@ -36,12 +35,13 @@ it will not show in aftab
                         </a>
                         <a href="" class="remove">
                         </a>
+                        <a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.minute_chart:instrument_id={{$instrument_id}}" class="reload"></a>
                     </div>
 
                 </div>
                 <div class="portlet-body">
 
-                    @include('block.minute_chart', array('instrument_id' => $instrument_id))
+                    {{--@include('block.minute_chart', array('instrument_id' => $instrument_id))--}}
 
                 </div>
             </div>

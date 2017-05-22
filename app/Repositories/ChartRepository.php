@@ -17,7 +17,7 @@ class ChartRepository {
 
     public static function getDailyData($instrumentId = 12, $from = '2010-10-25', $to = '2013-04-25', $extraPoint = 0)
     {
-        require_once(app_path() . '\ChartDirector\phpchartdir.php');
+        require_once(app_path() . '/ChartDirector/phpchartdir.php');
       //  $path=public_path('metronic_custom/chart_director/lib/FinanceChart.php');
      //   File::requireOnce($path);
 
@@ -56,7 +56,7 @@ class ChartRepository {
     }
     public static function getAdjustedDailyData($instrumentId = 12, $from = '2010-10-25', $to = '2013-04-25', $extraPoint = 0)
     {
-        require_once(app_path() . '\ChartDirector\phpchartdir.php');
+        require_once(app_path() . '/ChartDirector/phpchartdir.php');
        // $path=public_path('metronic_custom/chart_director/lib/FinanceChart.php');
        // File::requireOnce($path);
 

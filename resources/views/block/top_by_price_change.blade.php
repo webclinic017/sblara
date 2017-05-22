@@ -1,3 +1,12 @@
+@push('css')
+<style>
+.popover{
+    max-width:600px;
+    height:350px;
+
+}
+</style>
+@endpush
 <div class="scroller" style="height:250px" data-rail-visible="1" data-always-visible="1"
      data-rail-color="yellow" data-handle-color="#a1b2bd">
     <div class="table-scrollable table-scrollable-borderless" id="gain_by_percentage">
@@ -31,8 +40,7 @@
                 <tr>
                     <td>
 
-{{--<a class="popovers" data-container="body" data-html="true" data-trigger="hover" data-placement="top" data-content="<img src='{{url('/tooltip_chart/')}}/{{$instrumentId}}' />" data-original-title="Popover in top">{{$viewData['instrumentList'][$instrumentId]->instrument_code}}</a>--}}
-<a class="popovers" data-container="body" data-html="true" data-trigger="hover" data-placement="top" data-content="" data-original-title="Popover in top">{{$viewData['instrumentList'][$instrumentId]->instrument_code}}</a>
+            <a class="popovers" data-container="body" data-html="true" data-trigger="hover" data-placement="top" data-content="<img src='{{url('/tooltip_chart/')}}/{{$instrumentId}}' />">{{$viewData['instrumentList'][$instrumentId]->instrument_code}}</a>
 
 
 
@@ -87,6 +95,10 @@
             //width: '100px'
         });
 
-
+$('a[data-toggle="tooltip"]').tooltip({
+    animated: 'fade',
+    placement: 'bottom',
+    html: true
+});
 </script>
 @endpush

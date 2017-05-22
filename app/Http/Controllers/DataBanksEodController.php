@@ -111,7 +111,7 @@ class DataBanksEodController extends Controller
 
         //$path=public_path('metronic_custom/chart_director/lib/FinanceChart.php');
         //File::requireOnce($path);
-        include(app_path() . '\ChartDirector\FinanceChart.php');
+        include(app_path() . '/ChartDirector/FinanceChart.php');
 
         $width = 1230; $mainHeight = 320; $indicatorHeight = 90; $extraPoints = 21;
 
@@ -303,7 +303,7 @@ class DataBanksEodController extends Controller
     {
         //$path=public_path('metronic_custom/chart_director/lib/FinanceChart.php');
         //File::requireOnce($path);
-        include(app_path() . '\ChartDirector\FinanceChart.php');
+        include(app_path() . '/ChartDirector/FinanceChart.php');
 
 
         $instrumentCode = $request->input('instrumentCode','DSEX');
@@ -562,7 +562,7 @@ class DataBanksEodController extends Controller
     public function tooltip_chart($instrumentId)
     {
         $instrumentId=(int) $instrumentId;
-        include(app_path() . '\ChartDirector\FinanceChart.php');
+        include(app_path() . '/ChartDirector/FinanceChart.php');
         $from = date('Y-m-d', strtotime(' -120 days'));
         $to = date('Y-m-d');
         $extraDays=0;
@@ -580,7 +580,7 @@ class DataBanksEodController extends Controller
 
 
 # Add a title to the chart
-        $c->addTitle("Finance Chart Demonstration");
+        //$c->addTitle("Finance Chart Demonstration");
 
 # Set the data into the finance chart object
         $c->setData($timeStamps, $highData, $lowData, $openData, $closeData, $volData, $extraDays);

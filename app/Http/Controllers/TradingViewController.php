@@ -46,8 +46,8 @@ class TradingViewController extends Controller
         $returnData['minmov2']=2;
         $returnData['pricescale']=10;
         $returnData['pointvalue']=1;
-        //$returnData['session']='24x7';
-        $returnData['session']='1030-1430';
+        $returnData['session']='24x7';  //24x 7 should be given otherwise it will remove sunday treating it weekend
+        //$returnData['session']='1030-1430;1'; //https://github.com/tradingview/charting_library/wiki/Trading-Sessions
         $returnData['has_daily']=true;
         $returnData['has_intraday']=true;
         $returnData['has_no_volume']=false;
