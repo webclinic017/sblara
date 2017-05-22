@@ -52,7 +52,7 @@
                                 </td>
                                 <td>{{ $user->join_date }}</td>
                                 <td></td>
-                                <td></td>
+                                <td>{{ $user->shares->count() }}</td>
                                 <td>{{ $user->pivot->portfolio_value }}</td>
                             </tr>
                         @empty

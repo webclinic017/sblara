@@ -58,7 +58,7 @@ class ContestsController extends Controller
         }
 
         // Retrieve all contests that have at least one approved user..
-        $contest->load(['contestUsers' => function ($q) {
+        $contest->load(['contestUsers.shares', 'contestUsers' => function ($q) {
             $q->wherePivot('approved', true);
         }]);
 

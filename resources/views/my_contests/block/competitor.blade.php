@@ -44,10 +44,14 @@
                                         <a href="{{ route('contests.portfolios.show', $contest->pivot->id) }}" class="btn btn-primary btn-xs">View</a>
                                     </td>
                                 </tr>
+                            @else
+                                <tr class="no-records-found text-center">
+                                    <td colspan="6">No matching records found</td>
+                                </tr>
                             @endif
                         @empty
                             <tr class="no-records-found text-center">
-                                <td colspan="7">No matching records found</td>
+                                <td colspan="6">No matching records found</td>
                             </tr>
                         @endforelse
                     </tbody>
