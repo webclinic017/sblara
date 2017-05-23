@@ -39,12 +39,12 @@ class MenuMaker
     {
         $items = Navigation::tree();
         $currentPath= Route::currentRouteName();
-
+//dump($currentPath);
         $selected_node_parent_id=0;
         $selected_node_id=0;
         foreach($items as $item)
         {
-            $found=$item['children']->where('route',$currentPath);
+            $found=$item['children']->where('name',$currentPath);
             if(count($found)) {
                 $selected_node_parent_id = $found->first()->parent_id;
                 $selected_node_id=$found->first()->id;

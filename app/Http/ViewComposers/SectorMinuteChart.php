@@ -55,6 +55,7 @@ class SectorMinuteChart
         $data=$data->reverse();
         $category=$data->pluck('index_time');
         $volumeData=$data->pluck('volume_difference');
+
         $indexData=$data->pluck('index_change');
 
         $view->with('indexData', collect($indexData)->toJson(JSON_NUMERIC_CHECK))

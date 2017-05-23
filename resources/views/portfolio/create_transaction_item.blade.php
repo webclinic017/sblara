@@ -29,7 +29,7 @@
 
     </td>
     <td>
-        <input type="text" name="dates[]" class="form-control datepicker">
+        <input type="text" name="dates[]" class="form-control  portfolio_date">
 
     </td>
 </tr>

@@ -17,11 +17,8 @@ class PortfolioController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index() {
-//        $portfolio = auth()->user()->portfolios()->first();
-//        if ($portfolio) {
-//            return redirect('/portfolio/' . $portfolio->id);
-//        } else
-//            return redirect('/portfolio/create');
+
+        //dd(auth()->user()->portfolios);
         $data = [
             'navigation' => [
                 'Portfolio',
@@ -54,7 +51,7 @@ class PortfolioController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
-//        dd($request->all());
+        //dd($request->all());
         if ($portfolioId = $request->portfolioId) {
             $portfolio = Portfolio::find($portfolioId);
             if ($request->old_types) {

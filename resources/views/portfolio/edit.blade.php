@@ -39,8 +39,8 @@
     </table>
 </form>
 <script>
-    $(".datepicker").datepicker({
-        dateFormat: 'yy-mm-dd'
+   $(".portfolio_date").datepicker({
+               format: 'yyyy-mm-dd'
     });
     $(".transactionType").change(function () {
         var value = $(this).val()

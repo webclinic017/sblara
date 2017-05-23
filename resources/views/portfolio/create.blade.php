@@ -10,17 +10,56 @@
         </div>
         <div class="portlet-body form">
             {{csrf_field()}}
-            <div class="form-group form-md-line-input">
-                <div class="input-group">
-                    <div class="input-group-control">
-                        <input type="text" class="form-control" value="" required="" name="name">
-                        <label for="form_control_1">Portfolio Name</label>
+            <div class="row">
+
+                        <div class="col-md-6">
+                           <div class="form-group form-md-line-input has-success form-md-floating-label">
+                               <div class="input-icon right">
+                                   <input class="form-control" type="text">
+                                   <label for="form_control_1">Portfolio name</label>
+                                   <span class="help-block">Your portfolio name...</span>
+                                   <i class="icon-briefcase"></i>
+                               </div>
+                           </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group form-md-line-input has-success form-md-floating-label">
+                                <div class="input-icon right">
+                                    <input class="form-control" type="text">
+                                    <label for="form_control_1">Cash</label>
+                                    <span class="help-block">If you dont add any cash, your total cash will be negative when purchase share</span>
+                                    <i class="fa fa-money"></i>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+               {{-- <div class="col-md-6">
+                    <div class="form-group form-md-line-input">
+                        <div class="input-group">
+                            <div class="input-group-control">
+                                <input type="text" class="form-control" value="" required="" name="name">
+                                <label for="form_control_1">Portfolio Name</label>
+                            </div>
+
+                        </div>
                     </div>
-                    <span class="input-group-btn btn-right">
-                        <button type="submit" class="btn blue">Save</button>
-                    </span>
                 </div>
+                <div class="col-md-6">
+                    <div class="form-group form-md-line-input">
+                        <div class="input-group">
+                            <div class="input-group-control">
+                                <input type="text" class="form-control" value="" required="" name="name">
+                                <label for="form_control_1">Portfolio Name</label>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>--}}
             </div>
+
             <table class="table table-striped">
                 <thead>
                     <tr>
@@ -50,8 +89,8 @@
 @section('js')
 <script>
     $(function () {
-        $(".datepicker").datepicker({
-            dateFormat: 'yy-mm-dd'
+        $(".portfolio_date").datepicker({
+            format: 'yyyy-mm-dd'
         });
         $(".portfolio-menu .create").addClass('active');
         $(".portfolio-menu").addClass('open');

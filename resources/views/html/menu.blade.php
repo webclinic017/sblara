@@ -13,15 +13,17 @@
 
                                     <ul class="dropdown-menu dropdown-menu-fw">
                                     @foreach($item['children'] as $child)
-                                         @if($child->id==$selected_node_id)
-                                            <li class="active">
-                                         @else
-                                            <li>
-                                         @endif
-                                            <a href="{{url($child->route)}}">
-                                                <i class="{{$child->icon}}"></i> {{ $child->title }} </a>
-                                            </li>
-                                       @endforeach
+                                        @if($child->route!='0')
+                                             @if($child->id==$selected_node_id)
+                                                <li class="active">
+                                             @else
+                                                <li>
+                                             @endif
+                                                <a href="{{url($child->route)}}">
+                                                    <i class="{{$child->icon}}"></i> {{ $child->title }} </a>
+                                                </li>
+                                        @endif
+                                    @endforeach
 
                                     </ul>
                                 </li>

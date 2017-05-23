@@ -39,7 +39,7 @@ class SectorIntraday extends Model
             $m=new Market();
             $activeDate=$m->getActiveDates(1,$tradeDate,$exchangeId)->first();
             $marketId=$activeDate->id;
-            $query=static::where('market_id',$marketId)->where('volume','!=',0)->orderBy('index_time', 'desc');
+            $query=static::where('market_id',$marketId)->where('volume','>',0)->orderBy('index_time', 'desc');
             if($limit)
             {
                 $query->skip(0)->take($limit);

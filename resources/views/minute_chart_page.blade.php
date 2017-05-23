@@ -35,7 +35,7 @@
                         </a>
                         <a href="" class="remove">
                         </a>
-                        <a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.minute_chart:instrument_id={{$instrument_id}}" class="reload"></a>
+                        <a href="" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.minute_chart:instrument_id={{$instrument_id}}" class="reload"></a>
                     </div>
 
                 </div>

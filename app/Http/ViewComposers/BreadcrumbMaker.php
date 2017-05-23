@@ -48,7 +48,7 @@ class BreadcrumbMaker
         foreach($items as $item)
         {
 
-            $found=$item['children']->where('route',$currentPath);
+            $found=$item['children']->where('name',$currentPath);
 
             if(count($found)) {
                 $temp=array();
