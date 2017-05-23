@@ -8,6 +8,10 @@ $( document ).ready(function() {
   });
 
   function load_filter(filter){
+    $('#input-button').empty();
+    $( "select.select-filter" ).each(function( index ) {
+      $( this ).selectpicker('val', 0);
+    });
     var arr = filter.split("\n");
     for(i = 0; i < arr.length; i++){
       var select = arr[i].split(":");
@@ -52,8 +56,10 @@ $( document ).ready(function() {
         reader.readAsText(f);
       }
     }
+    if ( $( "#load_filter" ).length ) {
+      document.getElementById('load_filter').addEventListener('change', handleFileSelect, false);
+    }
 
-    document.getElementById('load_filter').addEventListener('change', handleFileSelect, false);
 
     $('#save_filter').on('click', function() {
       var flag = false;
