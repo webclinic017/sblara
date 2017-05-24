@@ -65,9 +65,7 @@
 
                             <tr>
                                 <th>Purchase Power (this item):</th>
-                                <th>
-                                    {{ $purchase_power }}
-                                </th>
+                                <th>{{ $purchase_power }}</th>
                             </tr>
 
                             <tr>

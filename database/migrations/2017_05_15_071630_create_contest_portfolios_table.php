@@ -16,8 +16,8 @@ class CreateContestPortfoliosTable extends Migration
         Schema::create('contest_portfolios', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned()->index();
-            $table->decimal('portfolio_value', 10, 2); // Contest Amount
-            $table->decimal('cash_amount', 10, 2); // Portfolio Value
+            $table->decimal('portfolio_value', 10, 2);
+            $table->decimal('cash_amount', 10, 2);
             $table->string('portfolio_name');
             $table->decimal('broker_fee', 10, 2);
             $table->string('broker');
