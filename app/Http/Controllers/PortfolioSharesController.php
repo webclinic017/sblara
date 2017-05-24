@@ -34,9 +34,18 @@ class PortfolioSharesController extends Controller
 
         if ($id = request()->company_info) {
             $company_info = Instrument::with('data_banks_intraday')->find($id);
+
+            $purchase_power = $portfolio->cash_amount * $portfolio->contest->max_amount / 100;
+            $max_shares     = number_format($purchase_power / $company_info->data_banks_intraday->close_price);
         }
 
-        return view('contest_portfolio_shares.create', compact('portfolio', 'instruments', 'company_info'));
+        return view('contest_portfolio_shares.create', [
+            'portfolio'      => $portfolio,
+            'instruments'    => $instruments,
+            'company_info'   => $company_info,
+            'purchase_power' => $purchase_power,
+            'max_shares'     => $max_shares
+        ]);
     }
 
     /**

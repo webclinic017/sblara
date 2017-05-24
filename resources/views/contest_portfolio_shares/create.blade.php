@@ -60,12 +60,12 @@
                         <thead>
                             <tr>
                                 <th>Total Purchase Power:</th>
-                                <th>{{ $portfolio->portfolio_value }}</th>
+                                <th>{{ $portfolio->cash_amount }}</th>
                             </tr>
 
                             <tr>
                                 <th>Purchase Power (this item):</th>
-                                <th></th>
+                                <th>{{ $purchase_power }}</th>
                             </tr>
 
                             <tr>
@@ -86,7 +86,7 @@
 
                             <tr>
                                 <th>Maximum Shares you can buy:</th>
-                                <th></th>
+                                <th>{{ $max_shares }}</th>
                             </tr>
                         </thead>
                     </table>

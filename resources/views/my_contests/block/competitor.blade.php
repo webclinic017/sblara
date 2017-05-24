@@ -45,9 +45,11 @@
                                     </td>
                                 </tr>
                             @else
-                                <tr class="no-records-found text-center">
-                                    <td colspan="6">No matching records found</td>
-                                </tr>
+                                @if ($loop->first)
+                                    <tr class="no-records-found text-center">
+                                        <td colspan="6">No matching records found</td>
+                                    </tr>
+                                @endif
                             @endif
                         @empty
                             <tr class="no-records-found text-center">
