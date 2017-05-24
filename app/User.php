@@ -51,7 +51,7 @@ class User extends Authenticatable {
     public function contestPortfolios()
     {
         return $this->belongsToMany(Contest::class, 'contest_portfolios', 'user_id', 'contest_id')
-                    ->withPivot('id', 'join_date', 'approved', 'cash_amount')
+                    ->withPivot('id', 'join_date', 'approved', 'portfolio_value', 'cash_amount', 'current_portfolio_value')
                     ->withTimestamps();
     }
 

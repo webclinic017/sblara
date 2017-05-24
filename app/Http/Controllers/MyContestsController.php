@@ -58,9 +58,9 @@ class MyContestsController extends Controller
             'start_date'     => 'required|date',
             'end_date'       => 'required|date',
             'access_level'   => 'required',
-            'contest_amount' => 'required|numeric',
-            'max_amount'     => 'required|numeric',
-            'max_member'     => 'required|numeric'
+            'contest_amount' => 'required|numeric|min:1',
+            'max_amount'     => 'required|numeric|min:1',
+            'max_member'     => 'required|numeric|min:1'
         ]);
         
         // create contest
@@ -77,8 +77,9 @@ class MyContestsController extends Controller
         $portfolio = auth()->user()
                             ->contestPortfolios()
                             ->attach($contest, [
-                                'approved' => true, 
-                                'cash_amount' => $contest->contest_amount
+                                'approved'                => true, 
+                                'portfolio_value'         => $contest->contest_amount,
+                                'cash_amount'             => $contest->contest_amount
                             ]);
 
         flash('Contest successfully created!', 'success');

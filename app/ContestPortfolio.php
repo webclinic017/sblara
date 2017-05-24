@@ -54,7 +54,7 @@ class ContestPortfolio extends Model
     public function portfolioShares()
     {
         return $this->belongsToMany(ContestPortfolioShare::class, 'contest_portfolio_shares', 'contest_portfolio_id', 'instrument_id')
-                    ->withPivot('no_of_shares', 'buying_price', 'buying_date', 'commision')
+                    ->withPivot('no_of_shares', 'buying_price', 'buying_date', 'commission')
                     ->withTimestamps();
     }
 }

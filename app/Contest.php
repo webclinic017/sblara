@@ -52,7 +52,7 @@ class Contest extends Model
     public function contestUsers()
     {
         return $this->belongsToMany(User::class, 'contest_portfolios', 'contest_id', 'user_id')
-                    ->withPivot('id', 'join_date', 'approved', 'cash_amount')
+                    ->withPivot('id', 'join_date', 'approved', 'portfolio_value', 'cash_amount', 'current_portfolio_value')
                     ->orderBy('pivot_cash_amount', 'desc')
                     ->withTimestamps();
     }

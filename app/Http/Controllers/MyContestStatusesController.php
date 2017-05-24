@@ -25,8 +25,10 @@ class MyContestStatusesController extends Controller
     public function approve(Contest $contest, User $user)
     {
         $user->contestPortfolios()->updateExistingPivot($contest->id, [
-                                'approved' => true, 
-                                'portfolio_value' => $contest->contest_amount
+                                'approved'                => true, 
+                                'portfolio_value'         => $contest->contest_amount,
+                                'cash_amount'             => $contest->contest_amount,
+                                'current_portfolio_value' => $contest->contest_amount
                             ]);
 
         flash('Member successfully approved!', 'success');

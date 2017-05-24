@@ -6,7 +6,6 @@ use App\ContestPortfolio;
 use App\Instrument;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class PortfolioSharesController extends Controller
 {
@@ -27,7 +26,7 @@ class PortfolioSharesController extends Controller
      */
     public function create(ContestPortfolio $portfolio)
     {
-        $portfolio->load('contest');
+        $portfolio->load('contest', 'shares');
 
         $company_info   = null;
         $purchase_power = null;
@@ -39,9 +38,20 @@ class PortfolioSharesController extends Controller
 
         if ($id = request()->company_info) {
             $company_info = Instrument::with('data_banks_intraday')->find($id);
+            $buying_price = $company_info->data_banks_intraday->close_price;
 
-            $purchase_power = $portfolio->cash_amount * $portfolio->contest->max_amount / 100;
-            $max_shares     = number_format($purchase_power / $company_info->data_banks_intraday->close_price);
+            if ($portfolio->shares) {
+                $sum_shares     = $portfolio->shares->sum('no_of_shares');
+                $total_shares   = $sum_shares * $buying_price;
+
+                $purchase_power = $portfolio->contest->contest_amount * $portfolio->contest->max_amount / 100;
+                $purchase_power -= $total_shares;
+
+                $max_shares     = $purchase_power / $buying_price;
+            } else {
+                $purchase_power = $portfolio->cash_amount * $portfolio->contest->max_amount / 100;
+                $max_shares     = $purchase_power / $buying_price;
+            }
         }
 
         return view('contest_portfolio_shares.create', [
@@ -62,11 +72,11 @@ class PortfolioSharesController extends Controller
      */
     public function store(Request $request, ContestPortfolio $portfolio)
     {
-        $portfolio->load('contest');
+        $this->validate($request, [
+            'buy_quantity' => 'required|numeric|min:1'
+        ]);
 
-        // if $request->buy_quantity > $max_shares_can_buy
-        // $purchase_power     = $portfolio->cash_amount * $portfolio->contest->max_amount / 100;
-        // $max_shares_can_buy = number_format($purchase_power / $company_info->data_banks_intraday->close_price);
+        $portfolio->load('contest');
 
         try {
             $id           = $request->instrument_id;
@@ -74,19 +84,33 @@ class PortfolioSharesController extends Controller
 
             $company_info = Instrument::with('data_banks_intraday')->find($id);
 
-            $portfolio->cash_amount -= $buy_quantity;
-            $portfolio->save();
+            $purchase_power     = $portfolio->cash_amount * $portfolio->contest->max_amount / 100;
+            $max_shares_can_buy = $purchase_power / $company_info->data_banks_intraday->close_price;
+            $buying_price       = $company_info->data_banks_intraday->close_price;
 
-            $portfolio->portfolioShares()->attach($company_info->id, [
-                'no_of_shares' => $buy_quantity,
-                'buying_price' => $company_info->data_banks_intraday->close_price,
-                'buying_date'  => Carbon::now(),
-            ]);
+            if ($buy_quantity > $max_shares_can_buy) {
+                flash('You are not allowed to purchase this amount of shares', 'error');
+
+                return back();
+            } else {
+                $portfolio->portfolioShares()->attach($company_info->id, [
+                    'no_of_shares' => $buy_quantity,
+                    'buying_price' => $buying_price,
+                    'buying_date'  => Carbon::now()
+                ]);
+
+                $commission                     = 0.5;
+                $total_buy_cost                 = $buy_quantity * $buying_price;
+                $buy_commission                 = $commission * $total_buy_cost / 100;
+                $total_buy_cost_with_commission = $total_buy_cost += $buy_commission;
+                $portfolio->cash_amount         = $portfolio->cash_amount -= $total_buy_cost_with_commission;
+                $portfolio->save();
+
+                return redirect()->route('contests.portfolios.show', $portfolio);
+            }
         } catch (Exception $e) {
             // return $e->message;    
         }
-
-        return redirect()->route('contests.portfolios.show', $portfolio);
     }
 
     /**
