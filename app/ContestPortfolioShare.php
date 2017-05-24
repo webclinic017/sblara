@@ -12,7 +12,7 @@ class ContestPortfolioShare extends Model
      * @var array
      */
     protected $dates = [
-        'transaction_time'
+        'buying_date'
     ];
 
     /**
@@ -21,9 +21,9 @@ class ContestPortfolioShare extends Model
      * @var array
      */
     protected $fillable = [
-        'amount', 
-        'rate', 
-        'transaction_time',
+        'no_of_shares', 
+        'buying_price', 
+        'buying_date',
         'commission',
     ];
 

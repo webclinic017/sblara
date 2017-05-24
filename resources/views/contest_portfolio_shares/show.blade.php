@@ -60,7 +60,7 @@
                                 <td>{{ $gainLossToday }}</td>
                                 <td>{{ $amount }}</td>
                                 <td>{{ $buyPrice }}</td>
-                                <td>{{ $portfolio->share->transaction_time->format('Y-m-d') }}</td>
+                                <td>{{ $portfolio->share->buying_date->format('Y-m-d') }}</td>
                                 <td>{{ $commission }}</td>
                                 <td>{{ $totalPurchase }}</td>
                                 <td>{{ $gainLossTotal }}</td>

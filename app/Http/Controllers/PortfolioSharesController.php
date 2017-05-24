@@ -28,6 +28,10 @@ class PortfolioSharesController extends Controller
     {
         $portfolio->load('contest');
 
+        $company_info   = null;
+        $purchase_power = null;
+        $max_shares     = null;
+
         $instruments = Instrument::where('active', true)
                                  ->pluck('instrument_code', 'id')
                                  ->prepend('Select a company', '');
@@ -57,15 +61,19 @@ class PortfolioSharesController extends Controller
      */
     public function store(Request $request, ContestPortfolio $portfolio)
     {
+        $portfolio->load('contest');
         $id = $request->instrument_id;
 
         $company_info = Instrument::with('data_banks_intraday')->find($id);
 
+        // if $request->buy_quantity > $max_shares_can_buy
+        // $purchase_power     = $portfolio->cash_amount * $portfolio->contest->max_amount / 100;
+        // $max_shares_can_buy = number_format($purchase_power / $company_info->data_banks_intraday->close_price);
+
         $portfolio->portfolioShares()->attach($company_info->id, [
-            'amount'           => $request->buy_quantity,
-            'rate'             => $company_info->data_banks_intraday->close_price,
-            'transaction_time' => Carbon::now(),
-            'commission'       => 0.5
+            'no_of_shares' => $request->buy_quantity,
+            'buying_price' => $company_info->data_banks_intraday->close_price,
+            'buying_date'  => Carbon::now(),
         ]);
 
         return redirect()->route('contests.portfolios.show', $portfolio);
