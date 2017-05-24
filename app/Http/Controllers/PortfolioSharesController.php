@@ -6,6 +6,7 @@ use App\ContestPortfolio;
 use App\Instrument;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PortfolioSharesController extends Controller
 {
@@ -62,19 +63,28 @@ class PortfolioSharesController extends Controller
     public function store(Request $request, ContestPortfolio $portfolio)
     {
         $portfolio->load('contest');
-        $id = $request->instrument_id;
-
-        $company_info = Instrument::with('data_banks_intraday')->find($id);
 
         // if $request->buy_quantity > $max_shares_can_buy
         // $purchase_power     = $portfolio->cash_amount * $portfolio->contest->max_amount / 100;
         // $max_shares_can_buy = number_format($purchase_power / $company_info->data_banks_intraday->close_price);
 
-        $portfolio->portfolioShares()->attach($company_info->id, [
-            'no_of_shares' => $request->buy_quantity,
-            'buying_price' => $company_info->data_banks_intraday->close_price,
-            'buying_date'  => Carbon::now(),
-        ]);
+        try {
+            $id           = $request->instrument_id;
+            $buy_quantity = $request->buy_quantity;
+
+            $company_info = Instrument::with('data_banks_intraday')->find($id);
+
+            $portfolio->cash_amount -= $buy_quantity;
+            $portfolio->save();
+
+            $portfolio->portfolioShares()->attach($company_info->id, [
+                'no_of_shares' => $buy_quantity,
+                'buying_price' => $company_info->data_banks_intraday->close_price,
+                'buying_date'  => Carbon::now(),
+            ]);
+        } catch (Exception $e) {
+            // return $e->message;    
+        }
 
         return redirect()->route('contests.portfolios.show', $portfolio);
     }
