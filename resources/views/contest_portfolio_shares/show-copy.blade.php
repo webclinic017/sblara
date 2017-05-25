@@ -46,34 +46,11 @@
                     </thead>
 
                     <tbody>
-                        @forelse ($portfolio->shares as $share)
-                            @if (count($portfolio->shares) > 1)
-                                @if ($loop->first)
-                                    <tr>
-                                        <td>
-                                            {{ $share->intrument->instrument_code }}
-                                            <small class="instrument-name">{{ $share->intrument->name }}</small>
-                                        </td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>{{ $share->sum('no_of_shares') }}</td>
-                                        <td>{{ $share->buying_price }}</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                @endif
-                            @endif
-
+                        @if ($portfolio->share)
                             <tr>
                                 <td>
-                                    {{ $share->intrument->instrument_code }}
-                                    <small class="instrument-name">{{ $share->intrument->name }}</small>
+                                    {{ $portfolio->share->intrument->instrument_code }}
+                                    <small class="instrument-name">{{ $portfolio->share->intrument->name }}</small>
                                 </td>
                                 <td>
                                     {{ $lastTradePrice }}
@@ -81,11 +58,9 @@
                                 </td>
                                 <td>{{ $change }}</td>
                                 <td>{{ $gainLossToday }}</td>
-                                <td>{{ $share->no_of_shares }}</td>
-                                <td>{{ $share->buying_price }}</td>
-                                <td>
-                                    {{ $share->buying_date->format('Y-m-d') }}
-                                </td>
+                                <td>{{ $amount }}</td>
+                                <td>{{ $buyPrice }}</td>
+                                <td>{{ $portfolio->share->buying_date->format('Y-m-d') }}</td>
                                 <td>{{ $commission }}</td>
                                 <td>{{ $totalPurchase }}</td>
                                 <td>{{ $gainLossTotal }}</td>
@@ -93,45 +68,11 @@
                                 <td>{{ $percentPortfolio }}</td>
                                 <td>{{ $sellValue }}</td>
                             </tr>
-
-                            @if ($loop->last)
-                                <tr>
-                                    <td>Cash</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-
-                                <tr>
-                                    <td>Total</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                            @endif
-                        @empty     
+                        @else
                             <tr class="no-records-found text-center">
                                 <td colspan="13">No portfolio available. Please <a href="{{ route('portfolios.shares.create', $portfolio) }}">buy share</a> to create your portfolio.</td>
                             </tr>
-                        @endforelse
+                        @endif
                     </tbody>
                 </table>
             </div>

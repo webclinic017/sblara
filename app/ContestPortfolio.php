@@ -43,7 +43,7 @@ class ContestPortfolio extends Model
      */
     public function shares()
     {
-        return $this->hasMany(ContestPortfolioShare::class);
+        return $this->hasMany(ContestPortfolioShare::class)->latest('buying_date');
     }
 
     /**
