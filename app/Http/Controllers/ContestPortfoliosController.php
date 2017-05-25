@@ -25,75 +25,63 @@ class ContestPortfoliosController extends Controller
     {
         $portfolio->load('shares.intrument.data_banks_intraday');
 
-        $lastTradePrice     = null;
-        $lastTradeDate      = null;
-        $change             = null;
-        $gainLossToday      = null;
-        $amount             = null;
-        $buyPrice           = null;
-        $buyCommission      = null;
-        $totalPurchase      = null;
-        $gainLossTotal      = null;
-        $changePercentTotal = null;
-        $sellValue          = null;
+        $lastTradePrice              = null;
+        $lastTradeDate               = null;
+        $price_change                = null;
+        $change                      = null;
+        $gainLossToday               = null;
+        $buyPrice                    = null;
+        $buyCommission               = null;
+        $totalPurchase               = null;
+        $gainLossTotal               = null;
+        $changePercentTotal          = null;
+        $sellValue                   = null;
+        $total_gain                  = null;
+        $portfolio_of_a_share        = null;
+        $sellValueDeductingCommision = null;
 
         if (isset($portfolio->shares)) {
             foreach ($portfolio->shares as $share) {
                 $shares        = $share->no_of_shares; // same
                 $buyPrice      = $share->buying_price;
+                
                 $totalBuyCost  = $shares * $buyPrice;
                 $buyCommission = $share->commission * $totalBuyCost / 100;
-                $amount        = $share->no_of_shares; // same
                 $totalPurchase = $buyPrice * $shares + $buyCommission;
 
-                $lastTradePrice     = $share->intrument->data_banks_intraday->close_price;
-                $lastTradeDate      = $share->intrument->data_banks_intraday->lm_date_time->format('Y-m-d');
-                $change             = $share->intrument->data_banks_intraday->price_change;
-                $changePercent      = $buyPrice ? $change / $buyPrice * 100 : 0;
-                $gainLossToday      = $change * $shares;
-                $changeTotal        = $lastTradePrice - $buyPrice;
-                $changePercentTotal = $buyPrice ? $changeTotal / $buyPrice * 100 : 0;
-                $gainLossTotal      = $changeTotal * $shares;;
-                $sellValue          = $lastTradePrice * $shares;
+                $lastTradePrice = $share->intrument->data_banks_intraday->close_price;
+                $lastTradeDate  = $share->intrument->data_banks_intraday->lm_date_time->format('Y-m-d');
+                
+                $price_change  = $share->intrument->data_banks_intraday->price_change;
+                $gainLossToday = $price_change * $shares;
+
+                $sellValue                   = $shares * $lastTradePrice;
+                $sellCommission              = ($share->commission / 100) * $sellValue;
+                $sellValueDeductingCommision = $sellValue - $sellCommission;
+
+                $total_buy_cost_with_commission = $totalBuyCost + $buyCommission;
+                $total_gain                     = $sellValueDeductingCommision - $total_buy_cost_with_commission;
+
+                $change = $total_gain / $total_buy_cost_with_commission * 100;
+
+                $all_share_cash_amount = $share->sum('no_of_shares') + $portfolio->cash_amount;
+                $portfolio_of_a_share  = $sellValue / $all_share_cash_amount * 100;
             }
-
-            /*$shares        = $portfolio->shares->amount;
-            $buyPrice      = $portfolio->shares->rate;
-            $totalBuyCost  = $shares * $buyPrice;
-            $buyCommission = $portfolio->shares->commission * $totalBuyCost / 100;
-            $amount        = $portfolio->shares->amount;
-            $totalPurchase = $buyPrice * $shares + $buyCommission;*/
-
-            /*$lastTradePrice     = $portfolio->shares->intrument->data_banks_intraday->close_price;
-            $lastTradeDate      = $portfolio->shares->intrument->data_banks_intraday->lm_date_time->format('Y-m-d');
-            $change             = $portfolio->shares->intrument->data_banks_intraday->price_change;
-            $changePercent      = $buyPrice ? $change / $buyPrice * 100 : 0;
-            $gainLossToday      = $change * $shares;
-            $changeTotal        = $lastTradePrice - $buyPrice;
-            $changePercentTotal = $buyPrice ? $changeTotal / $buyPrice * 100 : 0;
-            $gainLossTotal      = $changeTotal * $shares;
-            $sellValue          = $lastTradePrice * $shares;*/
-
-            /*$amountSumOfPortfolio = \App\PortfolioTransaction::where('portfolio_id', $portfolio->shares->portfolio_id)
-                                                             ->where('transaction_type_id', 1)
-                                                             ->sum('amount');
-            $portfolioPercent   = $amount / $amountSumOfPortfolio * 100;*/
         }
         
         return view('contest_portfolio_shares.show', [
             'portfolio'        => $portfolio,
             'lastTradePrice'   => $lastTradePrice,
             'lastTradeDate'    => $lastTradeDate,
-            'change'           => $change,
+            'change'           => $price_change,
             'gainLossToday'    => $gainLossToday,
-            'amount'           => $amount,
             'buyPrice'         => $buyPrice,
             'commission'       => $buyCommission,
             'totalPurchase'    => $totalPurchase,
-            'gainLossTotal'    => $gainLossTotal,
-            'percentChange'    => $changePercentTotal,
-            'percentPortfolio' => 0, // Todo portfolioPercent,
-            'sellValue'        => $sellValue,
+            'gainLossTotal'    => $total_gain,
+            'percentChange'    => $change,
+            'percentPortfolio' => $portfolio_of_a_share,
+            'sellValue'        => $sellValueDeductingCommision
         ]);
     }
 }

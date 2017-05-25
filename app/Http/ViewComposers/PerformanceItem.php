@@ -29,17 +29,17 @@ class PerformanceItem {
 //            'transactionTypes' => $transactionTypes,
 //        ];
 
-        $viewData      = $view->getData();
-        $isChild       = isset($viewData['isChild']) ? $viewData['isChild'] : false;
-        $transaction   = $viewData['transaction'];
-        $instrumentId  = $transaction->instrument_id;
-        $shares        = $transaction->no_of_shares;
-        $buyPrice      = $transaction->buying_price;
-        $totalBuyCost  = $shares * $buyPrice;
-        $buyCommission = $transaction->commission?($transaction->commission/100) * $totalBuyCost:0;
-        $amount        = $totalBuyCost;
-        $totalPurchase = $totalBuyCost + $buyCommission;
-        $commission_rate=$transaction->commission;
+        $viewData        = $view->getData();
+        $isChild         = isset($viewData['isChild']) ? $viewData['isChild'] : false;
+        $transaction     = $viewData['transaction'];
+        $instrumentId    = $transaction->instrument_id;
+        $shares          = $transaction->no_of_shares;
+        $buyPrice        = $transaction->buying_price;
+        $totalBuyCost    = $shares * $buyPrice;
+        $buyCommission   = $transaction->commission?($transaction->commission/100) * $totalBuyCost:0;
+        $amount          = $totalBuyCost;
+        $totalPurchase   = $totalBuyCost + $buyCommission;
+        $commission_rate = $transaction->commission;
 
         if (!$isChild) {
             $transactions = \App\PortfolioScrip::where('instrument_id', $instrumentId)
@@ -47,19 +47,19 @@ class PerformanceItem {
                                                      ->where('portfolio_id', $transaction->portfolio_id)
                                                      ->get();
             if ($transactions->count() > 1) {
-                $shares        = 0;
-                $amount        = 0;
-                $buyPrice      = 0;
-                $buyCommission = 0;
-                $totalPurchase = 0;
-                $grandTotalBuyCost=0;
+                $shares            = 0;
+                $amount            = 0;
+                $buyPrice          = 0;
+                $buyCommission     = 0;
+                $totalPurchase     = 0;
+                $grandTotalBuyCost = 0;
 
 
                 foreach ($transactions as $transactionChild) {
                     $shares            +=$transactionChild->no_of_shares;
                     $buyPrice          +=$transactionChild->buying_price;
-                    $totalBuyCost  = $transactionChild->no_of_shares * $transactionChild->buying_price;
-                    $grandTotalBuyCost+=$totalBuyCost;
+                    $totalBuyCost      = $transactionChild->no_of_shares * $transactionChild->buying_price;
+                    $grandTotalBuyCost +=$totalBuyCost;
                     $buyCommissionChil = $transactionChild->commission?($transactionChild->commission/100) * $totalBuyCost:0;
                     $buyCommission     +=$buyCommissionChil;
                     $amount            +=$totalBuyCost;
