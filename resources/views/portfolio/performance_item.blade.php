@@ -1,22 +1,22 @@
 <tr class='{{$isChild?"hidden transactionChild":"normalTransaction"}}'>
-    <td>
+
+    <td class="highlight">
+
         @if($isParent)
         <i class="fa fa-plus showTransactionChildren"></i>
         <i class="fa fa-minus hideTransactionChildren hidden"></i>
         @endif
         @if($isChild)
+
         <i class="fa fa-chevron-right"></i>
-        {{$transaction->transaction_time->format('Y-m-d')}}
+        {{$transaction->buying_date->format('Y-m-d')}}
         <div>
             {{$transaction->shares}} @ TK{{$transaction->rate}}
         </div>
         @else
         {{$transaction->instrument->instrument_code or 'N/A'}}
-        <small class="instrument-name">
-
-            {{$transaction->instrument->name or 'N/A'}}
-        </small>
         @endif
+
     </td>
     <td>
         @if($isChild)
@@ -51,20 +51,20 @@
         @if($isParent)
         Multiple
         @else
-        {{$transaction->transaction_time->format('Y-m-d')}}
+        {{$transaction->buying_date->format('Y-m-d')}}
         @endif
     </td>
     <td>{{$commission}}</td>
     <td>{{$purchaseTotal or 'N/A'}}</td>
     <td class="{{$gainLossTotal<0?'text-danger': 'text-success'}}">{{$gainLossTotal or 'N/A'}}</td>
     <td class="{{$percentChange<0?'text-danger': 'text-success'}}">{{$percentChange or 'N/A'}}</td>
-    <td>
+    {{--<td>
         @if($isChild)
 
         @else
         {{$percentPortfolio or 'N/A'}}
         @endif
-    </td>
+    </td>--}}
     <td>
         {{$sellValue or 'N/A'}}
     </td>

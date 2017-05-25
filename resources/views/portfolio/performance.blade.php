@@ -1,10 +1,11 @@
-<table class="table table-striped">
+{{--<table class="table table-striped table-bordered">--}}
+<table class="table table-striped table-bordered table-advance table-hover">
     <thead>
         <tr>
             <th colspan="2"></th>
-            <th colspan="3">Today</th>
+            <th colspan="3" class="text-center">Today</th>
             <th colspan="3"></th>
-            <th colspan="4">Since Purchased</th>
+            <th colspan="4" class="text-center">Since Purchased</th>
             <th colspan="2"></th>
         </tr>
         <tr>
@@ -20,7 +21,7 @@
             <th>Total Purchase</th>
             <th>Gain/Loss</th>
             <th>%Change</th>
-            <th>%Portfolio</th>
+            {{--<th>%Portfolio</th>--}}
             <th>Sell Value</th>
         </tr>
     </thead>

@@ -114,7 +114,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index');
 Route::resource('/portfolio', 'PortfolioController');
-Route::resource('/portfolio_transaction', 'PortfolioTransactionController');
+Route::resource('/portfolio_transaction', 'PortfolioScripsController');
 Route::get('/portfolio_diversity/{portfolio_id}', 'PortfolioController@diversity');
 Route::get('/portfolio_market_summary/{portfolio_id}', 'PortfolioController@marketSummary');
 Route::get('/portfolio_gain_loss/{portfolio_id}', 'PortfolioController@gainLoss');

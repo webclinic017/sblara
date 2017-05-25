@@ -1,25 +1,25 @@
 <link href="/css/portfolio.css" rel="stylesheet">
 <div class="row portfolioActions ">
     <div class="col-md-2">
-        <a href=":;javascript" action="/portfolio_performance/{{$portfolioId}}">
+        {{--<a href=":;javascript" action="/portfolio_performance/{{$portfolioId}}">
             <button class="btn btn-primary ">Diversity Model</button>
-        </a>
+        </a>--}}
     </div>
     <div class="col-md-2">
-        <a href=":;javascript" action="/portfolio_performance/{{$portfolioId}}">
+        {{--<a href=":;javascript" action="/portfolio_performance/{{$portfolioId}}">
             <button class="btn btn-primary ">Fundamental Ratio</button>
-        </a>
+        </a>--}}
     </div>
     <div class="col-md-2">
-        <a href=":;javascript" action="/portfolio_performance/{{$portfolioId}}">
-            <button class="btn btn-primary performance">Performance</button>
-        </a>
-    </div>
-    <div class="col-md-2">
-        <a href=":;javascript" action="/portfolio_performance/{{$portfolioId}}">
+        {{--<a href=":;javascript" action="/portfolio_performance/{{$portfolioId}}">
             <button class="btn btn-primary ">Market Summary</button>
-        </a>
+        </a>--}}
     </div>
+    <div class="col-md-2">
+            <a href=":;javascript" action="/portfolio_performance/{{$portfolioId}}">
+                <button class="btn btn-primary performance">Performance</button>
+            </a>
+        </div>
     <div class="col-md-2">
         <a href=":;javascript" action="/portfolio_gain_loss/{{$portfolioId}}" class="portfolio_gain_loss">
             <button class="btn btn-primary gain-loss">Realized Gain/Loss</button>

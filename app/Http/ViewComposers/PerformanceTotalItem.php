@@ -24,7 +24,9 @@ class PerformanceTotalItem {
     public function compose(View $view) {
         $viewData = $view->getData();
         $portfolio = $viewData['portfolio'];
-        $transactions = \App\PortfolioTransaction::where('transaction_type_id', 1)->where('portfolio_id', $portfolio->id)->get();
+        $transactions = \App\PortfolioScrip::where('share_status', 'buy')->where('portfolio_id', $portfolio->id)->get();
+        $lastTradeData=DataBanksIntradayRepository::getLatestTradeDataAll();
+
         $shares = 0;
         $amount = 0;
         $buyPrice = 0;
@@ -33,36 +35,52 @@ class PerformanceTotalItem {
         $gainLossTotal = 0;
         $sellValue = 0;
         $gainLossToday = 0;
+
         $changePercentTotal = 0;
+        $totalPurchaseWithCommission=0;
+        $totalSellDeductingCommission=0;
+        $totalProfitSincePurchase=0;
+
         foreach ($transactions as $transaction) {
-            $shares = $transaction->shares;
-            $buyPrice = $transaction->rate;
-            $totalBuyCost = $transaction->shares * $transaction->rate;
-            $buyCommissionChil = $totalBuyCost * $transaction->commission / 100;
-            $buyCommission = $totalBuyCost * $transaction->commission / 100;
-            $amount = $transaction->amount;
-            $totalPurchase += $transaction->rate * $transaction->shares + $buyCommissionChil;
-            $dataBankIntraDays = \App\DataBanksIntraday::where('instrument_id', $transaction->instrument_id)->orderBy('id', 'desc')->first();
-            $lastTradePrice = $change = $changePercent = $changePercentTotal = $portfolioPercent = 0;
-            if ($dataBankIntraDays) {
-                $lastTradePrice = $dataBankIntraDays->close_price;
-                $lastTradeDate = $dataBankIntraDays->lm_date_time->format('Y-m-d');
-                $change = $dataBankIntraDays->price_change;
-                $changePercent = $buyPrice ? $change / $buyPrice * 100 : 0;
-                $gainLossToday += $change * $shares;
-                $changeTotal = $lastTradePrice - $buyPrice;
-                $changePercentTotal = $buyPrice ? $changeTotal / $buyPrice * 100 : 0;
-                $gainLossTotal += $changeTotal * $shares;
-                $sellValue += $lastTradePrice * $shares;
-            }
+            $priceInfo=$lastTradeData->where('instrument_id',$transaction->instrument_id)->first();
+
+            // buy value for this instrument
+            $buyValue = $transaction->no_of_shares * $transaction->buying_price;
+            $buyCommission=($transaction->commission/100)*$buyValue;
+            $buyValueWithCommision=$buyValue+$buyCommission;
+
+            // portfolio total buy value
+            $totalPurchaseWithCommission+=$buyValueWithCommision;
+
+            // sell value for this instrument if today sold
+            $sellValue = $transaction->no_of_shares * $priceInfo->close_price;
+            $sellCommission=($transaction->commission/100)*$sellValue;
+            $sellValueDeductingCommision=$sellValue-$sellCommission;
+
+            // portfolio total sell value if today sold
+            $totalSellDeductingCommission+=$sellValueDeductingCommision;
+
+            // profit for this instrument since if today sold
+            $profit=$sellValueDeductingCommision-$buyValueWithCommision;
+
+            // portfolio total profit if today sold
+            $totalProfitSincePurchase+=$profit;
+
+            // today change for all shares of this item
+            $totalChangeForThisInstrument=$priceInfo->price_change*$transaction->no_of_shares;
+            $gainLossToday+=$totalChangeForThisInstrument;
+
+
         }
-        $change = $totalPurchase ? $gainLossTotal / $totalPurchase * 100 : 0;
-        $view->with('change', round($change, 2));
-        $view->with('totalPurchase', round($totalPurchase, 2));
+
+        $totalChangeSincePurchase = $totalPurchaseWithCommission?($totalProfitSincePurchase/$totalPurchaseWithCommission)*100:0;
+
+        $view->with('totalPurchaseWithCommission', round($totalPurchaseWithCommission, 2));
+        $view->with('totalProfitSincePurchase', round($totalProfitSincePurchase, 2));
+        $view->with('totalChangeSincePurchase', round($totalChangeSincePurchase, 2));
+        $view->with('totalSellDeductingCommission', round($totalSellDeductingCommission, 2));
         $view->with('gainLossToday', round($gainLossToday, 2));
-        $view->with('gainLossTotal', round($gainLossTotal, 2));
-        $view->with('percentChange', round($changePercentTotal, 2));
-        $view->with('sellValue', round($sellValue, 2));
+        $view->with('cash_amount', round($portfolio->cash_amount, 2));
     }
 
 }

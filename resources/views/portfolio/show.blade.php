@@ -1,12 +1,15 @@
 @extends('layouts.metronic.default')
 @section('content')
 @include('portfolio.portfolio_actions')
+@section('page_heading')
+{{$portfolio->portfolio_name}}
+@endsection
 
 <div class="portlet light bordered ">
     <div class="portlet-title">
         <div class="caption font-green">
             <!--<i class="icon-pin font-green"></i>-->
-            <span class="caption-subject bold uppercase"> Portfolio Performancess</span>
+            <span class="caption-subject bold uppercase"> Portfolio Performances</span>
         </div>
     </div>
     <div class="portlet-body portfolio-content-area form">

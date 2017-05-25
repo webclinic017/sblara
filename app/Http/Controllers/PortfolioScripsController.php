@@ -79,6 +79,7 @@ class PortfolioScripsController extends Controller
      */
     public function destroy($id)
     {
+        \App\PortfolioScrip::destroy(1);
         //
     }
 }

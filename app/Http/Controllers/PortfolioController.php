@@ -24,7 +24,7 @@ class PortfolioController extends Controller {
                 'Portfolio',
                 'Your Portfolios',
             ],
-            'portfolios' => auth()->user()->portfolios,
+            'portfolios' => auth()->user()->portfolios->sortByDesc('id'),
         ];
         return view('portfolio.index', $data);
     }
@@ -51,70 +51,147 @@ class PortfolioController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
-        //dd($request->all());
+        $cash_amount_to_be_adjusted=0;
+
         if ($portfolioId = $request->portfolioId) {
+            // when editing share
+
             $portfolio = Portfolio::find($portfolioId);
             if ($request->old_types) {
                 foreach ($request->old_types as $key => $type) {
                     $transactionId = $request->old_transaction_ids[$key];
 //                    dd($transactionId);
                     switch ($type) {
+                        //when sell
                         case 2:
-                            $transaction = new \App\PortfolioTransaction;
-                            $oldtransaction = \App\PortfolioTransaction::find($transactionId);
-                            $transaction->portfolio_id = $oldtransaction->portfolio_id;
-                            $transaction->instrument_id = $oldtransaction->instrument_id;
-                            $transaction->exchange_id = $oldtransaction->exchange_id;
-                            $transaction->transaction_type_id = $type;
-                            $transaction->amount = $request->old_price_per_share[$key] * $request->old_shares[$key];
-                            $transaction->rate = $request->old_price_per_share[$key];
-                            $transaction->transaction_time = $request->old_dates[$key];
-                            $transaction->shares = $request->old_shares[$key];
-                            $transaction->commission = $request->old_commissions[$key];
-                            $transaction->parent_id = $oldtransaction->id;
-                            $transaction->save();
-                            $oldtransaction->shares-=$transaction->shares;
-                            $oldtransaction->amount-=$oldtransaction->shares * $oldtransaction->rate;
-                            $oldtransaction->save();
-                            break;
-                        case 3:
-                            $transaction = \App\PortfolioTransaction::find($request->old_transaction_ids[$key]);
-                            if ($transaction) {
-                                $transaction->amount = $request->old_price_per_share[$key] * $request->old_shares[$key];
-                                $transaction->rate = $request->old_price_per_share[$key];
-                                $transaction->transaction_time = $request->old_dates[$key];
-                                $transaction->shares = $request->old_shares[$key];
+                            /*
+                             * @todo share sell validation in front end
+                             *
+                            */
+                            $share_status='sell';
+                            $oldtransaction = \App\PortfolioScrip::find($transactionId);
+                            $remaining_shares=$oldtransaction->no_of_shares-$request->old_shares[$key];
+
+                            $total_sell_value=$request->old_shares[$key]*$request->old_price_per_share[$key];
+                            $sell_commission=($request->old_commissions[$key]/100)*$total_sell_value;
+                            $total_sell_value_deducting_commission=$total_sell_value-$sell_commission;
+
+                            $cash_amount_to_be_adjusted=$cash_amount_to_be_adjusted+$total_sell_value_deducting_commission; // amount that will be added with portfolio cash_amount
+
+                            if($remaining_shares>=0)
+                            {
+                                // if allowed share quantity
+
+                                $transaction = new \App\PortfolioScrip;
+                                $transaction->portfolio_id = $oldtransaction->portfolio_id;
+                                $transaction->instrument_id = $oldtransaction->instrument_id;
+                                $transaction->exchange_id = $oldtransaction->exchange_id;
+
+                                $transaction->no_of_shares=$oldtransaction->no_of_shares;
+                                $transaction->buying_price=$oldtransaction->buying_price;
+                                $transaction->buying_date =$oldtransaction->buying_date;
+
+                                $transaction->share_status = $share_status;
+                                $transaction->no_of_shares =  $request->old_shares[$key];
+                                $transaction->sell_price = $request->old_price_per_share[$key];
+                                $transaction->sell_date = $request->old_dates[$key];
                                 $transaction->commission = $request->old_commissions[$key];
                                 $transaction->save();
+
+                                if($remaining_shares) {
+                                    //if still share remaining
+                                    $oldtransaction->no_of_shares = $remaining_shares;
+                                    $oldtransaction->save();
+                                }else
+                                {
+                                    // no shares left. so delete the row
+                                    $oldtransaction->delete();
+                                }
+
+                            }else
+                            {
+                                return redirect()->back()->with('status', 'error');
+                            }
+
+
+                            break;
+                        case 3:
+                            //when edit
+                            $transaction = \App\PortfolioScrip::find($request->old_transaction_ids[$key]);
+                            if ($transaction) {
+
+                                //lets calculate how much adjustable cash
+                                // 1st rollback existing cash amount for this item
+
+                                $total_buy_value=$transaction->no_of_shares*$transaction->buying_price;
+                                $buy_commission=($transaction->commission/100)*$total_buy_value;
+                                $total_buy_value_with_commission=$total_buy_value+$buy_commission;
+                                $cash_amount_to_be_adjusted=$cash_amount_to_be_adjusted+$total_buy_value_with_commission;  // Returning that amount to portfolio cash
+
+                                $transaction->no_of_shares=$request->old_shares[$key];
+                                $transaction->buying_price=$request->old_price_per_share[$key];
+                                $transaction->commission =$request->old_commissions[$key];
+                                $transaction->buying_date = $request->old_dates[$key];
+                                $transaction->save();
+
+                                // now re-adding edited amount
+                                $total_buy_value=$transaction->no_of_shares*$transaction->buying_price;
+                                $buy_commission=($transaction->commission/100)*$total_buy_value;
+                                $total_buy_value_with_commission=$total_buy_value+$buy_commission;
+                                $cash_amount_to_be_adjusted=$cash_amount_to_be_adjusted-$total_buy_value_with_commission;  // deducting new edited amount from portfolio
+
                             }
                             break;
                         case 4:
-                            \App\PortfolioTransaction::where('id', $transactionId)->delete();
+                            //when delete
+                            $transaction = \App\PortfolioScrip::find($transactionId);
+
+                            $total_buy_value=$transaction->no_of_shares*$transaction->buying_price;
+                            $buy_commission=($transaction->commission/100)*$total_buy_value;
+                            $total_buy_value_with_commission=$total_buy_value+$buy_commission;
+                            $cash_amount_to_be_adjusted=$cash_amount_to_be_adjusted+$total_buy_value_with_commission;  // returning that amount to cash_amount
+
+                            \App\PortfolioScrip::where('id', $transactionId)->delete();
                             break;
                     }
                 }
             }
         } else {
+            // new
             $portfolio = new Portfolio();
             $portfolio->user_id = auth()->id();
         }
+
         $portfolio->portfolio_name = $request->name;
+        $portfolio->cash_amount = $request->cash_amount;
+        $portfolio->broker_fee = $request->broker_fee;
         $portfolio->save();
-        foreach ($request->shares as $key => $share) {
+
+        foreach ($request->no_of_shares as $key => $share) {
             if ($share) {
-                $portfolioTransaction = new \App\PortfolioTransaction;
+                $portfolioTransaction = new \App\PortfolioScrip;
                 $portfolioTransaction->portfolio_id = $portfolio->id;
-                $portfolioTransaction->instrument_id = $request->symbols[$key];
-                $portfolioTransaction->exchange_id = $request->markets[$key];
-                $portfolioTransaction->transaction_type_id = $request->types[$key];
-                $portfolioTransaction->amount = $request->price_per_share[$key] * $share;
-                $portfolioTransaction->rate = $request->price_per_share[$key];
-                $portfolioTransaction->transaction_time = $request->dates[$key];
-                $portfolioTransaction->shares = $share;
-                $portfolioTransaction->commission = $request->commissions[$key];
+                $portfolioTransaction->instrument_id = $request->instrument_id[$key];
+                $portfolioTransaction->exchange_id = $request->exchange_id[$key];
+                $portfolioTransaction->share_status = $request->share_status[$key];
+                $portfolioTransaction->no_of_shares = $request->no_of_shares[$key];
+                $portfolioTransaction->buying_price = $request->buying_price[$key];
+                $portfolioTransaction->commission = $request->commission[$key];
+                $portfolioTransaction->buying_date = $request->buying_date[$key];
                 $portfolioTransaction->save();
+
+                $total_buy_value=$portfolioTransaction->no_of_shares*$portfolioTransaction->buying_price;
+                $buy_commission=($portfolioTransaction->commission/100)*$total_buy_value;
+                $total_buy_value_with_commission=$total_buy_value+$buy_commission;
+                $cash_amount_to_be_adjusted=$cash_amount_to_be_adjusted-$total_buy_value_with_commission;  // deducting  amount from portfolio
+
+
             }
         }
+
+        $portfolio->cash_amount = $portfolio->cash_amount+$cash_amount_to_be_adjusted;
+        $portfolio->save();
+
         return redirect("/portfolio/$portfolio->id")->with('status', 'success');
         return redirect()->back()->with('status', 'success');
     }
@@ -134,7 +211,7 @@ class PortfolioController extends Controller {
             ],
             'portfolioId' => $portfolio->id,
             'portfolio' => $portfolio,
-            'transactions' => $portfolio->portfolio_transactions()->where('transaction_type_id', 1)->groupBy('instrument_id')->get(),
+            'transactions' => $portfolio->portfolio_scrips()->where('share_status', 'buy')->groupBy('instrument_id')->get(),
         ];
         return view('portfolio.show', $data);
     }
@@ -149,7 +226,7 @@ class PortfolioController extends Controller {
             ],
             'portfolioId' => $portfolio->id,
             'portfolio' => $portfolio,
-            'transactions' => $portfolio->portfolio_transactions()->where('transaction_type_id', 1)->groupBy('instrument_id')->get(),
+            'transactions' => $portfolio->portfolio_scrips()->where('share_status', 'buy')->groupBy('instrument_id')->get(),
         ];
         return view('portfolio.performance', $data);
     }
@@ -164,7 +241,7 @@ class PortfolioController extends Controller {
             ],
             'portfolioId' => $portfolio->id,
             'portfolio' => $portfolio,
-            'transactions' => $portfolio->portfolio_transactions()->where('transaction_type_id', 2)->get(),
+            'transactions' => $portfolio->portfolio_scrips()->where('share_status', 'sell')->get(),
         ];
 //        dd($data);
         return view('portfolio.gain_loss', $data);
@@ -186,7 +263,7 @@ class PortfolioController extends Controller {
             'portfolioId' => $portfolio->id,
             'portfolio' => $portfolio,
             'instruments' => \App\Repositories\InstrumentRepository::getInstrumentList(),
-            'transactions' => $portfolio->portfolio_transactions()->where('transaction_type_id', 1)->get(),
+            'transactions' => $portfolio->portfolio_scrips()->where('share_status', 'buy')->get(),
         ];
         return view('portfolio.edit', $data);
     }
@@ -209,7 +286,8 @@ class PortfolioController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function destroy(Portfolio $portfolio) {
-        //
+        \App\PortfolioScrip::where('portfolio_id', $portfolio->id)->delete();
+        $portfolio->delete();
     }
 
 }

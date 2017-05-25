@@ -37,7 +37,6 @@ class TransactionItem {
             'instruments' => $instruments,
             'transactionTypes' => $transactionTypes,
         ];
-
         $view->with('exchanges', \App\Exchange::all());
         $view->with('instruments', $instruments);
         $view->with('types', \App\TransactionType::all());

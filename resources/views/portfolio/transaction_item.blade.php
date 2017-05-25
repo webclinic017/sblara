@@ -17,19 +17,19 @@
     <td>
         <div class="type-buy">
 
-            {{$transaction->shares or 'N/A'}}
+            {{$transaction->no_of_shares or 'N/A'}}
         </div>
         <div class="type-sell type-edit hidden">
-            <input type="text" name="old_shares[]" class="form-control" placeholder="Shares Sold..." value="{{$transaction->shares }}">
+            <input type="text" name="old_shares[]" class="form-control" placeholder="Shares Sold..." value="{{$transaction->no_of_shares }}">
         </div>
     </td>
     <td>
         <div class="type-buy">
 
-            {{$transaction->rate}}
+            {{$transaction->buying_price}}
         </div>
         <div class="type-sell type-edit hidden">
-            <input type="text" name="old_price_per_share[]" class="form-control" placeholder="Price Sold..." value="{{$transaction->rate }}">
+            <input type="text" name="old_price_per_share[]" class="form-control" placeholder="Price Sold..." value="{{$transaction->buying_price }}">
         </div>
     </td>
     <td>
@@ -44,10 +44,10 @@
     </td>
     <td>
         <div class="type-buy">
-            {{$transaction->transaction_time->format('Y-m-d')}}
+            {{$transaction->buying_date->format('Y-m-d')}}
         </div>
         <div class="type-sell type-edit hidden">
-            <input type="text" name="old_dates[]" class="form-control datepicker" placeholder="Sell Date..." value="{{$transaction->transaction_time->format('Y-m-d') }}">
+            <input type="text" name="old_dates[]" class="form-control datepicker" placeholder="Sell Date..." value="{{$transaction->buying_date->format('Y-m-d') }}">
         </div>
     </td>
 </tr>

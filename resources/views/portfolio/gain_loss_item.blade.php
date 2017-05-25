@@ -1,15 +1,15 @@
 <tr>
-    <td>{{$transaction->instrument->name or 'N/A'}}</td>
+    <td>{{$transaction->instrument->instrument_code or 'N/A'}}</td>
     <td>{{$transaction->exchange->name or 'N/A'}}</td>
-    <td>{{$transaction->shares or 'N/A'}}</td>
-    <td>{{$parentTransaction->rate or 'N/A'}}</td>
+    <td>{{$transaction->no_of_shares or 'N/A'}}</td>
+    <td>{{$transaction->buying_price or 'N/A'}}</td>
     <td>{{$buyCommission or 'N/A'}}</td>
-    <td>{{$parentTransaction->amount or 'N/A'}}</td>
-    <td>{{$parentTransaction?$parentTransaction->transaction_time->format('Y-m-d') : 'N/A'}}</td>
-    <td>{{$transaction->rate}}</td>
+    <td>{{$buyValue}}</td>
+    <td>{{$transaction->buying_date or 'N/A'}}</td>
+    <td>{{$transaction->sell_price}}</td>
     <td>{{$sellCommission}}</td>
-    <td>{{$transaction->amount}}</td>
-    <td>{{$transaction->transaction_time?$transaction->transaction_time->format('Y-m-d'):'N\A'}}</td>
+    <td>{{$sellValue}}</td>
+    <td>{{$transaction->sell_date or 'N/A'}}</td>
     <td class="{{$profit<0?'text-danger':'text-success'}}">{{$profit}}</td>
     <td><button class="btn btn-danger btn-sm deleteTransaction" itemId='{{$transaction->id}}'>Delete</button></td>
 </tr>

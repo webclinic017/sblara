@@ -28,20 +28,22 @@ class PerformanceItem {
 //            'instruments' => $instruments,
 //            'transactionTypes' => $transactionTypes,
 //        ];
+
         $viewData      = $view->getData();
         $isChild       = isset($viewData['isChild']) ? $viewData['isChild'] : false;
         $transaction   = $viewData['transaction'];
         $instrumentId  = $transaction->instrument_id;
-        $shares        = $transaction->shares;
-        $buyPrice      = $transaction->rate;
+        $shares        = $transaction->no_of_shares;
+        $buyPrice      = $transaction->buying_price;
         $totalBuyCost  = $shares * $buyPrice;
-        $buyCommission = $transaction->commission * $totalBuyCost / 100;
-        $amount        = $transaction->amount;
-        $totalPurchase = $buyPrice * $shares + $buyCommission;
+        $buyCommission = $transaction->commission?($transaction->commission/100) * $totalBuyCost:0;
+        $amount        = $totalBuyCost;
+        $totalPurchase = $totalBuyCost + $buyCommission;
+        $commission_rate=$transaction->commission;
 
         if (!$isChild) {
-            $transactions = \App\PortfolioTransaction::where('instrument_id', $instrumentId)
-                                                     ->where('transaction_type_id', 1)
+            $transactions = \App\PortfolioScrip::where('instrument_id', $instrumentId)
+                                                     ->where('share_status', 'buy')
                                                      ->where('portfolio_id', $transaction->portfolio_id)
                                                      ->get();
             if ($transactions->count() > 1) {
@@ -50,25 +52,29 @@ class PerformanceItem {
                 $buyPrice      = 0;
                 $buyCommission = 0;
                 $totalPurchase = 0;
+                $grandTotalBuyCost=0;
+
 
                 foreach ($transactions as $transactionChild) {
-                    $shares            +=$transactionChild->shares;
-                    $buyPrice          +=$transactionChild->rate;
-                    $totalBuyCost      = $transactionChild->shares * $transactionChild->rate;
-                    $buyCommissionChil = $totalBuyCost * $transactionChild->commission / 100;
-                    $buyCommission     +=$totalBuyCost * $transactionChild->commission / 100;
-                    $amount            +=$transactionChild->amount;
-                    $totalPurchase     +=$transactionChild->rate * $transactionChild->shares + $buyCommissionChil;
+                    $shares            +=$transactionChild->no_of_shares;
+                    $buyPrice          +=$transactionChild->buying_price;
+                    $totalBuyCost  = $transactionChild->no_of_shares * $transactionChild->buying_price;
+                    $grandTotalBuyCost+=$totalBuyCost;
+                    $buyCommissionChil = $transactionChild->commission?($transactionChild->commission/100) * $totalBuyCost:0;
+                    $buyCommission     +=$buyCommissionChil;
+                    $amount            +=$totalBuyCost;
+                    $totalPurchase     +=$totalBuyCost + $buyCommissionChil;
                 }
 
-                $buyPrice = $buyPrice / $transactions->count();
+                $buyPrice = $grandTotalBuyCost / $shares;
 //                $buyCommission = $buyCommission / $transactions->count();
             }
         }
 
-        $amountSumOfPortfolio = \App\PortfolioTransaction::where('portfolio_id', $transaction->portfolio_id)
+       /* $amountSumOfPortfolio = \App\PortfolioScrip::where('portfolio_id', $transaction->portfolio_id)
                                                          ->where('transaction_type_id', 1)
-                                                         ->sum('amount');
+                                                         ->sum('amount');*/
+        $amountSumOfPortfolio=$amount;
 
         $dataBankIntraDays = \App\DataBanksIntraday::where('instrument_id', $transaction->instrument_id)
                                                    ->orderBy('id', 'desc')
@@ -77,15 +83,26 @@ class PerformanceItem {
         $lastTradePrice = $change = $changePercent = $gainLossToday = $gainLossTotal = $changePercentTotal = $portfolioPercent = $sellValue = 0;
 
         if ($dataBankIntraDays) {
+
+            $buyValue = $shares * $buyPrice;
+            $buyCommission=($commission_rate/100)*$buyValue;
+            $buyValueWithCommision=$buyValue+$buyCommission;
+
+
+            $sellValue = $shares * $dataBankIntraDays->close_price;
+            $sellCommission=($commission_rate/100)*$sellValue;
+            $sellValueDeductingCommision=$sellValue-$sellCommission;
+
             $lastTradePrice     = $dataBankIntraDays->close_price;
             $lastTradeDate      = $dataBankIntraDays->lm_date_time->format('Y-m-d');
             $change             = $dataBankIntraDays->price_change;
             $changePercent      = $buyPrice ? $change / $buyPrice * 100 : 0;
             $gainLossToday      = $change * $shares;
-            $changeTotal        = $lastTradePrice - $buyPrice;
-            $changePercentTotal = $buyPrice ? $changeTotal / $buyPrice * 100 : 0;
-            $gainLossTotal      = $changeTotal * $shares;
-            $sellValue          = $lastTradePrice * $shares;
+
+            $gainLossTotal      = $sellValueDeductingCommision-$buyValueWithCommision;
+            $changePercentTotal=$gainLossTotal/$buyValueWithCommision*100;
+
+            $sellValue          = $sellValueDeductingCommision;
             $portfolioPercent   = $amount / $amountSumOfPortfolio * 100;
         }
 
