@@ -39,7 +39,7 @@
                             <td class="highlight">
                                 <div class="success"></div>
                                 <a href="#">Since purchased gain/loss</a></td>
-                            <td class="hidden-xs">{{$gainLossToday}} ({{$totalChangeSincePurchase}}%)</td>
+                            <td class="hidden-xs">{{$totalProfitSincePurchase}} ({{$totalChangeSincePurchase}}%)</td>
                         </tr>
                         <tr>
                             <td class="highlight">
