@@ -17,7 +17,7 @@
             </div>
 
             <div class="portlet-body">
-                <table class="table table-bordered table-condensed">
+                <table class="table table-bordered table-condensed table-hover">
                     <thead>
                         <tr class="bg-primary">
                             <th colspan="2"></th>
@@ -51,129 +51,59 @@
                     </thead>
 
                     <tbody> 
-                        @php
-                            $multiplier = count($portfolio->shares);
-                        @endphp
-
                         @forelse ($portfolio->shares as $share)
-                            @if (count($portfolio->shares) > 1)
-                                @if ($loop->first)
-                                    <tr>
-                                        <td>
-                                            <span class="bold text-primary">{{ $share->intrument->instrument_code }}</span>
-                                            <small class="instrument-name">{{ $share->intrument->name }}</small>
-                                        </td>
-                                        <td>
-                                            {{ $lastTradePrice }}
-                                            <small class="instrument-name">({{ $lastTradeDate }})</small>
-                                        </td>
-                                        <td>
-                                            @if ($change > 0)
-                                                <span class="text-success">{{ number_format($change, 2) }}</span>
-                                            @else
-                                                <span class="text-danger">{{ number_format($change, 2) }}</span>
-                                            @endif
-                                        </td>
-                                        <td>
-                                            @if ($gainLossToday > 0)
-                                                <span class="text-success">{{ number_format($gainLossToday * $multiplier, 2) }}</span>
-                                            @else
-                                                <span class="text-danger">{{ number_format($gainLossToday * $multiplier, 2) }}</span>
-                                            @endif
-                                        </td>
-                                        <td>{{ $share->sum('no_of_shares') }}</td>
-                                        <td>{{ $share->buying_price }}</td>
-                                        <td>Multiple</td>
-                                        <td>{{ $commission * $multiplier }}</td>
-                                        <td>{{ $totalPurchase * $multiplier }}</td>
+                            @php
+                                $noOfShare = $share->no_of_shares;
+                                $buyingPrice = $share->buying_price;
+                                $totalBuyCost  = $noOfShare * $buyingPrice;
 
-                                        <td>
-                                            @if ($gainLossTotal > 0)
-                                                <span class="text-success">{{ number_format($gainLossTotal * $multiplier, 2) }}</span>
-                                            @else
-                                                <span class="text-danger">{{ number_format($gainLossTotal * $multiplier, 2) }}</span>
-                                            @endif
-                                        </td>
-                                        <td>
-                                            @if ($percentChange > 0)
-                                                <span class="text-success">{{ number_format($percentChange, 2) }}</span>
-                                            @else
-                                                <span class="text-danger">{{ number_format($percentChange, 2) }}</span>
-                                            @endif
-                                        </td>
-                                        <td>{{ $percentPortfolio * $multiplier }}</td>
-                                        <td>{{ number_format($sellValue * $multiplier, 2) }}</td>
-                                        <td></td>
-                                    </tr>
-                                @endif
-                            @endif
+                                $lastTradePrice = $share->intrument->data_banks_intraday->close_price;
+                                $priceChange = $share->intrument->data_banks_intraday->price_change;
+                                $gainLoss = $priceChange * $noOfShare;
+
+                                $portfolioComission = $share->commission;
+
+                                $buyCommission = $portfolioComission * $totalBuyCost / 100;
+
+                                $totalPurchase = $buyingPrice * $noOfShare + $buyCommission;
+
+                                $sellValue = $noOfShare * $lastTradePrice;
+                                $sellCommission = ($portfolioComission / 100) * $sellValue;
+                                $sellValueDeductingCommision = $sellValue - $sellCommission;
+
+                                $totalBuyCostWithCommission = $totalBuyCost + $buyCommission;
+                                $totalGain = $sellValueDeductingCommision - $totalBuyCostWithCommission;
+
+                                $percentChange = $totalGain / $totalBuyCostWithCommission * 100;
+
+                                $allShareCashAmount = $share->sum('no_of_shares') * $buyingPrice;
+                                $totalPortfolioValue = $allShareCashAmount + $portfolio->cash_amount;
+                                $percentPortfolio = $sellValue / $totalPortfolioValue * 100;
+                            @endphp
 
                             <tr>
                                 <td>
-                                    @if (count($portfolio->shares) > 1)
-                                        <!-- -->
-                                    @else
-                                        <span class="bold text-primary">{{ $share->intrument->instrument_code }}</span>
-                                        <br>
-                                        <small class="instrument-name">{{ $share->intrument->name }}</small>
-                                    @endif
+                                    <span class="bold text-primary">{{ $share->intrument->instrument_code }}</span>
+                                    <br>
+                                    <small class="instrument-name">{{ $share->intrument->name }}</small>
                                 </td>
                                 <td>
-                                    @if (count($portfolio->shares) > 1)
-                                        <!-- -->
-                                    @else
-                                        {{ number_format($lastTradePrice, 2) }}
-                                        <br>
-                                        <small class="instrument-name">({{ $lastTradeDate }})</small>
-                                    @endif
+                                    {{ $lastTradePrice }}
+                                     <small class="instrument-name">
+                                        ({{ $share->intrument->data_banks_intraday->lm_date_time->format('Y-m-d') }})
+                                    </small>
                                 </td>
-                                <td>
-                                    @if (count($portfolio->shares) > 1)
-                                        <!-- -->
-                                    @else
-                                        @if ($change > 0)
-                                            <span class="text-success">{{ number_format($change, 2) }}</span>
-                                        @else
-                                            <span class="text-danger">{{ number_format($change, 2) }}</span>
-                                        @endif
-                                    @endif
-                                </td>
-                                <td>
-                                    @if ($gainLossToday > 0)
-                                        <span class="text-success">{{ number_format($gainLossToday, 2) }}</span>
-                                    @else
-                                        <span class="text-danger">{{ number_format($gainLossToday, 2) }}</span>
-                                    @endif
-                                </td>
-                                <td>{{ $share->no_of_shares }}</td>
-                                <td>{{ $share->buying_price }}</td>
-                                <td>
-                                    {{ $share->buying_date->format('Y-m-d') }}
-                                </td>
-                                <td>{{ number_format($commission, 2) }}</td>
-                                <td>{{ number_format($totalPurchase, 2) }}</td>
-                                <td>
-                                    @if ($gainLossTotal > 0)
-                                        <span class="text-success">{{ number_format($gainLossTotal, 2) }}</span>
-                                    @else
-                                        <span class="text-danger">{{ number_format($gainLossTotal, 2) }}</span>
-                                    @endif
-                                </td>
-                                <td>
-                                    @if ($percentChange > 0)
-                                        <span class="text-success">{{ number_format($percentChange, 2) }}</span>
-                                    @else
-                                        <span class="text-danger">{{ number_format($percentChange, 2) }}</span>
-                                    @endif
-                                </td>
-                                <td>
-                                    @if (count($portfolio->shares) > 1)
-                                        <!-- -->
-                                    @else
-                                        {{ $percentPortfolio }}
-                                    @endif
-                                </td>
-                                <td>{{ number_format($sellValue, 2) }}</td>
+                                <td>{{ $priceChange }}</td>
+                                <td>{{ $gainLoss }}</td>
+                                <td>{{ $noOfShare }}</td>
+                                <td>{{ $buyingPrice }}</td>
+                                <td>{{ $share->buying_date->format('Y-m-d')  }}</td>
+                                <td>{{ $buyCommission }}</td>
+                                <td>{{ $totalPurchase }}</td>
+                                <td>{{ $totalGain }}</td>
+                                <td>{{ $percentChange }}</td>
+                                <td>{{ $percentPortfolio }}</td>
+                                <td>{{ $sellValueDeductingCommision }}</td>
                                 <td>
                                     @if ($share->is_mature)
                                         <small>Matured</small>
@@ -213,30 +143,18 @@
                                     </td>
                                     <td></td>
                                     <td></td>
-                                    <td>
-                                        @if ($gainLossToday > 0)
-                                            <span class="text-success">{{ number_format($gainLossToday * $multiplier, 2) }}</span>
-                                        @else
-                                            <span class="text-danger">{{ number_format($gainLossToday * $multiplier, 2) }}</span>
-                                        @endif
-                                    </td>
                                     <td></td>
                                     <td></td>
                                     <td></td>
                                     <td></td>
-                                    <td>{{ number_format($totalPurchase * $multiplier, 2) }}</td>
-                                    <td>
-                                        @if ($gainLossTotal > 0)
-                                            <span class="text-success">{{ number_format($gainLossTotal * $multiplier, 2) }}</span>
-                                        @else
-                                            <span class="text-danger">{{ number_format($gainLossTotal * $multiplier, 2) }}</span>
-                                        @endif
-                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
                                     <td></td>
                                     <td></td>
                                     <td>
                                         <span class="bold">
-                                            {{ number_format($portfolio->cash_amount + $sellValue * $multiplier, 2) }}
+                                            
                                         </span>
                                     </td>
                                     <td></td>
