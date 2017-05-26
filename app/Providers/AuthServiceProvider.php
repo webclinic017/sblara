@@ -27,5 +27,9 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         Passport::routes();
+        Passport::tokensCan([
+            'paid-plugin-data' => 'Paid plugin',
+            'free-plugin-data' => 'Free'
+        ]);
     }
 }
