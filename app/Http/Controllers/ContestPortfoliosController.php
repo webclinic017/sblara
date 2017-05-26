@@ -24,10 +24,60 @@ class ContestPortfoliosController extends Controller
     public function show(ContestPortfolio $portfolio)
     {
         $portfolio->load('shares.intrument.data_banks_intraday');
-        //return $portfolio;
+
+        $sumGainLoss = 0;
+        $sumBuyCommission = 0;
+
+        $sumTotalPurchase = 0;
+        $sumTotalGain = 0;
+        $sumPercentPortfolio = 0;
+        $sumSellValueDeductingCommision = 0;
+
+        foreach ($portfolio->shares as $share) {
+            $portfolioCashAmount = $portfolio->cash_amount;
+            $noOfShare = $share->no_of_shares;
+            $sumNoOfShare = $share->sum('no_of_shares');
+            $buyingPrice = $share->buying_price;
+            $totalBuyCost  = $noOfShare * $buyingPrice;
+
+            $lastTradePrice = $share->intrument->data_banks_intraday->close_price;
+            $lastTradeDate = $share->intrument->data_banks_intraday->lm_date_time->format('Y-m-d');
+            $priceChange = $share->intrument->data_banks_intraday->price_change;
+            $gainLoss = $priceChange * $noOfShare;
+            $sumGainLoss += $gainLoss;
+
+            $shareComission = $share->commission;
+            $buyCommission = $shareComission * $totalBuyCost / 100;
+            $sumBuyCommission += $buyCommission;
+            
+            $totalPurchase = $buyingPrice * $noOfShare + $buyCommission;
+            $sumTotalPurchase += $totalPurchase;
+
+            $sellValue = $noOfShare * $lastTradePrice;
+            $sellCommission = ($shareComission / 100) * $sellValue;
+            $sellValueDeductingCommision = $sellValue - $sellCommission;
+            $sumSellValueDeductingCommision += $sellValueDeductingCommision;
+
+            $totalBuyCostWithCommission = $totalBuyCost + $buyCommission;
+            $totalGain = $sellValueDeductingCommision - $totalBuyCostWithCommission;
+            $sumTotalGain += $totalGain;
+
+            $percentChange = $totalGain / $totalBuyCostWithCommission * 100;
+
+            $allShareCashAmount = $sumNoOfShare * $buyingPrice;
+            $totalPortfolioValue = $allShareCashAmount + $portfolioCashAmount;
+            $percentPortfolio = $sellValue / $totalPortfolioValue * 100;
+            $sumPercentPortfolio += $percentPortfolio;
+        }
 
         return view('contest_portfolio_shares.show', [
-            'portfolio'        => $portfolio
+            'portfolio'                          => $portfolio,
+            'sumGainLossLoop'                    => number_format($sumGainLoss, 2),
+            'sumBuyCommissionLoop'               => number_format($sumBuyCommission, 2),
+            'sumTotalPurchaseLoop'               => number_format($sumTotalPurchase, 2),
+            'sumTotalGainLoop'                   => number_format($sumTotalGain, 2),
+            'sumPercentPortfolioLoop'            => number_format($sumPercentPortfolio, 2),
+            'sumSellValueDeductingCommisionLoop' => number_format($sumSellValueDeductingCommision, 2)
         ]);
     }
 }
