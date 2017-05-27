@@ -11,7 +11,7 @@
                         <a href="">
                             <span class="text-primary"></span>
                         </a>
-                         Details
+                         Portfolio
                     </span>
                 </div>
             </div>
@@ -95,7 +95,13 @@
                                 $allShareCashAmount = $sumNoOfShare * $buyingPrice;
                                 $totalPortfolioValue = $allShareCashAmount + $portfolioCashAmount;
                                 $percentPortfolio = $sellValue / $totalPortfolioValue * 100;
-                                $sumPercentPortfolio += $percentPortfolio;
+                                $sumPercentPortfolio += number_format($percentPortfolio, 2);
+
+                                $portfolioOfCash = number_format($portfolioCashAmount / $totalPortfolioValue * 100, 2);
+
+                                //
+                                $totalChangeOfAllShare = $sumSellValueDeductingCommision - $totalBuyCostWithCommission;
+                                $testChange = $totalChangeOfAllShare / $totalBuyCostWithCommission * 100;
                             @endphp
 
                             @if (count($portfolio->shares) > 1)
@@ -103,10 +109,12 @@
                                     <tr class="danger">
                                         <td>
                                             <span class="bold text-primary">{{ $instrumentCode }}</span>
+                                            <br>
                                             <small class="instrument-name">{{ $instrumentName }}</small>
                                         </td>
                                         <td>
                                             {{ $lastTradePrice }}
+                                            <br>
                                             <small class="instrument-name">({{ $lastTradeDate }})</small>
                                         </td>
                                         <td>
@@ -142,7 +150,7 @@
                                                 <span class="text-danger">{{ $percentChange }}</span>
                                             @endif
                                         </td>
-                                        <td>{{ $sumPercentPortfolioLoop }}</td>
+                                        <td>{{ $sumPercentPortfolioLoop }}%</td>
                                         <td>{{ $sumSellValueDeductingCommisionLoop }}</td>
                                         <td></td>
                                     </tr>
@@ -233,7 +241,7 @@
                                     <td></td>
                                     <td></td>
                                     <td></td>
-                                    <td></td>
+                                    <td>{{ $portfolioOfCash }}%</td>
                                     <td>
                                         <span class="bold">
                                             {{ number_format($portfolioCashAmount, 2) }}
@@ -248,14 +256,14 @@
                                     </td>
                                     <td>
                                         @if ($sumGainLoss > 0)
-                                            <span class="text-success">{{ $sumGainLoss }}</span>
+                                            <span class="text-success">{{ number_format($sumGainLoss, 2) }}</span>
                                         @else
-                                            <span class="text-danger">{{ $sumGainLoss }}</span>
+                                            <span class="text-danger">{{ number_format($sumGainLoss, 2) }}</span>
                                         @endif
                                     </td>
                                     <td colspan="3"></td>
                                     <td></td>
-                                    <td>{{ $sumTotalPurchase }}</td>
+                                    <td>{{ number_format($sumTotalPurchase, 2) }}</td>
                                     <td>
                                         @if ($sumTotalGain > 0)
                                             <span class="text-success">{{ $sumTotalGain }}</span>
@@ -264,10 +272,10 @@
                                         @endif
                                     </td>
                                     <td></td>
-                                    <td></td>
+                                    <td>{{ $portfolioOfCash += $sumPercentPortfolio }}%</td>
                                     <td>
                                         <span class="bold">
-                                            {{ $sumSellValueDeductingCommision += $portfolioCashAmount }}
+                                            {{ number_format($sumSellValueDeductingCommision += $portfolioCashAmount, 2) }}
                                         </span>
                                     </td>
                                     <td></td>
