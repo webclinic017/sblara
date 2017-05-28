@@ -11,6 +11,7 @@ use App\DataBanksEod;
 use App\Exchange;
 use Carbon\Carbon;
 use App\Repositories\FundamentalRepository;
+use App\Repositories\InstrumentRepository;
 use App\Repositories\CorporateActionRepository;
 class DataBankEodRepository {
 
@@ -110,10 +111,38 @@ class DataBankEodRepository {
         return collect($returnData);
 
     }
-    public static function getEodDataAdjusted($instrumentId,$form,$to)
+
+    public static function getPluginEodDataAdjusted($instrumentCode,$form,$to)
+    {
+        $instrumentInfo=InstrumentRepository::getInstrumentsByCode($instrumentCode)->first();
+        $returnData=self::getEodDataAdjusted($instrumentInfo->id,$form,$to,0);
+
+        $eodForPlugin=array();
+        $eodForPlugin[]=array('Code','Date','Open','High','Low','Close','Volume');
+        foreach($returnData as $row)
+        {
+            $temp=array();
+            $temp[]=$instrumentInfo->instrument_code;
+            $temp[]=date('d/m/Y',$row['date_timestamp']);
+            $temp[]=$row['open'];
+            $temp[]=$row['high'];
+            $temp[]=$row['low'];
+            $temp[]=$row['close'];
+            $temp[]=$row['volume'];
+
+            $eodForPlugin[]=$temp;
+        }
+
+        return $eodForPlugin;
+    }
+    /*
+     * Buy default it will return ohlc array
+     * */
+    public static function getEodDataAdjusted($instrumentId,$form,$to,$ohlc_format=1)
     {
        $form=Carbon::parse($form);
         $to=Carbon::parse($to);
+
        $eodData=DataBanksEod::getEodByInstrument($instrumentId,$form->format('Y-m-d'),$to->format('Y-m-d'));
 
         $faceValue=FundamentalRepository::getFundamentalData(array('face_value'),array($instrumentId))->toArray();
@@ -230,24 +259,29 @@ class DataBankEodRepository {
         $eodData = collect($resultarr);
 
 
+        if($ohlc_format)
+        {
+            $dateArr=$eodData->pluck('date_timestamp')->toArray();
+            $closeArr=$eodData->pluck('close')->toArray();
+            $openArr=$eodData->pluck('open')->toArray();
+            $highArr=$eodData->pluck('high')->toArray();
+            $lowArr=$eodData->pluck('low')->toArray();
+            $volumeArr=$eodData->pluck('volume')->toArray();
 
-       $dateArr=$eodData->pluck('date_timestamp')->toArray();
-       $closeArr=$eodData->pluck('close')->toArray();
-       $openArr=$eodData->pluck('open')->toArray();
-       $highArr=$eodData->pluck('high')->toArray();
-       $lowArr=$eodData->pluck('low')->toArray();
-       $volumeArr=$eodData->pluck('volume')->toArray();
-
-        $returnData=array();
-        $returnData['t']=$dateArr;
-        $returnData['c']=$closeArr;
-        $returnData['o']=$openArr;
-        $returnData['h']=$highArr;
-        $returnData['l']=$lowArr;
-        $returnData['v']=$volumeArr;
-        $returnData['s']="ok";
-
-        return collect($returnData);
+            $returnData=array();
+            $returnData['t']=$dateArr;
+            $returnData['c']=$closeArr;
+            $returnData['o']=$openArr;
+            $returnData['h']=$highArr;
+            $returnData['l']=$lowArr;
+            $returnData['v']=$volumeArr;
+            $returnData['s']="ok";
+            return collect($returnData);
+        }
+        else
+        {
+            return $eodData;
+        }
 
     }
     public static function getEodForCSV($form,$to,$instrumentIdArr=array(),$adjusted=1)

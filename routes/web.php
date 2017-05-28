@@ -45,16 +45,15 @@ Route::get('head', function(){
     return response()->view('includes.metronic.head')->setTtl(60);
 });
 
-Route::get('/', function () {
-    //return view('dashboard');
+/*Route::get('/', function () {
     return response()->view('dashboard')->setTtl(60);
-})->name('/');
+})->name('/');*/
 
 Route::get('/test', function () {
     return view('test');
 });
 
-
+Route::get('/', 'PagesController@dashboard')->name('/')->middleware('httpcache');
 Route::get('/market-depth', function () {return view('market_depth_page');})->name('market-depth');
 Route::get('/market-frame', function () {return view('market_frame_page');})->name('market-frame');
 Route::get('/market-composition', function () {return view('market_composition_page');})->name('market-composition');

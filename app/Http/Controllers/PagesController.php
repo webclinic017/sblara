@@ -5,6 +5,8 @@ use View;
 use \App\DataBanksEod;
 use App\Repositories\InstrumentRepository;
 use App\Repositories\DataBanksIntradayRepository;
+use App\Repositories\DataBankEodRepository;
+use App\Market;
 
 class PagesController extends Controller
 {
@@ -13,6 +15,13 @@ class PagesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function dashboard()
+    {
+        dd(DataBanksIntradayRepository::getIntraForPlugin('ABBANK',0,15));
+
+        $trade_date_Info=Market::getActiveDates()->first();
+        return response()->view('dashboard', ['trade_date_Info' => $trade_date_Info])->setTtl(60);
+    }
     public function newsChart($instrument_id=13)
     {
         return View::make("news_chart_page")->with('instrument_id',(int)$instrument_id);

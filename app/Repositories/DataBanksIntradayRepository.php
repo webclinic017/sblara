@@ -10,6 +10,7 @@
 namespace App\Repositories;
 
 Use App\DataBanksIntraday;
+use App\Repositories\InstrumentRepository;
 Use App\Market;
 use Carbon\Carbon;
 
@@ -446,5 +447,32 @@ class DataBanksIntradayRepository {
         return collect($returnData)->toJson();
 
     }
+    public static function getIntraForPlugin($instrumentCode,$skip=0,$take=1)
+    {
+        $instrumentInfo=InstrumentRepository::getInstrumentsByCode($instrumentCode)->first();
+        $rawdata = DataBanksIntraday::where('instrument_id',$instrumentInfo->id)->orderBy('lm_date_time', 'desc')->skip($skip)->take($take)->get();
+
+        $intraDataForPlugin=array();
+        $intraDataForPlugin[]=array('Time','Date','Open','High','Low','Close','Volume');
+
+        foreach($rawdata as $row)
+        {
+            $temp=array();
+            $temp[]=$row['lm_date_time']->format('H:i');
+            $temp[]=$row['lm_date_time']->format('d/m/Y');
+            $temp[]=$row['open_price'];
+            $temp[]=$row['high_price'];
+            $temp[]=$row['low_price'];
+            $temp[]=$row['close_price'];
+            $temp[]=$row['total_volume'];
+
+            $intraDataForPlugin[]=$temp;
+
+        }
+        return($intraDataForPlugin);
+
+    }
+
+
 
 }
