@@ -59,7 +59,7 @@ class IndexChart
             $indexData['index'][$indexId]['details']['height']=300;
 
             // setting active tab. 1st tab is active
-            if($c==0)
+            if($c==2)
                  $indexData['index'][$indexId]['details']['active']='active';
             else
                 $indexData['index'][$indexId]['details']['active']='';
@@ -75,6 +75,9 @@ class IndexChart
 
         for($i=0;$i<count($xdata);++$i)
         {
+            //skipping 0 vol
+            if(!$xdata[$i])
+                continue;
 
             $temp=array();
             $temp[]=$x_time[$i]->timestamp*1000;

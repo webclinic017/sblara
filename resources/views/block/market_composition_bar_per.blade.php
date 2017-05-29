@@ -50,17 +50,6 @@ chart_bar_total_trade = new Highcharts.Chart({
                     groupPadding: 0.1
                 }
             },
-            legend: {
-                //layout: 'vertical',
-                //align: 'right',
-                verticalAlign: 'top',
-                //x: -100,
-                //y: 100,
-                //floating: true,
-                borderWidth: 1,
-                backgroundColor: '#FFFFFF',
-                shadow: true
-            },
             credits:{
                 enabled:true,
                 href:"http://www.stockbangladesh.com",

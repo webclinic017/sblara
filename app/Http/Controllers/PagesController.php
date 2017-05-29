@@ -18,12 +18,18 @@ class PagesController extends Controller
     public function dashboard()
     {
         //getPluginEodDataAll($from,$to,$adjusted=1,$instrumentCodeArr=array())
-        dd(DataBankEodRepository::getPluginEodDataAll('2017-04-20','2017-05-30',0,array('ABBANK','ACI')));
+       /* dd(DataBankEodRepository::getPluginEodDataAll('2017-04-20','2017-05-30',0,array('ABBANK','ACI')));
         dd(DataBankEodRepository::getPluginEodDataAdjusted('ABBANK','2016-10-10','2017-05-30',0));
-        dd(DataBanksIntradayRepository::getIntraForPlugin('ABBANK',0,15));
+        dd(DataBanksIntradayRepository::getIntraForPlugin('ABBANK',0,15));*/
+       /* $latestTradeDataAll=DataBanksIntradayRepository::getLatestTradeDataAll();
+        $prevMinuteTradeDataAll=DataBanksIntradayRepository::getMinuteAgoTradeDataAll();
+        $return=growthCalculate($latestTradeDataAll,$prevMinuteTradeDataAll,'close_price',500);
+        //dd($return->toArray());
+        dump($latestTradeDataAll->where('instrument_id',128)->toArray());
+        dd($prevMinuteTradeDataAll->where('instrument_id',128)->toArray());*/
 
         $trade_date_Info=Market::getActiveDates()->first();
-        return response()->view('dashboard', ['trade_date_Info' => $trade_date_Info])->setTtl(60);
+        return response()->view('dashboard', ['trade_date_Info' => $trade_date_Info])->setTtl(1);
     }
     public function newsChart($instrument_id=13)
     {

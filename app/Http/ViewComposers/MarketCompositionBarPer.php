@@ -74,12 +74,12 @@ class MarketCompositionBarPer
             }
 
             $todayTemp['name']=$sector_name;
-            $todayTemp['color']='#50B432';
+            $todayTemp['color']='#26C281';
             $todayTemp['y']=($sector_area_total/$marketTotalToday)*100;
             $todayTemp['y']=number_format($todayTemp['y'], 2, '.', '');
 
             $prevTemp['name']=$sector_name;
-            $prevTemp['color']='#FF9655';
+            $prevTemp['color']='#f36a5a';
             $prevTemp['y']=($sector_area_total_prev/$marketTotalPrev)*100;
             $prevTemp['y']=number_format($prevTemp['y'], 2, '.', '');
 

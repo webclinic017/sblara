@@ -2,6 +2,7 @@
 
 use App\Repositories\DataBankEodRepository;
 use App\Repositories\DataBanksIntradayRepository;
+use App\Repositories\InstrumentRepository;
 use Illuminate\Http\Request;
 
 /*
@@ -28,6 +29,11 @@ Route::get('/test', function () {
     // Access token has both "check-status" and "place-orders" scopes...
 })->middleware(['auth:api', 'scopes:paid-plugin-data']);
 
+
+Route::get('symbol_list/', function () {
+    $data = InstrumentRepository::getInstrumentsScripWithIndex();
+    return json_encode($data,JSON_UNESCAPED_SLASHES );
+})->middleware(['auth:api', 'scopes:paid-plugin-data']);
 
 Route::get('eod_data/{from}/{to}/{instrument_code}/{adjusted?}', function ($from,$to,$instrument_code,$adjusted=1) {
     $data = DataBankEodRepository::getPluginEodData($instrument_code,$from,$to,$adjusted);

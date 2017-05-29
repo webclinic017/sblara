@@ -21,6 +21,10 @@ class DataBanksIntradayRepository {
         return DataBanksIntraday::getLatestTradeDataAll($tradeDate, $exchangeId);
     }
 
+    public static function getMinuteAgoTradeDataAll($tradeDate = null, $exchangeId = 0) {
+        return DataBanksIntraday::getMinuteAgoTradeDataAll($tradeDate,1,$exchangeId);
+    }
+
     public static function getPreviousDayData($instrumentsIdArr=array(),$tradeDate = null, $minute = 1, $exchangeId = 0)  {
         return DataBanksIntraday::getPreviousDayData($instrumentsIdArr,$tradeDate,$minute,$exchangeId, $exchangeId);
     }

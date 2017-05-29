@@ -39,11 +39,7 @@
             @foreach($viewData['topList'] as $instrumentId=>$instrument)
                 <tr>
                     <td>
-
-            <a class="popovers" data-container="body" data-html="true" data-trigger="hover" data-placement="top" data-content="<img src='{{url('/tooltip_chart/')}}/{{$instrumentId}}' />">{{$viewData['instrumentList'][$instrumentId]->instrument_code}}</a>
-
-
-
+                        @include('html.tooltip_chart',array('instrumentId'=>$instrumentId,'instrument_code'=>$viewData['instrumentList'][$instrumentId]->instrument_code))
                     </td>
 
                     <td>
