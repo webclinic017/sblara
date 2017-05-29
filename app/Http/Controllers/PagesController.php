@@ -17,6 +17,9 @@ class PagesController extends Controller
      */
     public function dashboard()
     {
+        //getPluginEodDataAll($from,$to,$adjusted=1,$instrumentCodeArr=array())
+        dd(DataBankEodRepository::getPluginEodDataAll('2017-04-20','2017-05-30',0,array('ABBANK','ACI')));
+        dd(DataBankEodRepository::getPluginEodDataAdjusted('ABBANK','2016-10-10','2017-05-30',0));
         dd(DataBanksIntradayRepository::getIntraForPlugin('ABBANK',0,15));
 
         $trade_date_Info=Market::getActiveDates()->first();

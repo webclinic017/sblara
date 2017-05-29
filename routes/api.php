@@ -29,10 +29,21 @@ Route::get('/test', function () {
 })->middleware(['auth:api', 'scopes:paid-plugin-data']);
 
 
-Route::get('eod_data/{from}/{to}/{instrument_code?}', function ($from,$to,$instrument_code) {
-    $data = DataBankEodRepository::getPluginEodDataAdjusted($instrument_code,$from,$to);
+Route::get('eod_data/{from}/{to}/{instrument_code}/{adjusted?}', function ($from,$to,$instrument_code,$adjusted=1) {
+    $data = DataBankEodRepository::getPluginEodData($instrument_code,$from,$to,$adjusted);
     return json_encode($data,JSON_UNESCAPED_SLASHES );
 })->middleware(['auth:api', 'scopes:paid-plugin-data']);
+
+Route::get('eod_data_all/{from}/{to}/{adjusted?}/{instrument_codes?}', function ($from,$to,$adjusted=1,$instrument_codes=array()) {
+
+    $instrument_code_arr=array();
+    if(!empty($instrument_codes))
+    $instrument_code_arr=explode(',',$instrument_codes);
+
+    $data=DataBankEodRepository::getPluginEodDataAll($from,$to,$adjusted,$instrument_code_arr);
+    return json_encode($data,JSON_UNESCAPED_SLASHES );
+})->middleware(['auth:api', 'scopes:paid-plugin-data']);
+
 
 Route::get('intrday_data/{from}/{to}/{instrument_code?}', function ($skip,$take,$instrument_code) {
     $data = DataBanksIntradayRepository::getIntraForPlugin($instrument_code,$skip,$take);

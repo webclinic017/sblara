@@ -112,11 +112,17 @@ class DataBankEodRepository {
 
     }
 
-    public static function getPluginEodDataAdjusted($instrumentCode,$form,$to)
+    public static function getPluginEodData($instrumentCode,$from,$to,$adjusted=1)
     {
         $instrumentInfo=InstrumentRepository::getInstrumentsByCode($instrumentCode)->first();
-        $returnData=self::getEodDataAdjusted($instrumentInfo->id,$form,$to,0);
-
+        if($adjusted) {
+            $returnData = self::getEodDataAdjusted($instrumentInfo->id, $from, $to, 0);
+        }
+        else
+        {
+            $eodData=DataBanksEod::getEodByInstrument($instrumentInfo->id,$from,$to);
+            $returnData=$eodData->sortByDesc('date_timestamp');
+        }
         $eodForPlugin=array();
         $eodForPlugin[]=array('Code','Date','Open','High','Low','Close','Volume');
         foreach($returnData as $row)
@@ -133,6 +139,24 @@ class DataBankEodRepository {
             $eodForPlugin[]=$temp;
         }
 
+        return $eodForPlugin;
+    }
+    public static function getPluginEodDataAll($from,$to,$adjusted=1,$instrumentCodeArr=array())
+    {
+        $instrumentIdArr=array();
+
+        if(!empty($instrumentCodeArr))
+        {
+            $allInstrumentInfo=InstrumentRepository::getInstrumentsScripWithIndex();
+
+            foreach($instrumentCodeArr as $instrumentCode)
+            {
+                $instrumentInfo=$allInstrumentInfo->whereInStrict('instrument_code',$instrumentCode)->first();
+                $instrumentIdArr[]=$instrumentInfo->id;
+            }
+
+        }
+        $eodForPlugin=self::getEodForCSV($from,$to,$instrumentIdArr,$adjusted);
         return $eodForPlugin;
     }
     /*
@@ -284,6 +308,7 @@ class DataBankEodRepository {
         }
 
     }
+
     public static function getEodForCSV($form,$to,$instrumentIdArr=array(),$adjusted=1)
     {
 
