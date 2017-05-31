@@ -50,6 +50,7 @@ class AppServiceProvider extends ServiceProvider {
         View::composer('block.market_composition_pie', 'App\Http\ViewComposers\MarketCompositionPie');
         View::composer('block.market_composition_bar_total', 'App\Http\ViewComposers\MarketCompositionBarTotal');
         View::composer('block.market_composition_bar_per', 'App\Http\ViewComposers\MarketCompositionBarPer');
+        View::composer('block.intraday_market_composition_bar_per', 'App\Http\ViewComposers\IntradayMarketCompositionBarPer');
         View::composer('block.gain_loser_depth', 'App\Http\ViewComposers\GainerLoserDepth');
         View::composer('block.sector_gain_loser_column', 'App\Http\ViewComposers\SectorGainerLoserColumn');
 

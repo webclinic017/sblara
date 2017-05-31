@@ -93,6 +93,7 @@ class MinuteChart
 
         $inst_id=(int)$viewdata['instrument_id'];
         $minuteChartData = DataBanksIntradayRepository::getDataForMinuteChart($inst_id,5);
+
         $instrumentInfo=InstrumentRepository::getInstrumentsById(array($inst_id))->first();
 
         $chartData=array();

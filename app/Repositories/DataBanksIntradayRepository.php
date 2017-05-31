@@ -126,8 +126,8 @@ class DataBanksIntradayRepository {
     {
 
         $minuteData=DataBanksIntraday::getWholeDayData($instrumentsIdArr,$minute,$tradeDate,$exchangeId);
-        $minuteData=$minuteData->groupBy('instrument_id');
 
+        $minuteData=$minuteData->groupBy('instrument_id');
         $returnData=array();
         foreach($minuteData as $instrument_id=>$dataObj) {
             $returnData[$instrument_id]=self::calculateDifference($dataObj,$field);
@@ -229,49 +229,72 @@ class DataBanksIntradayRepository {
         $multipleDaydata=DataBanksIntradayRepository::getMinuteDataByMarketId($marketId,$instrumentsIdArr,'total_volume');
         $bullBear=self::lastNdaysBullBear($multipleDaydata);
 
-        $intradayData=$multipleDaydata[$marketId[0]];
-
-        $close_price=$intradayData->pluck('close_price')->toArray();
-        $dateTime=$intradayData->pluck('lm_date_time')->toArray();
-        $total_volume_diff=$intradayData->pluck('total_volume_difference')->toArray();
-
+        $intradayData=null;
         $total_volume_data=array();
         $close_data=array();
         $date_data=array();
 
-        $no_of_bar=count($close_price)-2;
-
-        for($i=$no_of_bar;$i>=0;--$i)
+        if(isset($multipleDaydata[$marketId[0]]))
         {
-            if(!isset($close_price[$i]))
+            $intradayData=$multipleDaydata[$marketId[0]];
+        }
+        else
+        {
+            $intradayData=$multipleDaydata[$marketId[1]];
+        }
+
+
+        $reverse_close_price= $intradayData->reverse()->pluck('close_price')->toArray();  // 10.30 am fast
+        $yday_close_price=$intradayData->first()->yday_close_price;
+        $dateTime=$intradayData->reverse()->pluck('lm_date_time')->toArray();
+
+        array_unshift($reverse_close_price, $yday_close_price); // adding yclose to compare starting volume at 10.30 am
+
+        $reverse_total_volume_diff=$intradayData->reverse()->pluck('total_volume_difference')->toArray(); // 10:30 minute data first ($close_price[0)
+
+
+        for($i=0;$i<count($reverse_close_price)-1;$i++)
+        {
+            $data_temp=array();
+
+            if(!isset($reverse_close_price[$i]))
                 continue;
 
-            $temp=array();
+            if(isset($reverse_close_price[$i+1]))
+                $temp=$reverse_close_price[$i+1];
 
 
-            if($close_price[$i+1]>$close_price[$i]) // if price fall
+            if($temp<$reverse_close_price[$i]) // if price fall
             {
-                $temp['color']='#EF4836';
+                $data_temp['color']='#EF4836';
+
             }
-            if($close_price[$i+1]<$close_price[$i]) // if price increases
+            if($temp>$reverse_close_price[$i]) // if price increases
             {
-                $temp['color']='#1BA39C';
+                $data_temp['color']='#1BA39C';
             }
-            if($close_price[$i+1]==$close_price[$i]) // if price equal
+            if($temp==$reverse_close_price[$i]) // if price equal
             {
-                $temp['color']='#ACB5C3';
+                $data_temp['color']='#ACB5C3';
             }
 
-            $temp['y']=$total_volume_diff[$i];
-            $total_volume_data[]=$temp;
+            $data_temp['y']=$reverse_total_volume_diff[$i];
+            $total_volume_data[]=$data_temp;
 
-            $temp['y']=$close_price[$i]+0;
-            $close_data[]=$temp;
+            $data_temp['y']=$reverse_close_price[$i+1]+0;
+            $close_data[]=$data_temp;
 
             $date_data[]=$dateTime[$i]->format('h:i');
 
         }
-        $yday_close_price=$intradayData->first()->yday_close_price;
+
+        //reversing back to 2.30 data first
+        /*$total_volume_data=array_reverse($total_volume_data);
+        $close_data=array_reverse($close_data);
+        $date_data=array_reverse($date_data);*/
+
+
+
         $cp=$intradayData->first()->close_price;
         $day_total_volume=$intradayData->first()->total_volume;
         $trade_date=$intradayData->first()->trade_date;

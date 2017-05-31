@@ -53,6 +53,7 @@ Route::get('/test', function () {
     return view('test');
 });
 
+Route::get('/d', 'PagesController@dashboard2')->name('/dashboard2')->middleware('httpcache');
 Route::get('/', 'PagesController@dashboard')->name('/')->middleware('httpcache');
 Route::get('/market-depth', function () {return view('market_depth_page');})->name('market-depth');
 Route::get('/market-frame', function () {return view('market_frame_page');})->name('market-frame');
@@ -119,3 +120,30 @@ Route::get('/portfolio_market_summary/{portfolio_id}', 'PortfolioController@mark
 Route::get('/portfolio_gain_loss/{portfolio_id}', 'PortfolioController@gainLoss');
 Route::get('/portfolio_performance/{portfolio_id}', 'PortfolioController@performance');
 Route::post('search_json', 'SearchController@search');
+
+
+Route::get('rss', function () {
+    $source = 'http://www.dailystockbangladesh.com/feed/';
+    //$source = 'http://rss.cnn.com/rss/cnn_topstories.rss';
+
+    $headers = get_headers($source);
+    $response = substr($headers[0], 9, 3);
+    if ($response == '404') {
+        return 'Invalid Source';
+    }
+
+    $data = simplexml_load_string(file_get_contents($source));
+
+    if (count($data) == 0) {
+        return 'No Posts';
+    }
+    $posts = '';
+    foreach ($data->channel->item as $item) {
+        print_r($item->description);
+        $posts .= '<h1><a href="' . $item->link . '">' . $item->title . '</a></h1>';
+        $posts .= '<h4>' . $item->pubDate . '</h4>';
+        $posts .= '<p>' . $item->description . '</p>';
+        $posts .= '<hr><hr>';
+    }
+    return $posts;
+});

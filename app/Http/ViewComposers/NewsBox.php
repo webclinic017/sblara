@@ -98,6 +98,12 @@ class NewsBox
       foreach($allNews as $oneInstrumentsNews)
       {
           $code=$oneInstrumentsNews->first()->prefix;
+          $code = explode(' ', $code);
+          $code = $code[0];
+
+          $code = explode('(', $code);
+          $code = $code[0];
+
           $temp['label']=$code;
           $temp['search_key']= "--";
           $temp['filter_key']= "$code";

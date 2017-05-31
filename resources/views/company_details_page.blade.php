@@ -1,9 +1,12 @@
 @extends('layouts.metronic.default')
+@section('page_heading')
+{{$instrumentInfo->name}}
+@endsection
 
 @section('content')
 <div class="row margin-bottom-20">
 <div class="col-lg-6 col-md-3 col-sm-6 col-xs-12">
-<h4>{{$instrumentInfo->name}}</h4>
+<h4>Update: {{$lastTradeInfo->lm_date_time->format('d-m-Y H:i')}}</h4>
 </div>
 <div class="col-lg-6 col-md-3 col-sm-6 col-xs-12">
 @include('html.instrument_list_bs_select',['bs_select_id'=>'instruments'])
@@ -71,7 +74,7 @@
             <div class="display">
                 <div class="number">
                     <h3 class="{{fontCss($currentVolDiffThenYday)}}">
-                        <span data-counter="counterup" data-value="1349">{{$lastTradeInfo->total_volume}} </span></span>
+                        <span data-counter="counterup" data-value="{{$lastTradeInfo->total_volume}}">{{$lastTradeInfo->total_volume}} </span></span>
                     </h3>
                     <small>Trade Volume</small>
                 </div>
@@ -124,7 +127,7 @@
             <div class="display">
                 <div class="number">
                     <h3 class="{{fontCss($lastTradeInfo->close_price)}}">
-                        <span data-counter="counterup" data-value="276">{{$lastTradeInfo->total_volume_difference}}</span>
+                        <span data-counter="counterup" data-value="{{$lastTradeInfo->total_volume_difference}}">{{$lastTradeInfo->total_volume_difference}}</span>
                     </h3>
                     <small>Last minute traded vol</small>
                 </div>
@@ -139,8 +142,8 @@
                                         </span>
                 </div>
                 <div class="status">
-                    <div class="status-title"> change </div>
-                    <div class="status-number"> 57% </div>
+                    <div class="status-title"> counted time </div>
+                    <div class="status-number"> {{$lastTradeInfo->lm_date_time->format('d-m-Y H:i')}} </div>
                 </div>
             </div>
         </div>

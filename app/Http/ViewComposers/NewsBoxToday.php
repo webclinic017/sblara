@@ -41,7 +41,7 @@ class NewsBoxToday
     {
 
         // using trade date 2017-01-29 for testing as there is no news in db for last market id using here
-       $allNews=NewsRepository::getWholeDayNews('2017-01-29')->groupBy('instrument_id');
+       $allNews=NewsRepository::getWholeDayNews()->groupBy('instrument_id');
 
        $searchKeyArr=array();
 
@@ -86,6 +86,12 @@ class NewsBoxToday
       foreach($allNews as $oneInstrumentsNews)
       {
           $code=$oneInstrumentsNews->first()->prefix;
+          $code=explode(' ', $code);
+          $code=$code[0];
+
+          $code = explode('(', $code);
+          $code = $code[0];
+
           $temp['label']=$code;
           $temp['search_key']= "--";
           $temp['filter_key']= "$code";
@@ -113,6 +119,9 @@ class NewsBoxToday
           }
 
       }
+
+        sort($foundSearchKey);
+
 
         $allNewsResult=collect($allNewsResult);
         $allNewsResult=$allNewsResult->groupBy('instrument_id');

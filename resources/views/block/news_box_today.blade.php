@@ -2,9 +2,9 @@
     <div class="clearfix">
 
         <div id="js-filters-lightbox-gallery2" class="cbp-l-filters-button cbp-l-filters-left">
-        <div data-filter="*" class="cbp-filter-item-active cbp-filter-item btn blue btn-outline uppercase">All</div>
+        <div data-filter="*" class="cbp-filter-item-active cbp-filter-item btn btn-xs blue btn-outline uppercase">All</div>
         @foreach($searchKeyArr as $row)
-            <div data-filter=".{{$row['filter_key']}}" class="cbp-filter-item btn blue btn-outline uppercase">{{$row['label']}}</div>
+            <div data-filter=".{{$row['filter_key']}}" class="cbp-filter-item btn btn-xs blue btn-outline uppercase">{{$row['label']}}</div>
         @endforeach
 
         </div>
