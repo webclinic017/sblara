@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 use View;
 use \App\DataBanksEod;
+use App\Repositories\DataBankEodRepository;
+use Illuminate\Support\Facades\DB;
 use App\Repositories\InstrumentRepository;
 use App\Repositories\DataBanksIntradayRepository;
-use Illuminate\Support\Facades\DB;
 use App\Market;
 
 class PagesController extends Controller
@@ -15,8 +16,23 @@ class PagesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function data()
+    {
+
+        $d = DB::select("select * from `data_banks_eods` where `date` between '2017-05-30' and '2017-05-31' order by `date` desc");
+
+        //dump(DataBankEodRepository::getPluginEodDataAll('2017-05-29', '2017-06-30', 0));
+return $d;
+
+    }
     public function dashboard()
     {
+
+        $d= DB::select("select * from `data_banks_eods` where `date` between '2017-05-30' and '2017-05-31' order by `date` desc");
+
+        dump(DataBankEodRepository::getPluginEodDataAll('2017-05-29', '2017-06-30', 0));
+
         //getPluginEodDataAll($from,$to,$adjusted=1,$instrumentCodeArr=array())
        /* dd(DataBankEodRepository::getPluginEodDataAll('2017-04-20','2017-05-30',0,array('ABBANK','ACI')));
         dd(DataBankEodRepository::getPluginEodDataAdjusted('ABBANK','2016-10-10','2017-05-30',0));

@@ -423,8 +423,7 @@ class DataBanksIntradayRepository {
     {
         $from=Carbon::createFromTimestamp($from);
         $to=Carbon::createFromTimestamp($to);
-
-        $rawdata = DataBanksIntraday::getIntraDayDataByRange($instrumentId, $from->format('Y-m-d'), $to->format('Y-m-d'));
+        $rawdata = DataBanksIntraday::getIntraDayDataByRange($instrumentId, $from->format('Y-m-d H:i:s'), $to->format('Y-m-d H:i:s'));
         $rawdata = $rawdata->reverse();
         $rawdata=$rawdata->keyBy('batch');
         $rawdata=$rawdata->groupBy('market_id');
@@ -474,30 +473,38 @@ class DataBanksIntradayRepository {
         return collect($returnData)->toJson();
 
     }
-    public static function getIntraForPlugin($instrumentCode,$skip=0,$take=1)
+
+    public static function getIntraForPlugin($minute=0, $tradeDate = null, $exchangeId=1,$instrumentCodeArr=array())
     {
-        $instrumentInfo=InstrumentRepository::getInstrumentsByCode($instrumentCode)->first();
-        $rawdata = DataBanksIntraday::where('instrument_id',$instrumentInfo->id)->orderBy('lm_date_time', 'desc')->skip($skip)->take($take)->get();
+        $instrumentIdArr = array();
+        $allInstrumentInfo = InstrumentRepository::getInstrumentsScripWithIndex();
 
-        $intraDataForPlugin=array();
-        $intraDataForPlugin[]=array('Time','Date','Open','High','Low','Close','Volume');
-
-        foreach($rawdata as $row)
-        {
-            $temp=array();
-            $temp[]=$row['lm_date_time']->format('H:i');
-            $temp[]=$row['lm_date_time']->format('d/m/Y');
-            $temp[]=$row['open_price'];
-            $temp[]=$row['high_price'];
-            $temp[]=$row['low_price'];
-            $temp[]=$row['close_price'];
-            $temp[]=$row['total_volume'];
-
-            $intraDataForPlugin[]=$temp;
+        if (!empty($instrumentCodeArr)) {
+            foreach ($instrumentCodeArr as $instrumentCode) {
+                $instrumentInfo = $allInstrumentInfo->whereInStrict('instrument_code', $instrumentCode)->first();
+                $instrumentIdArr[] = $instrumentInfo->id;
+            }
 
         }
-        return($intraDataForPlugin);
+        $rawdata=DataBanksIntraday::getWholeDayData($instrumentIdArr, $minute, $tradeDate, $exchangeId);
+        $intraDataForPlugin = array();
+        $intraDataForPlugin[] = array('Code','Time', 'Date', 'Open', 'High', 'Low', 'Close', 'Volume');
+        foreach ($rawdata as $row) {
+            $code= InstrumentRepository::getInstrumentsById($row['instrument_id'])->first()->instrument_code;
+            $temp = array();
+            $temp[] = $code;
+            $temp[] = $row['lm_date_time']->format('H:i');
+            $temp[] = $row['lm_date_time']->format('d/m/Y');
+            $temp[] = $row['open_price'];
+            $temp[] = $row['high_price'];
+            $temp[] = $row['low_price'];
+            $temp[] = $row['close_price'];
+            $temp[] = $row['total_volume'];
 
+            $intraDataForPlugin[] = $temp;
+
+        }
+        return ($intraDataForPlugin);
     }
 
 

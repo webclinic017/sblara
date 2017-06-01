@@ -53,6 +53,11 @@ Route::get('/test', function () {
     return view('test');
 });
 
+Route::get('/pluginEod', function () {
+    return response()->download(storage_path() .'/app/plugin/eod/data.txt');
+});
+
+Route::get('/data', 'PagesController@data')->name('/data');
 Route::get('/d', 'PagesController@dashboard2')->name('/dashboard2')->middleware('httpcache');
 Route::get('/', 'PagesController@dashboard')->name('/')->middleware('httpcache');
 Route::get('/market-depth', function () {return view('market_depth_page');})->name('market-depth');
@@ -139,9 +144,10 @@ Route::get('rss', function () {
     }
     $posts = '';
     foreach ($data->channel->item as $item) {
-        print_r($item->description);
+        dd($item->image);
         $posts .= '<h1><a href="' . $item->link . '">' . $item->title . '</a></h1>';
         $posts .= '<h4>' . $item->pubDate . '</h4>';
+        $posts .= '<h4>' . $item->image . '</h4>';
         $posts .= '<p>' . $item->description . '</p>';
         $posts .= '<hr><hr>';
     }

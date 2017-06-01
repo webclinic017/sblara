@@ -40,19 +40,26 @@ Route::get('eod_data/{from}/{to}/{instrument_code}/{adjusted?}', function ($from
     return json_encode($data,JSON_UNESCAPED_SLASHES );
 })->middleware(['auth:api', 'scopes:paid-plugin-data']);
 
-Route::get('eod_data_all/{from}/{to}/{adjusted?}/{instrument_codes?}', function ($from,$to,$adjusted=1,$instrument_codes=array()) {
+Route::get('eod_data_all/{from}/{to}/{adjusted?}/{instrument_codes?}', function ($from,$to,$adjusted=1,$instrument_codes=null) {
 
     $instrument_code_arr=array();
-    if(!empty($instrument_codes))
+    if(!is_null($instrument_codes))
     $instrument_code_arr=explode(',',$instrument_codes);
 
     $data=DataBankEodRepository::getPluginEodDataAll($from,$to,$adjusted,$instrument_code_arr);
     return json_encode($data,JSON_UNESCAPED_SLASHES );
 })->middleware(['auth:api', 'scopes:paid-plugin-data']);
 
+//$tradeDate=2017-05-29
+Route::get('intraday_data/{minute?}/{tradeDate?}/{instrument_code?}', function ($minute=1, $tradeDate=null, $instrument_codes=null) {
 
-Route::get('intrday_data/{from}/{to}/{instrument_code?}', function ($skip,$take,$instrument_code) {
-    $data = DataBanksIntradayRepository::getIntraForPlugin($instrument_code,$skip,$take);
+    if($tradeDate=='null')
+        $tradeDate=null;
+    $instrument_code_arr = array();
+    if (!is_null($instrument_codes))
+        $instrument_code_arr = explode(',', $instrument_codes);
+
+    $data = DataBanksIntradayRepository::getIntraForPlugin($minute, $tradeDate,1,$instrument_code_arr);
     return json_encode($data,JSON_UNESCAPED_SLASHES );
 })->middleware(['auth:api', 'scopes:paid-plugin-data']);
 
