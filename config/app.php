@@ -182,7 +182,7 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         Barryvdh\HttpCache\ServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
-
+        Chumper\Zipper\ZipperServiceProvider::class,
 
     ],
 
@@ -236,6 +236,7 @@ return [
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
         'Image' => Intervention\Image\Facades\Image::class,
+        'Zipper' => Chumper\Zipper\Zipper::class,
 
 
     ],

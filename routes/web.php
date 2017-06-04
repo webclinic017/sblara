@@ -54,8 +54,13 @@ Route::get('/test', function () {
 });
 
 Route::get('/pluginEod', function () {
-    return response()->download(storage_path() .'/app/plugin/eod/data.txt');
+    return response()->download(storage_path() .'/app/plugin/eod.zip');
 });
+
+Route::get('/pluginIntra', function () {
+    return response()->download(storage_path() .'/app/plugin/intra.zip');
+});
+
 
 Route::get('/data', 'PagesController@data')->name('/data');
 Route::get('/d', 'PagesController@dashboard2')->name('/dashboard2')->middleware('httpcache');

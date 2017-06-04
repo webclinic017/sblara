@@ -7,22 +7,23 @@ use Illuminate\Support\Facades\Storage;
 use DB;
 use App\Repositories\InstrumentRepository;
 use App\Market;
+Use App\DataBanksIntraday;
 
-class PluginEodDataResetCommand extends Command
+class PluginIntradayDataResetCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'plugin:resetEod';
+    protected $signature = 'plugin:resetIntra';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Reset eod file';
+    protected $description = 'Reset Intraday data file';
 
     /**
      * Create a new command instance.
@@ -48,25 +49,29 @@ class PluginEodDataResetCommand extends Command
 
             if (count($instrumentInfo)) {
                 $instrument_code = $instrumentInfo->first()->instrument_code;
-                $date_formated = date('d/m/Y', strtotime($row->date));
-                $strToadd .= $instrument_code . ',' . $date_formated . ',' . $row->open . ',' . $row->high . ',' . $row->low . ',' . $row->close . ',' . $row->volume."\n";
+                $time_formated = $row['lm_date_time']->format('H:i');
+                $date_formated = $row['lm_date_time']->format('d/m/Y');
+
+                $strToadd .= $instrument_code . ',' . $time_formated . ',' . $date_formated . ',' . $row->open_price . ',' . $row->high_price . ',' . $row->low_price . ',' . $row->close_price . ',' . $row->total_volume."\n";
 
             }
 
         }
+
         Storage::append($file, $strToadd);
 
         $zipper = new \Chumper\Zipper\Zipper;
-        $files = glob(storage_path() .'/app/plugin/eod/*');
-        $zipper->make(storage_path() .'/app/plugin/eod.zip')->add($files)->close();
+        $files = glob(storage_path() .'/app/plugin/intra/*');
+        $zipper->make(storage_path() .'/app/plugin/intra.zip')->add($files)->close();
 
     }
 
-// live server command   /opt/cpanel/ea-php70/root/usr/bin/php /home/hostingmonitors/artisan plugin:resetEod
+
+// live server command   /opt/cpanel/ea-php70/root/usr/bin/php /home/hostingmonitors/artisan plugin:resetIntra
     public function handle()
     {
-        $file="plugin/eod/data.txt";
-        //$heading = 'Code,Date,Open,High,Low,Close,Volume';
+        $file="plugin/intra/data.txt";
+        //$heading = 'Code,Time,Date,Open,High,Low,Close,Volume';
         $heading = '';
         Storage::disk('local')->put($file, $heading);
 
@@ -82,7 +87,7 @@ class PluginEodDataResetCommand extends Command
         for($i=0;$i<$total_row;$i=$i+ $limit)
         {
             dump(".... processing start=$i, limit=$limit");
-            $data = DB::select("select instrument_id,open,high,low,close,volume,date from data_banks_eods where date<'$last_trade_date' ORDER BY date desc limit $i,$limit");
+            $data= DataBanksIntraday::whereDate('lm_date_time','<',$last_trade_date)->groupBy('lm_date_time')->orderBy('lm_date_time', 'desc')->skip($i)->take($limit)->get();
             self::writeData($data, $instrumentList, $file);
         }
 

@@ -16,6 +16,8 @@ class Kernel extends ConsoleKernel
         //
         Commands\PluginEodDataWriteCommand::class,
         Commands\PluginEodDataResetCommand::class,
+        Commands\PluginIntradayDataResetCommand::class,
+        Commands\PluginIntradayDataWriteCommand::class,
     ];
 
     /**
