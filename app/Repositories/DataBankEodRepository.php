@@ -164,8 +164,22 @@ class DataBankEodRepository {
      * */
     public static function getEodDataAdjusted($instrumentId,$form,$to,$ohlc_format=1)
     {
-       $form=Carbon::parse($form);
-        $to=Carbon::parse($to);
+        if(is_int($form))
+        {
+            $form = Carbon::createFromTimestamp($form);
+
+        }else
+        {
+            $form = Carbon::parse($form);
+        }
+
+        if (is_int($to)) {
+            $to = Carbon::createFromTimestamp($to);
+        } else {
+            $to = Carbon::parse($to);
+        }
+
+
 
        $eodData=DataBanksEod::getEodByInstrument($instrumentId,$form->format('Y-m-d'),$to->format('Y-m-d'));
 

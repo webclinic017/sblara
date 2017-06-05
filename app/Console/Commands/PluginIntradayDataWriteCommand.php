@@ -67,7 +67,7 @@ class PluginIntradayDataWriteCommand extends Command
 
     }
 
-    // live server command   /opt/cpanel/ea-php70/root/usr/bin/php /home/hostingmonitors/artisan plugin:writeLastEod
+    // live server command   /opt/cpanel/ea-php70/root/usr/bin/php /home/hostingmonitors/artisan plugin:writeLastIntra
     public function handle()
     {
         $file="plugin/intra/data.txt";

@@ -29,9 +29,6 @@ return $d;
     public function dashboard()
     {
 
-        $d= DB::select("select * from `data_banks_eods` where `date` between '2017-05-30' and '2017-05-31' order by `date` desc");
-
-        dump(DataBankEodRepository::getPluginEodDataAll('2017-05-29', '2017-06-30', 0));
 
         //getPluginEodDataAll($from,$to,$adjusted=1,$instrumentCodeArr=array())
        /* dd(DataBankEodRepository::getPluginEodDataAll('2017-04-20','2017-05-30',0,array('ABBANK','ACI')));
@@ -45,7 +42,7 @@ return $d;
         dd($prevMinuteTradeDataAll->where('instrument_id',128)->toArray());*/
 
         $trade_date_Info=Market::getActiveDates()->first();
-        return response()->view('dashboard', ['trade_date_Info' => $trade_date_Info])->setTtl(1);
+        return response()->view('dashboard', ['trade_date_Info' => $trade_date_Info])->setTtl(60);
     }
     public function dashboard2()
     {

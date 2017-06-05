@@ -1,6 +1,7 @@
 @extends('layouts.metronic.default')
 
 @section('content')
+@include('block.dsb_news')
 {{--@include('block.price_matrix')--}}
 {{--@include('block.data_matrix')--}}
 
@@ -35,7 +36,7 @@
 {{--@include('block.eps_history_chart_quarter_to_quarter')--}}
 {{--@include('block.eps_history_chart_up_to_quarter')--}}
 {{--@include('block.net_profit_history_chart_quarter_to_quarter')--}}
-@include('block.net_profit_history_chart_up_to_quarter')
+{{--@include('block.net_profit_history_chart_up_to_quarter')--}}
 
 {{--@include('block.dividend_possible')--}}
 

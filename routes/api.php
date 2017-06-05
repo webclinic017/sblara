@@ -64,3 +64,16 @@ Route::get('intraday_data/{minute?}/{tradeDate?}/{instrument_code?}', function (
 })->middleware(['auth:api', 'scopes:paid-plugin-data']);
 
 
+Route::get('intraday_data_lastday/{minute?}/{tradeDate?}/{instrument_code?}', function ($minute = 1, $tradeDate = null, $instrument_codes = null) {
+
+    if ($tradeDate == 'null')
+        $tradeDate = null;
+    $instrument_code_arr = array();
+    if (!is_null($instrument_codes))
+        $instrument_code_arr = explode(',', $instrument_codes);
+
+    $data = DataBanksIntradayRepository::getIntraForPlugin($minute, $tradeDate, 1, $instrument_code_arr);
+    return json_encode($data, JSON_UNESCAPED_SLASHES);
+})->middleware(['auth:api', 'scopes:paid-plugin-data']);
+
+

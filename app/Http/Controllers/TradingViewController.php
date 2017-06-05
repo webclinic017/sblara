@@ -78,13 +78,15 @@ class TradingViewController extends Controller
         $to=(int) $request->input('to',time());
 
         if($resolution=='D') {
-            $data = DataBankEodRepository::getDataForTradingView($instrumentInfo->id, $from, $to, $resolution);
+           $data = DataBankEodRepository::getDataForTradingView($instrumentInfo->id, $from, $to, $resolution);
+            //$data = DataBankEodRepository::getEodDataAdjusted($instrumentInfo->id, $from, $to, $resolution);
         }else
         {
             $data = DataBanksIntradayRepository::getDataForTradingView($instrumentInfo->id, $from, $to, $resolution);
         }
-
-        return $data;
+       // return response()->view('dashboard', ['trade_date_Info' => $trade_date_Info])->setTtl(1);
+        return response()->json($data)->setTtl(60);
+        //return $data;
 
     }
 

@@ -33,6 +33,7 @@ class AppServiceProvider extends ServiceProvider {
         View::composer('block.news_time_line', 'App\Http\ViewComposers\NewsTimeLine');
         View::composer('block.news_box', 'App\Http\ViewComposers\NewsBox');
         View::composer('block.news_box_today', 'App\Http\ViewComposers\NewsBoxToday');
+        View::composer('block.dsb_news', 'App\Http\ViewComposers\DsbNews');
 
         View::composer('block.fundamental_summary', 'App\Http\ViewComposers\FundamentalSummary');
         View::composer('block.dividend_history', 'App\Http\ViewComposers\DividendHistory');

@@ -5,6 +5,7 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
 @endsection
 
 @section('content')
+
 <div class="row">
     <div class="col-lg-10 col-md-10 col-sm-6 col-xs-12">
         @include('block.market_summary')
@@ -89,7 +90,8 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
 
                 </div>
                 <div class="portlet-body">
-                    @include('block.sector_gainer_loser_last_minute')
+                    {{--@include('block.sector_gainer_loser_last_minute')--}}
+                    @include('block.dsb_news')
                 </div>
             </div>
             <!-- END Portlet PORTLET-->

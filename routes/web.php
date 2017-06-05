@@ -115,7 +115,7 @@ Route::get('search/', 'TradingViewController@search');
 
 
 //https://demo_feed.tradingview.com/history?symbol=ABB&resolution=D&from=1491726479&to=1492590479
-Route::get('history/', 'TradingViewController@history');
+Route::get('history/', 'TradingViewController@history')->middleware('httpcache');
 
 Route::get('/ajax', function () {
     return 786;
@@ -149,7 +149,10 @@ Route::get('rss', function () {
     }
     $posts = '';
     foreach ($data->channel->item as $item) {
-        dd($item->image);
+        //dd((string) $item->image->src);
+        echo "<pre>";
+        print_r($item->image->img->attributes->src);
+        exit;
         $posts .= '<h1><a href="' . $item->link . '">' . $item->title . '</a></h1>';
         $posts .= '<h4>' . $item->pubDate . '</h4>';
         $posts .= '<h4>' . $item->image . '</h4>';
