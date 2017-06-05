@@ -32,22 +32,7 @@
                     <td>
 
 
-                        <div class="btn-group">
-                            <a class="#" href="javascript:;" data-placement="right" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">  {{$viewData['instrumentList'][$instrumentId]->instrument_code}}
-                            </a>
-                            <ul class="dropdown-menu">
-
-                                <li>
-                                    <a href="javascript:;" target="_blank">TA Chart</a>
-                                </li>
-                                <li>
-                                    <a href="javascript:;" target="_blank">Minute Chart</a>
-                                </li>
-                                <li>
-                                    <a href="javascript:;" target="_blank">Company Details</a>
-                                </li>
-                            </ul>
-                        </div>
+                        @include('html.tooltip_chart',array('instrumentId'=>$instrumentId,'instrument_code'=>$viewData['instrumentList'][$instrumentId]->instrument_code))
 
 
                     </td>

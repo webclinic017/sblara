@@ -44,6 +44,11 @@ class PerformanceTotalItem {
         foreach ($transactions as $transaction) {
             $priceInfo=$lastTradeData->where('instrument_id',$transaction->instrument_id)->first();
 
+            //if not traded yet
+            if(!count($priceInfo))
+                $priceInfo=\App\DataBanksIntraday::where('instrument_id', $transaction->instrument_id)->orderBy('lm_date_time','desc')->skip(0)->take(1)->get()->first();
+
+
             // buy value for this instrument
             $buyValue = $transaction->no_of_shares * $transaction->buying_price;
             $buyCommission=($transaction->commission/100)*$buyValue;

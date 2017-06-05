@@ -13,7 +13,7 @@ use Illuminate\View\View;
 use App\Repositories\InstrumentRepository;
 use App\Repositories\DataBanksIntradayRepository;
 
-class MarketCompositionBarPer
+class IntradayMarketCompositionBarPer
 {
 
     /**
@@ -38,7 +38,7 @@ class MarketCompositionBarPer
         $instrumentTradeData=DataBanksIntradayRepository::getLatestTradeDataAll();
         $instrumentTradeData=$instrumentTradeData->keyBy('instrument_id');
 
-        $instrumentTradeDataPrev=DataBanksIntradayRepository::getPreviousDayData();
+        $instrumentTradeDataPrev=DataBanksIntradayRepository::getMinuteAgoTradeDataAll();
         $instrumentTradeDataPrev=$instrumentTradeDataPrev->keyBy('instrument_id');
 
 
@@ -110,7 +110,7 @@ class MarketCompositionBarPer
             ->with('category', collect($category)->toJson())
             ->with('todayDate', $todayDate)
             ->with('prevDate', $prevDate)
-            ->with('renderTo', "market_composition_per_$base")
+            ->with('renderTo', "intraday_market_composition_per_$base")
             ->with('height',$height)
             ->with('ylabel',$base);
 

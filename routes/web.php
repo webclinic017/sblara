@@ -45,16 +45,26 @@ Route::get('head', function(){
     return response()->view('includes.metronic.head')->setTtl(60);
 });
 
-Route::get('/', function () {
-    //return view('dashboard');
+/*Route::get('/', function () {
     return response()->view('dashboard')->setTtl(60);
-})->name('/');
+})->name('/');*/
 
 Route::get('/test', function () {
     return view('test');
 });
 
+Route::get('/pluginEod', function () {
+    return response()->download(storage_path() .'/app/plugin/eod.zip');
+});
 
+Route::get('/pluginIntra', function () {
+    return response()->download(storage_path() .'/app/plugin/intra.zip');
+});
+
+
+Route::get('/data', 'PagesController@data')->name('/data');
+Route::get('/d', 'PagesController@dashboard2')->name('/dashboard2')->middleware('httpcache');
+Route::get('/', 'PagesController@dashboard')->name('/')->middleware('httpcache');
 Route::get('/market-depth', function () {return view('market_depth_page');})->name('market-depth');
 Route::get('/market-frame', function () {return view('market_frame_page');})->name('market-frame');
 Route::get('/market-composition', function () {return view('market_composition_page');})->name('market-composition');
@@ -105,7 +115,7 @@ Route::get('search/', 'TradingViewController@search');
 
 
 //https://demo_feed.tradingview.com/history?symbol=ABB&resolution=D&from=1491726479&to=1492590479
-Route::get('history/', 'TradingViewController@history');
+Route::get('history/', 'TradingViewController@history')->middleware('httpcache');
 
 Route::get('/ajax', function () {
     return 786;
@@ -120,3 +130,34 @@ Route::get('/portfolio_market_summary/{portfolio_id}', 'PortfolioController@mark
 Route::get('/portfolio_gain_loss/{portfolio_id}', 'PortfolioController@gainLoss');
 Route::get('/portfolio_performance/{portfolio_id}', 'PortfolioController@performance');
 Route::post('search_json', 'SearchController@search');
+
+
+Route::get('rss', function () {
+    $source = 'http://www.dailystockbangladesh.com/feed/';
+    //$source = 'http://rss.cnn.com/rss/cnn_topstories.rss';
+
+    $headers = get_headers($source);
+    $response = substr($headers[0], 9, 3);
+    if ($response == '404') {
+        return 'Invalid Source';
+    }
+
+    $data = simplexml_load_string(file_get_contents($source));
+
+    if (count($data) == 0) {
+        return 'No Posts';
+    }
+    $posts = '';
+    foreach ($data->channel->item as $item) {
+        //dd((string) $item->image->src);
+        echo "<pre>";
+        print_r($item->image->img->attributes->src);
+        exit;
+        $posts .= '<h1><a href="' . $item->link . '">' . $item->title . '</a></h1>';
+        $posts .= '<h4>' . $item->pubDate . '</h4>';
+        $posts .= '<h4>' . $item->image . '</h4>';
+        $posts .= '<p>' . $item->description . '</p>';
+        $posts .= '<hr><hr>';
+    }
+    return $posts;
+});

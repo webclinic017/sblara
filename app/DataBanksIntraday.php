@@ -117,6 +117,7 @@ class DataBanksIntraday extends Model {
 
     public static function getWholeDayData($instrumentsIdArr=array(),$minute=0,$tradeDate=null,$exchangeId=0)
     {
+
         if(is_object($instrumentsIdArr))
             $instrumentIdHash=$instrumentsIdArr->sum();
 
@@ -125,7 +126,7 @@ class DataBanksIntraday extends Model {
 
         $cacheVar = "IntraDataByInstrument$tradeDate$exchangeId$instrumentIdHash$minute";
 
-        $returnData = Cache::remember("$cacheVar", 1, function () use ($tradeDate, $exchangeId, $minute, $instrumentsIdArr) {
+        //$returnData = Cache::remember("$cacheVar", 1, function () use ($tradeDate, $exchangeId, $minute, $instrumentsIdArr) {
                     $m = new Market();
                     $activeDate = $m->getActiveDates(1,$tradeDate , $exchangeId)->first();
 
@@ -142,10 +143,11 @@ class DataBanksIntraday extends Model {
                     }
 
                     $returnData = $query->get();
-                    return $returnData;
-                });
 
-        return $returnData;
+                    return $returnData;
+                //});
+
+       // return $returnData;
 
 
     }
@@ -210,6 +212,7 @@ class DataBanksIntraday extends Model {
 
             $query = static::whereIn('market_id', $marketId)->orderBy('lm_date_time', 'desc');
             $query->whereIn('instrument_id', $instrumentId);
+            $query->groupBy('lm_date_time');
             $returnData = $query->get();
             $returnData=$returnData->groupBy('market_id');
             return $returnData;
@@ -219,8 +222,11 @@ class DataBanksIntraday extends Model {
     }
 
     public static function getIntraDayDataByRange($instrumentId=12,$from,$to) {
-        $returnData= static::select('pub_last_traded_price','lm_date_time','total_volume','market_id','batch')->whereBetween('lm_date_time', [$from, $to])->where('instrument_id',$instrumentId)->orderBy('lm_date_time', 'desc')->get();
+        $returnData= static::select('pub_last_traded_price','lm_date_time','total_volume','market_id','batch')->whereBetween('lm_date_time', [$from, $to])->where('instrument_id',$instrumentId)->groupBy('lm_date_time')->orderBy('lm_date_time', 'desc')->get();
         return $returnData;
     }
+
+
+
 
 }
