@@ -102,6 +102,9 @@
                                 //
                                 $totalChangeOfAllShare = $sumSellValueDeductingCommision - $totalBuyCostWithCommission;
                                 $testChange = $totalChangeOfAllShare / $totalBuyCostWithCommission * 100;
+                                // echo $testChange;
+                                // total change of all share=sell_value_deducting_commision of all portfolio share - buy_value_with_commision of all share
+                                // change%= total change of all share/buy_value_with_commision of all share*100
                             @endphp
 
                             @if (count($portfolio->shares) > 1)

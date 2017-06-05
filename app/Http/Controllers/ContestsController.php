@@ -56,7 +56,15 @@ class ContestsController extends Controller
             $q->wherePivot('approved', true);
         }]);
 
-        return view('contests.show', compact('contest'));
+        $growthPercent = 0;
+        $contestAmount = $contest->contest_amount;
+        foreach ($contest->contestUsers as $user) {
+            $totalPortfolioValue = $user->pivot->cash_amount;
+        }
+        $growth = $totalPortfolioValue - $contestAmount;
+        $growthPercent = $growth / $contestAmount * 100;
+
+        return view('contests.show', compact('contest', 'growthPercent'));
     }
 
     /**

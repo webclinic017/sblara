@@ -51,9 +51,15 @@
                                     @endif
                                 </td>
                                 <td>{{ $user->join_date }}</td>
-                                <td></td>
+                                <td>
+                                    @if ($growthPercent > 0)
+                                        <span class="text-success">{{ $growthPercent }}</span>
+                                    @else
+                                        <span class="text-danger">{{ $growthPercent }}</span>
+                                    @endif
+                                </td>
                                 <td>{{ $user->shares->count() }}</td>
-                                <td>{{ $user->pivot->portfolio_value }}</td>
+                                <td>{{ $user->pivot->cash_amount }}</td>
                             </tr>
                         @empty
                             <tr class="no-records-found text-center">
