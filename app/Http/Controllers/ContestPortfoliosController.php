@@ -23,6 +23,8 @@ class ContestPortfoliosController extends Controller
      */
     public function show(ContestPortfolio $portfolio)
     {
+        $this->authorize('show', $portfolio);
+
         $portfolio->load('contest', 'shares.intrument.data_banks_intraday');
 
         $sumGainLoss = 0;
