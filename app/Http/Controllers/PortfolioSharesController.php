@@ -85,8 +85,8 @@ class PortfolioSharesController extends Controller
             $company_info = Instrument::with('data_banks_intraday')->find($id);
 
             $purchase_power     = $portfolio->cash_amount * $portfolio->contest->max_amount / 100;
-            $max_shares_can_buy = $purchase_power / $company_info->data_banks_intraday->close_price;
             $buying_price       = $company_info->data_banks_intraday->close_price;
+            $max_shares_can_buy = $purchase_power / $buying_price;
 
             if ($buy_quantity > $max_shares_can_buy) {
                 flash('You are not allowed to purchase this amount of shares', 'error');
@@ -99,11 +99,19 @@ class PortfolioSharesController extends Controller
                     'buying_date'  => Carbon::now()
                 ]);
 
-                $commission                     = 0.5;
-                $total_buy_cost                 = $buy_quantity * $buying_price;
-                $buy_commission                 = $commission * $total_buy_cost / 100;
-                $total_buy_cost_with_commission = $total_buy_cost += $buy_commission;
-                $portfolio->cash_amount         = $portfolio->cash_amount -= $total_buy_cost_with_commission;
+                $commission                 = 0.5;
+                $totalBuyCost               = $buy_quantity * $buying_price;
+                $buyCommission              = $commission * $totalBuyCost / 100;
+                $totalBuyCostWithCommission = $totalBuyCost + $buyCommission;
+                
+                $sellCommission = ($commission / 100) * $totalBuyCost;
+                $sellValueDeductingCommision = $totalBuyCost - $sellCommission;
+
+                $totalBuyCostWithCommission = $totalBuyCost + $buyCommission;
+                $totalGain = $sellValueDeductingCommision - $totalBuyCostWithCommission;
+
+                $portfolio->current_portfolio_value = $portfolio->current_portfolio_value += $totalGain;
+                $portfolio->cash_amount = $portfolio->cash_amount -= $totalBuyCostWithCommission;
                 $portfolio->save();
 
                 return redirect()->route('contests.portfolios.show', $portfolio);

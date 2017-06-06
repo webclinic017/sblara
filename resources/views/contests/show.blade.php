@@ -59,7 +59,7 @@
                                     @endif
                                 </td>
                                 <td>{{ $user->shares->count() }}</td>
-                                <td>{{ $user->pivot->cash_amount }}</td>
+                                <td>{{ $user->pivot->current_portfolio_value }}</td>
                             </tr>
                         @empty
                             <tr class="no-records-found text-center">

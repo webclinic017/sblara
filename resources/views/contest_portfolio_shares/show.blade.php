@@ -55,11 +55,10 @@
                             $sumGainLoss = 0;
                             $sumTotalPurchase = 0;
                             $sumTotalGain = 0;
-                            $sumPercentPortfolio = 0;
                             $sumSellValueDeductingCommision = 0;
                         @endphp
 
-                        @forelse ($portfolio->shares as $key => $share)
+                        @forelse ($portfolio->shares as $share)
                             @php
                                 $instrumentCode = $share->intrument->instrument_code;
                                 $instrumentName = $share->intrument->name;
@@ -95,8 +94,6 @@
                                 $allShareCashAmount = $sumNoOfShare * $buyingPrice;
                                 $totalPortfolioValue = $allShareCashAmount + $portfolioCashAmount;
                                 $percentPortfolio = $sellValue / $totalPortfolioValue * 100;
-                                $sumPercentPortfolio += number_format($percentPortfolio, 2);
-
                                 $portfolioOfCash = number_format($portfolioCashAmount / $totalPortfolioValue * 100, 2);
 
                                 //
@@ -274,8 +271,14 @@
                                             <span class="text-danger">{{ $sumTotalGain }}</span>
                                         @endif
                                     </td>
-                                    <td></td>
-                                    <td>{{ $portfolioOfCash += $sumPercentPortfolio }}%</td>
+                                    <td>
+                                        @if ($growthPercent > 0)
+                                            <span class="text-success">{{ $growthPercent }}</span>
+                                        @else
+                                            <span class="text-danger">{{ $growthPercent }}</span>
+                                        @endif
+                                    </td>
+                                    <td>{{ $portfolioOfCash += $sumPercentPortfolioLoop }}%</td>
                                     <td>
                                         <span class="bold">
                                             {{ number_format($sumSellValueDeductingCommision += $portfolioCashAmount, 2) }}

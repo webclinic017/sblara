@@ -79,7 +79,8 @@ class MyContestsController extends Controller
                             ->attach($contest, [
                                 'approved'                => true, 
                                 'portfolio_value'         => $contest->contest_amount,
-                                'cash_amount'             => $contest->contest_amount
+                                'cash_amount'             => $contest->contest_amount,
+                                'current_portfolio_value' => $contest->contest_amount
                             ]);
 
         flash('Contest successfully created!', 'success');

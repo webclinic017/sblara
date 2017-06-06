@@ -23,7 +23,7 @@ class ContestPortfoliosController extends Controller
      */
     public function show(ContestPortfolio $portfolio)
     {
-        $portfolio->load('shares.intrument.data_banks_intraday');
+        $portfolio->load('contest', 'shares.intrument.data_banks_intraday');
 
         $sumGainLoss = 0;
         $sumBuyCommission = 0;
@@ -32,6 +32,11 @@ class ContestPortfoliosController extends Controller
         $sumTotalGain = 0;
         $sumPercentPortfolio = 0;
         $sumSellValueDeductingCommision = 0;
+
+        $contestAmount = $portfolio->contest->contest_amount;
+        $totalPortfolioValue = $portfolio->current_portfolio_value;
+        $growth = $totalPortfolioValue - $contestAmount;
+        $growthPercent = $growth / $contestAmount * 100;
 
         foreach ($portfolio->shares as $share) {
             $portfolioCashAmount = $portfolio->cash_amount;
@@ -77,7 +82,8 @@ class ContestPortfoliosController extends Controller
             'sumTotalPurchaseLoop'               => number_format($sumTotalPurchase, 2),
             'sumTotalGainLoop'                   => number_format($sumTotalGain, 2),
             'sumPercentPortfolioLoop'            => number_format($sumPercentPortfolio, 2),
-            'sumSellValueDeductingCommisionLoop' => number_format($sumSellValueDeductingCommision, 2)
+            'sumSellValueDeductingCommisionLoop' => number_format($sumSellValueDeductingCommision, 2),
+            'growthPercent'                      => number_format($growthPercent, 2)
         ]);
     }
 }
