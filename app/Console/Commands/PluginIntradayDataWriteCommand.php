@@ -51,9 +51,7 @@ class PluginIntradayDataWriteCommand extends Command
                 $instrument_code = $instrumentInfo->first()->instrument_code;
                 $time_formated = $row['lm_date_time']->format('H:i');
                 $date_formated = $row['lm_date_time']->format('d/m/Y');
-
                 $strToadd .= $instrument_code . ',' . $time_formated . ',' . $date_formated . ',' . $row->open_price . ',' . $row->high_price . ',' . $row->low_price . ',' . $row->close_price . ',' . $row->total_volume."\n";
-
 
             }
 
@@ -84,7 +82,7 @@ class PluginIntradayDataWriteCommand extends Command
             $data= DataBanksIntraday::whereDate('trade_date',$last_trade_date)->groupBy('lm_date_time')->orderBy('lm_date_time', 'desc')->get();
             //dd($data->first());
             self::writeData($data, $instrumentList, $file);
-            $this->info('Last day EOD data written to fie');
+            $this->info('Last day Intraday  data written to fie');
 
         }
         else

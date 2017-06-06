@@ -87,11 +87,9 @@ class PluginIntradayDataResetCommand extends Command
         for($i=0;$i<$total_row;$i=$i+ $limit)
         {
             dump(".... processing start=$i, limit=$limit");
-            $data= DataBanksIntraday::whereDate('lm_date_time','<',$last_trade_date)->groupBy('lm_date_time')->orderBy('lm_date_time', 'desc')->skip($i)->take($limit)->get();
+            $data= DataBanksIntraday::whereDate('lm_date_time','<',$last_trade_date)->orderBy('lm_date_time', 'desc')->skip($i)->take($limit)->get();
             self::writeData($data, $instrumentList, $file);
         }
-
-
 
 
         $this->info('ok');

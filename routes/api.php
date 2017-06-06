@@ -64,16 +64,16 @@ Route::get('intraday_data/{minute?}/{tradeDate?}/{instrument_code?}', function (
 })->middleware(['auth:api', 'scopes:paid-plugin-data']);
 
 
-Route::get('intraday_data_lastday/{minute?}/{tradeDate?}/{instrument_code?}', function ($minute = 1, $tradeDate = null, $instrument_codes = null) {
-
-    if ($tradeDate == 'null')
-        $tradeDate = null;
-    $instrument_code_arr = array();
-    if (!is_null($instrument_codes))
-        $instrument_code_arr = explode(',', $instrument_codes);
-
-    $data = DataBanksIntradayRepository::getIntraForPlugin($minute, $tradeDate, 1, $instrument_code_arr);
+Route::get('intraday_data_lastday/{last_update_time?}/{skip?}/{take?}/', function ($last_update_time=0,$skip=0,$take=0) {
+    $data = DataBanksIntradayRepository::getLastDayIntraForPlugin($last_update_time, $skip,$take);
     return json_encode($data, JSON_UNESCAPED_SLASHES);
 })->middleware(['auth:api', 'scopes:paid-plugin-data']);
 
-
+Route::get('user_stats/{username}/{ip}/{pc_info}/', function ($username, $ip, $pc_info) {
+    $user_info=\DB::select("select * from users where email like '$username'");
+    $user_id= $user_info[0]->id;
+    DB::table('plugin_stats')->insert(
+        ['user_id' => $user_id, 'login_from_ip' => $ip, 'pc_information' => $pc_info]
+    );
+    return 1;
+})->middleware(['auth:api', 'scopes:paid-plugin-data']);
