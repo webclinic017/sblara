@@ -26,6 +26,8 @@ class PortfolioSharesController extends Controller
      */
     public function create(ContestPortfolio $portfolio)
     {
+        $this->authorize('create', $portfolio);
+
         $portfolio->load('contest', 'shares');
 
         $company_info   = null;

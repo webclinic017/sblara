@@ -11,12 +11,25 @@ class ContestPortfolioPolicy
     use HandlesAuthorization;
 
     /**
-     * Determine if the contest is blocked.
+     * Determine if the authenticated user has permission to show a contest.
      *
-     * @param  Contest $contest
+     * @param  User $user
+     * @param  ContestPortfolio $portfolio
      * @return bool
      */
     public function show(User $user, ContestPortfolio $portfolio)
+    {
+        return $portfolio->user_id == $user->id;
+    }
+
+    /**
+     * Determine if the authenticated user has permission to create a contest.
+     *
+     * @param  User $user
+     * @param  ContestPortfolio $portfolio
+     * @return bool
+     */
+    public function create(User $user, ContestPortfolio $portfolio)
     {
         return $portfolio->user_id == $user->id;
     }
