@@ -37,14 +37,13 @@ class ContestPortfoliosController extends Controller
         $totalPortfolioValue = $portfolio->current_portfolio_value;
         $growth = $totalPortfolioValue - $contestAmount;
         $growthPercent = $growth / $contestAmount * 100;
-
+        
         foreach ($portfolio->shares as $share) {
             $portfolioCashAmount = $portfolio->cash_amount;
             $noOfShare = $share->no_of_shares;
-            $sumNoOfShare = $share->sum('no_of_shares');
+            $sumNoOfShare = $portfolio->shares->sum('no_of_shares');
             $buyingPrice = $share->buying_price;
             $totalBuyCost  = $noOfShare * $buyingPrice;
-
             $lastTradePrice = $share->intrument->data_banks_intraday->close_price;
             $lastTradeDate = $share->intrument->data_banks_intraday->lm_date_time->format('Y-m-d');
             $priceChange = $share->intrument->data_banks_intraday->price_change;

@@ -41,6 +41,15 @@
                         @endphp
                         
                         @forelse ($contest->contestUsers as $user)
+                            @php
+                                $growthPercent = 0;
+                                $contestAmount = $contest->contest_amount;
+
+                                $totalPortfolioValue = $user->pivot->current_portfolio_value;
+                                $growth = $totalPortfolioValue - $contestAmount;
+                                $growthPercent = number_format($growth / $contestAmount * 100, 2);
+                            @endphp
+                            
                             <tr class="text-center">
                                 <td>{{ $rank++ }}</td>
                                 <td>

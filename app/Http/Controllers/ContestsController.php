@@ -56,23 +56,7 @@ class ContestsController extends Controller
             $q->wherePivot('approved', true);
         }]);
 
-        /*total_portfolio_value= sum of sell_value_deducting_commision of all portfolio share +cash_amount
-        %portfolio of a share = sell_value_deducting_commission of that share/total_portfolio_value*100
-        growth=portfolio growth
-        if contest_amount =100000 taka
-        and current total_portfolio_value is 150000 taka
-        growth will be =150000-100000 =50000 taka
-        growth %= 50000/100000*100= 50%*/
-
-        $growthPercent = 0;
-        $contestAmount = $contest->contest_amount;
-        foreach ($contest->contestUsers as $user) {
-            $totalPortfolioValue = $user->pivot->current_portfolio_value;
-        }
-        $growth = $totalPortfolioValue - $contestAmount;
-        $growthPercent = number_format($growth / $contestAmount * 100, 2);
-
-        return view('contests.show', compact('contest', 'growthPercent'));
+        return view('contests.show', compact('contest'));
     }
 
     /**

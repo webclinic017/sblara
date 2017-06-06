@@ -36,7 +36,9 @@ class JoinContestsController extends Controller
                 auth()->user()->contestPortfolios()
                             ->attach($contest, [
                                 'approved' => true, 
-                                'portfolio_value' => $contest->contest_amount
+                                'portfolio_value'         => $contest->contest_amount,
+                                'cash_amount'             => $contest->contest_amount,
+                                'current_portfolio_value' => $contest->contest_amount
                             ]);
 
                 flash('You successfully joined in a contest!', 'success');

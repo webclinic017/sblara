@@ -64,7 +64,8 @@
                                 $instrumentName = $share->intrument->name;
                                 $portfolioCashAmount = $portfolio->cash_amount;
                                 $noOfShare = $share->no_of_shares;
-                                $sumNoOfShare = $share->sum('no_of_shares');
+                                $sumNoOfShare = $portfolio->shares->sum('no_of_shares');
+                                
                                 $buyingPrice = $share->buying_price;
                                 $totalBuyCost  = $noOfShare * $buyingPrice;
 
@@ -93,15 +94,8 @@
 
                                 $allShareCashAmount = $sumNoOfShare * $buyingPrice;
                                 $totalPortfolioValue = $allShareCashAmount + $portfolioCashAmount;
-                                $percentPortfolio = $sellValue / $totalPortfolioValue * 100;
+                                $percentPortfolio = number_format($sellValue / $totalPortfolioValue * 100, 2);
                                 $portfolioOfCash = number_format($portfolioCashAmount / $totalPortfolioValue * 100, 2);
-
-                                //
-                                $totalChangeOfAllShare = $sumSellValueDeductingCommision - $totalBuyCostWithCommission;
-                                $testChange = $totalChangeOfAllShare / $totalBuyCostWithCommission * 100;
-                                // echo $testChange;
-                                // total change of all share=sell_value_deducting_commision of all portfolio share - buy_value_with_commision of all share
-                                // change%= total change of all share/buy_value_with_commision of all share*100
                             @endphp
 
                             @if (count($portfolio->shares) > 1)
