@@ -507,6 +507,57 @@ class DataBanksIntradayRepository {
         return ($intraDataForPlugin);
     }
 
+    public static function getLastDayIntraForPlugin($last_update_time = 0, $to_update_time=0)
+    {
+
+
+        //$sql = "select * from `data_banks_intradays` where `lm_date_time` >= '$last_update_time' ORDER BY `lm_date_time` DESC limit $skip,$take";
+       $sql = "select * from `data_banks_intradays` where `lm_date_time` >= '$last_update_time' and `lm_date_time` < '$to_update_time'";
+        $rawdata = \DB::select($sql);
+
+       return $rawdata;
+
+       /* $m = new Market();
+        $activeDate = $m->getActiveDates(1)->first();
+
+        $marketId = $activeDate->id;
+        //$query = DataBanksIntraday::orderBy('lm_date_time', 'asc');
+        if ($last_update_time)
+            $query=DataBanksIntraday::where('lm_date_time', '>=', $last_update_time);
+        else {
+            $query=DataBanksIntraday::where('market_id', $marketId);
+        }
+
+        if ($take) {
+            $query->skip($skip)->take($take);
+        }
+        $rawdata = $query->get();
+
+
+        $intraDataForPlugin = array();
+        $intraDataForPlugin[] = array('Code', 'Time', 'Date', 'Open', 'High', 'Low', 'Close', 'Volume');
+        foreach ($rawdata as $row) {
+            $code = InstrumentRepository::getInstrumentsById($row['instrument_id'])->first()->instrument_code;
+            $temp = array();
+            $temp[] = $code;
+            $temp[] = $row['lm_date_time']->format('H:i');
+            $temp[] = $row['lm_date_time']->format('d/m/Y');
+            $temp[] = $row['open_price'];
+            $temp[] = $row['high_price'];
+            $temp[] = $row['low_price'];
+            $temp[] = $row['close_price'];
+            $temp[] = $row['total_volume'];
+            $intraDataForPlugin[] = $temp;
+
+        }
+        return ($intraDataForPlugin);*/
+    }
+    public static function getPluginInstrumentList()
+    {
+        return InstrumentRepository::getInstrumentsScripWithIndex();
+
+    }
+
 
 
 }
