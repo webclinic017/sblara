@@ -11,7 +11,7 @@ class ContestPortfolioPolicy
     use HandlesAuthorization;
 
     /**
-     * Determine if the authenticated user has permission to show a contest.
+     * Determine if the authenticated user has permission to show a contest portfolio.
      *
      * @param  User $user
      * @param  ContestPortfolio $portfolio
@@ -23,7 +23,7 @@ class ContestPortfolioPolicy
     }
 
     /**
-     * Determine if the authenticated user has permission to create a contest.
+     * Determine if the authenticated user has permission to create a contest portfolio.
      *
      * @param  User $user
      * @param  ContestPortfolio $portfolio

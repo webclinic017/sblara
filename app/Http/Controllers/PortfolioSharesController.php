@@ -10,6 +10,15 @@ use Illuminate\Http\Request;
 class PortfolioSharesController extends Controller
 {
     /**
+     * Create a new controller instance.
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
+    
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -42,7 +51,7 @@ class PortfolioSharesController extends Controller
             $company_info = Instrument::with('data_banks_intraday')->find($id);
             $buying_price = $company_info->data_banks_intraday->close_price;
 
-            if ($portfolio->shares) {
+            /*if ($portfolio->shares) {
                 $sum_shares     = $portfolio->shares->sum('no_of_shares');
                 $total_shares   = $sum_shares * $buying_price;
 
@@ -50,10 +59,10 @@ class PortfolioSharesController extends Controller
                 $purchase_power -= $total_shares;
 
                 $max_shares     = $purchase_power / $buying_price;
-            } else {
-                $purchase_power = $portfolio->cash_amount * $portfolio->contest->max_amount / 100;
-                $max_shares     = $purchase_power / $buying_price;
-            }
+            }*/
+
+            $purchase_power = $portfolio->cash_amount * $portfolio->contest->max_amount / 100;
+            $max_shares     = $purchase_power / $buying_price;
         }
 
         return view('contest_portfolio_shares.create', [
