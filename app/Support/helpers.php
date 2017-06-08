@@ -123,14 +123,31 @@ function barCss($val)
     return $css;
 }
 
-function r_collect($array)
-{
-    foreach ($array as $key => $value) {
-        if (is_array($value)) {
-            $value = r_collect($value);
-            $array[$key] = $value;
+if (!function_exists('r_collect')) {
+    function r_collect($array)
+    {
+        foreach ($array as $key => $value) {
+            if (is_array($value)) {
+                $value = r_collect($value);
+                $array[$key] = $value;
+            }
         }
-    }
 
-    return collect($array);
+        return collect($array);
+    }
+}
+
+if (!function_exists('words')) {
+    /**
+     * Limit the number of words in a string.
+     *
+     * @param  string $value
+     * @param  int $words
+     * @param  string $end
+     * @return string
+     */
+    function words($value, $words = 100, $end = '...')
+    {
+        return \Illuminate\Support\Str::words($value, $words, $end);
+    }
 }

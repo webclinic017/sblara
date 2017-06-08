@@ -77,3 +77,8 @@ Route::get('user_stats/{username}/{ip}/{pc_info}/', function ($username, $ip, $p
     );
     return 1;
 })->middleware(['auth:api', 'scopes:paid-plugin-data']);
+
+Route::get('trade_date_info/{date}', function ($date) {
+    $trade_date_details = \DB::select("SELECT *  FROM `markets` WHERE `trade_date` = '$date'");
+    return $trade_date_details;
+})->middleware(['auth:api', 'scopes:paid-plugin-data']);
