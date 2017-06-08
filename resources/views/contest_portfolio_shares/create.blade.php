@@ -9,6 +9,8 @@
                     <i class="icon-badge font-green-haze"></i>
                     <span class="caption-subject bold uppercase"> Search Company</span>
                 </div>
+
+                @include('contest_portfolio_shares.partials.menu')
             </div>
 
             <div class="portlet-body form">

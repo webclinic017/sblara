@@ -79,7 +79,7 @@ class AppServiceProvider extends ServiceProvider {
         View::composer('my_contests.block.index', 'App\Http\ViewComposers\MyContestsView@index');
         // Competitors View
         View::composer('my_contests.block.competitor', 'App\Http\ViewComposers\MyContestsView@competitor');
-        // Test
+        // 
         // View::composer('contest_portfolio_shares.show', 'App\Http\ViewComposers\ContestPortfolioSharesView');
     }
 

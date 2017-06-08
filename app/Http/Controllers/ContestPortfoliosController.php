@@ -32,7 +32,6 @@ class ContestPortfoliosController extends Controller
 
         $sumTotalPurchase = 0;
         $sumTotalGain = 0;
-        $sumPercentPortfolio = 0;
         $sumSellValueDeductingCommision = 0;
 
         $contestAmount = $portfolio->contest->contest_amount;
@@ -73,18 +72,16 @@ class ContestPortfoliosController extends Controller
             $allShareCashAmount = $sumNoOfShare * $buyingPrice;
             $totalPortfolioValue = $allShareCashAmount + $portfolioCashAmount;
             $percentPortfolio = $sellValue / $totalPortfolioValue * 100;
-            $sumPercentPortfolio += $percentPortfolio;
         }
 
         return view('contest_portfolio_shares.show', [
-            'portfolio'                          => $portfolio,
-            'sumGainLossLoop'                    => number_format($sumGainLoss, 2),
-            'sumBuyCommissionLoop'               => number_format($sumBuyCommission, 2),
-            'sumTotalPurchaseLoop'               => number_format($sumTotalPurchase, 2),
-            'sumTotalGainLoop'                   => number_format($sumTotalGain, 2),
-            'sumPercentPortfolioLoop'            => number_format($sumPercentPortfolio, 2),
-            'sumSellValueDeductingCommisionLoop' => number_format($sumSellValueDeductingCommision, 2),
-            'growthPercent'                      => number_format($growthPercent, 2)
+            'portfolio'                      => $portfolio,
+            'sumGainLoss'                    => number_format($sumGainLoss, 2),
+            'sumBuyCommission'               => number_format($sumBuyCommission, 2),
+            'sumTotalPurchase'               => number_format($sumTotalPurchase, 2),
+            'sumTotalGain'                   => number_format($sumTotalGain, 2),
+            'sumSellValueDeductingCommision' => number_format($sumSellValueDeductingCommision, 2),
+            'growthPercent'                  => number_format($growthPercent, 2)
         ]);
     }
 }
