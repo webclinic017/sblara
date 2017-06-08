@@ -1,5 +1,5 @@
 <div class="actions">
-    <a href="javascript:;" class="btn btn-default btn-sm">
+    <a href="{{ route('contests.portfolios.show', $portfolio) }}" class="btn btn-default btn-sm">
         <i class="icon-badge"></i> Portfolio 
     </a>
 
