@@ -43,7 +43,7 @@ class DsbNews
                 WHERE  dsbp_posts.post_status LIKE  'publish'
                 AND  dsbp_postmeta.meta_key LIKE  '_thumbnail_id'
                 ORDER BY  dsbp_posts.post_date DESC
-                LIMIT 0 , 5";
+                LIMIT 0 , 3";
 
         $result = DB::connection('dsb')->select($sql);
 
@@ -63,12 +63,11 @@ class DsbNews
             $temp['post_id'] = $post_id;
             $temp['post_date'] = $row->post_date;
             $temp['guid'] = $row->guid;
-            $temp['post_content'] = $row->post_content;
+            $temp['post_content'] = words($row->post_content, $words = 15, $end = '...');
             $temp['post_title'] = $row->post_title;
             $temp['thmbnail'] = $thumbArr[0]->guid;
            // $temp['taxonomy'] = $tagArr;
             $liveNews[] = $temp;
-
         }
 
         $view->with('allnews', $liveNews);

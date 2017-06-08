@@ -22,6 +22,76 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
     {{--Main content column: Start--}}
     <div class="col-lg-10 col-md-10 col-sm-6 col-xs-12">
 
+    {{--New row START--}}
+        <div class="row">
+            {{-- 1st column START--}}
+            <div class="col-lg-6 col-md-5 col-sm-6 col-xs-12">
+                <!-- BEGIN Portlet PORTLET-->
+                <div class="portlet light bordered">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <i class="icon-graph font-yellow-casablanca"></i>
+                            <span class="caption-subject bold font-yellow-casablanca uppercase">
+                                Live news </span>
+                                <span class="caption-helper"> share market news</span>
+                            </div>
+                            <div class="tools">
+                                <a href="" class="collapse">
+                                </a>
+
+                            </a>
+                            <a href="" class="remove">
+                            </a>
+                        </div>
+
+                    </div>
+                    <div class="portlet-body">
+                        @include('block.dsb_news')
+                    </div>
+                </div>
+                <!-- END Portlet PORTLET-->
+            </div>
+            {{-- 1st column END--}}
+
+            {{-- 2nd column START--}}
+            <div class="col-lg-6 col-md-5 col-sm-6 col-xs-12">
+
+                <!-- BEGIN Portlet PORTLET-->
+                <div class="portlet light bordered">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <i class="icon-graph font-yellow-casablanca"></i>
+                            <span class="caption-subject bold font-yellow-casablanca uppercase">
+                                Course </span>
+                                <span class="caption-helper"> upcoming course</span>
+                            </div>
+                            <div class="tools">
+                                <a href="" class="collapse">
+                                </a>
+
+                            </a>
+                            <a href="" class="remove">
+                            </a>
+                        </div>
+
+                    </div>
+                    <div class="portlet-body">
+
+                        @include('block.dsb_news')
+                    </div>
+                </div>
+                <!-- END Portlet PORTLET-->
+
+
+            </div>
+            {{-- 2nd column END--}}
+        </div>
+        {{--New row END--}}
+
+
+
+
+
         {{--New row START--}}
         <div class="row">
             {{-- 1st column START--}}
@@ -90,8 +160,8 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
 
                 </div>
                 <div class="portlet-body">
-                    {{--@include('block.sector_gainer_loser_last_minute')--}}
-                    @include('block.dsb_news')
+                    @include('block.sector_gainer_loser_last_minute')
+
                 </div>
             </div>
             <!-- END Portlet PORTLET-->
