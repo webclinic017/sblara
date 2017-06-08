@@ -32,10 +32,6 @@ class Kernel extends ConsoleKernel
         $schedule->command('plugin:writeLastEod')->dailyAt('16:15')->emailOutputTo('fazalmohammad19@gmail.com');
         $schedule->command('plugin:writeLastIntra')->dailyAt('16:30')->emailOutputTo('fazalmohammad19@gmail.com');
 
-       /* $schedule->call(function () {
-            $i=rand(1,100);
-            echo $i;
-        })->everyMinute()->emailOutputTo('fazalmohammad19@gmail.com');*/
 
     }
 

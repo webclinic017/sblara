@@ -512,8 +512,9 @@ class DataBanksIntradayRepository {
 
 
         //$sql = "select * from `data_banks_intradays` where `lm_date_time` >= '$last_update_time' ORDER BY `lm_date_time` DESC limit $skip,$take";
-       $sql = "select * from `data_banks_intradays` where `lm_date_time` >= '$last_update_time' and `lm_date_time` < '$to_update_time'";
-        $rawdata = \DB::select($sql);
+       //$sql = "select * from `data_banks_intradays` where `lm_date_time` >= '$last_update_time' and `lm_date_time` < '$to_update_time'";
+       $sql = "select instrument_id,lm_date_time,open_price,high_price,low_price,close_price,total_volume,pub_last_traded_price,spot_last_traded_price from `data_banks_intradays` where `lm_date_time` >= '$last_update_time' and `lm_date_time` < '$to_update_time'";
+       $rawdata = \DB::select($sql);
 
        return $rawdata;
 
