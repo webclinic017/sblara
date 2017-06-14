@@ -69,14 +69,15 @@ Route::get('intraday_data_lastday/{last_update_time?}/{skip?}/{take?}/', functio
     return json_encode($data, JSON_UNESCAPED_SLASHES);
 })->middleware(['auth:api', 'scopes:paid-plugin-data']);
 
-Route::get('plugin_user_stats/{username}/{ip}/{hdd}/{cpu}/', function ($username, $ip, $hdd, $cpu) {
+Route::get('plugin_user_stats/{username}/{hdd}/{cpu}/', function ($username, $hdd, $cpu) {
     $user_info=\DB::select("select * from users where email like '$username'");
     $user_id= $user_info[0]->id;
+    $ip='null';
     DB::table('plugin_stats')->insert(
         ['user_id' => $user_id, 'login_from_ip' => $ip, 'hdd' => $hdd, 'cpu' => $cpu]
     );
     $message['user']= $user_info[0]->plugin_message;
-    $message['global']= "Our data maintenance will go on next day";
+    $message['global']= "Our data maintenance will go on next day ";
     return json_encode($message, JSON_UNESCAPED_SLASHES);
 })->middleware(['auth:api', 'scopes:paid-plugin-data']);
 
