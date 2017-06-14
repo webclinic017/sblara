@@ -41,7 +41,57 @@ class PluginIntradayDataWriteCommand extends Command
      *
      * @return mixed
      */
-    public function writeData($data, $instrumentList, $file)
+
+    public function writeData($data, $instrument_code, $file)
+    {
+
+        $data = $data->groupBy('market_id');
+
+        $strToadd = '';
+
+        foreach ($data as $trade_date => $instrumentData) {
+
+            $instrumentData = $instrumentData->unique('total_volume')->values();
+
+
+            $i = 0;
+            foreach ($instrumentData as $row) {
+                $last_minute_total_volume = $row->total_volume;
+
+                if (isset($instrumentData[$i + 1]))
+                    $prev_minute_of_lastminute_volume = $instrumentData[$i + 1]->total_volume;
+                else {
+                    $prev_minute_of_lastminute_volume = 0;
+
+                }
+
+
+                $last_minute_traded_vol = $last_minute_total_volume - $prev_minute_of_lastminute_volume;
+
+                if ($last_minute_traded_vol < 0)  // skip some negative value specially for dsex
+                    continue;
+
+                $time_formated = $row['lm_date_time']->format('H:i');
+                $date_formated = $row['lm_date_time']->format('d/m/Y');
+
+
+                $strToadd .= $instrument_code . ',' . $time_formated . ',' . $date_formated . ',' . $row->close_price . ',' . $row->close_price . ',' . $row->close_price . ',' . $row->close_price . ',' . $last_minute_traded_vol . "\n";
+
+                $i++;
+            }
+
+        }
+
+        Storage::prepend($file, $strToadd);
+
+        $zipper = new \Chumper\Zipper\Zipper;
+        $files = glob(storage_path() . '/app/plugin/intra/*');
+        $zipper->make(storage_path() . '/app/plugin/intra.zip')->add($files)->close();
+
+
+    }
+
+    public function writeData_prev($data, $instrumentList, $file)
     {
         $strToadd='';
         foreach ($data as $row) {
@@ -51,7 +101,7 @@ class PluginIntradayDataWriteCommand extends Command
                 $instrument_code = $instrumentInfo->first()->instrument_code;
                 $time_formated = $row['lm_date_time']->format('H:i');
                 $date_formated = $row['lm_date_time']->format('d/m/Y');
-                $strToadd .= $instrument_code . ',' . $time_formated . ',' . $date_formated . ',' . $row->open_price . ',' . $row->high_price . ',' . $row->low_price . ',' . $row->close_price . ',' . $row->total_volume."\n";
+                $strToadd .= $instrument_code . ',' . $time_formated . ',' . $date_formated . ',' . $row->close_price . ',' . $row->close_price . ',' . $row->close_price . ',' . $row->close_price . ',' . $row->total_volume."\n";
 
             }
 
@@ -66,7 +116,7 @@ class PluginIntradayDataWriteCommand extends Command
     }
 
     // live server command   /opt/cpanel/ea-php70/root/usr/bin/php /home/hostingmonitors/artisan plugin:writeLastIntra
-    public function handle()
+    public function handle_prev()
     {
         $file="plugin/intra/data.txt";
         $tradeDate = Market::getActiveDates();
@@ -87,9 +137,36 @@ class PluginIntradayDataWriteCommand extends Command
         }
         else
         {
-            $this->info('Today is not trade date. SO no EOD data written to file');
+            $this->info('Today is not trade date. SO no Intra day data written to file');
         }
 
+
+
+    }
+
+    public function handle()
+    {
+        $file = "plugin/intra/data.txt";
+
+
+        $tradeDate = Market::getActiveDates();
+        $last_trade_date = $tradeDate->first()->trade_date->format('Y-m-d');
+        $today = date('Y-m-d');
+
+        if ($today == $last_trade_date) {
+            $instrumentList = InstrumentRepository::getInstrumentsScripWithIndex();
+            foreach ($instrumentList as $ins) {
+                $instrument_id = $ins->id;
+                dump("started  " . $ins->instrument_code);
+                $data = DataBanksIntraday::whereDate('trade_date', $last_trade_date)->where('instrument_id', $instrument_id)->orderBy('lm_date_time', 'desc')->get();
+                self::writeData($data, $ins->instrument_code, $file);
+            }
+
+            $this->info('Last day Intraday  data written to fie');
+
+        } else {
+            $this->info('Today is not trade date. SO no EOD data written to file');
+        }
 
 
     }

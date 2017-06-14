@@ -36,16 +36,16 @@
                         </tr>
 
                         <tr class="text-center active">
-                            <th class="text-center">Company Code</th>
-                            <th class="text-center">Last Trade Price</th>
+                            <th class="text-center">Code</th>
+                            <th class="text-center">LTP</th>
                             <th class="text-center">Change</th>
                             <th class="text-center">Gain/Loss</th>
                             <th class="text-center">Shares</th>
-                            <th class="text-center">Buy Price</th>
-                            <th class="text-center">Purchase Date</th>
-                            <th class="text-center">Buy Commision</th>
+                            <th class="text-center">B Price</th>
+                            <th class="text-center">B Date</th>
+                            <th class="text-center">Buy Comm</th>
                             <th class="text-center">Total Purchase</th>
-                            <th class="text-center">Total Gain/Loss</th>
+                            <th class="text-center">Total G/L</th>
                             <th class="text-center">% Change</th>
                             <th class="text-center">% Portfolio</th>
                             <th class="text-center">Sell Value</th>
@@ -100,8 +100,7 @@
                             <tr>
                                 <td>
                                     <span class="bold text-primary">{{ $instrumentCode }}</span>
-                                    <br>
-                                    <small class="instrument-name">{{ $instrumentName }}</small>
+
                                 </td>
                                 <td>
                                     {{ $lastTradePrice }} <br>
@@ -143,8 +142,8 @@
                                 </td>
                                 <td>{{ $sellValueDeductingCommision }}</td>
                                 <td>
-                                    @if ($share->is_mature)
-                                        <small>Matured</small>
+                                    @if (isMature($share->intrument->id,$share->buying_date->format('Y-m-d')))
+                                        <a href="{{ route('portfolios.shares.edit', $share) }}" class="btn blue">Sell</a>
                                     @else
                                         <small>Not Matured</small>
                                     @endif

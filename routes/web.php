@@ -3,6 +3,7 @@
 // Contest Portfolio Shares routes..
 Route::post('/portfolios/{portfolio}/shares/create', 'PortfolioSharesController@store')->name('portfolios.shares.store');
 Route::get('/portfolios/{portfolio}/shares/create', 'PortfolioSharesController@create')->name('portfolios.shares.create');
+Route::get('/portfolios/{portfolio}/shares/edit', 'PortfolioSharesController@edit')->name('portfolios.shares.edit');
 // Contest Portfolio routes..
 Route::get('/contests/portfolios/{portfolio}', 'ContestPortfoliosController@show')->name('contests.portfolios.show');
 // My Contests Update Statuses routes..
@@ -59,6 +60,10 @@ Route::get('/pluginEod', function () {
 
 Route::get('/pluginIntra', function () {
     return response()->download(storage_path() .'/app/plugin/intra.zip');
+});
+
+Route::get('/pluginIntra2', function () {
+    return response()->download(storage_path() . '/app/plugin/intra_data_test.txt');
 });
 
 
@@ -131,33 +136,3 @@ Route::get('/portfolio_gain_loss/{portfolio_id}', 'PortfolioController@gainLoss'
 Route::get('/portfolio_performance/{portfolio_id}', 'PortfolioController@performance');
 Route::post('search_json', 'SearchController@search');
 
-
-Route::get('rss', function () {
-    $source = 'http://www.dailystockbangladesh.com/feed/';
-    //$source = 'http://rss.cnn.com/rss/cnn_topstories.rss';
-
-    $headers = get_headers($source);
-    $response = substr($headers[0], 9, 3);
-    if ($response == '404') {
-        return 'Invalid Source';
-    }
-
-    $data = simplexml_load_string(file_get_contents($source));
-
-    if (count($data) == 0) {
-        return 'No Posts';
-    }
-    $posts = '';
-    foreach ($data->channel->item as $item) {
-        //dd((string) $item->image->src);
-        echo "<pre>";
-        print_r($item->image->img->attributes->src);
-        exit;
-        $posts .= '<h1><a href="' . $item->link . '">' . $item->title . '</a></h1>';
-        $posts .= '<h4>' . $item->pubDate . '</h4>';
-        $posts .= '<h4>' . $item->image . '</h4>';
-        $posts .= '<p>' . $item->description . '</p>';
-        $posts .= '<hr><hr>';
-    }
-    return $posts;
-});

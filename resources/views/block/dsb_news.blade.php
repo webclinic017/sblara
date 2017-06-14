@@ -11,7 +11,7 @@
                     </h4>
 
                     <p>
-                      {!! $allnews[0]['post_content'] !!}
+                      {{$allnews[0]['post_content']}}
                     </p>
                 </div>
             </div>
@@ -25,8 +25,8 @@
                     </h4>
 
                     <p>
+                    {{$allnews[1]['post_content']}}
 
-                      {!! $allnews[1]['post_content'] !!}
                     </p>
                 </div>
             </div>
@@ -40,7 +40,7 @@
                     </h4>
 
                     <p>
-                         {!! $allnews[2]['post_content'] !!}
+                         {{$allnews[2]['post_content']}}
 
                     </p>
                 </div>

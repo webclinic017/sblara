@@ -63,7 +63,7 @@ class DsbNews
             $temp['post_id'] = $post_id;
             $temp['post_date'] = $row->post_date;
             $temp['guid'] = $row->guid;
-            $temp['post_content'] = words($row->post_content, $words = 15, $end = '...');
+            $temp['post_content'] = strip_tags(words($row->post_content, $words = 15, $end = '...'));
             $temp['post_title'] = $row->post_title;
             $temp['thmbnail'] = $thumbArr[0]->guid;
            // $temp['taxonomy'] = $tagArr;
