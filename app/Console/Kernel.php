@@ -16,6 +16,7 @@ class Kernel extends ConsoleKernel
         //
         Commands\PluginEodDataWriteCommand::class,
         Commands\PluginEodDataResetCommand::class,
+        Commands\PluginAdjustedEodDataResetCommand::class,
         Commands\PluginIntradayDataResetCommand::class,
         Commands\PluginIntradayDataWriteCommand::class,
         Commands\RemoveDuplicateEodCommand::class,
@@ -29,9 +30,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('plugin:writeLastEod')->dailyAt('16:15')->emailOutputTo('fazalmohammad19@gmail.com');
-        $schedule->command('plugin:writeLastIntra')->dailyAt('16:30')->emailOutputTo('fazalmohammad19@gmail.com');
-
+        $schedule->command('plugin:resetEod')->dailyAt('16:15')->emailOutputTo('fazalmohammad19@gmail.com');
+        $schedule->command('plugin:resetIntra')->dailyAt('17:00')->emailOutputTo('fazalmohammad19@gmail.com');
+        $schedule->command('plugin:resetAdjustedEod')->dailyAt('17:45')->emailOutputTo('fazalmohammad19@gmail.com');
 
     }
 

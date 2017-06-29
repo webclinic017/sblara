@@ -120,7 +120,7 @@ class PluginIntradayDataResetCommand extends Command
         Storage::disk('local')->put($file, $heading);
 
         $tradeDate = Market::getActiveDates(15);
-        $last_trade_date = $tradeDate->first()->trade_date->format('Y-m-d');
+        $last_trade_date = $tradeDate->first()->trade_date->addDay()->format('Y-m-d');
         $from_trade_date = $tradeDate->last()->trade_date->format('Y-m-d');
 
         if ($this->debug) {
@@ -139,6 +139,6 @@ class PluginIntradayDataResetCommand extends Command
         }
 
 
-        $this->info('ok');
+        $this->info('Intraday data reset ok');
     }
 }

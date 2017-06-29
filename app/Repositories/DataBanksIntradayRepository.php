@@ -506,6 +506,162 @@ class DataBanksIntradayRepository {
         }
         return ($intraDataForPlugin);
     }
+    public static function getLiveIntraForPlugin($instrument_code = 'DSEX')
+    {
+        $tradeDate = Market::getActiveDates();
+        $last_trade_date = $tradeDate->first()->trade_date->format('Y-m-d');
+        $today = date('Y-m-d');
+
+        $instrumentList = InstrumentRepository::getInstrumentsByCode(array($instrument_code));
+        $returnData  = array();
+        foreach ($instrumentList as $ins) {
+            $instrument_id = $ins->id;
+            dump("started  " . $ins->instrument_code);
+            $data = DataBanksIntraday::whereDate('trade_date', $last_trade_date)->where('instrument_id', $instrument_id)->orderBy('lm_date_time', 'desc')->get();
+
+            foreach ($data as $trade_date => $instrumentData) {
+
+                $instrumentData = $instrumentData->unique('total_volume')->values();
+
+
+                $i = 0;
+                foreach ($instrumentData as $row) {
+                    $last_minute_total_volume = $row->total_volume;
+
+                    if (isset($instrumentData[$i + 1]))
+                        $prev_minute_of_lastminute_volume = $instrumentData[$i + 1]->total_volume;
+                    else {
+                        $prev_minute_of_lastminute_volume = 0;
+
+                    }
+
+
+                    $last_minute_traded_vol = $last_minute_total_volume - $prev_minute_of_lastminute_volume;
+
+                    if ($last_minute_traded_vol < 0)  // skip some negative value specially for dsex
+                        continue;
+
+                    $time_formated = $row['lm_date_time']->format('H:i');
+                    $date_formated = $row['lm_date_time']->format('d/m/Y');
+
+
+                    //$strToadd .= $instrument_code . ',' . $time_formated . ',' . $date_formated . ',' . $row->close_price . ',' . $row->close_price . ',' . $row->close_price . ',' . $row->close_price . ',' . $last_minute_traded_vol . "\n";
+                    $temp  = array();
+                    $temp['code']= $instrument_code;
+                    $temp['time']= $time_formated;
+                    $temp['date']= $date_formated;
+                    $temp['close']= $row->close_price;
+                    $temp['volume']= $last_minute_traded_vol;
+                    $returnData[] = $temp;
+
+
+                    $i++;
+                }
+
+            }
+        }
+        return $returnData;
+    }
+    public static function getLastDayIntraForPlugin($last_update_time = 0, $instrument_code=null)
+    {
+
+
+        //$sql = "select * from `data_banks_intradays` where `lm_date_time` >= '$last_update_time' ORDER BY `lm_date_time` DESC limit $skip,$take";
+       //$sql = "select * from `data_banks_intradays` where `lm_date_time` >= '$last_update_time' and `lm_date_time` < '$to_update_time'";
+       //$sql = "select instrument_id,lm_date_time,close_price,total_volume,pub_last_traded_price,spot_last_traded_price from `data_banks_intradays` where `lm_date_time` >= '$last_update_time' ORDER BY `data_banks_intradays`.`lm_date_time`  ASC";
+       //$sql = "select instrument_id,lm_date_time,close_price,total_volume,pub_last_traded_price,spot_last_traded_price from `data_banks_intradays` where `lm_date_time` >= '$last_update_time'";
+       //$rawdata = \DB::select($sql);
+       $query = DataBanksIntraday::select('instrument_id','lm_date_time','close_price','total_volume','pub_last_traded_price','spot_last_traded_price')->where('lm_date_time','>=',$last_update_time);
+       if(!is_null($instrument_code))
+       {
+           $instrument_id= InstrumentRepository::getInstrumentsByCode($instrument_code)->first()->id;
+           $query->where('instrument_id',$instrument_id);
+       }
+
+
+
+       $rawdata=$query->orderBy('lm_date_time')->get();
+       $rawdata=$rawdata->groupBy('instrument_id');
+
+$returnData=array();
+
+        foreach ($rawdata as $instrument_id => $instrumentData) {
+
+            $instrumentData = $instrumentData->unique('total_volume')->values();
+
+
+           /* $i = 0;
+            foreach ($instrumentData as $row) {
+                $last_minute_total_volume = $row->total_volume;
+
+                if (isset($instrumentData[$i + 1]))
+                    $prev_minute_of_lastminute_volume = $instrumentData[$i + 1]->total_volume;
+                else {
+                    $prev_minute_of_lastminute_volume = 0;
+
+                }
+
+
+                $last_minute_traded_vol = $last_minute_total_volume - $prev_minute_of_lastminute_volume;
+
+                if ($last_minute_traded_vol < 0)  // skip some negative value specially for dsex
+                    continue;
+
+
+                $temp=array();
+                $temp['instrument_id']=$instrument_id;
+                $temp['datetime']=$row->lm_date_time->format('d/m/Y H:i');
+                $temp['close']=$row->close_price;
+                $temp['volume']=$last_minute_traded_vol;
+
+                $returnData[]=$temp;
+                $i++;
+            }
+
+        }*/
+
+            $i = 0;
+            foreach ($instrumentData as $row) {
+                if($i==0)
+                {
+                    $prev_minute_of_lastminute_volume =0;
+                }else
+                {
+                    $prev_minute_of_lastminute_volume =$instrumentData[$i - 1]->total_volume;
+                }
+                $last_minute_total_volume = $row->total_volume;
+
+
+
+                $last_minute_traded_vol = $last_minute_total_volume - $prev_minute_of_lastminute_volume;
+
+                if ($last_minute_traded_vol < 0)  // skip some negative value specially for dsex
+                    continue;
+
+
+                $temp=array();
+                //$temp['instrument_id']=$instrument_id;
+                $temp['lm_date_time']=$row->lm_date_time->format('d/m/Y H:i');
+                $temp['close']=$row->close_price;
+                $temp['volume']=$last_minute_traded_vol;
+
+                $returnData[$instrument_id][]=$temp;
+                $i++;
+            }
+
+        }
+
+
+
+       return $returnData;
+
+
+    }
+    public static function getPluginInstrumentList()
+    {
+        return InstrumentRepository::getInstrumentsScripWithIndex();
+
+    }
 
     public static function getLastDayIntraForPlugin($last_update_time = 0, $to_update_time=0)
     {

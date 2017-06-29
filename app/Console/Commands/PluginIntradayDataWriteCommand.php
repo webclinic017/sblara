@@ -24,7 +24,7 @@ class PluginIntradayDataWriteCommand extends Command
      *
      * @var string
      */
-    protected $description = 'write last minute intraday data to file';
+    protected $description = 'write last day intraday data to file';
 
     /**
      * Create a new command instance.
@@ -85,75 +85,25 @@ class PluginIntradayDataWriteCommand extends Command
         Storage::prepend($file, $strToadd);
 
         $zipper = new \Chumper\Zipper\Zipper;
-        $files = glob(storage_path() . '/app/plugin/intra/*');
-        $zipper->make(storage_path() . '/app/plugin/intra.zip')->add($files)->close();
-
-
-    }
-
-    public function writeData_prev($data, $instrumentList, $file)
-    {
-        $strToadd='';
-        foreach ($data as $row) {
-            $instrumentInfo = $instrumentList->where('id', $row->instrument_id);
-
-            if (count($instrumentInfo)) {
-                $instrument_code = $instrumentInfo->first()->instrument_code;
-                $time_formated = $row['lm_date_time']->format('H:i');
-                $date_formated = $row['lm_date_time']->format('d/m/Y');
-                $strToadd .= $instrument_code . ',' . $time_formated . ',' . $date_formated . ',' . $row->close_price . ',' . $row->close_price . ',' . $row->close_price . ',' . $row->close_price . ',' . $row->total_volume."\n";
-
-            }
-
-        }
-       // dd($strToadd);
-        Storage::prepend($file, $strToadd);
-
-        $zipper = new \Chumper\Zipper\Zipper;
-        $files = glob(storage_path() .'/app/plugin/intra/*');
-        $zipper->make(storage_path() .'/app/plugin/intra.zip')->add($files)->close();
+        $files = glob(storage_path() . '/app/plugin/intra_last_day/*');
+        $zipper->make(storage_path() . '/app/plugin/intra_last_day.zip')->add($files)->close();
 
     }
+
 
     // live server command   /opt/cpanel/ea-php70/root/usr/bin/php /home/hostingmonitors/artisan plugin:writeLastIntra
-    public function handle_prev()
-    {
-        $file="plugin/intra/data.txt";
-        $tradeDate = Market::getActiveDates();
-        $last_trade_date = $tradeDate->first()->trade_date->format('Y-m-d');
-        $instrumentList = InstrumentRepository::getInstrumentsScripWithIndex();
-
-        $today=date('Y-m-d');
-       // $today='2017-04-06';
-
-        if($today==$last_trade_date)
-        {
-            //$data= DataBanksIntradayRepository::getLatestTradeDataAll();
-            $data= DataBanksIntraday::whereDate('trade_date',$last_trade_date)->groupBy('lm_date_time')->orderBy('lm_date_time', 'desc')->get();
-            //dd($data->first());
-            self::writeData($data, $instrumentList, $file);
-            $this->info('Last day Intraday  data written to fie');
-
-        }
-        else
-        {
-            $this->info('Today is not trade date. SO no Intra day data written to file');
-        }
-
-
-
-    }
 
     public function handle()
     {
-        $file = "plugin/intra/data.txt";
+        $file = "plugin/intra_last_day/data.txt";
 
 
         $tradeDate = Market::getActiveDates();
         $last_trade_date = $tradeDate->first()->trade_date->format('Y-m-d');
         $today = date('Y-m-d');
 
-        if ($today == $last_trade_date) {
+        //if ($today == $last_trade_date) {
+        if (1) {
             $instrumentList = InstrumentRepository::getInstrumentsScripWithIndex();
             foreach ($instrumentList as $ins) {
                 $instrument_id = $ins->id;
@@ -165,7 +115,7 @@ class PluginIntradayDataWriteCommand extends Command
             $this->info('Last day Intraday  data written to fie');
 
         } else {
-            $this->info('Today is not trade date. SO no EOD data written to file');
+            $this->info('Today is not trade date. SO no Intra data written to file');
         }
 
 

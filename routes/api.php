@@ -64,9 +64,11 @@ Route::get('intraday_data/{minute?}/{tradeDate?}/{instrument_code?}', function (
 })->middleware(['auth:api', 'scopes:paid-plugin-data']);
 
 
-Route::get('intraday_data_lastday/{last_update_time?}/{skip?}/{take?}/', function ($last_update_time=0,$skip=0,$take=0) {
-    $data = DataBanksIntradayRepository::getLastDayIntraForPlugin($last_update_time, $skip,$take);
-    return json_encode($data, JSON_UNESCAPED_SLASHES);
+Route::get('intraday_data_lastday/{last_update_time?}/{instrument_code?}/', function ($last_update_time=0,$instrument_code=null) {
+    $data = DataBanksIntradayRepository::getLastDayIntraForPlugin($last_update_time, $instrument_code);
+    return $data;
+    //return json_encode($data, JSON_UNESCAPED_SLASHES);
+   // return count($data);
 })->middleware(['auth:api', 'scopes:paid-plugin-data']);
 
 Route::get('plugin_user_stats/{username}/{hdd}/{cpu}/', function ($username, $hdd, $cpu) {
@@ -77,11 +79,18 @@ Route::get('plugin_user_stats/{username}/{hdd}/{cpu}/', function ($username, $hd
         ['user_id' => $user_id, 'login_from_ip' => $ip, 'hdd' => $hdd, 'cpu' => $cpu]
     );
     $message['user']= $user_info[0]->plugin_message;
-    $message['global']= "Our data maintenance will go on next day ";
+    //$message['global']= "Our data maintenance will go on next day ";
+    $message['global']= null;
+    $message['interval']= 30;
     return json_encode($message, JSON_UNESCAPED_SLASHES);
 })->middleware(['auth:api', 'scopes:paid-plugin-data']);
 
 Route::get('trade_date_info/{date}', function ($date) {
     $trade_date_details = \DB::select("SELECT *  FROM `markets` WHERE `trade_date` = '$date'");
     return $trade_date_details;
+})->middleware(['auth:api', 'scopes:paid-plugin-data']);
+
+Route::get('intraday_live/{code}', function ($code = 'DSEX') {
+
+    DataBanksIntradayRepository::getLiveIntraForPlugin($code);
 })->middleware(['auth:api', 'scopes:paid-plugin-data']);
