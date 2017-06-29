@@ -81,7 +81,8 @@ class PluginIntradayDataResetCommand extends Command
                         $strToadd .= $instrument_code . ',' . $time_formated . ',' . $date_formated . ',' . $row->close_price . ',' . $row->close_price . ',' . $row->close_price . ',' . $row->close_price . ',' . $last_minute_traded_vol . ',' . $row->total_volume . "\n";
                         dump("last_minute_total_volume=$last_minute_total_volume | prev_minute_of_lastminute_volume=$prev_minute_of_lastminute_volume = $last_minute_traded_vol");
                     } else {
-                        $strToadd .= $instrument_code . ',' . $time_formated . ',' . $date_formated . ',' . $row->close_price . ',' . $row->close_price . ',' . $row->close_price . ',' . $row->close_price . ',' . $last_minute_traded_vol . "\n";
+                        $strToadd .= $instrument_code . ',' . $time_formated . ',' . $date_formated . ',' . $row->close_price . ',' . $last_minute_traded_vol . "\n";
+
                     }
 
                     $i++;
@@ -115,7 +116,7 @@ class PluginIntradayDataResetCommand extends Command
         }
 
 
-        //$heading = 'Code,Time,Date,Open,High,Low,Close,Volume';
+        //$heading = 'Code,Time,Date,Close,Volume';
         $heading = '';
         Storage::disk('local')->put($file, $heading);
 
