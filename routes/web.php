@@ -58,6 +58,11 @@ Route::get('/pluginEod', function () {
     return response()->download(storage_path() .'/app/plugin/eod.zip');
 });
 
+Route::get('/pluginAdjustedEod', function () {
+    return response()->download(storage_path() . '/app/plugin/adjusted_eod.zip');
+});
+
+
 Route::get('/pluginIntra', function () {
     return response()->download(storage_path() .'/app/plugin/intra.zip');
 });

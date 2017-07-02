@@ -3,6 +3,7 @@
 use App\Repositories\DataBankEodRepository;
 use App\Repositories\DataBanksIntradayRepository;
 use App\Repositories\InstrumentRepository;
+use App\Repositories\FundamentalRepository;
 use Illuminate\Http\Request;
 
 /*
@@ -69,6 +70,13 @@ Route::get('intraday_data_lastday/{last_update_time?}/{instrument_code?}/', func
     return $data;
     //return json_encode($data, JSON_UNESCAPED_SLASHES);
    // return count($data);
+})->middleware(['auth:api', 'scopes:paid-plugin-data']);
+
+Route::get('fundamental_data/{instrument_code?}/', function ($instrument_code=null) {
+    $data = FundamentalRepository::getAmibrokerFundamentalData($instrument_code);
+    return $data;
+    //return json_encode($data, JSON_UNESCAPED_SLASHES);
+    // return count($data);
 })->middleware(['auth:api', 'scopes:paid-plugin-data']);
 
 Route::get('plugin_user_stats/{username}/{hdd}/{cpu}/', function ($username, $hdd, $cpu) {
