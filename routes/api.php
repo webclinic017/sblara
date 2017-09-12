@@ -68,9 +68,7 @@ Route::get('intraday_data/{minute?}/{tradeDate?}/{instrument_code?}', function (
 Route::get('intraday_data_lastday/{last_update_time?}/{instrument_code?}/', function ($last_update_time=0,$instrument_code=null) {
     $data = DataBanksIntradayRepository::getLastDayIntraForPlugin($last_update_time, $instrument_code);
     return $data;
-    //return json_encode($data, JSON_UNESCAPED_SLASHES);
-   // return count($data);
-})->middleware(['auth:api', 'scopes:paid-plugin-data']);
+  })->middleware(['auth:api', 'scopes:paid-plugin-data']);
 
 Route::get('fundamental_data/{instrument_code?}/', function ($instrument_code=null) {
     $data = FundamentalRepository::getAmibrokerFundamentalData($instrument_code);

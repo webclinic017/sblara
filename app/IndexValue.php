@@ -41,23 +41,18 @@ class IndexValue extends Model
             $exchangeId = session('active_exchange_id', 1);
         }
 
-        $cacheVar="IndexValue$tradeDate$limit$exchangeId";
-        $returnData = Cache::remember("$cacheVar", 1, function ()  use ($exchangeId,$tradeDate,$limit)  {
-
             $m=new Market();
             $activeDate=$m->getActiveDates(1,$tradeDate,$exchangeId)->first();
             $marketId=$activeDate->id;
-            $query=static::where('market_id',$marketId)->where('deviation','!=',0)->orderBy('date_time', 'desc');
+            $fromDate=$activeDate->trade_date->format('Y-m-d').' '.$activeDate->market_started->subMinute()->format('H:i:s');
+            $toDate=$activeDate->trade_date->format('Y-m-d').' '.$activeDate->market_closed->addMinute()->format('H:i:s');
+
+            $query=static::where('market_id',$marketId)->whereBetween('date_time', [$fromDate, $toDate])->where('deviation','!=',0)->orderBy('date_time', 'desc');
             if($limit)
             {
                 $query->skip(0)->take($limit);
             }
             $returnData=$query->get();
-
-            return $returnData;
-
-        });
-
         return $returnData;
     }
 

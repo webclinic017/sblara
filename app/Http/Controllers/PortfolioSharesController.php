@@ -10,15 +10,6 @@ use Illuminate\Http\Request;
 class PortfolioSharesController extends Controller
 {
     /**
-     * Create a new controller instance.
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-    
-    
-    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -35,8 +26,6 @@ class PortfolioSharesController extends Controller
      */
     public function create(ContestPortfolio $portfolio)
     {
-        $this->authorize('create', $portfolio);
-
         $portfolio->load('contest', 'shares');
 
         $company_info   = null;
@@ -70,7 +59,7 @@ class PortfolioSharesController extends Controller
             'instruments'    => $instruments,
             'company_info'   => $company_info,
             'purchase_power' => $purchase_power,
-            'max_shares'     => floor($max_shares)
+            'max_shares'     => $max_shares
         ]);
     }
 
@@ -87,22 +76,22 @@ class PortfolioSharesController extends Controller
             'buy_quantity' => 'required|numeric|min:1'
         ]);
 
-        $portfolio->load('contest', 'shares');
+        $portfolio->load('contest');
 
-        $id           = $request->instrument_id;
-        $buy_quantity = $request->buy_quantity;
+        try {
+            $id           = $request->instrument_id;
+            $buy_quantity = $request->buy_quantity;
 
-        $company_info = Instrument::with('data_banks_intraday')->find($id);
+            $company_info = Instrument::with('data_banks_intraday')->find($id);
 
-        $purchase_power     = $portfolio->cash_amount * $portfolio->contest->max_amount / 100;
-        $buying_price       = $company_info->data_banks_intraday->close_price;
-        $max_shares_can_buy = floor($purchase_power / $buying_price);
+            $purchase_power     = $portfolio->cash_amount * $portfolio->contest->max_amount / 100;
+            $max_shares_can_buy = $purchase_power / $company_info->data_banks_intraday->close_price;
+            $buying_price       = $company_info->data_banks_intraday->close_price;
 
-        $noOfShare = $portfolio->shares->sum('no_of_shares');
-
-        if ($noOfShare < $max_shares_can_buy) {
             if ($buy_quantity > $max_shares_can_buy) {
                 flash('You are not allowed to purchase this amount of shares', 'error');
+
+                return back();
             } else {
                 $portfolio->portfolioShares()->attach($company_info->id, [
                     'no_of_shares' => $buy_quantity,
@@ -110,30 +99,18 @@ class PortfolioSharesController extends Controller
                     'buying_date'  => Carbon::now()
                 ]);
 
-                $commission                 = 0.5;
-                $totalBuyCost               = $buy_quantity * $buying_price;
-                $buyCommission              = $commission * $totalBuyCost / 100;
-                $totalBuyCostWithCommission = $totalBuyCost + $buyCommission;
-                
-                $sellCommission = ($commission / 100) * $totalBuyCost;
-                $sellValueDeductingCommision = $totalBuyCost - $sellCommission;
-
-                $totalBuyCostWithCommission = $totalBuyCost + $buyCommission;
-                $totalGain = $sellValueDeductingCommision - $totalBuyCostWithCommission;
-
-                $portfolio->current_portfolio_value = $portfolio->current_portfolio_value += $totalGain;
-                $portfolio->cash_amount = $portfolio->cash_amount -= $totalBuyCostWithCommission;
+                $commission                     = 0.5;
+                $total_buy_cost                 = $buy_quantity * $buying_price;
+                $buy_commission                 = $commission * $total_buy_cost / 100;
+                $total_buy_cost_with_commission = $total_buy_cost += $buy_commission;
+                $portfolio->cash_amount         = $portfolio->cash_amount -= $total_buy_cost_with_commission;
                 $portfolio->save();
-
-                flash('Successfully bought a share', 'success');
 
                 return redirect()->route('contests.portfolios.show', $portfolio);
             }
-        } else {
-            flash('You are not allowed to purchase this amount of shares', 'error');
+        } catch (Exception $e) {
+            // return $e->message;    
         }
-        
-        return back();
     }
 
     /**
@@ -155,8 +132,7 @@ class PortfolioSharesController extends Controller
      */
     public function edit($id)
     {
-
-        dd($id);
+        //
     }
 
     /**

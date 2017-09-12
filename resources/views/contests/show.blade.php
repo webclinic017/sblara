@@ -41,15 +41,6 @@
                         @endphp
                         
                         @forelse ($contest->contestUsers as $user)
-                            @php
-                                $growthPercent = 0;
-                                $contestAmount = $contest->contest_amount;
-
-                                $totalPortfolioValue = $user->pivot->current_portfolio_value;
-                                $growth = $totalPortfolioValue - $contestAmount;
-                                $growthPercent = number_format($growth / $contestAmount * 100, 2);
-                            @endphp
-                            
                             <tr class="text-center">
                                 <td>{{ $rank++ }}</td>
                                 <td>
@@ -60,15 +51,9 @@
                                     @endif
                                 </td>
                                 <td>{{ $user->join_date }}</td>
-                                <td>
-                                    @if ($growthPercent > 0)
-                                        <span class="text-success">{{ $growthPercent }}</span>
-                                    @else
-                                        <span class="text-danger">{{ $growthPercent }}</span>
-                                    @endif
-                                </td>
+                                <td></td>
                                 <td>{{ $user->shares->count() }}</td>
-                                <td>{{ $user->pivot->current_portfolio_value }}</td>
+                                <td>{{ $user->pivot->portfolio_value }}</td>
                             </tr>
                         @empty
                             <tr class="no-records-found text-center">

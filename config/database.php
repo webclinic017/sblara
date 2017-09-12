@@ -55,7 +55,7 @@ return [
         ],
         'dsb' => [
             'driver' => 'mysql',
-            'host' => env('DB_HOST', '127.0.0.1'),
+            'host' => env('DB_HOST', '5.189.167.100'),
             'port' => env('DB_PORT', '3306'),
             'database' => 'dailysto_dsbdb',
             'username' => 'dailysto_dbman',

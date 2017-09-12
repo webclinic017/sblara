@@ -44,9 +44,9 @@ class DataBanksEod extends Model
             $fromDate=$howManyDays;
         }
 
-        $eodData= static::whereBetween('date', [$fromDate, $toDate])->where('instrument_id',$instrumentId)->orderBy('date', 'desc')->get();
+        return $eodData= static::whereBetween('date', [$fromDate, $toDate])->where('instrument_id',$instrumentId)->orderBy('date', 'desc')->get();
 
-        $dataBankallGroup = $eodData->groupBy('market_id');
+       /* $dataBankallGroup = $eodData->groupBy('market_id');
 
         $eodData=array();
         //eliminating duplicate if exist (some duplicate data available. We have to prevent this in future)
@@ -62,7 +62,7 @@ class DataBanksEod extends Model
                 }
             }
             $eodData[]=$data;
-        }
+        }*/
 
         return collect($eodData);
 

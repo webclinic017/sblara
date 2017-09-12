@@ -67,6 +67,11 @@ Route::get('/pluginIntra', function () {
     return response()->download(storage_path() .'/app/plugin/intra.zip');
 });
 
+Route::get('/pluginResources', function () {
+    return response()->download(storage_path() . '/app/plugin/resources.zip');
+});
+
+
 Route::get('/pluginIntra2', function () {
     return response()->download(storage_path() . '/app/plugin/intra_data_test.txt');
 });
