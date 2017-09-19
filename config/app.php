@@ -183,6 +183,7 @@ return [
         Barryvdh\HttpCache\ServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
         Chumper\Zipper\ZipperServiceProvider::class,
+        Unisharp\Ckeditor\ServiceProvider::class,
 
     ],
 

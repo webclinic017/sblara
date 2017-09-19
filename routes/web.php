@@ -31,11 +31,27 @@ Route::post('change-image', 'ImageController@changeImage')->name('change-image')
 Route::get('/passport', 'Passport\PassportController@show');
 
 //Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout'); //Just added to fix issue. By default logout is post
+// filter
 Route::get('/filter', 'FilterController@index');
-
 Route::post('/filter', 'FilterController@filter');
-
 Route::post('/save_filter', 'FilterController@save_filter');
+//
+// Route to courses
+Route::resource('/categories_course', 'CourseCategoriesController');
+Route::resource('/venues_course', 'CourseVenuesController');
+Route::resource('/facilitators_course', 'CourseFacilitatorsController');
+
+Route::resource('/courses', 'CoursesController');
+Route::resource('/manage_course', 'CourseManageController');
+Route::resource('/participants_course', 'CourseParticipantsController');
+Route::resource('/batch_transfer', 'BatchTransferController');
+
+Route::get('/courses-avaliable', 'UserParticipantsController@index')->name('courses');
+Route::get('/registration/{id}', 'UserParticipantsController@create')->name('registration.create');
+Route::post('/registration', 'UserParticipantsController@store')->name('registration.store');
+
+//Route::post('/categories_course', 'CourseCategoriesController@store')->name('qwer');
+
 
 Route::get('my-page', function(){
     return Response::make('Hello!')->setTtl(60); // Cache 1 minute
@@ -145,4 +161,3 @@ Route::get('/portfolio_market_summary/{portfolio_id}', 'PortfolioController@mark
 Route::get('/portfolio_gain_loss/{portfolio_id}', 'PortfolioController@gainLoss');
 Route::get('/portfolio_performance/{portfolio_id}', 'PortfolioController@performance');
 Route::post('search_json', 'SearchController@search');
-

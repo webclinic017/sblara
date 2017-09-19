@@ -12,9 +12,10 @@
         "intervention/image": "^2.3",
         "laracasts/flash": "^2.0",
         "laravel/framework": "5.4.*",
-        "laravel/passport": "^2.0",
+        "laravel/passport": "1.0.18",
         "laravel/tinker": "~1.0",
         "laravelcollective/html": "^5.4",
+        "unisharp/laravel-ckeditor": "^4.6",
         "yajra/laravel-datatables-oracle": "^7.6"
     },
     "require-dev": {
