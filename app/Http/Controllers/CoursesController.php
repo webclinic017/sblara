@@ -187,4 +187,90 @@ class CoursesController extends Controller
         Courses::where('id',$id)->delete();
         return redirect()->back()->with(['message_success' => 'Course is remove']);
     }
+
+    public function dataImport()
+    {
+        //$result = DB::select("SELECT * FROM `sb_course_batch` ");
+
+        /*
+        $result = DB::table('sb_course_batch')->get();
+        foreach($result as $data)
+        {
+            dump($data->batch);
+            DB::table('course_batches')->insert(
+                [     'id' => $data->batch_id
+                    , 'course_id' => $data->course_id
+                    , 'course_venue_id' => $data->venue_id
+                    , 'course_facilitator_id' => $data->faci_id
+                    , 'batch_name' => $data->batch
+                    , 'c_start_date' => date('Y-m-d',$data->c_start_date).' '.date('H:i:s',strtotime($data->c_start_time))
+                    , 'c_end_date' => date('Y-m-d', $data->c_end_date) . ' ' . date('H:i:s', strtotime($data->c_end_time))
+                    , 'course_days_oftheweek' => $data->course_days_oftheweek
+                    , 'c_reg_last_date' => date('Y-m-d', $data->c_reg_last_date)
+                    , 'c_start_time' => date('Y-m-d', $data->c_start_date) . ' ' . date('H:i:s', strtotime($data->c_start_time))
+                    , 'c_end_time' => date('Y-m-d', $data->c_end_date) . ' ' . date('H:i:s', strtotime($data->c_end_time))
+                    , 'course_duration' => $data->course_duration
+                    , 'course_fees' => $data->course_fees
+                    , 'course_vat' => $data->course_vat
+                    , 'course_discount' => $data->course_discount
+                    , 'discounted_course_fees' => $data->discounted_course_fees
+                    , 'certificate_status' => $data->certificate_status
+                    , 'course_certificate_status' => $data->course_certificate_status
+                    , 'num_participants' => $data->num_participants
+                    , 'batch_status' => $data->batch_status
+                    , 'filled_up' => $data->filled_up
+                    , 'previous_event' => $data->previous_event
+                    , 'testimonials' => $data->batch_id
+
+                ]
+            );
+        }
+        */
+
+        /*$result = DB::table('sb_course_participants')->get();
+        foreach($result as $data)
+        {
+            dump($data->p_name);
+            DB::table('course_participants')->insert(
+                [     'id' => $data->p_id
+                    , 'course_batch_id' => $data->batch_id
+                    , 'p_name' => $data->p_name
+                    , 'p_identification_no' => $data->p_identification_no
+                    , 'p_email' => $data->p_email
+                    , 'p_phone' => $data->p_phone
+                    , 'p_address' => $data->p_address
+                    , 'p_profession' => $data->p_profession
+                    , 'p_organisation' => $data->p_organisation
+                    , 'p_designation' => $data->p_designation
+                    , 'where_heard' => $data->where_heard
+                    , 'p_comments' => $data->p_comments
+                    , 'our_comments' => $data->our_comments
+                    , 'paid_status' => $data->paid_status
+                    , 'p_certificate_status' => $data->p_certificate_status
+                    , 'reg_date' => date('Y-m',$data->last_update).'-'.$data->reg_date
+                    , 'last_update' => date('Y-m-d', $data->last_update)
+                    , 'batch_want' => $data->batch_want
+                ]
+            );
+        }*/
+
+        $result = DB::table('sb_participants_payment')->get();
+        foreach ($result as $data) {
+            dump($data->payment_amount);
+            DB::table('course_participant_payments')->insert(
+                ['id' => $data->payment_id
+                    , 'course_participant_id' => $data->p_id
+                    , 'payment_mr_no' => $data->payment_mr_no
+                    , 'payment_type' => $data->p_payment_type
+                    , 'payment_amount' => $data->p_payment
+                    , 'payment_due' => $data->p_payment_due
+                    , 'payment_vat_chalan_no' => $data->p_payment_vat_chalan_no
+                    , 'payment_date' => date('Y-m-d H:i:s', $data->p_payment_date)
+
+                ]
+            );
+        }
+        //dd($result);
+        exit;
+    }
 }

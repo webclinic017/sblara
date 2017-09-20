@@ -16,8 +16,8 @@
         Highcharts.stockChart('{{$renderTo}}', {
              plotOptions: {
                 candlestick: {
-                    color: '#36C6D3',
-                    upColor: 'red'
+                    color: 'red',
+                    upColor: '#36C6D3'
                 }
             },
             rangeSelector: {
