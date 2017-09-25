@@ -8,6 +8,8 @@ use App\CourseVenues;
 use App\CourseFacilitators;
 use App\CourseCategories;
 use App\CourseBatches;
+use App\CourseParticipants;
+use Illuminate\Support\Facades\DB;
 
 class BatchTransferController extends Controller
 {
@@ -19,7 +21,15 @@ class BatchTransferController extends Controller
     public function index()
     {
       //$batches = CourseBatches::where('c_start_date', '>=', date("Y-m-d H:i:s"))->get();
-      return view('admin_courses.transfers.list');
+
+      //
+      //  SELECT a.*, b.id, b.course_id, b.batch_name, c.course_name FROM course_participants AS a, course_batches AS b, courses AS c WHERE a.batch_want = 'nextbatch' AND a.course_batch_id=b.id AND b.course_id=c.id
+      //
+      $participants = DB::select("SELECT a.*, b.id as b_id, b.course_id, b.batch_name, c.course_name FROM course_participants AS a, course_batches AS b, courses AS c WHERE a.batch_want = 'nextbatch' AND a.course_batch_id=b.id AND b.course_id=c.id");
+      $transfers = DB::select("SELECT b.id, b.batch_name, c.course_name FROM course_batches AS b, courses AS c WHERE b.course_id = c.id AND b.batch_status = 'upcoming'");
+      //$transfers = CourseParticipants::getActiveCourse();
+    //  dd($participants);
+      return view('admin_courses.transfers.list', ['participants' => $participants, 'transfers' => $transfers]);
     }
 
     /**
@@ -74,8 +84,15 @@ class BatchTransferController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
-        //return view('admin_courses.category.list', ['course_categories' => $course_categories, 'message_success' => 'Category is update']);
+      //  dump($id);
+        $course_participant = CourseParticipants::find($id);
+      //  dd($course_participant);
+        $course_participant->course_batch_id = $request->input('course_batch_id');
+        $course_participant->save();
+
+        //dd($course_participant);
+
+        return redirect()->route('batch_transfer.index');
     }
 
     /**

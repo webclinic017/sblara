@@ -17,7 +17,7 @@
         </div>
         <div class="row">
           <div class="col-md-12">
-            <form action="{{route('manage_course.store')}}" method="POST">
+            <form action="{{route('batches.store')}}" method="POST">
               {{ csrf_field() }}
               <div class="form-group">
                 <label for="course_id">Course Category:</label>
@@ -48,7 +48,7 @@
                 <label for="batch_name">Batch:</label>
                 <select id="batch_name" name="batch_name" class="bs-select form-control select-filter" data-live-search="true">
           				@foreach($batches as $batch)
-          					<option value="{{$batch}}" @if (old('batch_name') == $batch) selected="selected" @endif>{{$batch}}</option>
+          					<option value="{{$batch->batch_name}}" @if (old('batch_name') == $batch->batch_name) selected="selected" @endif>{{$batch->batch_name}}</option>
           				@endforeach
           			</select>
               </div>

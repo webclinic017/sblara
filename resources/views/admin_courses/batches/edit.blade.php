@@ -17,7 +17,7 @@
         </div>
         <div class="row">
           <div class="col-md-12">
-            <form action="{{route('manage_course.update', $course_batch->id )}}" method="POST">
+            <form action="{{route('batches.update', $course_batch->id )}}" method="POST">
               {{ csrf_field() }}
               {{ method_field('PUT') }}
               <div class="form-group">
@@ -58,11 +58,11 @@
                 <label for="batch_name">Batch:</label>
                 <select id="batch_name" name="batch_name" class="bs-select form-control select-filter" data-live-search="true">
           				@foreach($batches as $batch)
-          					<option value="{{$batch}}"
-                    @if ($batch==$course_batch->batch_name)
+          					<option value="{{$batch->batch_name}}"
+                    @if ($batch->batch_name==$course_batch->batch_name)
                       selected
                     @endif
-                    >{{$batch}}</option>
+                    >{{$batch->batch_name}}</option>
           				@endforeach
           			</select>
               </div>

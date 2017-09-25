@@ -37,18 +37,26 @@ Route::post('/filter', 'FilterController@filter');
 Route::post('/save_filter', 'FilterController@save_filter');
 //
 // Route to courses
-Route::resource('/categories_course', 'CourseCategoriesController');
-Route::resource('/venues_course', 'CourseVenuesController');
-Route::resource('/facilitators_course', 'CourseFacilitatorsController');
+//Route::group(['middleware' => 'admin'], function()
+//{
+  Route::resource('/categories_course', 'CourseCategoriesController');//->middleware('auth');;
+  Route::resource('/venues_course', 'CourseVenuesController');//->middleware('admin');
+  Route::resource('/facilitators_course', 'CourseFacilitatorsController');//->middleware('admin');
 
-Route::resource('/courses', 'CoursesController');
-Route::resource('/manage_course', 'CourseManageController');
-Route::resource('/participants_course', 'CourseParticipantsController');
-Route::resource('/batch_transfer', 'BatchTransferController');
-
+  Route::resource('/courses', 'CoursesController');//->middleware('admin');
+  Route::resource('/batches', 'CourseManageController');//->middleware('admin');
+  Route::resource('/participants_course', 'CourseParticipantsController');//->middleware('admin');
+  Route::resource('/batch_transfer', 'BatchTransferController');//->middleware('admin');
+//});
 Route::get('/courses-avaliable', 'UserParticipantsController@index')->name('courses');
 Route::get('/registration/{id}', 'UserParticipantsController@create')->name('registration.create');
 Route::post('/registration', 'UserParticipantsController@store')->name('registration.store');
+
+//Route::get('/mail', 'MailController@index');
+
+Route::get('mail', function(){
+    return view('mail');
+});
 
 //Route::post('/categories_course', 'CourseCategoriesController@store')->name('qwer');
 

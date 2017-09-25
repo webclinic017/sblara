@@ -9,6 +9,8 @@ use App\CourseFacilitators;
 use App\CourseCategories;
 use App\CourseBatches;
 use App\CourseParticipants;
+use App\Mail\OrderShipped;
+use Illuminate\Support\Facades\Mail;
 
 class UserParticipantsController extends Controller
 {
@@ -71,7 +73,12 @@ class UserParticipantsController extends Controller
         $participant->p_comments = $request->input('p_comments');
         $participant->save();
 
+
+        Mail::to($request->input('p_email'))->send(new OrderShipped($participant->id));
+
         $batches = CourseParticipants::getActiveCourse();
+
+
         return view('user_courses.list', ['batches' => $batches, 'message_success' => 'You successfull registred!']);
     }
 

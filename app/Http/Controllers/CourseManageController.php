@@ -33,16 +33,19 @@ class CourseManageController extends Controller
         $courses = Courses::all();
         $venues = CourseVenues::all();
         $facilitators = CourseFacilitators::all();
-        $batches = [
-          'Workshop','Batch-01','Batch-02','Batch-03','Batch-04','Batch-05','Batch-06','Batch-07','Batch-08','Batch-09','Batch-10',
-          'Batch-11','Batch-12','Batch-13','Batch-14','Batch-15','Batch-16','Batch-17','Batch-18','Batch-19','Batch-20','Batch-21',
-          'Batch-22','Batch-23','Batch-24','Batch-25','Batch-26','Batch-27','Batch-28','Batch-29','Batch-30','Batch-31','Batch-32',
-          'Batch-33','Batch-34','Batch-35','Batch-36','Batch-37','Batch-38','Batch-39','Batch-40','Batch-41','Batch-42','Batch-43',
-          'Batch-44','Batch-45','Batch-46','Batch-47','Batch-48','Batch-49','Batch-50','Batch-51','Batch-52','Batch-53','Batch-54',
-          'Batch-55','Batch-56','Batch-57','Batch-58','Batch-59','Batch-60','Batch-61','Batch-62','Batch-63','Batch-64','Batch-65',
-          'Batch-66','Batch-67','Batch-68','Batch-69','Batch-70'
-        ];
+        // $batches = [
+        //   'Workshop','Batch-01','Batch-02','Batch-03','Batch-04','Batch-05','Batch-06','Batch-07','Batch-08','Batch-09','Batch-10',
+        //   'Batch-11','Batch-12','Batch-13','Batch-14','Batch-15','Batch-16','Batch-17','Batch-18','Batch-19','Batch-20','Batch-21',
+        //   'Batch-22','Batch-23','Batch-24','Batch-25','Batch-26','Batch-27','Batch-28','Batch-29','Batch-30','Batch-31','Batch-32',
+        //   'Batch-33','Batch-34','Batch-35','Batch-36','Batch-37','Batch-38','Batch-39','Batch-40','Batch-41','Batch-42','Batch-43',
+        //   'Batch-44','Batch-45','Batch-46','Batch-47','Batch-48','Batch-49','Batch-50','Batch-51','Batch-52','Batch-53','Batch-54',
+        //   'Batch-55','Batch-56','Batch-57','Batch-58','Batch-59','Batch-60','Batch-61','Batch-62','Batch-63','Batch-64','Batch-65',
+        //   'Batch-66','Batch-67','Batch-68','Batch-69','Batch-70'
+        // ];
+        //
+        //SELECT DISTINCT `batch_name` FROM course_batches
 
+        $batches =  CourseBatches::select('batch_name')->distinct()->get();
         return view('admin_courses.batches.create', ['courses' => $courses, 'venues' => $venues, 'facilitators' => $facilitators, 'batches' => $batches]);
     }
 
@@ -113,6 +116,9 @@ class CourseManageController extends Controller
     {
         //
         //  dd("sdf2");
+        $batch = CourseBatches::find($id);
+
+        return view('admin_courses.batches.show', ['batch' => $batch]);
     }
 
     /**
@@ -128,15 +134,16 @@ class CourseManageController extends Controller
         $courses = Courses::all();
         $venues = CourseVenues::all();
         $facilitators = CourseFacilitators::all();
-        $batches = [
-          'Workshop','Batch-01','Batch-02','Batch-03','Batch-04','Batch-05','Batch-06','Batch-07','Batch-08','Batch-09','Batch-10',
-          'Batch-11','Batch-12','Batch-13','Batch-14','Batch-15','Batch-16','Batch-17','Batch-18','Batch-19','Batch-20','Batch-21',
-          'Batch-22','Batch-23','Batch-24','Batch-25','Batch-26','Batch-27','Batch-28','Batch-29','Batch-30','Batch-31','Batch-32',
-          'Batch-33','Batch-34','Batch-35','Batch-36','Batch-37','Batch-38','Batch-39','Batch-40','Batch-41','Batch-42','Batch-43',
-          'Batch-44','Batch-45','Batch-46','Batch-47','Batch-48','Batch-49','Batch-50','Batch-51','Batch-52','Batch-53','Batch-54',
-          'Batch-55','Batch-56','Batch-57','Batch-58','Batch-59','Batch-60','Batch-61','Batch-62','Batch-63','Batch-64','Batch-65',
-          'Batch-66','Batch-67','Batch-68','Batch-69','Batch-70'
-        ];
+        // $batches = [
+        //   'Workshop','Batch-01','Batch-02','Batch-03','Batch-04','Batch-05','Batch-06','Batch-07','Batch-08','Batch-09','Batch-10',
+        //   'Batch-11','Batch-12','Batch-13','Batch-14','Batch-15','Batch-16','Batch-17','Batch-18','Batch-19','Batch-20','Batch-21',
+        //   'Batch-22','Batch-23','Batch-24','Batch-25','Batch-26','Batch-27','Batch-28','Batch-29','Batch-30','Batch-31','Batch-32',
+        //   'Batch-33','Batch-34','Batch-35','Batch-36','Batch-37','Batch-38','Batch-39','Batch-40','Batch-41','Batch-42','Batch-43',
+        //   'Batch-44','Batch-45','Batch-46','Batch-47','Batch-48','Batch-49','Batch-50','Batch-51','Batch-52','Batch-53','Batch-54',
+        //   'Batch-55','Batch-56','Batch-57','Batch-58','Batch-59','Batch-60','Batch-61','Batch-62','Batch-63','Batch-64','Batch-65',
+        //   'Batch-66','Batch-67','Batch-68','Batch-69','Batch-70'
+        // ];
+        $batches =  CourseBatches::select('batch_name')->distinct()->get();
 
         return view('admin_courses.batches.edit', ['course_batch' => $course_batch,'batches' => $batches, 'courses' => $courses, 'venues' => $venues, 'facilitators' => $facilitators]);
     }

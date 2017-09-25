@@ -97,8 +97,7 @@ class CoursesController extends Controller
      */
     public function show($id)
     {
-        //
-        //  dd("sdf2");
+      
     }
 
     /**

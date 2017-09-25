@@ -17,7 +17,7 @@
         </div>
         <div class="row">
           <div class="col-md-12">
-            <a href="{{route('manage_course.create')}}">Add Batch</a>
+            <a href="{{route('batches.create')}}">Add Batch</a>
             {{ csrf_field() }}
           </div>
         </div>
@@ -60,7 +60,7 @@
                           <td>{{$batche->c_start_date}}</td>
                           <td>{{$batche->course_duration}}</td>
                           <td>
-                            <a class="edithButton" href="{{ route('manage_course.edit',$batche->id ) }}" style="cursor: pointer;"> edit <i class="fa fa-pencil"></i></a>
+                            <a class="edithButton" href="{{ route('batches.edit',$batche->id ) }}" style="cursor: pointer;"> edit <i class="fa fa-pencil"></i></a>
                           </td>
                         </tr>
 

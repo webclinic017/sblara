@@ -23,13 +23,13 @@
                       <th class="sorting_asc" tabindex="0" aria-controls="sample_3" rowspan="1" colspan="1" style="width: 10px;">
                         #
                       </th>
-                      <th class="sorting" tabindex="1" aria-controls="sample_3" rowspan="1" colspan="1" style="width: 290px;">
+                      <th class="sorting" tabindex="1" aria-controls="sample_3" rowspan="1" colspan="1" style="width: 100px;">
                         Participant Name
                       </th>
-                      <th class="sorting" tabindex="2" aria-controls="sample_3" rowspan="1" colspan="1" style="width: 100px;">
+                      <th class="sorting" tabindex="2" aria-controls="sample_3" rowspan="1" colspan="1" style="width: 50px;">
                         Phone
                       </th>
-                      <th class="sorting" tabindex="2" aria-controls="sample_3" rowspan="1" colspan="1" style="width: 100px;">
+                      <th class="sorting" tabindex="2" aria-controls="sample_3" rowspan="1" colspan="1" style="width: 80px;">
                         Paid Status
                       </th>
                       <th class="sorting" tabindex="2" aria-controls="sample_3" rowspan="1" colspan="1" style="width: 100px;">
@@ -38,12 +38,47 @@
                       <th class="sorting" tabindex="2" aria-controls="sample_3" rowspan="1" colspan="1" style="width: 100px;">
                         Next Batch
                       </th>
-                      <th class="sorting" tabindex="2" aria-controls="sample_3" rowspan="1" colspan="1" style="width: 100px;">
+                      <th class="sorting" tabindex="2" aria-controls="sample_3" rowspan="1" colspan="1" style="width: 80px;">
                         Action
                       </th>
                     </thead>
                     <tbody id="">
+                      @foreach($participants as $participant)
 
+                          <tr>
+                            <form action="{{ route('batch_transfer.update', $participant->id) }}" method="post">
+                              {{ csrf_field() }}
+                              {{ method_field('PUT') }}
+                              <td>
+                                {{ $loop->iteration }}
+                              </td>
+                              <td>
+                                {{ $participant->p_name }}
+                              </td>
+                              <td>
+                                {{ $participant->p_phone }}
+                              </td>
+                              <td>
+                                {{ $participant->paid_status }}
+                              </td>
+                              <td>
+                                {{ $participant->course_name }} {{ $participant->batch_name }}
+                              </td>
+                              <td>
+                                <select id="course_batch_id" name="course_batch_id" class="form-control" data-live-search="true">
+                          				@foreach($transfers as $transfer)
+                                    <option value="{{$transfer->id}}">{{$transfer->course_name}} {{ $transfer->batch_name }}</option>
+                          				@endforeach
+                          			</select>
+
+                              </td>
+                              <td>
+                                <input type="submit" class="btn btn-default" value="Transfer">
+                              </td>
+                            </form>
+                          </tr>
+
+                      @endforeach
                     </tbody>
                 </table>
             </div>
@@ -64,7 +99,7 @@
      $( document ).ready(function() {
 
        $('table').DataTable();
-       
+
        $.ajaxSetup({
 
        });

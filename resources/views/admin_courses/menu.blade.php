@@ -14,7 +14,7 @@
       <a href="{{ route('courses.index') }}">Courses List</a>
     </li>
     <li class="">
-      <a href="{{ route('manage_course.index') }}">Courses Manager</a>
+      <a href="{{ route('batches.index') }}">Courses Manager</a>
     </li>
     <li class="">
       <a href="{{ route('participants_course.index') }}">Participants List</a>
