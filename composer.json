@@ -7,21 +7,22 @@
     "require": {
         "php": ">=5.6.4",
         "barryvdh/laravel-debugbar": "^2.3",
-        "barryvdh/laravel-httpcache": "0.2.x@dev",
+        "barryvdh/laravel-httpcache": "0.3.*",
         "chumper/zipper": "1.0.x",
         "intervention/image": "^2.3",
         "laracasts/flash": "^2.0",
-        "laravel/framework": "5.4.*",
-        "laravel/passport": "1.0.18",
+        "laravel/framework": "5.5.*",
+        "laravel/passport": "^3.0",
         "laravel/tinker": "~1.0",
-        "laravelcollective/html": "^5.4",
         "unisharp/laravel-ckeditor": "^4.6",
-        "yajra/laravel-datatables-oracle": "^7.6"
+        "laravelcollective/html": "^5.4"
+
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
         "mockery/mockery": "0.9.*",
-        "phpunit/phpunit": "~5.7"
+        "phpunit/phpunit": "~6.0",
+        "filp/whoops": "~2.0"
     },
     "autoload": {
         "classmap": [
