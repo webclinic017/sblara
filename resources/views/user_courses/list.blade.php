@@ -41,7 +41,7 @@
                         </thead>
                         <tbody id="">
                             <tr>
-                              <td>{{isset($batch->course->course_name)?$batch->course->course_name:$batch->course_id}}</td>
+                              <td>{{isset($batch->course_name)?$batch->course_name:$batch->course_id}}</td>
                               <td>{{$batch->course_duration}}</td>
                               <td>{{$batch->c_start_date}}</td>
                               <td>{{$batch->c_start_time}} - {{$batch->c_end_time}}</td>
@@ -60,7 +60,7 @@
                     <a href="" class="btn btn-default">Certificate will be awarded</a>
                   </div>
                   <div class="col-md-2 col-md-offset-3">
-                    <a href="" class="btn btn-default">More detail</a>
+                    <a href="{{ route('batches.show', $batch->id) }}" class="btn btn-default">More detail</a>
                   </div>
                 </div>
               </div>

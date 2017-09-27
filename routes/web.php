@@ -37,8 +37,8 @@ Route::post('/filter', 'FilterController@filter');
 Route::post('/save_filter', 'FilterController@save_filter');
 //
 // Route to courses
-//Route::group(['middleware' => 'admin'], function()
-//{
+Route::group(['middleware' => 'admin'], function()
+{
   Route::resource('/categories_course', 'CourseCategoriesController');//->middleware('auth');;
   Route::resource('/venues_course', 'CourseVenuesController');//->middleware('admin');
   Route::resource('/facilitators_course', 'CourseFacilitatorsController');//->middleware('admin');
@@ -47,7 +47,7 @@ Route::post('/save_filter', 'FilterController@save_filter');
   Route::resource('/batches', 'CourseManageController');//->middleware('admin');
   Route::resource('/participants_course', 'CourseParticipantsController');//->middleware('admin');
   Route::resource('/batch_transfer', 'BatchTransferController');//->middleware('admin');
-//});
+});
 Route::get('/courses-avaliable', 'UserParticipantsController@index')->name('courses');
 Route::get('/registration/{id}', 'UserParticipantsController@create')->name('registration.create');
 Route::post('/registration', 'UserParticipantsController@store')->name('registration.store');

@@ -201,7 +201,7 @@ class CourseManageController extends Controller
         $batch->certificate_status = $request->input('certificate_status');
         $batch->save();
 
-        return redirect()->route('manage_course.index')->with('message_success', 'Facilitator is update');
+        return redirect()->route('batches.index')->with('message_success', 'Course is update');
         //return view('admin_courses.category.list', ['course_categories' => $course_categories, 'message_success' => 'Category is update']);
     }
 

@@ -38,10 +38,11 @@
                     </thead>
                     <tbody id="">
                       @foreach($batches as $batch)
+                        
                         <tr>
                           <td>{{$loop->iteration}}</td>
-                          <td>{{isset($batch->course->course_name)?$batch->course->course_name:$batch->course_id}}- {{$batch->batch_name}} ( Participants: {{$batch->count}} , Paid: {{$batch->paid}} )</td>
-                          <td>{{$batch->venue->venue_name}}</td>
+                          <td>{{isset($batch->course_name)?$batch->course_name:$batch->course_id}}- {{$batch->batch_name}} ( Participants: {{$batch->count}} , Paid: {{$batch->paid}} )</td>
+                          <td>{{$batch->venue_name}}</td>
                           <td>{{$batch->c_start_date}}</td>
                           <td>
                             <a class="edithButton" href="{{ route('participants_course.show',$batch->id ) }}" style="cursor: pointer;"> detail <i class="fa fa-info"></i></a>
@@ -68,7 +69,7 @@
      $( document ).ready(function() {
 
        $('table').DataTable();
-       
+
        $.ajaxSetup({
 
        });
