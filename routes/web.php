@@ -47,6 +47,11 @@ Route::group(['middleware' => 'admin'], function()
   Route::resource('/batches', 'CourseManageController');//->middleware('admin');
   Route::resource('/participants_course', 'CourseParticipantsController');//->middleware('admin');
   Route::resource('/batch_transfer', 'BatchTransferController');//->middleware('admin');
+
+  Route::get('participant_payment/{id}', ['as' => 'participant_payment.index', 'uses' => 'CoursePaymentsController@index']);
+  Route::get('participant_payment/create/{id}', ['as' => 'participant_payment.create', 'uses' => 'CoursePaymentsController@create']);
+  Route::post('participant_payment/store', ['as' => 'participant_payment.store', 'uses' => 'CoursePaymentsController@store']);
+  //Route::resource('/participant_payment', 'CoursePaymentsController', ['except' => ['index']]);//->middleware('admin');
 });
 Route::get('/courses-avaliable', 'UserParticipantsController@index')->name('courses');
 Route::get('/registration/{id}', 'UserParticipantsController@create')->name('registration.create');

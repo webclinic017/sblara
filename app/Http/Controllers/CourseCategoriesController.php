@@ -48,7 +48,7 @@ class CourseCategoriesController extends Controller
 
         $course_categories = CourseCategories::all();
 
-        return view('admin_courses.category.list', ['course_categories' => $course_categories, 'message_success' => 'Category is add']);
+        return view('admin_courses.category.list', ['course_categories' => $course_categories, 'message_success' => 'Category successfully added']);
     }
 
     /**
@@ -96,7 +96,7 @@ class CourseCategoriesController extends Controller
         $category->save();
 
         $course_categories = CourseCategories::all();
-        return redirect()->route('categories_course.index')->with('message_success', 'Category is update');
+        return redirect()->route('categories_course.index')->with('message_success', 'Category successfully updated');
         //return view('admin_courses.category.list', ['course_categories' => $course_categories, 'message_success' => 'Category is update']);
     }
 
@@ -110,6 +110,6 @@ class CourseCategoriesController extends Controller
     {
         //
         CourseCategories::find($id)->delete();
-        return redirect()->back()->with(['message_success' => 'Category is remove']);
+        return redirect()->back()->with(['message_success' => 'Category successfully removed']);
     }
 }

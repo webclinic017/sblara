@@ -52,7 +52,7 @@ class CourseFacilitatorsController extends Controller
 
         $course_facilitators = CourseFacilitators::all();
 
-        return view('admin_courses.facilitators.list', ['course_facilitators' => $course_facilitators, 'message_success' => 'Category is add']);
+        return view('admin_courses.facilitators.list', ['course_facilitators' => $course_facilitators, 'message_success' => 'Facilitator successfully added']);
     }
 
     /**
@@ -105,7 +105,7 @@ class CourseFacilitatorsController extends Controller
           ]
         );
 
-        return redirect()->route('facilitators_course.index')->with('message_success', 'Facilitator is update');
+        return redirect()->route('facilitators_course.index')->with('message_success', 'Facilitator successfully updated');
         //return view('admin_courses.category.list', ['course_categories' => $course_categories, 'message_success' => 'Category is update']);
     }
 
@@ -119,6 +119,6 @@ class CourseFacilitatorsController extends Controller
     {
         //
         CourseFacilitators::where('id',$id)->delete();
-        return redirect()->back()->with(['message_success' => 'Category is remove']);
+        return redirect()->back()->with(['message_success' => 'Facilitator successfully removed']);
     }
 }

@@ -8,7 +8,7 @@
     <div class="portlet light portlet-fit portlet-datatable bordered">
       <div class="portlet-title">
           <div class="caption">
-            <span class="caption-subject font-green sbold uppercase">Edit category:</span>
+            <span class="caption-subject font-green sbold uppercase">Edit Batch:</span>
           </div>
       </div>
       <div class="portlet-body">

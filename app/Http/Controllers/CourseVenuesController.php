@@ -56,7 +56,7 @@ class CourseVenuesController extends Controller
 
         $course_venues = CourseVenues::all();
 
-        return view('admin_courses.venues.list', ['course_venues' => $course_venues, 'message_success' => 'Category is add']);
+        return view('admin_courses.venues.list', ['course_venues' => $course_venues, 'message_success' => 'Venue successfully added']);
     }
 
     /**
@@ -113,7 +113,7 @@ class CourseVenuesController extends Controller
           ]
         );
         $course_venues = CourseVenues::all();
-        return redirect()->route('venues_course.index')->with('message_success', 'Category is update');
+        return redirect()->route('venues_course.index')->with('message_success', 'Venue successfully updated');
         //return view('admin_courses.category.list', ['course_categories' => $course_categories, 'message_success' => 'Category is update']);
     }
 
@@ -127,6 +127,6 @@ class CourseVenuesController extends Controller
     {
         //
         CourseVenues::where('venue_id',$id)->delete();
-        return redirect()->back()->with(['message_success' => 'Category is remove']);
+        return redirect()->back()->with(['message_success' => 'Venue successfully removed']);
     }
 }

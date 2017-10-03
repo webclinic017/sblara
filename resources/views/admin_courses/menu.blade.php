@@ -23,7 +23,7 @@
       <a href="{{ route('batch_transfer.index') }}">Batch Transfer</a>
     </li>
     <li class="">
-      <a href="{{ route('categories_course.index') }}">Certificate List</a>
+      <a href="">Certificate List</a>
     </li>
   </ul>
 </div>

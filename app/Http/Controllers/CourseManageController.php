@@ -103,7 +103,7 @@ class CourseManageController extends Controller
 
         $batches = CourseBatches::all();
 
-        return view('admin_courses.batches.list', ['batches' => $batches, 'message_success' => 'Course is add']);
+        return view('admin_courses.batches.list', ['batches' => $batches, 'message_success' => 'Batch successfully added']);
     }
 
     /**
@@ -201,7 +201,7 @@ class CourseManageController extends Controller
         $batch->certificate_status = $request->input('certificate_status');
         $batch->save();
 
-        return redirect()->route('batches.index')->with('message_success', 'Course is update');
+        return redirect()->route('batches.index')->with('message_success', 'Batch successfully updated');
         //return view('admin_courses.category.list', ['course_categories' => $course_categories, 'message_success' => 'Category is update']);
     }
 
@@ -215,6 +215,6 @@ class CourseManageController extends Controller
     {
         //
         Courses::where('id',$id)->delete();
-        return redirect()->back()->with(['message_success' => 'Course is remove']);
+        return redirect()->back()->with(['message_success' => 'Batch successfully removed']);
     }
 }

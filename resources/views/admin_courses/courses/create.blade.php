@@ -8,7 +8,7 @@
     <div class="portlet light portlet-fit portlet-datatable bordered">
       <div class="portlet-title">
           <div class="caption">
-            <span class="caption-subject font-green sbold uppercase">Create new category:</span>
+            <span class="caption-subject font-green sbold uppercase">Create new course:</span>
           </div>
       </div>
       <div class="portlet-body">

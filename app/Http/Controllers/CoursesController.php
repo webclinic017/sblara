@@ -86,7 +86,7 @@ class CoursesController extends Controller
 
         $courses = Courses::all();
 
-        return view('admin_courses.courses.list', ['courses' => $courses, 'message_success' => 'Course is add']);
+        return view('admin_courses.courses.list', ['courses' => $courses, 'message_success' => 'Course successfully added']);
     }
 
     /**
@@ -97,7 +97,7 @@ class CoursesController extends Controller
      */
     public function show($id)
     {
-      
+
     }
 
     /**
@@ -170,7 +170,7 @@ class CoursesController extends Controller
 
         $courses = Courses::all();
 
-        return redirect()->route('courses.index')->with('message_success', 'Facilitator is update');
+        return redirect()->route('courses.index')->with('message_success', 'Course successfully updated');
         //return view('admin_courses.category.list', ['course_categories' => $course_categories, 'message_success' => 'Category is update']);
     }
 
@@ -184,7 +184,7 @@ class CoursesController extends Controller
     {
         //
         Courses::where('id',$id)->delete();
-        return redirect()->back()->with(['message_success' => 'Course is remove']);
+        return redirect()->back()->with(['message_success' => 'Course successfully removed']);
     }
 
     public function dataImport()

@@ -74,35 +74,37 @@
 
   <script>
      $( document ).ready(function() {
+       $('.trashButton').click(function(event){         
+         //.event.preventDefault();
+         if (confirm("Do you want delete item?")) {
+           var form = $(this).parents('form:first');
+           form.submit();
+
+         }
+         else {
+
+         }
+
+   //     alert('sadf');
+   //     // $.ajax({
+   //     //     url: '/user/4',
+   //     //     type: 'DELETE',  // user.destroy
+   //     //     success: function(result) {
+   //     //         // Do something with the result
+   //     //     }
+   //     // });
+      });
+
 
        $('table').DataTable();
-       
+
        $.ajaxSetup({
 
        });
 
         lots_of_stuff_already_done = false;
 
-        $('.trashButton').click(function(event){
-          //.event.preventDefault();
-          if (confirm("Do you want delete item?")) {
-            var form = $(this).parents('form:first');
-            form.submit();
 
-          }
-          else {
-
-          }
-
-    //     alert('sadf');
-    //     // $.ajax({
-    //     //     url: '/user/4',
-    //     //     type: 'DELETE',  // user.destroy
-    //     //     success: function(result) {
-    //     //         // Do something with the result
-    //     //     }
-    //     // });
-       });
     });
   </script>
 @endpush

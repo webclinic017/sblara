@@ -8,17 +8,12 @@
     <div class="portlet light portlet-fit portlet-datatable bordered">
       <div class="portlet-title">
           <div class="caption">
-            <span class="caption-subject font-green sbold uppercase">Detail of batch:</span>
+            <span class="caption-subject font-green sbold uppercase">Edit category:</span>
           </div>
       </div>
       <div class="portlet-body">
         <div class="row">
           @include('admin_courses.message')
-        </div>
-        <div class="row">
-          <div class="col-md-12 item" style="height:25px;">
-          <a href="{{ route('participants_course.index') }}">Back</a>
-          </div>
         </div>
         <div class="row">
           <div class="col-md-12 item">
@@ -75,20 +70,9 @@
                         <td>{{ $participant->p_name }}</td>
                         <td>{{ $participant->p_email }}</td>
                         <td>{{ $participant->p_phone }}</td>
-                        <td>
-
-                          @if(isset($participant->payment[0]))
-                            @if($participant->payment[0]->payment_due == 0)
-                              paid
-                            @elseif($participant->payment[0]->payment_due > 0)
-                              partialy paid
-                            @endif
-                          @else
-                            {{ $participant->paid_status }}
-                          @endif
-                        </td>
+                        <td>{{ $participant->paid_status }}</td>
                         <td>{{ $participant->our_comments }}</td>
-                        <td><a href="{{ route('participants_course.edit', $participant->id) }}">Edit</a> / <a href="{{ route('participant_payment.index', $participant->id) }}">Payment</a></td>
+                        <td>Action</td>
                       </tr>
                       @endforeach
                     </tbody>
@@ -125,8 +109,6 @@
     $('.timepicker').datepicker({
        format: 'LT'
     });
-
-    $('table').DataTable();
 
 </script>
 @endpush

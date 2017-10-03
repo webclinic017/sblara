@@ -67,7 +67,10 @@ class CourseParticipantsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $participant = CourseParticipants::find($id);
+        $certificate_status = CourseParticipants::getEnumValues('course_participants', 'p_certificate_status');
+        $batch_want = CourseParticipants::getEnumValues('course_participants', 'batch_want');
+        return view('admin_courses.participants.edit', ['participant' => $participant, 'certificate_status' => $certificate_status, 'batch_want' => $batch_want]);
     }
 
     /**
@@ -79,8 +82,40 @@ class CourseParticipantsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
-        //return view('admin_courses.category.list', ['course_categories' => $course_categories, 'message_success' => 'Category is update']);
+        $this->validate($request, [
+           'p_name' => 'required',
+           'p_email' => 'required|email',
+           'p_phone' => 'required',
+           'p_address' => 'required',
+           'p_profession' => 'max:100',
+           'p_organisation' => 'max:100',
+           'p_designation' => 'max:100',
+           'p_comments' => 'max:255',
+           'our_comments' => 'max:255',
+
+        ]);
+
+        $participant = CourseParticipants::find($id);
+        $participant->p_name = $request->input('p_name');
+        $participant->p_identification_no = $request->input('p_identification_no');
+        $participant->p_email = $request->input('p_email');
+        $participant->p_phone = $request->input('p_phone');
+        $participant->p_address = $request->input('p_address');
+        $participant->p_profession = $request->input('p_profession');
+        $participant->p_organisation = $request->input('p_organisation');
+        $participant->p_designation = $request->input('p_designation');
+        $participant->where_heard = $request->input('where_heard');
+        $participant->p_comments = $request->input('p_comments');
+        $participant->our_comments = $request->input('our_comments');
+        $participant->p_certificate_status = $request->input('p_certificate_status');
+        $participant->batch_want = $request->input('batch_want');
+        $participant->save();
+
+        $participant = CourseParticipants::find($id);
+        $certificate_status = CourseParticipants::getEnumValues('course_participants', 'p_certificate_status');
+        $batch_want = CourseParticipants::getEnumValues('course_participants', 'batch_want');
+        return view('admin_courses.participants.edit', ['participant' => $participant, 'certificate_status' => $certificate_status, 'batch_want' => $batch_want,
+                'message_success' => 'Participant successfully updated']);
     }
 
     /**
