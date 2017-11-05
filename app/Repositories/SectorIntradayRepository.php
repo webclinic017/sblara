@@ -12,10 +12,9 @@ Use App\SectorIntraday;
 
 class SectorIntradayRepository {
 
-    public static function getWholeDayData($limit=0,$tradeDate=null,$exchangeId=0)
+    public static function getWholeDayData($limit=0,$tradeDate=null,$exchangeId=0,$sector_list_id)
     {
-        $returnData= SectorIntraday::getWholeDayData($limit,$tradeDate,$exchangeId);
-        $returnData=calculateDifference($returnData,'volume');
+        $returnData= SectorIntraday::getWholeDayData($limit,$tradeDate,$exchangeId,$sector_list_id);
         return $returnData;
     }
 

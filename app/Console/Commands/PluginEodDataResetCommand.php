@@ -88,7 +88,6 @@ class PluginEodDataResetCommand extends Command
 
 
 
-
         $this->info('ok');
     }
 }

@@ -53,6 +53,7 @@ Route::group(['middleware' => 'admin'], function()
   Route::post('participant_payment/store', ['as' => 'participant_payment.store', 'uses' => 'CoursePaymentsController@store']);
   //Route::resource('/participant_payment', 'CoursePaymentsController', ['except' => ['index']]);//->middleware('admin');
 });
+
 Route::get('/courses-avaliable', 'UserParticipantsController@index')->name('courses');
 Route::get('/registration/{id}', 'UserParticipantsController@create')->name('registration.create');
 Route::post('/registration', 'UserParticipantsController@store')->name('registration.store');

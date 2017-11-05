@@ -51,7 +51,10 @@ class SectorMinuteChart
         $sector_list_id=$sectorList->first()->id;
         $sector_name=$sectorList->first()->name;
 
-        $data=SectorIntradayRepository::getWholeDayData()->where('sector_list_id',$sector_list_id);
+        $returnData=SectorIntradayRepository::getWholeDayData($limit = 0, $tradeDate = null, $exchangeId = 0,$sector_list_id);
+
+        $data = calculateDifference($returnData, 'volume');
+
         $data=$data->reverse();
         $category=$data->pluck('index_time');
         $volumeData=$data->pluck('volume_difference');
