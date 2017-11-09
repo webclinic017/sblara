@@ -14,9 +14,9 @@
         "laravel/framework": "5.5.*",
         "laravel/passport": "^3.0",
         "laravel/tinker": "~1.0",
-        "unisharp/laravel-ckeditor": "^4.6",
-        "laravelcollective/html": "^5.4"
-
+        "laravelcollective/html": "^5.4",
+        "lavary/laravel-menu": "^1.7",
+        "unisharp/laravel-ckeditor": "^4.6"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

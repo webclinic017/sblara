@@ -91,6 +91,7 @@ class NewsBoxToday
 
           $code = explode('(', $code);
           $code = $code[0];
+          $code=str_replace('&',' And ', $code);
 
           $temp['label']=$code;
           $temp['search_key']= "--";

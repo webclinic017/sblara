@@ -20,6 +20,7 @@ class Kernel extends ConsoleKernel
         Commands\PluginIntradayDataResetCommand::class,
         Commands\PluginIntradayDataWriteCommand::class,
         Commands\RemoveDuplicateEodCommand::class,
+        Commands\GenerateCustomIndexCommand::class,
     ];
 
     /**

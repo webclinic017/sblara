@@ -53,8 +53,9 @@ class IndexRepository {
         return $returnData;
     }
 
-    public static function marketSummaryData()
+    public static function getIndexData($limit=0,$tradeDate=null,$exchangeId=0)
     {
+
         // taking all index info from instrument table
         $instrumentInfoOfIndex=Instrument::getInstrumentsBySectorName('index');
 
@@ -62,7 +63,56 @@ class IndexRepository {
         $instrumentInfoOfIndex=$instrumentInfoOfIndex->groupBy('id')->toArray();
 
         // all index of last trade date
-        $indexValues=IndexValue::getWholeDayData();
+        $indexValues=IndexValue::getWholeDayData($limit, $tradeDate, $exchangeId);  //($limit = 0, $tradeDate = null, $exchangeId = 0)
+
+        $indexValues = $indexValues->groupBy('instrument_id');
+
+        $returnData = array();
+        foreach ($instrumentInfoOfIndex as $index_id => $index_details) {
+            // taking 1st element of the array.
+            $index_details = $index_details[0];
+
+            // delivering index name
+            $returnData['index'][$index_id]['details'] = $index_details;
+
+            // delivering index data as object
+            $returnData['index'][$index_id]['data'] = $indexValues[$index_id];
+
+        }
+        ksort($returnData);
+
+        return $returnData;
+
+    }
+    public static function getIndexDataYesterday($limit=0,$tradeDate=null,$exchangeId=0)
+    {
+
+        // taking all index info from instrument table
+        $instrumentInfoOfIndex=Instrument::getInstrumentsBySectorName('index');
+
+        // setting instrument_id as key and returning array
+        $instrumentInfoOfIndex=$instrumentInfoOfIndex->groupBy('id')->toArray();
+
+        // all index of last trade date
+        $indexValues=IndexValue::getWholeDayDataYesterday($limit, $tradeDate, $exchangeId);  //($limit = 0, $tradeDate = null, $exchangeId = 0)
+
+        $indexValues = $indexValues->groupBy('instrument_id');
+
+        $returnData = array();
+        foreach ($instrumentInfoOfIndex as $index_id => $index_details) {
+            // taking 1st element of the array.
+            $index_details = $index_details[0];
+
+            // delivering index name
+            $returnData['index'][$index_id]['details'] = $index_details;
+
+            // delivering index data as object
+            $returnData['index'][$index_id]['data'] = $indexValues[$index_id];
+
+        }
+        ksort($returnData);
+
+        return $returnData;
 
     }
 

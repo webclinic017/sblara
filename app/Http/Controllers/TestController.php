@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Repositories\FundamentalRepository;
+use App\Repositories\MarketStatRepository;
 use App\Repositories\DataBanksIntradayRepository;
 use App\Repositories\UserRepository;
 use App\Navigation;
@@ -13,11 +14,11 @@ class TestController extends Controller
     public function funtest()
     {
 
-        $items = Navigation::tree();
 
-        dd($items);
+        MarketStatRepository::getMarketStatsData(array('cap_equity'),4612);
 
-        $menu = View::make('layouts.home.index')->withItems($items);
+exit;
+
 
 
         dump(FundamentalRepository::getFundamentalData(array('stock_dividend','no_of_securities'),array('ABBANK','ACI'))->toArray());

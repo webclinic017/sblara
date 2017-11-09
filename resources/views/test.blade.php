@@ -1,7 +1,7 @@
 @extends('layouts.metronic.default')
 
 @section('content')
-@include('block.dsb_news')
+@include('block.index_mover')
 {{--@include('block.price_matrix')--}}
 {{--@include('block.data_matrix')--}}
 
