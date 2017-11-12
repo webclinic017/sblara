@@ -41,6 +41,7 @@ class Instrument extends Model
 
     }
 
+
     public static function getInstrumentsAll($exchangeId=0)
     {
 

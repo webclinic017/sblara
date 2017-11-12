@@ -9,7 +9,32 @@
 namespace App\Repositories;
 use App\Instrument;
 use App\Exchange;
+use App\SectorList;
 class InstrumentRepository {
+
+    //$key= name or id
+    public static function getInstrumentsGroupBySector($key='name',$exchangeId=0)
+    {
+        $allInstruments=Instrument::getInstrumentsAll()->groupBy('sector_list_id')->first();
+        $allSectors=SectorList::getSectorList();
+
+        $instrumentGrouped=array();
+        foreach($allInstruments as $ins)
+        {
+            $sector_list_id=$ins->sector_list_id;
+            $key=$allSectors->where('id',$sector_list_id)->first()->$key;
+            $instrumentGrouped[$key][]=$ins;
+        }
+
+        return $instrumentGrouped;
+    }
+
+
+    public static function getInstrumentsBySectorName($sectorName='Bank',$exchangeId=0)
+    {
+        $returnData=Instrument::getInstrumentsBySectorName($sectorName,$exchangeId);
+        return $returnData;
+    }
 
     public static function getInstrumentList($exchangeId=0)
     {

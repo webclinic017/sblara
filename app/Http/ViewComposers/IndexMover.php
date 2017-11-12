@@ -49,9 +49,9 @@ class IndexMover
         $trade_date_today= $index_data_today['index']['10001']['data'][0]->index_date->format('Y-m-d');
         $trade_date_yesterday= $index_data_yesterday['index']['10001']['data'][0]->index_date->format('Y-m-d');
 
-
-        $TindexData = $this->Symbol->query('select id,symbol_id,close,date_time,lastprice from data_banks_intraday where symbol_id =3 AND date_time LIKE ' . "'$ydate%'" . ' ORDER BY id DESC LIMIT 1');
-        $lastdayTindex = $TindexData[0]['data_banks_intraday']['lastprice'];
+dd($cap_equity);
+       /* $TindexData = $this->Symbol->query('select id,symbol_id,close,date_time,lastprice from data_banks_intraday where symbol_id =3 AND date_time LIKE ' . "'$ydate%'" . ' ORDER BY id DESC LIMIT 1');
+        $lastdayTindex = $TindexData[0]['data_banks_intraday']['lastprice'];*/
 
 
         //$view->with('bread', $bread);
