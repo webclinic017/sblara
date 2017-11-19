@@ -1,0 +1,307 @@
+<div id="mm_div_804255"></div>
+<script>
+    $(function () {
+
+        $('#mm_div_804255').highcharts({
+            chart: {
+                zoomType: 'xy',
+                defaultSeriesType: 'spline',
+               // plotBackgroundImage: 'http://www.new.stockbangladesh.com/img/chart_logo.gif',
+                events: {
+                    load: function() {
+                        this.renderer.image('http://www.new.stockbangladesh.com/img/chart_logo.gif', this.chartWidth/2.5, this.chartHeight/2.5, 86, 63).add();  // add image(url, x, y, w, h)
+                    }
+                },
+                showAxes: true,
+                shadow: false,
+                borderWidth: 1,
+                borderColor: "#D5DAE0",
+
+                spacingLeft: 2,
+                spacingRight: 2
+                //,height:300   // if height defined, scalling is not taking full canvas
+
+
+            },
+            exporting: {
+                buttons: {
+                    contextButton: {
+                        menuItems: [
+
+                            {
+                                textKey: 'downloadPNG',
+                                onclick: function () {
+                                    this.exportChart({filename: 'StockBangladesh_minute-chart'});
+                                }
+                            }]
+                    }
+                }
+            },
+            title: {
+                text: 'ACI',
+                style: {
+                    fontSize: '12px'
+                },
+                margin: 1
+
+            },
+            subtitle: {
+                text: 'Total Vol:182180',
+                useHTML: true,
+//floating: true,
+                y: 23,
+                style: {
+                    fontSize: '10px'
+                }
+//margin: 50
+            },
+
+            xAxis: [
+                {
+                    categories:
+                       ["10:39","10:40","10:41","10:42","10:44","10:46","10:47","10:48","10:49","10:51","10:52","10:52","10:54","10:58","11:03","11:04","11:07","11:08","11:09","11:11","11:11","11:12","11:15","11:18","11:18","11:20","11:26","11:33","11:38","11:38","11:41","11:42","11:45","11:47","11:54","11:55","11:56","11:57","11:59","11:59","12:04","12:06","12:07","12:07","12:10","12:11","12:12","12:15","12:16","12:19","12:21","12:21","12:23","12:24","12:25","12:27","12:28","12:29","12:30","12:31","12:32","12:33","12:35","12:36","12:37","12:38","12:41","12:44","12:45","12:46","12:48","12:49","12:51","12:52","12:54","12:55","12:56","12:56","01:00","01:01","01:06","01:07","01:09","01:13","01:14","01:16","01:16","01:19","01:20","01:21","01:24","01:26","01:34","01:36","01:38","01:39","01:40","01:41","01:43","01:44","01:45","01:47","01:48","01:50","01:50","01:52","01:53","01:55","01:55","01:56","01:57","01:59","02:00","02:01","02:02","02:04","02:05","02:06","02:07","02:09","02:10","02:11","02:12","02:13","02:16","02:17","02:18","02:19","02:20","02:21","02:22","02:24","02:24","02:26","02:27","02:28","02:30"]
+
+                        //'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun','Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+                    ,
+                    tickInterval: 1,
+                    crosshair: true,
+                    labels: {
+                        enabled: true,
+                        rotation: -90,
+                        align: 'right'
+
+                        //x:10,
+                    }
+
+                }
+            ],
+            yAxis: [
+                { // Primary yAxis
+
+                    title: {
+                        /* text: 'Price',
+                         style: {
+                         color: Highcharts.getOptions().colors[1]
+                         }*/
+                        text: ''
+                    },
+                    id: 'y_price',
+                    enabled: false
+                },
+                { // Secondary yAxis
+                    title: {
+                        text: ''
+                    },
+                    enabled: false,
+                    labels: {
+                        format: '{value}',
+                        style: {
+                            color: '#1BA39C'
+                        }
+                    },
+                    id: 'y_volume',
+                    opposite: true
+                }
+            ],
+            tooltip: {
+                shared: true
+            },
+            credits: {
+                enabled: true,
+                href: "http://www.stockbangladesh.com",
+                text: "stockbangladesh.com",
+                style: {
+                    color: '#4572A7'
+
+                },
+                position: {
+                    align: 'right',
+                    verticalAlign: 'bottom'
+                    /*  x: 5,
+                     y: 15*/
+                }
+            },
+            legend: {
+                enabled: false
+                //layout: 'vertical',
+                /*   align: 'left',
+                 verticalAlign: 'bottom'*/
+                /* x: 120,
+                 verticalAlign: 'top',
+                 y: 100,*/
+                /*  floating: true,
+                 backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'*/
+            },
+            series: [
+                {
+                    name: 'Volume',
+                    type: 'column',
+                    color: '#8CC152',
+                    yAxis: 0,
+                    data: [{"color":"#1BA39C","y":650},{"color":"#ACB5C3","y":80},{"color":"#1BA39C","y":80},{"color":"#EF4836","y":180},{"color":"#ACB5C3","y":4562},{"color":"#1BA39C","y":383},{"color":"#1BA39C","y":70},{"color":"#ACB5C3","y":250},{"color":"#1BA39C","y":2160},{"color":"#ACB5C3","y":2000},{"color":"#EF4836","y":1050},{"color":"#1BA39C","y":100},{"color":"#EF4836","y":2746},{"color":"#EF4836","y":2351},{"color":"#ACB5C3","y":74},{"color":"#EF4836","y":5},{"color":"#ACB5C3","y":40},{"color":"#ACB5C3","y":80},{"color":"#ACB5C3","y":500},{"color":"#EF4836","y":1254},{"color":"#ACB5C3","y":363},{"color":"#EF4836","y":768},{"color":"#EF4836","y":2700},{"color":"#EF4836","y":6},{"color":"#ACB5C3","y":6},{"color":"#1BA39C","y":56},{"color":"#ACB5C3","y":115},{"color":"#1BA39C","y":5107},{"color":"#EF4836","y":200},{"color":"#1BA39C","y":165},{"color":"#EF4836","y":300},{"color":"#EF4836","y":822},{"color":"#ACB5C3","y":100},{"color":"#ACB5C3","y":204},{"color":"#EF4836","y":1161},{"color":"#ACB5C3","y":830},{"color":"#ACB5C3","y":120},{"color":"#1BA39C","y":200},{"color":"#EF4836","y":402},{"color":"#ACB5C3","y":100},{"color":"#1BA39C","y":50},{"color":"#EF4836","y":100},{"color":"#EF4836","y":4000},{"color":"#EF4836","y":550},{"color":"#ACB5C3","y":100},{"color":"#ACB5C3","y":300},{"color":"#ACB5C3","y":20},{"color":"#ACB5C3","y":500},{"color":"#ACB5C3","y":50},{"color":"#1BA39C","y":4308},{"color":"#ACB5C3","y":170},{"color":"#1BA39C","y":500},{"color":"#ACB5C3","y":775},{"color":"#EF4836","y":450},{"color":"#ACB5C3","y":500},{"color":"#ACB5C3","y":20},{"color":"#ACB5C3","y":530},{"color":"#1BA39C","y":6745},{"color":"#ACB5C3","y":1295},{"color":"#1BA39C","y":100},{"color":"#1BA39C","y":7080},{"color":"#ACB5C3","y":5010},{"color":"#EF4836","y":1440},{"color":"#1BA39C","y":1061},{"color":"#EF4836","y":1798},{"color":"#ACB5C3","y":1979},{"color":"#ACB5C3","y":1000},{"color":"#EF4836","y":670},{"color":"#ACB5C3","y":104},{"color":"#ACB5C3","y":223},{"color":"#ACB5C3","y":1230},{"color":"#ACB5C3","y":1230},{"color":"#1BA39C","y":521},{"color":"#EF4836","y":2168},{"color":"#ACB5C3","y":142},{"color":"#1BA39C","y":509},{"color":"#EF4836","y":4334},{"color":"#ACB5C3","y":460},{"color":"#ACB5C3","y":100},{"color":"#ACB5C3","y":100},{"color":"#ACB5C3","y":200},{"color":"#EF4836","y":3136},{"color":"#ACB5C3","y":200},{"color":"#1BA39C","y":3140},{"color":"#1BA39C","y":200},{"color":"#ACB5C3","y":270},{"color":"#1BA39C","y":6390},{"color":"#EF4836","y":110},{"color":"#1BA39C","y":90},{"color":"#ACB5C3","y":3},{"color":"#ACB5C3","y":20},{"color":"#EF4836","y":200},{"color":"#ACB5C3","y":437},{"color":"#EF4836","y":70},{"color":"#ACB5C3","y":573},{"color":"#1BA39C","y":100},{"color":"#EF4836","y":100},{"color":"#1BA39C","y":40},{"color":"#EF4836","y":3235},{"color":"#1BA39C","y":1575},{"color":"#1BA39C","y":8708},{"color":"#ACB5C3","y":110},{"color":"#1BA39C","y":1595},{"color":"#EF4836","y":610},{"color":"#ACB5C3","y":276},{"color":"#EF4836","y":8344},{"color":"#EF4836","y":100},{"color":"#1BA39C","y":1343},{"color":"#ACB5C3","y":2895},{"color":"#1BA39C","y":155},{"color":"#1BA39C","y":1642},{"color":"#EF4836","y":614},{"color":"#EF4836","y":28},{"color":"#ACB5C3","y":173},{"color":"#EF4836","y":1082},{"color":"#ACB5C3","y":1566},{"color":"#ACB5C3","y":1050},{"color":"#ACB5C3","y":950},{"color":"#ACB5C3","y":1729},{"color":"#EF4836","y":625},{"color":"#ACB5C3","y":615},{"color":"#ACB5C3","y":560},{"color":"#EF4836","y":1300},{"color":"#EF4836","y":2517},{"color":"#ACB5C3","y":127},{"color":"#1BA39C","y":1033},{"color":"#1BA39C","y":6684},{"color":"#ACB5C3","y":1072},{"color":"#1BA39C","y":1159},{"color":"#ACB5C3","y":81},{"color":"#EF4836","y":530},{"color":"#1BA39C","y":4810},{"color":"#1BA39C","y":2272},{"color":"#1BA39C","y":11564},{"color":"#EF4836","y":4000},{"color":"#1BA39C","y":1579},{"color":"#EF4836","y":4031}],
+                    tooltip: {
+                        valueSuffix: ''
+                    }
+
+                },
+                {
+                    name: 'Price',
+                    type: 'spline',
+                    color: '#26C281',
+                    yAxis: 1,
+                    marker: {
+                        radius: 3
+                    },
+                    data: [{"color":"#1BA39C","y":500},{"color":"#ACB5C3","y":500},{"color":"#1BA39C","y":502},{"color":"#EF4836","y":500},{"color":"#ACB5C3","y":500},{"color":"#1BA39C","y":500.1},{"color":"#1BA39C","y":500.2},{"color":"#ACB5C3","y":500.2},{"color":"#1BA39C","y":502},{"color":"#ACB5C3","y":502},{"color":"#EF4836","y":500.2},{"color":"#1BA39C","y":501.8},{"color":"#EF4836","y":500.2},{"color":"#EF4836","y":500},{"color":"#ACB5C3","y":500},{"color":"#EF4836","y":499.9},{"color":"#ACB5C3","y":499.9},{"color":"#ACB5C3","y":499.9},{"color":"#ACB5C3","y":499.9},{"color":"#EF4836","y":499.4},{"color":"#ACB5C3","y":499.4},{"color":"#EF4836","y":499},{"color":"#EF4836","y":498},{"color":"#EF4836","y":497.6},{"color":"#ACB5C3","y":497.6},{"color":"#1BA39C","y":497.7},{"color":"#ACB5C3","y":497.7},{"color":"#1BA39C","y":498.8},{"color":"#EF4836","y":498.5},{"color":"#1BA39C","y":498.6},{"color":"#EF4836","y":498.5},{"color":"#EF4836","y":497.8},{"color":"#ACB5C3","y":497.8},{"color":"#ACB5C3","y":497.8},{"color":"#EF4836","y":497.7},{"color":"#ACB5C3","y":497.7},{"color":"#ACB5C3","y":497.7},{"color":"#1BA39C","y":497.9},{"color":"#EF4836","y":497.7},{"color":"#ACB5C3","y":497.7},{"color":"#1BA39C","y":497.8},{"color":"#EF4836","y":497.7},{"color":"#EF4836","y":497.6},{"color":"#EF4836","y":497.5},{"color":"#ACB5C3","y":497.5},{"color":"#ACB5C3","y":497.5},{"color":"#ACB5C3","y":497.5},{"color":"#ACB5C3","y":497.5},{"color":"#ACB5C3","y":497.5},{"color":"#1BA39C","y":499},{"color":"#ACB5C3","y":499},{"color":"#1BA39C","y":499.2},{"color":"#ACB5C3","y":499.2},{"color":"#EF4836","y":499},{"color":"#ACB5C3","y":499},{"color":"#ACB5C3","y":499},{"color":"#ACB5C3","y":499},{"color":"#1BA39C","y":499.2},{"color":"#ACB5C3","y":499.2},{"color":"#1BA39C","y":499.5},{"color":"#1BA39C","y":500.9},{"color":"#ACB5C3","y":500.9},{"color":"#EF4836","y":500},{"color":"#1BA39C","y":500.1},{"color":"#EF4836","y":500},{"color":"#ACB5C3","y":500},{"color":"#ACB5C3","y":500},{"color":"#EF4836","y":499},{"color":"#ACB5C3","y":499},{"color":"#ACB5C3","y":499},{"color":"#ACB5C3","y":499},{"color":"#ACB5C3","y":499},{"color":"#1BA39C","y":499.1},{"color":"#EF4836","y":499},{"color":"#ACB5C3","y":499},{"color":"#1BA39C","y":499.7},{"color":"#EF4836","y":499},{"color":"#ACB5C3","y":499},{"color":"#ACB5C3","y":499},{"color":"#ACB5C3","y":499},{"color":"#ACB5C3","y":499},{"color":"#EF4836","y":498.5},{"color":"#ACB5C3","y":498.5},{"color":"#1BA39C","y":499.4},{"color":"#1BA39C","y":499.5},{"color":"#ACB5C3","y":499.5},{"color":"#1BA39C","y":500},{"color":"#EF4836","y":499},{"color":"#1BA39C","y":499.1},{"color":"#ACB5C3","y":499.1},{"color":"#ACB5C3","y":499.1},{"color":"#EF4836","y":499},{"color":"#ACB5C3","y":499},{"color":"#EF4836","y":498.6},{"color":"#ACB5C3","y":498.6},{"color":"#1BA39C","y":499.7},{"color":"#EF4836","y":499},{"color":"#1BA39C","y":499.4},{"color":"#EF4836","y":499},{"color":"#1BA39C","y":499.1},{"color":"#1BA39C","y":500},{"color":"#ACB5C3","y":500},{"color":"#1BA39C","y":500.8},{"color":"#EF4836","y":500.3},{"color":"#ACB5C3","y":500.3},{"color":"#EF4836","y":500},{"color":"#EF4836","y":499.9},{"color":"#1BA39C","y":500},{"color":"#ACB5C3","y":500},{"color":"#1BA39C","y":500.7},{"color":"#1BA39C","y":500.9},{"color":"#EF4836","y":500.8},{"color":"#EF4836","y":500.1},{"color":"#ACB5C3","y":500.1},{"color":"#EF4836","y":500},{"color":"#ACB5C3","y":500},{"color":"#ACB5C3","y":500},{"color":"#ACB5C3","y":500},{"color":"#ACB5C3","y":500},{"color":"#EF4836","y":499.8},{"color":"#ACB5C3","y":499.8},{"color":"#ACB5C3","y":499.8},{"color":"#EF4836","y":499.7},{"color":"#EF4836","y":499.5},{"color":"#ACB5C3","y":499.5},{"color":"#1BA39C","y":499.7},{"color":"#1BA39C","y":500},{"color":"#ACB5C3","y":500},{"color":"#1BA39C","y":500.7},{"color":"#ACB5C3","y":500.7},{"color":"#EF4836","y":500.2},{"color":"#1BA39C","y":501},{"color":"#1BA39C","y":501.5},{"color":"#1BA39C","y":502},{"color":"#EF4836","y":501.6},{"color":"#1BA39C","y":501.7},{"color":"#EF4836","y":500.8}],
+                    tooltip: {
+                        valueSuffix: ''
+                    }
+                }
+                                ,
+                {
+                    type: 'pie',
+                    name: '2017-04-02',
+                    data: [{
+                        name: 'Bull Vol',
+                        y: 60104,
+                        color: '#1BA39C' // bear
+                    }, {
+                        name: 'Bear Vol',
+                        y: 36846,
+                        color: '#EF4836' // Bear color
+                    }, {
+                        name: 'Neutral Vol',
+                        y: 18423,
+                        color: '#ACB5C3'// Neutral
+                    }],
+                    center: [40, 10],
+                    size: 40,
+                    showInLegend: false,
+                    dataLabels: {
+                        enabled: false
+                    }
+                }
+
+                                ,
+                {
+                    type: 'pie',
+                    name: '2017-04-03',
+                    data: [{
+                        name: 'Bull Vol',
+                        y: 366287,
+                        color: '#1BA39C' // bear
+                    }, {
+                        name: 'Bear Vol',
+                        y: 134986,
+                        color: '#EF4836' // Bear color
+                    }, {
+                        name: 'Neutral Vol',
+                        y: 72992,
+                        color: '#ACB5C3'// Neutral
+                    }],
+                    center: [80, 10],
+                    size: 40,
+                    showInLegend: false,
+                    dataLabels: {
+                        enabled: false
+                    }
+                }
+
+                                ,
+                {
+                    type: 'pie',
+                    name: '2017-04-04',
+                    data: [{
+                        name: 'Bull Vol',
+                        y: 86006,
+                        color: '#1BA39C' // bear
+                    }, {
+                        name: 'Bear Vol',
+                        y: 90141,
+                        color: '#EF4836' // Bear color
+                    }, {
+                        name: 'Neutral Vol',
+                        y: 68100,
+                        color: '#ACB5C3'// Neutral
+                    }],
+                    center: [120, 10],
+                    size: 40,
+                    showInLegend: false,
+                    dataLabels: {
+                        enabled: false
+                    }
+                }
+
+                                ,
+                {
+                    type: 'pie',
+                    name: '2017-04-05',
+                    data: [{
+                        name: 'Bull Vol',
+                        y: 65211,
+                        color: '#1BA39C' // bear
+                    }, {
+                        name: 'Bear Vol',
+                        y: 35147,
+                        color: '#EF4836' // Bear color
+                    }, {
+                        name: 'Neutral Vol',
+                        y: 32229,
+                        color: '#ACB5C3'// Neutral
+                    }],
+                    center: [160, 10],
+                    size: 40,
+                    showInLegend: false,
+                    dataLabels: {
+                        enabled: false
+                    }
+                }
+
+                                ,
+                {
+                    type: 'pie',
+                    name: '2017-04-06',
+                    data: [{
+                        name: 'Bull Vol',
+                        y: 83924,
+                        color: '#1BA39C' // bear
+                    }, {
+                        name: 'Bear Vol',
+                        y: 60087,
+                        color: '#EF4836' // Bear color
+                    }, {
+                        name: 'Neutral Vol',
+                        y: 38169,
+                        color: '#ACB5C3'// Neutral
+                    }],
+                    center: [200, 10],
+                    size: 40,
+                    showInLegend: false,
+                    dataLabels: {
+                        enabled: false
+                    }
+                }
+
+                
+            ],
+            responsive: {
+                rules: [{
+                    condition: {
+                        maxWidth: 500
+                    }
+
+                }]
+            }
+        });
+
+
+       
+
+    });
+
+</script>
+
+
+
+
+

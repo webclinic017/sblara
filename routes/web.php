@@ -39,13 +39,12 @@ Route::post('/save_filter', 'FilterController@save_filter');
 // Route to courses
 Route::group(['middleware' => 'admin'], function()
 {
+  Route::resource('/courses', 'CoursesController');//->middleware('admin');
   Route::resource('/categories_course', 'CourseCategoriesController');//->middleware('auth');;
   Route::resource('/venues_course', 'CourseVenuesController');//->middleware('admin');
+  Route::resource('/participants_course', 'CourseParticipantsController');//->middleware('admin');
   Route::resource('/facilitators_course', 'CourseFacilitatorsController');//->middleware('admin');
 
-  Route::resource('/courses', 'CoursesController');//->middleware('admin');
-  Route::resource('/batches', 'CourseManageController');//->middleware('admin');
-  Route::resource('/participants_course', 'CourseParticipantsController');//->middleware('admin');
   Route::resource('/batch_transfer', 'BatchTransferController');//->middleware('admin');
 
   Route::get('participant_payment/{id}', ['as' => 'participant_payment.index', 'uses' => 'CoursePaymentsController@index']);
@@ -55,6 +54,7 @@ Route::group(['middleware' => 'admin'], function()
 });
 
 Route::get('/courses-avaliable', 'UserParticipantsController@index')->name('courses');
+Route::resource('/batches', 'CourseManageController');//->middleware('admin');
 Route::get('/registration/{id}', 'UserParticipantsController@create')->name('registration.create');
 Route::post('/registration', 'UserParticipantsController@store')->name('registration.store');
 

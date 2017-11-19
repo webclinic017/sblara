@@ -13,7 +13,7 @@
                             </button>
                             <!-- End Toggle Button -->
                             <!-- BEGIN LOGO -->
-                            <a id="index" class="page-logo" href="index.html">
+                            <a id="index" class="page-logo" href="{{url('/')}}">
                                 <img src="{{ URL::asset('metronic/assets/layouts/layout5/img/logo.jpg') }}" alt="Logo"> </a>
                             <!-- END LOGO -->
                             <!-- BEGIN SEARCH -->

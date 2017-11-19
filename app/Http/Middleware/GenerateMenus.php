@@ -38,16 +38,13 @@ class GenerateMenus
             $menu->chart->add('TA Chart', ['route' => 'ta-chart'])->prepend('<i class="icon-bar-chart" ></i > ');
             $menu->chart->add('Advance TA Chart', ['route' => 'advance-ta-chart'])->prepend('<i class="icon-bar-chart" ></i > ');
 
-            /*Monitor*/
-            $menu->add('Monitor', ['class' => 'dropdown dropdown-fw  ']);
-            $menu->monitor->link->href('javascript:;')->attr(['class' => 'text-uppercase']);
-            $menu->monitor->attr(['class' => 'dropdown dropdown-fw  '])->prepend('<i class="fa fa-television" ></i > ');
+            //Monitor submenu
+            $menu->chart->add('Market Monitor', ['route' => 'monitor'])->prepend('<i class="icon-bar-chart" ></i > ');
+            $menu->chart->add('Market Depth', ['route' => 'market-depth'])->prepend('<i class="icon-bar-chart" ></i > ');
+            $menu->chart->add('Market Frame', ['route' => 'market-frame'])->prepend('<i class="icon-bar-chart" ></i > ');
+            $menu->chart->add('Market Composition', ['route' => 'market-composition'])->prepend('<i class="icon-bar-chart" ></i > ');
 
-            //submenu
-            $menu->monitor->add('Market Monitor', ['route' => 'monitor'])->prepend('<i class="icon-bar-chart" ></i > ');
-            $menu->monitor->add('Market Depth', ['route' => 'market-depth'])->prepend('<i class="icon-bar-chart" ></i > ');
-            $menu->monitor->add('Market Frame', ['route' => 'market-frame'])->prepend('<i class="icon-bar-chart" ></i > ');
-            $menu->monitor->add('Market Composition', ['route' => 'market-composition'])->prepend('<i class="icon-bar-chart" ></i > ');
+
 
             /*Portfolio*/
             $menu->add('Portfolio', ['class' => 'dropdown dropdown-fw  ']);
@@ -84,8 +81,16 @@ class GenerateMenus
             $menu->contest->attr(['class' => 'dropdown dropdown-fw  '])->prepend('<i class="icon-link" ></i > ');
 
             //submenu
-            //$menu->contest->add('Trade Details', ['route' => 'company-details'])->prepend('<i class="icon-bar-chart" ></i > ');
-            //$menu->contest->add('Fundamental Details', ['route' => 'fundamental-details'])->prepend('<i class="icon-bar-chart" ></i > ');
+            //$menu->contest->add('Contests', ['route' => 'contests'])->prepend('<i class="icon-link" ></i > ');
+            
+
+            /*Corse*/
+            $menu->add('Course', ['class' => 'dropdown dropdown-fw  ']);
+            $menu->course->link->href('javascript:;')->attr(['class' => 'text-uppercase']);
+            $menu->course->attr(['class' => 'dropdown dropdown-fw  '])->prepend('<i class="icon-link" ></i > ');
+
+            //submenu
+            $menu->course->add('Upcoming Courses', ['route' => 'courses'])->prepend('<i class="icon-link" ></i > ');
 
 
         });
