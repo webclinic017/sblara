@@ -98,7 +98,8 @@ class GenerateCustomIndexCommand extends Command
         $instrument_id_of_all_dsex_listed_company=$instrument_list_of_dsex->pluck('instrument_id');
 
 
-        $needed_fundamentals_of_dsex_listed_company=FundamentalRepository::getFundamentalData(array('total_no_of_securities','share_percentage_public'),$instrument_id_of_all_dsex_listed_company);
+        // total_no_securities,public_share_per under meta_group=company_financial_performance
+        $needed_fundamentals_of_dsex_listed_company=FundamentalRepository::getFundamentalData(array('total_no_securities','public_share_per'),$instrument_id_of_all_dsex_listed_company);
 
 
         $latestTradeDataAll=DataBanksIntradayRepository::getLatestTradeDataAll()->keyBy('instrument_id');
@@ -115,28 +116,28 @@ class GenerateCustomIndexCommand extends Command
             if(isset($latestTradeDataAll[$instrument_id]))
             {
 
-                if(isset($needed_fundamentals_of_dsex_listed_company['total_no_of_securities'][$instrument_id])) {
-                    $total_no_of_securities = $needed_fundamentals_of_dsex_listed_company['total_no_of_securities'][$instrument_id]->meta_value;
-                    dump($total_no_of_securities);
+                if(isset($needed_fundamentals_of_dsex_listed_company['total_no_securities'][$instrument_id])) {
+                    $total_no_securities = $needed_fundamentals_of_dsex_listed_company['total_no_securities'][$instrument_id]->meta_value;
+                    dump($total_no_securities);
                 }else
                 {
-                    $total_no_of_securities=0;
+                    $total_no_securities=0;
 
-                    //send an email to rnd manager informing  that  $total_no_of_securities is missing for this share
+                    //send an email to rnd manager informing  that  $total_no_securities is missing for this share
 
                 }
-                if(isset($needed_fundamentals_of_dsex_listed_company['share_percentage_public'][$instrument_id]))
+                if(isset($needed_fundamentals_of_dsex_listed_company['public_share_per'][$instrument_id]))
                 {
-                    $share_percentage_public=$needed_fundamentals_of_dsex_listed_company['share_percentage_public'][$instrument_id]->meta_value;
+                    $public_share_per=$needed_fundamentals_of_dsex_listed_company['public_share_per'][$instrument_id]->meta_value;
 
                 }else
                 {
-                    $share_percentage_public=0;
-                    //send an email to rnd manager informing  that  $share_percentage_public is missing for this share
+                    $public_share_per=0;
+                    //send an email to rnd manager informing  that  $public_share_per is missing for this share
 
                 }
 
-                $total_no_of_securities_public=$total_no_of_securities*$share_percentage_public/100;
+                $total_no_securities_public=$total_no_securities*$public_share_per/100;
 
 
                 if(isset($adjustmentFactor[$instrument_id]))
@@ -145,13 +146,13 @@ class GenerateCustomIndexCommand extends Command
                     $yday_close_price=$yday_close_price/$adjustmentFactor[$instrument_id];
 
                     $pub_last_traded_price=$latestTradeDataAll[$instrument_id]->pub_last_traded_price;
-                    $market_capital_public_yesterday+=$total_no_of_securities_public*$yday_close_price;
-                    $market_capital_public_today+=$total_no_of_securities_public*$pub_last_traded_price;
+                    $market_capital_public_yesterday+=$total_no_securities_public*$yday_close_price;
+                    $market_capital_public_today+=$total_no_securities_public*$pub_last_traded_price;
 
 
 
                     $price_change=$latestTradeDataAll[$instrument_id]->price_change;
-                    $total_impact_for_this_instrument=$price_change*$total_no_of_securities;
+                    $total_impact_for_this_instrument=$price_change*$total_no_securities;
                     $market_capital_increased_for_this_instrument=$cap_equity_yesterday+$total_impact_for_this_instrument;
 
                     $final_index=($dsex_yesterday+$market_capital_increased_for_this_instrument)/$cap_equity_yesterday;
@@ -202,7 +203,7 @@ class GenerateCustomIndexCommand extends Command
         $trdgen_data['trade_date']=date('Y-m-d',time());
         $dataToSave[]=$trdgen_data;
 
-
+dd($dataToSave);
         //$result = DataBanksIntraday::insert($dataToSave);
 
         $this->info('ok');
