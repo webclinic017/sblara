@@ -21,7 +21,7 @@
                 <table class="table table-striped table-bordered table-hover" id="table_filter">
                     <thead>
                       <th class="sorting_asc" tabindex="0" aria-controls="sample_3" rowspan="1" colspan="1" style="width: 10px;">
-                        #
+                        <!--#-->
                       </th>
                       <th class="sorting" tabindex="1" aria-controls="sample_3" rowspan="1" colspan="1" style="width: 290px;">
                         Batch
@@ -41,11 +41,11 @@
                         
                         <tr>
                           <td>{{$loop->iteration}}</td>
-                          <td>{{isset($batch->course_name)?$batch->course_name:$batch->course_id}}- {{$batch->batch_name}} ( Participants: {{$batch->count}} , Paid: {{$batch->paid}} )</td>
+                          <td><a class="edithButton" href="{{ route('participants_course.show',$batch->id ) }}" style="cursor: pointer;"> {{isset($batch->course_name)?$batch->course_name:$batch->course_id}}- {{$batch->batch_name}} ( Participants: {{$batch->count}} , Paid: {{$batch->paid}} ) </a></td>
                           <td>{{$batch->venue_name}}</td>
                           <td>{{$batch->c_start_date}}</td>
                           <td>
-                            <a class="edithButton" href="{{ route('participants_course.show',$batch->id ) }}" style="cursor: pointer;"> detail <i class="fa fa-info"></i></a>
+                            <a class="edithButton" href="{{ route('participants_course.show',$batch->id ) }}" style="cursor: pointer;"> Detail <i class="fa fa-eye"></i></a>
                           </td>
                         </tr>
                       @endforeach

@@ -88,7 +88,15 @@
                           @endif
                         </td>
                         <td>{{ $participant->our_comments }}</td>
-                        <td><a href="{{ route('participants_course.edit', $participant->id) }}">Edit</a> / <a href="{{ route('participant_payment.index', $participant->id) }}">Payment</a></td>
+                        <td>
+                            <a href="{{ route('participants_course.edit', $participant->id) }}">Edit</a> / 
+                            <a href="{{ route('participant_payment.index', $participant->id) }}">Payment</a> / 
+                            <form action="{{ URL::route('participants_course.destroy',$participant->id )}}" method="POST">
+                              {{ method_field('DELETE') }}
+                              {{ csrf_field() }}
+                              <a class="trashButton" style="cursor: pointer;"> Delete <i class="fa fa-trash-o"></i></a>
+                            </form>
+                        </td>
                       </tr>
                       @endforeach
                     </tbody>
@@ -129,4 +137,40 @@
     $('table').DataTable();
 
 </script>
+
+<script>
+     $( document ).ready(function() {
+
+       lots_of_stuff_already_done = false;
+
+       $('.trashButton').click(function(event){
+         //.event.preventDefault();
+         if (confirm("Do you want delete item?")) {
+           var form = $(this).parents('form:first');
+           form.submit();
+
+         }
+         else {
+
+         }
+
+   //     alert('sadf');
+   //     // $.ajax({
+   //     //     url: '/user/4',
+   //     //     type: 'DELETE',  // user.destroy
+   //     //     success: function(result) {
+   //     //         // Do something with the result
+   //     //     }
+   //     // });
+      });
+      
+       $('table').DataTable();
+
+       $.ajaxSetup({
+
+       });
+
+
+    });
+  </script>
 @endpush

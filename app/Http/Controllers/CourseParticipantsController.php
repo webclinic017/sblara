@@ -127,5 +127,7 @@ class CourseParticipantsController extends Controller
     public function destroy($id)
     {
         //
+        CourseParticipants::where('id',$id)->delete();
+        return redirect()->back()->with(['message_success' => 'Course Participants Successfully Removed']);
     }
 }
