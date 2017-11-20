@@ -53,4 +53,10 @@ class Meta extends Model
             //->where('id', 1)
             //->update(['votes' => 1]);
     }
+
+    public static function deleteMeta($meta_ids=array())
+    {
+        self::destroy($meta_ids);
+        return true;
+    }
 }

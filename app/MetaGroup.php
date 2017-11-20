@@ -10,4 +10,11 @@ class MetaGroup extends Model
         'created_at',
 
     ];
+
+    public static function deleteMetaGroup($group_key)
+    {
+        $deletedRows = self::where('group_key', $group_key)->delete();
+
+        return true;
+    }
 }

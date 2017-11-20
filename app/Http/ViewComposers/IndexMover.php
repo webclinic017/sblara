@@ -37,6 +37,7 @@ class IndexMover
      */
     public function compose(View $view)
     {
+        FundamentalRepository::showOrphan();
         $cap_equity=MarketStatRepository::getMarketStatsData(array('cap_equity'), null);
         $ob_cap_equity_today=$cap_equity->first();
         $ob_cap_equity_yesterday=$cap_equity->last();

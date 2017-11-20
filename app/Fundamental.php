@@ -37,4 +37,10 @@ class Fundamental extends Model
         $returnData=$query->orderby('meta_date','desc')->get();
         return  $returnData;
     }
+
+    public static function deleteFundamental($meta_ids = array())
+    {
+        $deletedRows = self::whereIn('meta_id', $meta_ids)->delete();
+        return true;
+    }
 }
