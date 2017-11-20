@@ -81,7 +81,7 @@ class GenerateMenus
             $menu->contest->attr(['class' => 'dropdown dropdown-fw  '])->prepend('<i class="icon-link" ></i > ');
 
             //submenu
-            //$menu->contest->add('Contests', ['route' => 'contests'])->prepend('<i class="icon-link" ></i > ');
+            $menu->contest->add('Contests', ['route' => 'contests'])->prepend('<i class="icon-link" ></i > ');
             
 
             /*Corse*/

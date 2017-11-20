@@ -17,6 +17,7 @@ Route::post('/contests/{contest}/join', 'JoinContestsController@store')->name('c
 Route::resource('/mycontests', 'MyContestsController');
 // Contests routes..
 Route::resource('/contests', 'ContestsController');
+Route::get('/contests', 'ContestsController@index')->name('contests');
 
 
 // User routes
