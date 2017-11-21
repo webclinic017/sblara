@@ -1,5 +1,5 @@
 <?php
-
+//========================  Contest Start  ======================== 
 // Contest Portfolio Shares routes..
 Route::post('/portfolios/{portfolio}/shares/create', 'PortfolioSharesController@store')->name('portfolios.shares.store');
 Route::get('/portfolios/{portfolio}/shares/create', 'PortfolioSharesController@create')->name('portfolios.shares.create');
@@ -15,10 +15,11 @@ Route::patch('/mycontests/{contest}/unblock', 'MyContestStatusesController@unblo
 Route::post('/contests/{contest}/join', 'JoinContestsController@store')->name('contests.join');
 // My Contests routes..
 Route::resource('/mycontests', 'MyContestsController');
+Route::get('/mycontests', 'MyContestsController@index')->name('mycontests');
 // Contests routes..
 Route::resource('/contests', 'ContestsController');
 Route::get('/contests', 'ContestsController@index')->name('contests');
-
+//========================  Contest End  ======================== 
 
 // User routes
 Route::get('user-information', 'UserController@userInformationChange')->name('user-information')->middleware('auth');

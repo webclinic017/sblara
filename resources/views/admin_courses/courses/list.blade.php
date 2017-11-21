@@ -1,16 +1,20 @@
 @extends('layouts.metronic.default')
 <!-- BEGIN GLOBAL MANDATORY STYLES -->
 
-@section('content')
+@section('page_heading')
 @include('admin_courses.menu')
+Courses List:
+@endsection
+
+@section('content')
 <div class="row">
   <div class="col-md-12">
     <div class="portlet light portlet-fit portlet-datatable bordered">
-      <div class="portlet-title">
+<!--      <div class="portlet-title">
           <div class="caption">
             <span class="caption-subject font-green sbold uppercase">Courses List:</span>
           </div>
-      </div>
+      </div>-->
       <div class="portlet-body">
         <div class="row">
           @include('admin_courses.message')
@@ -29,13 +33,13 @@
                       <th class="sorting_asc" tabindex="0" aria-controls="sample_3" rowspan="1" colspan="1" style="width: 10px;">
                         #
                       </th>
-                      <th class="sorting" tabindex="1" aria-controls="sample_3" rowspan="1" colspan="1" style="width: 100px;">
+                      <th class="sorting" tabindex="1" aria-controls="sample_3" rowspan="1" colspan="1" style="width: 200px;">
                         Category Name
                       </th>
-                      <th class="sorting" tabindex="1" aria-controls="sample_3" rowspan="1" colspan="1" style="width: 100px;">
+                      <th class="sorting" tabindex="1" aria-controls="sample_3" rowspan="1" colspan="1" style="width: 200px;">
                         Course Name
                       </th>
-                      <th class="sorting" tabindex="2" aria-controls="sample_3" rowspan="1" colspan="1" style="width: 290px;">
+                      <th class="sorting" tabindex="2" aria-controls="sample_3" rowspan="1" colspan="1" style="width: 90px;">
                         Edit
                       </th>
                     </thead>
