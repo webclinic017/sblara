@@ -42,6 +42,16 @@ class InstrumentRepository {
         return $returnData;
     }
 
+    /*
+     * Return all instrument including debenture treasury bonds
+     * */
+    public static function getInstrumentsAll($exchangeId = 0)
+    {
+        $returnData = Instrument::getInstrumentsAll($exchangeId);
+        return $returnData;
+    }
+
+
     public static function getInstrumentsByCode($instrumentCode=array(),$exchangeId=0)
     {
         $returnData=Instrument::getInstrumentsAll($exchangeId)->whereInStrict('instrument_code',$instrumentCode);

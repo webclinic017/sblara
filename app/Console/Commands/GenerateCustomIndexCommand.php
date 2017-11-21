@@ -51,12 +51,15 @@ class GenerateCustomIndexCommand extends Command
 
 
 // live server command   /opt/cpanel/ea-php70/root/usr/bin/php /home/hostingmonitors/artisan index:generateCustomIndex
+// source generate_index.php cron of old site
     public function handle()
     {
+
         $cap_equity = MarketStatRepository::getMarketStatsData(array('cap_equity'), null);
         $ob_cap_equity_today = $cap_equity->first();
         $ob_cap_equity_yesterday = $cap_equity->last();
         $cap_equity_yesterday = $ob_cap_equity_yesterday['cap_equity']['meta_value'];
+
 
         // DSEX is using here. instrument_id of dsex=10001
 
@@ -64,6 +67,7 @@ class GenerateCustomIndexCommand extends Command
         $trade_date_yesterday = $index_data_yesterday['index']['10001']['data'][0]->index_date->format('Y-m-d');
         $dsex_yesterday = $index_data_yesterday['index']['10001']['data'][0]->capital_value;
         $market_id_yesterday = $index_data_yesterday['index']['10001']['data'][0]->market_id;
+
 
 
         $index_data_today = IndexRepository::getIndexData(10, null, 0);
@@ -75,7 +79,7 @@ class GenerateCustomIndexCommand extends Command
 
 
         // Taking today data of TRDGEN(10004)
-        $trdgen_today=\App\DataBanksIntraday::where('instrument_id', 10004)->where('market_id', $market_id_today)->orderBy('lm_date_time', 'desc')->first();
+        $trdgen_today=\App\DataBanksIntraday::where('instrument_id', 10004)->where('market_id', $market_id_yesterday)->orderBy('lm_date_time', 'desc')->first();
         $last_trade_price_of_trdgen_today=$trdgen_today->pub_last_traded_price;
 
 
@@ -118,7 +122,7 @@ class GenerateCustomIndexCommand extends Command
 
                 if(isset($needed_fundamentals_of_dsex_listed_company['total_no_securities'][$instrument_id])) {
                     $total_no_securities = $needed_fundamentals_of_dsex_listed_company['total_no_securities'][$instrument_id]->meta_value;
-                    dump($total_no_securities);
+                    //dump($total_no_securities);
                 }else
                 {
                     $total_no_securities=0;
@@ -203,8 +207,8 @@ class GenerateCustomIndexCommand extends Command
         $trdgen_data['trade_date']=date('Y-m-d',time());
         $dataToSave[]=$trdgen_data;
 
-dd($dataToSave);
-        //$result = DataBanksIntraday::insert($dataToSave);
+
+        $result = DataBanksIntraday::insert($dataToSave);
 
         $this->info('ok');
     }

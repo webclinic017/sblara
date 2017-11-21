@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\ContestPortfolio;
 use App\Instrument;
+use App\Repositories\InstrumentRepository;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -32,9 +33,9 @@ class PortfolioSharesController extends Controller
         $purchase_power = null;
         $max_shares     = null;
 
-        $instruments = Instrument::where('active', true)
-                                 ->pluck('instrument_code', 'id')
-                                 ->prepend('Select a company', '');
+        $instruments=InstrumentRepository::getInstrumentsScripOnly();
+        $instruments=$instruments->pluck('instrument_code', 'id')->prepend('Select a company', '');
+
 
         if ($id = request()->company_info) {
             $company_info = Instrument::with('data_banks_intraday')->find($id);

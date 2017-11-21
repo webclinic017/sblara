@@ -8,7 +8,7 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
 
 <div class="row">
     <div class="col-lg-10 col-md-10 col-sm-6 col-xs-12">
-        @include('block.market_summary')
+            @include('block.market_summary')
     </div>
 </div>
 <div class="row">

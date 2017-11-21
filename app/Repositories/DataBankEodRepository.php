@@ -548,5 +548,11 @@ class DataBankEodRepository {
     }
 
 
+    public static function getDateLessTradeData($instrumentIDs = array())
+    {
+        return DataBanksEod::getDateLessTradeData($instrumentIDs);
+    }
+
+
 
 } 
