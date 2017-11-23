@@ -13,11 +13,45 @@ class Instrument extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
+
+
+   /* // Category model
+    public function latestEod()
+    {
+        return $this->hasOne('App\DataBanksEod')->latest('date')->take(1);
+        //return $this->hasOne(Measure::class)->latest()->first();
+    }
+
+
+    public function data_banks_eods()
+    {
+        return $this->hasMany('App\DataBanksEod', 'instrument_id');
+    }*/
+
+
+    public function data_banks_eods()
+    {
+        return $this->hasMany(DataBanksEod::class);
+    }
+
+    public function latestDataBanksEod()
+    {
+        return $this->hasOne(DataBanksEod::class)->latest('date');
+    }
+
     public function data_banks_intraday()
     {
         return $this->hasOne(DataBanksIntraday::class)
                     ->latest('id');
     }
+
+
+
+   /* public function data_banks_eod()
+    {
+        return $this->hasMany(DataBanksEod::class)
+                    ->latest('date');
+    }*/
 
     public function sector_list()
     {
@@ -141,4 +175,54 @@ class Instrument extends Model
         return $result;
 
     }
+
+    /*
+    * This will return last traded data for all shares of $instrumentIDs regardless date.
+    * Some share may not be traded for last 2/3 days. DataBanksIntradayRepository::getLatestTradeDataAll() will return only last day data without those instruments
+    * So for this reason we are writing this method
+    *
+    * $instrumentIDs= array of instruments id
+    * $tradeDate =  If set/not null, it will count data before that day
+    *
+    * We dont need exchange_id here as instruments_id are coming from desired exchange
+    *
+    * */
+
+
+    public static function getDateLessTradeData($instrumentIDs = array())
+    {
+        /*We will use session value of active_trade_date as default if exist*/
+        $tradeDate = session('active_trade_date', null);
+
+        if (is_null($tradeDate)) {
+
+        /*    $lastTradedDataAllInstruments = Instrument::whereIn('id', $instrumentIDs)
+                ->with(['data_banks_eod' => function ($q) {
+                    $q->latest('date')->take(1);
+                }])
+                ->get();*/
+
+            $lastTradedDataAllInstruments = Instrument::with(['data_banks_eod' => function ($q) {
+                    $q->latest('date')->take(1);
+                }])
+                ->get();
+
+
+        } else {
+            $lastTradedDataAllInstruments = Instrument::whereIn('id', $instrumentIDs)
+                ->with(['data_banks_eod' => function ($q, $tradeDate) {
+                    $q->whereDate('date', '<=', $tradeDate)->latest('date')->take(1);
+                }])
+                ->get();
+        }
+
+        //  dump($instrumentIDs);
+        //   dd($lastTradedDataAllInstruments->toArray());
+
+        return $lastTradedDataAllInstruments;
+
+
+    }
+
+
 }

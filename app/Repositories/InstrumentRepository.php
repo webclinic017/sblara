@@ -107,7 +107,46 @@ class InstrumentRepository {
     }
 
 
+    public static function getDateLessTradeData($instrumentIDs = array())
+    {
+        return Instrument::getDateLessTradeData($instrumentIDs);
+    }
+
+    public static function isMature($instrumentId = 0, $buyDate = null)
+    {
+        $exchangeId = session('active_exchange_id', 1);
+        if (is_null($buyDate))
+            $buyDate = date('Y-m-d');
+        $today = date('Y-m-d');
+        $tradeDatePassed = \DB::table('markets')->where('trade_date', '>', $buyDate)->where('trade_date', '<=', $today)->where('exchange_id', $exchangeId)->count();
+        $category_Z_mutured_day = 7;
+        $category_Others_mutured_day = 1;
+        $lastTradeInfo = \DB::table('data_banks_intradays')->where('instrument_id', $instrumentId)->orderBy('lm_date_time', 'desc')->skip(0)->take(1)->first();
+        $isSpot = $lastTradeInfo->spot_last_traded_price == 0 ? 0 : 1;
+        $isLocked = 0;
+        $quote_bases = $lastTradeInfo->quote_bases;
+        $categoryArr = explode('-', $quote_bases);
+        $category = trim($categoryArr[0]);
+        if ($isLocked) { // if it is locked do nothing
+        } else {
+            if ($isSpot) {
+                if ($tradeDatePassed > 0) {  // checking if it is not same date of buying date. share should not be mature at same date
+                    return true;
+                }
+            } else {
+                if ($category == 'Z') {
+                    if ($tradeDatePassed > $category_Z_mutured_day) {
+                        return true;
+                    }
+                } else {
+                    if ($tradeDatePassed > $category_Others_mutured_day) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
 
 
-
-} 
+}

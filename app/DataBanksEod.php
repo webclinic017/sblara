@@ -18,6 +18,10 @@ class DataBanksEod extends Model
     {
         return $this->belongsTo('App\Market');
     }
+    public function instrument()
+    {
+        return $this->belongsTo('App\Instrument');
+    }
 
     public function getDateTimestampAttribute()
     {
@@ -156,54 +160,5 @@ class DataBanksEod extends Model
         return DB::Select($sql);
     }
 
-    /*
-     * This will return last traded data for all shares of $instrumentIDs regardless date.
-     * Some share may not be traded for last 2/3 days. DataBanksIntradayRepository::getLatestTradeDataAll() will return only last day data without those instruments
-     * So for this reason we are writing this method
-     *
-     * $instrumentIDs= array of instruments id
-     * $tradeDate =  If set/not null, it will count data before that day
-     *
-     * We dont need exchange_id here as instruments_id are coming from desired exchange
-     *
-     * */
 
-
-    public static function getDateLessTradeData($instrumentIDs = array())
-    {
-        /*We will use session value of active_trade_date as default if exist*/
-        $tradeDate = session('active_trade_date', null);
-
-        if (is_null($tradeDate)) {
-
-          /*  $lastTradedDataAllInstruments = self::whereIn('instrument_id', $instrumentIDs)
-                ->orderBy('date', 'desc')
-                ->groupBy('instrument_id')
-             //       ->skip(0)
-             //   ->take(2000)
-                ->get()->groupBy('instrument_id');*/
-
-            $lastTradedDataAllInstruments = self::select(DB::raw('*, max(date) as date'))
-                ->groupBy('instrument_id')
-                ->orderBy('date', 'desc')
-                ->whereIn('instrument_id', $instrumentIDs)
-                ->get();
-
-
-        }else
-        {
-            $lastTradedDataAllInstruments = self::whereIn('instrument_id', $instrumentIDs)
-                ->groupBy('instrument_id')
-                ->orderBy('date', 'desc')
-                ->whereDate('date', '<=', $tradeDate)
-                ->get();
-        }
-
-      //  dump($instrumentIDs);
-     //   dd($lastTradedDataAllInstruments->toArray());
-
-        return $lastTradedDataAllInstruments;
-
-
-    }
 }

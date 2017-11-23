@@ -11,6 +11,7 @@ namespace App\Http\ViewComposers;
 use Illuminate\View\View;
 use App\Repositories\FundamentalRepository;
 use App\Repositories\InstrumentRepository;
+use App\Instrument;
 use App\Repositories\DataBanksIntradayRepository;
 use App\Repositories\DataBankEodRepository;
 use App\Repositories\IndexRepository;
@@ -41,13 +42,57 @@ class IndexMover
      */
     public function compose(View $view)
     {
-        //$instrumentList = InstrumentRepository::getInstrumentsScripOnly();
-        $instrumentList = InstrumentRepository::getInstrumentsAll();
+
+
+
+        $instrumentList = InstrumentRepository::getInstrumentsScripOnly();
+        //$instrumentList = InstrumentRepository::getInstrumentsAll();
         $instrumentList=$instrumentList->whereNotIn('sector_list_id', [23, 24]); //filtering index and custom_index
 
         $listed_company_ids = $instrumentList->pluck('id');
-        $lastTradedDataAllInstruments = DataBankEodRepository::getDateLessTradeData($listed_company_ids);
 
+
+        $posts = Instrument::with(['data_banks_eods' => function ($query) {
+
+            $query->latest('date')->first();
+
+        }])->get();
+        //$hives = App\Hive::with('latestMeasure')->get()
+
+
+        foreach ($posts as $r) {
+            dump($r->latestDataBanksEod->close);
+        }
+
+       /* $posts = Instrument::with(['data_banks_eods' => function ($q) {
+            //$q->orderBy('date','desc')->take(1);
+            $q->where('date','desc')->take(1);
+        }])
+            ->get();*/
+
+        //$posts = Instrument::with('data_banks_eods')->where('instrument_id', 79)->take(1)->get();
+
+      /*  dump($posts);
+
+        $posts = Instrument::where('id', $listed_company_ids)
+            ->with(['data_banks_eod' => function ($q) {
+                $q->latest('date')->take(1);
+            }])
+            ->get();*/
+
+        /*foreach($posts->chunk(5)->first() as $r)
+        {
+            dump($r->latestDataBanksEod);
+        }
+
+        dd($posts->chunk(2)->first()->toArray());
+
+
+        $lastTradedDataAllInstruments = InstrumentRepository::getDateLessTradeData($listed_company_ids);
+
+        dd($lastTradedDataAllInstruments->chunk(35)->first()->toArray());
+
+        //dump($lastTradedDataAllInstruments->toarray());
 
         //fundamental data can be cache for 24 hours as it updated daily basis
         $needed_fundamentals_of_listed_company = Cache::remember("index_mover_fundamentals", 60, function () use ($listed_company_ids) {
@@ -57,10 +102,14 @@ class IndexMover
 
         });
 
+
         $total_market_capital=0;
         $out="<table>";
-        foreach($lastTradedDataAllInstruments as $instrumentData)
+        foreach($lastTradedDataAllInstruments as $row)
         {
+            $instrumentData=$row->data_banks_eod;
+            echo "<pre>";
+            print_r($instrumentData->toArray());
             $instrument_id = $instrumentData->instrument_id;
             $instrument_code = $instrumentList->where('id', $instrument_id)->first()->instrument_code;
 
@@ -68,15 +117,17 @@ class IndexMover
             if(isset($needed_fundamentals_of_listed_company['total_no_securities'][$instrument_id]))
             {
                 $out.="<tr>";
-                $total_no_securities = (int) $needed_fundamentals_of_listed_company['total_no_securities'][$instrument_id]->meta_value;
+                $total_no_securities =$needed_fundamentals_of_listed_company['total_no_securities'][$instrument_id]->meta_value;
+                $total_no_securities=trim($total_no_securities);
+                //$out .= "<td>$instrument_code=$total_no_securities</td>";
                 $nos_updated= $needed_fundamentals_of_listed_company['total_no_securities'][$instrument_id]->meta_date;
                 $cp= $instrumentData->close;
                 $trade_date= $instrumentData->date;
                 $market_cap_of_this_instrument = $total_no_securities * $cp;
                 $total_market_capital+= $market_cap_of_this_instrument;
 
-                $out .= "<td>  $instrument_code  </td><td>  $total_no_securities  </td><td>  $cp  </td><td> $market_cap_of_this_instrument  </td><td>  close price =$trade_date </td><td>  nos of= $nos_updated </td>";
-                //echo "$instrument_code | securities= $total_no_securities ($nos_updated) | cp=$cp ($trade_date) | market capital= $market_cap_of_this_instrument <br />";
+                $out .= "<td>$instrument_id= $instrument_code  </td><td>  $total_no_securities  </td><td>  $cp  </td><td> $market_cap_of_this_instrument  </td><td>  close price =$trade_date </td><td>  nos of= $nos_updated </td>";
+
 
                 $out .= "</tr>";
 
@@ -92,7 +143,7 @@ class IndexMover
         echo $out;
 
         dd("Total market capital = $total_market_capital ");
-exit;
+exit;*/
 
 
         /* FundamentalRepository::showOrphan();
