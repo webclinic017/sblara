@@ -57,6 +57,12 @@
                             $sumTotalPurchase = 0;
                             $sumTotalGain = 0;
                             $sumSellValueDeductingCommision = 0;
+                            
+                            $sumBuyCommissionLoop = 0;
+                            $sumTotalPurchaseLoop = 0;
+                            $sumTotalGainLoop = 0;
+                            $growthPercent = 0;
+                            $sumPercentPortfolioLoop = 0;
                         @endphp
 
                         @forelse ($portfolio->shares as $share)
@@ -70,9 +76,9 @@
                                 $buyingPrice = $share->buying_price;
                                 $totalBuyCost  = $noOfShare * $buyingPrice;
 
-                                $lastTradePrice = number_format($share->intrument->data_banks_intraday->close_price, 2);
+                                $lastTradePrice = $share->intrument->data_banks_intraday->close_price;
                                 $lastTradeDate = $share->intrument->data_banks_intraday->lm_date_time->format('Y-m-d');
-                                $priceChange = number_format($share->intrument->data_banks_intraday->price_change, 2);
+                                $priceChange = $share->intrument->data_banks_intraday->price_change;
                                 $gainLoss = $priceChange * $noOfShare;
                                 $sumGainLoss += $gainLoss;
 
@@ -91,20 +97,19 @@
                                 $totalGain = $sellValueDeductingCommision - $totalBuyCostWithCommission;
                                 $sumTotalGain += $totalGain;
 
-                                $percentChange = number_format($totalGain / $totalBuyCostWithCommission * 100, 2);
+                                $percentChange = $totalGain / $totalBuyCostWithCommission * 100;
 
                                 $allShareCashAmount = $sumNoOfShare * $buyingPrice;
                                 $totalPortfolioValue = $allShareCashAmount + $portfolioCashAmount;
-                                $percentPortfolio = number_format($sellValue / $totalPortfolioValue * 100, 2);
-                                $portfolioOfCash = number_format($portfolioCashAmount / $totalPortfolioValue * 100, 2);
+                                $percentPortfolio = $sellValue / $totalPortfolioValue * 100;
+                                $portfolioOfCash = $portfolioCashAmount / $totalPortfolioValue * 100;
                                 
-                                /* New */
-                                $sumBuyCommissionLoop = $sellValue;
-                                $sumTotalPurchaseLoop = $sellValue;
-                                $sumTotalGainLoop = $sellValue;
-                                $growthPercent = $sellValue;
-                                
-                                $sumPercentPortfolioLoop = $percentPortfolio;
+
+                                $sumBuyCommissionLoop += $buyCommission;
+                                $sumTotalPurchaseLoop += $totalPurchase;
+                                $sumTotalGainLoop += $totalGain;
+                                $growthPercent += $percentChange;                                
+                                $sumPercentPortfolioLoop += $percentPortfolio;
                             @endphp
 
                             <tr>
@@ -120,13 +125,13 @@
                                     </small>
                                 </td>
                                 <td>
-                                    {{ $priceChange }}
+                                    {{ number_format($priceChange, 2) }}
                                 </td>
                                 <td>
                                     @if ($gainLoss > 0)
-                                        <span class="text-success">{{ $gainLoss }}</span>
+                                        <span class="text-success">{{ number_format($gainLoss, 2) }}</span>
                                     @else
-                                        <span class="text-danger">{{ $gainLoss }}</span>
+                                        <span class="text-danger">{{ number_format($gainLoss, 2) }}</span>
                                     @endif
                                 </td>
                                 <td>{{ $noOfShare }}</td>
@@ -143,13 +148,13 @@
                                 </td>
                                 <td>
                                     @if ($percentChange > 0)
-                                        <span class="text-success">{{ $percentChange }}%</span>
+                                        <span class="text-success">{{ number_format($percentChange, 2) }}%</span>
                                     @else
-                                        <span class="text-danger">{{ $percentChange }}%</span>
+                                        <span class="text-danger">{{ number_format($percentChange, 2) }}%</span>
                                     @endif
                                 </td>
                                 <td>
-                                    {{ $percentPortfolio }}%
+                                    {{ number_format($percentPortfolio, 2) }}%
                                 </td>
                                 <td>{{ $sellValueDeductingCommision }}</td>
                                 <td>
@@ -172,7 +177,7 @@
                                     <td></td>
                                     <td></td>
                                     <td></td>
-                                    <td>{{ $portfolioOfCash }}%</td>
+                                    <td>{{ number_format($portfolioOfCash, 2) }}%</td>
                                     <td>
                                         <span class="bold">
                                             {{ number_format($portfolioCashAmount, 2) }}
@@ -207,10 +212,10 @@
                                         @if ($growthPercent > 0)
                                             <span class="text-success">{{ $growthPercent }}%</span>
                                         @else
-                                            <span class="text-danger">{{ $growthPercent }}%</span>
+                                            <span class="text-danger">{{ number_format($growthPercent, 2) }}%</span>
                                         @endif
                                     </td>
-                                    <td>{{ $portfolioOfCash += $sumPercentPortfolioLoop }}%</td>
+                                    <td>{{ number_format($portfolioOfCash += $sumPercentPortfolioLoop, 2) }}%</td>
                                     <td>
                                         <span class="bold">
                                             {{ number_format($sumSellValueDeductingCommision += $portfolioCashAmount, 2) }}
