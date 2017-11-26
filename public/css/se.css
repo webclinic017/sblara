@@ -1,0 +1,13 @@
+.se-widget{
+}
+.se-widget .accordion{
+
+}
+div.center{
+	text-align: center;
+	width: 100%;
+}
+div.center select{
+	display: inline-block;
+	max-width: 200px !important;
+}

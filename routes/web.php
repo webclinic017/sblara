@@ -177,3 +177,9 @@ Route::get('/portfolio_market_summary/{portfolio_id}', 'PortfolioController@mark
 Route::get('/portfolio_gain_loss/{portfolio_id}', 'PortfolioController@gainLoss');
 Route::get('/portfolio_performance/{portfolio_id}', 'PortfolioController@performance');
 Route::post('search_json', 'SearchController@search');
+
+/* Se Routes */
+Route::get('/ipos', 'IpoController@index');
+Route::get('/ipos/history', 'IpoController@history');
+Route::get('/ipos/results', 'IpoController@results');
+/* Se Routes */

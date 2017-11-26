@@ -48,13 +48,15 @@
             <link href="{{ URL::asset('metronic/assets/layouts/layout5/css/layout.min.css') }}" rel="stylesheet" type="text/css" />
 	  		<link href="{{ URL::asset('metronic/assets/global/plugins/jquery-file-upload/blueimp-gallery/blueimp-gallery.min.css') }}" rel="stylesheet" type="text/css" />
             <link href="{{ URL::asset('metronic/assets/global/plugins/jquery-file-upload/css/jquery.fileupload.css') }}" rel="stylesheet" type="text/css" />
+            <link href="{{ URL::asset('metronic/assets/pages/css/search.min.css') }}" rel="stylesheet" type="text/css" />
             <link href="{{ URL::asset('metronic/assets/global/plugins/jquery-file-upload/css/jquery.fileupload-ui.css') }}" rel="stylesheet" type="text/css" />
       
             <!-- END THEME LAYOUT STYLES -->
             @stack('css')
 
             <link href="{{ URL::asset('metronic_custom/custom.css') }}" rel="stylesheet" type="text/css" />
-			<link href="{{ URL::asset('css/filter.css') }}" rel="stylesheet" type="text/css" />
+            <link href="{{ URL::asset('css/filter.css') }}" rel="stylesheet" type="text/css" />
+			<link href="{{ URL::asset('css/se.css') }}" rel="stylesheet" type="text/css" />
 
             <link rel="shortcut icon" href="favicon.ico" />
 
