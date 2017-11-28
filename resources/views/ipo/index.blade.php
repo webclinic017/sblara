@@ -24,8 +24,8 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label class="control-label">Year</label>
-                            <div class="input-group input-medium date date-picker" data-date="12-02-2012" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
-                                <input type="text" class="form-control" readonly>
+                            <div class="input-group date date-picker" data-date="12-02-2012" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
+                                <input type="text" name="year" class="form-control" readonly>
                                 <span class="input-group-btn">
                                     <button class="btn default" type="button">
                                         <i class="fa fa-calendar"></i>
@@ -157,14 +157,14 @@
                     <div class="col-md-4">      
                         <div class="form-group">
                             <label class="control-label">Logo</label>
-                            {!!imageUploader('image')!!}
+                            {!!imageUploader('logo')!!}
                         </div>
                     </div>
                     <div class="col-md-4">      
                         <div class="form-group">
                             <label class="control-label">Bank List</label>
                             <div class="input-icon right">
-                                <input type="text" name="bank_list" class="form-control"> 
+                                {!!fileUploader('bank_list')!!}
                             </div>
                         </div>
                     </div>
@@ -180,7 +180,7 @@
                         <div class="form-group">
                             <label class="control-label">Bank Code</label>
                             <div class="input-icon right">
-                                <input type="text" name="bank_code" class="form-control"> 
+                                {!!fileUploader('bank_code')!!}
                             </div>
                         </div>
                     </div>
