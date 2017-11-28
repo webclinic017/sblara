@@ -161,4 +161,18 @@ function yearsAsOption($start = 1994)
     }
     return $html;
 }
+
+function uploader($name, $type = 'file')
+{
+    return view('partials.file-uploader')->with(compact('name', 'type'));
+}
+
+function fileUploader($name = 'file')
+{
+    return uploader($name);
+}
+function imageUploader($name = 'image')
+{
+    return uploader($name, 'image');
+}   
 /*se functions*/

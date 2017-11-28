@@ -184,6 +184,10 @@ return [
         Intervention\Image\ImageServiceProvider::class,
         Chumper\Zipper\ZipperServiceProvider::class,
         Unisharp\Ckeditor\ServiceProvider::class,
+        /*Se packages*/
+         Unisharp\Laravelfilemanager\LaravelFilemanagerServiceProvider::class,
+          Yajra\DataTables\DataTablesServiceProvider::class,
+        /*Se packages*/
 
     ],
 

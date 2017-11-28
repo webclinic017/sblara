@@ -12,7 +12,7 @@ Route::patch('/mycontests/{contest}/disapprove/{user}', 'MyContestStatusesContro
 Route::patch('/mycontests/{contest}/block', 'MyContestStatusesController@block')->name('mycontests.block');
 Route::patch('/mycontests/{contest}/unblock', 'MyContestStatusesController@unblock')->name('mycontests.unblock');
 // Join Contest routes..
-Route::post('/contests/{contest}/join', 'JoinContestsController@store')->name('contests.join');
+Route::match(['get', 'post'], '/contests/{contest}/join', 'JoinContestsController@store')->name('contests.join');
 // My Contests routes..
 Route::resource('/mycontests', 'MyContestsController');
 Route::get('/mycontests', 'MyContestsController@index')->name('mycontests');
@@ -67,7 +67,6 @@ Route::get('mail', function(){
 });
 
 //Route::post('/categories_course', 'CourseCategoriesController@store')->name('qwer');
-
 
 Route::get('my-page', function(){
     return Response::make('Hello!')->setTtl(60); // Cache 1 minute
@@ -179,7 +178,14 @@ Route::get('/portfolio_performance/{portfolio_id}', 'PortfolioController@perform
 Route::post('search_json', 'SearchController@search');
 
 /* Se Routes */
-Route::get('/ipos', 'IpoController@index');
+Route::get('/ipos', 'IpoController@upcoming');
 Route::get('/ipos/history', 'IpoController@history');
 Route::get('/ipos/results', 'IpoController@results');
+
 /* Se Routes */
+Route::group(['prefix' => 'admin'], function ()
+{
+  Route::resource('/ipos', 'IpoController');
+});
+/* Se Routes */
+

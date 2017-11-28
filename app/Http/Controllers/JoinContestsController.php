@@ -45,6 +45,6 @@ class JoinContestsController extends Controller
             flash('Sorry contest is already full!', 'error');
         }
 
-        return back();
+        return redirect()->route('mycontests');
     }
 }
