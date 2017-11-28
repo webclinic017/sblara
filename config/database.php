@@ -55,7 +55,7 @@ return [
         ],
         'dsb' => [
             'driver' => 'mysql',
-            'host' => env('DB_HOST', '5.189.167.100'),
+            'host' => env('DB_HOST', 'dailystockbangladesh.com'),
             'port' => env('DB_PORT', '3306'),
             'database' => 'dailysto_dsbdb',
             'username' => 'dailysto_dbman',
@@ -66,6 +66,19 @@ return [
             'prefix' => '',
             'strict' => false,
             'engine' => null,
+        ],'dse' => [
+            'driver' => 'mysql',
+            'host' => '202.84.32.13',
+            'port' => env('DB_PORT', '3306'),
+            'database' => 'mdsdata',
+            'username' => 'stockbangladesh',
+            'password' => '123456',
+            'unix_socket' => env('DB_SOCKET', ''),
+           /* 'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'strict' => false,
+            'engine' => null,*/
         ],
 
         'pgsql' => [

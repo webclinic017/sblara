@@ -47,7 +47,7 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
 
                     </div>
                     <div class="portlet-body">
-                     {{--   @include('block.dsb_news') --}}
+                        {{--@include('block.dsb_news')--}}
                     </div>
                 </div>
                 <!-- END Portlet PORTLET-->
