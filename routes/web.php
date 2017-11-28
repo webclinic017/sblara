@@ -68,7 +68,6 @@ Route::get('mail', function(){
 
 //Route::post('/categories_course', 'CourseCategoriesController@store')->name('qwer');
 
-
 Route::get('my-page', function(){
     return Response::make('Hello!')->setTtl(60); // Cache 1 minute
 });
@@ -179,7 +178,11 @@ Route::get('/portfolio_performance/{portfolio_id}', 'PortfolioController@perform
 Route::post('search_json', 'SearchController@search');
 
 /* Se Routes */
-Route::get('/ipos', 'IpoController@index');
+Route::get('/ipos', 'IpoController@upcoming');
 Route::get('/ipos/history', 'IpoController@history');
 Route::get('/ipos/results', 'IpoController@results');
+Route::group(['prefix' => 'admin'], function ()
+{
+  Route::resource('/ipos', 'IpoController');
+});
 /* Se Routes */
