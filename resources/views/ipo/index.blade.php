@@ -1,5 +1,6 @@
 @extends('layouts.metronic.default')
 @section('content')
+
 <div class="portlet light bordered">
     <div class="portlet-title">
         <div class="caption font-dark">
@@ -17,16 +18,19 @@
                         <button type="submit" class="btn green">Submit</button>
                     </div>
                 </div>
+
                 <hr>
                 <div class="form-body">
                     <div class="col-md-4">
                         <div class="form-group">
                             <label class="control-label">Year</label>
-                            <div class="input-icon right input-medium date date-picker" data-date="12-02-2012" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
-                                <button class="btn default" type="button">
-                                    <i class="fa fa-calendar" data-original-title="Calendar" data-container="body"></i>
-                                </button>
-                                <input type="text" name="year" class="form-control" readonly>
+                            <div class="input-group input-medium date date-picker" data-date="12-02-2012" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
+                                <input type="text" class="form-control" readonly>
+                                <span class="input-group-btn">
+                                    <button class="btn default" type="button">
+                                        <i class="fa fa-calendar"></i>
+                                    </button>
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -153,9 +157,7 @@
                     <div class="col-md-4">      
                         <div class="form-group">
                             <label class="control-label">Logo</label>
-                            <div class="input-icon right">
-                                <input type="text" name="logo" class="form-control"> 
-                            </div>
+                            {!!imageUploader('image')!!}
                         </div>
                     </div>
                     <div class="col-md-4">      
@@ -326,6 +328,8 @@
 
 @endsection
 @section('js')
+
+
 <script>
     var table = $('#datatable').DataTable({
         processing: true,

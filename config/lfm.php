@@ -15,7 +15,7 @@ return [
     'middlewares' => ['web', 'auth'],
 
     // The url to this package. Change it if necessary.
-    'url_prefix' => 'laravel-filemanager',
+    'url_prefix' => 'filemanager',
 
     /*
     |--------------------------------------------------------------------------
@@ -45,7 +45,7 @@ return [
     // You should create routes to serve images if it is not set to public.
     'base_directory' => 'public',
 
-    'images_folder_name' => 'photos',
+    'images_folder_name' => 'images',
     'files_folder_name'  => 'files',
 
     'shared_folder_name' => 'shares',
