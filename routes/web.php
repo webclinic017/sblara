@@ -21,10 +21,6 @@ Route::resource('/contests', 'ContestsController');
 Route::get('/contests', 'ContestsController@index')->name('contests');
 //========================  Contest End  ======================== 
 
-//========================  Admin Start  ======================== 
-Route::get('/administrator', 'ContestsController@index')->name('contests');
-//========================  Admin End  ======================== 
-
 // User routes
 Route::get('user-information', 'UserController@userInformationChange')->name('user-information')->middleware('auth');
 Route::get('user-name-change', 'UserController@userNameChange')->name('user-name-change');
