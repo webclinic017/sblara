@@ -39,5 +39,8 @@ $('.cancel-edit').click(function () {
 $('body').on('submit', 'form.ajax', function (e) {
 	e.preventDefault();
 });
+/*file uploader*/
+ $('.file-uploader').filemanager($(this).data('type'));
+/*file uploader*/
 	// $("#ipo-accordion").accordion("option", "active", 1);
 });

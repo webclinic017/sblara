@@ -1,5 +1,6 @@
 @extends('layouts.metronic.default')
 @section('content')
+{!!imageUploader('image')!!}
 <div class="portlet light bordered">
     <div class="portlet-title">
         <div class="caption font-dark">
@@ -20,7 +21,8 @@
             <hr>
             <div class="form-body">
                 <div class="col-md-4">
-                    
+
+
                     <div class="form-group">
                         <label class="control-label">Year</label>
                         <div class="input-icon right">
@@ -108,6 +110,8 @@
 
 @endsection
 @section('js')
+
+
 <script>
     var table = $('#datatable').DataTable({
         processing: true,
