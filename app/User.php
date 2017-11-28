@@ -55,6 +55,11 @@ class User extends Authenticatable {
                     ->withTimestamps();
     }
 
+    public function joinedContests()
+    {
+        return $this->hasMany(\App\ContestPortfolio::class);
+    }
+
     /**
      * Get all of the shares for the user.
      *

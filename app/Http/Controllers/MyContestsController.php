@@ -22,9 +22,11 @@ class MyContestsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('my_contests.index');
+        $portfolios = $request->user()->joinedContests()->with('contest.creator')->get();
+       
+        return view('my_contests.index')->with(compact('portfolios'));
     }
 
     /**

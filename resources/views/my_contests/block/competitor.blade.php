@@ -22,12 +22,16 @@
                     </thead>
 
                     <tbody>
-                        @forelse ($contests->contestPortfolios as $contest)
-                            @if ($contest->creator)
+
+                        @forelse ($portfolios as $portfolio)
+                        @php
+                        $contest = $portfolio->contest;
+                        @endphp
+                            @if ($contest->creator->name)
                                 <tr>
                                     <td>
                                         <a href="{{ route('contests.show', $contest) }}">
-                                            {{ $contest->name }}
+                                            {{$contest->name}}
                                         </a>
                                     </td>
                                     <td>{{ $contest->creator->name }}</td>
@@ -41,7 +45,7 @@
                                         @endif
                                     </td>
                                     <td>
-                                        <a href="{{ route('contests.portfolios.show', $contest->pivot->id) }}" class="btn btn-primary btn-xs">View</a>
+                                        <a href="{{ route('contests.portfolios.show', $contest->id) }}" class="btn btn-primary btn-xs">View</a>
                                     </td>
                                 </tr>
                             @else

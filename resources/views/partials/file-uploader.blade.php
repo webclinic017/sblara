@@ -5,7 +5,7 @@
              <i class="fa fa-upload"></i> Choose
            </a>
          </span>
-         <input id="{{$name}}" class="form-control" type="text" name="{{$name}}">
+         <input id="{{$name}}" class="form-control" type="hidden" name="{{$name}}">
        </div>
        <img id="{{$name}}_holder" style="margin-top:15px;max-height:100px;">
   </div>
