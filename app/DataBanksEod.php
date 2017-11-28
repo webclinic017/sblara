@@ -8,6 +8,8 @@ use DB;
 
 class DataBanksEod extends Model
 {
+    const UPDATED_AT = 'updated';
+
     protected $appends = array('date_timestamp');
     protected $dates = [
         'date',
@@ -159,6 +161,8 @@ class DataBanksEod extends Model
         $sql = "SELECT `instrument_id`, count(*) as count FROM $table WHERE date between '" . $date_b . "' and '" . $date_e . "' and `instrument_id` in (" . $instruments . ")  group by `instrument_id`";
         return DB::Select($sql);
     }
+
+
 
 
 }

@@ -22,6 +22,8 @@ class Kernel extends ConsoleKernel
         Commands\PluginIntradayDataWriteCommand::class,
         Commands\RemoveDuplicateEodCommand::class,
         Commands\GenerateCustomIndexCommand::class,
+        Commands\EodIntradayCommand::class,
+        Commands\TradeDataCommand::class,
     ];
 
     /**
@@ -36,9 +38,9 @@ class Kernel extends ConsoleKernel
         $schedule->command('plugin:resetIntra')->dailyAt('17:00')->emailOutputTo('fazalmohammad19@gmail.com');
         $schedule->command('plugin:resetAdjustedEod')->dailyAt('17:45')->emailOutputTo('fazalmohammad19@gmail.com');
 
-        $schedule->command('index:generateCustomIndex')->cron('* 10,11,12,13,14 * * 0,1,2,3,4')->when(function () {
+       /* $schedule->command('index:generateCustomIndex')->cron('* 10,11,12,13,14 * * 0,1,2,3,4')->when(function () {
             return Market::isMarketOpen();
-        });
+        })->emailOutputTo('fazalmohammad19@gmail.com');*/
 
     }
 

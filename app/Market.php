@@ -221,5 +221,29 @@ class Market extends Model
     }
 
 
+    /*
+     * This function is used in EodIntradayCommand
+     * It will return last valid trade date or false
+     *
+     * */
+
+    public static function validateTradeDate($trade_date_to_validate=null, $exchangeId = 0)
+    {
+
+        /*We will use session value of active_exchange_id as default if exist*/
+        if (!$exchangeId) {
+            $exchangeId = session('active_exchange_id', 1);
+        }
+
+        $trade_date_to_validate=Carbon::parse($trade_date_to_validate);
+        $activeTradeDates = self::getActiveDates(1, null, $exchangeId)->first();
+
+        if ($trade_date_to_validate->eq($activeTradeDates->trade_date))
+            return $activeTradeDates;
+        else
+            return false;
+    }
+
+
 
 }
