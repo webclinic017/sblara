@@ -12,7 +12,7 @@ Route::patch('/mycontests/{contest}/disapprove/{user}', 'MyContestStatusesContro
 Route::patch('/mycontests/{contest}/block', 'MyContestStatusesController@block')->name('mycontests.block');
 Route::patch('/mycontests/{contest}/unblock', 'MyContestStatusesController@unblock')->name('mycontests.unblock');
 // Join Contest routes..
-Route::post('/contests/{contest}/join', 'JoinContestsController@store')->name('contests.join');
+Route::match(['get', 'post'], '/contests/{contest}/join', 'JoinContestsController@store')->name('contests.join');
 // My Contests routes..
 Route::resource('/mycontests', 'MyContestsController');
 Route::get('/mycontests', 'MyContestsController@index')->name('mycontests');
@@ -20,6 +20,10 @@ Route::get('/mycontests', 'MyContestsController@index')->name('mycontests');
 Route::resource('/contests', 'ContestsController');
 Route::get('/contests', 'ContestsController@index')->name('contests');
 //========================  Contest End  ======================== 
+
+//========================  Admin Start  ======================== 
+Route::get('/administrator', 'ContestsController@index')->name('contests');
+//========================  Admin End  ======================== 
 
 // User routes
 Route::get('user-information', 'UserController@userInformationChange')->name('user-information')->middleware('auth');
