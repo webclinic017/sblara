@@ -6,6 +6,7 @@
 {{--<script src="{{ mix('metronic_home.js') }}"></script>--}}
 
 <script src="{{ asset('metronic/assets/global/plugins/jquery.min.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.0.5/sweetalert2.all.js"></script>
 <script src="{{ asset('metronic/assets/global/plugins/bootstrap/js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('metronic/assets/global/plugins/js.cookie.min.js') }}"></script>
 <script src="{{ asset('metronic/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js') }}"></script>
@@ -70,6 +71,6 @@
 
 <script src="{{ asset('js/slimscroll.min.js') }}"></script>
 <script src="{{ asset('js/search.js') }}"></script>
-<script src="{{ asset('js/se.js') }}"></script>
+<script src="{{ asset('js/se.js') }}?v={{uniqid()}}"></script>
 {{--<script src="{{ asset('js/filter.js') }}" type="text/javascript"></script>--}}
 @stack('scripts')

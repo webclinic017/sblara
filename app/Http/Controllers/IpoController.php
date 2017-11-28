@@ -7,14 +7,18 @@ use App\Ipo;
 
 class IpoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function upcoming()
     {
         // dd(Ipo::first());
+        return view('ipo.upcoming');
+    }
+
+    public function index(Request $request)
+    {
+        if($request->has('draw'))
+        {
+            return $this->datatable($request);
+        }
         return view('ipo.index');
     }
 
@@ -80,9 +84,9 @@ class IpoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Ipo $ipo)
     {
-        //
+        $ipo->delete();
     }
 
     public function history(Request $request)
@@ -97,5 +101,11 @@ class IpoController extends Controller
         $year = $request->has('year')?$request->year:2017;
         return view('ipo.results')
                 ->with(compact('year'));
+    }
+
+    public function datatable(Request $request)
+    {
+        $ipos = Ipo::all();
+        return datatables()->of($ipos)->make();
     }
 }
