@@ -6,6 +6,7 @@
         <div class="caption font-dark">
             <i class="icon-settings font-dark"></i>
             <span class="caption-subject bold uppercase"> Manage IPO</span>
+            <h3 class="text-center text-success">{{ Session::get('message') }}</h3>
         </div>
     </div>
     <div class="portlet-body">
@@ -25,7 +26,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label class="control-label">Year</label>
-                            <div class="input-group date date-picker" data-date="12-02-2012" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
+                            <div class="input-group date date-picker" data-date="" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
                                 <input type="text" name="year" class="form-control" readonly>
                                 <span class="input-group-btn">
                                     <button class="btn default" type="button">
