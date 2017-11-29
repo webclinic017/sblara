@@ -11,7 +11,8 @@
     <div class="portlet-body">
         {{-- form --}}
         <div id="editing" class="hidden">
-            <form role="form" class="ajax">
+            {!! Form::open(['url' => '/admin/ipos', 'method'=>'POST']) !!}
+            <!--<form role="form" class="ajax">-->
                 <div class="col-md-12" >
                     <div class="form-actions pull-right" >
                         <button type="button" class="btn default cancel-edit">Cancel</button>
@@ -296,7 +297,8 @@
                         <button type="submit" class="btn green">Submit</button>
                     </div>
                 </div>
-            </form>
+            <!--</form>-->
+            {!! Form::close() !!}
         </div>
         {{-- form --}}
         <div id="showing">
