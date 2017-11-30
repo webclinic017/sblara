@@ -52,7 +52,7 @@
                                     <div class="form-group">
                                         <label class="control-label">Add Attachment</label>
                                         <div class="input-icon right">
-                                            {!!imageUploader('attachment[]')!!}
+                                            {!!imageUploader('attachment')!!}
                                         </div>
                                     </div>
                                 </div>
