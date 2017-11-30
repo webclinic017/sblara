@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\ContestPortfolio;
-use Illuminate\Http\Request;
-
+use Illuminate\Http\Request;    
+use App\Instrument;
+use App\Repositories\InstrumentRepository;
 class ContestPortfoliosController extends Controller
 {
     /**
@@ -80,6 +81,40 @@ class ContestPortfoliosController extends Controller
             $portfolioPercent   = $amount / $amountSumOfPortfolio * 100;*/
         }
         
+/*copied from portfolio share controller*/
+        $portfolio->load('contest', 'shares');
+
+        $company_info   = null;
+        $purchase_power = null;
+        $max_shares     = null;
+
+        $instruments=InstrumentRepository::getInstrumentsScripOnly();
+        $instruments=$instruments->pluck('instrument_code', 'id')->prepend('Select a company', '');
+
+
+        if ($id = request()->company_info) {
+            $company_info = Instrument::with('data_banks_intraday')->find($id);
+            $buying_price = $company_info->data_banks_intraday->close_price;
+
+            if ($portfolio->shares) {
+                $sum_shares     = $portfolio->shares->sum('no_of_shares');
+                $total_shares   = $sum_shares * $buying_price;
+
+                $purchase_power = $portfolio->contest->contest_amount * $portfolio->contest->max_amount / 100;
+                $purchase_power -= $total_shares;
+
+                $max_shares     = $purchase_power / $buying_price;
+            } else {
+                $purchase_power = $portfolio->cash_amount * $portfolio->contest->max_amount / 100;
+                $max_shares     = $purchase_power / $buying_price;
+            }
+
+            return view('contest_portfolio_shares.market_info')->with(compact('portfolio', 'company_info', 'purchase_power', 'max_shares'));
+
+        }
+/*copied from portfolio share controller*/
+
+
         return view('contest_portfolio_shares.show', [
             'portfolio'        => $portfolio,
             'lastTradePrice'   => $lastTradePrice,
@@ -94,6 +129,12 @@ class ContestPortfoliosController extends Controller
             'percentChange'    => $changePercentTotal,
             'percentPortfolio' => 0, // Todo portfolioPercent,
             'sellValue'        => $sellValue,
+            // se change
+            'instruments'    => $instruments,
+            'company_info'   => $company_info,
+            'purchase_power' => $purchase_power,
+            'max_shares'     => $max_shares
+            // se change
         ]);
     }
 }

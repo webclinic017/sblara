@@ -75,4 +75,14 @@
 <script src="{{asset('vendor/laravel-filemanager/js/lfm.js')}}"></script>
 <script src="{{ asset('js/se.js') }}?v={{uniqid()}}"></script>
 {{--<script src="{{ asset('js/filter.js') }}" type="text/javascript"></script>--}}
+{{-- uploaer --}}
+<script src="//blueimp.github.io/JavaScript-Templates/js/tmpl.min.js"></script>
+<!-- The Load Image plugin is included for the preview images and image resizing functionality -->
+<script src="//blueimp.github.io/JavaScript-Load-Image/js/load-image.all.min.js"></script>
+<!-- The Canvas to Blob plugin is included for image resizing functionality -->
+<script src="//blueimp.github.io/JavaScript-Canvas-to-Blob/js/canvas-to-blob.min.js"></script>
+<!-- Bootstrap JS is not required, but included for the responsive demo navigation -->
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<!-- blueimp Gallery script -->
+<script src="//blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js"></script>
 @stack('scripts')

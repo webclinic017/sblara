@@ -1,4 +1,43 @@
 var token = $('meta[name="csrf-token"]').attr('content');
+var loadingHtml = `
+	<img src="/img/loading.gif" class='loading' alt="" />
+`;
+function startLoading(e) {
+	e.after(loadingHtml);
+}
+function endLoading() {
+	$('.loading').remove();
+}
+class Form{
+	constructor(data)
+	{
+		this.method = "POST";
+		this.data = data;
+		return this;
+	}
+	 submit(success, fail) {
+		var data = new FormData(this.data);
+	    $.ajax({
+	        url: window.location.pathname,
+	        type: this.method,
+	        data: data,
+	        headers: {
+			        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			    },
+	        success: success,
+	        error: fail,
+	        cache: false,
+	        contentType: false,
+	        processData: false
+	    });
+	}
+
+	reset(){
+		this.data.reset();
+		return this;
+	}
+}
+
 function deleteRequest(url) {
 	swal({
 	  title: 'Are you sure?',
@@ -21,7 +60,7 @@ function deleteRequest(url) {
 	})
 }
 function editIpo(id) {
-	
+	$.get('/admin/ipos/'+id);
 }
 function deleteIpo(id) {
 	deleteRequest('/admin/ipos/'+id);
@@ -37,7 +76,16 @@ $('.cancel-edit').click(function () {
 })
 
 $('body').on('submit', 'form.ajax', function (e) {
-	e.preventDefault();
+		e.preventDefault();
+		var form = new Form(this);	
+			form.submit(function () {
+					form.reset();
+					$('#datatable').DataTable().ajax.reload();
+				}, function (error) {
+					formAlert(error);
+				});
+
+	    return false;
 });
 /*file uploader*/
  $('.file-uploader').filemanager($(this).data('type'));

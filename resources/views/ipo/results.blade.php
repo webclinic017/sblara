@@ -12,51 +12,34 @@
             </div>
         </div>
         <div class="portlet-body">
-            <div class="panel-group accordion" id="ipo-accordion">
+            @foreach( $ipos as $ipo )
+            <div class="panel-group accordion" id="ipo-accordion_{{$ipo->id}}">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title">
-                            <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion1" href="#collapse_1" aria-expanded="false"> <span><h3>Company Name</h3></span> <br>
-                                <span>Subscription Open: <b>September 5, 2017</b> </span>
-                                <span>Subscription Close: <b>September 5, 2017</b> </span>
+                            <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion1" href="#collapse_{{$ipo->id}}" aria-expanded="false"> <span><h3>{{$ipo->ipo_name}}</h3></span> <br>
+                                <span>SUBSCRIPTION PERIOD: SUNDAY, SEP 24, 2017 -- TUESDAY, OCT 03, 2017</span>
                              </a>
                         </h4>
                     </div>
-                    <div id="collapse_1" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                    <div id="collapse_{{$ipo->id}}" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
                         <div class="panel-body">
                             <div class="col-md-4">
-                                <table>
-                                    <tr>
-                                        <td>Proposed Share :    </td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Face Value:    </td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Offered Value:   </td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Market Lot :  </td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>EPS :  </td>
-                                        <td></td>
-                                    </tr>
-                                </table>
                             </div>
                             <div class="col-md-8">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum expedita a aut sequi beatae, minima ducimus magnam culpa! Placeat minima quos cupiditate illo minus debitis ullam animi nesciunt nostrum earum.</p>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum expedita a aut sequi beatae, minima ducimus magnam culpa! Placeat minima quos cupiditate illo minus debitis ullam animi nesciunt nostrum earum.</p>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum expedita a aut sequi beatae, minima ducimus magnam culpa! Placeat minima quos cupiditate illo minus debitis ullam animi nesciunt nostrum earum.</p>
+                                <ul>
+                                    <li><a href="{{$ipo->bank_code?asset($ipo->bank_code):'javascript:'}}">Bank / Branch Code</a></li>
+                                    <li><a href="{{$ipo->result_general?asset($ipo->result_general):'javascript:'}}">General Public [Other than NRB]</a></li>
+                                    <li><a href="{{$ipo->result_nrb?asset($ipo->result_nrb):'javascript:'}}">Non - Resident Bangladeshi (NRB)</a></li>
+                                    <li><a href="{{$ipo->result_mutual_fund?asset($ipo->result_mutual_fund):'javascript:'}}">Mutual Fund</a></li>
+                                    <li><a href="{{$ipo->bank_code?asset($ipo->bank_code):'javascript:'}}">Affected Small Investor</a></li>
+                                </ul>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            @endforeach
         </div>
     </div>
 </div>
