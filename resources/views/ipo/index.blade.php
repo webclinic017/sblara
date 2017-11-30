@@ -24,6 +24,16 @@
                 <hr>
                 <div class="form-body">
                     <div class="col-md-4">
+
+     <div class="form-group has-error">
+        <label class=" control-label">Input with error</label>
+      
+            <div class="input-icon right">
+                <i class="fa fa-exclamation tooltips" data-original-title="please write a valid email" data-container="body"></i>
+                <input type="text" class="form-control">
+             </div>
+     
+    </div>
                         <div class="form-group">
                             <label class="control-label">Year</label>
                             <div class="input-group date date-picker" data-date="" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
