@@ -108,7 +108,9 @@ class ContestPortfoliosController extends Controller
                 $purchase_power = $portfolio->cash_amount * $portfolio->contest->max_amount / 100;
                 $max_shares     = $purchase_power / $buying_price;
             }
+
             return view('contest_portfolio_shares.market_info')->with(compact('portfolio', 'company_info', 'purchase_power', 'max_shares'));
+
         }
 /*copied from portfolio share controller*/
 
