@@ -11,8 +11,8 @@
                     <a href="javascript:;" class="collapse" data-original-title="" title=""> </a>
                 </div>
             </div>
-            @foreach( $ipos as $ipo )
             <div class="portlet-body">
+                @foreach( $ipos as $ipo )
                 <div class="panel-group accordion" id="ipo-accordion_{{$ipo->id}}">
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -60,16 +60,17 @@
                                     <p>{{$ipo->issue_manager}}</p>
                                     <strong>NAV :</strong>
                                     <p>
-                                    {{$ipo->revaluation_reserve}} :<br>
-                                    {{$ipo->w_revaluation_reserve}} :
+                                        {{$ipo->revaluation_reserve}} :<br>
+                                        {{$ipo->w_revaluation_reserve}} :
                                     </p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                @endforeach
             </div>
-            @endforeach
+
         </div>
     </div>
 </div>

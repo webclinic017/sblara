@@ -1,5 +1,13 @@
 var token = $('meta[name="csrf-token"]').attr('content');
-
+var loadingHtml = `
+	<img src="/img/loading.gif" class='loading' alt="" />
+`;
+function startLoading(e) {
+	e.after(loadingHtml);
+}
+function endLoading() {
+	$('.loading').remove();
+}
 class Form{
 	constructor(data)
 	{

@@ -11,6 +11,7 @@
       window.SetUrl = function (url, file_path) {
           //set the value of the desired input to image url
           var target_input = $('#' + localStorage.getItem('target_input'));
+     
           target_input.val(file_path).trigger('change');
 
           //set or change the preview image src

@@ -171,8 +171,9 @@ class IpoController extends Controller
     public function results(Request $request)
     {
         $year = $request->has('year')?$request->year:2017;
+        $ipos = Ipo::take(200)->get();
         return view('ipo.results')
-                ->with(compact('year'));
+                ->with(compact('year','ipos'));
     }
 
     public function datatable(Request $request)
