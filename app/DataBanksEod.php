@@ -8,8 +8,9 @@ use DB;
 
 class DataBanksEod extends Model
 {
-    const UPDATED_AT = 'updated';
-
+    public $timestamps=false;
+    //protected $fillable = ['*'];
+    protected $guarded = ['id'];
     protected $appends = array('date_timestamp');
     protected $dates = [
         'date',
