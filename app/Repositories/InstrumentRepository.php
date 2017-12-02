@@ -15,15 +15,14 @@ class InstrumentRepository {
     //$key= name or id
     public static function getInstrumentsGroupBySector($key='name',$exchangeId=0)
     {
-        $allInstruments=Instrument::getInstrumentsAll()->groupBy('sector_list_id')->first();
+        $allInstruments=Instrument::getInstrumentsAll()->groupBy('sector_list_id');
         $allSectors=SectorList::getSectorList();
 
         $instrumentGrouped=array();
-        foreach($allInstruments as $ins)
+        foreach($allInstruments as $sector_list_id=>$all_instrument_of_this_sector)
         {
-            $sector_list_id=$ins->sector_list_id;
-            $key=$allSectors->where('id',$sector_list_id)->first()->$key;
-            $instrumentGrouped[$key][]=$ins;
+            $key_value=$allSectors->where('id',$sector_list_id)->first()->$key;
+            $instrumentGrouped[$key_value]=$all_instrument_of_this_sector;
         }
 
         return $instrumentGrouped;

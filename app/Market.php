@@ -218,7 +218,15 @@ class Market extends Model
         // adding to minute with market close time. It is needed to ensure run cron at 2.30 minutes to take latest data
         $activeTradeDates->market_closed=$activeTradeDates->market_closed->addMinutes(2);
 
-        if($now->gte($activeTradeDates->market_started) and $now->lte($activeTradeDates->market_closed))
+        // It was not wise keeping the start_time and end time as time data type. It should be date_time.
+        // For this mistake we have to join time with date here
+
+        $market_started=$activeTradeDates->trade_date->format('Y-m-d').' '.$activeTradeDates->market_started->format('H:i');
+        $market_started=Carbon::parse($market_started);
+        $market_closed=$activeTradeDates->trade_date->format('Y-m-d').' '.$activeTradeDates->market_closed->format('H:i');
+        $market_closed=Carbon::parse($market_closed);
+
+        if($now->gte($market_started) and $now->lte($market_closed))
             return true;
         else
             return false;

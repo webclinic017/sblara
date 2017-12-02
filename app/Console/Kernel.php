@@ -27,6 +27,7 @@ class Kernel extends ConsoleKernel
         Commands\UpdateDseNewsCommand::class,
         Commands\UpdateDseIndexCommand::class,
         Commands\ParseMstCommand::class,
+        Commands\CalculateSectorIntradayCommand::class,
     ];
 
     /**

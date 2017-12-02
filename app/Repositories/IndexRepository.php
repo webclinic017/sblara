@@ -53,6 +53,7 @@ class IndexRepository {
         return $returnData;
     }
 
+    // $limit=0 will return all index data of a trade_date
     public static function getIndexData($limit=0,$tradeDate=null,$exchangeId=0)
     {
 

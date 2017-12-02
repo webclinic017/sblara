@@ -7,13 +7,13 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
 @section('content')
 
 <div class="row">
-    <div class="col-lg-10 col-md-10 col-sm-6 col-xs-12">
+    <div class="col-lg-12 col-md-12 col-sm-6 col-xs-12">
 
         @include('block.market_summary')
     </div>
 </div>
 <div class="row">
-    <div class="col-lg-10 col-md-10 col-sm-6 col-xs-12">
+    <div class="col-lg-12 col-md-12 col-sm-6 col-xs-12">
         @include('block.index_chart')
     </div>
 </div>
@@ -21,7 +21,7 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
 
 <div class="row">
     {{--Main content column: Start--}}
-    <div class="col-lg-10 col-md-10 col-sm-6 col-xs-12">
+    <div class="col-lg-12 col-md-12 col-sm-6 col-xs-12">
 
     {{--New row START--}}
         <div class="row">
@@ -47,7 +47,7 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
 
                     </div>
                     <div class="portlet-body">
-                        {{--@include('block.dsb_news')--}}
+                        @include('block.dsb_news')
                     </div>
                 </div>
                 <!-- END Portlet PORTLET-->
@@ -368,11 +368,7 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
 
 </div>
 {{--Main content column: End--}}
-{{--Ads column : Starts--}}
-<div class="col-lg-2 col-md-10 col-sm-6 col-xs-12">
 
-</div>
-{{--Ads column : Ends--}}
 </div>
 
 {{-- full row at the bottom START--}}
