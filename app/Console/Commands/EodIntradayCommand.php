@@ -87,9 +87,7 @@ class EodIntradayCommand extends Command
             if($activeTradeDates=Market::validateTradeDate($trade_date))
             {
                 // its returning today data. So we will proceed here
-                $market_id=$activeTradeDates->market_id;
-
-
+                $market_id=$activeTradeDates->id;
 
 
                 //////////////////////////// BATCH DEALINGS \\\\\\\\\\\\\\\\\\\\\\\\
@@ -123,60 +121,68 @@ class EodIntradayCommand extends Command
                     $dataToSave = array();
 
                     foreach ($dataFromDseServer as $data) {
+
                         $instrument_info = $instrumentList->where('instrument_code', trim($data->MKISTAT_INSTRUMENT_CODE))->first();
+
                         if (count($instrument_info)) {
                             $instrument_id = $instrument_info->id;
                             $ltp = $data->MKISTAT_CLOSE_PRICE != 0 ? $data->MKISTAT_CLOSE_PRICE : ($data->MKISTAT_PUB_LAST_TRADED_PRICE != 0 ? $data->MKISTAT_PUB_LAST_TRADED_PRICE : $data->MKISTAT_SPOT_LAST_TRADED_PRICE);
 
                             /////////////////// WE WILL PROCESS EOD DATA FIRST \\\\\\\\\\\\\\\\\\\\\\\
 
-
-                            $eod = DataBanksEod::updateOrCreate(
-                                ['market_id' => $market_id, 'instrument_id' => $instrument_id],
-                                [
-                                    'open' => $data->MKISTAT_OPEN_PRICE,
-                                    'high' => $data->MKISTAT_HIGH_PRICE,
-                                    'low' => $data->MKISTAT_LOW_PRICE,
-                                    'close' => $ltp,
-                                    'volume' => $data->MKISTAT_TOTAL_VOLUME,
-                                    'trade' => $data->MKISTAT_TOTAL_TRADES,
-                                    'tradevalues' => $data->MKISTAT_TOTAL_VALUE,
-                                    'date' => $trade_date
-                                ]
-                            );
-                            $this->info($instrument_info->instrument_code . ' Inserted/ Updated into DataBankEod');
-
-
-                            /////////////////// WE WILL PROCESS INTRADAY DATA NOW \\\\\\\\\\\\\\\\\\\\\\\
-
-
-                            $temp = array();
-                            $temp['market_id'] = $market_id;
-                            $temp['instrument_id'] = $instrument_id;
-                            $temp['quote_bases'] = $data->MKISTAT_QUOTE_BASES;
-                            $temp['open_price'] = $data->MKISTAT_OPEN_PRICE;
-                            $temp['pub_last_traded_price'] = $data->MKISTAT_PUB_LAST_TRADED_PRICE;
-                            $temp['spot_last_traded_price'] = $data->MKISTAT_SPOT_LAST_TRADED_PRICE;
-                            $temp['high_price'] = $data->MKISTAT_HIGH_PRICE;
-                            $temp['low_price'] = $data->MKISTAT_LOW_PRICE;
-                            $temp['close_price'] = $data->MKISTAT_CLOSE_PRICE;
-                            $temp['yday_close_price'] = $data->MKISTAT_YDAY_CLOSE_PRICE;
-                            $temp['total_trades'] = $data->MKISTAT_TOTAL_TRADES;
-                            $temp['total_volume'] = $data->MKISTAT_TOTAL_VOLUME;
-                            $temp['total_value'] = $data->MKISTAT_TOTAL_VALUE;
-                            $temp['public_total_trades'] = $data->MKISTAT_PUBLIC_TOTAL_TRADES;
-                            $temp['public_total_volume'] = $data->MKISTAT_PUBLIC_TOTAL_VOLUME;
-                            $temp['public_total_value'] = $data->MKISTAT_PUBLIC_TOTAL_VALUE;
-                            $temp['spot_total_trades'] = $data->MKISTAT_SPOT_TOTAL_TRADES;
-                            $temp['spot_total_volume'] = $data->MKISTAT_SPOT_TOTAL_VOLUME;
-                            $temp['spot_total_value'] = $data->MKISTAT_SPOT_TOTAL_VALUE;
-                            $temp['lm_date_time'] = date('Y-m-d H:i:s', strtotime($data->MKISTAT_LM_DATE_TIME));
-                            $temp['trade_time'] = date('H:i', strtotime($data->MKISTAT_LM_DATE_TIME));
-                            $temp['trade_date'] = date('Y-m-d', strtotime($data->MKISTAT_LM_DATE_TIME));
-                            $temp['batch'] = $data_bank_intraday_batch;
+                           // dump($market_id);
+                          //  dump($instrument_id);
+                          //  dump($data->MKISTAT_OPEN_PRICE);
+                            if($data->MKISTAT_TOTAL_VOLUME) {
+                                 $eod = DataBanksEod::updateOrCreate(
+                                     ['market_id' => $market_id, 'instrument_id' => $instrument_id],
+                                     [
+                                         'open' => $data->MKISTAT_OPEN_PRICE,
+                                         'high' => $data->MKISTAT_HIGH_PRICE,
+                                         'low' => $data->MKISTAT_LOW_PRICE,
+                                         'close' => $ltp,
+                                         'volume' => $data->MKISTAT_TOTAL_VOLUME,
+                                         'trade' => $data->MKISTAT_TOTAL_TRADES,
+                                         'tradevalues' => $data->MKISTAT_TOTAL_VALUE,
+                                         'updated' => date('Y-m-d H:i:s'),
+                                         'date' => $trade_date
+                                     ]
+                                 );
+                                 //$this->info($instrument_info->instrument_code . ' Inserted/ Updated into DataBankEod');
 
 
-                            $dataToSave[] = $temp;
+                                /////////////////// WE WILL PROCESS INTRADAY DATA NOW \\\\\\\\\\\\\\\\\\\\\\\
+
+
+                                $temp = array();
+                                $temp['market_id'] = $market_id;
+                                $temp['instrument_id'] = $instrument_id;
+                                $temp['quote_bases'] = $data->MKISTAT_QUOTE_BASES;
+                                $temp['open_price'] = $data->MKISTAT_OPEN_PRICE;
+                                $temp['pub_last_traded_price'] = $data->MKISTAT_PUB_LAST_TRADED_PRICE;
+                                $temp['spot_last_traded_price'] = $data->MKISTAT_SPOT_LAST_TRADED_PRICE;
+                                $temp['high_price'] = $data->MKISTAT_HIGH_PRICE;
+                                $temp['low_price'] = $data->MKISTAT_LOW_PRICE;
+                                $temp['close_price'] = $data->MKISTAT_CLOSE_PRICE;
+                                $temp['yday_close_price'] = $data->MKISTAT_YDAY_CLOSE_PRICE;
+                                $temp['total_trades'] = $data->MKISTAT_TOTAL_TRADES;
+                                $temp['total_volume'] = $data->MKISTAT_TOTAL_VOLUME;
+                                $temp['total_value'] = $data->MKISTAT_TOTAL_VALUE;
+                                $temp['public_total_trades'] = $data->MKISTAT_PUBLIC_TOTAL_TRADES;
+                                $temp['public_total_volume'] = $data->MKISTAT_PUBLIC_TOTAL_VOLUME;
+                                $temp['public_total_value'] = $data->MKISTAT_PUBLIC_TOTAL_VALUE;
+                                $temp['spot_total_trades'] = $data->MKISTAT_SPOT_TOTAL_TRADES;
+                                $temp['spot_total_volume'] = $data->MKISTAT_SPOT_TOTAL_VOLUME;
+                                $temp['spot_total_value'] = $data->MKISTAT_SPOT_TOTAL_VALUE;
+                                $temp['lm_date_time'] = date('Y-m-d H:i:s', strtotime($data->MKISTAT_LM_DATE_TIME));
+                                $temp['trade_time'] = date('H:i', strtotime($data->MKISTAT_LM_DATE_TIME));
+                                $temp['trade_date'] = date('Y-m-d', strtotime($data->MKISTAT_LM_DATE_TIME));
+                                $temp['batch'] = $data_bank_intraday_batch;
+
+                                //dd($temp);
+
+                                $dataToSave[] = $temp;
+                            }
 
 
                         }

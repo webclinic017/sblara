@@ -20,21 +20,21 @@ use App\Repositories\IndexRepository;
 
 
 
-class TradeDataCommand extends Command
+class UpdateDseNewsCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'dse:TradeData';
+    protected $signature = 'dse:UpdateDseNews';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Fetching Trade data data every minutes from DSE TRD tables';
+    protected $description = 'Fetching dse news from DSE MAN tables';
 
     /**
      * Create a new command instance.
@@ -53,9 +53,7 @@ class TradeDataCommand extends Command
      */
 
 
-
-// live server command   /opt/cpanel/ea-php70/root/usr/bin/php /home/hostingmonitors/artisan dse:TradeData
-// source update_eods_and_intraday_data cron of old site
+// live server command   /opt/cpanel/ea-php70/root/usr/bin/php /home/hostingmonitors/artisan dse:UpdateDseNews
     public function handle()
     {
 
@@ -68,10 +66,10 @@ class TradeDataCommand extends Command
         {
 
 
-            $querystr = "select * from TRD";
+            $querystr = "select * from MAN ORDER BY MAN_ANNOUNCEMENT_DATE_TIME ASC";
             $dataFromDseServer = DB::connection('dse')->select($querystr);
 
-            $date_time = $dataFromDseServer[0]->TRD_LM_DATE_TIME;
+            $date_time = $dataFromDseServer[0]->MAN_ANNOUNCEMENT_DATE_TIME;
             $convertedTimestamp = strtotime($date_time);
             $trade_date = date('Y-m-d', $convertedTimestamp);
 
@@ -80,32 +78,51 @@ class TradeDataCommand extends Command
             if($activeTradeDates=Market::validateTradeDate($trade_date))
             {
                 // its returning today data. So we will proceed here
-                $market_id = $activeTradeDates->id;
+                $market_id=$activeTradeDates->id;
+                $instrumentList = InstrumentRepository::getInstrumentsScripWithIndex();
+
 
                 foreach($dataFromDseServer as $data)
                 {
-                    $data->TRD_LM_DATE_TIME = str_replace('at', '', $data->TRD_LM_DATE_TIME);
+                    $instrument_info = $instrumentList->where('instrument_code', trim($data->MAN_ANNOUNCEMENT_PREFIX))->first();
+
+
+                    if(!is_null($instrument_info))
+                    {
+                        $instrument_id = $instrument_info->id;
+                    }
+                    else
+                    {
+                        // some prefix like REGL, EXCH etc is not instrument. So we will set instrument_id =0 for these type of prefix
+                        $instrument_id = 0;
+                    }
+
 
                     $temp = array();
                     $temp['market_id'] = $market_id;
-                    $temp['TRD_SNO'] = $data->TRD_SNO;
-                    $temp['TRD_TOTAL_TRADES'] = $data->TRD_TOTAL_TRADES;
-                    $temp['TRD_TOTAL_VOLUME'] = $data->TRD_TOTAL_VOLUME;
-                    $temp['TRD_TOTAL_VALUE'] = $data->TRD_TOTAL_VALUE;
-                    $temp['TRD_LM_DATE_TIME'] = date('Y-m-d H:i:s', strtotime($data->TRD_LM_DATE_TIME));
-                    $temp['trade_time'] = date('H:i', strtotime($data->TRD_LM_DATE_TIME));
-                    $temp['trade_date'] = date('Y-m-d', strtotime($data->TRD_LM_DATE_TIME));
+                    $temp['instrument_id'] = $instrument_id;
+                    $temp['prefix'] = trim($data->MAN_ANNOUNCEMENT_PREFIX);
+                    $temp['details'] = $data->MAN_ANNOUNCEMENT;
+                    $temp['post_date'] = date('Y-m-d H:i:s', strtotime($data->MAN_ANNOUNCEMENT_DATE_TIME));
+                    $temp['expire_date'] = date('Y-m-d H:i:s', strtotime($data->MAN_EXPIRY_DATE));
+                    $temp['is_active'] = 1;
 
                     $dataToSave[] = $temp;
 
 
                 }
 
+
+
+
                 if (!empty($dataToSave)) {
+                    //first delete all news of trade_date
+                    DB::table('news')->where('market_id', $market_id)->delete();
 
-                    DB::table('trades')->insert($dataToSave);
+                    // re insert all news of trade date.
+                    DB::table('news')->insert($dataToSave);
 
-                    $this->info(count($dataToSave) . ' row inserted into trades');
+                    $this->info(count($dataToSave) . ' row inserted into news');
 
                 }
 

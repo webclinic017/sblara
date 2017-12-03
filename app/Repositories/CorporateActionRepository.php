@@ -23,8 +23,9 @@ class CorporateActionRepository {
     {
         if(!$toDate)
         {
-            $toDate=date('Y-m-d',$toDate);
+            $toDate=date('Y-m-d');
         }
+
         $query=CorporateAction::whereBetween('record_date', [$fromDate, $toDate])->where('active',1);
 
         if(!empty($instrumentIdArr))
