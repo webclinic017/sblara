@@ -88,9 +88,12 @@ class IpoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, Ipo $ipo)
     {
-        //
+        if($request->ajax())
+        {
+            return $ipo;
+        }
     }
 
     /**

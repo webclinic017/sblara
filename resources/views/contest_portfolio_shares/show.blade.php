@@ -97,10 +97,12 @@
                                                         <div class="form-group">
                                                             <label for="single-append-text" class="col-md-4 control-label">Select Company:</label>
                                                             <div class="col-md-8">
+                                                                
+                                                                        {{dd($portfolio->shares)}}
                                                                 <div class="input-group select2-bootstrap-append">
                                                                     <select id="single-append-text" class="form-control basic-single-select2 select-company" name="company_info" style="width: 300px;">
-                                                                        @foreach ($instruments as $id => $company)
-                                                                        <option value="{{ $id }}">{{ $company }}</option>
+                                                                        @foreach ($portfolio->shares as $company)
+                                                                        <option value="{{ $company->instrument->instrument_code }}">{{ $company->instrument->name }}</option>
                                                                         @endforeach
                                                                     </select>
                                                                 </div>
@@ -112,65 +114,7 @@
                                         </div>
                                         <!--company info start-->
                                         <div class="company-info">
-                                            <div class="col-md-12">
-                                                <div class="portlet-body form">
-                                                    <div class="portlet-title center">
-                                                        <div class="caption font-green-haze">
-                                                            <span class="caption-subject bold uppercase">{{ $company_info->instrument_code }}</span>
-                                                        </div>
-                                                    </div>
-                                                    <table class="table table-bordered">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Category:</th>
-                                                                <th>
-                                                                    {{-- @php
-                                        $cat = explode('-', $company_info->data_banks_intraday->quote_bases);
-                                    @endphp
-                                    {{ $cat[0] }} --}}
-                                                                    {{ $company_info->data_banks_intraday->quote_bases[0] }}
-                                                                </th>
-                                                            </tr>
-                                                            <tr>
-                                                                <th>Last Trade Price:</th>
-                                                                <th>{{ $company_info->data_banks_intraday->close_price }}</th>
-                                                            </tr>
-                                                            <tr>
-                                                                <th>Market Lot:</th>
-                                                                <th>{{ $max_shares }}</th>
-                                                            </tr>
-                                                            <tr>
-                                                                <th>Quantity:</th>
-                                                                <th>{{ $max_shares }}</th>
-                                                            </tr>
-                                                        </thead>
-                                                    </table>
-                                                </div>
-                                                <div class="portlet-title">
-                                                    <div class="caption font-green-haze">
-                                                        <i class="fa fa-money font-green-haze"></i>
-                                                        <span class="caption-subject bold uppercase"> Sell Price: 
-                                                            <span class="text-danger">{{ $company_info->data_banks_intraday->close_price }}</span>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                                <div class="portlet-body form">
-                                                    <form method="POST" action="{{ route('portfolios.shares.store', $portfolio) }}">
-                                                        {{ csrf_field() }}
-                                                        <div class="row">
-                                                            <div class="col-md-12">
-                                                                <label class="control-label" for="buy_quantity">Sell Quantity:</label>      
-                                                                <div class="form-group">
-                                                                    <div class="input-icon right">
-                                                                        <input type="text" name="buy_quantity" class="form-control"> 
-                                                                        <input type="hidden" class="form-control" name="instrument_id" value="{{ $company_info->id }}">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </div>
+                                    
                                         </div>
                                         <!--company info end-->
                                     </div>

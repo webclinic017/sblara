@@ -1,6 +1,5 @@
 @extends('layouts.metronic.default')
 @section('content')
-
 <div class="portlet light bordered">
     <div class="portlet-title">
         <div class="caption font-dark">
@@ -12,7 +11,8 @@
     <div class="portlet-body">
         {{-- form --}}
         <div id="editing" class="hidden">
-            {!! Form::open(['url' => '/admin/ipos', 'method'=>'POST']) !!}
+            {!! Form::open(['url' => '/admin/ipos', 'method'=>'POST', 'class' => 'ajax']) !!}
+
             <!--<form role="form" class="ajax">-->
             <div class="col-md-12" >
                 <div class="form-actions pull-right" >
@@ -37,28 +37,31 @@
                     <div class="portlet-body portlet-collapsed">
                         <div class="row">
                             <div class="col-md-12">      
-                                <button type="button" class="btn green pull-right">Add More <i class="fa fa-plus"></i></button>
+                                <button type="button" class="btn green pull-right add-more-attachment">Add More <i class="fa fa-plus"></i></button>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row addable-attachments">
+                            <div class="defautl-field">
+                                
                             <div class="col-md-12">
                                 <div class="col-md-4">      
                                     <div class="form-group">
                                         <label class="control-label">Title/File Name</label>
                                         <div class="input-icon right">
-                                            <input type="text" name="title" class="form-control"> 
+                                            <input type="text" name="title[]" class="form-control"> 
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-4">      
                                     <div class="form-group">
-                                        <label class="control-label">Add Attachment</label>
-                                        <div class="input-icon right">
-                                            {!!imageUploader('attachments')!!}
-
-                                        </div>
+                                        <label class="control-label">Attachment</label>
+                                        <input type="file" class="form-control" name="attachments[]"  class="form-control">
                                     </div>
                                 </div>
+                            </div>
+                            </div>
+                            <div class="additional-fields">
+                                
                             </div>
                         </div>
                     </div>
@@ -207,62 +210,6 @@
                 </div>
                 <div class="col-md-4">      
                     <div class="form-group">
-                        <label class="control-label">Bank List</label>
-                        <div class="input-icon right">
-                            {!!fileUploader('bank_list')!!}
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label class="control-label">NRB Form</label>
-                        <div class="input-icon right">
-                            <input type="text" name="nrb_form" class="form-control"> 
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">      
-                    <div class="form-group">
-                        <label class="control-label">Bank Code</label>
-                        <div class="input-icon right">
-                            {!!fileUploader('bank_code')!!}
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">      
-                    <div class="form-group">
-                        <label class="control-label">Result General</label>
-                        <div class="input-icon right">
-                            <input type="text" name="result_general" class="form-control"> 
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">      
-                    <div class="form-group">
-                        <label class="control-label">Result NRB</label>
-                        <div class="input-icon right">
-                            <input type="text" name="result_nrb" class="form-control"> 
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">      
-                    <div class="form-group">
-                        <label class="control-label">Result Mutual Fund</label>
-                        <div class="input-icon right">
-                            <input type="text" name="result_mutual_fund" class="form-control"> 
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label class="control-label">Result Affected Users</label>
-                        <div class="input-icon right">
-                            <input type="text" name="result_affected_users" class="form-control"> 
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">      
-                    <div class="form-group">
                         <label class="control-label">Distribution Locations</label>
                         <div class="input-icon right">
                             <input type="text" name="distribution_locations" class="form-control"> 
@@ -317,22 +264,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">      
-                    <div class="form-group">
-                        <label class="control-label">Result Published</label>
-                        <div class="input-icon right">
-                            <input type="text" name="result_published" class="form-control"> 
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">      
-                    <div class="form-group">
-                        <label class="control-label">Alert Marker</label>
-                        <div class="input-icon right">
-                            <input type="text" name="alert_marker" class="form-control"> 
-                        </div>
-                    </div>
-                </div>
+
 
             </div>
             <div class="col-md-12" style="display: inline-block;">

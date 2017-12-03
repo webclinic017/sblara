@@ -18,10 +18,7 @@
                                                             <tr>
                                                                 <th>Category:</th>
                                                                 <th>
-                                                                    {{-- @php
-                                        $cat = explode('-', $company_info->data_banks_intraday->quote_bases);
-                                    @endphp
-                                    {{ $cat[0] }} --}}
+                                        
                                                                     {{ $company_info->data_banks_intraday->quote_bases[0] }}
                                                                 </th>
                                                             </tr>

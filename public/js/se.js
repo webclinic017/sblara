@@ -60,7 +60,12 @@ function deleteRequest(url) {
 	})
 }
 function editIpo(id) {
-	$.get('/admin/ipos/'+id);
+	$.get('/admin/ipos/'+id, function (data) {
+		$.each(data, function (k, v) {
+			$('input[name="'+k+'"]').val(v);
+			console.log(k);
+		})
+	});
 }
 function deleteIpo(id) {
 	deleteRequest('/admin/ipos/'+id);
@@ -86,6 +91,11 @@ $('body').on('submit', 'form.ajax', function (e) {
 				});
 
 	    return false;
+});
+
+$('.add-more-attachment').click(function () {
+	var html = $('.addable-attachments .defautl-field').html();
+	$('.additional-fields').append(html);
 });
 /*file uploader*/
  $('.file-uploader').filemanager($(this).data('type'));
