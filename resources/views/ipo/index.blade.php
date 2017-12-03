@@ -42,26 +42,26 @@
                         </div>
                         <div class="row addable-attachments">
                             <div class="defautl-field">
-                                
-                            <div class="col-md-12">
-                                <div class="col-md-4">      
-                                    <div class="form-group">
-                                        <label class="control-label">Title/File Name</label>
-                                        <div class="input-icon right">
-                                            <input type="text" name="title[]" class="form-control"> 
+
+                                <div class="col-md-12">
+                                    <div class="col-md-4">      
+                                        <div class="form-group">
+                                            <label class="control-label">Title/File Name</label>
+                                            <div class="input-icon right">
+                                                <input type="text" name="title[]" class="form-control"> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">      
+                                        <div class="form-group">
+                                            <label class="control-label">Attachment</label>
+                                            <input type="file" class="form-control" name="attachments[]"  class="form-control">
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">      
-                                    <div class="form-group">
-                                        <label class="control-label">Attachment</label>
-                                        <input type="file" class="form-control" name="attachments[]"  class="form-control">
-                                    </div>
-                                </div>
-                            </div>
                             </div>
                             <div class="additional-fields">
-                                
+
                             </div>
                         </div>
                     </div>
@@ -72,14 +72,9 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label class="control-label">Year</label>
-                        <div class="input-group date date-picker" data-date="" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
-                            <input type="text" name="year" class="form-control" readonly>
-                            <span class="input-group-btn">
-                                <button class="btn default" type="button">
-                                    <i class="fa fa-calendar"></i>
-                                </button>
-                            </span>
-                        </div>
+                        <select name="year" class="bs-select form-control">
+                            {!! yearsAsOption() !!}
+                        </select>
                     </div>
                 </div>
                 <div class="col-md-4">      
@@ -101,16 +96,26 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label class="control-label">Subscription Open</label>
-                        <div class="input-icon right">
-                            <input type="text" name="subscription_open" class="form-control"> 
+                        <div class="input-group date date-picker" data-date="" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
+                            <input type="text" name="subscription_open" class="form-control" readonly>
+                            <span class="input-group-btn">
+                                <button class="btn default" type="button">
+                                    <i class="fa fa-calendar"></i>
+                                </button>
+                            </span>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">      
+                <div class="col-md-4">
                     <div class="form-group">
                         <label class="control-label">Subscription Close</label>
-                        <div class="input-icon right">
-                            <input type="text" name="subscription_close" class="form-control"> 
+                        <div class="input-group date date-picker" data-date="" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
+                            <input type="text" name="subscription_close" class="form-control" readonly>
+                            <span class="input-group-btn">
+                                <button class="btn default" type="button">
+                                    <i class="fa fa-calendar"></i>
+                                </button>
+                            </span>
                         </div>
                     </div>
                 </div>

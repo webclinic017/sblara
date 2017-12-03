@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Ipo;
+use App\Attachment;
 use Carbon\Carbon;
 
 class IpoController extends Controller
@@ -48,8 +49,8 @@ class IpoController extends Controller
         $ipo->year                      = $request->year;
         $ipo->ipo_name                  = $request->ipo_name;
         $ipo->short_name                = $request->short_name;
-        $ipo->subscription_open         = $request->subscription_open;
-        $ipo->subscription_close        = $request->subscription_close;
+        $ipo->subscription_open         = date("Y-m-d", strtotime($request->subscription_open));
+        $ipo->subscription_close        = date("Y-m-d", strtotime($request->subscription_close));
         $ipo->nature_of_business        = $request->nature_of_business;
         $ipo->major_product             = $request->major_product;
         $ipo->use_of_ipo_proceeds       = $request->use_of_ipo_proceeds;
@@ -61,14 +62,7 @@ class IpoController extends Controller
         $ipo->eps                       = $request->eps;
         $ipo->revaluation_reserve       = $request->revaluation_reserve;
         $ipo->w_revaluation_reserve     = $request->w_revaluation_reserve;
-        $ipo->logo                      = $request->logo;
-        $ipo->bank_list                 = $request->bank_list;
-        $ipo->nrb_form                  = $request->nrb_form;
-        $ipo->bank_code                 = $request->bank_code;
-        $ipo->result_general            = $request->result_general;
-        $ipo->result_nrb                = $request->result_nrb;
-        $ipo->result_mutual_fund        = $request->result_mutual_fund;
-        $ipo->result_affected_users     = $request->result_affected_users;
+        $ipo->logo                      = $request->logo;       
         $ipo->distribution_locations    = $request->distribution_locations;
         $ipo->webaddress                = $request->webaddress;
         $ipo->address1                  = $request->address1;
@@ -76,10 +70,20 @@ class IpoController extends Controller
         $ipo->address3                  = $request->address3;
         $ipo->form_address_to           = $request->form_address_to;
         $ipo->amount_in_words           = $request->amount_in_words;
-        $ipo->result_published          = $request->result_published;
-        $ipo->alert_marker              = $request->alert_marker;
         $ipo->save();
-        return redirect('/admin/ipos')->with('message', 'IPOS info Save Successfully!');
+        $ipo->id;
+        $i = 0;
+        foreach($request->attachments as $file)
+        {
+            return $file;
+             $attachment = new Attachment();
+             $attachment->title              = $request[$i]->title;
+             $attachment->attachments        = $file->attachments->store('/');
+    //        $attachment->save();
+            print_r($request->attachments);
+            $i++;
+        }
+
     }
 
     /**
@@ -149,6 +153,7 @@ class IpoController extends Controller
         $ipo->amount_in_words           = $request->amount_in_words;
         $ipo->result_published          = $request->result_published;
         $ipo->alert_marker              = $request->alert_marker;
+        dd($ipo);
         $ipo->save();
         return redirect('/admin/ipos')->with('message', 'IPOS info Save Successfully!');
     }
