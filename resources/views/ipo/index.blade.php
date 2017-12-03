@@ -335,8 +335,9 @@
                 "targets": 5,
                 "data": null,
                 "render": function (data, type, row) {
+                    // <i onclick="editIpo(` + row.id + `)" class="fa fa-edit btn btn-success btn-xs"></i>
                     return `
-                                <i onclick="editIpo(` + row.id + `)" class="fa fa-edit btn btn-success btn-xs"></i>
+                               
                                 <i onclick="deleteIpo(` + row.id + `)" class="fa fa-trash  btn red-mint btn-xs"></i>
                                 `;
                 }

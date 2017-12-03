@@ -510,9 +510,12 @@
         });
 
         $('.select-company').change(function () {
+            if($(this).val() == "")
+            {
+                return;
+            }
             startLoading($(this));
             var type = $(this).data('type');
-            alert(type);
             $.get('?company_info=' + $(this).val(), {type: type}, function (data) {
                 $('.company-info').html(data);
                 endLoading();
