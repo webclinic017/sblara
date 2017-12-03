@@ -71,18 +71,7 @@ class IpoController extends Controller
         $ipo->form_address_to           = $request->form_address_to;
         $ipo->amount_in_words           = $request->amount_in_words;
         $ipo->save();
-        $ipo->id;
-        $i = 0;
-        foreach($request->attachments as $file)
-        {
-            return $file;
-             $attachment = new Attachment();
-             $attachment->title              = $request[$i]->title;
-             $attachment->attachments        = $file->attachments->store('/');
-    //        $attachment->save();
-            print_r($request->attachments);
-            $i++;
-        }
+        $ipo->storeAttachments($request);
 
     }
 
@@ -96,6 +85,7 @@ class IpoController extends Controller
     {
         if($request->ajax())
         {
+            $ipo->attachments = $ipo->attachments;
             return $ipo;
         }
     }

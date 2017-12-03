@@ -42,7 +42,6 @@
                         </div>
                         <div class="row addable-attachments">
                             <div class="defautl-field">
-
                                 <div class="col-md-12">
                                     <div class="col-md-4">      
                                         <div class="form-group">
@@ -61,8 +60,21 @@
                                 </div>
                             </div>
                             <div class="additional-fields">
-
+                                    
                             </div>
+{{--       
+                                  <div class="col-md-12">
+                                        <hr>
+                                             <h4>Existing Files</h4>
+                                        <hr>
+                                    <div class="edit-attachments">
+                                  <div class="col-md-3">
+                                            <h6>File name</h6>
+                                            <img src="/img/chart_logo.gif" >
+                                        </div> 
+                                    </div>
+                            </div>
+                                        --}}
                         </div>
                     </div>
                 </div>
@@ -311,8 +323,6 @@
 
 @endsection
 @section('js')
-
-
 <script>
     var table = $('#datatable').DataTable({
         processing: true,

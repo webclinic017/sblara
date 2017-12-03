@@ -5,6 +5,14 @@ var loadingHtml = `
 function getValue(name) {
 	return $('input[name="'+name+'"]').val();
 }
+function startEditing() {
+	$('#editing').removeClass('hidden');
+	$('#showing').addClass('hidden');
+}
+function endEditing() {
+	$('#editing').addClass('hidden');
+	$('#showing').removeClass('hidden');
+}
 function startLoading(e) {
 	e.after(loadingHtml);
 }
@@ -66,17 +74,25 @@ function editIpo(id) {
 	$.get('/admin/ipos/'+id, function (data) {
 		$.each(data, function (k, v) {
 			$('input[name="'+k+'"]').val(v);
-			console.log(k);
+			startEditing();
 		})
+		// var html = `
+  //               <div class="col-md-3">
+  //                   <h6>File name</h6>
+  //                   <img src="/img/chart_logo.gif" >
+  //               </div>
+		// `;
+		$('.edit-attachments').html(html);
+
 	});
+
 }
 function deleteIpo(id) {
 	deleteRequest('/admin/ipos/'+id);
 }
 $(document).ready(function () {
 $('#addNew').click(function () {
-	$('#editing').removeClass('hidden');
-	$('#showing').addClass('hidden');
+	startEditing();
 })
 $('.cancel-edit').click(function () {
 	$('#editing').addClass('hidden');
