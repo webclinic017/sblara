@@ -37,6 +37,11 @@ class ContestPortfolioShare extends Model
         return $this->belongsTo(Instrument::class, 'instrument_id');
     }
 
+    public function instrument()
+    {
+        return $this->intrument();
+    }
+
     /**
      * A share may have a transaction type.
      *
@@ -55,5 +60,18 @@ class ContestPortfolioShare extends Model
     public function portfolio() 
     {
         return $this->belongsTo(Portfolio::class, 'id');
+    }
+
+    public function getIsMatureAttribute()
+    {
+        // a b n t+2
+        // z t+9
+        return true;
+    }
+
+    public function sell()
+    {
+        // is mature qty
+        //
     }
 }

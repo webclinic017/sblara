@@ -91,7 +91,6 @@ class PortfolioSharesController extends Controller
 
             if ($buy_quantity > $max_shares_can_buy) {
                 flash('You are not allowed to purchase this amount of shares', 'error');
-
                 return back();
             } else {
                 $portfolio->portfolioShares()->attach($company_info->id, [
