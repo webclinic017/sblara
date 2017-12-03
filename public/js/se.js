@@ -2,6 +2,9 @@ var token = $('meta[name="csrf-token"]').attr('content');
 var loadingHtml = `
 	<img src="/img/loading.gif" class='loading' alt="" />
 `;
+function getValue(name) {
+	return $('input[name="'+name+'"]').val();
+}
 function startLoading(e) {
 	e.after(loadingHtml);
 }
@@ -100,5 +103,10 @@ $('.add-more-attachment').click(function () {
 /*file uploader*/
  $('.file-uploader').filemanager($(this).data('type'));
 /*file uploader*/
-	// $("#ipo-accordion").accordion("option", "active", 1);
+
+$('body').on('click',  '.confirmBuy', function () {
+	var qty = getValue('buy_quantity');
+	alert(qty);
+});
+
 });

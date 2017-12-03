@@ -1,5 +1,4 @@
 @extends('layouts.metronic.default')
-
 @section('content')
 <div class="row">
     <div class="col-md-12">
@@ -41,13 +40,13 @@
                                     <div class="row">
                                         <div class="col-md-12">                                             
                                             <div class="portlet-body form">
-                                                <form role="form" class="form-horizontal" method="GET" action="{{ route('portfolios.shares.create', $portfolio) }}">
+                                                <form id="sellForm" role="form" class="form-horizontal" method="GET" action="{{ route('portfolios.shares.create', $portfolio) }}">
                                                     <div class="form-body">
                                                         <div class="form-group">
                                                             <label for="single-append-text" class="col-md-4 control-label">Select Company:</label>
                                                             <div class="col-md-8">
                                                                 <div class="input-group select2-bootstrap-append">
-                                                                    <select id="single-append-text" class="form-control basic-single-select2 select-company" name="company_info" style="width: 300px;">
+                                                                    <select data-type="buy" id="single-append-text" class="form-control basic-single-select2 select-company" name="company_info" style="width: 300px;">
                                                                         @foreach ($instruments as $id => $company)
                                                                         <option value="{{ $id }}">{{ $company }}</option>
                                                                         @endforeach
@@ -67,7 +66,7 @@
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="submit" class="btn blue">Confirm</button>
+                                    <button type="submit" class="btn blue confirmBuy" >Confirm</button>
                                     <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                                 </div>
                             </div>
@@ -98,11 +97,17 @@
                                                             <label for="single-append-text" class="col-md-4 control-label">Select Company:</label>
                                                             <div class="col-md-8">
                                                                 
-                                                                        {{dd($portfolio->shares)}}
                                                                 <div class="input-group select2-bootstrap-append">
-                                                                    <select id="single-append-text" class="form-control basic-single-select2 select-company" name="company_info" style="width: 300px;">
+                                                                    <select data-type="sell" id="single-append-text" class="form-control basic-single-select2 select-company" name="company_info" style="width: 300px;">
                                                                         @foreach ($portfolio->shares as $company)
-                                                                        <option value="{{ $company->instrument->instrument_code }}">{{ $company->instrument->name }}</option>
+                                                                        @php
+                                                                        if(!$company->isMature)
+                                                                        {
+                                                                            continue;
+                                                                        }
+                                                                        @endphp
+                                                                        <option value=""></option>
+                                                                        <option value="{{ $company->instrument->id }}">{{ $company->instrument->instrument_code }}</option>
                                                                         @endforeach
                                                                     </select>
                                                                 </div>
@@ -120,7 +125,7 @@
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="submit" class="btn blue">Confirm</button>
+                                    <button type="submit" class="btn blue confirmSell">Confirm</button>
                                     <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                                 </div>
                             </div>
@@ -159,7 +164,7 @@
                                             <th>% Change</th>
                                             <th>% Portfolio</th>
                                             <th>Sell Value</th>
-                                            <th>Sell</th>
+                                            <th>Status</th>
                                         </tr>
                                     </thead>
                                     <tbody> 
@@ -265,7 +270,7 @@
                                             </td>
                                             <td>{{ $sellValueDeductingCommision }}</td>
                                             <td>
-                                                @if ($share->is_mature)
+                                                @if ($share->isMature)
                                                 <small>Matured</small>
                                                 @else
                                                 <small>Not Matured</small>
@@ -359,8 +364,9 @@
 
         $('.select-company').change(function () {
             startLoading($(this));
-
-            $.get('?company_info='+$(this).val(), function (data) {
+            var type = $(this).data('type');
+            alert(type);
+            $.get('?company_info='+$(this).val(), {type: type}, function (data) {
                 $('.company-info').html(data);     
                  endLoading();
 
