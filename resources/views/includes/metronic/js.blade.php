@@ -53,9 +53,10 @@
 <script src="{{ asset('metronic/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}"></script>
 <script src="{{ asset('metronic/assets/pages/scripts/table-datatables-buttons.min.js') }}"></script>
 <script src="{{ asset('metronic/assets/global/plugins/horizontal-timeline/horizontal-timeline.js') }}"></script>
+<script src="{{ asset('metronic/assets/global/plugins/horizontal-timeline/horizontal-timeline.js') }}"></script>
 
 <!-- Toastr -->
-<script src="{{ asset('metronic/assets/global/plugins/bootstrap-toastr/toastr.min.js') }}"></script>
+<script src="{{ asset('maxazan-jquery-treegrid/js/jquery.treegrid.min.js') }}"></script>
 @include('includes.flash.toastr')
 <!-- END PAGE LEVEL SCRIPTS -->
 

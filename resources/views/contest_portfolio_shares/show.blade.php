@@ -96,14 +96,14 @@
                                                         <div class="form-group">
                                                             <label for="single-append-text" class="col-md-4 control-label">Select Company:</label>
                                                             <div class="col-md-8">
-                                                                
+
                                                                 <div class="input-group select2-bootstrap-append">
                                                                     <select data-type="sell" id="single-append-text" class="form-control basic-single-select2 select-company" name="company_info" style="width: 300px;">
                                                                         @foreach ($portfolio->shares as $company)
                                                                         @php
                                                                         if(!$company->isMature)
                                                                         {
-                                                                            continue;
+                                                                        continue;
                                                                         }
                                                                         @endphp
                                                                         <option value=""></option>
@@ -119,7 +119,7 @@
                                         </div>
                                         <!--company info start-->
                                         <div class="company-info">
-                                    
+
                                         </div>
                                         <!--company info end-->
                                     </div>
@@ -142,7 +142,7 @@
                         </div>
                         <div class="portlet-body">
                             <div class="table-scrollable">
-                                <table class="table table-striped table-hovern table-bordered">
+                                <table class="tree table table-striped table-hovern table-bordered">
                                     <thead>
                                         <tr>
                                             <th colspan="2" style="text-align: center"></th>
@@ -166,8 +166,8 @@
                                             <th>Sell Value</th>
                                             <th>Status</th>
                                         </tr>
-                                    </thead>
-                                    <tbody> 
+                                    </thead>   
+                                    <tbody>
                                         @php
                                         $sumGainLoss = 0;
                                         $sumTotalPurchase = 0;
@@ -229,6 +229,153 @@
                                         @endphp
 
                                         <tr>
+                                            <td>
+                                                <span class="bold text-primary">{{ $instrumentCode }}</span>
+                                                <br>
+                                                <small class="instrument-name">{{ $instrumentName }}</small>
+                                            </td>
+                                            <td>
+                                                {{ $lastTradePrice }}
+                                            </td>
+                                            <td>
+                                                {{ number_format($priceChange, 2) }}
+                                            </td>
+                                            <td>
+                                                @if ($gainLoss > 0)
+                                                <span class="text-success">{{ number_format($gainLoss, 2) }}</span>
+                                                @else
+                                                <span class="text-danger">{{ number_format($gainLoss, 2) }}</span>
+                                                @endif
+                                            </td>
+                                            <td>{{ $noOfShare }}</td>
+                                            <td>{{ $buyingPrice }}</td>
+                                            <td>{{ $buyCommission }}</td>
+                                            <td>{{ $totalPurchase }}</td>
+                                            <td>
+                                                @if ($totalGain > 0)
+                                                <span class="text-success">{{ $totalGain }}</span>
+                                                @else
+                                                <span class="text-danger">{{ $totalGain }}</span>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($percentChange > 0)
+                                                <span class="text-success">{{ number_format($percentChange, 2) }}%</span>
+                                                @else
+                                                <span class="text-danger">{{ number_format($percentChange, 2) }}%</span>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                {{ number_format($percentPortfolio, 2) }}%
+                                            </td>
+                                            <td>{{ $sellValueDeductingCommision }}</td>
+                                            <td>
+                                                @if ($share->isMature)
+                                                <small>Matured</small>
+                                                @else
+                                                <small>Not Matured</small>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                        <tr class="treegrid-1">
+                                            <td>
+                                                <span class="bold text-primary">{{ $instrumentCode }}</span>
+                                                <br>
+                                                <small class="instrument-name">{{ $instrumentName }}</small>
+                                            </td>
+                                            <td>
+                                                {{ $lastTradePrice }}
+                                            </td>
+                                            <td>
+                                                {{ number_format($priceChange, 2) }}
+                                            </td>
+                                            <td>
+                                                @if ($gainLoss > 0)
+                                                <span class="text-success">{{ number_format($gainLoss, 2) }}</span>
+                                                @else
+                                                <span class="text-danger">{{ number_format($gainLoss, 2) }}</span>
+                                                @endif
+                                            </td>
+                                            <td>{{ $noOfShare }}</td>
+                                            <td>{{ $buyingPrice }}</td>
+                                            <td>{{ $buyCommission }}</td>
+                                            <td>{{ $totalPurchase }}</td>
+                                            <td>
+                                                @if ($totalGain > 0)
+                                                <span class="text-success">{{ $totalGain }}</span>
+                                                @else
+                                                <span class="text-danger">{{ $totalGain }}</span>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($percentChange > 0)
+                                                <span class="text-success">{{ number_format($percentChange, 2) }}%</span>
+                                                @else
+                                                <span class="text-danger">{{ number_format($percentChange, 2) }}%</span>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                {{ number_format($percentPortfolio, 2) }}%
+                                            </td>
+                                            <td>{{ $sellValueDeductingCommision }}</td>
+                                            <td>
+                                                @if ($share->isMature)
+                                                <small>Matured</small>
+                                                @else
+                                                <small>Not Matured</small>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                        <tr  class="treegrid-2 treegrid-parent-1">
+                                            <td>
+                                                <span class="bold text-primary">{{ $instrumentCode }}</span>
+                                                <br>
+                                                <small class="instrument-name">{{ $instrumentName }}</small>
+                                            </td>
+                                            <td>
+                                                {{ $lastTradePrice }}
+                                            </td>
+                                            <td>
+                                                {{ number_format($priceChange, 2) }}
+                                            </td>
+                                            <td>
+                                                @if ($gainLoss > 0)
+                                                <span class="text-success">{{ number_format($gainLoss, 2) }}</span>
+                                                @else
+                                                <span class="text-danger">{{ number_format($gainLoss, 2) }}</span>
+                                                @endif
+                                            </td>
+                                            <td>{{ $noOfShare }}</td>
+                                            <td>{{ $buyingPrice }}</td>
+                                            <td>{{ $buyCommission }}</td>
+                                            <td>{{ $totalPurchase }}</td>
+                                            <td>
+                                                @if ($totalGain > 0)
+                                                <span class="text-success">{{ $totalGain }}</span>
+                                                @else
+                                                <span class="text-danger">{{ $totalGain }}</span>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($percentChange > 0)
+                                                <span class="text-success">{{ number_format($percentChange, 2) }}%</span>
+                                                @else
+                                                <span class="text-danger">{{ number_format($percentChange, 2) }}%</span>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                {{ number_format($percentPortfolio, 2) }}%
+                                            </td>
+                                            <td>{{ $sellValueDeductingCommision }}</td>
+                                            <td>
+                                                @if ($share->isMature)
+                                                <small>Matured</small>
+                                                @else
+                                                <small>Not Matured</small>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                        <tr  class="treegrid-2 treegrid-parent-1">
                                             <td>
                                                 <span class="bold text-primary">{{ $instrumentCode }}</span>
                                                 <br>
@@ -366,12 +513,16 @@
             startLoading($(this));
             var type = $(this).data('type');
             alert(type);
-            $.get('?company_info='+$(this).val(), {type: type}, function (data) {
-                $('.company-info').html(data);     
-                 endLoading();
+            $.get('?company_info=' + $(this).val(), {type: type}, function (data) {
+                $('.company-info').html(data);
+                endLoading();
 
             });
         });
     });
+</script>
+
+<script type="text/javascript">
+    $('.tree').treegrid();
 </script>
 @endsection
