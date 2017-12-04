@@ -109,6 +109,23 @@ class ContestPortfoliosController extends Controller
                 $max_shares     = $purchase_power / $buying_price;
             }
 
+            if (request()->has('type') && request()->type == 'sell') {
+                // find saleable qty
+                $saleableQty = 0;
+                foreach ($portfolio->shares as $share) {
+                    if($share->instrument_id != request()->company_info)
+                    {
+                        continue;   
+                    }
+                    if($share->isMature)
+                    {
+                        $saleableQty += $share->no_of_shares - $share->sell_quantity;
+                    }
+                }
+                // find saleable qty
+            return view('contest_portfolio_shares.market_info_sell')->with(compact('portfolio', 'company_info', 'purchase_power', 'max_shares', 'saleableQty'));
+            }
+
             return view('contest_portfolio_shares.market_info')->with(compact('portfolio', 'company_info', 'purchase_power', 'max_shares'));
 
         }

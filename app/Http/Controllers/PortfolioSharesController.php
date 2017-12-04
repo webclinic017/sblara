@@ -73,12 +73,12 @@ class PortfolioSharesController extends Controller
      */
     public function store(Request $request, ContestPortfolio $portfolio)
     {
+
         $this->validate($request, [
             'buy_quantity' => 'required|numeric|min:1'
         ]);
 
         $portfolio->load('contest');
-
         try {
             $id           = $request->instrument_id;
             $buy_quantity = $request->buy_quantity;
@@ -88,6 +88,46 @@ class PortfolioSharesController extends Controller
             $purchase_power     = $portfolio->cash_amount * $portfolio->contest->max_amount / 100;
             $max_shares_can_buy = $purchase_power / $company_info->data_banks_intraday->close_price;
             $buying_price       = $company_info->data_banks_intraday->close_price;
+
+            
+            if($request->type == 'sell')
+            {
+                $sellPrice = $buying_price;
+                $qty = $request->buy_quantity;  
+                $shares = $portfolio->shares()->where('instrument_id', $id)->get();
+                foreach ($shares as $share) {
+
+                    if($qty < 1)
+                    {
+                        break;
+                    }
+                    if(!$share->isMature && !$share->availableQty < 1 )
+                    {
+                        continue;
+                    }
+                    $share->sell_quantity = $share->sell_quantity + $qty;
+                    $share->sell_price = $sellPrice;
+                    $share->sell_date = Carbon::now();
+                    $share->save();
+                    $qty -= $share->availableQty;
+                }
+                if ($qty > 0) {
+                    flash('You are not allowed to sell this amount of shares', 'error');
+                    return back();
+                }
+                                    /*comisssion */
+                    $commision = 0.5;
+                    $total_sell_cost = $request->buy_quantity * $sellPrice;
+                    $sell_commision = $commision * $total_sell_cost / 100;
+                    $total_sell_cost_diducting_commission=$total_sell_cost - $sell_commision ;
+        
+                    $portfolio->cash_amount = $portfolio->cash_amount + $total_sell_cost_diducting_commission;
+                    $portfolio->save();                 
+                    /*comisssion */
+                      flash('Share successfully sold', 'success');
+                    return back();
+            }
+
 
             if ($buy_quantity > $max_shares_can_buy) {
                 flash('You are not allowed to purchase this amount of shares', 'error');
@@ -106,6 +146,7 @@ class PortfolioSharesController extends Controller
                 $portfolio->cash_amount         = $portfolio->cash_amount -= $total_buy_cost_with_commission;
                 $portfolio->save();
 
+                flash('Share successfully purchased', 'success');
                 return redirect()->route('contests.portfolios.show', $portfolio);
             }
         } catch (Exception $e) {

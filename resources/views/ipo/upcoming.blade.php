@@ -12,6 +12,10 @@
                 </div>
             </div>
             <div class="portlet-body">
+                
+            @if(count($ipos) == 0)
+            Currently there is no IPO. Please check again later.
+            @endif
                 @foreach( $ipos as $ipo )
                 <div class="panel-group accordion" id="ipo-accordion_{{$ipo->id}}">
                     <div class="panel panel-default">

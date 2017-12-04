@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Repositories\InstrumentRepository;
 use Illuminate\Database\Eloquent\Model;
 
 class ContestPortfolioShare extends Model
@@ -66,12 +67,26 @@ class ContestPortfolioShare extends Model
     {
         // a b n t+2
         // z t+9
-        return true;
+        return InstrumentRepository::isMature($this->id, $this->buying_date->format('Y-m-d'));
     }
 
-    public function sell()
+
+    public function getAvailableQtyAttribute()
     {
-        // is mature qty
-        //
+        return $this->no_of_shares - $this->sell_quantity;
     }
+
+
+    public function getBuyQtyAttribute()
+    {
+        return $this->no_of_shares;
+    }
+
+    public function getSellQtyAttribute()
+    {
+        return $this->sellQty;
+    }
+
+
+
 }

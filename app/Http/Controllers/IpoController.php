@@ -11,8 +11,7 @@ class IpoController extends Controller
 {
     public function upcoming()
     {
-//         $ipos = Ipo::whereDate('subscription_close', '<=', date('Y-m-d'));
-         $ipos = Ipo::take(5)->get();
+        $ipos = Ipo::whereDate('subscription_close', '>=', date('Y-m-d'));
         return view('ipo.upcoming')->with(compact('ipos'));
                
     }
@@ -169,7 +168,7 @@ class IpoController extends Controller
     public function results(Request $request)
     {
         $year = $request->has('year')?$request->year:2017;
-        $ipos = Ipo::take(200)->get();
+        $ipos = Ipo::take(20)->get();
         return view('ipo.results')
                 ->with(compact('year','ipos'));
     }

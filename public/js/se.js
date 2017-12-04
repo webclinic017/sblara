@@ -124,4 +124,7 @@ $('.add-more-attachment').click(function () {
 $('body').on('click',  '.confirmBuy', function () {
 			$('#buyModal form').submit();
 	});
+$('body').on('click',  '.confirmSell', function () {
+			$('#sellModal form').submit();
+	});
 });

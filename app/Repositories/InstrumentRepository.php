@@ -121,6 +121,10 @@ class InstrumentRepository {
         $category_Z_mutured_day = 7;
         $category_Others_mutured_day = 1;
         $lastTradeInfo = \DB::table('data_banks_intradays')->where('instrument_id', $instrumentId)->orderBy('lm_date_time', 'desc')->skip(0)->take(1)->first();
+        if($lastTradeInfo == null)
+        {
+            return false;
+        }
         $isSpot = $lastTradeInfo->spot_last_traded_price == 0 ? 0 : 1;
         $isLocked = 0;
         $quote_bases = $lastTradeInfo->quote_bases;

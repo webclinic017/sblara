@@ -12,6 +12,9 @@
             </div>
         </div>
         <div class="portlet-body">
+            @if(count($ipos) == 0)
+            Currently there is no IPO. Please check again later.
+            @endif
             @foreach( $ipos as $ipo )
             <div class="panel-group accordion" id="ipo-accordion_{{$ipo->id}}">
                 <div class="panel panel-default">
@@ -28,12 +31,19 @@
                             </div>
                             <div class="col-md-8">
                                 <ul>
-                                    <li><a href="{{$ipo->bank_code?asset($ipo->bank_code):'javascript:'}}">Bank / Branch Code</a></li>
-                                    <li><a href="{{$ipo->result_general?asset($ipo->result_general):'javascript:'}}">General Public [Other than NRB]</a></li>
-                                    <li><a href="{{$ipo->result_nrb?asset($ipo->result_nrb):'javascript:'}}">Non - Resident Bangladeshi (NRB)</a></li>
-                                    <li><a href="{{$ipo->result_mutual_fund?asset($ipo->result_mutual_fund):'javascript:'}}">Mutual Fund</a></li>
-                                    <li><a href="{{$ipo->bank_code?asset($ipo->bank_code):'javascript:'}}">Affected Small Investor</a></li>
-                                </ul>
+                                    @php
+                                    $i = 0;
+                                    @endphp
+                                    @foreach($ipo->attachments as $attachment)
+                                    <li><a href="{{$attachment->path?asset($attachment->path):'javascript:'}}">{{$attachment->title}}</a></li>
+                                    @php
+                                    $i++;
+                                    @endphp
+                                    @endforeach
+                                   </ul>
+                                   @if(!$i)
+                                   No data found
+                                   @endif
                             </div>
                         </div>
                     </div>

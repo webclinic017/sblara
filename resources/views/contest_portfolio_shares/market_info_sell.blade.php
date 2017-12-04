@@ -18,13 +18,10 @@
                             <th>Last Trade Price:</th>
                             <th>{{ $company_info->data_banks_intraday->close_price }}</th>
                         </tr>
-                        <tr>
-                            <th>Market Lot:</th>
-                            <th>{{ $max_shares }}</th>
-                        </tr>
+
                         <tr>
                             <th>Quantity:</th>
-                            <th>{{ $max_shares }}</th>
+                            <th>{{ $saleableQty }}</th>
                         </tr>
                     </thead>
                 </table>
@@ -38,14 +35,15 @@
                 </div>
             </div>
             <div class="portlet-body form">
-                <form method="POST" action="{{ route('portfolios.shares.store', $portfolio) }}">
+                <form id="sellForm" method="POST" action="{{ route('portfolios.shares.store', $portfolio) }}">
                     {{ csrf_field() }}
+                    <input type="hidden" name="type" value="sell">
                     <div class="row">
                         <div class="col-md-12">
                             <label class="control-label" for="buy_quantity">Sell Quantity:</label>      
                             <div class="form-group">
                                 <div class="input-icon right">
-                                    <input type="text" name="buy_quantity" class="form-control"> 
+                                    <input type="number" max="{{ $saleableQty }}" name="buy_quantity" class="form-control"> 
                                     <input type="hidden" class="form-control" name="instrument_id" value="{{ $company_info->id }}">
                                 </div>
                             </div>

@@ -56,10 +56,11 @@
 <script src="{{ asset('metronic/assets/global/plugins/horizontal-timeline/horizontal-timeline.js') }}"></script>
 
 <!-- Toastr -->
-<script src="{{ asset('maxazan-jquery-treegrid/js/jquery.treegrid.min.js') }}"></script>
+<script src="{{ asset('metronic/assets/global/plugins/bootstrap-toastr/toastr.min.js') }}"></script>
 @include('includes.flash.toastr')
 <!-- END PAGE LEVEL SCRIPTS -->
 
+<script src="{{ asset('maxazan-jquery-treegrid/js/jquery.treegrid.min.js') }}"></script>
 <script>
 	$(document).ready(function ()
 	{

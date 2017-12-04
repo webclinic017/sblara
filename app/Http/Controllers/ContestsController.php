@@ -55,7 +55,7 @@ class ContestsController extends Controller
         $contest->load(['contestUsers.shares', 'contestUsers' => function ($q) {
             $q->wherePivot('approved', true);
         }]);
-
+        dd($contest);
         return view('contests.show', compact('contest'));
     }
 
