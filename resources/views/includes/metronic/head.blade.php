@@ -59,6 +59,8 @@
             <link href="{{ URL::asset('css/filter.css') }}" rel="stylesheet" type="text/css" />
             <link rel="stylesheet" href="{{asset('vendor/jfu/css/jquery.fileupload-ui.css')}}">
             <link href="{{ URL::asset('css/se.css') }}" rel="stylesheet" type="text/css" />
+            
+            <link href="{{ URL::asset('maxazan-jquery-treegrid/css/jquery.treegrid.css') }}" rel="stylesheet" type="text/css" />
 
             <link rel="shortcut icon" href="favicon.ico" />
 

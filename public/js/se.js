@@ -1,4 +1,5 @@
 var token = $('meta[name="csrf-token"]').attr('content');
+var url = window.location;
 var loadingHtml = `
 	<img src="/img/loading.gif" class='loading' alt="" />
 `;
@@ -121,8 +122,6 @@ $('.add-more-attachment').click(function () {
 /*file uploader*/
 
 $('body').on('click',  '.confirmBuy', function () {
-	var qty = getValue('buy_quantity');
-	alert(qty);
-});
-
+			$('#buyModal form').submit();
+	});
 });

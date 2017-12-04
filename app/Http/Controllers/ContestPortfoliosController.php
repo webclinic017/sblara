@@ -24,7 +24,7 @@ class ContestPortfoliosController extends Controller
      */
     public function show(ContestPortfolio $portfolio)
     {
-        $portfolio->load('shares.intrument.data_banks_intraday');
+        $portfolio->load('shares.intrument');
 
         $lastTradePrice     = null;
         $lastTradeDate      = null;
