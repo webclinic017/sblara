@@ -12,6 +12,12 @@
             </div>
         </div>
         <div class="portlet-body">
+                                <div class="center form-group" >    
+                        <select class="form-control" id="year" onchange="window.location.href='?year='+this.value">
+                            <option>Select a Year</option>
+                            {!!yearsAsOption()!!}
+                         </select>
+                        </div>
             @if(count($ipos) == 0)
             Currently there is no IPO. Please check again later.
             @endif

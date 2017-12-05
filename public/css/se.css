@@ -27,3 +27,6 @@ div.center select{
     height: 10px;
     display: inline-block;
 }
+.se-table tr:nth-child(even){
+	/*background:rgba(38, 161, 171, .1) !important;*/
+}

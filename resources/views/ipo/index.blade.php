@@ -109,12 +109,12 @@
                     <div class="form-group">
                         <label class="control-label">Subscription Open</label>
                         <div class="input-group date date-picker" data-date="" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
-                            <input type="text" name="subscription_open" class="form-control" readonly>
-                            <span class="input-group-btn">
-                                <button class="btn default" type="button">
-                                    <i class="fa fa-calendar"></i>
-                                </button>
-                            </span>
+                            <input type="text" name="subscription_open" class="form-control" >
+                                <span class="input-group-btn">
+                                    <button class="btn default" type="button">
+                                        <i class="fa fa-calendar"></i>
+                                    </button>
+                                </span>
                         </div>
                     </div>
                 </div>
@@ -227,6 +227,12 @@
                 </div>
                 <div class="col-md-4">      
                     <div class="form-group">
+                        <label class="control-label">Prospectus</label>
+                        {!!imageUploader('prospectus')!!}
+                    </div>
+                </div>
+                <div class="col-md-4">      
+                    <div class="form-group">
                         <label class="control-label">Distribution Locations</label>
                         <div class="input-icon right">
                             <input type="text" name="distribution_locations" class="form-control"> 
@@ -306,14 +312,14 @@
                     </div>
                 </div>
             </div>
-            <table class="table table-striped table-bordered table-hover table-checkable order-column" id="datatable">
+            <table class="table table-striped table-bordered table-hover table-checkable order-column se-table" id="datatable">
                 <thead>
                 <th>Ticker</th>
                 <th width="25%">Company</th>
                 <th>Subscription Start</th>
                 <th>Subscription End</th>
-                <th>Issue Manager</th>
-                <th>Edit/Delete</th>
+                <th width="200px">Issue Manager</th>
+                <th width="10px">Edit/Delete</th>
                 </thead>
             </table>
         </div>
