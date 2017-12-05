@@ -178,9 +178,9 @@ Route::get('/portfolio_performance/{portfolio_id}', 'PortfolioController@perform
 Route::post('search_json', 'SearchController@search');
 
 /* Se Routes */
-Route::get('/ipos', 'IpoController@upcoming');
-Route::get('/ipos/history', 'IpoController@history');
-Route::get('/ipos/results', 'IpoController@results');
+Route::get('/ipos', 'IpoController@upcoming')->name('ipos');
+Route::get('/ipos/history', 'IpoController@history')->name('ipos-history');
+Route::get('/ipos/results', 'IpoController@results')->name('ipos-results');
 
 /* Se Routes */
 Route::group(['prefix' => 'admin'], function ()

@@ -92,6 +92,18 @@ class GenerateMenus
 
             //submenu
             $menu->course->add('Upcoming Courses', ['route' => 'courses'])->prepend('<i class="icon-link" ></i > ');
+            $menu->course->add('Upcoming Courses', ['route' => 'ipos'])->prepend('<i class="icon-link" ></i > ');
+            
+            
+            /*IPO*/
+            $menu->add('Ipo', ['class' => 'dropdown dropdown-fw  ']);
+            $menu->ipo->link->href('javascript:;')->attr(['class' => 'text-uppercase']);
+            $menu->ipo->attr(['class' => 'dropdown dropdown-fw  '])->prepend('<i class="icon-link" ></i > ');
+
+            //submenu
+            $menu->ipo->add('Upcoming IPO', ['route' => 'ipos'])->prepend('<i class="icon-link" ></i > ');
+            $menu->ipo->add('IPO History', ['route' => 'ipos-history'])->prepend('<i class="icon-link" ></i > ');
+            $menu->ipo->add('IPO Results', ['route' => 'ipos-results'])->prepend('<i class="icon-link" ></i > ');
 
 
         });
