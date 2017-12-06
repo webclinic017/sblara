@@ -13,13 +13,13 @@ class BaseImporter
 		$this->handle();
 	}
 
-	public function table($table)
+	public function new($table)
 	{
 		return DB::table($table);
 	}
 
 
-	public function oldTable($table)
+	public function old($table)
 	{
 		return DB::connection($this->oldDB)->table($table);
 	}
