@@ -92,7 +92,6 @@ class GenerateMenus
 
             //submenu
             $menu->course->add('Upcoming Courses', ['route' => 'courses'])->prepend('<i class="icon-link" ></i > ');
-            $menu->course->add('Upcoming Courses', ['route' => 'ipos'])->prepend('<i class="icon-link" ></i > ');
             
             
             /*IPO*/

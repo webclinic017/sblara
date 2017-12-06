@@ -189,3 +189,9 @@ Route::group(['prefix' => 'admin'], function ()
 });
 /* Se Routes */
 
+
+//==============================
+Route::get('/tutorials/technical', 'knowledgeBasketController@index');
+Route::resource('/news', 'newspaperNewsController');
+
+
