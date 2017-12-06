@@ -3,8 +3,9 @@ namespace App\Importers;
 use \DB;
 class Importer  
 {
-	public function table($table)
+	public function run($importer, $console)
 	{
-		return DB::table($table);
+		$importer = 'App\Importers\\'.ucfirst($importer).'Importer';
+		new $importer($console);
 	}
 }
