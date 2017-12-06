@@ -9,7 +9,14 @@ class UserImporter extends BaseImporter
 
 	public function handle()
 	{
-		$this->new('users');
+		$total =  $this->new('users')->count();
+		$skip = 0;
+		while ($total > 0) {
+			foreach ($this->new('users')->take($this->limit)->skip($skip)->get() as $row) {
+				dd($row);
+			 } 
+			 $total -= $this->limit;
+		}
 	}
 
 }
