@@ -32,16 +32,18 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach($ipos as $ipo)
                             <tr>
-                                <td> AAC </td>
-                                <td> AUSTRALIAN AGRICULTURAL COMPANY LIMITED. </td>
-                                <td class="numeric"> &nbsp; </td>
-                                <td class="numeric"> -0.01 </td>
-                                <td class="numeric"> -0.36% </td>
-                                <td class="numeric"> $1.39 </td>
-                                <td class="numeric"> $1.39 </td>
-                                <td class="numeric"> &nbsp; </td>
+                                <td> {{$ipo->short_name}} </td>
+                                <td> {{$ipo->ipo_name}}  </td>
+                                <td class="numeric"> {{$ipo->subscription_open}}</td>
+                                <td class="numeric"> {{$ipo->subscription_close}} </td>
+                                <td class="numeric"> {{$ipo->issue_manager}} </td>
+                                <td class="numeric"> {{$ipo->firstDayClose}} </td>
+                                <td class="numeric"> {{$ipo->return}} </td>
+                                <td class="numeric"> {{$ipo->prospectus}} </td>
                             </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

@@ -84,6 +84,10 @@ Route::get('head', function(){
 Route::get('/test', function () {
     return view('test');
 });
+Route::get('/se', function () {
+  new App\Importers\IpoImporter;
+  return " ";
+});
 
 Route::get('/pluginEod', function () {
     return response()->download(storage_path() .'/app/plugin/eod.zip');

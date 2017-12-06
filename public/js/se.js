@@ -93,6 +93,7 @@ function deleteIpo(id) {
 }
 $(document).ready(function () {
 $('#addNew').click(function () {
+	$('form.ajax')[0].reset();
 	startEditing();
 })
 $('.cancel-edit').click(function () {

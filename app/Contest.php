@@ -67,7 +67,13 @@ class Contest extends Model
         return $this->belongsToMany(User::class, 'contest_portfolios', 'contest_id', 'user_id')
                     ->wherePivot('approved', true)
                     ->withPivot('join_date', 'approved')
+
                     ->withTimestamps();
+    }
+
+    public function contestPortfolios()
+    {
+        return $this->hasMany(ContestPortfolio::class);
     }
 
     /**
@@ -94,4 +100,6 @@ class Contest extends Model
                         ->wherePivot('user_id', auth()->id())
                         ->count();
     }
+
+
 }
