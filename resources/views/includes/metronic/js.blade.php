@@ -76,5 +76,5 @@
 
 <script src="{{asset('vendor/laravel-filemanager/js/lfm.js')}}"></script>
 <script src="{{ asset('js/se.js') }}?v={{uniqid()}}"></script>
-{{--<script src="{{ asset('js/filter.js') }}" type="text/javascript"></script>--}}
+<script src="{{ asset('js/filter.js') }}" type="text/javascript"></script>
 @stack('scripts')

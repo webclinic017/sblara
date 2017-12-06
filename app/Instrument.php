@@ -42,6 +42,7 @@ class Instrument extends Model
     public function data_banks_intraday()
     {
         return $this->hasOne(DataBanksIntraday::class)
+                    ->take(1)
                     ->latest('id');
     }
 
