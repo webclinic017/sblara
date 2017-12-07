@@ -6,6 +6,7 @@ class BaseImporter
 {
 	/* old database connection*/
 	protected $oldDB = 'old';
+	protected $limit = '10000';
 	public $console;
 	function __construct($console)
 	{
