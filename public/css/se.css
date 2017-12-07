@@ -1,6 +1,6 @@
 #editing{
-	display: inline-block;
-	width: 100%;
+    display: inline-block;
+    width: 100%;
 }
 .se-widget{
 }
@@ -8,15 +8,15 @@
 
 }
 div.center{
-	text-align: center;
-	width: 100%;
+    text-align: center;
+    width: 100%;
 }
 div.center select{
-	display: inline-block;
-	max-width: 200px !important;
+    display: inline-block;
+    max-width: 200px !important;
 }
 .loading{
-	    position: absolute;
+    position: absolute;
     top: -14px;
     right: -55px;
     height: 60px;
@@ -28,5 +28,30 @@ div.center select{
     display: inline-block;
 }
 .se-table tr:nth-child(even){
-	/*background:rgba(38, 161, 171, .1) !important;*/
+    /*background:rgba(38, 161, 171, .1) !important;*/
+}
+.knowledge_basket img{
+
+    float: right;
+    margin-left: 15px;
+    margin-bottom: 15px;
+}
+.knowledge_basket  {
+
+    text-align: justify;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.knowledge_basket_sidebar{
+    height: 600px;
+    overflow: auto;
+}
+.knowledge_basket_sidebar img{
+    height: 50px;
+    width: 100px;
+    overflow: auto;
+}
+.knowledge_basket_tab{
+    margin-left: 10px;
 }

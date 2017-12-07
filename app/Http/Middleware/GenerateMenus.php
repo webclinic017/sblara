@@ -26,6 +26,8 @@ class GenerateMenus
 
             //submenu
             $menu->home->add('Dashboard', ['route' => '/'])->prepend('<i class="icon-bar-chart" ></i > ');
+            $menu->home->add('News', ['route' => 'collective-news'])->prepend('<i class="icon-bar-chart" ></i > ');
+            $menu->home->add('Knowledge Basket', ['route' => 'knowledge-basket'])->prepend('<i class="icon-bar-chart" ></i > ');
 
             /*Chart*/
             $menu->add('Chart', ['class' => 'dropdown dropdown-fw  ']);
@@ -92,7 +94,6 @@ class GenerateMenus
 
             //submenu
             $menu->course->add('Upcoming Courses', ['route' => 'courses'])->prepend('<i class="icon-link" ></i > ');
-            $menu->course->add('Upcoming Courses', ['route' => 'ipos'])->prepend('<i class="icon-link" ></i > ');
             
             
             /*IPO*/

@@ -189,7 +189,16 @@ Route::get('/ipos/results', 'IpoController@results')->name('ipos-results');
 /* Se Routes */
 Route::group(['prefix' => 'admin'], function ()
 {
+    
   Route::resource('/ipos', 'IpoController');
+  
+Route::resource('/news', 'newspaperNewsController');
 });
 /* Se Routes */
+
+
+//==============================
+Route::get('/tutorials/technical', 'knowledgeBasketController@index')->name('knowledge-basket');
+Route::get('/collective/news', 'newspaperNewsController@collectiveNews')->name('collective-news');
+
 

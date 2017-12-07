@@ -276,6 +276,7 @@ class UpdateDseIndexCommand extends Command
                 if (!empty($IntradayDataToSave)) {
 
                     DB::table('data_banks_intradays')->insert($IntradayDataToSave);
+                    $this->info(count($IntradayDataToSave) . ' index data inserted into data_banks_intradays');
                 }
 
             }
