@@ -61,6 +61,10 @@
 <!-- END PAGE LEVEL SCRIPTS -->
 
 <script src="{{ asset('maxazan-jquery-treegrid/js/jquery.treegrid.min.js') }}"></script>
+
+<!--<script src="https://cloud.tinymce.com/stable/tinymce.min.js"></script>
+  <script>tinymce.init({ selector:'textarea' });</script>-->
+  
 <script>
 	$(document).ready(function ()
 	{

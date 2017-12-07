@@ -35,25 +35,39 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#tab_6_5" data-toggle="tab"> Bands </a>
+                        <a href="#tab_6_5" data-toggle="tab"> 
+                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image008.gif')}}" width="100px" height="50px"/>
+                            <br>Bands </a>
                     </li>
                     <li>
-                        <a href="#tab_6_6" data-toggle="tab"> Crossover </a>
+                        <a href="#tab_6_6" data-toggle="tab"> 
+                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image032.gif')}}" width="100px" height="50px"/>
+                            <br>Crossover </a>
                     </li>
                     <li>
-                        <a href="#tab_6_7" data-toggle="tab"> Average </a>
+                        <a href="#tab_6_7" data-toggle="tab"> 
+                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image034.png')}}" width="100px" height="50px"/>
+                            <br>Average </a>
                     </li>
                     <li>
-                        <a href="#tab_6_8" data-toggle="tab"> MACD </a>
+                        <a href="#tab_6_8" data-toggle="tab"> 
+                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image031.png')}}" width="100px" height="50px"/>
+                            <br>MACD </a>
                     </li>
                     <li>
-                        <a href="#tab_6_9" data-toggle="tab"> RSI </a>
+                        <a href="#tab_6_9" data-toggle="tab"> 
+                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image043.gif')}}" width="100px" height="50px"/>
+                            <br>RSI </a>
                     </li>
                     <li>
-                        <a href="#tab_6_10" data-toggle="tab"> Stochastics </a>
+                        <a href="#tab_6_10" data-toggle="tab"> 
+                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image044.gif')}}" width="100px" height="50px"/>
+                            <br>Stochastics </a>
                     </li>
                     <li>
-                        <a href="#tab_6_11" data-toggle="tab"> Ultimate </a>
+                        <a href="#tab_6_11" data-toggle="tab"> 
+                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image050.gif')}}" width="100px" height="50px"/>
+                            <br>Ultimate </a>
                     </li>
                 </ul>
             </div>
@@ -144,6 +158,11 @@
                                             <p> 
                                             <ol>
                                                 <li>Long white (empty)line: এটি হচ্ছে একটি বুলিশ রেখা ।এটি সৃষ্টি হয় যখন প্রারম্ভিক মূল্য সর্বনিন্ম থেকে শুরু হয়ে একেবারে দিনের সর্বোচ্চ প্রান্তে কাছাকাছি গিয়ে শেষ হয় ।</li>
+                                                <li>Hammer: এটি একটি বুলিশ রেখা । সাধারণতঃ এটি একটি downtrend এর পর সৃষ্টি হয় । যদি এটি একটি গুরুত্বপূর্ণ uptrend এর পর সৃষ্টি হয় তবে এটকে Hanging man বলা হয় । হ্যামার সাধরণত একটি ছোট শরীর (প্রারম্ভিক মূল্য ও সমাপ্তি মূল্যের অল্প পার্থক্য) ও নিচের দিকে লম্বা ছায়া থাকে (সর্বোনিন্ম মূল্য প্রারম্ভিক, সর্বোচ্চ, সমাপ্তি মূল্যের চেয়েও নিচে অবস্থান করে).</li>
+                                                <li>Piercing Line: এটি বুলিশ রেখা এবং ডার্ক ক্লাউড কাভারের বিপরীত । প্রথম লম্বা রেখাটি সম্পূর্ণ কালো এবং দ্বিত্বীয় লম্বা রেখাটি সাদা হয়ে থাকে। প্রথম রেখাটির নিন্মস্তরের চেয়েও নিচে হতে দ্বিত্বীয় রেখাটি শুরু হয়। কিন্তু এটি প্রথম রেখাটির মধ্যবর্তী অংশের কিছু উপরে গিয়ে শেষ হয় । </li>
+                                                <li>Bullish engulfing lines: এটি একটি জোরালো বুলিশ প্যাটার্ণ যা একটি গুরুত্বপূর্ণ downtrend পর দেখা যায় (এটি রিভারসেল হিসেবে কাজ করে)। যখন একটি ছোট বিয়ারিশ(bearish)রেখা বড় বুলিশ(bullish)রেখা দ্বারা আবৃত থাকে তখন এটি সৃষ্টি হয়।</li>
+                                                <li>Morning star: এটি ও একটি বুলিশ প্যাটার্ণ যা নিন্মের গতি নির্দেশ করে ।এখানে সটারটি রিভারসেলের সম্ভাবনা এবং বুলিশ (খালি) রেখাটি সে সম্ভাবনাকে নিশ্চিত করে ।এ স্টারটি পূর্ণ বা খালি থাকতে পারে। </li>
+                                                <li>Bullish doji star: সটার রিভারসেল নির্দেশ করে ও ডজি সিদ্ধান্তহীনতা প্রকাশ করে ।যদিও এটি অনিশ্চিত সময়ে রিভারসেল প্রদর্শণ করে।ট্রেড এর নিশ্চয়তার জন্য ডজি দেখলেই অপেক্ষা করতে হবে।প্রথম রেখাটি পূর্ণ বা খালি থাকতে পারে।</li>
                                             </ol>
                                             </p>
                                         </div>

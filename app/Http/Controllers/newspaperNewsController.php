@@ -3,23 +3,23 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\NewspaperNews;
 
-class newspaperNewsController extends Controller
-{
+class newspaperNewsController extends Controller {
 
     /**
      * Display a listing of the resource.
-     */
-    public function __construct() {
-        $this->middleware('auth');
-    }
-
-    /*
+     *
      * @return \Illuminate\Http\Response
      */
-
     public function index() {
-        return view('news.index');
+        $news = NewspaperNews::all();
+        return view('admin_newspaper_news.list', ['news' => $news]);
+    }
+    
+    public function collectiveNews(){
+        $news = NewspaperNews::all();
+        return view('newspaper_news.index', ['news' => $news]);
     }
 
     /**
@@ -28,8 +28,8 @@ class newspaperNewsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create() {
-
-        return view('news.create');
+        //
+        return view('admin_newspaper_news.create');
     }
 
     /**
@@ -38,9 +38,23 @@ class newspaperNewsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
         //
+        $this->validate($request, [
+            'title' => 'required',
+            'details' => 'required',
+            'published_date' => 'required|date',
+        ]);
+
+        $news = new NewspaperNews();
+        $news->title = $request->input('title');
+        $news->details = $request->input('details');
+        $news->published_date = date("Y-m-d", strtotime($request->input('published_date')));
+        $news->save();
+
+        $news = NewspaperNews::all();
+
+        return view('admin_newspaper_news.list', ['news' => $news, 'message_success' => 'News successfully added']);
     }
 
     /**
@@ -49,9 +63,9 @@ class newspaperNewsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
+    public function show($id) {
         //
+        //  dd("sdf2");
     }
 
     /**
@@ -60,9 +74,11 @@ class newspaperNewsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
+    public function edit($id) {
         //
+        $news = NewspaperNews::where('id', $id)->take(1)->get()[0];
+
+        return view('admin_newspaper_news.edit', ['news' => $news]);
     }
 
     /**
@@ -72,9 +88,22 @@ class newspaperNewsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
+    public function update(Request $request, $id) {
+
+        $this->validate($request, [
+            'title' => 'required',
+            'details' => 'required',
+            'published_date' => 'required|date',
+        ]);
+        $news = NewspaperNews::where('id', $id)->update(
+                [
+                    'title' => $request->input('title'),
+                    'details' => $request->input('details'),
+                    'published_date' => date("Y-m-d", strtotime($request->input('published_date'))),
+                ]
+        );
+        $news = NewspaperNews::all();
+        return view('admin_newspaper_news.list', ['news' => $news, 'message_success' => 'News successfully updated']);
     }
 
     /**
@@ -83,8 +112,10 @@ class newspaperNewsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
+    public function destroy($id) {
         //
+        NewspaperNews::where('id', $id)->delete();
+        return redirect()->back()->with(['message_success' => 'News successfully removed']);
     }
+
 }
