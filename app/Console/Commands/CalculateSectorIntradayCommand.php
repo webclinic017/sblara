@@ -56,9 +56,8 @@ class CalculateSectorIntradayCommand extends Command
 // live server command   /opt/cpanel/ea-php70/root/usr/bin/php /home/hostingmonitors/artisan dse:CalculateSectorIntraday
     public function handle()
     {
-
-        //if(!Market::isMarketOpen())
-        if(Market::isMarketOpen())
+        $timeStart = microtime(true);
+        if(!Market::isMarketOpen())
         {
             $this->info('market is not open');
 
@@ -135,9 +134,7 @@ class CalculateSectorIntradayCommand extends Command
                 $total_price_change_sector = 0;
                 $total_volume_sector = 0;
                 $total_value_sector = 0;
-
-                dump($all_instrument_of_this_sector->toArray());
-
+                $trade_time_arr=array();
 
                 foreach ($all_instrument_of_this_sector as  $instrument_info) {
 
@@ -179,7 +176,8 @@ class CalculateSectorIntradayCommand extends Command
 
                             $total_volume_sector += $trade_data_of_this_instrument->total_volume;
                             $total_value_sector += $trade_data_of_this_instrument->total_value;
-                            $time = $trade_data_of_this_instrument->trade_time;
+                            // we will sort according to timestamp and use latest one later
+                            $trade_time_arr[$trade_data_of_this_instrument->trade_time->timestamp]= $trade_data_of_this_instrument->trade_time;
 
 
                         }
@@ -214,11 +212,16 @@ class CalculateSectorIntradayCommand extends Command
                 $temp['value'] = $total_value_sector;
                 $temp['contribution'] = $total_contribution_sector;
                 $temp['index_date'] = $trade_date_info[0]->trade_date->format('Y-m-d');
-                $temp['index_time'] = $time;
 
+                if($total_volume_sector) {
 
-                if($total_volume_sector)
-                $dataToSave[] = $temp;
+                    // we are taking latest time of this sector.
+                    krsort($trade_time_arr);
+                    $time_latest = array_values($trade_time_arr);
+                    $temp['index_time']= $time_latest[0];
+
+                    $dataToSave[] = $temp;
+                }
 
 
 
@@ -228,6 +231,7 @@ class CalculateSectorIntradayCommand extends Command
 
             if (!empty($dataToSave)) {
                 DB::table('sector_intradays')->insert($dataToSave);
+                $this->info(count($dataToSave) . ' row inserted into sector_intradays');
 
             }
 
@@ -240,5 +244,10 @@ class CalculateSectorIntradayCommand extends Command
 
         }
 
+        $diff = microtime(true) - $timeStart;
+        $sec = intval($diff);
+        $micro = $diff - $sec;
+
+        dump("Time:  " . round($micro * 1000, 4) . " ms");
     }
 }

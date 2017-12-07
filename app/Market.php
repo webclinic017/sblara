@@ -213,7 +213,12 @@ class Market extends Model
         }
 
         $now = Carbon::now();
-        $activeTradeDates= self::getActiveDates(1,null,$exchangeId)->first();
+
+        // here condition  where('data_bank_intraday_batch','>',0) is not applicable
+        $activeTradeDates = static::whereHas('exchange', function ($q) use ($exchangeId) {
+            $q->where('exchange_id', $exchangeId);
+        })->whereDate('trade_date', '<=', DB::raw('CURDATE()'))->orderBy('trade_date', 'desc')->skip(0)->take(1)->get()->first();
+
 
         // adding to minute with market close time. It is needed to ensure run cron at 2.30 minutes to take latest data
         $activeTradeDates->market_closed=$activeTradeDates->market_closed->addMinutes(2);
@@ -226,10 +231,20 @@ class Market extends Model
         $market_closed=$activeTradeDates->trade_date->format('Y-m-d').' '.$activeTradeDates->market_closed->format('H:i');
         $market_closed=Carbon::parse($market_closed);
 
+       /* dump($now);
+        dump($market_started);
+        dump($market_closed);*/
+
         if($now->gte($market_started) and $now->lte($market_closed))
+        {
             return true;
+        }
         else
+        {
             return false;
+        }
+            //return false;
+
 
     }
 
