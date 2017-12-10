@@ -66,7 +66,6 @@ class BaseImporter
 			 $skip += $this->limit;
 			 $total -= $this->limit;
 			 // store to new table
-			 dd($data);
 			 $this->new($to)->insert($data);
 		}		
 
