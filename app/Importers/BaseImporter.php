@@ -6,7 +6,7 @@ class BaseImporter
 {
 	/* old database connection*/
 	protected $oldDB = 'old';
-	protected $limit = '1000';
+	protected $limit = '5000';
 	protected $instruments = false;
 	public $console;
 	function __construct($console)
@@ -56,7 +56,7 @@ class BaseImporter
 					  $newRow[$key] =	$value;
 				}
 
-				if(!isset($newRow['instrument_id']) )
+				if(array_key_exists('instrument_id',  $this->oneToOneMap($to)) && !isset($newRow['instrument_id']))
 				{
 					continue;
 				}				
@@ -66,6 +66,7 @@ class BaseImporter
 			 $skip += $this->limit;
 			 $total -= $this->limit;
 			 // store to new table
+			 dd($data);
 			 $this->new($to)->insert($data);
 		}		
 

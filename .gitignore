@@ -9,7 +9,7 @@
 Homestead.json
 Homestead.yaml
 .env
- error_log
+error_log
 
 ./public/img/35x35
 ./public/img/149x149
