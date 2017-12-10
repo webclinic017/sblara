@@ -114,6 +114,156 @@
                             <img src="{{ URL::asset('/knowledge_basket/images/clip_image045.png')}}"/>
                             <br>SAR </a>
                     </li>
+                    <li>
+                        <a href="#tab_6_21" data-toggle="tab"> 
+                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image012.png')}}"/>
+                            <br>Channel </a>
+                    </li>
+                    <li>
+                        <a href="#tab_6_22" data-toggle="tab"> 
+                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image013.jpg')}}"/>
+                            <br>A&D </a>
+                    </li>
+                    <li>
+                        <a href="#tab_6_23" data-toggle="tab"> 
+                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image035.png')}}"/>
+                            <br>Neutral </a>
+                    </li>
+                    <li>
+                        <a href="#tab_6_24" data-toggle="tab"> 
+                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image042.png')}}"/>
+                            <br>Reversal </a>
+                    </li>
+                    <li>
+                        <a href="#tab_6_25" data-toggle="tab"> 
+                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image018.png')}}"/>
+                            <br>Divergence </a>
+                    </li>
+                    <li>
+                        <a href="#tab_6_26" data-toggle="tab"> 
+                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image003.png')}}"/>
+                            <br>Andrew's </a>
+                    </li>
+                    <li>
+                        <a href="#tab_6_27" data-toggle="tab"> 
+                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image004.gif')}}"/>
+                            <br>Aroon </a>
+                    </li>
+                    <li>
+                        <a href="#tab_6_28" data-toggle="tab"> 
+                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image019.png')}}"/>
+                            <br>Fan </a>
+                    </li>
+                    <li>
+                        <a href="#tab_6_29" data-toggle="tab"> 
+                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image020.png')}}"/>
+                            <br>Retracement </a>
+                    </li>
+                    <li>
+                        <a href="#tab_6_30" data-toggle="tab"> 
+                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image045.png')}}"/>
+                            <br>Arc </a>
+                    </li>
+                    <li>
+                        <a href="#tab_6_31" data-toggle="tab"> 
+                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image048.png')}}"/>
+                            <br>TLV </a>
+                    </li>
+                    <li>
+                        <a href="#tab_6_32" data-toggle="tab"> 
+                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image049.png')}}"/>
+                            <br>TS-1 </a>
+                    </li>
+                    <li>
+                        <a href="#tab_6_33" data-toggle="tab"> 
+                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image047.png')}}"/>
+                            <br>TS-2 </a>
+                    </li>
+                    <li>
+                        <a href="#tab_6_34" data-toggle="tab"> 
+                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image046.png')}}"/>
+                            <br>Swing </a>
+                    </li>
+                    <li>
+                        <a href="#tab_6_35" data-toggle="tab"> 
+                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image040.png')}}"/>
+                            <br>PushingUp </a>
+                    </li>
+                    <li>
+                        <a href="#tab_6_36" data-toggle="tab"> 
+                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image038.png')}}"/>
+                            <br>Pivot </a>
+                    </li>
+                    <li>
+                        <a href="#tab_6_37" data-toggle="tab"> 
+                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image002.png')}}"/>
+                            <br>A/D </a>
+                    </li>
+                    <li>
+                        <a href="#tab_6_38" data-toggle="tab"> 
+                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image024.gif')}}"/>
+                            <br>HPP-1 </a>
+                    </li>
+                    <li>
+                        <a href="#tab_6_39" data-toggle="tab"> 
+                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image025.gif')}}"/>
+                            <br>HPP-2 </a>
+                    </li>
+                    <li>
+                        <a href="#tab_6_40" data-toggle="tab"> 
+                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image026.gif')}}"/>
+                            <br>HPP-3 </a>
+                    </li>
+                    <li>
+                        <a href="#tab_6_41" data-toggle="tab"> 
+                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image027.gif')}}"/>
+                            <br>HPP-4 </a>
+                    </li>
+                    <li>
+                        <a href="#tab_6_42" data-toggle="tab"> 
+                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image006.jpg')}}"/>
+                            <br>ATR-1 </a>
+                    </li>
+                    <li>
+                        <a href="#tab_6_43" data-toggle="tab"> 
+                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image005.gif')}}"/>
+                            <br>ATR-2 </a>
+                    </li>
+                    <li>
+                        <a href="#tab_6_44" data-toggle="tab"> 
+                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image015.png')}}"/>
+                            <br>Cup </a>
+                    </li>
+                    <li>
+                        <a href="#tab_6_45" data-toggle="tab"> 
+                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image016.png')}}"/>
+                            <br>DeadCat </a>
+                    </li>
+                    <li>
+                        <a href="#tab_6_46" data-toggle="tab"> 
+                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image028.png')}}"/>
+                            <br>H&S </a>
+                    </li>
+                    <li>
+                        <a href="#tab_6_47" data-toggle="tab"> 
+                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image022.png')}}"/>
+                            <br>Gaps </a>
+                    </li>
+                    <li>
+                        <a href="#tab_6_48" data-toggle="tab"> 
+                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image023.png')}}"/>
+                            <br>GoodTrade </a>
+                    </li>
+                    <li>
+                        <a href="#tab_6_49" data-toggle="tab"> 
+                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image041.png')}}"/>
+                            <br>ROC </a>
+                    </li>
+                    <li>
+                        <a href="#tab_6_50" data-toggle="tab"> 
+                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image037.jpg')}}"/>
+                            <br>ParabolicSAR </a>
+                    </li>
                 </ul>
             </div>
             <div class="col-md-10 col-sm-10 col-xs-10">
@@ -782,6 +932,952 @@
                                             <img src="{{ URL::asset('/knowledge_basket/images/clip_image045.png') }}"/><br><br>
                                             <p>
                                             সাপোর্ট বলতে সেই মূল্যস্তরকে নির্দেশ করে যেখানে ক্রেতা একটি সুদৃঢ় অবস্থানে থেকে মূল্যের পতন রোধ করে। রেজিস্টেন্স হচ্ছে সেই মূল্যস্তর যেখানে বিক্রেতা সুদৃঢ় অবস্থানে থেকে মূল্যের উর্ধ্বগতিকে ধরে রাখে। আতীত মূল্যের উপর ভিত্তি করে সাপোর্ট ও রেজিস্টেন্স লেভেল তৈরিহয়।সাপোর্ট ও রেজিস্টেন্স লেভেল হচ্ছে সেই মুল্যস্তর যেখানে নির্দিষ্ট সময়ে বিশেষ কিছু ক্রেতা/বিক্রেতা বাজারে প্রবেশ করে এবং পরবর্তীতে আরোকিছু ক্রেতা/বিক্রেতা প্রবেশ করে মূল্যকে তার আগের অবস্থানে ফিরিয়ে আনে। যখন মূল্য রেজিস্টেন্স লেভেলকে অতিক্রম করে তখন তা সাপোর্ট হিসেবে পরিগনিত হয়।আবার যখন মূল্য পতিত হয়ে নিচে একটি নুতন অবস্থান নেয় তখন তা সাপোর্ট হিসেবে কাজ করে।যখন সাপোর্ট বা রেজিস্টেন্স পরিবর্তীত হয়ে একটি নুতন রেজিস্টেন্স লেভেল তৈরি করে তখন দাম দ্রুতগতিতে উপরের দিকে ঊঠে আসে যা ব্রেকাউট বা মূল্যবৃদ্ধি নির্দেশ করে।যখন একটি লেভেল পরিবর্তিত হয় কিন্তু যা পর্যাপ্ত পরিমাণ ক্রেতা বা বিক্রেতা আকৃষ্ট করতে পারেনা তখন তা অতীতের সাপোর্ট বা রেজিস্টেন্সে লেভেল অতিক্রম করে আরো নিচে নেমে আসে। এই পতনকে কৃত্রিম ব্রেকাঊট বলা হয়। সাপোর্ট ও রেজিস্টেন্স লেভেল তার বিভিন্নতা এবং সহনীয়তা নিয়ে অবস্থান করে।এরা অনূভূমিকভাবে মূল্যের মাত্রা/স্থল নির্দেশ করে। বিভিন্ন আঙ্গিকের ট্রেন্ডলাইনগুলি সাপোর্ট ও রেজিস্টেন্স হিসেবে কাজ করে।যে সময় নিয়ে সাপোর্ট/রেজিস্টেন্স একটি লেভেলে অবস্থান করে তা সেই স্থলের সহনীয়তা বা দূর্বলতা। এই অবস্থানগুলি সে স্থল থেকে বেরিয়ে আসতে কি পরিমান ক্রয় বা বিক্রয়ের প্রয়োজন তা নির্দেশ করে।যতই একটি অবস্থানে ভলিউম বাড়তে থাকবে ততই সে অবস্থানটি সুদৃঢ় হবে। সাপোর্ট ও রেজিস্টেন্স সকল সময়ে এবং সব বাজারেই অবস্থিত। একটি স্তরে দীর্ঘ সময়ে অবস্থান সে স্তরের সুদৃঢ় এং স্বল্প সময়ের অবস্থান সে স্থলের দূর্বলতাকে নির্দেশ করে।
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="tab_6_21">
+                        <strong><u>Channel :</u></strong><br><br>
+                        <div class="row">                           
+                            <div class="knowledge_basket_tab">
+                                <div class="portlet-body">
+                                    <ul class="nav nav-tabs">
+                                        <li class="active">
+                                            <a href="#tab_1_41" data-toggle="tab"> English </a>
+                                        </li>
+                                        <li>
+                                            <a href="#tab_1_42" data-toggle="tab"> Bangla </a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content knowledge_basket">
+                                        <div class="tab-pane fade active in" id="tab_1_41">
+                                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image012.png') }}"/><br><br>
+                                            <p>
+                                                If we take this trend line theory one step further and draw a parallel line at the same angle of the uptrend or downtrend, we will have created a channel. To create an up (ascending) channel, simply draw a parallel line at the same angle as an uptrend line and then move that line to position where it touches the most recent peak. This should be done at the same time you create the trend line. To create a down (descending) channel, simple draw a parallel line at the same angle as the downtrend line and then move that line to a position where it touches the most recent valley. This should be done at the same time you created the trend line. When prices hit the bottom trend line this may be used as a buying area. When prices hit the upper trend line this may be used as a selling area.
+                                            </p>
+                                        </div>
+                                        <div class="tab-pane fade" id="tab_1_42">
+                                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image012.png') }}"/><br><br>
+                                            <p>
+                                                যদি আমরা Uptrend ও downtrend এই দুই ধারাকে কেন্দ্র করে যদি সমভাবে দু’টি রেখা অঙ্কন করি তবে আমরা একটি channel পেয়ে যাই। ঊর্ধ্বগতির (ascending) চ্যানেল পেতে হলে up trend বরাবর সমভাবে দু’টি রেখা টেনে যেতে হবে যা সম্প্রতি তার শীর্ষ অবস্থানকে স্পর্শ করেছে। এটি তৈরীর সময় আপনি trend line ও পেয়ে যাবেন। নিন্মগতির (descending) চ্যানেল পেতে হলে down trend বরাবর সমভাবে দু’টি রেখা টেনে যেতে হবে যা সম্প্রতি তার তলদেশকে স্পর্শ করেছে।আপনি চ্যানেল ও ট্রেন্ড লাইন একইসাথে পেয়ে যাবেন। যখন দাম নিচের ট্রেন্ডলাইনটিকে স্পর্শ করে তখন তা ক্রয়ের স্থান (buying area) হিসেবে বিবেচিত হয়। যখন দাম উপরের ট্রেন্ডলাইনটিকে স্পর্শ করে তখন তা বিক্রয়স্থান (selling area) হিসেবে বিবেচিত হয়। চিত্রটিতে দেখুন Trend গুলোকে Uptrend and Downtrend অনুযায়ী ভাগ করা হয়েছে। এর জন্য একটি নিচে এবং ওপরে দুইটি দাগ দিয়ে Channel তৈরি করা হয়েছে। এই Channel এর উপকারিতা হলো আপনি অনেক সহজে Trend line পেয়ে যাবেন এবং বুঝতে পারবেন বাজার কোনদিকে যাচ্ছে ফলে আপনার সিদ্ধান্ত নিতে কোনোরকম বিলম্ব হবে না। সেই সাথে পরবর্তী কোন হতে পারে সেই সম্পর্কে ও আপনি কিছু আগাম ধারনা পেতে পারেন। channel এর উপরকিতা হচ্ছে আপনি একটি শেয়ার ক্রয় করার সময় তার support level থেকেই ক্রয় করতে পারবেন এবং একটি লম্বা পর্যন্ত অবস্থান নিতে
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="tab_6_22">
+                        <strong><u>Ascending & Descending Triangles Chart Pattern :</u></strong><br><br>
+                        <div class="row">                           
+                            <div class="knowledge_basket_tab">
+                                <div class="portlet-body">
+                                    <ul class="nav nav-tabs">
+                                        <li class="active">
+                                            <a href="#tab_1_43" data-toggle="tab"> English </a>
+                                        </li>
+                                        <li>
+                                            <a href="#tab_1_44" data-toggle="tab"> Bangla </a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content knowledge_basket">
+                                        <div class="tab-pane fade active in" id="tab_1_43">
+                                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image013.jpg') }}"/><br><br>
+                                            <p>
+                                                Ascending and descending triangles are short-term investor favorites, because the trends allow short-term traders to earn from the same sharp price increase that long-term investors have been waiting for. Rather than holding on to a stock for months or years before you finally see a big payday, you can buy and hold for only a period of days and reap in the same monster returns as the long-time stock owners. As with many of our favorite patterns, when you learn to identify ascending and descending triangles, you can profit from upwards or downwards breakouts. That way, you’ll earn a healthy profit regardless of where the market is going. Set Your Target Price: For ascending and descending triangles, sell your stock at a target price of:  Entry price plus the pattern’s height for an upward breakout.  Entry price minus the pattern’s height for a downward breakout. To Profit from Symmetrical Triangles: Symmetrical triangles are very reliable. You can profit from upwards or downwards breakouts. You’ll learn more about how to earn from downtrends when we talk about maximizing profits. If you see a symmetrical triangle forming, watch it closely. The sooner you catch the breakout, the more money you stand to make. Watch For:  Sideways movement, a period of rest, before the breakout.  Price of the asset traveling between two converging trendlines.  Breakout ¾ of the way to the apex. Set Your Target Price: As with all patterns, knowing when to get out is as important as knowing when to get in. Your target price is the safest time to sell, even if it looks like the trend may be continuing. For symmetrical triangles, sell your stock at a target price of:  Entry price plus the pattern’s height for an upward breakout.  Entry price minus the pattern’s height for a downward breakout.
+                                            </p>
+                                        </div>
+                                        <div class="tab-pane fade" id="tab_1_44">
+                                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image013.jpg') }}"/><br><br>
+                                            <p>
+                                                স্বল্প মেয়াদী বিনিয়োগকারীদের কাছে Ascending এবং Descending Triangles জনপ্রিয় কারন স্বল্পমেয়াদী ট্রেডাররা এই ট্রেন্ডটি ব্যবহারের মাধ্যমে সেই পরিমান মুনাফা অর্জন করতে পারেন যার জন্যে দীর্ঘমেয়াদী বিনিয়োগকারী দীর্ঘ সময় ধরে অপেক্ষা করে থাকেন। বরং একটি শেয়ারকে দীর্ঘদিন ধরে না রেখে এই triangles ব্যবহার করে আপনি শেয়ার কিনে তা অল্প কিছুদিন ধরে রেখে দীর্ঘমেয়াদী বিনিয়োগকারীদের সমান মুনাফা লাভ করতে পারেন। অনান্য জনপ্রিয় প্যাটার্ণগুলোর মত আপনি যখন চার্টে ascending এবং descending triangles শনাক্ত করতে পারবেন তখন আপনি উর্ধ্বমূখী বা নিন্মগামী ব্রেকাউট চিহ্নিত করে তা হতে মুনাফা অর্জন করতে পারবেন।এভাবে বাজার যেদিকেই অবস্থান নিক না কেন আপনি ভালরকম মুনাফা অর্জন করতে পারেন। তিন এবং চার সপ্তাহের মধ্যে একটি ascending এবং descending প্যাটার্ণ সৃষ্টি হয়।
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="tab_6_23">
+                        <strong><u>Neutral Candlestick Pattern :</u></strong><br><br>
+                        <div class="row">                           
+                            <div class="knowledge_basket_tab">
+                                <div class="portlet-body">
+                                    <ul class="nav nav-tabs">
+                                        <li class="active">
+                                            <a href="#tab_1_45" data-toggle="tab"> English </a>
+                                        </li>
+                                        <li>
+                                            <a href="#tab_1_46" data-toggle="tab"> Bangla </a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content knowledge_basket">
+                                        <div class="tab-pane fade active in" id="tab_1_45">
+                                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image035.png') }}"/><br><br>
+                                            <ol>
+                                                <li>Marubozu: Marubozu indicates that there are no shadows from the bodies. A white Marubozu is a long white body without anyshadows and indicates a bullish trend. It generally becomes the first part of a bullish continuance or a bullish reverssal pattern. Black Marubozu is a long black body without any shadows. It generally implies bearish continuation or bearish reversal. Spinning tops. These are neutral lines. They occur when the distance between the high and low, and the distance between the open and close, are relatively small.</li>
+                                                <li>Doji. This line implies indecision. The security opened and closed at the same price. These lines can appear in several different patterns. Double doji lines (two adjacent doji lines) imply that a forceful move will follow a breakout from the current indecision.</li>
+                                                <li>Harami ("pregnant" in English). This pattern indicates a decrease in momentum. It occurs when a line with a small body falls within the area of a larger body. In this example, a bullish (empty) line with a long body is followed by a weak bearish (filled-in) line. This implies a decrease in the bullish momentum.</li>
+                                                <li>Harami cross. This pattern also indicates a decrease in momentum. The pattern is similar to a harami, except the second line is a doji (signifying indecision).</li>
+                                            </ol>
+                                        </div>
+                                        <div class="tab-pane fade" id="tab_1_46">
+                                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image035.png') }}"/><br><br>
+                                            <ol>
+                                                <li>Marubozu: এই কেন্ডেলস্টিকটির সাধারণত কোন ওপরের দিকে কোন ছায়া থাকে না অর্থাৎ কোন শরবচ্ছো বা সর্বনিম্ন মূল্য থাকে না। যদি এই কেন্ডেল টি সবুজ হয় তবে সেটি বুলিশ এবং লাল হলে বিয়ারিশ ধারা বুঝিয়ে থাকে।</li>
+                                                <li>Doji: এটি অনিশ্চয়তার ইঙ্গিত বহন করে। যদি শেয়ারের প্রারম্ভিক ও সমাপ্তি মূল্য একই হয় তবে এটি সংঘটিত হয়।এই রেখাগুলি বিভিন্ন প্যাটার্ণে আবির্ভূত হতে পারে।যুগল ডজি রেখাদ্দ্বয় বর্তমান অনিশ্চয়তা থেকে বেরিয়ে একটি শক্তিশালী ব্রেকাউটের ইঙ্গিত দেয়।</li>
+                                                <li>Harami: এই প্যাটার্ণটি নিন্মগামী গতি ইঙ্গিত করে।ছোট শরীরবিশিষ্ট রেখা যখন বড় একটি রেখার মধ্যবর্তী হয় তখন এটি সৃষ্টি হয়।উদাহরণস্বরুপ,আমরা দেখতে পাচ্ছি বিয়ারিশ রেখাটি বুলিশ রেখাটিকে অনুসরন করছে যা বুলিশের নিন্মগতি ইঙ্গিত করছে।</li>
+                                                <li>Harami cross: এটি গতিহ্রাস্ব প্রকাশ করে।এটি harami –র মতো কিন্তু পরবর্তী রেখাটি ডজি যা অনিশ্চয়তার ইঙ্গিত দেয়।</li>
+                                            </ol>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="tab_6_24">
+                        <strong><u>Reversal Candlestick Pattern :</u></strong><br><br>
+                        <div class="row">                           
+                            <div class="knowledge_basket_tab">
+                                <div class="portlet-body">
+                                    <ul class="nav nav-tabs">
+                                        <li class="active">
+                                            <a href="#tab_1_47" data-toggle="tab"> English </a>
+                                        </li>
+                                        <li>
+                                            <a href="#tab_1_48" data-toggle="tab"> Bangla </a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content knowledge_basket">
+                                        <div class="tab-pane fade active in" id="tab_1_47">
+                                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image042.png') }}"/><br><br>
+                                            <ol>
+                                                <li>Long-legged doji. This line often signifies a turning point. It occurs when the open and close are the same, and the range between the high and low is relatively large. it expresses the indecision of buyers and also for sellers.</li>
+                                                <li>Dragon-fly doji. This line also signifies a turning point. It occurs when the open and close are the same, and the low is significantly lower than the open, high, and closing prices. This signal is a reversal after a downtrend and expresses that control has shifted sellers to buyers.</li>
+                                                <li>Gravestone doji. This line also signifies a turning point. It occurs when the open, close, and low are the same, and the high is significantly higher than the open, low, and closing prices.</li>
+                                                <li>Four Price Doji: Open, High, Low and close are all the same for a trading day. Its a very distinctive line that indicates the indecision of the traders, or a very quite market.</li>
+                                                <li>Star. Stars indicate reversals. A star is a line with a small real body that occurs after a line with a much larger real body, where the real bodies do not overlap. The shadows may overlap.</li>
+                                                <li>Doji star. A star indicates a reversal and a doji indicates indecision. Thus, this pattern usually indicates a reversal following an indecisive period. You should wait for a confirmation (e.g., as in the evening star illustration) before trading a doji star.</li>
+                                            </ol>
+                                        </div>
+                                        <div class="tab-pane fade" id="tab_1_48">
+                                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image042.png') }}"/><br><br>
+                                            <ol>
+                                                <li>Long-legged doji: এই রেখাটি সবসময় একটি পরিবর্তনের ইঙ্গিত বহন করে।এটি তখনই সংঘটিত হয় যখন প্রারম্ভিক ও সমাপ্তি মূল্য একই থাকে এবং সর্বোচ্চ ও সর্বনিন্ম মূল্যের দূরত্ব পারস্পারিকভাবে অধিক হয়।</li>
+                                                <li>Dragon-fly doji: এই রেখাটি ও পরিবর্তনের আভাস দেয়।করে।এটি তখনই সংঘটিত হয় যখন প্রারম্ভিক ও সমাপ্তি মূল্য একই থাকে এবং সর্বনিন্ম মূল্য প্রারম্ভিক, সর্বোচ্চ ও সমাপ্তি মূল্যের চেয়ে কম থাকে।</li>
+                                                <li>Gravestone Doji: এই রেখার মাধ্যমেও আমরা পরিবর্তনের আভাস পাই।এটি আমরা দেখতে পাই যখন প্রারম্ভিক,সমাপ্তি ও সর্বোনিন্ম মুল্য একই অবস্থানে থাকে এবং সর্বোচ্চ মূল্য প্রারম্ভিক,সমাপ্তি ও সর্বনিন্ম মূল্যের চেয়ে বেশি থাকে।</li>
+                                                <li>Four Price Doji: এই কেন্ডেলস্টিকটির কোন শরবচ্ছ বা শরবনিন্ম কোন মূল্য থাকে না শুধু পারম্ভিক এবং শমাপনি মূল্য থাকে। এই পারম্ভিক এবং শমাপনি মূল্যর মাঝে ও কোন বেবধান থাকে না।</li>
+                                                <li>Star: স্টারগুলি রিভারসেলের ইঙ্গিত দেয়।একটি বড় রেখার(রিয়েল বডি)পর এই রেখাটি ছোট দেহ নিয়ে আবির্ভুত হয়।যখন এটি বিয়ারিশ প্যাটার্ণের পর আবির্ভূত হয় তখন তা downtrend নির্দেশ করে এবং বুলিশ প্যাটার্ণের পর আবির্ভূত হয় তখন তা uptrend নির্দেশ করে।তবে স্টারটির অবশ্যই ছায়া থাকতে হবে অন্যথায় এটি স্টার হিসেবে গণ্য হবে না।</li>
+                                                <li>Doji star: স্টারটি রিভেরসেলের এবং ডজিটি সিদ্ধান্তহীনতা নির্দেশ করে।যদিও এটি অনিশ্চিত সময়ে রিভারসেলের ইঙ্গিত দেয়।ট্রেড করার পূর্বে এই ডজি দেখার পর আপনাকে অপেক্ষা করতে হবে।</li>
+                                            </ol>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="tab_6_25">
+                        <strong><u>Divergence Trading :</u></strong><br><br>
+                        <div class="row">                           
+                            <div class="knowledge_basket_tab">
+                                <div class="portlet-body">
+                                    <ul class="nav nav-tabs">
+                                        <li class="active">
+                                            <a href="#tab_1_49" data-toggle="tab"> English </a>
+                                        </li>
+                                        <li>
+                                            <a href="#tab_1_50" data-toggle="tab"> Bangla </a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content knowledge_basket">
+                                        <div class="tab-pane fade active in" id="tab_1_49">
+                                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image018.png') }}"/><br><br>
+                                            <p>
+                                                divergence can be seen by comparing price action and the movement of an indicator. It doesn't really matter what indicator you use. You can use RSI, MACD, the stochastic, CCI, etc. The great thing about divergences is that you can use them as a leading indicator, and after some practice it's not too difficult to spot. When traded properly, you can be consistently profitable with divergences. The best thing about divergences is that you're usually buying near the bottom or selling near the top. This makes the risk on your trades are very small relative to your potential reward. Just think "higher highs" and "lower lows". Price and momentum normally move hand in hand. If price is making higher highs, the oscillator should also be making higher highs. If price is making lower lows, the oscillator should also be making lower lows. If they are NOT, that means price and the oscillator are diverging from each other. And that's why it's called "divergence." A regular divergence is used as a possible sign for a trend reversal. If price is making lower lows (LL), but the oscillator is making higher lows (HL), this is considered to be regular bullish divergence. This normally occurs at the end of a down trend. After establishing a second bottom, if the oscillator fails to make a new low, it is likely that the price will rise, as price and momentum are normally expected to move in line with each other.
+                                            </p>
+                                        </div>
+                                        <div class="tab-pane fade" id="tab_1_50">
+                                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image018.png') }}"/><br><br>
+                                            <p>
+                                                Divergence Trading টি হলো একটি শেয়ার যখন বোটম লেভেলে থাকে তখন ক্রয় করা এবং যখন টপ লেভেলে থাকে ঠিক তখন বিক্রয় করা। আপনি এই Divergence Trading করার জন্য MACD, stochastic ইনডিকেটরগুলো ব্যাবহার করতে পারেন। এই ট্রেডিং পদ্ধতিটি ব্যাবহার করতে আপনাকে আরও কিছু বিষয় সম্পর্কে জানতে হবে। বিষয়গুলো হচ্ছে Higher Highs and Lower Lows। সাধারণত Higher Highs হচ্ছে উচ্চ পয়েন্ট এর উচ্চ সীমা এবং Lower Lows হচ্ছে নিন্ম পয়েন্ট এর নিন্ম সীমা। চিত্রে ভালভবে লক্ষ্য করলে আপনি ও বিষয়টা বুঝতে পারবেন। আপনি এখন জেনে গেছেন Divergence Trading সম্পর্কে। এখন আপনি পুরপরি প্রস্তুত Divergence Trading করার জন্য। দুই ধরনের Divergence রয়েছে। একটি হচ্ছে regular এবং আরেকটি হচ্ছে Hidden। regular bullish divergence ব্যাবহার করা হয় সম্ভাব্য ট্রেন্ড রিভারসাল বুঝার জন্য। যদি কোন শেয়ারের দাম lower lows অবস্থানে থাকে কিন্তু oscillator টি higher lows অবস্থানে থাকে তবে সেটি হবে regular divergence। এই regular divergence শাধারনত সংগঠিত হয় একটি ডাওন ট্রেন্ডের পর। একটি Hidden bullish divergence সংগঠিত হয় যখন একটি শেয়ার এর দাম higher low অবস্থানে থেকে এবং oscillator টি lower low অবস্থনে থাকে।
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="tab_6_26">
+                        <strong><u>Andrew's Pitchfork :</u></strong><br><br>
+                        <div class="row">                           
+                            <div class="knowledge_basket_tab">
+                                <div class="portlet-body">
+                                    <ul class="nav nav-tabs">
+                                        <li class="active">
+                                            <a href="#tab_1_51" data-toggle="tab"> English </a>
+                                        </li>
+                                        <li>
+                                            <a href="#tab_1_52" data-toggle="tab"> Bangla </a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content knowledge_basket">
+                                        <div class="tab-pane fade active in" id="tab_1_51">
+                                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image003.png') }}"/><br><br>
+                                            <p>
+                                                Andrew's Pitchfork, otherwise known as median line studies utilizes the concepts of support, resistance, and retracements. As is visually depicted below, Andrew's Pitchfork consists of: • Handle • Resistance Trendline "tine" • Median Line • Support Trendline "tine" now lets see with an example how andrew’s pitchfork works. At very beginning we need to find a significant pivot or retracement (in the chart above, the lower left corner). Then find the next significant pivot or retracement. Thirdly find the next retracement. Now look at the graph. Red box areas showing the Low point, High point and low point. We also can see the support and resistance line and median line. The price of that share did not cross its resistance level and always got support at the support level. in the last are the price broke the support line and continued to fall.
+                                            </p>
+                                        </div>
+                                        <div class="tab-pane fade" id="tab_1_52">
+                                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image003.png') }}"/><br><br>
+                                            <p>
+                                                Ami Broker এর একটি খুবই জনপ্রিয় টুলস হচ্ছে Andrew's Pitchfork অনেকটা কাটা চামচের মত দেখতে। এই Andrew's Pitchfork Tool -টিকে অনেকে আবার median line studies ও বলে থাকেন। এই median line লাইন দিয়ে সাধারণত support, resistance এবং retracements নির্ণয় করা হয়ে থাকে। এই Andrew's Pitchfork টুলসটিতে একটি Handle, একটি Resistance লাইন, একটি Median লাইন এবং একটি Support লাইন রয়েছে। চলুন এবার একটি উদাহরনের মাধ্যমে দেখে কি ভাবে আমরা এই Andrew's Pitchfork টুলসটি ব্যাবহার করবো। এই Andrew's Pitchfork আঁকার জন্য প্রথমে একটি Low point খুজে বের করতে হবে তারপর সেই low point কে ভিত্তি ধরে আর একটি high point নিতে হবে। এবং শেষ ধাপে সেই high point থেকে আবার নিচের দিকে একটি low point নিতে হবে। চিত্রে লক্ষ্য করুন লাল বক্স করে পয়েন্ট গুলো দেখানো হয়েছে। ১ নাম্বার বক্সটি ছিল low point এবং ২ নাম্বার বক্সটি ছিল high point এবং ৩ নাম্বার বক্সটি ছিল low point। এভাবে আঁকার পর দেখা যায় তিনটি লাইন তৈরি হয়েছে। সব থেকে ওপরের লাইনটি Resistance লেভেল হিশেবে কাজ করে থাকে। মাঝখানের লাইনটি median এবং শেষের লাইনটি একটি শেয়ারের support লেভেল হিসেবে কাজ করে থাকে। চিত্রে support এবং Resistance দেখুন। শেয়ারটির দাম ওপরের লাইনে Resistance যেয়ে ব্রেক করতে না পেরে নিচের দিকে নেমে আসে এবং নিচের লাইনে সে support তৈরি করবে।
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="tab_6_27">
+                        <strong><u>Aroon :</u></strong><br><br>
+                        <div class="row">                           
+                            <div class="knowledge_basket_tab">
+                                <div class="portlet-body">
+                                    <ul class="nav nav-tabs">
+                                        <li class="active">
+                                            <a href="#tab_1_53" data-toggle="tab"> English </a>
+                                        </li>
+                                        <li>
+                                            <a href="#tab_1_54" data-toggle="tab"> Bangla </a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content knowledge_basket">
+                                        <div class="tab-pane fade active in" id="tab_1_53">
+                                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image004.gif') }}"/><br><br>
+                                            <p>
+                                            Aroon is an indicator system that determines whether a stock is trending or not and how strong the trend is. The Aroon indicators measure the number of periods since price recorded an x-day high or low. There are two separate indicators: Aroon-Up and Aroon-Down. A 25-day Aroon-Up measures the number of days since a 25-day high.A 25-day Aroon-Down measures the number of days since a 25-day low. In this sense, the Aroon indicators are quite different from typical momentum oscillators, which focus on price relative to time. Aroon is unique because it focuses on time relative to price. Chartists can use the Aroon indicators to spot emerging trends, identify consolidations, define correction periods and anticipate reversals. In graph we can see that Aroon indicator gave signal when Aroon-Up crossed the Aroon-down. this uptrend was sustain and went 50 points to 100 points. That time Aroon down also in downtrend.
+                                            </p>
+                                        </div>
+                                        <div class="tab-pane fade" id="tab_1_54">
+                                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image004.gif') }}"/><br><br>
+                                            <p>
+                                                Aroon ইনডিকেটরটি হচ্ছে কোন শেয়ারের ট্রেন্ড নির্ণয় করার একটি পদ্ধতি। এই ইনডিকেটরটি বুঝায় একটি শেয়ার কি ট্রেেন্ড রয়েছে অথবা নতুন করে ট্রেন্ড তৈরি হতে যাচ্ছে কিনা এবং ট্রেন্ডটি কতটা মজবুত হতে পারে। এই ইনডিকেটরটি এক সাথে দুইটি সংকেত দিয়ে থাকে। একটি হচ্ছে Aroon-Up এবং Aroon-Down। একটি ২৫ দিনের Aroon-Up শেষ ২৫ দিনের শর্বচ্চ দাম পরিমাপ করে থাকে এবং Aroon-Down এর ক্ষেত্রে শেষ ২৫ দিনের সর্বনিন্ম দাম পরিমাপ করা হয়। এই ইনডিকেটরটি গতানুগতিক momentum oscillators ইনডিকেটরেরে থেকে কিছুটা আলাদা। আলাদা হবার প্রধান কারনটি হচ্ছে এই ইনডিকেটরটি দামের থেকে সময়ের ওপর বেশি জোর দিয়ে থাকে। সাধারণত এই ইনডিকেটরটি সেন্ট্রাল লাইনের (৫০) ওপরে এবং নিচে ওঠানামা করে থাকে। এর সর্বউচ্চ সীমা হচ্ছে ১০০ এবং শরবনিন্ম সীমা হচ্ছে ০। চিত্রে দেখা যাচ্ছে Aroon প্রথম ঊর্ধ্বমুখী প্রবণতার সংকেত দিয়েছিল যখন Aroon-Up ইনডিকেটরটি Aroon-Down কে ক্রস করে। এই ঊর্ধ্বমুখী প্রবণতা শেষ পর্যন্ত অব্যাহত ছিল এবং ৫০ পয়েন্ট লাইন ক্রস করে ১০০ পয়েন্ট পর্যন্ত পৌঁছে ছিল। ঠিক তখন ও Aroon-Down নিন্মমুখি প্রবণতায় ছিল। আপনি খেয়াল করলে দেখবেন তখন শেয়ারটির দাম বেরেছিল এবং যখন Aroon-Down ইনডিকেটরটি Aroon-Up কে ক্রস করে এবং ঊর্ধ্বমুখী প্রবণতায় ছিল তখন শেয়ারটির দাম কমে ছিল। অর্থাৎ আপনাকে দুইটি ইনডিকেটরই ব্যাবহার করতে হবে একটি ট্রেন্ড বুঝার জন্য।
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="tab_6_28">
+                        <strong><u>Fibonacci Fan :</u></strong><br><br>
+                        <div class="row">                           
+                            <div class="knowledge_basket_tab">
+                                <div class="portlet-body">
+                                    <ul class="nav nav-tabs">
+                                        <li class="active">
+                                            <a href="#tab_1_55" data-toggle="tab"> English </a>
+                                        </li>
+                                        <li>
+                                            <a href="#tab_1_56" data-toggle="tab"> Bangla </a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content knowledge_basket">
+                                        <div class="tab-pane fade active in" id="tab_1_55">
+                                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image019.png') }}"/><br><br>
+                                            <p>
+                                                Fibonacci Fan consists of three Diagonal lines and these lines use Fibonacci Ratio to measure support & resistance level. Like Fibonacci Fan the way of drawing Fibonacci Fan is also same. In this case a Swing High and Swing Low will be needed to draw the Fibonacci Fan. After finding swing low and swing high point a line need to draw from low point to high point. Then three lines will be available with the Fibonacci Ratio like 38.2%, 50.0% and 61.8%. Look at the graph. The three lines worked as a support and resistance level. when price fallen at the first day it bounced back from its second support line. Then again went up and it didn’t break the last support. At last the price went up from the last support line. So the last support line was very strong.
+                                            </p>
+                                        </div>
+                                        <div class="tab-pane fade" id="tab_1_56">
+                                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image019.png') }}"/><br><br>
+                                            <p>
+                                                Fibonacci Fan তিনটি Diagonal লাইন দ্বারা গঠিত এবং এই লাইন গুলো Fibonacci Ratio ব্যাবহার করে support এবং resistance লেভেল নির্ণয় করতে সাহায্য করে থাকে। অন্য সব Fibonacci এর মত Fibonacci Fan আঁকার ও কৌশল রয়েছে। এই Fibonacci Fan আঁকতে আপনাকে নিকটবর্তী Swing High এবং Swing Low খুঁজে বের করতে হবে। তারপর Swing Low থেকে Swing High পর্যন্ত একটি Fibonacci Fan আঁকতে হবে। এই Fibonacci Fanএর প্রতিটি লাইন Fibonacci Ratio দ্বারা ভাগ করা থাকে। রেশিও গুলো হচ্ছে 38.2%, 50% এবং 61.8%। লক্ষ্য করুন যখন শেয়ারটির দাম কমে যাচ্ছিল ঠিক তখন সে তার প্রথম support লেভেল ব্রেক করে এবং কিছু দিন side walk করে। তারও কিছু দিন পর তৃতীয় support লেভেল ব্রেক করতে যেয়েও ব্রেক করতে পারিনি এবং আস্তে আস্তে সে আবার উপরের দিকে ওঠা শুরু করে। অর্থাৎ বলা যায় ৫০.০০% লেভেলের support লেভেলটা খুব মজবুত ছিল।
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="tab_6_29">
+                        <strong><u>Fibonacci Retracement :</u></strong><br><br>
+                        <div class="row">                           
+                            <div class="knowledge_basket_tab">
+                                <div class="portlet-body">
+                                    <ul class="nav nav-tabs">
+                                        <li class="active">
+                                            <a href="#tab_1_57" data-toggle="tab"> English </a>
+                                        </li>
+                                        <li>
+                                            <a href="#tab_1_58" data-toggle="tab"> Bangla </a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content knowledge_basket">
+                                        <div class="tab-pane fade active in" id="tab_1_57">
+                                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image020.png') }}"/><br><br>
+                                            <p>
+                                                In technical analysis Fibonacci Tools is very popular tools for measuring Support and Resistance level of a given stock. When market is in trend Fibonacci retracement can give better result for measuring possible support & resistance level. When market goes up an investor can stay up to his Fibonacci Resistance level and when market goes down an investor can stay up to his Fibonacci Support level. For calculation Fibonacci Retracement at first need to find out the Swing High and Swing Low point. Look at the chart there are two points are available. One is swing high and another is swing low. Now a Fibonacci retracement can be drawn from swing low to swing high. See there are some possible level of support and resistance like 38.2%, 50.0%, 61.8% and 100%. So if the stock price goes down then these level will work as a possible support and if the price goes up then these level will work as a possible resistance.
+                                            </p>
+                                        </div>
+                                        <div class="tab-pane fade" id="tab_1_58">
+                                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image020.png') }}"/><br><br>
+                                            <p>
+                                                টেকনিক্যাল আনালাইসিসে Fibonacci খুবই একটি জনপ্রিয় টুলস যেটি সম্ভাব্য support & resistance level নির্ণয় করতে সাহায্য করে। সর্ব প্রথম যেটা মাথায় রাখতে হবে সেটা হল Fibonacci খুব ভাল কাজ করে যখন মার্কেট একটি Trend এর দিকে যেটে থাকে। মার্কেট যখন Uptrend এ যেতে থাকে তখন একজন Trader Long Position এ থাকতে পারে যতক্ষণ Fibonacci Support Level এ থাকে। আবার মার্কেট যখন Downtrend এ যেতে থাকে তখন একজন Trader Short Position এ থাকতে পারে যতক্ষণ Fibonacci Resistance Level এ থাকে। আর এই Retracement Level খুজে পবার জন্য আপনাকে নিকটবর্তী Swing Highs and Swings Lows বের করতে হবে। তারপর Swing High থেকে Swing Low পর্যন্ত একটি Fibonacci Draw করতে হবে। চিত্রে Swing Low থেকে একটি Fibonacci Retracement অপরের swing High পর্যন্ত আঁকা হয়েছে। চার্ট থেকে আমরা দেখতে পাই retracement levels ছিল ৩৮.২%, ৫০.০%, ৬১.৮% এবং ১০০.০% পয়েন্ট। এই লেভেল গুলো আমাদের Support এবং Resistance এর জায়গা পরিমাপ করে দিচ্ছে। অর্থাৎ যদি শেয়ারটি Downtrend এ চলে আসে তবে ওপরের ঐ লেভেল গুলতে Strong Bounce করার শম্ভাবনা থাকে। ঠিক একই ভাবে যদি Uptrend যায় তবে ওপরের ঐ লেভেল গুলোতে ও Bounce করে নিচের দিকে নেমে যেতে পারে।
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="tab_6_30">
+                        <strong><u>Fibonacci Arc :</u></strong><br><br>
+                        <div class="row">                           
+                            <div class="knowledge_basket_tab">
+                                <div class="portlet-body">
+                                    <ul class="nav nav-tabs">
+                                        <li class="active">
+                                            <a href="#tab_1_59" data-toggle="tab"> English </a>
+                                        </li>
+                                        <li>
+                                            <a href="#tab_1_60" data-toggle="tab"> Bangla </a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content knowledge_basket">
+                                        <div class="tab-pane fade active in" id="tab_1_59">
+                                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image021.png') }}"/><br><br>
+                                            <p>
+                                            Like Fibonacci Retracement Fibonacci arc does same work. Fibonacci Arc also uses to determine the possible support & resistance level. When market is in trend Fibonacci Arc can give better result for measuring possible support & resistance level. When market goes up an investor can stay up to his Fibonacci Arc level and when market goes down an investor can stay up to his Fibonacci Arc level. Like Fibonacci Retracement, at first need to find out the Swing High and Swing Low point for calculating Fibonacci Arc. Look at the chart there are two points are available. One is swing high and another is swing low. Now a Fibonacci Arc can be drawn from swing low to swing high. See there are some possible level of support and resistance like 38.2%, 50.0%, 61.8% . So if the stock price goes down then these levels will work as a possible support and if the price goes up then these level will work as a possible resistance level.
+                                            </p>
+                                        </div>
+                                        <div class="tab-pane fade" id="tab_1_60">
+                                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image021.png') }}"/><br><br>
+                                            <p>
+                                                টেকনিক্যাল আনালাইসিসে Fibonacci Retracement এর মত Fibonacci Arc ও একটি শেয়ারের সম্ভাব্য support & resistance level নির্ণয় করতে সাহায্য করে। Fibonacci Arc এর খেত্তেও সর্ব প্রথম যেটা মাথায় রাখতে হবে সেটা হল Fibonacci Arc খুব ভাল কাজ করে যখন মার্কেট একটি Trend এর দিকে যেতে থাকে। মার্কেট যখন Uptrend এ যেতে থাকে তখন একজন Trader Long Position এ থাকতে পারে যতক্ষণ Fibonacci Arc Support Level এ থাকে। আবার মার্কেট যখন Downtrend এ যেতে থাকে তখন একজন Trader Short Position এ থাকতে পারে যতক্ষণ Fibonacci Arc Resistance Level এ থাকে। আর এই Retracement Level খুজে পবার জন্য আপনাকে নিকটবর্তী Swing Highs and Swings Lows বের করতে হবে। তারপর Swing High থেকে Swing Low পর্যন্ত একটি Fibonacci arc Draw করতে হবে। চিত্রে Swing Low থেকে একটি Fibonacci Arc swing High পর্যন্ত আঁকা হয়েছে। চার্ট থেকে আমরা দেখতে পাই retracement levels ছিল ৩৮.২%, ৫০.০%, ৬১.৮% পয়েন্ট। এই লেভেল গুলো আমাদের Support এবং Resistance এর জায়গা পরিমাপ করে দিচ্ছে। অর্থাৎ যদি শেয়ারটি Downtrend এ চলে আসে তবে ওপরের ঐ লেভেল গুলতে Strong Bounce করার শম্ভাবনা থাকে। ঠিক একই ভাবে যদি Uptrend যায় তবে ওপরের ঐ লেভেল গুলোতে ও Bounce করে নিচের দিকে নেমে যেতে পারে।
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="tab_6_31">
+                        <strong><u>Relationship between Trend Line and Volume :</u></strong><br><br>
+                        <div class="row">                           
+                            <div class="knowledge_basket_tab">
+                                <div class="portlet-body">
+                                    <ul class="nav nav-tabs">
+                                        <li class="active">
+                                            <a href="#tab_1_61" data-toggle="tab"> English </a>
+                                        </li>
+                                        <li>
+                                            <a href="#tab_1_62" data-toggle="tab"> Bangla </a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content knowledge_basket">
+                                        <div class="tab-pane fade active in" id="tab_1_61">
+                                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image048.png') }}"/><br><br>
+                                            <p>
+                                                Today we will discuss about relationship between Trend Line and Volume. We know trend line works as a support and resistance of a share. And if the price breaks the trend line it must be confirmed by the volume. Without large volume price cannot breaks the trend line. Look at the image. We have seen a downtrend rally was continuing. When price breaks the trend line for the first time it confirmed by the volume and it continued to increase. So here volume is very important incase of break out a trend line. sometime a trend line can show you wrong signals but you need to observe it very carefully.
+                                            </p>
+                                        </div>
+                                        <div class="tab-pane fade" id="tab_1_62">
+                                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image048.png') }}"/><br><br>
+                                            <p>
+                                                আজকে আমরা Trend Line বা রেখের পরিবর্তনের সাথে Volume এর সম্পর্ক নিয়ে আলোচনা করব। উপোরোক্ত চিত্রে আমরা দেখতে পাচ্ছি চারবার দাম মিডিয়াম ট্রেন্ডকে অনুসরন করেছে কিন্তু ট্রেন্ডলাইনটিকে অতিক্রম করে যায়নি। অবশেষে এক সময় মূল্য একটি উঠতি স্বল্পমেয়াদী ট্রেন্ডলাইনের সাহায্যে মিডিয়াম ট্রেন্ডলাইনকে অতিক্রম করে গেছে। পরবর্তী দিনে বাজার সঠিক তথ্য দিয়েছে যে এটি ট্রেন্ডলাইন হতে ওপরে উঠে অর্থাৎ দাম বেড়ে গিয়ে একটি নুতন ঊর্ধ্বমুখী প্রবণতা সৃষ্টি করেছে। এখনে volume এর ব্যাপারটি খুবই গুরুত্বপূর্ণ। volume ছাড়া কোন Trend Line মজবুত হয় না। এই লাইনের ক্ষেত্রেও ঠিক তাই হয়েছে। যখনই দাম বৃদ্ধি পেতে শুরু করে তখনই ভলিউম বৃদ্ধি পেতে থাকে। অনেক সময় এই Trend Line ভুল সিগন্যাল ও দিতে পারে। যদি ভুল সিগন্যাল দেয় তবে Trend Line টি পূর্ণ না হয়ে বিপরীত মুখি ধারার চলে যাবে অর্থাৎ line change হয়ে যাবে। টেকনিকাল এনালিসিস এ সফল হবার মূলে হচ্ছে অনুশীলন। এই অনুশীলনের মাধ্যমেই সম্ভব পুরো বিষয়টাকে আয়ত্ত করা।
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="tab_6_32">
+                        <strong><u>Trend Spotting 1 :</u></strong><br><br>
+                        <div class="row">                           
+                            <div class="knowledge_basket_tab">
+                                <div class="portlet-body">
+                                    <ul class="nav nav-tabs">
+                                        <li class="active">
+                                            <a href="#tab_1_63" data-toggle="tab"> English </a>
+                                        </li>
+                                        <li>
+                                            <a href="#tab_1_64" data-toggle="tab"> Bangla </a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content knowledge_basket">
+                                        <div class="tab-pane fade active in" id="tab_1_63">
+                                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image049.png') }}"/><br><br>
+                                            <p>
+                                                When two people go to war, the foolish man always rushes blindly into battle without a plan, much like a starving man at his favorite buffet spot. The wise man, on the other hand, will always get a situation report first to know the surrounding conditions that could affect how the battle plays out. Like in warfare, we must also get a situation report on the market we are trading. This means we need to know what kind of market environment we are actually in. Sometimes the system does in fact, suck. Other times, the system is potentially profitable, but it is being utilized in the wrong environment. Before spotting those opportunities, you have to be able to determine the market environment. The state of the market can be classified into three scenarios: 1.Trending up, 2. Trending down, 3. Ranging. A trending market is one in which price is generally moving in one direction. Sure, price may go against the trend every now and then, but looking at the longer time frames would show that those were just retracements. Trends are usually noted by "higher highs" and "higher lows" in an uptrend and "lower highs" and "lower lows" in a downtrend. Place a 7 period, a 20 period, and a 65 period Simple Moving Average on your chart. Then, wait until the three SMA's compress together and begin to fan out. If the 7 period SMA fans out on top of the 20 period SMA, and the 20 SMA on top of the 65 SMA, then price is trending up. On the other hand, if the 7 period SMA fans out below the 20 period SMA, and the 20 SMA is below the 65 SMA, then price is trending down.
+                                            </p>
+                                        </div>
+                                        <div class="tab-pane fade" id="tab_1_64">
+                                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image049.png') }}"/><br><br>
+                                            <p>
+                                                যখন দুই জন যোদ্ধা যুদ্ধক্ষেত্রে মিলিত হয় তখন শুধু বোকা যোদ্ধাই কেবল মাত্র কোন পরিকল্পনা ছাড়াই লড়াইয়ে অংশ গ্রহন করেন। কিন্তু বুদ্দিমান যোদ্ধা একটি পরিকল্পনা নিয়েই যুদ্ধে অংশগ্রহন করে থাকে। ঠিক তেমনি আপনারও উচিৎ একটি নির্দিষ্ট পরিকল্পনা নিয়ে শেয়ার বাজারে বিনিয়োগ করা। আর সেই জন্য আপনাকে বাজারের গতিবিধি বা ট্রেন্ড বুঝতে হবে। বাজারে সাধারণত তিন ধরনের ট্রেন্ড পরিলক্ষিত হয়। এই গুলো হচ্ছে ১. আপ ট্রেন্ড, ২. ডাওন ট্রেন্ড, ৩. রেঞ্জিং। আজ আমরা দেখব Trending Market কি এবং এই বিষয়টি কিভাবে আপনার কাজে আসবে। Trending Market হচ্ছে একটি মার্কেট যখন নির্দিষ্ট ট্রেন্ডে অনেক দিন যাবত চলতে থাকে। চিত্র লক্ষ্য করুন এবং দেখুন একটি পরিষ্কার ডাওন ট্রেন্ড দেখা যাচ্ছে। তারমানে আমরা এই ট্রেন্ডটিকে Trending বলতে পারি কারন অনেক দিন যাবত এই ট্রেন্ডটি অব্যাহত ছিল। আপনি আপ ট্রেন্ড বুঝতে পারবেন যখন "higher highs" এবং "higher lows" দেখতে পাবেন এবং ডাওন ট্রেন্ড বুঝবেন "lower highs" এবং "lower lows" দেখে। আপনি এই Trending মার্কেটেও Moving Average টুলস টি বেবহার করতে পারেন। আপনি ৭ দিন, ২০ দিন এবং ৬৫ দিনের Simple Moving Average নিতে পারেন। একটু ভালভাবে লক্ষ্য করুন যখন ওপর দিক থেকে ৭ দিনের SMA ২০ দিনের SMA কে অতিক্রম করে এবং ২০ দিনের SMA ৬৫ দিনের কে অতিক্রম করে তখন মূল্যর trending up সংগঠিত হয়। আবার ঠিক উল্টো ভাবে যখন নিচের দিক থেকে ৭ দিনের SMA ২০ দিনের SMA কে অতিক্রম করে এবং ২০ দিনের SMA ৬৫ দিনের কে অতিক্রম করে তখন মূল্যর trending down সংগঠিত হয়। চিত্রে ঠিক এই বিষয়টিই দেখানো হয়েছে।
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="tab_6_33">
+                        <strong><u>Trend Spotting - 2 :</u></strong><br><br>
+                        <div class="row">                           
+                            <div class="knowledge_basket_tab">
+                                <div class="portlet-body">
+                                    <ul class="nav nav-tabs">
+                                        <li class="active">
+                                            <a href="#tab_1_65" data-toggle="tab"> English </a>
+                                        </li>
+                                        <li>
+                                            <a href="#tab_1_66" data-toggle="tab"> Bangla </a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content knowledge_basket">
+                                        <div class="tab-pane fade active in" id="tab_1_65">
+                                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image047.png') }}"/><br><br>
+                                            <p>
+                                                A ranging market is one in which price bounces in between a specific high price and low price. The high price acts as a major resistance level in which price can't seem to break through. Likewise, the low price acts as major support level in which price can't seem to break as well. Market movement could be classified as horizontal or sideways. The basic idea of a range-bound strategy is that a stock has a high and low price that it normally trades between. By buying near the low price, the trader is hoping to take profit around the high price. By selling near the high price, the trader is hoping to take profit around the low price. Popular tools to use are channels such as the one shown above and Bollinger bands. Using oscillators, like Stochastic or RSI, will help increase the odds of you finding a turning point in a range as they can identify potentially oversold and overbought conditions.
+                                            </p>
+                                        </div>
+                                        <div class="tab-pane fade" id="tab_1_66">
+                                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image047.png') }}"/><br><br>
+                                            <p>
+                                                Ranging হচ্ছে একটি মার্কেট যখন নির্দিষ্ট রেঞ্জের মধ্যে বার বার ওঠা নামা করে এবং রেঞ্জেটির আওতা হচ্ছে মূল্যর উচ্চসীমা এবং মূল্যর ণিন্মসীমা। বার বার মার্কেট এই রেঞ্জের মধ্য ওঠানামা করে বিধায় এটিকে ranging বলা হয়। চিত্রে একটু লক্ষ্য করলে দেখতে পাবেন শেয়ারটির দাম একটি নির্দিষ্ট সীমার মধ্যে ওঠা নামা করে। কিন্তু সেই রেঞ্জটি ব্রেক করতে পারেনি। এই ধরনের বাজারে বুদ্ধিমান বিনিয়োগকারীরা low price লেভেলে শেয়ার ক্রয় করে থাকেন এবং high price লেভেলে বিক্রয় করে থাকেন। এই Ranging মার্কেটে ও আপনি Stochastic এবং RSI Indicator ব্যাবহার করতে পারেন। আবার ও চিত্রে লক্ষ্য করে দেখুন আমরা Stochastic ব্যাবহার করেছি। এই টুলটি ব্যাবহার করা হয়েছে বাজারে overbought এবং oversold চিহ্নিত করার জন্য। খেয়াল করুন যখন শেয়ারটির দাম ওপরের লেভেলটি ব্রেক করতে পারেনি তখন দেখুন Stochastic টি ও overbought অবস্থায় ছিল। ফলে শেয়ারটির দাম কমে যায়। ঠিক একই ভাবে নিচের দিকের লেভেলও ব্রেক করতে পারেনি এবং সেই সময় Stochastic টি ও oversold অবস্থায় ছিল। সুতরাং আপনি কিন্তু এই পদ্ধতিতে আপনার Entry এবং Exit এর সময় নির্ধারণ করতে পারবেন।
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="tab_6_34">
+                        <strong><u>Swing Trade Strategy :</u></strong><br><br>
+                        <div class="row">                           
+                            <div class="knowledge_basket_tab">
+                                <div class="portlet-body">
+                                    <ul class="nav nav-tabs">
+                                        <li class="active">
+                                            <a href="#tab_1_67" data-toggle="tab"> English </a>
+                                        </li>
+                                        <li>
+                                            <a href="#tab_1_68" data-toggle="tab"> Bangla </a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content knowledge_basket">
+                                        <div class="tab-pane fade active in" id="tab_1_67">
+                                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image046.png') }}"/><br><br>
+                                            <p>
+                                                Among traders Swing trade strategy is very popular. By using this strategy you can earn profit within very short period. Basically Swing Trading is to take position in a trade by based on Candlestick and support resistance line. Look at the graph. At first you have seen a reversal candlestick in support line so you can understand tomorrow it can pull back. Then next day you have seen a bullish candlestick so it pulled back. You can buy this share in that day and wait until the price goes at resistance line. When price went in resistance line then you can sell out and wait for next round. Few days later you have got the same pattern and you can also buy the share and sell at its resistance level. This is way you can get 3 times buy signals and 3 times sell signals from a particular stock. So it’s your responsibility to find out this pattern.
+                                            </p>
+                                        </div>
+                                        <div class="tab-pane fade" id="tab_1_68">
+                                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image046.png') }}"/><br><br>
+                                            <p>
+                                                প্রথমবার আপনি দেখতে পেলেন candlestick টি একটি রিভারসাল প্যাটার্ন তৈরি করেছে এবং support line এ স্পর্শ করেছে ফলে আপনি বুঝতে পারছেন শেয়ারটি আগামিকাল pull back করার যথেষ্ট শম্ভাবনা রয়েছে। পরের দিন আপনি লক্ষ্য করলেন একটি bulish candlestick তৈরি হয়েছে তার মানে শেয়ারটি সত্যি pull back করেছে। আপনি যদি সেই দিন শেয়ারটি ক্রয় করেন তবে চার দিনের মাথায় মুনাফা নিয়ে বের হতে পারবেন। ধরুন আপনি চার দিনের মাথায় শেয়ারটি বিক্রয় করলেন। এইবার আবার কিছু দিন অপেক্ষা করুন এবং শেয়ারটির মুভমেন্ট খেয়াল করুন। ঠিক আবার চার দিন পর দেখলেন candlestick টি আবার একটি রিভারসাল প্যাটার্ন তৈরি করেছে। আপনি অপেক্ষা করছেন পরের দিনের জন্য।পরের দিন ও ঠিক একই ভাবে আপনি লক্ষ্য করলেন একটি bulish candlestick তৈরি হয়েছে তার মানে শেয়ারটি আবার pull back করেছে। আপনি যদি সেই দিন ও শেয়ারটি ক্রয় করেন তবে আবার পাঁচ দিনের মাথায় বিক্রয় করতে পারেন এবং স্বল্প সময়ের মধ্যে মুনাফা অর্জন করতে পারেন। চিত্রটি ভাল ভাবে খেয়াল করে দেখুন একটি শেয়ার আপনাকে বার বার মুনাফা করার সুযোগ করে দিচ্ছে। আপনি এই Swing Trade ব্যাবহার করে তিন বার ক্রয় এবং তিন বার বিক্রয়ের সুযোগ পাচ্ছেন। শুধু প্রয়োজন আপনার সতর্ক দৃষ্টি এবং বুদ্ধি। আপনাকে খুজে বের করতে হবে এই রকম প্যাটার্ন যা ব্যাবহার করে আপনি স্বল্প সময় মুনাফা করতে পারবেন.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="tab_6_35">
+                        <strong><u>Pushing Up through Supply :</u></strong><br><br>
+                        <div class="row">                           
+                            <div class="knowledge_basket_tab">
+                                <div class="portlet-body">
+                                    <ul class="nav nav-tabs">
+                                        <li class="active">
+                                            <a href="#tab_1_69" data-toggle="tab"> English </a>
+                                        </li>
+                                        <li>
+                                            <a href="#tab_1_70" data-toggle="tab"> Bangla </a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content knowledge_basket">
+                                        <div class="tab-pane fade active in" id="tab_1_69">
+                                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image040.png') }}"/><br><br>
+                                            <p>
+                                                Sometime many investors stuck in upper price level that means they purchase at resistance level. General people start panic selling when they stack a resistance level and ultimately price goes down. After few days number of sellers also decreases and market makers take this opportunity to make money. That time they purchase share in very low price and supply decrease gradually. When supply decreases the demand increase and ultimately it push price to increase. This price push breaks the resistance level and price goes up. Again Market makers takes this opportunity and sells their total holding to general investor and remain inactive for sometimes. This is like a cycle and continues forever.
+                                            </p>
+                                        </div>
+                                        <div class="tab-pane fade" id="tab_1_70">
+                                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image040.png') }}"/><br><br>
+                                            <p>
+                                                সাধারণত Crowed Behavior এর জন্য আমাদের মত সাধারণ বিনিয়োগকারীরা অনেক সময় উপরের লেভেলে আটকা পরে যাই। তার অর্থ হচ্ছে Resistance লেভেল ব্রেক করতে পারে না। যখন Resistance লেভেলে বিনিয়োগকারীরা আটকে যায় তখন কিছু বিনিয়োগকারী পেনিক সেল করেন এবং শেয়ারটির দাম আস্তে আস্তে কমে যায়। একটি নির্দিষ্ট সময় পর বিক্রয়কারীর সংখ্যা কমে যায় এবং যারা সেল না করে আটকে ছিল তারা পারথনা করতে থাকে দাম বাড়ার জন্য। এই সুযোগটির জন্যই প্রোফেসনাল মানি অথবা মার্কেট মেকাররা অপেক্ষা করতে থাকেন। তারা সেই সময় খুবই কম দামে শেয়ার গুলো কিনে নেন এবং কিছুদিন অপেক্ষা করেন। তারপর আস্তে আস্তে শেয়ারটির বিক্রেতা কমে যায় এবং যোগান (Supply) ও কমে যায়। ফলে চাহিদা বৃদ্ধি পায় এবং দাম আবার বারতে শুরু করে। আবার সেই Resistance লেভেলে চলে গেলে মার্কেট মেকেররা বাজারে যোগান বাড়িয়ে দেয় এবং Resistance লেভেল ব্রেক করে। যখন এই অবস্থা হয় তখন যেইসব বিনিয়োগকারী Resistance ভেলেভে আটকে ছিল তারা কিছুটা শস্তি পায় এবং শেয়ার গুলো বিক্রয় না করে অপেক্ষা করতে থাকে বেশি দামের আশায়। আবার ও সেই Crowed Behivior জন্য নতুন বিনিয়োগকারীরা ঐ লেভেলে শেয়ার কিনতে থাকেন। এই সময় মার্কেট মেকেররা আবার তাদের সব শেয়ার বিক্রয় করে কিছুদিন নিষ্ক্রয় ভূমিকা পালন করেন। এই ভাবেই এই ধারাটি চলতে থাকে।
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="tab_6_36">
+                        <strong><u>Pivot :</u></strong><br><br>
+                        <div class="row">                           
+                            <div class="knowledge_basket_tab">
+                                <div class="portlet-body">
+                                    <ul class="nav nav-tabs">
+                                        <li class="active">
+                                            <a href="#tab_1_71" data-toggle="tab"> English </a>
+                                        </li>
+                                        <li>
+                                            <a href="#tab_1_72" data-toggle="tab"> Bangla </a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content knowledge_basket">
+                                        <div class="tab-pane fade active in" id="tab_1_71">
+                                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image038.png') }}"/><br><br>
+                                            <p>
+                                                For any market, there is an equilibrium point around which trading activity occurs. in the absence of large number of new buyers or sellers, this point serves as the pivot or focal point for floor trader and market makers as they adjust their bids and offers. When prices move away from the pivot, there are zone of support and resistance that can be derived from the established value area in the market. Penetration of these zone leads to perceived changes in valuation and they entry of new players into the market. calculation of Pivot Point: Pivot point(P)=(H+L+C)/3 First resistence level(R1)= (2*P)- L First support level(S1) = (2*P) – H Second resistence level (R2)= P+(R1-S1) Second support level(S2)= P – (R1-S1) where H, L, C are the previous day’s high, low and close, respectively.
+                                            </p>
+                                        </div>
+                                        <div class="tab-pane fade" id="tab_1_72">
+                                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image038.png') }}"/><br><br>
+                                            <p>
+                                                একটি নির্দিষ্ট মূল্যকে বেইজ করেই ট্রেড সংঘটিত হয় যা যেকোন বাজারের ক্ষেত্রেই প্রযোজ্য। একটি বিশাল সংখ্যক নুতন ক্রেতা এবং বিক্রেতার অনুপস্থিতিতে এই পয়েন্টটি প্রধান এবং উল্লেখযোগ্য মূল্যস্থল হিসেবে স্থানীয় ট্রেডার এবং বাজার নিয়ন্ত্রণকারীদের বিড এবং অফার সম্বন্বয়ে সাহায্য করে। এই মূল্যস্থলটিকেই Pivot পয়েন্ট বলে। যখন মূল্য এই pivot পয়েন্ট হতে সরে যায় তখন নুতন সাপোর্ট এবং রেজিস্টেন্স লেভেল তৈরি হয়। যখন এই জ়োনগুলি ভেঙ্গে যায় তখন দামে পরিবর্তন পরিলক্ষিত হয় এবং নুতন ট্রেডাররা বাজারে প্রবেশ করে। ক্যালকুলেশনঃ নিন্মে Pivot পয়েন্ট এবং এর সাপোর্ট ও রেজিস্টেন্স লেভেল এর ক্যালকুলেশন তুলে ধরা হলোঃ Pivot point(P)=(H+L+C)/3 First resistence level(R1)= (2*P)- L First support level(S1) = (2*P) – H Second resistence level (R2)= P+(R1-S1) Second support level(S2)= P – (R1-S1) যেখানে H, L, C হচ্ছে পূরবর্তী দিনের সর্বোচ্চ, সর্বনিন্ম এবং সমাপ্তিমূল্য নির্দেশ করছে। যায়।
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="tab_6_37">
+                        <strong><u>Accumulation/Distribution :</u></strong><br><br>
+                        <div class="row">                           
+                            <div class="knowledge_basket_tab">
+                                <div class="portlet-body">
+                                    <ul class="nav nav-tabs">
+                                        <li class="active">
+                                            <a href="#tab_1_73" data-toggle="tab"> English </a>
+                                        </li>
+                                        <li>
+                                            <a href="#tab_1_74" data-toggle="tab"> Bangla </a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content knowledge_basket">
+                                        <div class="tab-pane fade active in" id="tab_1_73">
+                                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image002.png') }}"/><br><br>
+                                            <p>
+                                                There are many indicators available to measure volume and the flow of money for a particular stock, index or security. One of the most popular volume indicators over the years has been the Accumulation/Distribution Line. The basic premise behind volume indicators, including the Accumulation/Distribution Line, is that volume precedes price. Volume reflects the amount of shares traded in a particular stock, and is a direct reflection of the money flowing into and out of a stock. Many times before a stock advances, there will be period of increased volume just prior to the move. Most volume or money flow indicators are designed to identify early increases in positive or negative volume flow to gain an edge before the price moves. Take a example. look at very carefully. After June month Accumulation / Distribution line was decreasing and that time volume was increasing. so it was a clear indication of distribution. Again look at the July month. Accumulation and Distribution line was moving steadily and after few days later the price increased.
+                                            </p>
+                                        </div>
+                                        <div class="tab-pane fade" id="tab_1_74">
+                                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image002.png') }}"/><br><br>
+                                            <p>
+                                                বিভিন্ন indicator দ্বারা একটি নির্দিষ্ট শেয়ারের volume ও money flow পরিমাপ করা যায়। Accumulation/Distribution Line হচ্ছে সবচেয়ে জনপ্রিয় volume ইন্ডিকেটর। Volume indicator গুলোর পেছনে যে মূলধারণা কাজ করে তা হচ্ছে volume-এ পরিবর্তন মূল্যে পরিবর্তন ঘটায়। কি পরিমান শেয়ার কেনা-বেচা হয়েছে এবং কি পরিমান অর্থ প্রবাহ(money flow) একটি শেয়ারে প্রবেশ করছে এবং বেরিয়ে যাচ্ছে তা Volume নির্দেশ করে। অনেক সময় একটি শেয়ারের লেনদেনের প্রায় শুরুর দিকে বর্ধিত volume পরিলক্ষিত হয়। সাধারণত অধিকাংশ volume বা money flow indicator গুলো এভাবে তৈরিকরা হয়েছে যাতে মূল্যে পরিবর্তনের পূর্বে এটি পজিটিভ এবং নেগেটিভ volume flow-র প্রাথমিক বৃদ্ধি চিহ্নিত করতে পারে যা কিছুটা মুনাফা লাভে সহায়ক। আমরা এখন একটি শেয়ার নিয়ে দেখব কিভাবে কাজ করে। চিত্রটি খেয়াল করুন। ভাল ভাবে লক্ষ্য করলে দেখবেন জুন মাসের শেষ ভাগে Accumulation/Distribution Line টি নিচের দিকে নেমে যাচ্ছে এবং সেই সাথে ও volume বৃদ্ধি পেয়েছে। এর মাধ্যমে আমরা বুঝতে পারি শেয়ারটি এখন Distribution পর্যায় রয়েছে। আবার দেখুন ঠিক জুলাই মাসের একটু আগে Accumulation/Distribution Line টি সমান্তরাল ভাবে চলছিলো এবং কিছুটা volume ও বৃদ্ধি পেয়েছিল, আসলে তখন Accumulation period চলছিলো।ঠিক তার কিছুদিন পরই শেয়ারটির দাম বৃদ্ধি পেয়েছিল। জুলাই মাসের মাঝামাঝি সময় শেয়ারটি আবার Distribution আরাম্ভ করে ছিল এবং সাথে সাথে volume ও বৃদ্ধি পেয়েছিল।
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="tab_6_38">
+                        <strong><u>Harmonic price patterns (পর্ব - ১) :</u></strong><br><br>
+                        <div class="row">                           
+                            <div class="knowledge_basket_tab">
+                                <div class="portlet-body">
+                                    <ul class="nav nav-tabs">
+                                        <li class="active">
+                                            <a href="#tab_1_75" data-toggle="tab"> English </a>
+                                        </li>
+                                        <li>
+                                            <a href="#tab_1_76" data-toggle="tab"> Bangla </a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content knowledge_basket">
+                                        <div class="tab-pane fade active in" id="tab_1_75">
+                                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image024.gif') }}"/><br><br>
+                                            <p>
+                                                The whole idea of these patterns is that they help people spot possible retracements of recent trends. In fact, we'll make use of other tools we've already covered - the Fibonacci retracement and extensions. Combining these wonderful tools to spot these harmonic patterns, we'll be able to distinguish possible areas for a continuation of the overall trend. There are 6 types of Harmonic Patterns. • ABCD Pattern • Three-Drive Pattern • Gartley Pattern • Crab Pattern • Bat Pattern • Butterfly Pattern For both the bullish and bearish versions of the ABCD chart pattern, the lines AB and CD are known as the legs while BC is called the correction or retracement. If you use the Fibonacci retracement tool on leg AB, the retracement BC should reach until the 0.618 level. Then, the line CD should be the 1.272 Fibonacci extension of BC. All you have to do is wait for the entire pattern to complete (reach point D) before taking any short or long positions. Oh, but if you want to be extra strict about it, here are a couple more rules for a valid ABCD pattern: The length of line AB should be equal to the length of line CD.
+                                            </p>
+                                        </div>
+                                        <div class="tab-pane fade" id="tab_1_76">
+                                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image024.gif') }}"/><br><br>
+                                            <p>
+                                                harmonic price patterns সম্পর্কে সম্পূর্ণ ধারনা একজন বিনিয়োগকারীকে একটি ট্রেন্ডের সম্ভাব্য retracements বুঝতে সাহায্য করে থাকে। আপনাদের নিশ্চয়ই Fibonacci retracement এবং extensions সম্পর্কে মনে আছে কারন আমরা আমাদের টিউটোরিয়াল কর্নারে এই সম্পর্কেও বিস্তারিত আলোচনা করেছি। আমাদের এই retracement এবং extensions টুলস দুইটি দরকার হবে harmonic patterns নির্ণয় করার জন্য। ছয় ধরনের harmonic patterns সাধারণত দেখা যায়। সেই গুলো হচ্ছে ১.ABCD pattern ২.Three-Driven Pattern ৩.Gtartley Pattern ৪.Crab Pattern ৫. Bat Pattern ৬. Butterfly Pattern। এখন আমরা ABCD pattern নিয়ে আলোচনা করব এবং বুঝতে চেষ্টা করব এই pattern- টি কিভাবে কাজ করে থাকে। ABCD pattern টি বুঝতে এবং খুজে বের করতে আপনাকে Fibonacci টুলস ব্যাবহার করতে হবে এবং সেই সাথে তীক্ষ্ণ দৃষ্টি দরকার হবে। ABCD pattern এ AB এবং CD কে legs এবং BC কে correction বলা হয়ে থাকে যা একটি বুলিশ এবং বিয়ারিশ উভয় ট্রেন্ডের জন্য প্রযোজ্য। আপনি যদি leg AB থেকে retracement আঁকেন তবে BC -র retracement 0.618 লেভেল হওয়া উচিৎ। এবং BC লাইনের extension CD লাইনের পরিমাপ 1.272 লেভেল হবে। আপনি retracement এর সাহায্যে সম্ভাব্য লেভেল গুলো জেনে গিয়েছেন এবং সম্পূর্ণ pattern টি সংগঠিত না হওয়া পর্যন্ত আপনাকে অপেক্ষা করতে হবে (point D সংগঠিত না হওয়া পর্যন্ত)। এই ABCD pattern এর কিছু Rules রয়েছে এবং Rules গুলো হচ্ছে। ১. AB লাইনের দৈর্ঘ্য ঠিক CD লাইনের দৈর্ঘ্যর সমান হবে। ২. Point A থেকে Point B তে যেতে যে সময় লাগে ঠিক একই সময় লাগবে Point C থেকে Point D তে পৌঁছুতে। অনেক সময় এই Rules গুলোর কিছুটা তারতম্য হয়ে থাকে যখন শেয়ার মার্কেট দুর্বল এবং খুব Volatile হয়ে থাকে।
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="tab_6_39">
+                        <strong><u>Harmonic price patterns (পর্ব - 2) :</u></strong><br><br>
+                        <div class="row">                           
+                            <div class="knowledge_basket_tab">
+                                <div class="portlet-body">
+                                    <ul class="nav nav-tabs">
+                                        <li class="active">
+                                            <a href="#tab_1_77" data-toggle="tab"> English </a>
+                                        </li>
+                                        <li>
+                                            <a href="#tab_1_78" data-toggle="tab"> Bangla </a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content knowledge_basket">
+                                        <div class="tab-pane fade active in" id="tab_1_77">
+                                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image025.gif') }}"/><br><br>
+                                            <p>
+                                                The three-drive pattern is a lot like the ABCD pattern except that it has three legs (now known as drives) and two corrections or retracements. Easy as pie! In fact, this three-drive pattern is the ancestor of the Elliott Wave pattern. As usual, you'll need your hawk eyes, the Fibonacci tool, and a smidge of patience on this one. As you can see from the charts above, point A should be the 61.8% retracement of drive 1. Similarly, point B should be the 0.618 retracement of drive 2. Then, drive 2 should be the 1.272 extension of correction A and drive 3 should be the 1.272 extension of correction B. By the time the whole three-drive pattern is complete, that's when you can pull the trigger on your long or short trade. Typically, when the price reaches point B, you can already set your short or long orders at the 1.272 extension so that you won't miss out.
+                                            </p>
+                                        </div>
+                                        <div class="tab-pane fade" id="tab_1_78">
+                                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image025.gif') }}"/><br><br>
+                                            <p>
+                                                three-drive pattern টিও অনেকটা ABCD Pattern এর মত কিন্তু এই Pattern টির তিনটি legs রয়েছে যা সাধারণত drives নামে পরিচিত এবং দুইটি corrections বা retracements রয়েছে। প্রকৃতপক্ষে এই three-drive pattern টি Elliott Wave pattern এর অগ্রদূত বলে বিবেচিত হয়। এই pattern টির খেত্রেও আপনাকে তীক্ষ্ণ দৃষ্টি শম্পন্ন হতে হবে এবং অবশ্যই Fibonacci টুলস ব্যাবহার করতে হবে। আপনি চার্টে লক্ষ্য করলে দখতে পাবেন পয়েন্ট A এর পরিমাপ drive 1 এর 61.8% retracement লেভেল হওয়া উচিৎ। ঠিক একই ভাবে পয়েন্ট B এর পরিমাপ drive 2 এর 0.618 retracement লেভেলে হবে। তারপর drive 2 অবশ্যই 1.272 extension of correction A এবং drive 3 অবশ্যই 1.272 extension of correction B হতে হবে। এই correction গুলোর extension সম্পূর্ণ হলে পুরো pattern টি সংগঠিত হবে। এই pattern টি একটি বুলিশ এবং বিয়ারিশ উভয় ট্রেন্ডের জন্য প্রযোজ্য। সাধারণত যখন দাম পয়েন্ট B তে পৌছায় তখন আপনি 1.272 extension লেভেলে দীর্ঘ অথবা স্বল্প সময়ের জন্য ট্রেডে অংশ নিতে পারেন। এই pattern টির ও কিছু rules রয়েছে। rules গুলো হচ্ছে ১. drive 2 সম্পূর্ণ হতে যে সময় লাগে ঠিক একই সময় লাগবে drive 3 সম্পূর্ণ হতে। ২. retracements A এবং B সম্পূর্ণ হতেও ঠিক একই সময় লাগবে। চিত্রে লক্ষ্য করুন বুলিশ ট্রেন্ডের সময় পয়েন্ট A এবং B এর অবস্থান ছিল ওপরে তারমানে ঐ গুলো ছিল Corrective wave. মার্কেট যখন আপ ট্রেন্ডে থাকবে তখন Corrective wave হয় নিচের দিকে এবং মার্কেট যখন ডাউন ট্রেন্ডে থাকবে তখন Corrective wave হয় ওপরের দিকে।
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="tab_6_40">
+                        <strong><u>Harmonic price patterns (পর্ব - ৩) :</u></strong><br><br>
+                        <div class="row">                           
+                            <div class="knowledge_basket_tab">
+                                <div class="portlet-body">
+                                    <ul class="nav nav-tabs">
+                                        <li class="active">
+                                            <a href="#tab_1_79" data-toggle="tab"> English </a>
+                                        </li>
+                                        <li>
+                                            <a href="#tab_1_80" data-toggle="tab"> Bangla </a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content knowledge_basket">
+                                        <div class="tab-pane fade active in" id="tab_1_79">
+                                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image026.gif') }}"/><br><br>
+                                            <p>
+                                                The Gartley "222" pattern is named for the page number it is found on in H.M. Gartleys book, Profits in the Stock Market. Gartleys are patterns that include the basic ABCD pattern we've already talked about, but are preceded by a significant high or low. Now, these patterns normally form when a correction of the overall trend is taking place and look like 'M' (or 'W' for bearish patterns). These patterns are used to help traders find good entry points to jump in on the overall trend. A Gartley forms when the price action has been going on a recent uptrend (or downtrend) but has started to show signs of a correction. What makes the Gartley such a nice setup when it forms is the reversal points are a Fibonacci retracement and Fibonacci extension level. This gives a stronger indication that the pair may actually reverse. This pattern can be hard to spot and once you do, it can get confusing when you pop up all those Fibonacci tools. The key to avoiding all the confusion is to take things one step at a time. In any case, the pattern contains a bullish or bearish ABCD pattern, but is preceded by a point (X) that is beyond point D. The "perfect" Gartley pattern has the following characteristics: 1. Move AB should be the .618 retracement of move XA. 2. Move BC should be either .382 or .886 retracement of move AB. 3. If the retracement of move BC is .382 of move AB, then CD should be 1.272 of move BC. Consquently, if move BC is .886 of move AB, then CD should extend 1.618 of move BC.
+                                            </p>
+                                        </div>
+                                        <div class="tab-pane fade" id="tab_1_80">
+                                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image026.gif') }}"/><br><br>
+                                            <p>
+                                                Harmonic price patterns এর মধ্যে আরেকটি প্যাটার্ন হচ্ছে Gartley "222" pattern। এই প্যাটার্নটির নামকরন করা হয়েছে H.M. Gartleys এর নামানুসারে কারন তিনিই এই pattern টি সর্ব প্রথম আবিষ্কার করেন। এই pattern টি মধ্যেও basic ABCD pattern রয়েছে যা আমরা গত কয়েকদিন আগের টিউটোরিয়াল কর্নারে আলোচনা করেছিলাম। এই Gartley "222" pattern টি সাধারণত সংগঠিত হয় যখন একটি ট্রেন্ডের correction হয় এবং এটি দেখতে অনেকটা ইংরেজি শব্দ 'M' এর মত (যখন বুলিশ প্যাটার্ন)এবং আরেকটি অনেকটা ইংরেজি শব্দ 'W' এর মত (যখন বিয়ারিশ প্যাটার্ন)। এই প্যাটার্ন গুলো বিনিয়োগকারীদের কখন শেয়ার কিনতে হবে অথবা এন্ট্রি দিতে হবে এই বেপারে অনেক সাহায্য করে থাকে। একটি Gartley প্যাটার্ন সংগঠিত হয় যখন price action একটি correction এর সংকেত দিয়ে সম্প্রতি উপট্রেন্ড অথবা ডাওনট্রেন্ডে যেতে থাকে। এবং এই বিষয়টি Fibonacci retracement এবং Fibonacci extension ব্যাবহারের মাধ্যমে আর পরিষ্কার হওয়া যায়। এটি খুব strong নির্দেশনা দেয় যখন রেভারসাল হয়। এই Gartley pattern টি খুজে বের করা কিছুটা কঠিন এবং কিছুটা বিবভ্রান্তিকর হলেও যদি আপনি একবার বের করতে পারেন তবে আস্তে আস্তে বিভ্রান্তি কেটে যাবে। একটি আদর্শ Gartley pattern এর কিছু বৈশিষ্ট্য রয়েছে। সেই বৈশিষ্ট্য গুলো হচ্ছে - ১. AB point এর মুভমেন্ট সাধারণত XA point এর মুভেমেন্টের .618 retracement লেভেলে হবে। ২. BC point এর মুভমেন্ট সাধারণত AB এর মুভেমেন্টের .382 অথবা .886 retracement লেভেলে হবে। ৩. যদি AB এর মুভ BC এর retracement লেভেল .382 হয় তবে CD এর মুভ retracement লেভেলের 1.272 হওয়া উচিৎ। ৩. CD এর মুভ XA এর .786 retracement হওয়া উচিৎ। দিকে।
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="tab_6_41">
+                        <strong><u>Harmonic price patterns (শেষ পর্ব) :</u></strong><br><br>
+                        <div class="row">                           
+                            <div class="knowledge_basket_tab">
+                                <div class="portlet-body">
+                                    <ul class="nav nav-tabs">
+                                        <li class="active">
+                                            <a href="#tab_1_81" data-toggle="tab"> English </a>
+                                        </li>
+                                        <li>
+                                            <a href="#tab_1_82" data-toggle="tab"> Bangla </a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content knowledge_basket">
+                                        <div class="tab-pane fade active in" id="tab_1_81">
+                                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image027.gif') }}"/><br><br>
+                                            <p>
+                                                As you may have guessed, profiting off Harmonic Price Patterns is all about being able to spot those "perfect" patterns and buying or selling on their completion. There are three basic steps in spotting Harmonic Price Patterns: • Step 1: Locate a potential Harmonic Price Pattern • Step 2: Measure the potential Harmonic Price Pattern • Step 3: Buy or sell on the completion of the Harmonic Price Pattern Step 1: Locate a potential Harmonic Price Pattern: look at the chart. At this point in time, we're not exactly sure what kind of pattern that is. It LOOKS like a three-drive, but it could be a Bat or a Crab. Heck, it could even be a Moose! In any case, let's label those reversal points. Step 2: Measure the potential Harmonic Price Pattern: Using the Fibonacci tool, a pen, and a piece of paper, let us list down our observations. 1. Move BC is .618 retracement of move AB. 2. Move CD is 1.272 extension of move BC. 3. The length of AB is roughly equal to the length of CD. This pattern qualifies for a bullish ABCD pattern, which is a strong buy signal Step 3: Buy or sell on the completion of the Harmonic Price Pattern: Once the pattern is complete, all you have to do is respond appropriately with a buy or sell order. In this case, you should buy at point D, which is the 1.272 Fibonacci extension of move CB, and put your stop loss a couple of pips below your entry price.
+                                            </p>
+                                        </div>
+                                        <div class="tab-pane fade" id="tab_1_82">
+                                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image027.gif') }}"/><br><br>
+                                            <p>
+                                                Harmonic Price Patterns ব্যাবহারের মাধ্যমে মুনাফা করার জন্য যে বিষয়টি সব থেকে গুরুত্বপূর্ণ সেইটি হচ্ছে আপনি কতটা দক্ষ ভাবে Pattern গুলো খুঁজে বের করতে পারেন। তিনটি বেসিক ধাপ রয়েছে এই Harmonic Price Patterns ঠিক মত চিহ্নিত করার জন্য। ১. আপনাকে একটি সম্ভাব্য Harmonic Price Pattern সেট করতে হবে। ২. তারপর আপানাকে সেই সম্ভাব্য Harmonic Price Pattern টি পরিমাপ করতে হবে। ৩. আপনি ক্রয় এবং বিক্রয় সম্পন্ন করবেন যখন Harmonic Price Pattern টি সম্পূর্ণ হবে। প্রথম ধাপে লক্ষ্য করুন চার্টটি একটি সম্ভাব্য Harmonic Price Pattern এর মত দেখা যাচ্ছে। কিন্তু সেই সময় নিশ্চিত হওয়া যাচ্ছিলোনা যে এই pattern টি কি three-drive হবে অথবা Bat pattern হবে। এই বিষয়টি নিশ্চিত হবার জন্য এর রেভারসাল পয়েন্টটি ছিনহিত করতে হবে। দ্বিতীয় ধাপে আপনি Fibonacci tool ব্যাবহার করে কিছুটা মাপঝোঁক করে নিতে পারেন। লক্ষ্য করুন মুভ BC হচ্ছে মুভ AB এর .৬১৮ retracement লেভেল। মুভ CD হচ্ছে মুভ BC এর ১.২৭২ extension এবং সব শেষে মুভ AB এর দৈর্ঘ্য মুভ CD এর প্রায় সমান। ফলে এই Pattern টি একটি বুলিশ ABCD pattern হয়েছে যা একটি ক্রয় সিগন্যাল। একবার যখন pattern টি সম্পূর্ণ হবে তখন আপানাকে ক্রয় অথবা বিক্রয় কোনটি করবেন সেই বেপারে সিদ্ধান্ত নিতে হবে। এর জন্য আপনার পয়েন্ট D থেকে ক্রয় করা উচিত। এবং আপনি বিক্রয় আদেশ দিতে পারেন যখন দাম আপনার ক্রয় মূল্য থেকে নিচে নেমে যাবে। harmonic price patterns এর একটি সমস্যা হচ্ছে অনুশীলন না থাকেল এই pattern গুলো খুঁজে বের করা একটু কঠিন। তবে আপনি যদি নিয়মিত অনুশীলন করেন তবে আপনি কিন্তু অনেক তারাতারি এই pattern গুলো খুঁজে বের করতে পারবেন।
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="tab_6_42">
+                        <strong><u>Average True Range - 1 :</u></strong><br><br>
+                        <div class="row">                           
+                            <div class="knowledge_basket_tab">
+                                <div class="portlet-body">
+                                    <ul class="nav nav-tabs">
+                                        <li class="active">
+                                            <a href="#tab_1_83" data-toggle="tab"> English </a>
+                                        </li>
+                                        <li>
+                                            <a href="#tab_1_84" data-toggle="tab"> Bangla </a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content knowledge_basket">
+                                        <div class="tab-pane fade active in" id="tab_1_83">
+                                            <img src="{{ URL::asset('/knowledge_basket/clip_image006.jpg') }}"/><br><br>
+                                            <p>
+                                                ATR indicator does not provide an indication of price direction or duration, simply the degree of price movement or volatility. As with most of his indicators, Wilder designed ATR with commodities and daily prices in mind. In 1978, commodities were frequently more volatile than stocks. They were (and still are) often subject to gaps and limit moves. In order to accurately reflect the volatility associated with commodities, Wilder sought to account for gaps, limit moves, and small high-low ranges in his calculations. A volatility formula based on only the high-low range would fail to capture the actual volatility created by the gap or limit move. True Range is the greatest of the following three values:  difference between the current maximum and minimum (high and low).  difference between the previous closing price and the current maximum.  difference between the previous closing price and the current minimum. If the current high-low range is large, chances are it will be used as the True Range. If the current high-low range is small, it is likely that one of the other two methods would be used to calculate the True Range. The last two possibilities usually arise when the previous close is greater than the current high (signaling a potential gap down or limit move) or the previous close is lower than the current low (signaling a potential gap up or limit move). To ensure positive numbers, absolute values were applied to differences. The example shows three potential situations when the TR would not be based on the current high/low range. Notice that all three examples have small high/low ranges and two examples show a significant gap. 1. A small high/low range formed after a gap up. The TR was found by calculating the absolute value of the difference between the current high and the previous close. 2. A small high/low range formed after a gap down. The TR was found by calculating the absolute value of the difference between the current low and the previous close. 3. Even though the current close is within the previous high/low range, the current high/low range is quite small. In fact, it is smaller than the absolute value of the difference between the current high and the previous close, which is used to value the TR
+                                            </p>
+                                        </div>
+                                        <div class="tab-pane fade" id="tab_1_84">
+                                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image006.jpg') }}"/><br><br>
+                                            <p>
+                                                Average True Range indicator টি দামের গতি ও সময় কোনটাই নির্দেশ করেনা শুধুমাত্র দাম পরিবর্তনশীলতার (volatility) ডিগ্রী নির্দেশ করে। এই indicator গুলো সব সময় বিষয় অনুযায়ী ব্যবধান (gap) এবং limit move দেখায়। Limit move তখনই সংঘটিত হয় যখন একটি কমোডিটি তার অনুমোদিত সর্বোচ্চ সীমা পর্যন্ত ওঠানামা করে এবং পরবর্তী সেশান না আসা পর্যন্ত আবার ট্রেডে অংশগ্রহন করেনা।এর ফলে সৃষ্ট বার কিম্বা ক্যান্ডেলস্টিক ছোট ড্যাশে পরিণত হয়। নিন্মলিখিত তিনটি value এর উপর ভিত্তি করে True range নির্ধারিত হয়। • চলতি সর্বোচ্চ ও সর্বনিন্ম মূল্যের পার্থক্য(high & low) • পূর্ব্বর্তী সমাপ্তি মূল্য এবং চলতি (current) সর্বোচ্চ মূল্যের পার্থক্য • পূর্ব্বর্তী সমাপ্তি মূল্য এবং চলতি সর্বনিন্ম মূল্যের পার্থক্য যদি চলতি (current) সর্বোচ্চ ও সর্বনিন্মের পরিধি বৃদ্ধি পায় তবে এটি True range হিসেবে বাবহৃত হওয়ার সুযোগ থাকে। আর যদি চলতি(current) সর্বোচ্চ ও সর্বনিন্মের পরিধি ছোট হয় তবে এটি অন্য দুটি পদ্ধতির মত True range ক্যালকুলেশনে ব্যবহৃত হয়। শেষের দিক-কার দুটি সম্ভাবনা তৈরি হয় যখন পূর্ব্বর্তী সমাপ্তি মূল্য চলতি (current) সর্বোচ্চ মূল্যের চেয়ে বেশী থাকে। (যা limit move অথবা gap এর নেমে আসাকে ইংঙ্গিত করে) উপোরোক্ত চিত্রে দেখতে পাই তিনটি অবস্থাতেই TR চলতি সর্বোচ্চ/সর্বনিন্ম এর উপর নির্ভর করছে না। লক্ষ্য করুন, তিনটি দৃষ্টান্তেই সীমার স্বল্পতা রয়েছে এবং দুটি দৃষ্টান্তে একটি গুরুত্বপূর্ন gap পরিলক্ষিত হচ্ছে। ১. ব্যবধান (gap) বৃদ্ধি যা একটি স্বল্প সীমা(high/low) সৃষ্টি করে। পুর্ব্বর্তী সমাপ্তি মূল্য এবং চলতি সর্বোচ্চ মূল্যের পার্থক্যের উপর ভিত্তি করে TR মান নির্ণয় করা হয়। ২. ব্যবধানের(gap) হ্রস্বতা যা একটি স্বল্প সীমা(high/low) সৃষ্টি করে। পূর্ব্বর্তী সমাপ্তি মূল্য এবং চলতি সর্বনিন্ম মূল্যের পার্থক্যের উপর ভিত্তি করে TR মান নির্ণয় করা হয়। ৩. তাসত্ত্বেও পূর্ব্বর্তী সর্বোচ/সর্বনিন্ম পরিধির মধ্যে চলতি সমাপ্তি মুল্য অন্তর্ভূক্ত থাকে। একটি ট্রেন্ড বুঝার জন্য।
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="tab_6_43">
+                        <strong><u>Average True Range - 2 :</u></strong><br><br>
+                        <div class="row">                           
+                            <div class="knowledge_basket_tab">
+                                <div class="portlet-body">
+                                    <ul class="nav nav-tabs">
+                                        <li class="active">
+                                            <a href="#tab_1_85" data-toggle="tab"> English </a>
+                                        </li>
+                                        <li>
+                                            <a href="#tab_1_86" data-toggle="tab"> Bangla </a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content knowledge_basket">
+                                        <div class="tab-pane fade active in" id="tab_1_85">
+                                            <img src="{{ URL::asset('/knowledge_basket/clip_image005.gif') }}"/><br><br>
+                                            <p>
+                                                Typically, the Average True Range (ATR) is based on 14 periods and can be calculated on an intraday, daily, weekly or monthly basis. For this example, the ATR will be based on daily data. Because there must be a beginning, the first TR value in a series is simply the High minus the Low, and the first 14-day ATR is the average of the daily ATR values for the last 14 days. After that, Wilder sought to smooth the data set, by incorporating the previous period's ATR value. The second and subsequent 14-day ATR value would be calculated with the following steps: 1. Multiply the previous 14-day ATR by 13. 2. Add the most recent day's TR value. 3. Divide by 14.
+                                            </p>
+                                        </div>
+                                        <div class="tab-pane fade" id="tab_1_86">
+                                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image005.gif') }}"/><br><br>
+                                            <p>
+                                                মূলত তিনটি বিষয়ের ওপর ভিত্তি করে ATR calculation করা হয়। বিষয় গুলো হচ্ছেঃ ১. চলতি সর্বোচ্চ ও সর্বনিন্ম মূল্যের পার্থক্য(high & low). ২. পূর্ব্বর্তী সমাপ্তি মূল্য এবং চলতি (current) সর্বোচ্চ মূল্যের পার্থক্য. ৩. পূর্ব্বর্তী সমাপ্তি মূল্য এবং চলতি সর্বনিন্ম মূল্যের পার্থক্য। সাধারণতঃ ATR ১৪ দিনের ডাটার উপর ভিত্তি করে সৃষ্টি হয় এবং দিনের মধ্যবর্তী সময়, দৈনিক, সাপ্তাহিক ও মাসিক ভিত্তিতে এটি নির্ণিত হতে পারে। উদাহরণস্বরুপ, ATR দৈনিক ডাটার উপর নির্ভরশীল।কারন সবকিছুর শুরু রয়েছে, প্রথম TR value পেতে হলে সর্বোচ্চ হতে সর্বনিন্ম মূল্যকে বাদ দিতে হবে। আর প্রথম ১৪ দিনের ATR হচ্ছে দৈনিক ATR value-র গড় যা পূর্বের ১৪ দিনে সংঘটিত হয়েছিল। এর পরে Wilder (ইন্ডিকেটরটির জনক) ডাটাকে আরো সঠিকভাবে পেতে পূর্ব্বর্তী ATR value যুক্ত করেছেন। ২য় ও পরবর্তী ১৪ দিনের ATR value-র ক্যালকুলেশন নিন্মে বর্ণিত হলোঃ ১. পূর্ব্বর্তী ১৪ দিনের ATR কে ১৩ দিয়ে গুণ , ২. একেবারে চলতি TR value যুক্ত করতে হবে, ৩. ১৪ দ্বারা বিভাজন করতে হবে. চিত্রে আমরা ATR বিষয়টি দেখতে পাচ্ছি। ভাল ভাবে লক্ষ্য করলে দেখবেন যখন ATR ঊর্ধ্বমুখী হয়ে ওঠে ছিল Average True Range এর তুলনায় এবং শেয়ারের দামও বৃদ্ধি পেয়েছিল। আবার যখন ATR নিন্মমুখি হয়ে ওঠে ছিল Average True Range এর তুলনায় এবং শেয়ারটির দামও কমে যাচ্ছিলো। এই ভাবে একটি শেয়ারের ATR খুব সহজেই নির্ণয় করা যায়। একটি ট্রেন্ড বুঝার জন্য।
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="tab_6_44">
+                        <strong><u>Cup & handle :</u></strong><br><br>
+                        <div class="row">                           
+                            <div class="knowledge_basket_tab">
+                                <div class="portlet-body">
+                                    <ul class="nav nav-tabs">
+                                        <li class="active">
+                                            <a href="#tab_1_87" data-toggle="tab"> English </a>
+                                        </li>
+                                        <li>
+                                            <a href="#tab_1_88" data-toggle="tab"> Bangla </a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content knowledge_basket">
+                                        <div class="tab-pane fade active in" id="tab_1_87">
+                                            <img src="{{ URL::asset('/knowledge_basket/clip_image015.png') }}"/><br><br>
+                                            <p>
+                                                The Cup with Handle is a bullish continuation pattern that marks a consolidation period followed by a breakout. As its name implies, there are two parts to the pattern: the cup and the handle. The cup forms after an advance and looks like a bowl or rounding bottom. As the cup is completed, a trading range develops on the right hand side and the handle is formed. A subsequent breakout from the handle's trading range signals a continuation of the prior advance. 1. Trend: To qualify as a continuation pattern, a prior trend should exist. Ideally, the trend should be a few months old and not too mature. 2. Cup: The cup should be "U" shaped and resemble a bowl or rounding bottom. The perfect pattern would have equal highs on both sides of the cup, but this is not always the case. 3. Cup Depth: Ideally, the depth of the cup should retrace 1/3 or less of the previous advance. 4. Handle: After the high forms on the right side of the cup, there is a pullback that forms the handle. 5. Duration: The cup can extend from 1 to 6 months 6. Volume: There should be a substantial increase in volume on the breakout above the handle's resistance.
+                                            </p>
+                                        </div>
+                                        <div class="tab-pane fade" id="tab_1_88">
+                                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image015.png') }}"/><br><br>
+                                            <p>
+                                                Cup and Handle চার্টটি একটি bullish Continuation প্যাটার্ণ যা uptrend থেমে যাওয়ার পরেও যখন প্যাটার্ণটি সৃষ্টি হয় তখন তা উর্ধ্বমূখী দিক নির্দেশ করে। আমরা যদি চার্টে লক্ষ্য করি করি তবে সেটা স্পষ্ট ভাবে বুঝতে পারব। চার্টটিতে March মাস থেকে downward trend শুরু হয়েছিল এবং একটা নির্দিষ্ট সময়ের পর একটি কাপ প্যাটার্ণ তৈরি করেছে যেটা দেখতে অনেকটা চায়ের কাপের মত বলে এই প্যাটার্ণটির নাম দেয়া হয়েছে Cup and Handle । এই প্যাটার্ণটি একটি মজবুত Upward Trend নির্দেশ করে । চার্ট এ আমরা ঠিক তাই দেখতে পাচ্ছি। এই প্যাটার্ণটি আমাদের দেশের বাজারে খুব সহসা দেখা যায় না। মাঝে মাঝে এই ধরনের চার্ট সংগঠিত হয় এবং যদি সংগঠিত হয় তবে সেই খুব দীর্ঘ দিনের জন্য ঊর্ধ্বমুখী অবস্থায় থাকে। ১. ট্রেন্ডঃ একটি continuation pattern এর জন্য অবশ্যই শেয়ারটিকে একটি ট্রেন্ডে থাকতে হবে। ২. কাপঃ কাপটি দেখতে অনেকটা “ইউ” এর মত হবে। কিন্তু হুবুহু যে “ইউ” শেপই হতে হবে সেই রকম কোন বাধ্যবাধকতা নেই। ৩. কাপের গভিরতাঃ কাপের গভীরতা সাধারণত ১/৩ অংশ হবে আগের থেকে। ৪. হান্ডেলঃ হান্ডেল থেকে সাধারণত শেয়ারটি শক্ত ভাবে পুল ব্যাক করে। ৫. সময় কালঃ একটি কাপ এবং হান্ডেল সংগঠিত হতে ১ থেকে ৬ মাস সময় লাগতে পারে আবার এর আগে ও সংগঠিত হয়তে পারে। ৬. ভলিউমঃ যখন দেখা যায় হ্যান্ডল থেকে ব্রেকআউট হবে তখন ভলিউমও বেশি হবে।
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="tab_6_45">
+                        <strong><u>Dead Cat Bounce :</u></strong><br><br>
+                        <div class="row">                           
+                            <div class="knowledge_basket_tab">
+                                <div class="portlet-body">
+                                    <ul class="nav nav-tabs">
+                                        <li class="active">
+                                            <a href="#tab_1_89" data-toggle="tab"> English </a>
+                                        </li>
+                                        <li>
+                                            <a href="#tab_1_90" data-toggle="tab"> Bangla </a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content knowledge_basket">
+                                        <div class="tab-pane fade active in" id="tab_1_89">
+                                            <img src="{{ URL::asset('/knowledge_basket/clip_image016.png') }}"/><br><br>
+                                            <p>
+                                                Dead Cat bounce is a financial Buzz word. In technical analysis we use this term to explain A temporary recovery from a prolonged decline or bear market, after which the market continues to fall. it happens because of short interest of investors. In a bearish market when demand and supply is not adjustable then for some specific period demand creates among the investors. it increases price of share for one or two days. Basically it is a Dead Cat Bounce. Recently, in our DSE chart we have seen this Dead Cat Bounce. Just look at the graph. After September month DSE index increased and volume also increased but did not sustain that level. It again happened in October and also in November month but did not sustain. This situation is called dead cat bounce.
+                                            </p>
+                                        </div>
+                                        <div class="tab-pane fade" id="tab_1_90">
+                                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image016.png') }}"/><br><br>
+                                            <p>
+                                                আমরা অনেক সময় অনেক ধরনের টেকনিক্যাল টার্ম ব্যাবহার করে থাকি এবং তাদের মধ্যে একটি টার্ম হচ্ছে Dead Cat Bounce। এই Dead Cat Bounce হচ্ছে যখন একটি শেয়ার অনেক দিন নিন্মমুখি থাকার পর কিছু দিনের জন্য ঊর্ধ্বমুখী হয়ে থাকে। এই বিষয়টি ঘটে থাকে কারন অনেক বিনিয়োগকারীর মার্কেটের প্রতি স্বল্প সময়ের জন্য আগ্রহ থাকে যাকে আমরা Short Interest ও বলতে পারি। যদি একটি বেয়ারিশ মার্কেটে চাহিদা এবং যোগানের পরিমান সমান না হয় তবে একটি স্বল্প সময়ের জন্য বিপুল চাহিদার সৃষ্টি হয় এবং স্বল্প সময়ের জন্য দাম বৃদ্ধি পায়। এই বৃদ্ধিকে টেকনিক্যাল আনাল্যসিসের ভাষায় Dead Cat Bounce বলা হয়ে থাকে। এই বৃদ্ধিটি খুব স্বল্প সময়ের জন্য হয় এবং একটি শক্ত বিক্রয় চাপ থাকে ফলে আগের মূল্যসীমা অতিক্রম করে যায়। আমরা আমাদের ডিএসই চার্ট পর্যবেক্ষণ করলে এই বিষয়ে অনেক পরিষ্কার ধারনা পাব। চার্টে লক্ষ্য করে দেখুন প্রায়ই ডিএসই ইনডেক্স কিছুটা বৃদ্ধি পায় এবং সাথে ভলিউমও বেড়ে ছিল। কিন্তু বেশিদিন সেই ঊর্ধ্বমুখী প্রবণতা অব্যাহত ছিল না। আবার ঠিক সেপ্টেম্বর মাসের শেষ দিকেও ইনডেক্স ছিল ঊর্ধ্বমুখী এবং কয়েক দিন ঊর্ধ্বমুখী ছিল। বিয়ারিশ মার্কেতে এই মাঝে মাঝে যে দামের এবং শেয়ারের ঊর্ধ্বমুখী প্রবণতা একেই Dead Cat Bounce বলা হয়ে থাকে। পরিমানে কমে গেছে।
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="tab_6_46">
+                        <strong><u>Head and shoulders :</u></strong><br><br>
+                        <div class="row">                           
+                            <div class="knowledge_basket_tab">
+                                <div class="portlet-body">
+                                    <ul class="nav nav-tabs">
+                                        <li class="active">
+                                            <a href="#tab_1_91" data-toggle="tab"> English </a>
+                                        </li>
+                                        <li>
+                                            <a href="#tab_1_92" data-toggle="tab"> Bangla </a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content knowledge_basket">
+                                        <div class="tab-pane fade active in" id="tab_1_91">
+                                            <img src="{{ URL::asset('/knowledge_basket/clip_image028.png') }}"/><br><br>
+                                            <p>
+                                                This is one of the most popular and reliable chart patterns in technical analysis. head and shoulders is a reversal chart pattern than when formed, signals that the security is likely to move against the previous trend. The head and shoulders chart pattern illustrates a weakening in a trend by showing the deterioration in the successive movements of the highs and lows. The chart exactly showing what happened in our DSE. The chart formed two shoulders and one head and it has nick line. When it crossed its nick line then it went more down also price has decreased.
+                                            </p>
+                                        </div>
+                                        <div class="tab-pane fade" id="tab_1_92">
+                                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image028.png') }}"/><br><br>
+                                            <p>
+                                                Head and Shoulders মূলত একটি Reversal Chart Pattern । টেকনিক্যাল এনালাইসিসে এই চার্টটি সবচেয়ে জনপ্রিয় এবং নির্ভরযোগ্য। Head and Shoulders যখন সৃষ্টি হয় তখন এটি রিভার্সেল চার্ট প্যাটার্ণ হিসেবে কাজ করে এবং একটি শেয়ারের পূর্ব্বর্তী ট্রেন্ডের বিপরীত গতি নির্দেশ করে। Head and Shoulders চার্ট প্যাটার্ণটি সর্বোচ্চ ও সর্বনিন্ম পরিধির দূর্বলতা তুলে ধরার মাধ্যমে ট্রেন্ডের দূর্বলতা চিহ্নিত করে। Head and Shoulders চার্ট প্যাটার্ণটি খুব মনোযোগ দিয়ে লক্ষ্য করতে হবে কারন মনযোগী না হলে অনেক সময় আপনি চার্ট প্যাটার্ণটি ধরতে পারবেন না। চিত্রে Head and Shoulders দেখাচ্ছে যেটি আমাদের দেশের বাজারে সংগঠিত হয়েছে। চিত্রে ওপর দিকে Head and Shoulders সংগঠিত হয়েছে এবং যখন Nick line cross করেছে তখন দাম ও অনেক পরিমানে কমে গেছে।
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="tab_6_47">
+                        <strong><u>Gaps :</u></strong><br><br>
+                        <div class="row">                           
+                            <div class="knowledge_basket_tab">
+                                <div class="portlet-body">
+                                    <ul class="nav nav-tabs">
+                                        <li class="active">
+                                            <a href="#tab_1_93" data-toggle="tab"> English </a>
+                                        </li>
+                                        <li>
+                                            <a href="#tab_1_94" data-toggle="tab"> Bangla </a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content knowledge_basket">
+                                        <div class="tab-pane fade active in" id="tab_1_93">
+                                            <img src="{{ URL::asset('/knowledge_basket/clip_image022.png') }}"/><br><br>
+                                            <p>
+                                                A gap in a chart is an empty space between a trading period and he following trading period. This occurs when there is a large difference in price between two sequential trading periods. If the trading range in one period is between 50 taka and 65 taka and the next trading period opens at 70 Taka there will be a large gap on the chart between these two periods. look at the chart first one downward gap. when the price of a particular share starts below than yesterdays price then there is a downward gap. in this situation 80% share’s price increase. Upward Gap is just reverse of Downward Trend and in case of Upward Tren 80% share’s price falls.
+                                            </p>
+                                        </div>
+                                        <div class="tab-pane fade" id="tab_1_94">
+                                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image022.png') }}"/><br><br>
+                                            <p>
+                                                একটি চার্টের Gap হচ্ছে ট্রেডিং এর সময় সৃষ্ট কিম্বা পরবর্তী ট্রেডিং পিরিওডের সৃষ্ট খালি জায়গা। দুটি ট্রেডিং পিরিওডে মূল্যের অস্বাভাবিক পার্থক্যের কারনে এটি তৈরিহয়। মূলতঃ Gap একটি শেয়ারের গুরুত্বপূর্ণ পরিবর্তনকে ইংগিত করে যদি প্রাপ্তির চেয়ে বেশি অর্জনের ঘোষনা থাকে। এবার চিত্রটি লক্ষ্য করা যাক। চিত্রে আমরা দেখতে পাচ্ছি দুইটি Gap । প্রথমটি Downward Gap. যখন কোন শেয়ােরর দাম আগের দিনের দামের তুলনায় কম দিয়ে শুরু হয় এবং আগের দিনের দামকে ক্রস করতে পারে না তখন একটি Downward Gap সৃষ্টি হয়। এই ক্ষেত্রে প্রায় ৮০ ভাগ শেয়ােরর দাম বৃদ্ধি পায়। নিচের চিত্রে ও আমরা সেই বিষয়ই দেখতে পাচ্ছি। Upward Gap হল ঠিক Downward Gap এর উল্টো। এই ক্ষেত্রে শেয়ােরর দাম আগের দিনের দামের তুলনায় বেশী দিয়ে শুরু হয় ফলে উপরের দিকে একটি Upward Gap সৃষ্টি হয়। এই Upward Gap সৃষ্টি হলে দেখা যায় অধিকাংশ শেয়ােরর দাম কমে যায়। নিচের চিত্রে ও আমরা তাই লক্ষ্য করছি। যেদিন ক্যানডেল স্টিকটি একটি Upward Gap সৃষ্টি করেছে ঠিক তার পরদিন থেকে দাম কমতে শুরু করেছে। সুতরাং Gap Trading এর ক্ষেত্রে আমাদের কিছুটা লক্ষ্য রাখতে হবে যে কোন ধরনের Gap সৃষ্টি হচ্ছে।
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="tab_6_48">
+                        <strong><u>Good Trade :</u></strong><br><br>
+                        <div class="row">                           
+                            <div class="knowledge_basket_tab">
+                                <div class="portlet-body">
+                                    <ul class="nav nav-tabs">
+                                        <li class="active">
+                                            <a href="#tab_1_95" data-toggle="tab"> English </a>
+                                        </li>
+                                        <li>
+                                            <a href="#tab_1_96" data-toggle="tab"> Bangla </a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content knowledge_basket">
+                                        <div class="tab-pane fade active in" id="tab_1_95">
+                                            <img src="{{ URL::asset('/knowledge_basket/clip_image023.png') }}"/><br><br>
+                                            <p>
+                                            What is a good Tread? or how we can select a good trade? Many investor ask this types of question. we know some of the indicators we have that show the when market is risky and when the market is totally safe for investment. the picture shows the weekly chart and the trading range is 6758 to 5170. so there is 1580 point gaps are available so we can take it as our trading range. we can sell when it goes to its resistance and we can buy when the price goes to its support line. For this reason you have to take three decisions. 1. what will be the target price and stop price. 2. For next trade will you follow the trend or not. 3. Will you trade at a current market price or will wait for your desire market price.
+                                            </p>
+                                        </div>
+                                        <div class="tab-pane fade" id="tab_1_96">
+                                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image023.png') }}"/><br><br>
+                                            <p>
+                                                সাধারণত আমরা একটি ভাল ট্রেড বলতে কি বুঝি অথবা ভাল ট্রেড আমরা কিভাবে চিনহিত করতে পারি? অনেক বিনিয়োগকারীর এমন প্রশ্ন রয়েছে। আমরা জানি অল্প কিছু সংখ্যক ট্রেন্ডলাইন বাজারে বিনিয়োগ কখন ঝুকিপূর্ণ তা নির্দেশ করে। আমরা একটি সাপ্তাহিক চার্টে দেখতে পাচ্ছি এর ট্রেডিং রেঞ্জ 6758 হতে 5170 পর্যন্ত যা 1580 পয়েন্ট। সুতরাং, রেজিস্টেন্স লেভেলের একেবারে সর্বোচ্চ পর্যায়ে sell করা ততোটা বিপদজনক নয়। যদি রেজিস্টেন্স লেভেল ভেঙ্গে যায় তবে সে স্থানটি buy এর স্থান হিসেবে বিবেচিত হয়। এই ক্ষেতের আপনাকে তিনটি বিষয়ে সিদ্ধান্ত নিতে হবে- ১. Target price বা stop price এর ক্ষেত্রে লাভ-লোকসানের অনুপাত কি হওয়া উচিত? ২. পরবর্তী দীর্ঘমেয়াদী ট্রেডের ক্ষেত্রে আমি কি ট্রেন্ড অনূসরণ করবো অথবা করবোনা? ৩. আপনি কি মার্কেট প্রাইসে ট্রেড করবেন বা একটি উপযুক্ত প্রাইস লেভেলের জন্য অপেক্ষা করবেন ?
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="tab_6_49">
+                        <strong><u>The Rate-of-Change (ROC) :</u></strong><br><br>
+                        <div class="row">                           
+                            <div class="knowledge_basket_tab">
+                                <div class="portlet-body">
+                                    <ul class="nav nav-tabs">
+                                        <li class="active">
+                                            <a href="#tab_1_97" data-toggle="tab"> English </a>
+                                        </li>
+                                        <li>
+                                            <a href="#tab_1_98" data-toggle="tab"> Bangla </a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content knowledge_basket">
+                                        <div class="tab-pane fade active in" id="tab_1_97">
+                                            <img src="{{ URL::asset('/knowledge_basket/clip_image041.png') }}"/><br><br>
+                                            <p>
+                                                The Rate-of-Change (ROC) indicator, which is also referred to as simply Momentum, is a pure momentum oscillator that measures the percent change in price from one period to the next. The ROC calculation compares the current price with the price "n" periods ago. The plot forms an oscillator that fluctuates above and below the zero line as the Rate-of-Change moves from positive to negative. As a momentum oscillator, ROC signals include centerline crossovers, divergences and overbought-oversold readings. Divergences fail to foreshadow reversals more often than not so this article will forgo a discussion on divergences. Even though centerline crossovers are prone to whipsaw, especially short-term, these crossovers can be used to identify the overall trend. Identifying overbought or oversold extremes comes natural to the Rate-of-Change oscillator.
+                                            </p>
+                                        </div>
+                                        <div class="tab-pane fade" id="tab_1_98">
+                                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image041.png') }}"/><br><br>
+                                            <p>
+                                                The Rate-of-Change (ROC) ইনডিকেটরটি সাধারণত একটি মোমেনটার্ম এবং অনেক সময় এই ইনডিকেটরকে একটি বিশুদ্ধ momentum oscillator ও বলা হয়। সাধারণত এই ইনডিকেটরটি একটি নির্দিষ্ট সময় থেকে আরেকটি সময় পর্যন্ত দামের পরিবর্তনের হার নির্ণয় করে থাকে। যখন দামের পরিবর্তন হয় তখন Rate-of-Change ইনডিকেটরটি জিরো লাইনের এর ওপরে এবং নিচে ওঠানামা করে। যেহেতু Rate-of-Change একটি মোমেনটার্ম তাই এর সিগনাল গুলো অন্যান্য মোমেনটার্মের মতই হয়ে থাকে যেমন center line crossovers, divergences and overbought-oversold। এই পরিবর্তনের হার সাধারণত তিন ধরনের হয়ে থাকে সেইগুলো হচ্ছে আপ ট্রেন্ড, ডাউন ট্রেন্ড এবং সাইডওয়ে। সাধারণত একটি আপট্রেন্ড গঠিত হয় যখন কতগুলো higher highs এবং higher lows থাকে এবং দাম ও জিকজ্যাক করে আপট্রেন্ড অনুসরণ করে । এবং Pullback হয় যখন একটি নির্দিষ্ট সময় পর পর percentage move করে এবং ডাউন ট্রেন্ড গঠিত হয় যখন lows and lower highs এবং দাম ও জিকজ্যাক করে ডাউন ট্রেন্ড অনুসরণ করে.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="tab_6_50">
+                        <strong><u>Parabolic SAR with RSI and Stochastic :</u></strong><br><br>
+                        <div class="row">                           
+                            <div class="knowledge_basket_tab">
+                                <div class="portlet-body">
+                                    <ul class="nav nav-tabs">
+                                        <li class="active">
+                                            <a href="#tab_1_99" data-toggle="tab"> English </a>
+                                        </li>
+                                        <li>
+                                            <a href="#tab_1_100" data-toggle="tab"> Bangla </a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content knowledge_basket">
+                                        <div class="tab-pane fade active in" id="tab_1_99">
+                                            <img src="{{ URL::asset('/knowledge_basket/clip_image037.jpg') }}"/><br><br>
+                                            <p>
+                                                Parabolic SAR is an indicator and basically it indicates the momentum of an assets when the possibility of change the momentum. That is upward or downward change. In a chart Parabolic SAR, RSI and Stochastics oscillator were added to see the buy and sell signals. We know when RSI and Stochastics leave their Oversold area then they generate buy signals. Take a example of HR textile. In 3rd March 2011 we have seen a buy signals. If we look previous data then we find RSI and Stochastics Oscillator were in oversold situation and giving buy signals. These three Indicators buy signals were formed one after another and we can take it a good trade. Similarly look at the 3rd April 2011. That time RSI and Stochastics Oscillator were overbought situation and Parabolic SAR was in Downtrend. If anyone can use these three indicators then he or she can get easily buy signal.
+                                            </p>
+                                        </div>
+                                        <div class="tab-pane fade" id="tab_1_100">
+                                            <img src="{{ URL::asset('/knowledge_basket/images/clip_image037.jpg') }}"/><br><br>
+                                            <p>
+                                                প্রথমে জানা যাক Parabolic SAR ইন্ডিকেটরটি কি । Parabolic SAR ইন্ডিকেটর হচ্ছে এমন একটি Indicator যেটা assets এর Momenterm নির্দেশ করে এবং যখন Momenterm এর দিক পরিবর্তনের সম্ভাবনা অনেক বেশি থাকে । অর্থাৎ upward অথবা dwonword এ যাবার সম্ভাবনা। নিন্মের একটি চার্টে Parabolic SAR ইন্ডিকেটর , RSI এবং Stochastics oscillator যুক্ত করা হয়েছে। ইতিমধ্যে আমরা জানি যখন RSI এবং Stochastics তাদের oversold স্থল ত্যাগ করা শুরু করে তখন তা buy সিগন্যাল হিসেবে কাজ করে এবং যখন RSI এবং Stochastics তাদের overbought স্থল ত্যাগ করা শুরু করে তখন তা buy সিগন্যাল হিসেবে কাজ করে।এখানে আমরা HR Textile এর একটি উদাহরন দিচ্ছি । ০৩-০৩-২০১১ তারিখে একটি buy সিগন্যাল দেখা গেছে। তারও আগে যদি আমরা ভাল মত লক্ষ করা হয় তবে দেখা যাবে RSI এবং Stochastics oscillator OverSold অবস্থায় ছিল এবং buy সিগন্যাল দিচ্ছিল । এই তিনটি ইন্ডিকেটরে buy সিগন্যাল পরপর সংঘটিত হয়েছে এবং এটি একটি ভাল ট্রেড হিসেবে বিবেচিত হয়েছে। আবার ০৩.০৪.২০১১ তারিখে আবার দেখা যায় RSI এবং Stochastics oscillator Overbought অবস্থায় ছিল এবং Parabolic SAR ও Downtrend এ ছিল। যদি এই তিনটি Indicators এক সাথে ব্যাবহার করা হয় তবে পরিষ্কার sell Signal পাওয়া যায়। আবার যদি May মাসের দিকে লক্ষ করা হয় তবে আবার ও RSI এবং Stochastics oscillator Oversold অবস্থায় দেখতে পাওয়া এবং আবার Buy সিগন্যাল পাওয়া যায়।
                                             </p>
                                         </div>
                                     </div>
