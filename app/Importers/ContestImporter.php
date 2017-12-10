@@ -61,8 +61,8 @@ class ContestImporter extends BaseImporter
 
 	public function handle()
 	{
-		 // $this->oneToOne('contests', 'contests');
-		 // $this->oneToOne('contest_portfolios', 'contest_portfolios');
+		 $this->oneToOne('contests', 'contests');
+		 $this->oneToOne('contest_portfolios', 'contest_portfolios');
 		 $this->oneToOne('contest_portfolio_shares', 'contest_portfolio_shares');
 		 return ;
 	}
