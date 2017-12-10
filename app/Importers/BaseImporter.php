@@ -51,15 +51,16 @@ class BaseImporter
 					/*Resolve the instrument id*/
 					if($key == 'instrument_id' /* || additional column name check here*/){
 						$value = $this->newInstrumentId($value);
+						$hasInstrument_id = true;
 					}
 					/*Resolve the instrument id*/
 					  $newRow[$key] =	$value;
 				}
 
-				if(array_key_exists('instrument_id',  $this->oneToOneMap($to)) && !isset($newRow['instrument_id']))
+				if(isset($hasInstrument_id) && !isset($newRow['instrument_id']))
 				{
 					continue;
-				}				
+				}	
 					// dd($newRow);
 				$data[] = $newRow;
 			 }
