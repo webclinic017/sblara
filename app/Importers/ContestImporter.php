@@ -63,6 +63,7 @@ class ContestImporter extends BaseImporter
 	{
 		 $this->oneToOne('contests', 'contests');
 		 $this->oneToOne('contest_portfolios', 'contest_portfolios');
+		 $this->new('contest_portfolios')->update(['approved' => 1]);
 		 $this->oneToOne('contest_portfolio_shares', 'contest_portfolio_shares');
 		 return ;
 	}
