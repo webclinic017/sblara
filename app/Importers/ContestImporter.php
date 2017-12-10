@@ -37,7 +37,7 @@ class ContestImporter extends BaseImporter
 					'contest_portfolio_shares' => [
 							'id'   =>   'id',
 							'portfolio_id'   =>   'contest_portfolio_id',
-							// 'symbol_id'   =>   'instrument_id|Filter', working
+							'symbol_id'   =>   'instrument_id', 
 							'no_of_shares'   =>   'no_of_shares',
 							'buying_price'   =>   'buying_price',
 							'buying_date'   =>   'buying_date|filter',

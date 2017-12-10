@@ -29,6 +29,7 @@ class Kernel extends ConsoleKernel
         Commands\ParseMstCommand::class,
         Commands\CalculateSectorIntradayCommand::class,
         Commands\FundamentalLatestIdCommand::class,
+        Commands\Import::class,
     ];
 
     /**

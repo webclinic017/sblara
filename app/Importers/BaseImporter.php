@@ -7,11 +7,11 @@ class BaseImporter
 	/* old database connection*/
 	protected $oldDB = 'old';
 	protected $limit = '1000';
+	protected $instruments = false;
 	public $console;
 	function __construct($console)
 	{
 		$this->console = $console;
-		dd($this->newInstrumentId(11101));
 		$this->handle();
 	}
 
@@ -48,8 +48,19 @@ class BaseImporter
 						$value = $this->$function($value);
 						/*additional filter if neseccery*/
 					}
+					/*Resolve the instrument id*/
+					if($key == 'instrument_id' /* || additional column name check here*/){
+						$value = $this->newInstrumentId($value);
+					}
+					/*Resolve the instrument id*/
 					  $newRow[$key] =	$value;
 				}
+
+				if(!isset($newRow['instrument_id']) )
+				{
+					continue;
+				}				
+					// dd($newRow);
 				$data[] = $newRow;
 			 }
 			 $skip += $this->limit;
@@ -75,12 +86,15 @@ class BaseImporter
 	public function newInstrumentId($old_id)
 	{
 		$data = [];
-		foreach (DB::select(DB::raw("SELECT instruments.id as instrument_id, symbols.id as symbol_id FROM `instruments` LEFT JOIN symbols on symbols.dse_code = instruments.instrument_code  WHERE symbols.id is NOT null ")) as  $value) {
+		if(!$this->instruments)
+		{
+			$this->instruments = DB::select(DB::raw("SELECT instruments.id as instrument_id, symbols.id as symbol_id FROM `instruments` LEFT JOIN symbols on symbols.dse_code = instruments.instrument_code  WHERE symbols.id is NOT null "));
+		}
+		foreach ( $this->instruments as  $value) {
 					if($value->symbol_id == $old_id)
 					{
 						return $value->instrument_id;
 					}
-			}	
-
+		}	
 	}
 }
