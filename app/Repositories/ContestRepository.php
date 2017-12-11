@@ -18,7 +18,7 @@ class ContestRepository
                             ->withCount('approvedContestUsers')
                             ->orderBy('approved_contest_users_count', 'desc')
                             ->where('is_active', true)
-                            
+                            ->take(25)
                             ->latest('created_at')->get();
         // Todo: whereDate()
 
