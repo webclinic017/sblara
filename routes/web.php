@@ -200,5 +200,6 @@ Route::resource('/news', 'newspaperNewsController');
 //==============================
 Route::get('/tutorials/technical', 'knowledgeBasketController@index')->name('knowledge-basket');
 Route::get('/collective/news', 'newspaperNewsController@collectiveNews')->name('collective-news');
+Route::get('/news/search', 'NewsController@newsSearch')->name('news-search');
 
 
