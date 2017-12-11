@@ -10,6 +10,8 @@ use App\Repositories\InstrumentRepository;
 use App\Repositories\ChartRepository;
 use App\Repositories\FundamentalRepository;
 //use App\ChartDirector\FinanceChart;
+use App\Instrument;
+use App\News;
 
 class NewsController extends Controller
 {
@@ -559,6 +561,39 @@ class NewsController extends Controller
         print $image;
         exit;
 
+    }
+    public function newsSearch(Request $request){
+                    
+            $result = [];
+        if($request->has('keyword')){
+            
+            $result = new News();
+            
+           if($request->instrument_id){
+               
+            $result = $result->where('instrument_id',$request->instrument_id);
+            
+           }
+           if($request->keyword)
+           {
+               
+            $result = $result->where('details','like', '%'.$request->keyword.'%');
+           }
+           if($request->from_date)
+           {
+              $result = $result->where('post_date', '>=', $request->from_date);
+           }
+           
+           if($request->to_date)
+           {
+              $result = $result->where('post_date', '<=', $request->to_date.' 23:59:59');
+           }
+                    
+             $result = $result->get();
+        }
+        $instrument = Instrument:: all();
+        $request->flash();
+        return view('news_search.index',['instrument' => $instrument, 'result' => $result]);
     }
 
 }

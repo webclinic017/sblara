@@ -27,6 +27,7 @@ class GenerateMenus
             //submenu
             $menu->home->add('Dashboard', ['route' => '/'])->prepend('<i class="icon-bar-chart" ></i > ');
             $menu->home->add('News', ['route' => 'collective-news'])->prepend('<i class="icon-bar-chart" ></i > ');
+            $menu->home->add('News Search', ['route' => 'news-search'])->prepend('<i class="icon-bar-chart" ></i > ');
             $menu->home->add('Knowledge Basket', ['route' => 'knowledge-basket'])->prepend('<i class="icon-bar-chart" ></i > ');
 
             /*Chart*/
