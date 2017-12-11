@@ -9,6 +9,64 @@
             </div>
 
             <div class="portlet-body">
+                <div class="caption font-green-haze" style="width: 100%; text-align: center;">
+                 <span class="caption-subject bold uppercase"> Contest of the Month</span>
+                </div>
+
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <td>Contest Name</td>
+                            <td>Contest Amount</td>
+                            <td>Max TK/Share</td>
+                            <td>Access</td>
+                            <td>Join</td>
+                        </tr>
+                    </thead>           
+                    <tbody>
+                        <tr>    
+                        <td>                                    
+                            <a href="{{ route('contests.show', $contestOfMonth) }}">
+                                        {{ $contestOfMonth->name }} 
+                                        <span class="badge badge-primary">
+                                            {{ $contestOfMonth->approved_contest_users_count }}
+                                        </span>
+                                    </a>
+                        </td>
+                        <td>{{ $contestOfMonth->contest_amount }}</td>
+                        <td> {{ $contestOfMonth->max_amount }}%</td>
+                        <td>
+                                    @if ($contestOfMonth->access_level)
+                                        <span class="text-danger">Private</span>
+                                    @else
+                                        <span class="text-success">Public</span>
+                                    @endif                            
+                        </td>
+                        <td>
+                                    <form method="POST" action="{{ route('contests.join', $contestOfMonth) }}">
+                                        {{ csrf_field() }}
+
+                                        <button class="btn btn-primary btn-xs"  {{ $contestOfMonth->isJoined() ? 'disabled' : '' }}
+                                                data-toggle="confirmation" 
+                                                data-original-title="Are you sure ?" 
+                                                title="">
+                                                <span class="md-click-circle md-click-animate" style="height: 184px; width: 184px;"></span>Join
+                                        </button>
+                                    </form>                            
+                        </td>
+                        </tr>
+ 
+                    </tbody>         
+                </table>
+                <hr>
+                <div class="col-md-12" style="text-align: right; margin-bottom: 20px;">
+{{--                     <a href="" class="btn btn-primary">All Contest</a>
+                    <a href="" class="btn btn-primary">General Contest</a> --}}
+                    <a href="/mycontests/create" class="btn btn-primary">Create Contest</a>
+                </div>
+              <div class="caption font-green-haze" style="width: 100%; text-align: center; margin-top: 30px;">
+                 <span class="caption-subject bold uppercase"> Popular Contests</span>
+                </div>
                 <table class="table table-bordered">
                     <thead>
                         <tr>
@@ -64,6 +122,7 @@
                         @endforelse
                     </tbody>
                 </table>
+                {{ $contests->links() }}
             </div>
         </div>
     </div>

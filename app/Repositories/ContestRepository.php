@@ -16,10 +16,10 @@ class ContestRepository
     	// get all contest
         $contests = Contest::with('creator')
                             ->withCount('approvedContestUsers')
+                             ->where('contest_category', 1)
                             ->orderBy('approved_contest_users_count', 'desc')
                             ->where('is_active', true)
-                            ->take(25)
-                            ->latest('created_at')->get();
+                            ->latest('created_at')->paginate(25);
         // Todo: whereDate()
 
         return $contests;

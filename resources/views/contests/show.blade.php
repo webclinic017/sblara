@@ -38,21 +38,20 @@
                         @php
                             $rank = 1;
                         @endphp
-                        
-                        @forelse ($contest->contestUsers as $user)
+                        @forelse ($contest->contestPortfolios as $user)
                             <tr class="text-center">
                                 <td>{{ $rank++ }}</td>
                                 <td>
-                                    @if (auth()->check() AND $user->name === auth()->user()->name)
-                                        <a href="{{ route('contests.portfolios.show', $user->pivot->id) }}">{{ $user->name }}</a>
+                                    @if (auth()->check() AND $user->user->id === auth()->user()->id)
+                                        <a href="{{ route('contests.portfolios.show', $user->id) }}">{{ $user->user->name }}</a>
                                     @else
-                                        {{ $user->name }}
+                                        {{ $user->user->name }}
                                     @endif
                                 </td>
-                                <td>{{ $user->join_date }}</td>
+                                <td>{{ date('d-M-Y', strtotime($user->join_date)) }}</td>
                                 <td></td>
                                 <td>{{ $user->shares->count() }}</td>
-                                <td>{{ $user->pivot->portfolio_value }}</td>
+                                <td>{{ $user->portfolio_value }}</td>
                             </tr>
                         @empty
                             <tr class="no-records-found text-center">

@@ -1,5 +1,6 @@
 <?php 
 namespace App\Importers;
+use \DB as DB;
 class UserImporter extends BaseImporter
 {
 							// from => to;
@@ -31,7 +32,9 @@ class UserImporter extends BaseImporter
 
 	public function handle()
 	{
-		return $this->oneToOne('users', 'users');
+		// $this->oneToOne('users', 'users');
+		$this->new('users')->where('name', '')->update(['name' => DB::raw('username')]);
+		return ;
 	}
 
 }

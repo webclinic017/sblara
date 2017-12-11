@@ -11,7 +11,7 @@ class ContestImporter extends BaseImporter
 						'access_level' 					=>  'access_level',
 						'is_active' 					=>  'is_active',
 						'members' 					=>  'members',
-						'members' 					=>  'contest_amount',
+						'contest_amount' 					=>  'contest_amount',
 						'max_amount' 					=>  'max_amount',
 						'author' 					=>  'user_id',
 						'contest_name' 					=>  'name',

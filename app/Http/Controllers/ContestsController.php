@@ -50,11 +50,15 @@ class ContestsController extends Controller
         if ( ! $contest->is_active) {
             $this->authorize('show', $contest);
         }
+        $sql = "SELECT *, (no_of_shares - sell_quantity) as available_shares FROM `contest_portfolio_shares` left join (SELECT * FROM `data_banks_intradays` where batch = (select max(batch) from data_banks_intradays)) as ltp on ltp.instrument_id = contest_portfolio_shares.instrument_id where contest_id = 413";
+        $data = \DB::select(\DB::raw($sql));
+        dd($data);
+         $contest->load(['contestPortfolios.shares', 'contestPortfolios.user']);
 
         // Retrieve all contests that have at least one approved user..
-        $contest->load(['contestUsers.shares', 'contestUsers' => function ($q) {
-            $q->wherePivot('approved', true);
-        }]);
+        // $contest->load(['contestUsers.shares', 'contestUsers' => function ($q) {
+        //     $q->wherePivot('approved', true);
+        // }]);
         return view('contests.show', compact('contest'));
     }
 

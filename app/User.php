@@ -73,6 +73,14 @@ class User extends Authenticatable {
         );
     }
 
+    public function contestShares()
+    {
+        return $this->hasManyThrough(
+            ContestPortfolioShare::class, ContestPortfolio::class,
+            'user_id', 'contest_portfolio_id', 'id'
+        );
+    }
+
     public function getJoinDateAttribute($join_date)
     {
         return Carbon::parse($join_date)->format('d-M-Y');

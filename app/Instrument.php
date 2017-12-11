@@ -216,7 +216,6 @@ class Instrument extends Model
                 }])
                 ->get();
         }
-
         //  dump($instrumentIDs);
         //   dd($lastTradedDataAllInstruments->toArray());
 

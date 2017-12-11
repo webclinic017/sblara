@@ -4,6 +4,7 @@ namespace App\Http\ViewComposers;
 
 use App\Repositories\ContestRepository;
 use Illuminate\View\View;
+use App\Contest;
 
 class ContestsView
 {
@@ -17,7 +18,11 @@ class ContestsView
     {
         // Show all contests.
         $contests = ContestRepository::index();
+        $contestOfMonth = Contest::withCount('approvedContestUsers')
+                    ->where('contest_category', 3)
+                    ->where('is_active', true)
+                    ->latest('created_at')->first();
 
-        $view->with('contests', $contests);
+        $view->with(compact('contests', 'contestOfMonth'));
     }
 }
