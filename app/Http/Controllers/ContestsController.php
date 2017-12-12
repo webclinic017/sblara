@@ -50,16 +50,16 @@ class ContestsController extends Controller
         if ( ! $contest->is_active) {
             $this->authorize('show', $contest);
         }
-        $sql = "SELECT *, (no_of_shares - sell_quantity) as available_shares FROM `contest_portfolio_shares` left join (SELECT * FROM `data_banks_intradays` where batch = (select max(batch) from data_banks_intradays)) as ltp on ltp.instrument_id = contest_portfolio_shares.instrument_id where contest_id = 413";
-        $data = \DB::select(\DB::raw($sql));
-        dd($data);
+         $sql = "SELECT users.name, users.username user_id, contest_portfolios.id, contest_portfolios.join_date, (select count(distinct  id) from contest_portfolio_shares where contest_portfolio_id = contest_portfolios.id) share_holdings, round(IFNULL(sum((no_of_shares - sell_quantity)*ltp), 0) +cash_amount, 2) portfolio_value FROM `contest_portfolios` LEFT JOIN contest_portfolio_shares on contest_portfolios.id = contest_portfolio_shares.contest_portfolio_id LEFT JOIN (SELECT instrument_id, ROUND(COALESCE(NULLIF(close_price, 0), NULLIF(pub_last_traded_price, 0) , NULLIF(spot_last_traded_price, 0), NULLIF(yday_close_price, 0) ), 2 ) as ltp FROM `data_banks_intradays` where batch = ( select max(batch) from data_banks_intradays) ) as ltp on ltp.instrument_id = contest_portfolio_shares.instrument_id LEFT JOIN users on users.id = user_id WHERE contest_portfolios.contest_id = $contest->id   group by contest_portfolios.id ORDER BY `portfolio_value` DESC";
+
+        $users = \DB::select(\DB::raw($sql));
          $contest->load(['contestPortfolios.shares', 'contestPortfolios.user']);
 
         // Retrieve all contests that have at least one approved user..
         // $contest->load(['contestUsers.shares', 'contestUsers' => function ($q) {
         //     $q->wherePivot('approved', true);
         // }]);
-        return view('contests.show', compact('contest'));
+        return view('contests.show', compact('users', 'contest'));
     }
 
     /**

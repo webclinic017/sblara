@@ -38,26 +38,32 @@
                         @php
                             $rank = 1;
                         @endphp
-                        @forelse ($contest->contestPortfolios as $user)
+                        @forelse ($users as $user)
                             <tr class="text-center">
                                 <td>{{ $rank++ }}</td>
                                 <td>
-                                    @if (auth()->check() AND $user->user->id === auth()->user()->id)
-                                        <a href="{{ route('contests.portfolios.show', $user->id) }}">{{ $user->user->name }}</a>
+                                    @if (auth()->check() AND $user->user_id === auth()->user()->id)
+                                        <a href="{{ route('contests.portfolios.show', $user->user_id) }}">{{ $user->name }}</a>
                                     @else
-                                        {{ $user->user->name }}
+                                        {{ $user->name }}
                                     @endif
                                 </td>
                                 <td>{{ date('d-M-Y', strtotime($user->join_date)) }}</td>
-                                <td></td>
-                                <td>{{ $user->shares->count() }}</td>
+                                @php
+                                $growth = number_format((($user->portfolio_value - $contest->contest_amount) * 100) / $contest->contest_amount , 2)
+                                @endphp
+                                <td style="color: {{$growth < 0?"red":"green"}}">{{ $growth  }}</td>
+                                <td>{{ $user->share_holdings }}</td>
                                 <td>{{ $user->portfolio_value }}</td>
-                            </tr>
-                        @empty
+                            </tr>                        
+
+                            @empty
                             <tr class="no-records-found text-center">
                                 <td colspan="6">No matching records found</td>
                             </tr>
                         @endforelse
+                    
+
                     </tbody>
                 </table>
             </div>
