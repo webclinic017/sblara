@@ -55,7 +55,8 @@ class GenerateMenus
             $menu->portfolio->attr(['class' => 'dropdown dropdown-fw  '])->prepend('<i class="icon-briefcase" ></i > ');
 
             //submenu
-           // $menu->portfolio->add('Portfolio Dashboard', ['route' => '/portfolio'])->prepend('<i class="icon-bar-chart" ></i > ');
+            $menu->portfolio->add('Portfolio home', ['route' => 'portfolio.index'])->prepend('<i class="icon-bar-chart" ></i > ');
+            $menu->portfolio->add('Create new portfolio', ['route' => 'portfolio.create'])->prepend('<i class="icon-bar-chart" ></i > ');
            //$menu->portfolio->add('Create New', ['route' => '/portfolio/create'])->prepend('<i class="icon-bar-chart" ></i > ');
 
             /*Company*/
@@ -64,7 +65,6 @@ class GenerateMenus
             $menu->company->attr(['class' => 'dropdown dropdown-fw  '])->prepend('<i class="icon-link" ></i > ');
 
             //submenu
-
 
             $menu->company->add('Trade Details', ['route' => 'company-details'])->prepend('<i class="icon-bar-chart" ></i > ')->active('company-details/*');
             $menu->company->add('Fundamental Details', ['route' => 'fundamental-details'])->prepend('<i class="icon-bar-chart" ></i > ')->active('fundamental-details/*');

@@ -32,6 +32,7 @@ class PerformanceItem {
         $viewData      = $view->getData();
         $isChild       = isset($viewData['isChild']) ? $viewData['isChild'] : false;
         $transaction   = $viewData['transaction'];
+        dump($transaction->toArray());
         $instrumentId  = $transaction->instrument_id;
         $shares        = $transaction->no_of_shares;
         $buyPrice      = $transaction->buying_price;
@@ -94,9 +95,10 @@ class PerformanceItem {
             $sellValueDeductingCommision=$sellValue-$sellCommission;
 
             $lastTradePrice     = $dataBankIntraDays->close_price;
-            $lastTradeDate      = $dataBankIntraDays->lm_date_time->format('Y-m-d');
+            $lastTradeDate      = $dataBankIntraDays->lm_date_time->format('h:i a');
             $change             = $dataBankIntraDays->price_change;
-            $changePercent      = $buyPrice ? $change / $buyPrice * 100 : 0;
+            $changePercent             = $dataBankIntraDays->price_change_per;
+            //$changePercent      = $buyPrice ? $change / $buyPrice * 100 : 0;
             $gainLossToday      = $change * $shares;
 
             $gainLossTotal      = $sellValueDeductingCommision-$buyValueWithCommision;
