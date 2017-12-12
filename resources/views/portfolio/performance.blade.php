@@ -21,7 +21,7 @@
             <th>Total Purchase</th>
             <th>Gain/Loss</th>
             <th>%Change</th>
-            {{--<th>%Portfolio</th>--}}
+            <th>%Portfolio</th>
             <th>Sell Value</th>
         </tr>
     </thead>

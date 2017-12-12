@@ -6,7 +6,7 @@
     <th colspan="1"></th>
     <th colspan="1"></th>
     <th colspan="1"></th>
-    {{--<th colspan="1">100%</th>--}}
+    <th colspan="1" class="{{$cash_amount<0?'text-danger':'text-success'}}">{{$cash_amount_per}}</th>
     <th colspan="1" class="{{$cash_amount<0?'text-danger':'text-success'}}">{{$cash_amount}}</th>
 </tr>
 
@@ -17,7 +17,7 @@
     <th colspan="1"></th>
     <th colspan="1" class="{{$totalPurchaseWithCommission<0?'text-danger':'text-success'}}">{{$totalPurchaseWithCommission}}</th>
     <th colspan="1" class="{{$totalProfitSincePurchase<0?'text-danger':'text-success'}}">{{$totalProfitSincePurchase}}</th>
-    <th colspan="1"class="{{$totalChangeSincePurchase<0?'text-danger':'text-success'}}">{{$totalChangeSincePurchase}}</th>
-    {{--<th colspan="1">100%</th>--}}
+    <th colspan="1"class="{{$totalChangeSincePurchase<0?'text-danger':'text-success'}}">{{$totalChangeSincePurchase}}%</th>
+    <th colspan="1">100%</th>
     <th colspan="1" class="{{$totalSellDeductingCommission<0?'text-danger':'text-success'}}">{{$totalSellDeductingCommission}}</th>
 </tr>

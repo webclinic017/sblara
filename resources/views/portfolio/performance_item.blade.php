@@ -57,14 +57,14 @@
     <td>{{$commission}}</td>
     <td>{{$purchaseTotal or 'N/A'}}</td>
     <td class="{{$gainLossTotal<0?'text-danger': 'text-success'}}">{{$gainLossTotal or 'N/A'}}</td>
-    <td class="{{$percentChange<0?'text-danger': 'text-success'}}">{{$percentChange or 'N/A'}}</td>
-    {{--<td>
+    <td class="{{$percentChange<0?'text-danger': 'text-success'}}">{{$percentChange or 'N/A'}}%</td>
+    <td>
         @if($isChild)
 
         @else
         {{$percentPortfolio or 'N/A'}}
         @endif
-    </td>--}}
+    </td>
     <td>
         {{$sellValue or 'N/A'}}
     </td>
