@@ -62,6 +62,10 @@
 
 <script src="{{ asset('maxazan-jquery-treegrid/js/jquery.treegrid.min.js') }}"></script>
 
+
+<script src="{{ asset('jquery-easy-ticker-master/test/jquery.easing.min.js') }}"></script>
+<script src="{{ asset('jquery-easy-ticker-master/jquery.easy-ticker.js') }}"></script>
+
 <!--<script src="https://cloud.tinymce.com/stable/tinymce.min.js"></script>
   <script>tinymce.init({ selector:'textarea' });</script>-->
   
@@ -80,5 +84,5 @@
 
 <script src="{{asset('vendor/laravel-filemanager/js/lfm.js')}}"></script>
 <script src="{{ asset('js/se.js') }}?v={{uniqid()}}"></script>
-<script src="{{ asset('js/filter.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/filter.js') }}" type="text/javascript"></script>
 @stack('scripts')

@@ -1,7 +1,7 @@
 <link href="/css/search.css" type="text/css" rel="stylesheet">
 <form class="search" action="extra_search.html" method="GET">
     {{csrf_field()}}
-    <input type="name" class="form-control" name="query" placeholder="Search..." id="top-search" autocomplete="false">
+    <input type="name" class="form-control" name="query" placeholder="Search..." id="top-search" autocomplete="false" style="background-color: #EEF1F5; width: 300px;">
     <a href="javascript:;" class="btn submit md-skip">
         <i class="fa fa-search"></i>
     </a>
