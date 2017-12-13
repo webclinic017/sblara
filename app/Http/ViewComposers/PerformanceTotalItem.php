@@ -45,8 +45,9 @@ class PerformanceTotalItem {
             $priceInfo=$lastTradeData->where('instrument_id',$transaction->instrument_id)->first();
 
             //if not traded yet
-            if(!count($priceInfo))
-                $priceInfo=\App\DataBanksIntraday::where('instrument_id', $transaction->instrument_id)->orderBy('lm_date_time','desc')->skip(0)->take(1)->get()->first();
+            if(!count($priceInfo)) {
+                $priceInfo = \App\DataBanksIntraday::where('instrument_id', $transaction->instrument_id)->orderBy('lm_date_time', 'desc')->skip(0)->take(1)->get()->first();
+            }
 
 
             // buy value for this instrument
@@ -78,7 +79,8 @@ class PerformanceTotalItem {
 
         }
 
-        $totalChangeSincePurchase = $totalPurchaseWithCommission?($totalProfitSincePurchase/$totalPurchaseWithCommission)*100:0;
+        $totalChangeSincePurchase = $totalPurchaseWithCommission?($totalProfitSincePurchase/($totalPurchaseWithCommission+ $portfolio->cash_amount))*100:0;
+        $cash_amount_per = $totalPurchaseWithCommission? ($portfolio->cash_amount / ($totalPurchaseWithCommission + $portfolio->cash_amount)) * 100:0;
 
         $view->with('totalPurchaseWithCommission', round($totalPurchaseWithCommission, 2));
         $view->with('totalProfitSincePurchase', round($totalProfitSincePurchase, 2));
@@ -86,6 +88,7 @@ class PerformanceTotalItem {
         $view->with('totalSellDeductingCommission', round($totalSellDeductingCommission, 2));
         $view->with('gainLossToday', round($gainLossToday, 2));
         $view->with('cash_amount', round($portfolio->cash_amount, 2));
+        $view->with('cash_amount_per', round($cash_amount_per, 2));
     }
 
 }

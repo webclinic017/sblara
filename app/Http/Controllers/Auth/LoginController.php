@@ -60,6 +60,7 @@ class LoginController extends Controller
 
         /*login old users*/
         $this->loginOldUser($request);
+        // dd($request->all());
         /*login old users*/
 
         // If the class is using the ThrottlesLogins trait, we can automatically throttle
@@ -85,10 +86,12 @@ class LoginController extends Controller
 
     public function loginOldUser($request)
     {
-        $user = \App\User::where($this->username(), $request->{$this->username()})->where('password', '')->where('password_old', md5($request->password))->first();
+        $username = $this->username();
+        $user = \App\User::where($username, $request->{$username})->where('password', '')->where('password_old', md5($request->password))->first();
+        // dd($user);
         if($user)
         {
-            $user->password = bcrypt($request->{$this->username()});
+            $user->password = bcrypt($request->password);
             $user->save();
             \Auth::login($user);
             return redirect()->intended('/');
@@ -104,6 +107,7 @@ class LoginController extends Controller
         }
         if(!isset( request()->username))
         {
+            // dd('username');
             $request = request()->all();
             $request['username'] = $request['email'];
             unset($request['email']);
