@@ -12,6 +12,7 @@ use App\Repositories\FundamentalRepository;
 //use App\ChartDirector\FinanceChart;
 use App\Instrument;
 use App\News;
+use App\NewspaperNews;
 
 class NewsController extends Controller
 {
@@ -594,6 +595,12 @@ class NewsController extends Controller
         $instrument = Instrument:: all();
         $request->flash();
         return view('news_search.index',['instrument' => $instrument, 'result' => $result]);
+    }
+    
+    public function viewNews($id){
+      
+        $newspaperNews = NewspaperNews::find($id);
+        return view('newspaper_news.view',['newspaperNews' => $newspaperNews]);
     }
 
 }

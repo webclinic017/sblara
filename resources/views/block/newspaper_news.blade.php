@@ -10,55 +10,90 @@
                     <a href="javascript:;" class="remove"> </a>
                 </div>
             </div>
-            <div class="portlet-body">
-                @foreach($news as $news)
-                <p>
-                    <a class="btn default" data-toggle="modal" href="#basic_{{ $news->id }}"> {{ $news->title }} </a>
-                </p>
-                <hr>
-                <details>
-                    <summary>
-                        @php
-                        // strip tags to avoid breaking any html
-                        $string = strip_tags($news->details);
-
-                        if (strlen($string) > 500) {
-
-                        // truncate string
-                        $stringCut = substr($string, 0, 500);
-
-                        // make sure it ends in a word so assassinate doesn't become ass...
-                        $string = substr($stringCut, 0, strrpos($stringCut, ' ')); 
-                        }
-                        echo $string;
-                        @endphp
-                    </summary>
-                    <p>{!! $news->details !!}</p>
-                </details>
-                <br><hr>
-                <div class="modal fade" id="basic_{{ $news->id }}" tabindex="-1" role="basic" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                                <h4 class="modal-title">{{ $news->title }}</h4>
-                            </div>
-                            <div class="modal-body">
-                                <div id="blockui_sample_3_1_element">
-                                    <p> {!! $news->details !!} </p>
+            <div class="portlet-body bolck_news_scroll">
+                <div class="vticker">
+                    <ul>
+                        
+                            @foreach($news as $news)
+                            <li>
+                            <div class="row" style="margin-left: 10px; margin-right: 10px;">
+                                <div class="pull-left">
+                                    <a href="{{ url('/news/details/'.$news->id)}}"><h4>{{ $news->title }}</h4></a>
+                                </div>
+                                <div class="pull-right">
+                                    <h4>{{ $news->published_date }}</h4>
                                 </div>
                             </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-outline sbold red" data-dismiss="modal">Close</button>
+                            <div class="row" style="margin-left: 10px; margin-right: 10px;">
+                                <details>
+                                    <summary>
+                                        @php
+                                        // strip tags to avoid breaking any html
+                                        $string = strip_tags($news->details);
+
+                                        if (strlen($string) > 500) {
+
+                                        // truncate string
+                                        $stringCut = substr($string, 0, 500);
+
+                                        // make sure it ends in a word so assassinate doesn't become ass...
+                                        $string = substr($stringCut, 0, strrpos($stringCut, ' ')); 
+                                        }
+                                        echo $string;
+                                        @endphp
+                                    </summary>
+                                    <p>{!! $news->details !!}</p>
+                                </details>
+                                <br><hr>
                             </div>
-                        </div>
-                        <!-- /.modal-content -->
-                    </div>
-                    <!-- /.modal-dialog -->
+                                </li>
+                            @endforeach 
+                        
+                    </ul>
                 </div>
-                @endforeach
             </div>
 
         </div>
     </div>
 </div>
+@push('scripts')
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        var dd = $('.vticker').easyTicker({
+            direction: 'up',
+            easing: 'easeInOutBack',
+            speed: 'slow',
+            interval: 2000,
+            height: 'auto',
+            visible: 1,
+            mousePause: 0,
+            controls: {
+                up: '.up',
+                down: '.down',
+                toggle: '.toggle',
+                stopText: 'Stop !!!'
+            }
+        }).data('easyTicker');
+
+        cc = 1;
+        $('.aa').click(function () {
+            $('.vticker ul').append('<li>' + cc + ' Triangles can be made easily using CSS also without any images. This trick requires only div tags and some</li>');
+            cc++;
+        });
+
+        $('.vis').click(function () {
+            dd.options['visible'] = 3;
+
+        });
+
+        $('.visall').click(function () {
+            dd.stop();
+            dd.options['visible'] = 0;
+            dd.start();
+        });
+
+    });
+
+</script>
+@endpush

@@ -55,3 +55,23 @@ div.center select{
 .knowledge_basket_tab{
     margin-left: 10px;
 }
+.bolck_news_scroll{
+    height: 200px;
+    overflow: auto;
+}
+
+
+
+.vticker{
+	
+}
+.vticker ul{
+	padding: 0;
+}
+.vticker li{
+	list-style: none;
+	padding: 10px;
+}
+.et-run{
+	background: red;
+}
