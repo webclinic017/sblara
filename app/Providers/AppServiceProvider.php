@@ -82,6 +82,7 @@ class AppServiceProvider extends ServiceProvider {
         // Test
         // View::composer('contest_portfolio_shares.show', 'App\Http\ViewComposers\ContestPortfolioSharesView');
          View::composer('block.newspaper_news', 'App\Http\ViewComposers\NewspaperNews');
+         View::composer('block.contest', 'App\Http\ViewComposers\Contest');
     }
 
     /**

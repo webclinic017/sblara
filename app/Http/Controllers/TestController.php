@@ -36,4 +36,8 @@ exit;
         $data=FundamentalRepository::getFundamentalDataById(array(13,211),array(12,13));
         dd($data);
     }
+    
+    public function testAK(){
+        return view('test.ak');
+    }
 }
