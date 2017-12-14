@@ -1,3 +1,5 @@
+<tfoot>
+    
 <tr>
     <th colspan="4">Cash</th>
     <th colspan="1"></th>
@@ -21,3 +23,4 @@
     <th colspan="1">100%</th>
     <th colspan="1" class="{{$totalSellDeductingCommission<0?'text-danger':'text-success'}}">{{$totalSellDeductingCommission}}</th>
 </tr>
+</tfoot>

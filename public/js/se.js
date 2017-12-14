@@ -128,4 +128,18 @@ $('body').on('click',  '.confirmBuy', function () {
 $('body').on('click',  '.confirmSell', function () {
 			$('#sellModal form').submit();
 	});
+	/* search  */
+	$('#top-search').keyup(function () {
+		var str = $(this).val();
+		if(str.length < 2)
+		{
+			$('.search-result').css('visibility', 'hidden');
+			return;			
+		}
+		$.get('/search?q='+str+'&search=company', function (result) {
+			
+		} );
+		$('.search-result').css('visibility', 'visible');
+	});
+	/* search  */
 });

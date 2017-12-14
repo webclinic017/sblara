@@ -163,6 +163,7 @@ Route::get('symbols/', 'TradingViewController@symbols');
 //tradingview function to search symbol
 //https://demo_feed.tradingview.com/search?limit=30&query=A&type=&exchange=
 Route::get('search/', 'TradingViewController@search');
+Route::get('search/{type}/{query}', 'SearchController@search');
 
 
 //https://demo_feed.tradingview.com/history?symbol=ABB&resolution=D&from=1491726479&to=1492590479

@@ -9,7 +9,7 @@ class Import extends Command
      *
      * @var string
      */
-    protected $signature = 'importer:run {importer}';
+    protected $signature = 'import {importer}';
 
     /**
      * The console command description.

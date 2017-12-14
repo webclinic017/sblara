@@ -1,7 +1,6 @@
 <?php
-
 namespace App\Http\Controllers;
-
+use App\Instrument;
 use App\Portfolio;
 use Illuminate\Http\Request;
 
@@ -11,19 +10,14 @@ class SearchController extends Controller {
 //        $this->middleware('auth');
     }
 
-    function search(Request $request) {
-        $search = $request->search;
-//        $intradays = \App\Repositories\DataBanksIntradayRepository::getLatestTradeDataAll();
-        $intradays = \App\DataBanksIntraday::take(10)->get();
-        $searchData = [];
-        $searchItems = [];
-        foreach ($intradays as $day) {
-            $searchItems[] = view('search_item', ['databank' => $day])->render();
-        }
-        $data = [
-            'count' => $intradays->count(),
-            'data' => $searchItems,
-        ];
+    function search(Request $request, $type, $search) {
+        return $search;
+         return $this->{$request->search}(); 
+    }
+
+    public function company()
+    {   
+        $data = Instrument::where('instrument_code', 'like', '%'.request()->q.'%')->paginate(10);
         return response()->json($data);
     }
 
