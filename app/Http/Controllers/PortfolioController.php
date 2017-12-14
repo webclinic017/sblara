@@ -243,8 +243,33 @@ class PortfolioController extends Controller {
             'portfolio' => $portfolio,
             'transactions' => $portfolio->portfolio_scrips()->where('share_status', 'sell')->get(),
         ];
-//        dd($data);
-        return view('portfolio.gain_loss', $data);
+
+        $instrument_info = \App\Instrument::all()->keyBy('id');
+        $exchange_info = \App\Exchange::all()->keyBy('id');
+
+        $all_transaction=array();
+        $total_profit=0;
+        foreach($data['transactions'] as $transaction)
+        {
+            $temp = array();
+            $temp['instrument_code'] = $instrument_info[$transaction->instrument_id]->instrument_code;
+            $temp['exchange'] = $exchange_info[$instrument_info[$transaction->instrument_id]->exchange_id]->name;
+            $temp['no_of_shares']= $transaction->no_of_shares;
+            $temp['total_buy_commission_of_this_instrument'] = $transaction->commission ? ($transaction->commission / 100) * ($transaction->buying_price * $transaction->no_of_shares) : 0;
+            $temp['total_buy_cost_with_commission_of_this_instrument'] = $transaction->buying_price * $transaction->no_of_shares+ $temp['total_buy_commission_of_this_instrument'];
+            $temp['buying_date']= $transaction->buying_date->format('d M, Y');
+            $temp['sell_price']= $transaction->sell_price;
+            $temp['total_sell_commission_of_this_instrument'] = $transaction->commission ? ($transaction->commission / 100) * ($transaction->sell_price * $transaction->no_of_shares) : 0;
+            $temp['total_sell_cost_deducting_commission_of_this_instrument']= ($transaction->sell_price* $transaction->no_of_shares)- $temp['total_sell_commission_of_this_instrument'];
+            $temp['sell_date']= $transaction->sell_date->format('d M, Y');
+            $temp['profit']= $temp['total_sell_cost_deducting_commission_of_this_instrument']- $temp['total_buy_cost_with_commission_of_this_instrument'];
+            $temp['profit_per'] = round($temp['profit']/ $temp['total_buy_cost_with_commission_of_this_instrument']*100,2);
+            $temp['id']= $transaction->id;
+            $total_profit+= $temp['profit'];
+            $all_transaction[]=$temp;
+
+        }
+        return view('portfolio.gain_loss', ['all_transaction' => $all_transaction,'total_profit' => $total_profit]);
     }
 
     /**
