@@ -85,4 +85,10 @@ class User extends Authenticatable {
     {
         return Carbon::parse($join_date)->format('d-M-Y');
     }
+
+    public function getAvatarAttribute()
+    {
+        return "https://www.aber.ac.uk/staff-profile-assets/img/noimg.png";
+        return $this->pic_path;
+    }
 }

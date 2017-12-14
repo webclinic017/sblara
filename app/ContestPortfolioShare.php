@@ -67,7 +67,7 @@ class ContestPortfolioShare extends Model
     {
         // a b n t+2
         // z t+9
-        return InstrumentRepository::isMature($this->id, $this->buying_date->format('Y-m-d'));
+        return InstrumentRepository::isMature($this->instrument_id, $this->buying_date->format('Y-m-d'));
     }
 
 

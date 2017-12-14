@@ -118,13 +118,11 @@ class InstrumentRepository {
             $buyDate = date('Y-m-d');
         $today = date('Y-m-d');
         $tradeDatePassed = \DB::table('markets')->where('trade_date', '>', $buyDate)->where('trade_date', '<=', $today)->where('exchange_id', $exchangeId)->count();
+
         $category_Z_mutured_day = 7;
         $category_Others_mutured_day = 1;
         $lastTradeInfo = \DB::table('data_banks_intradays')->where('instrument_id', $instrumentId)->orderBy('lm_date_time', 'desc')->skip(0)->take(1)->first();
-        if($lastTradeInfo == null)
-        {
-            return false;
-        }
+
         $isSpot = $lastTradeInfo->spot_last_traded_price == 0 ? 0 : 1;
         $isLocked = 0;
         $quote_bases = $lastTradeInfo->quote_bases;

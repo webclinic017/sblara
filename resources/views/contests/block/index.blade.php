@@ -62,6 +62,7 @@
                 <div class="col-md-12" style="text-align: right; margin-bottom: 20px;">
 {{--                     <a href="" class="btn btn-primary">All Contest</a>
                     <a href="" class="btn btn-primary">General Contest</a> --}}
+                    <a href="/contests?type=new" class="btn btn-primary">New Contests</a>
                     <a href="/mycontests/create" class="btn btn-primary">Create Contest</a>
                 </div>
               <div class="caption font-green-haze" style="width: 100%; text-align: center; margin-top: 30px;">

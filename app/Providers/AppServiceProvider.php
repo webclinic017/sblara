@@ -69,8 +69,6 @@ class AppServiceProvider extends ServiceProvider {
         View::composer('portfolio.create_transaction_item', 'App\Http\ViewComposers\CreateTransactionItem');
         View::composer('portfolio.transaction_item', 'App\Http\ViewComposers\TransactionItem');
         View::composer('portfolio.performance_item', 'App\Http\ViewComposers\PerformanceItem');
-        View::composer('portfolio.performance_total_item', 'App\Http\ViewComposers\PerformanceTotalItem');
-        View::composer('portfolio.gain_loss_item', 'App\Http\ViewComposers\GainLossItem');
         View::composer('portfolio.portfolio_card', 'App\Http\ViewComposers\PortfolioCard');
 
         // Contests View

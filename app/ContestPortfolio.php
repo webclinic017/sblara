@@ -44,8 +44,14 @@ class ContestPortfolio extends Model
     public function shares()
     {
         return $this->hasMany(ContestPortfolioShare::class)->latest('buying_date');
+
+        // return $this->hasMany(ContestPortfolioShare::class)->groupBy('instrument_id')->latest('buying_date');
     }
 
+    public function pShares()
+    {
+        return $this->hasMany(ContestPortfolioShare::class)->groupBy('instrument_id')->where('id', null)->latest('buying_date');
+    }
     /**
      * 
      *

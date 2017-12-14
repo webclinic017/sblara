@@ -1,74 +1,99 @@
-<tr class='{{$isChild?"hidden transactionChild":"normalTransaction"}}'>
+@foreach ($all_transaction_array as $transaction)
 
-    <td class="highlight">
+<tr class='{{$transaction['is_child']?"hidden transactionChild":"normalTransaction"}}'>
 
-        @if($isParent)
-        <i class="fa fa-plus showTransactionChildren"></i>
-        <i class="fa fa-minus hideTransactionChildren hidden"></i>
-        @endif
-        @if($isChild)
-
-        <i class="fa fa-chevron-right"></i>
-        {{$transaction->buying_date->format('Y-m-d')}}
-        <div>
-            {{$transaction->shares}} @ TK{{$transaction->rate}}
-        </div>
-        @else
-        {{$transaction->instrument->instrument_code or 'N/A'}}
-        @endif
-
-    </td>
+     <td class="highlight">
+    
+            @if($transaction['has_child'])
+            <i class="fa fa-plus showTransactionChildren"></i>
+            <i class="fa fa-minus hideTransactionChildren hidden"></i>
+            @endif
+            @if($transaction['is_child'])
+    
+            <i class="fa fa-chevron-right"></i>
+            {{$transaction['buying_date_of_this_instrument']}}
+            <div>
+                {{$transaction['total_shares_of_this_instrument']}} @ TK{{$transaction['avg_buy_cost_of_this_instrument']}}
+            </div>
+            @else
+            {{$transaction['instrument_code'] or 'N/A'}}
+            @endif
+    
+        </td>
     <td>
-        @if($isChild)
+        @if($transaction['is_child'])
         ...
         @else
-        {{$transaction->exchange->name or 'N/A'}}
+        {{$transaction['exchange'] or 'N/A'}}
         @endif
     </td>
     <td>
-        @if($isChild)
+        @if($transaction['is_child'])
         ...
         @else
-        {{$lastTradePrice or 'N/A'}}
+        {{$transaction['last_traded_price_of_this_instrument'] or 'N/A'}}
         <small class="last-trade-date">
-            ({{$lastTradeDate or 'N/A'}})
+            ({{$transaction['last_traded_datetime_of_this_instrument'] or 'N/A'}})
 
         </small>
         @endif
     </td>
-    <td class="{{$changeToday<0 ?'text-danger': 'text-success'}}">
-        @if($isChild)
+    <td class="{{$transaction['change_today_of_this_instrument']<0 ?'text-danger': 'text-success'}}">
+        @if($transaction['is_child'])
         ...
         @else
-        {{$changeToday or 'N/A'}}
-        ({{$changeTodayPercent}}%)
+        {{$transaction['change_today_of_this_instrument'] or 'N/A'}}
+        ({{$transaction['change_today_per_of_this_instrument']}}%)
         @endif
     </td>
-    <td class="{{$gainLossToday<0?'text-danger': 'text-success'}}">{{$gainLossToday or 'N/A'}}</td>
-    <td>{{$shares}}</td>
-    <td>{{$rate}}</td>
+    <td class="{{$transaction['gain_loss_today_for_this_instrument']<0?'text-danger': 'text-success'}}">{{$transaction['gain_loss_today_for_this_instrument'] or 'N/A'}}</td>
+    <td>{{$transaction['total_shares_of_this_instrument']}}</td>
+    <td>{{$transaction['avg_buy_cost_of_this_instrument']}}</td>
     <td>
-        @if($isParent)
+        @if($transaction['has_child'])
         Multiple
         @else
-        {{$transaction->buying_date->format('Y-m-d')}}
+        {{$transaction['buying_date_of_this_instrument']}}
         @endif
     </td>
-    <td>{{$commission}}</td>
-    <td>{{$purchaseTotal or 'N/A'}}</td>
-    <td class="{{$gainLossTotal<0?'text-danger': 'text-success'}}">{{$gainLossTotal or 'N/A'}}</td>
-    <td class="{{$percentChange<0?'text-danger': 'text-success'}}">{{$percentChange or 'N/A'}}%</td>
+    <td>{{$transaction['total_buy_commission_of_this_instrument']}}</td>
+    <td>{{$transaction['total_buying_cost_including_commission_of_this_instrument'] or 'N/A'}}</td>
+    <td class="{{$transaction['gain_loss_since_purchased_for_this_instrument']<0?'text-danger': 'text-success'}}">{{$transaction['gain_loss_since_purchased_for_this_instrument'] or 'N/A'}}</td>
+    <td class="{{$transaction['gain_loss_per_since_purchased_for_this_instrument']<0?'text-danger': 'text-success'}}">{{$transaction['gain_loss_per_since_purchased_for_this_instrument'] or 'N/A'}}%</td>
     <td>
-        @if($isChild)
+        @if($transaction['is_child'])
 
         @else
-        {{$percentPortfolio or 'N/A'}}
+        {{$transaction['percent_of_portfolio_holding_by_this_instrument'] or 'N/A'}}
         @endif
     </td>
     <td>
-        {{$sellValue or 'N/A'}}
+        {{$transaction['sell_value_deducting_commission_of_this_instrument'] or 'N/A'}}
     </td>
 </tr>
-@foreach($childTransactions as $transaction)
-@include('portfolio.performance_item',['isChild'=>true])
 @endforeach
+
+<tr>
+    <th colspan="4">Cash</th>
+    <th colspan="1"></th>
+    <th colspan="3"></th>
+    <th colspan="1"></th>
+    <th colspan="1"></th>
+    <th colspan="1"></th>
+    <th colspan="1"></th>
+    <th colspan="1" class="{{$cash_amount<0?'text-danger':'text-success'}}">{{$cash_amount_per}}</th>
+    <th colspan="1" class="{{$cash_amount<0?'text-danger':'text-success'}}">{{$cash_amount}}</th>
+</tr>
+
+<tr>
+    <th colspan="4">Total</th>
+    <th colspan="1" class="{{fontCss($gainLossToday)}}">{{$gainLossToday}}</th>
+    <th colspan="3"></th>
+    <th colspan="1"></th>
+    <th colspan="1" class="{{$totalPurchaseWithCommission<0?'text-danger':'text-success'}}">{{$totalPurchaseWithCommission}}</th>
+    <th colspan="1" class="{{$totalProfitSincePurchase<0?'text-danger':'text-success'}}">{{$totalProfitSincePurchase}}</th>
+    <th colspan="1"class="{{$totalChangeSincePurchase<0?'text-danger':'text-success'}}">{{$totalChangeSincePurchase}}%</th>
+    <th colspan="1">100%</th>
+    <th colspan="1" class="{{$totalSellDeductingCommission<0?'text-danger':'text-success'}}">{{$totalSellDeductingCommission}}</th>
+</tr>
+

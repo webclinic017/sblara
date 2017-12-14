@@ -82,6 +82,7 @@ Route::get('head', function(){
 })->name('/');*/
 
 Route::get('/test', function () {
+
     return view('test');
 });
 Route::get('/se', function () {

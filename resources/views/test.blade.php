@@ -1,7 +1,8 @@
 @extends('layouts.metronic.default')
 
 @section('content')
-@include('block.index_mover')
+@include('block.data_matrix')
+
 {{--@include('block.price_matrix')--}}
 {{--@include('block.data_matrix')--}}
 
