@@ -3,12 +3,16 @@ namespace App\Http\Controllers;
 use App\Instrument;
 use App\Portfolio;
 use Illuminate\Http\Request;
+use App\News;
+use App\NewspaperNews;
+use App\Instrument;
 
 class SearchController extends Controller {
 
     public function __construct() {
 //        $this->middleware('auth');
     }
+
 
     function search(Request $request, $type, $search) {
         return $search;
