@@ -21,7 +21,6 @@
                         </a>
                         Portfolio
                     </span><br><br>
-                    <a href="{{ route('portfolios.shares.create', $portfolio) }}">Buy Share</a>
                 </div>
             </div>
             <div class="row">
@@ -109,7 +108,7 @@
                                                                 <div class="input-group select2-bootstrap-append">
                                                                     <select data-type="sell" id="single-append-text" class="form-control basic-single-select2 select-company" name="company_info" style="width: 300px;">
                                                                         <option value=""></option>
-                                                                        @foreach ($portfolio->shares as $company)
+                                                                        @foreach ($portfolio->shares()->with('instrument')->groupBy('instrument_id')->get() as $company)
                                                                         @php
                                                                         if(!$company->isMature)
                                                                         {
@@ -166,7 +165,7 @@
                                             <th>Change</th>
                                             <th>Gain/Loss</th>
                                             <th>Shares</th>
-                                            <th>Buy</th>
+                                            <th>Buy Price</th>
                                             <th>Commission</th>
                                             <th>Total Purchase</th>
                                             <th>Total Gain/Loss</th>
@@ -188,15 +187,22 @@
                                         $sumTotalGainLoop = 0;
                                         $growthPercent = 0;
                                         $sumPercentPortfolioLoop = 0;
+                                        $sumNoOfShare = 0;
                                         @endphp
 
                                         @forelse ($portfolio->shares as $share)
+
                                         @php
+                                        // dd($portfolio->shares);
+                                        if($share->availableQty < 1)
+                                        {
+                                            continue;
+                                        }
                                         $instrumentCode = $share->intrument->instrument_code;
                                         $instrumentName = $share->intrument->name;
                                         $portfolioCashAmount = $portfolio->cash_amount;
-                                        $noOfShare = $share->no_of_shares;
-                                        $sumNoOfShare = $portfolio->shares->sum('no_of_shares');
+                                        $noOfShare = $share->no_of_shares - $share->sell_quantity;
+                                        $sumNoOfShare += $noOfShare;
 
                                         $buyingPrice = $share->buying_price;
                                         $totalBuyCost  = $noOfShare * $buyingPrice;
@@ -204,6 +210,7 @@
                                         $lastTradePrice = $share->intrument->data_banks_intraday->close_price;
                                         $lastTradeDate = $share->intrument->data_banks_intraday->lm_date_time->format('Y-m-d');
                                         $priceChange = $share->intrument->data_banks_intraday->price_change;
+                                        $priceChangePercent = ($priceChange * 100) / ($lastTradePrice - $priceChange);
                                         $gainLoss = $priceChange * $noOfShare;
                                         $sumGainLoss += $gainLoss;
 
@@ -221,7 +228,6 @@
                                         $totalBuyCostWithCommission = $totalBuyCost + $buyCommission;
                                         $totalGain = $sellValueDeductingCommision - $totalBuyCostWithCommission;
                                         $sumTotalGain += $totalGain;
-
                                         $percentChange = $totalGain / $totalBuyCostWithCommission * 100;
 
                                         $allShareCashAmount = $sumNoOfShare * $buyingPrice;
@@ -246,8 +252,8 @@
                                             <td>
                                                 {{ $lastTradePrice }}
                                             </td>
-                                            <td>
-                                                {{ number_format($priceChange, 2) }}
+                                            <td style="color: @if($priceChange > 0) #36c6d3 @elseif($priceChange == 0) blue @else red @endif ">
+                                                {{ number_format($priceChange, 2)  }} ({{number_format($priceChangePercent, 2)}}%)
                                             </td>
                                             <td>
                                                 @if ($gainLoss > 0)
@@ -293,7 +299,6 @@
                                             <td colspan="3">
                                                 <span class="bold">Cash</span>
                                             </td>
-                                            <td></td>
                                             <td colspan="3"></td>
                                             <td></td>
                                             <td></td>
@@ -319,7 +324,7 @@
                                                 @endif
                                             </td>
                                             <td>{{ $sumNoOfShare }}</td>
-                                            <td colspan="2"></td>
+                                            <td ></td>
                                             <td>{{ $sumBuyCommissionLoop }}</td>
                                             <td>{{ $sumTotalPurchaseLoop }}</td>
                                             <td>
@@ -336,7 +341,7 @@
                                                 <span class="text-danger">{{ number_format($growthPercent, 2) }}%</span>
                                                 @endif
                                             </td>
-                                            <td>{{ number_format($portfolioOfCash += $sumPercentPortfolioLoop, 2) }}%</td>
+                                            <td>100.00%</td>
                                             <td>
                                                 <span class="bold">
                                                     {{ number_format($sumSellValueDeductingCommision += $portfolioCashAmount, 2) }}
@@ -348,12 +353,13 @@
                                         @empty     
                                         <tr class="no-records-found text-center">
                                             <td colspan="13">
-                                                No portfolio available. Please <a href="{{ route('portfolios.shares.create', $portfolio) }}">buy share</a> to create your portfolio.
+                                                No portfolio available. Please <a href="javascript:" data-toggle="modal" data-target="#buyModal">buy share</a> to create your portfolio.
                                             </td>
                                         </tr>
                                         @endforelse
                                     </tbody>
                                 </table>
+
 
 {{-- 
                                 <table class="tree table table-striped table-hovern table-bordered">

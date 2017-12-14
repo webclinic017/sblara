@@ -17,7 +17,18 @@ class ContestsView
     public function index(View $view)
     {
         // Show all contests.
-        $contests = ContestRepository::index();
+        if(request()->has('type') && request()->type == 'new')
+        {
+               $contests = Contest::with('creator')
+                ->withCount('approvedContestUsers')
+                 ->where('contest_category', 1)
+                ->where('is_active', true)
+                ->orderBy('id', 'desc')->limit(25)->get();
+                dd($contests);
+            $contests->appends(request()->except('page'));
+        }else{
+            $contests = ContestRepository::index();
+        }
         $contestOfMonth = Contest::withCount('approvedContestUsers')
                     ->where('contest_category', 3)
                     ->where('is_active', true)

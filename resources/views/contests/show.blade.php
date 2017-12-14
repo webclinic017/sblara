@@ -13,6 +13,23 @@
             </div>
 
             <div class="portlet-body">
+                 <div class="caption font-green-haze" style="width: 100%; text-align: center;">
+                     <span class="caption-subject bold uppercase"> Boss of <span class="text-primary">{{ $contest->name }}</span></span>
+                </div>
+                                     <div class="col-md-8 col-md-offset-2" style="margin-bottom: 20px;">
+                   @foreach($top3 as $user)
+                        <div class="col-md-4">
+                            <h4 class="text-center"> {{strtoupper($user->name)}}</h4>
+                            <img class="img-responsive" src="{{$user->avatar}}" alt="User Image">
+                        </div>
+                  @endforeach
+ 
+                     </div>
+                                     <div class="col-md-12" style="text-align: right; margin-bottom: 20px;">
+{{--                     <a href="" class="btn btn-primary">All Contest</a>
+                    <a href="" class="btn btn-primary">General Contest</a> --}}
+                    <a href="/mycontests/create" class="btn btn-primary">Create Contest</a>
+                </div>
                 <table class="table table-bordered">
                     <thead>
                         <tr>
@@ -29,7 +46,7 @@
                             <th class="text-center">Name</th>
                             <th class="text-center">Join Date</th>
                             <th class="text-center">Growth %</th>
-                            <th class="text-center">Shares Holding</th>
+                            {{-- <th class="text-center">Shares Holding</th> --}}
                             <th class="text-center">Portfolio</th>
                         </tr>
                     </thead>
@@ -43,7 +60,7 @@
                                 <td>{{ $rank++ }}</td>
                                 <td>
                                     @if (auth()->check() AND $user->user_id === auth()->user()->id)
-                                        <a href="{{ route('contests.portfolios.show', $user->user_id) }}">{{ $user->name }}</a>
+                                        <a href="{{ route('contests.portfolios.show', $user->id) }}">{{ $user->name }}</a>
                                     @else
                                         {{ $user->name }}
                                     @endif
@@ -53,7 +70,7 @@
                                 $growth = number_format((($user->portfolio_value - $contest->contest_amount) * 100) / $contest->contest_amount , 2)
                                 @endphp
                                 <td style="color: {{$growth < 0?"red":"green"}}">{{ $growth  }}</td>
-                                <td>{{ $user->share_holdings }}</td>
+                                 
                                 <td>{{ $user->portfolio_value }}</td>
                             </tr>                        
 

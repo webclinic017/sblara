@@ -14,7 +14,7 @@ $purchase_power = $purchase_power > 0 ?$purchase_power:'0';
                                                         <thead>
                                                             <tr>
                                                                 <th>Total Purchase Power:</th>
-                                                                <th>{{ $portfolio->cash_amount }}</th>
+                                                                <th>{{ number_format($portfolio->cash_amount, 2) }}</th>
                                                             </tr>
                                                             <tr>
                                                                 <th>Purchase Power (this item):</th>

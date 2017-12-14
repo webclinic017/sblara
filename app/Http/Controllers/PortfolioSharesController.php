@@ -89,14 +89,25 @@ class PortfolioSharesController extends Controller
             $max_shares_can_buy = $purchase_power / $company_info->data_banks_intraday->close_price;
             $buying_price       = $company_info->data_banks_intraday->close_price;
 
-            
+
             if($request->type == 'sell')
             {
                 $sellPrice = $buying_price;
                 $qty = $request->buy_quantity;  
                 $shares = $portfolio->shares()->where('instrument_id', $id)->get();
+                $availableQty = 0;
+                foreach ($shares as $share)
+                {
+                    $availableQty += $share->availableQty;
+                }
+                 if ($request->buy_quantity > $availableQty || $request->buy_quantity < 1) {
+
+                    flash('You are not allowed to sell this amount of shares', 'error');
+                    return back();
+                }
                 foreach ($shares as $share) {
 
+   
                     if($qty < 1)
                     {
                         break;
@@ -105,16 +116,21 @@ class PortfolioSharesController extends Controller
                     {
                         continue;
                     }
-                    $share->sell_quantity = $share->sell_quantity + $qty;
+                    if($share->availableQty > $qty )
+                    {
+                        $share->sell_quantity = $share->sell_quantity +  $qty;
+                        $qty -= $qty;
+                    }else{
+                        $rem = $share->availableQty;
+                        $share->sell_quantity = $share->sell_quantity +  $rem;
+                        $qty -= $rem;
+                    }
                     $share->sell_price = $sellPrice;
                     $share->sell_date = Carbon::now();
                     $share->save();
-                    $qty -= $share->availableQty;
+
                 }
-                if ($qty > 0) {
-                    flash('You are not allowed to sell this amount of shares', 'error');
-                    return back();
-                }
+ 
                                     /*comisssion */
                     $commision = 0.5;
                     $total_sell_cost = $request->buy_quantity * $sellPrice;
