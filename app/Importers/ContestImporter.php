@@ -68,11 +68,6 @@ class ContestImporter extends BaseImporter
 		 return ;
 	}
 
-	public function buying_dateFilter($value)
-	{
-		 return \Carbon\Carbon::createFromTimestamp($value);
-
-	}
 
 	public function sell_dateFilter($value)
 	{

@@ -60,6 +60,9 @@ class BaseImporter
 				if(isset($hasInstrument_id) && !isset($newRow['instrument_id']))
 				{
 					continue;
+					dd($newRow);
+					throw new \Exception("Mismatch instrument found", 1);
+					
 				}	
 					// dd($newRow);
 				$data[] = $newRow;
@@ -97,5 +100,11 @@ class BaseImporter
 						return $value->instrument_id;
 					}
 		}	
+	}
+
+	public function buying_dateFilter($value)
+	{
+		 return \Carbon\Carbon::createFromTimestamp($value);
+
 	}
 }

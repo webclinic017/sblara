@@ -100,7 +100,7 @@ class PerformanceItem {
             }
 
             $total_buying_cost_including_commission_of_this_instrument= $total_buying_cost_of_this_instrument+ $total_buy_commission_of_this_instrument;
-            $avg_buy_cost_of_this_instrument= $total_buying_cost_of_this_instrument/ $total_shares_of_this_instrument;
+            $avg_buy_cost_of_this_instrument= round(($total_buying_cost_of_this_instrument/ $total_shares_of_this_instrument),2);
 
 
             $temp = array();
@@ -161,13 +161,13 @@ class PerformanceItem {
 
 
         $view->with('all_transaction_array', $all_transaction_array2);
-        $view->with('cash_amount', $cash_amount);
-        $view->with('cash_amount_per', $cash_amount_per);
-        $view->with('gainLossToday', $total_gain_loss_of_this_portfolio_today);
-        $view->with('totalPurchaseWithCommission', $total_buy_cost_of_this_portfolio_with_commission);
-        $view->with('totalProfitSincePurchase', $total_gain_loss_of_this_portfolio_since_purchased);
-        $view->with('totalChangeSincePurchase', $total_gain_loss_per_of_this_portfolio_since_purchased);
-        $view->with('totalSellDeductingCommission', $total_portfolio_value_with_cash);
+        $view->with('cash_amount', round($cash_amount,2));
+        $view->with('cash_amount_per', round($cash_amount_per,2));
+        $view->with('gainLossToday', round($total_gain_loss_of_this_portfolio_today,2));
+        $view->with('totalPurchaseWithCommission', round($total_buy_cost_of_this_portfolio_with_commission,2));
+        $view->with('totalProfitSincePurchase', round($total_gain_loss_of_this_portfolio_since_purchased,2));
+        $view->with('totalChangeSincePurchase', round($total_gain_loss_per_of_this_portfolio_since_purchased,2));
+        $view->with('totalSellDeductingCommission', round($total_portfolio_value_with_cash,2));
 
 
     }

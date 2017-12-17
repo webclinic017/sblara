@@ -75,3 +75,19 @@ div.center select{
 .et-run{
 	background: red;
 }
+
+/*search*/
+.search-result{
+    visibility: hidden;
+    position: absolute;
+    min-width: 500px;
+    top:45px;
+    border:1px solid #eee;
+}
+.se-search{
+    position: relative;
+    display: inline-block;
+}
+.se-search .portlet.box.yellow{
+    border:0;
+}

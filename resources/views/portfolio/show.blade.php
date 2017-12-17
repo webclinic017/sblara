@@ -54,7 +54,7 @@
     $(".portfolioActions .performance").addClass('active');
     $(function () {
 
-
+alert('df');
         $(".showTransactionChildren").click(function () {
             $(this).addClass('hidden');
             var tr = $(this).closest('tr');
@@ -64,6 +64,7 @@
         $(".hideTransactionChildren").click(function () {
             $(this).addClass('hidden');
             var tr = $(this).closest('tr');
+
             tr.nextUntil('.normalTransaction').addClass('hidden');
             tr.find('.showTransactionChildren').removeClass('hidden');
         })

@@ -32,7 +32,7 @@ class UserImporter extends BaseImporter
 
 	public function handle()
 	{
-		// $this->oneToOne('users', 'users');
+		$this->oneToOne('users', 'users');
 		$this->new('users')->where('name', '')->update(['name' => DB::raw('username')]);
 		return ;
 	}

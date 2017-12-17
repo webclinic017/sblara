@@ -10,6 +10,7 @@ Homestead.json
 sftp-config.json
 Homestead.yaml
 .env
+/.vscode
 error_log
 
 ./public/img/35x35
