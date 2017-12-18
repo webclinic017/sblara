@@ -29,7 +29,7 @@ class ShareHoldingsChart
         $render_to='share_holdings_chart';
         if(isset($viewdata['instrument_id']))
         {
-            $instrument_id=$viewdata['instrument_id'];
+            $instrument_id=(int)$viewdata['instrument_id'];
         }
         if(isset($viewdata['render_to']))
         {

@@ -55,9 +55,8 @@ class GenerateMenus
             $menu->portfolio->attr(['class' => 'dropdown dropdown-fw  '])->prepend('<i class="icon-briefcase" ></i > ');
 
             //submenu
-            $menu->portfolio->add('Portfolio home', ['route' => 'portfolio.index'])->prepend('<i class="icon-bar-chart" ></i > ');
+            $menu->portfolio->add('Portfolio home', ['route' => 'portfolio.index'])->prepend('<i class="icon-bar-chart" ></i > ')->active('portfolio/*');
             $menu->portfolio->add('Create new portfolio', ['route' => 'portfolio.create'])->prepend('<i class="icon-bar-chart" ></i > ');
-           //$menu->portfolio->add('Create New', ['route' => '/portfolio/create'])->prepend('<i class="icon-bar-chart" ></i > ');
 
             /*Company*/
             $menu->add('Company', ['class' => 'dropdown dropdown-fw  ']);

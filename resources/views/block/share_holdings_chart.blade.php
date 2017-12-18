@@ -1,7 +1,5 @@
 <div id="{{$render_to}}"></div>
 
-@push('scripts')
-
 <script>
     $(function () {
 
@@ -60,4 +58,3 @@
 
 
 </script>
-@endpush
