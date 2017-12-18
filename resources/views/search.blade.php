@@ -1,4 +1,3 @@
-<link href="/css/search.css" type="text/css" rel="stylesheet">
 <div class="se-search">
     
 <form class="search" action="extra_search.html" method="GET">

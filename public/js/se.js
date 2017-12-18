@@ -1,7 +1,7 @@
 var token = $('meta[name="csrf-token"]').attr('content');
 var url = window.location;
 var loadingHtml = `
-	<img src="/img/loading.gif" class='loading' alt="" />
+	<img src="/img/se_loading.gif" class='loading' alt="" />
 `;
 function getValue(name) {
 	return $('input[name="'+name+'"]').val();
@@ -203,5 +203,12 @@ $('body').on('click',  '.confirmSell', function () {
 		} );
 		$('.search-result').css('visibility', 'visible');
 	});
+	   document.addEventListener('DOMContentLoaded',
+      function () {
+        $.feedback({
+            ajaxURL: '/feedback',
+            html2canvasURL: '/vendor/feedback/html2canvas.js',
+        });
+        }, false);
 	/* search  */
 });
