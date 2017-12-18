@@ -1,6 +1,5 @@
 <div id="{{$render_to}}"></div>
 
-@push('scripts')
 
 <script>
     $(function () {
@@ -59,4 +58,3 @@ Highcharts.chart('{{$render_to}}', {
 
 
 </script>
-@endpush

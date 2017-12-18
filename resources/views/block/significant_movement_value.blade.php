@@ -53,7 +53,6 @@
 </div>
 
 
-@push('scripts')
 <script src="{{ asset('metronic_custom/jquery.sparkline.min.js') }}"></script>
 <script>
  $('.inlinesparkline_value').sparkline('html', {
@@ -64,4 +63,3 @@
             //width: '100px'
         });
 </script>
-@endpush

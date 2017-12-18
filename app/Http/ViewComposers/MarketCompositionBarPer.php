@@ -30,7 +30,7 @@ class MarketCompositionBarPer
 
         $height=700;
         if(isset($viewdata['height']))
-            $height=$viewdata['height'];
+            $height=(int) $viewdata['height'];
 
         $instrumentListMain=InstrumentRepository::getInstrumentsScripOnly();
         $instrumentList=$instrumentListMain->groupBy('sector_list_id');

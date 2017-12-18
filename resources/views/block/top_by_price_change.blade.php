@@ -1,4 +1,4 @@
-@push('css')
+
 <style>
 .popover{
     max-width:600px;
@@ -6,7 +6,7 @@
 
 }
 </style>
-@endpush
+
 <div class="scroller" style="height:250px" data-rail-visible="1" data-always-visible="1"
      data-rail-color="yellow" data-handle-color="#a1b2bd">
     <div class="table-scrollable table-scrollable-borderless" id="gain_by_percentage">
@@ -80,7 +80,7 @@
 </div>
 
 
-@push('scripts')
+
 <script src="{{ asset('metronic_custom/jquery.sparkline.min.js') }}"></script>
 <script>
  $('.{{$viewData['inlinesparkline']}}').sparkline('html', {
@@ -97,4 +97,3 @@ $('a[data-toggle="tooltip"]').tooltip({
     html: true
 });
 </script>
-@endpush
