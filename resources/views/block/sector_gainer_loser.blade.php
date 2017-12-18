@@ -1,5 +1,4 @@
   <div id="sector_gainer_loser"></div>
-@push('scripts')
 
 <script>
 
@@ -51,6 +50,5 @@ Highcharts.chart('sector_gainer_loser', {
 
 
 
-@endpush
 
 

@@ -10,11 +10,9 @@
                     <span class="caption-helper">DSE buyer seller list with chart</span>
                 </div>
                 <div class="tools">
+                    <a href="#"  id="buyer_seller_reload" class="reload"></a>
                     <a href="" class="collapse">
                     </a>
-
-                    </a>
-                    <a href="#"  id="buyer_seller_reload" class="reload"></a>
                     <a href="" class="remove">
                     </a>
                 </div>

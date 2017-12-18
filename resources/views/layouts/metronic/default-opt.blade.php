@@ -52,6 +52,7 @@
 
             @include('includes.metronic.js-opt')
             @yield('js')
+
         <script>
             $(document).ready(function()
             {

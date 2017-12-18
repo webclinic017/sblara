@@ -12,10 +12,10 @@
             <span class="caption-subject bold uppercase"> Portfolio Performances</span>
         </div>
     </div>
-    <div class="portlet-body portfolio-content-area form">
+    <div class="portlet-body portfolio-content-area formn flip-scroll">
 
-        <table class="table table-striped table-bordered table-advance table-hover">
-            <thead>
+        <table class="table table-striped table-bordered table-advance table-hover table-condensed flip-content">
+            <thead class="flip-content">
                 <tr>
                     <th colspan="2"></th>
                     <th colspan="3" class="text-center">Today</th>

@@ -91,7 +91,9 @@
                         <span class="caption-helper">Scope to pay dividend</span>
                     </div>
                     <div class="tools">
-                    <a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.dividend_possible:instrument_id={{$instrumentInfo->id}}:render_to=share_holdings_history_chart_{{$instrumentInfo->id}}" class="reload"></a>
+
+                    <a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.dividend_possible:instrument_id={{$instrumentInfo->id}}:render_to=dividend_possible{{$instrumentInfo->id}}" class="reload"></a>
+
                         <a href="" class="collapse">
                         </a>
 
@@ -123,7 +125,9 @@
                         <span class="caption-helper">See how shares are dristributing over time</span>
                     </div>
                     <div class="tools">
-                    <a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.share_holdings_history_chart:instrument_id={{$instrumentInfo->id}}:render_to=share_holdings_history_chart_{{$instrumentInfo->id}}" class="reload"></a>
+
+                    <a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.share_holdings_history_chart:instrument_id={{$instrumentInfo->id}}:render_to=share_holdings_history_chart{{$instrumentInfo->id}}" class="reload"></a>
+
                         <a href="" class="collapse">
                         </a>
 
@@ -149,6 +153,8 @@
                         <span class="caption-helper">what happened recently</span>
                     </div>
                     <div class="tools">
+                        <!-- <a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.page:instrument_id={{$instrumentInfo->id}}:render_to=recent_corporate_action{{$instrumentInfo->id}}" class="reload"></a> -->
+
                         <a href="" class="collapse">
                         </a>
 
@@ -178,6 +184,7 @@
                         <span class="caption-helper">EPS tracking quarter to quarter</span>
                     </div>
                     <div class="tools">
+                        <!-- <a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.eps_history_chart_quarter_to_quarter:instrument_id={{$instrumentInfo->id}}:render_to=eps_quarter_to_quarter{{$instrumentInfo->id}}" class="reload"></a> -->
                         <a href="" class="collapse">
                         </a>
 
@@ -188,7 +195,7 @@
 
                 </div>
                 <div class="portlet-body">
-                @include('block.eps_history_chart_quarter_to_quarter', array('instrument_id' => $instrumentInfo->id))
+
                 </div>
             </div>
             <!-- END Portlet PORTLET-->
@@ -204,6 +211,7 @@
                         <span class="caption-helper">EPS tracking up to quarter</span>
                     </div>
                     <div class="tools">
+                        <a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.eps_history_chart_up_to_quarter:instrument_id={{$instrumentInfo->id}}:render_to=eps_up_to_quarter{{$instrumentInfo->id}}" class="reload"></a>
                         <a href="" class="collapse">
                         </a>
 
@@ -214,7 +222,7 @@
 
                 </div>
                 <div class="portlet-body">
-                @include('block.eps_history_chart_up_to_quarter', array('instrument_id' => $instrumentInfo->id))
+
                 </div>
             </div>
             <!-- END Portlet PORTLET-->
@@ -232,6 +240,7 @@
                         <span class="caption-helper"></span>
                     </div>
                     <div class="tools">
+                        <a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.net_profit_history_chart_quarter_to_quarter:instrument_id={{$instrumentInfo->id}}:render_to=net_profit_after_tex_quarter_to_quarter{{$instrumentInfo->id}}" class="reload"></a>
                         <a href="" class="collapse">
                         </a>
 
@@ -242,8 +251,6 @@
 
                 </div>
                 <div class="portlet-body">
-
-                @include('block.net_profit_history_chart_quarter_to_quarter', array('instrument_id' => $instrumentInfo->id))
                 </div>
             </div>
             <!-- END Portlet PORTLET-->
@@ -259,6 +266,7 @@
                         <span class="caption-helper"></span>
                     </div>
                     <div class="tools">
+                        <a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.net_profit_history_chart_up_to_quarter:instrument_id={{$instrumentInfo->id}}:render_to=net_profit_after_tex_up_to_quarter{{$instrumentInfo->id}}" class="reload"></a>
                         <a href="" class="collapse">
                         </a>
 
@@ -269,7 +277,7 @@
 
                 </div>
                 <div class="portlet-body">
-                @include('block.net_profit_history_chart_up_to_quarter', array('instrument_id' => $instrumentInfo->id))
+
                 </div>
             </div>
             <!-- END Portlet PORTLET-->

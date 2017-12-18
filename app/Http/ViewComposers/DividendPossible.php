@@ -29,7 +29,7 @@ class DividendPossible
         $render_to='dividend_possible';
         if(isset($viewdata['instrument_id']))
         {
-            $instrument_id=$viewdata['instrument_id'];
+            $instrument_id=(int)$viewdata['instrument_id'];
         }
         if(isset($viewdata['render_to']))
         {

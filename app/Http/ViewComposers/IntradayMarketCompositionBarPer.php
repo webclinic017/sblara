@@ -80,7 +80,7 @@ class IntradayMarketCompositionBarPer
 
             $prevTemp['name']=$sector_name;
             $prevTemp['color']='#EF4836';
-            $prevTemp['y']=($sector_area_total_prev/$marketTotalPrev)*100;
+            $prevTemp['y']= $marketTotalPrev?($sector_area_total_prev/$marketTotalPrev)*100:0;
             $prevTemp['y']=number_format($prevTemp['y'], 2, '.', '');
 
 

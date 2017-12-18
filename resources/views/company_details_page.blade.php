@@ -168,13 +168,15 @@
                         <span class="caption-helper">Watch every minute's price movement</span>
                     </div>
                     <div class="tools">
+                                                <a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.minute_chart:instrument_id={{$instrumentInfo->id}}" class="reload"></a>
+
                         <a href="" class="collapse">
                         </a>
 
                         </a>
                         <a href="" class="remove">
                         </a>
-                        <a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.minute_chart:instrument_id={{$instrumentInfo->id}}" class="reload"></a>
+
                     </div>
 
                 </div>
@@ -195,13 +197,15 @@
                         <span class="caption-helper">Watch every minute's sector movement</span>
                     </div>
                     <div class="tools">
+                                                <a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.sector_minute_chart:instrument_id={{$instrumentInfo->id}}" class="reload"></a>
+
                         <a href="" class="collapse">
                         </a>
 
                         </a>
                         <a href="" class="remove">
                         </a>
-                        <a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.sector_minute_chart:instrument_id={{$instrumentInfo->id}}" class="reload"></a>
+
                     </div>
 
                 </div>
@@ -285,13 +289,15 @@
                         <span class="caption-helper">News by tag</span>
                     </div>
                     <div class="tools">
+                                                <a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.news_box:limit=30:instrument_id={{$instrumentInfo->id}}" class="reload"></a>
+                                                
                         <a href="" class="collapse">
                         </a>
 
                         </a>
                         <a href="" class="remove">
                         </a>
-                        <a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.news_box:limit=30:instrument_id={{$instrumentInfo->id}}" class="reload"></a>
+
                     </div>
 
                 </div>

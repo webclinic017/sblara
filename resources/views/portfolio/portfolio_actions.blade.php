@@ -11,9 +11,9 @@
         </a>--}}
     </div>
     <div class="col-md-2">
-        {{--<a href=":;javascript" action="/portfolio_performance/{{$portfolioId}}">
+        <a href=":;javascript" action="/portfolio_market_summary/{{$portfolioId}}">
             <button class="btn btn-primary ">Market Summary</button>
-        </a>--}}
+        </a>
     </div>
     <div class="col-md-2">
             <a href=":;javascript" action="/portfolio_performance/{{$portfolioId}}">

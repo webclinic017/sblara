@@ -1,5 +1,4 @@
   <div id="sector_gainer_loser_last_minute"></div>
-@push('scripts')
 
 <script>
 
@@ -49,8 +48,5 @@ Highcharts.chart('sector_gainer_loser_last_minute', {
 
 </script>
 
-
-
-@endpush
 
 
