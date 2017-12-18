@@ -130,14 +130,76 @@ $('body').on('click',  '.confirmSell', function () {
 	});
 	/* search  */
 	$('#top-search').keyup(function () {
+
+		$('.company-search').html('<li style="list-style-type:none"><div class="animated-background"></div></li>');
 		var str = $(this).val();
 		if(str.length < 2)
 		{
 			$('.search-result').css('visibility', 'hidden');
 			return;			
 		}
-		$.get('/search?q='+str+'&search=company', function (result) {
+		$.get('/search/company/'+str, function (result) {
 			
+			var html = "";
+			$.each(result, function (k, v) {
+	
+				if (v.data_banks_intraday == null){
+					yclose = 0;
+					ltp = 0; 
+					high = 0;
+					low = 0;
+				}else{
+					if (v.data_banks_intraday.pub_last_traded_price != 0)
+					{
+						ltp = v.data_banks_intraday.pub_last_traded_price;
+					}else{
+						ltp = v.data_banks_intraday.spot_last_traded_price;
+					}
+					yclose = v.data_banks_intraday.yday_close_price;
+					high = v.data_banks_intraday.high_price;
+					low = v.data_banks_intraday.low_price;
+				}
+				var change =  (((ltp - yclose) / yclose )*100).toFixed(2);
+				if(change = "NAN")
+				{
+					change = 0;
+				}
+				html += `
+                                        <li class="search-item clearfix">
+                                            <div class="search-content">
+                                                <div class="row">
+                                                    <div class="col-sm-4 col-xs-12">
+                                                        <h2 class="search-title">
+                                                            <a href="/company-details/`+v.id+`">`+ v.instrument_code+`</a>
+														</h2>
+												
+                                                    </div>
+                                                    <div class="col-md-7">
+                                                        <div class="col-sm-3 col-xs-4">
+                                                            <p class="text-center">LTP</p>
+                                                            <p class="search-counter-label uppercase">`+ ltp+`</p>
+                                                        </div>
+                                                        <div class="col-sm-3 col-xs-4">
+                                                            <p class="text-center">HIGH</p>
+                                                            <p class="search-counter-label uppercase">`+ high +`</p>
+                                                        </div>
+                                                        <div class="col-sm-3 col-xs-4">
+                                                            <p class="text-center">LOW</p>
+                                                            <p class="search-counter-label uppercase">`+ low +`</p>
+                                                        </div>
+                                                        <div class="col-sm-3 col-xs-4">
+                                                            <p class="text-center">%CHANGE    </p>
+                                                            <p class="search-counter-label uppercase">`+change+`</p>
+                                                        </div>
+                                                    </div>
+
+                                                </div> 
+                                        </li>   					
+				`;
+
+			})
+			$('.company-search').html(html);
+
 		} );
 		$('.search-result').css('visibility', 'visible');
 	});

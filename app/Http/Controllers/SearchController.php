@@ -5,7 +5,6 @@ use App\Portfolio;
 use Illuminate\Http\Request;
 use App\News;
 use App\NewspaperNews;
-use App\Instrument;
 
 class SearchController extends Controller {
 
@@ -15,13 +14,18 @@ class SearchController extends Controller {
 
 
     function search(Request $request, $type, $search) {
-        return $search;
-         return $this->{$request->search}(); 
+         return $this->{$request->type}($search); 
     }
 
-    public function company()
+    public function company($search)
     {   
-        $data = Instrument::where('instrument_code', 'like', '%'.request()->q.'%')->paginate(10);
+        $data = Instrument::where('instrument_code', 'like', ''.$search.'%')->with('data_banks_intraday')->get();
+        return response()->json($data);
+    }
+
+    public function news($search)
+    {   
+        $data = News::where('instrument_code', 'like', ''.$search.'%')->with('data_banks_intraday')->paginate(10);
         return response()->json($data);
     }
 

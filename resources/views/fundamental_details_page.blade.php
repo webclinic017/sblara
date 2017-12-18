@@ -27,6 +27,9 @@
                         <span class="caption-helper">History of cash and stock dividend</span>
                     </div>
                     <div class="tools">
+                      <a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.dividend_history:instrument_id={{ $instrumentInfo->id}}:render_to=divident_possible_{{$instrumentInfo->id}}" class="reload"></a>
+
+                                                           
                         <a href="" class="collapse">
                         </a>
 
@@ -38,7 +41,6 @@
                 </div>
                 <div class="portlet-body">
 
-                @include('block.dividend_history', array('instrument_id' => $instrumentInfo->id))
 
                 </div>
             </div>
@@ -59,17 +61,20 @@
                         <span class="caption-helper">Current share holdings</span>
                     </div>
                     <div class="tools">
+
+                    <a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.share_holdings_chart:instrument_id={{$instrumentInfo->id}}:render_to=share_holdings_chart_{{$instrumentInfo->id}}" class="reload"></a>
+
                         <a href="" class="collapse">
                         </a>
 
-                        </a>
+
                         <a href="" class="remove">
                         </a>
                     </div>
 
                 </div>
                 <div class="portlet-body">
-                    @include('block.share_holdings_chart', array('instrument_id' => $instrumentInfo->id))
+
 
                 </div>
             </div>
@@ -86,6 +91,7 @@
                         <span class="caption-helper">Scope to pay dividend</span>
                     </div>
                     <div class="tools">
+                    <a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.dividend_possible:instrument_id={{$instrumentInfo->id}}:render_to=share_holdings_history_chart_{{$instrumentInfo->id}}" class="reload"></a>
                         <a href="" class="collapse">
                         </a>
 
@@ -96,7 +102,7 @@
 
                 </div>
                 <div class="portlet-body">
-                @include('block.dividend_possible', array('instrument_id' => $instrumentInfo->id))
+                {{--@include('block.dividend_possible', array('instrument_id' => $instrumentInfo->id))--}}
 
                 </div>
             </div>
@@ -117,6 +123,7 @@
                         <span class="caption-helper">See how shares are dristributing over time</span>
                     </div>
                     <div class="tools">
+                    <a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.share_holdings_history_chart:instrument_id={{$instrumentInfo->id}}:render_to=share_holdings_history_chart_{{$instrumentInfo->id}}" class="reload"></a>
                         <a href="" class="collapse">
                         </a>
 
@@ -127,8 +134,6 @@
 
                 </div>
                 <div class="portlet-body">
-                    @include('block.share_holdings_history_chart', array('instrument_id' => $instrumentInfo->id))
-
                 </div>
             </div>
             <!-- END Portlet PORTLET-->
