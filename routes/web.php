@@ -164,6 +164,7 @@ Route::get('symbols/', 'TradingViewController@symbols');
 //https://demo_feed.tradingview.com/search?limit=30&query=A&type=&exchange=
 Route::get('search/', 'TradingViewController@search');
 Route::get('search/{type}/{query}', 'SearchController@search');
+Route::post('/feedback', 'FeedbackController@index');
 
 
 //https://demo_feed.tradingview.com/history?symbol=ABB&resolution=D&from=1491726479&to=1492590479
@@ -205,5 +206,11 @@ Route::get('/collective/news', 'newspaperNewsController@collectiveNews')->name('
 Route::get('/news/search', 'NewsController@newsSearch')->name('news-search');
 Route::get('/news/details/{id}', 'NewsController@viewNews');
 
-Route::get('/test/ak', 'TestController@testAK');
+
+//Route::get('/test/ak', 'TestController@testAK');
+Route::get('/test/ak', 'SearchController@testSearch');
+Route::get('/test/speed', function () {
+
+    return view('speed');
+});
 

@@ -230,6 +230,22 @@ class PortfolioController extends Controller {
         ];
         return view('portfolio.performance', $data);
     }
+    public function marketSummary($id) {
+        $portfolio = Portfolio::find($id);
+        $data = [
+            'navigation' => [
+                'Portfolio',
+                $portfolio->portfolio_name,
+                'Performance',
+            ],
+            'portfolioId' => $portfolio->id,
+            'portfolio' => $portfolio,
+            'transactions' => $portfolio->portfolio_scrips()->where('share_status', 'buy')->groupBy('instrument_id')->get(),
+        ];
+
+//        dd($data['transactions']->toArray());
+        return view('portfolio.market_summary', ['data' => $data]);
+    }
 
     public function gainLoss($id) {
         $portfolio = Portfolio::find($id);

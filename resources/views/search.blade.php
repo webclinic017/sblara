@@ -18,7 +18,7 @@
 <div class=" portlet box yellow search-result">
     <div class="portlet-body" style="padding-top: 0">
         <div class="tabbable-line" style="padding-top: 0">
-            <ul class="nav nav-tabs ">
+            {{--  <ul class="nav nav-tabs ">
                 <li class="active">
                     <a href="#tab_15_1" data-toggle="tab" data-search="company"> Company </a>
                 </li>
@@ -29,13 +29,14 @@
                     <a href="#tab_15_3" data-toggle="tab" data-search="papernews"> Newspaper News </a>
                 </li>
             </ul>
+              --}}
             <div class="tab-content" style="padding:0">
-                <div class="tab-pane active" id="tab_15_1">
+                <div class="tab-pane active" id="tab_15_1" style="overflow:unset">
                     <div class="search-page search-content-2">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="search-container">
-                                    <ul style="padding: 0px">
+                                    <ul style="padding: 0px" class="company-search">
                                         <li class="search-item clearfix">
                                             <div class="search-content">
                                                 <div class="row">
@@ -93,7 +94,7 @@
                                         <li class="search-item clearfix">
                                             <div class="search-content">
                                                 <div class="row">
-                                                    <div class="col-sm-4 col-xs-12">
+                                                    <div class="col-sm-5 col-xs-12">
                                                         <h2 class="search-title">
                                                             <a href="javascript:;">ABBANK</a>
                                                         </h2>
@@ -105,7 +106,7 @@
                                                             <span class="font-grey-salt"></span>
                                                         </p>
                                                     </div>
-                                                    <div class="col-md-8">
+                                                    <div class="col-md-7">
                                                         <div class="col-sm-3 col-xs-4">
                                                             <p class="text-center">LTP</p>
                                                             <p class="search-counter-label uppercase">362</p>

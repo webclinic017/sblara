@@ -78,18 +78,7 @@
 	    });
 	})
 </script>
-<script src="/vendor/feedback/feedback.js"></script>
-<script src="/vendor/feedback/html2canvas.min.js"></script>
-	<link rel="stylesheet" href="/vendor/feedback/feedback.min.css" />
-		<script type="text/javascript">
-        document.addEventListener('DOMContentLoaded',
-      function () {
-        $.feedback({
-            ajaxURL: '/feedback',
-            html2canvasURL: '/vendor/feedback/html2canvas.js',
-        });
-        }, false);
-    </script>
+
 <script src="{{ asset('js/slimscroll.min.js') }}"></script>
 <script src="{{ asset('js/search.js') }}"></script>
 

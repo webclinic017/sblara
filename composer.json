@@ -13,6 +13,7 @@
         "laracasts/flash": "^2.0",
         "laravel/framework": "5.5.*",
         "laravel/passport": "^3.0",
+        "laravel/scout": "^3.0",
         "laravel/tinker": "~1.0",
         "laravelcollective/html": "^5.4",
         "lavary/laravel-menu": "^1.7",

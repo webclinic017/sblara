@@ -91,7 +91,9 @@
                         <span class="caption-helper">Scope to pay dividend</span>
                     </div>
                     <div class="tools">
+
                     <a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.dividend_possible:instrument_id={{$instrumentInfo->id}}:render_to=dividend_possible{{$instrumentInfo->id}}" class="reload"></a>
+
                         <a href="" class="collapse">
                         </a>
 
@@ -123,7 +125,9 @@
                         <span class="caption-helper">See how shares are dristributing over time</span>
                     </div>
                     <div class="tools">
+
                     <a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.share_holdings_history_chart:instrument_id={{$instrumentInfo->id}}:render_to=share_holdings_history_chart{{$instrumentInfo->id}}" class="reload"></a>
+
                         <a href="" class="collapse">
                         </a>
 
