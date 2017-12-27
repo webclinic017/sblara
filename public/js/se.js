@@ -6,6 +6,124 @@ var loadingHtml = `
 function getValue(name) {
 	return $('input[name="'+name+'"]').val();
 }
+function depthLoading() {
+	return `
+<table style="font-family:Arial, Helvetica, sans-serif; font-size: 13px;" width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tbody><tr>
+    <td><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">
+      <tbody><tr>
+        <td width="15%" valign="top">&nbsp;</td>
+        <td width="75%" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tbody><tr>
+            <td width="100%" valign="top"><table width="100%" border="0" cellpadding="1" cellspacing="1" bgcolor="#E8FFFB">
+                <tbody><tr bgcolor="#339966">
+                  <td height="34%" colspan="2"><div align="center"><strong><font color="#FFFFFF">Buy</font></strong></div></td>
+                </tr>
+                <tr>
+                  <td width="50%" bgcolor="#D2F0E1"><div align="center">Buy Price </div></td>
+                  <td height="34%" bgcolor="#D2F0E1"><div align="center">Buy Volume </div></td>
+                  </tr>
+                                <tr>
+                  <td colspan="2" ><div class="animated-background" style="margin:2px; min-height:15px"></div></td>
+                  </tr>
+                                <tr>
+                  <td colspan="2" ><div class="animated-background" style="margin:2px; min-height:15px"></div></td>
+                  </tr>
+                                <tr>
+                  <td colspan="2" ><div class="animated-background" style="margin:2px; min-height:15px"></div></td>
+                  </tr>
+                                <tr>
+                  <td colspan="2" ><div class="animated-background" style="margin:2px; min-height:15px"></div></td>
+                  </tr>
+                                <tr>
+                  <td colspan="2" ><div class="animated-background" style="margin:2px; min-height:15px"></div></td>
+                  </tr>
+                                <tr>
+                  <td colspan="2" ><div class="animated-background" style="margin:2px; min-height:15px"></div></td>
+                  </tr>
+                                <tr>
+                  <td colspan="2" ><div class="animated-background" style="margin:2px; min-height:15px"></div></td>
+                  </tr>
+                                <tr>
+                  <td colspan="2" ><div class="animated-background" style="margin:2px; min-height:15px"></div></td>
+                  </tr>
+                                <tr>
+                  <td colspan="2" ><div class="animated-background" style="margin:2px; min-height:15px"></div></td>
+                  </tr>
+                              
+                            </tbody></table></td>
+
+          </tr>
+        </tbody></table></td>
+        <td width="15%" valign="top">&nbsp;</td>
+      </tr>
+      <tr>
+        <td valign="top">&nbsp;</td>
+        <td valign="top">&nbsp;</td>
+        <td valign="top">&nbsp;</td>
+      </tr>
+      <tr>
+        <td valign="top">&nbsp;</td>
+        <td valign="top">&nbsp;</td>
+        <td valign="top">&nbsp;</td>
+      </tr>
+      <tr>
+        <td valign="top">&nbsp;</td>
+        <td valign="top"><table width="100%" border="0" align="center" cellpadding="2" cellspacing="2" bgcolor="#FFF7EA">
+          <tbody><tr bgcolor="#339966">
+            <td colspan="4"><font color="#FFFFFF"><strong>Price Statistics </strong></font> </td>
+          </tr>
+
+          <tr>
+            <td colspan="4" >
+				<div class="animated-background" style="margin:2px; min-height:15px"></div>
+            </td>
+          </tr>
+       
+          <tr>
+            <td colspan="4" >
+				<div class="animated-background" style="margin:2px; min-height:15px"></div>
+            </td>
+          </tr>
+       
+          <tr>
+            <td colspan="4" >
+				<div class="animated-background" style="margin:2px; min-height:15px"></div>
+            </td>
+          </tr>
+       
+          <tr>
+            <td colspan="4" >
+				<div class="animated-background" style="margin:2px; min-height:15px"></div>
+            </td>
+          </tr>
+       
+          <tr>
+            <td colspan="4" >
+				<div class="animated-background" style="margin:2px; min-height:15px"></div>
+            </td>
+          </tr>
+       
+          <tr>
+            <td colspan="4" >
+				<div class="animated-background" style="margin:2px; min-height:15px"></div>
+            </td>
+          </tr>
+       
+        </tbody></table></td>
+        <td valign="top">&nbsp;</td>
+      </tr>
+      <tr>
+        <td valign="top">&nbsp;</td>
+        <td valign="top">&nbsp;</td>
+        <td valign="top">&nbsp;</td>
+      </tr>
+
+    </tbody></table></td>
+  </tr>
+</tbody></table>		
+	`;
+}
 function startEditing() {
 	$('#editing').removeClass('hidden');
 	$('#showing').addClass('hidden');
