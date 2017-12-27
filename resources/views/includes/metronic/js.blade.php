@@ -3,7 +3,6 @@
 <script src="{{ asset('metronic/assets/global/plugins/excanvas.min.js') }}"></script>
 <script src="{{ asset('metronic/assets/global/plugins/ie8.fix.min.js') }}"></script>
 <![endif]-->
-<script src="{{ mix('metronic_home.js') }}"></script>
 <script src="{{ asset('metronic_custom/custom.js') }}"></script>
 <script src="{{ asset('js/application.js') }}"></script>
 @include('includes.flash.toastr')
@@ -18,6 +17,6 @@
         });
     })
 </script>
-<script src="{{ asset('js/se.js') }}?v={{uniqid()}}"></script>
     <script src="{{ asset('js/filter.js') }}" type="text/javascript"></script>
+<script src="{{ asset('js/se.js') }}?v={{uniqid()}}"></script>
             @stack('scripts')

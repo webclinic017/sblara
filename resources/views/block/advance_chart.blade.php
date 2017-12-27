@@ -167,8 +167,8 @@ var referenceChart = {
                             atrLength: {name: "ATR Length"}
                         }
                     },
-                    symbol: "DSEX",
-                    shortName: "DSEX",
+                    symbol: "{{request()->has('instrumentCode')?request()->instrumentCode:'DSEX'}}",
+                    shortName: "{{request()->has('instrumentCode')?request()->instrumentCode:'DSEX'}}",
                     timeframe: "",
                     onWidget: !1,
                     interval: "D",
@@ -431,7 +431,7 @@ function SymbolisNullOrEmpty(n) {
 			{
 				var widget = window.tvWidget = new TradingView.widget({
 				    width: "100%",
-					symbol:"DSEX",
+					symbol:"{{request()->has('instrumentCode')?request()->instrumentCode:'DSEX'}}",
 					interval: 'D',
 					allow_symbol_change: !0,
                     disable_logo: !0,

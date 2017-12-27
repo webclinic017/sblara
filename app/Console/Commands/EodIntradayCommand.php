@@ -119,6 +119,7 @@ class EodIntradayCommand extends Command
 
                     $instrumentList = InstrumentRepository::getInstrumentsScripOnly();
                     $dataToSave = array();
+                    $instrument_ids = [];
 
                     foreach ($dataFromDseServer as $data) {
 
@@ -133,7 +134,7 @@ class EodIntradayCommand extends Command
                            // dump($market_id);
                           //  dump($instrument_id);
                           //  dump($data->MKISTAT_OPEN_PRICE);
-                            if($data->MKISTAT_TOTAL_VOLUME) {
+                                if($data->MKISTAT_PUBLIC_TOTAL_VOLUME + $data->MKISTAT_SPOT_TOTAL_VOLUME > 0){
                                  $eod = DataBanksEod::updateOrCreate(
                                      ['market_id' => $market_id, 'instrument_id' => $instrument_id],
                                      [
@@ -180,6 +181,11 @@ class EodIntradayCommand extends Command
                                 $temp['batch'] = $data_bank_intraday_batch;
 
                                 //dd($temp);
+                                 if($data->MKISTAT_PUBLIC_TOTAL_VOLUME + $data->MKISTAT_SPOT_TOTAL_VOLUME > 0)
+                                 {
+                                     $instrument_ids[] = $instrument_id;
+                                 }
+
 
                                 $dataToSave[] = $temp;
                             }
@@ -190,8 +196,12 @@ class EodIntradayCommand extends Command
                     }
 
                     if (!empty($dataToSave)) {
+                        /*set last updated batch_id in instruments table start*/
+                        DB::table('instruments')->whereIn('id', $instrument_ids)->update(['batch_id' => $data_bank_intraday_batch ]);
+                        /*set last updated batch_id in instruments table end*/
 
                         DB::table('data_banks_intradays')->insert($dataToSave);
+
 
                         //recording new value of data_bank_intraday_batch and batch_total_trades of markets table
 

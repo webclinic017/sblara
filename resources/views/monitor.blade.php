@@ -2,10 +2,7 @@
 
 @section('content')
 {{-- @include('block.market_summary') --}}
-<script src="{{ url('/js/jquery-2.2.4.js')}}"></script>
 
-
-<script src="{{ url('/js/html2canvas.js')}}"></script>
 <script type="text/javascript">
 	function setCookie(cname, cvalue, exdays) {
 	    var d = new Date();
@@ -30,10 +27,6 @@
 	}
 
 </script>
-
-@push('scripts')
-<script src="{{ URL::asset('metronic_custom/highstock/code/js/highstock.js') }}"></script>
-@endpush
 
 <div class="row">
 	<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3" style="padding: 1px;">

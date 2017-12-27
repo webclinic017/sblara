@@ -6,7 +6,10 @@ use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
-
+use \Jrean\UserVerification\Traits\VerifiesUsers;
+use Illuminate\Http\Request;
+use Illuminate\Auth\Events\Registered;
+use Jrean\UserVerification\Facades\UserVerification;
 class RegisterController extends Controller
 {
     /*
@@ -21,13 +24,14 @@ class RegisterController extends Controller
     */
 
     use RegistersUsers;
+    use VerifiesUsers;
 
     /**
      * Where to redirect users after registration.
      *
      * @var string
      */
-    protected $redirectTo = '/';
+    protected $redirectTo = '/register';
 
     /**
      * Create a new controller instance.
@@ -68,4 +72,26 @@ class RegisterController extends Controller
             'password' => bcrypt($data['password']),
         ]);
     }
+
+        /**
+         * Handle a registration request for the application.
+         *
+         * @param  \Illuminate\Http\Request  $request
+         * @return \Illuminate\Http\Response
+         */
+        public function register(Request $request)
+        {
+            $this->validator($request->all())->validate();
+
+            $user = $this->create($request->all());
+
+            event(new Registered($user));
+
+            UserVerification::generate($user);
+
+            UserVerification::send($user, 'Verify your email');
+
+            return $this->registered($request, $user)
+                            ?: redirect($this->redirectPath())->with(['success' => 'We just sent you a verification email. Please check your email and click the verification link to verify your account.']);
+        }    
 }

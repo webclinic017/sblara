@@ -19,7 +19,18 @@ class SearchController extends Controller {
 
     public function company($search)
     {   
-        $data = Instrument::where('instrument_code', 'like', ''.$search.'%')->with('data_banks_intraday')->get();
+        $data = Instrument::where('instrument_code', 'like', ''.$search.'%')
+                            ->select('instrument_code', 'instruments.id', 'pub_last_traded_price', 'spot_last_traded_price', 'high_price', 'low_price', 'yday_close_price')
+                             ->leftJoin('data_banks_intradays', function ($join)
+                                            {
+                                                $join->on('instruments.batch_id', '=', 'data_banks_intradays.batch');
+                                                $join->on('instruments.id', '=', 'data_banks_intradays.instrument_id');
+                                            }
+                                        )
+                                        ->whereNotNull('data_banks_intradays.id')
+                                       ->get();
+     
+        
         return response()->json($data);
     }
 

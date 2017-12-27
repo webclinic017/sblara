@@ -16,7 +16,7 @@ class UserImporter extends BaseImporter
 					'contact_no' 			=>  'contact_no',
 					'last_visit' 			=>  'last_visit',
 					'group_id' 				=>  'group_id',
-					'is_active' 			=>  'is_active',
+					'is_active' 			=>  'verified',
 					'created' 				=>  'created_at',
 					'modified' 				=>  'updated_at',
 					'tokenhash' 			=>  'tokenhash',

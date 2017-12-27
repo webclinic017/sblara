@@ -163,6 +163,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
 
+
         /*
          * Package Service Providers...
          */
@@ -177,6 +178,7 @@ return [
         App\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
+        Jrean\UserVerification\UserVerificationServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
@@ -187,6 +189,7 @@ return [
         /*Se packages*/
          Unisharp\Laravelfilemanager\LaravelFilemanagerServiceProvider::class,
           Yajra\DataTables\DataTablesServiceProvider::class,
+
         /*Se packages*/
 
     ],
@@ -242,6 +245,7 @@ return [
         'Html' => Collective\Html\HtmlFacade::class,
         'Image' => Intervention\Image\Facades\Image::class,
         'Zipper' => Chumper\Zipper\Zipper::class,
+        'UserVerification' => Jrean\UserVerification\Facades\UserVerification::class,
 
 
     ],

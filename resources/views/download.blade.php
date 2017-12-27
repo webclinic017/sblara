@@ -13,63 +13,116 @@
 <link href="{{ URL::asset('metronic/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('metronic/assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css') }}" rel="stylesheet" type="text/css" />
 
-<div class="row">
-    <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12" >
-        <div class="col-lg-12 col-md-5 col-sm-6 col-xs-12" style="margin-bottom: 20px;">
-            <div class="form-group">
-                <label class="control-label col-md-4">Date Ranges</label>
-                <div class="col-md-8">
-                    <div class="input-group" id="defaultrange">
-                        <input type="text" id = "defaultrangeVal" class="form-control">
-                        <span class="input-group-btn">
-                            <button class="btn default date-range-toggle" type="button">
-                                <i class="fa fa-calendar"></i>
-                            </button>
-                        </span>
+<div class="row" >
+    <div class="col-md-12">
+<div class="portlet light form-fit bordered">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="icon-settings font-green"></i>
+            <span class="caption-subject font-green sbold uppercase">Download all together</span>
+        </div>
+        <div class="actions">
+
+        </div>
+    </div>
+    <div class="portlet-body form">
+        <!-- BEGIN FORM-->
+        <form  class="form-horizontal form-bordered" method="post">
+            {{csrf_field()}}
+            <div class="form-body">
+                <div class="form-group">
+                    <label class="col-md-3 control-label">Last 2 years EOD data</label>
+                    <div class="col-md-9">
+                        <button  type="submit" name="nonadjusted"  class="btn green">
+                            <i class="fa fa-download"></i> Download</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label">Last 2 years eod data (adjusted) 
+                       </label>
+                    <div class="col-md-9">
+                        <button type="submit" name="adjusted" class="btn green">
+                            <i class="fa fa-download"></i> Download</button>                   
+                    </div>
+                </div>
+
+            </div>
+            <div class="form-actions">
+                <div class="row">
+                    <div class="col-md-offset-3 col-md-9">
+
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-lg-12 col-md-5 col-sm-3 col-xs-12" style="margin-bottom: 20px;">
-            <div class="form-group">
-                <label class="control-label col-md-4">Adjusted?</label>
-                <div class="col-md-8">
-                    <select id = "adjust" class="bs-select form-control" >
-                        <option>Yes</option>
-                        <option>No</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-12 col-md-5 col-sm-3 col-xs-12">
-            <div class="form-group">
-                <label class="control-label col-md-4">Instrument IdS</label>
-                <div class="col-md-8">
-                    <select multiple="multiple" class="multi-select instrument_ids" id="my_multi_select2" name="my_multi_select2[]" height='300px' >
-                        <?php echo $instrumentField ?>
-                    </select>
-                </div>
-            </div>
-        </div>
+        </form>
+        <!-- END FORM-->
     </div>
-    <div class="col-lg-8">
-        <div class="portlet box green">
-            <div class="portlet-title">
-                <div class="caption">
-                    <button class="btn btn-default" onclick = "preview();"><i class="fa fa-globe"></i>Preview</button></div>
-                <div class="tools"> <!-- <button class="btn btn-default" onclick = "zipDownload();"></i>ZIP</button> --></div>
-            </div>
-            <div class="portlet-body">
-                <table class="table table-striped table-bordered table-hover" id="sample_2">
-                    <?php echo $thead ?>
-                    <tbody id = "mainData">
-                        
-                    </tbody>
-                </table>
-            </div>
-        </div>
+ </div>
     </div>
 </div>
+<div class="row" >
+    <div class="col-md-12">
+<div class="portlet light form-fit bordered">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="icon-settings font-green"></i>
+            <span class="caption-subject font-green sbold uppercase">Download filtered data</span>
+        </div>
+        <div class="actions">
+
+        </div>
+    </div>
+    <div class="portlet-body form">
+        <!-- BEGIN FORM-->
+        <form  class="form-horizontal form-bordered" method="post">
+            {{csrf_field()}}
+            <div class="form-body">
+                <div class="form-group">
+                    <label class="col-md-3 control-label">Date Range</label>
+                    <div class="col-md-9">
+                        <div class="input-group input-large date-picker input-daterange" data-date="10/11/2012" data-date-format="mm/dd/yyyy">
+                            <input type="text" class="form-control" name="from">
+                            <span class="input-group-addon"> to </span>
+                            <input type="text" class="form-control" name="to"> </div>
+                        <!-- /input-group -->
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label">Select instruments (Max:5)</label>
+                    <div class="col-md-9">
+                        <select  data-max='2' class=" form-control select2-multiple input-fixed input-large" multiple="multiple" name="instruments[]">
+                 
+                                    @foreach(\App\Instrument::orderBy('instrument_code', 'asc')->get() as $instrument)
+                                        <option value="{{$instrument->id}}">{{$instrument->instrument_code}}</option>
+                                    @endforeach
+                        </select>                        
+                    </div>
+                </div>
+            <div class="form-group">
+                    <label class="col-md-3 control-label">Check if you need adjusted data</label>
+                    <div class="mt-checkbox-list col-md-9">
+                        <label class="mt-checkbox mt-checkbox-outline"> Adjusted
+                            <input type="checkbox" value="1" name="adjusted_filtered">
+                            <span></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-actions">
+                <div class="row">
+                    <div class="col-md-offset-3 col-md-9">
+                        <button type="submit" name="filtered" class="btn green">
+                            <i class="fa fa-download"></i> Download</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <!-- END FORM-->
+    </div>
+ </div>
+    </div>
+</div>
+
 @endsection
 
 @push('scripts')
@@ -93,101 +146,19 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
-        setTimeout(function() {
-            $('#defaultrangeVal').val(getFormatDate(new Date) + " - " + getFormatDate(new Date));
-        }, 1000);
-    });
-
-    var getDate = function(date) {
-        date = date.trim();
-        date = date.replace(",", "");
-        date = date.split(" ");
-        var month = {
-          "January" : 1, "February" : 2, "March" : 3,
-          "April" : 4, "May" : 5, "June" : 6, "July" : 7,
-          "August" : 8, "September" : 9, "October" : 10,
-          "November" : 11, "December" : 12
-        };
-        return date[2] + "-" + month[date[0]] + "-" + date[1];
-    };
-
-    var getFormatDate = function(date) {
-        var monthNames = [
-          "January", "February", "March",
-          "April", "May", "June", "July",
-          "August", "September", "October",
-          "November", "December"
-        ];
-
-        var day = date.getDate();
-        var monthIndex = date.getMonth();
-        var year = date.getFullYear();
-
-        return monthNames[monthIndex] + ' ' + day + ', ' + year;
-    }
-
-    var preview = function(argument) {
-        var dataRangeText = $('#defaultrangeVal').val();
-        if (!dataRangeText) {
-            alert("Please input Data Range");
-            return;
-        }
-        var adjust = ($('#adjust').value == "YES") ? 1 : 0;
-        var instruIDs = [];
-        var selOpts = $('.instrument_ids')[0].selectedOptions;
-        for ( index = 0; index  < selOpts.length; index ++ ) {
-            instruIDs[index] = selOpts[index].value;
-        }
-        if (!instruIDs.length) {
-            alert("Please select Instrument Id");
-            return;
-        }
-        var dataRange = dataRangeText.split("-");
-        if ( $.fn.dataTable.isDataTable( '#sample_2' ) ) {
-            $("#sample_2").dataTable().fnDestroy();
-        }
-        dataRange[0] = getDate(dataRange[0]);
-        dataRange[1] = getDate(dataRange[1]);
-        $("#mainData").html("");
-        $('#sample_2').DataTable( {
-            dom: 'Bfrtip',
-            "ajax": "/jsonData?adjust=" + adjust + "&instruIDs=" + instruIDs + "&dataRange=" + dataRange,
-            buttons: [
-                'excelHtml5',
-                'csvHtml5',
-                'pdfHtml5'
-            ]
-        } );
-        $('div.dt-buttons').append('<a class="dt-button buttons-html5 zip-button" tabindex="0"><span>ZIP</span></a>');
-        $("div.dt-buttons").on("click",".zip-button", function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            var dataRangeText = $('#defaultrangeVal').val();
-            if (!dataRangeText) {
-                alert("Please input Data Range");
-                return;
-            }
-            var adjust = ($('#adjust').value == "YES") ? 1 : 0;
-            var instruIDs = [];
-            var selOpts = $('.instrument_ids')[0].selectedOptions;
-            for ( index = 0; index  < selOpts.length; index ++ ) {
-                instruIDs[index] = selOpts[index].value;
-            }
-            if (!instruIDs.length) {
-                alert("Please select Instrument Id");
-                return;
-            }
-            var dataRange = dataRangeText.split("-");
-            if ( $.fn.dataTable.isDataTable( '#sample_2' ) ) {
-                $("#sample_2").dataTable().fnDestroy();
-            }
-            dataRange[0] = getDate(dataRange[0]);
-            dataRange[1] = getDate(dataRange[1]);
-
-            window.open( "/downloadZip?adjust=" + adjust + "&instruIDs=" + instruIDs + "&dataRange=" + dataRange );
-            preview();
+        $('#seDateRange').daterangepicker({
+            autoUpdateInput: false,
+        ranges: {
+           'Today': [moment(), moment()],
+           'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+           'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+           'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+           'This Month': [moment().startOf('month'), moment().endOf('month')],
+           'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        },
+        alwaysShowCalendars:true,
         });
-    }  
+    });
 </script>
 @endpush
 

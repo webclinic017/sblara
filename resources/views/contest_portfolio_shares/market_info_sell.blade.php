@@ -43,7 +43,7 @@
                             <label class="control-label" for="buy_quantity">Sell Quantity:</label>      
                             <div class="form-group">
                                 <div class="input-icon right">
-                                    <input type="number" max="{{ $saleableQty }}" name="buy_quantity" class="form-control"> 
+                                    <input type="number" max="{{ $saleableQty }}" name="buy_quantity" value="{{ $saleableQty }}" class="form-control"> 
                                     <input type="hidden" class="form-control" name="instrument_id" value="{{ $company_info->id }}">
                                 </div>
                             </div>

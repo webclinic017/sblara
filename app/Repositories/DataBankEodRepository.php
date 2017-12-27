@@ -161,6 +161,7 @@ class DataBankEodRepository {
     }
     /*
      * Buy default it will return ohlc array
+     * @params instrument_id , form date, end date, $ohlc_format
      * */
     public static function getEodDataAdjusted($instrumentId,$form,$to,$ohlc_format=1)
     {

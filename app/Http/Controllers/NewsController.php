@@ -590,7 +590,7 @@ class NewsController extends Controller
               $result = $result->where('post_date', '<=', $request->to_date.' 23:59:59');
            }
                     
-             $result = $result->get();
+             $result = $result->orderBy('post_date', 'desc')->get();
         }
         $instrument = Instrument:: all();
         $request->flash();

@@ -199,7 +199,7 @@
 
                 </form>
 
-                <div id="chartContainer" class="chartcontent thumbnail"><?php echo $viewer->renderHTML('usemap="#map1"'); ?></div>
+            <div id="chartContainer" class="chartcontent thumbnail"><?php echo $viewer->renderHTML('usemap="#map1"'); ?></div>
 
 
 

@@ -69,7 +69,11 @@ class ContestsController extends Controller
             $ids[] = $user->user_id;
             $i ++;
          }
-         $top3 = User::whereIn('id', $ids)->get();
+            $ids_ordered = implode(',', $ids);
+         $top3 = User::whereIn('id', $ids)
+                         ->orderByRaw(\DB::raw("FIELD(id, $ids_ordered)")) 
+                         ->get();
+
         return view('contests.show', compact('users', 'contest', 'top3'));
     }
 

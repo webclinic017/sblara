@@ -40,9 +40,7 @@ mix.combine([
 'public/maxazan-jquery-treegrid/css/jquery.treegrid.css',
 'public/vendor/feedback/feedback.min.css',
 
-], 'public/metronic_home.css')
-.sourceMaps();
-;
+], 'public/metronic_home.css');
 
 mix.scripts([
 'public/metronic/assets/global/plugins/jquery.min.js',

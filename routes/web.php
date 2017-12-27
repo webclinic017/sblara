@@ -89,7 +89,8 @@ Route::get('/se', function () {
 app('debugbar')->disable();
 return view('se');
 });
-
+Route::get('/download', 'DownloadController@index');
+Route::post('/download', 'DownloadController@download');
 Route::get('/pluginEod', function () {
     return response()->download(storage_path() .'/app/plugin/eod.zip');
 });
@@ -116,6 +117,7 @@ Route::get('/pluginIntra2', function () {
 Route::get('/data', 'PagesController@data')->name('/data');
 Route::get('/d', 'PagesController@dashboard2')->name('/dashboard2')->middleware('httpcache');
 Route::get('/', 'PagesController@dashboard')->name('/')->middleware('httpcache');
+Route::get('/home', 'PagesController@dashboard')->name('/')->middleware('httpcache');
 Route::get('/market-depth', function () {return view('market_depth_page');})->name('market-depth');
 Route::get('/market-frame', function () {return view('market_frame_page');})->name('market-frame');
 Route::get('/market-composition', function () {return view('market_composition_page');})->name('market-composition');
@@ -175,7 +177,6 @@ Route::get('/ajax', function () {
 });
 Auth::routes();
 
-Route::get('/home', 'HomeController@index');
 Route::resource('/portfolio', 'PortfolioController');
 Route::resource('/portfolio_transaction', 'PortfolioScripsController');
 Route::get('/portfolio_diversity/{portfolio_id}', 'PortfolioController@diversity');

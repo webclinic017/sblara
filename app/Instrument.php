@@ -1,7 +1,7 @@
 <?php
 
 namespace App;
-
+use App\Repositories\DataBanksIntradayRepository;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
 use DB;
@@ -41,11 +41,14 @@ class Instrument extends Model
 
     public function data_banks_intraday()
     {
-        return $this->hasOne(DataBanksIntraday::class)
-                    ->take(1)
-                    ->latest('id');
+        return $this->hasOne(DataBanksIntraday::class)->where('batch', $this->batch_id);
+    }
+    public function data_banks_intradays()
+    {
+        return $this->hasOne(DataBanksIntraday::class)->take(1)->orderBy('id', 'desc');
     }
 
+ 
 
 
    /* public function data_banks_eod()

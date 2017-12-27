@@ -121,16 +121,13 @@ $(document).ready(function(){
             document.getElementById('chart_placeholder{{ $id }}').style.display = 'block';
 
             var returnData = JSON.parse(result);
-            if(window.se_chart{{$id}} )
+            if(window.se_chart{{$id}})
             {
-                window.se_chart{{$id}} ++;
-            }else{
-                window.se_chart{{$id}} = 1;
+                 se_chart{{$id}}.destroy();
+                return;
+               window.se_chart{{$id}}.series[0].setData(returnData.ydata,true);
             }
-            if(window.se_chart{{$id}} == 15){
-                location.reload();
-            }
-              Highcharts.chart('monitor_chart{{ $id }}', {
+            se_chart{{$id}} = new Highcharts.chart('monitor_chart{{ $id }}', {
                                                      chart: {
                                                          zoomType: 'xy',
                                                          defaultSeriesType: 'spline',
@@ -444,7 +441,7 @@ $(document).ready(function(){
         if(document.getElementById('symbol{{ $id }}').value != -1) 
             $("#symbol{{ $id }}").trigger('change');
     }
-     setInterval(ref{{ $id }}, 60000);
+     setInterval(ref{{ $id }}, 2000);
     
 });
 

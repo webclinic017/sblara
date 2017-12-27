@@ -26,7 +26,9 @@ class GenerateMenus
 
             //submenu
             $menu->home->add('Dashboard', ['route' => '/'])->prepend('<i class="icon-bar-chart" ></i > ');
-            $menu->home->add('News', ['route' => 'collective-news'])->prepend('<i class="icon-bar-chart" ></i > ');
+            $menu->home->add('News', ['class' => 'dropdown more-dropdown-sub closed'])->prepend('<i class="icon-bar-chart" ></i > '); //should remove open class
+            $menu->news->link->href('javascript:;');
+            $menu->news->add('News from newspaper', ['route' => 'collective-news'])->prepend('<i class="icon-bar-chart" ></i > ');
             $menu->home->add('News Search', ['route' => 'news-search'])->prepend('<i class="icon-bar-chart" ></i > ');
             $menu->home->add('Knowledge Basket', ['route' => 'knowledge-basket'])->prepend('<i class="icon-bar-chart" ></i > ');
 
@@ -114,6 +116,36 @@ class GenerateMenus
 }
 
 /*
+ *
+ *
+ *
+ *
+ * <li class="dropdown more-dropdown-sub">
+                                            <a href="javascript:;">
+                                                <i class="icon-docs"></i> Apps </a>
+                                            <ul class="dropdown-menu">
+                                                <li>
+                                                    <a href="app_todo.html">
+                                                        <i class="icon-clock"></i> Todo 1 </a>
+                                                </li>
+                                                <li>
+                                                    <a href="app_todo_2.html">
+                                                        <i class="icon-check"></i> Todo 2 </a>
+                                                </li>
+                                                <li>
+                                                    <a href="app_inbox.html">
+                                                        <i class="icon-envelope"></i> Inbox </a>
+                                                </li>
+                                                <li>
+                                                    <a href="app_calendar.html">
+                                                        <i class="icon-calendar"></i> Calendar </a>
+                                                </li>
+                                                <li>
+                                                    <a href="app_ticket.html">
+                                                        <i class="icon-notebook"></i> Support </a>
+                                                </li>
+                                            </ul>
+                                        </li>
 <div class="nav-collapse collapse navbar-collapse navbar-responsive-collapse" >
                             <ul class="nav navbar-nav" >
                                 <li class="dropdown dropdown-fw  " >

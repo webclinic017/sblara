@@ -125,13 +125,51 @@ $('.add-more-attachment').click(function () {
 $('body').on('click',  '.confirmBuy', function () {
 			$('#buyModal form').submit();
 	});
+$('body').on('click', '[data-target="#sellModal"]', function () {
+	$('.company-info').html('');
+	$('.basic-single-select2').val($(this).data('ins_id'));
+	$('.basic-single-select2').each(function () {
+
+		if($(this).data('type') == 'sell')
+		{
+			$(this).trigger('change');
+		}
+	});
+});
+$('body').on('click', '.btn[data-target="#buyModal"]', function () {
+	$('.company-info').html('');
+	$('.basic-single-select2').val('');
+	$('.basic-single-select2').each(function () {
+
+		if($(this).data('type') == 'buy')
+		{
+			$(this).trigger('change');
+		}
+	});	
+});
 $('body').on('click',  '.confirmSell', function () {
 			$('#sellModal form').submit();
 	});
 	/* search  */
-	$('#top-search').keyup(function () {
+	$(document).mouseup(function(e) 
+{
+    var container = $(".se-search");
 
-		$('.company-search').html('<li style="list-style-type:none"><div class="animated-background"></div></li>');
+    if (!container.is(e.target) && container.has(e.target).length === 0) 
+    {
+        $('.search-result').hide();
+    }else{
+        $('.search-result').show();
+    }
+});
+	$('#top-search').keyup(function (e) {
+	if (e.keyCode == 27) { 
+
+			$('.search-result').css('visibility', 'hidden');
+			$(this).val('');
+			return;
+    }
+		$('.company-search').html('<tr><td colspan="5" ><div class="animated-background"></div><div class="animated-background"></div><div class="animated-background"></div><div class="animated-background"></div></td></tr>');
 		var str = $(this).val();
 		if(str.length < 2)
 		{
@@ -139,10 +177,10 @@ $('body').on('click',  '.confirmSell', function () {
 			return;			
 		}
 		$.get('/search/company/'+str, function (result) {
-			
+		
 			var html = "";
 			$.each(result, function (k, v) {
-	
+				v.data_banks_intraday = v;
 				if (v.data_banks_intraday == null){
 					yclose = 0;
 					ltp = 0; 
@@ -160,55 +198,91 @@ $('body').on('click',  '.confirmSell', function () {
 					low = v.data_banks_intraday.low_price;
 				}
 				var change =  (((ltp - yclose) / yclose )*100).toFixed(2);
-				if(change = "NAN")
+				var cls = '';
+				if(isNaN(change))
 				{
 					change = 0;
 				}
-				html += `
-                                        <li class="search-item clearfix">
-                                            <div class="search-content">
-                                                <div class="row">
-                                                    <div class="col-sm-4 col-xs-12">
-                                                        <h2 class="search-title">
-                                                            <a href="/company-details/`+v.id+`">`+ v.instrument_code+`</a>
-														</h2>
-												
-                                                    </div>
-                                                    <div class="col-md-7">
-                                                        <div class="col-sm-3 col-xs-4">
-                                                            <p class="text-center">LTP</p>
-                                                            <p class="search-counter-label uppercase">`+ ltp+`</p>
-                                                        </div>
-                                                        <div class="col-sm-3 col-xs-4">
-                                                            <p class="text-center">HIGH</p>
-                                                            <p class="search-counter-label uppercase">`+ high +`</p>
-                                                        </div>
-                                                        <div class="col-sm-3 col-xs-4">
-                                                            <p class="text-center">LOW</p>
-                                                            <p class="search-counter-label uppercase">`+ low +`</p>
-                                                        </div>
-                                                        <div class="col-sm-3 col-xs-4">
-                                                            <p class="text-center">%CHANGE    </p>
-                                                            <p class="search-counter-label uppercase">`+change+`</p>
-                                                        </div>
-                                                    </div>
+				if(change == 0)
+				{
+					cls = 'text-warning';
+				}
+				else if (change > 0){
+					cls = 'text-success';
+				} else {
+					cls = 'text-danger';
+				}
 
-                                                </div> 
-                                        </li>   					
+				if((high - yclose) == 0)
+				{
+					hcls = 'text-warning';
+				}
+				else if ((high - yclose) > 0){
+					hcls = 'text-success';
+				} else {
+					hcls = 'text-danger';
+				}
+				if((low - yclose) == 0)
+				{
+					lcls = 'text-warning';
+				}
+				else if ((low - yclose) > 0){
+					lcls = 'text-success';
+				} else {
+					lcls = 'text-danger';
+				}
+
+				// if((yclose - high) < 0)
+				html += `
+                            <tr>
+                                <td > 
+                                <a class="popover-ta-chart" data-trigger="hover" data-toggle="popover" title="`+v.instrument_code+`- TA Chart" data-content="<img src='/tooltip_chart/`+v.id+`' />"   target="_blank"  href="/company-details/`+v.id+`">`+ v.instrument_code+`</a>
+                                 <a   target="_blank"  href="/news-chart/`+v.id+`" title="News Chart"><i class="fa fa-bullhorn"></i></a>
+                                 <a  target="_blank"  href="/advance-ta-chart?instrumentCode=`+v.instrument_code+`" title="Advanced Chart"><i class="fa fa-line-chart"></i></a>
+                                 <a  target="_blank"  href="/ta-chart?instrumentCode=`+v.instrument_code+`" title="TA Chart"><i class="fa fa-bar-chart"></i></a>
+                                 <a target="_blank" href="/minute-chart/`+v.id+`" title="Minute Chart"><i class="fa fa-area-chart"></i></a>
+                                 </td>
+                                <td class="`+cls+`">`+ ltp+`</td>
+                                <td class="`+hcls+`">`+ high +`</td>
+                                <td class="`+lcls+`">`+ low +`</td>
+                                <td class="`+cls+`">`+change+`</td>
+                            </tr>				
+					
 				`;
 
 			})
 			$('.company-search').html(html);
 
+			/*enable popover for ajaxed content*/
+			    $('[data-toggle="popover"]').popover({
+			    	html: true,
+			    	placement: 'bottom',
+			    	delay: { "show": 500, "hide": 100 }
+			    });  
+			/*enable popover for ajaxed content*/
 		} );
 		$('.search-result').css('visibility', 'visible');
 	});
-	   document.addEventListener('DOMContentLoaded',
-      function () {
-        $.feedback({
-            ajaxURL: '/feedback',
-            html2canvasURL: '/vendor/feedback/html2canvas.js',
-        });
-        }, false);
+
 	/* search  */
+
+	/*pop over ta chart*/
+
+	/*pop over ta chart*/
+
+	/*menu fix*/
+	/*menu fix*/
+	$('.more-dropdown-sub.closed').removeClass('open');
+	$('.select2-multiple').select2({
+		maximumSelectionLength: 5,
+		 placeholder: "Please Select",
+	});
 });
+
+document.addEventListener('DOMContentLoaded',
+function () {
+$.feedback({
+    ajaxURL: '/feedback',
+    html2canvasURL: '/vendor/feedback/html2canvas.js',
+});
+}, false);

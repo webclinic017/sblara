@@ -13,12 +13,10 @@
                 <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
                 <link href="/metronic_home.css" rel="stylesheet" type="text/css" />
             <!-- END PAGE LEVEL PLUGINS -->
-            @stack('css')
-            <!-- END THEME LAYOUT STYLES -->
-            @stack('css')
              <link href="{{ URL::asset('metronic_custom/custom.css') }}" rel="stylesheet" type="text/css" />
             <link href="{{ URL::asset('css/se.css') }}" rel="stylesheet" type="text/css" />
             <link rel="shortcut icon" href="favicon.ico" />
+            @stack('css')
 
             <script>
                     window.Laravel = {!! json_encode([
@@ -26,3 +24,4 @@
                     ]) !!};
             </script>
     </head>
+<script src="{{ mix('metronic_home.js') }}"></script>

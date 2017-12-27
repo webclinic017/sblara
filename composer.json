@@ -10,6 +10,7 @@
         "barryvdh/laravel-httpcache": "0.3.*",
         "chumper/zipper": "1.0.x",
         "intervention/image": "^2.3",
+        "jrean/laravel-user-verification": "dev-master",
         "laracasts/flash": "^2.0",
         "laravel/framework": "5.5.*",
         "laravel/passport": "^3.0",

@@ -1,3 +1,19 @@
+/* theme modification start*/
+/*.page-header .navbar .navbar-nav .dropdown-menu>li>a{
+    padding: 10px 30px 10px 25px;
+    font-size: 13px;
+}
+.page-header .navbar .navbar-nav>li>a{
+    font-size: 16px;
+    padding: 15px 15px;
+}
+.page-header .navbar-fixed-top{
+    padding: 0px 25px;
+}
+.page-header .navbar-collapse{
+    margin-top: 50px;
+}*/
+/* theme modification end*/
 #editing{
     display: inline-block;
     width: 100%;
@@ -80,9 +96,10 @@ div.center select{
 .search-result{
     visibility: hidden;
     position: absolute;
-    min-width: 450px;
+    min-width: 500px;
     top:45px;
     border:1px solid #eee;
+    z-index: 999;
 }
 .se-search{
     position: relative;
@@ -109,6 +126,11 @@ div.center select{
     background: #f6f7f8;
     background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
     background-size: 800px 104px;
-    height: 96px;
+    height: 10px;
+    margin-top: 5px;
     position: relative;
+}
+.company-search i{
+    margin-left: 10px;
+    float: right;
 }

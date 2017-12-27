@@ -35,116 +35,19 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="search-container">
-                                    <ul style="padding: 0px" class="company-search">
-                                        <li class="search-item clearfix">
-                                            <div class="search-content">
-                                                <div class="row">
-                                                    <div class="col-sm-4 col-xs-12">
-                                                        <h2 class="search-title">
-                                                            <a href="javascript:;">ABBANK</a>
-                                                        </h2>
-                                                        <p class="search-desc">
-                                                            <a href="javascript:;">Minute Chart</a> |
-                                                            <a href="javascript:;">TA Chart </a> |
-                                                            <a href="javascript:;">TA Chart</a> |
-                                                            <a href="javascript:;">Advance TA Chart</a>
-                                                            <span class="font-grey-salt"></span>
-                                                        </p>
-                                                    </div>
-                                                    <div class="col-md-8">
-                                                        <div class="col-sm-3 col-xs-4">
-                                                            <p class="text-center">LTP</p>
-                                                            <p class="search-counter-label uppercase">362</p>
-                                                        </div>
-                                                        <div class="col-sm-3 col-xs-4">
-                                                            <p class="text-center">HIGH</p>
-                                                            <p class="search-counter-label uppercase">79</p>
-                                                        </div>
-                                                        <div class="col-sm-3 col-xs-4">
-                                                            <p class="text-center">LOW</p>
-                                                            <p class="search-counter-label uppercase">8</p>
-                                                        </div>
-                                                        <div class="col-sm-3 col-xs-4">
-                                                            <p class="text-center">YCP</p>
-                                                            <p class="search-counter-label uppercase">8</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-4"></div>
-                                                    <div class="col-md-8" style="margin-top: 10px;">
-                                                        <div class="col-sm-3 col-xs-4">
-                                                            <p class="text-center">%Change    </p>
-                                                            <p class="search-counter-label uppercase">8</p>
-                                                        </div>
-                                                        <div class="col-sm-3 col-xs-4">
-                                                            <p class="text-center">TRADE</p>
-                                                            <p class="search-counter-label uppercase">8</p>
-                                                        </div>
-                                                        <div class="col-sm-3 col-xs-4">
-                                                            <p class="text-center">VALUE</p>
-                                                            <p class="search-counter-label uppercase">8</p>
-                                                        </div>
-                                                        <div class="col-sm-3 col-xs-4">
-                                                            <p class="text-center">VOLUME</p>
-                                                            <p class="search-counter-label uppercase">8</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                        </li>                                      
-                                        <li class="search-item clearfix">
-                                            <div class="search-content">
-                                                <div class="row">
-                                                    <div class="col-sm-5 col-xs-12">
-                                                        <h2 class="search-title">
-                                                            <a href="javascript:;">ABBANK</a>
-                                                        </h2>
-                                                        <p class="search-desc">
-                                                            <a href="javascript:;">Minute Chart</a> | 
-                                                            <a href="javascript:;">TA Chart </a> |
-                                                            <a href="javascript:;">TA Chart</a> |
-                                                            <a href="javascript:;">Advance TA Chart</a>
-                                                            <span class="font-grey-salt"></span>
-                                                        </p>
-                                                    </div>
-                                                    <div class="col-md-7">
-                                                        <div class="col-sm-3 col-xs-4">
-                                                            <p class="text-center">LTP</p>
-                                                            <p class="search-counter-label uppercase">362</p>
-                                                        </div>
-                                                        <div class="col-sm-3 col-xs-4">
-                                                            <p class="text-center">HIGH</p>
-                                                            <p class="search-counter-label uppercase">79</p>
-                                                        </div>
-                                                        <div class="col-sm-3 col-xs-4">
-                                                            <p class="text-center">LOW</p>
-                                                            <p class="search-counter-label uppercase">8</p>
-                                                        </div>
-                                                        <div class="col-sm-3 col-xs-4">
-                                                            <p class="text-center">YCP</p>
-                                                            <p class="search-counter-label uppercase">8</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-4"></div>
-                                                    <div class="col-md-8" style="margin-top: 10px;">
-                                                        <div class="col-sm-3 col-xs-4">
-                                                            <p class="text-center">%Change    </p>
-                                                            <p class="search-counter-label uppercase">8</p>
-                                                        </div>
-                                                        <div class="col-sm-3 col-xs-4">
-                                                            <p class="text-center">TRADE</p>
-                                                            <p class="search-counter-label uppercase">8</p>
-                                                        </div>
-                                                        <div class="col-sm-3 col-xs-4">
-                                                            <p class="text-center">VALUE</p>
-                                                            <p class="search-counter-label uppercase">8</p>
-                                                        </div>
-                                                        <div class="col-sm-3 col-xs-4">
-                                                            <p class="text-center">VOLUME</p>
-                                                            <p class="search-counter-label uppercase">8</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                        </li>                                      
-                                    </ul>
+                                    <table class="table table-striped table-hover" style="margin-top: 10px;">
+                                        <thead>
+                                            <th>TICKER</th>
+                                            <th>LTP</th>
+                                            <th>HIGH</th>
+                                            <th>LOW</th>
+                                            <th>%CHANGE</th>
+                                        </thead>
+                                                <tbody class="company-search">
+
+                                                </tbody>
+                                    </table>
+      
                                 </div>
                             </div>
                         </div>

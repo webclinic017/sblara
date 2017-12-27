@@ -72,9 +72,25 @@ class LoginController extends Controller
             return $this->sendLockoutResponse($request);
         }
 
-        if ($this->attemptLogin($request)) {
+    //////////////////////////////////////////////////////////////////////    
+    if ($this->guard()->validate($this->credentials($request))) {
+        $user = $this->guard()->getLastAttempted();
+
+        // Make sure the user is verified
+        if ($user->verified && $this->attemptLogin($request)) {
+            // Send the normal successful login response
             return $this->sendLoginResponse($request);
+        } else {
+            // Increment the failed login attempts and redirect back to the
+            // login form with an error message.
+            $this->incrementLoginAttempts($request);
+            return redirect()
+                ->back()
+                ->withInput($request->only($this->username(), 'remember'))
+                ->withErrors(['active' => 'Please verify your email.']);
         }
+    }
+    //////////////////////////////////////////////////////////////////
 
         // If the login attempt was unsuccessful we will increment the number of attempts
         // to login and redirect the user back to the login form. Of course, when this
@@ -87,7 +103,7 @@ class LoginController extends Controller
     public function loginOldUser($request)
     {
         $username = $this->username();
-        $user = \App\User::where($username, $request->{$username})->where('password', '')->where('password_old', md5($request->password))->first();
+        $user = \App\User::where($username, $request->{$username})->where('password', '')->where('password_old', md5($request->password))->where('verified', 1)->first();
         // dd($user);
         if($user)
         {

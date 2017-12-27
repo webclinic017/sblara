@@ -7,37 +7,89 @@ use App\Instrument;
 use App\SectorList;
 use App\Repositories\DataBankEodRepository;
 use ZipArchive;
+use Carbon\Carbon;
+use App\DataBanksEod;
+use Illuminate\Support\Facades\Storage;
 
 class DownloadController extends Controller
 {
-    public function index(Request $request)
+    function __construct()
     {
-    	// echo "<pre>";
-    	// print_r(Instrument::getInstrumentsBySectorName('Cement'));
-    	// echo "</pre>";
-    	// exit;
-    	$instrumentField = "";
-    	$sectors = SectorList::all();
+        $this->middleware('auth');
+    }
 
-    	foreach ($sectors as $key => $sector) {
-    		$instrumentField .= "<optgroup label=$sector->name>";
-    		$instrumentsBySector = Instrument::getInstrumentsBySectorName($sector->name);
-    		foreach ($instrumentsBySector as $instrument) {
-    			$instrumentField .= "<option value = $instrument->id>$instrument->id - $instrument->instrument_code</option>";
-    		}
-    		$instrumentField .= '</optgroup>';
-    	}
-    	$theader = array('Code','Date','Open','High','Low','Close','Volume');
-    	$thead = "<thead><tr>";
-    	foreach ($theader as $key => $th) {
-    		$thead .= "<th> $th </th>";
-    	}
-    	$thead .= "</tr></thead>";
-    	// echo $instrumentField;
-    	return view('download',[
-    		'instrumentField' => $instrumentField,
-    		'thead' => $thead,
-    	]);
+    public function index(Request $request)
+    {    
+    	return view('download');
+    }
+
+    public function download(Request $request)
+    {
+        if($request->has('nonadjusted'))
+        {
+            return response()->download(storage_path() .'/app/plugin/eod.zip');
+        }
+        if($request->has('adjusted'))
+        {
+            return response()->download(storage_path() .'/app/plugin/adjusted_eod.zip');
+        }
+        if($request->has('filtered'))
+        {
+            $start = Carbon::createFromFormat('m/d/Y', $request->from);
+            $end = Carbon::createFromFormat('m/d/Y', $request->to);
+                $dir = 'tmp/'.md5(uniqid()).'/';
+
+
+                if($request->has('adjusted_filtered'))
+                {
+
+                    foreach ($request->instruments as $id) {
+                        $instrument = \App\Instrument::find($id);                    
+                        $path = $dir.$instrument->instrument_code.'.csv';
+                        $file  = Storage::put($path, "Date,Open,High,Low,Close,Volume");
+
+                        $data=DataBankEodRepository::getEodForCSV( $start->format('Y-m-d'), $end->format('Y-m-d'), $request->instruments, 1);
+                        $title = 'custom_eod_adjusted.zip';
+                        unset($data[0]);
+                        $content ="";
+                            foreach ($data as $row) {
+                                  $content .= $row[1].",$row[2],$row[3],$row[4],$row[5],$row[6]\n";
+                            }     
+                     }                                   
+                }else{
+                        foreach ($request->instruments as $id) {
+                            $instrument = \App\Instrument::find($id);
+
+                             $eod = new DataBanksEod;
+                            $rows = $eod->where('instrument_id', $id)->where('date', '>=', $start->format('Y-m-d'))->where('date', '<=', $end->format('Y-m-d'))->select('date', 'open', 'high', 'low', 'close', 'volume')->latest('date')->get();
+                            $path = $dir.$instrument->instrument_code.'.csv';
+                            $file  = Storage::put($path, "Date,Open,High,Low,Close,Volume");
+                            $content = "";
+
+            //              adjust price if corporate action found
+
+
+                                $title = 'custom_eod.zip';
+                                          
+
+            //              adjust price if corporate action found
+                            foreach ($rows as $row) {
+                                $content .= date('d/m/Y', strtotime($row->date)).",$row->open,$row->high,$row->low,$row->close,$row->volume\n";
+                            }
+                        }
+                }
+
+
+             Storage::append($path, $content);
+
+            $zipper = new \Chumper\Zipper\Zipper;
+            $files = glob( storage_path().'/app/' .$dir.'*');
+            $zipPath = storage_path().'/app/' .str_replace('/', '', $dir).'custom_eod.zip';
+            $zipper->make($zipPath)->add($files)->close();
+            Storage::deleteDirectory($dir);
+             return response()->download($zipPath, $title)->deleteFileAfterSend(true);
+        }
+        return redirect()->back();
     }
 
     public function getJsonData(Request $request)

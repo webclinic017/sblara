@@ -55,7 +55,7 @@ $purchase_power = $purchase_power > 0 ?$purchase_power:'0';
                                                                 <div class="col-md-12">      
                                                                     <div class="form-group">
                                                                         <div class="input-icon right">
-                                                                            <input type="number" max="{{ $max_shares }}" name="buy_quantity" class="form-control" required=""> 
+                                                                            <input type="number" max="{{ $max_shares }}" value="{{ $max_shares }}" name="buy_quantity" class="form-control" required=""> 
                                                                             <input type="hidden" class="form-control" name="instrument_id" value="{{ $company_info->id }}">
                                                                         </div>
                                                                     </div>

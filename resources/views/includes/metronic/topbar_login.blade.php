@@ -1,6 +1,6 @@
                             <div class="topbar-actions">
                                 <!-- BEGIN GROUP NOTIFICATION -->
-                                <div class="btn-group-notification btn-group" id="header_notification_bar">
+                               {{--  <div class="btn-group-notification btn-group" id="header_notification_bar">
                                     <button type="button" class="btn btn-sm md-skip dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                                         <i class="icon-bell"></i>
                                         <span class="badge">7</span>
@@ -97,10 +97,10 @@
                                             </ul>
                                         </li>
                                     </ul>
-                                </div>
+                                </div> --}}
                                 <!-- END GROUP NOTIFICATION -->
                                 <!-- BEGIN GROUP INFORMATION -->
-                                <div class="btn-group-red btn-group">
+{{--                                 <div class="btn-group-red btn-group">
                                     <button type="button" class="btn btn-sm md-skip dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                                         <i class="fa fa-plus"></i>
                                     </button>
@@ -126,7 +126,7 @@
                                             </a>
                                         </li>
                                     </ul>
-                                </div>
+                                </div> --}}
                                 <!-- END GROUP INFORMATION -->
                                 <!-- BEGIN USER PROFILE -->
                                 <div class="btn-group-img btn-group">
@@ -137,30 +137,30 @@
                                         <li>
                                             <a href="{{ route('user-information') }}">
                                                 <i class="icon-user"></i> My Profile
-                                                <span class="badge badge-danger">1</span>
+                                                {{-- <span class="badge badge-danger">1</span> --}}
                                             </a>
                                         </li>
-                                        <li>
+{{--                                         <li>
                                             <a href="app_calendar.html">
                                                 <i class="icon-calendar"></i> My Calendar </a>
-                                        </li>
-                                        <li>
+                                        </li> --}}
+                                {{--         <li>
                                             <a href="app_inbox.html">
                                                 <i class="icon-envelope-open"></i> My Inbox
                                                 <span class="badge badge-danger"> 3 </span>
                                             </a>
-                                        </li>
-                                        <li>
+                                        </li> --}}
+                                   {{--      <li>
                                             <a href="app_todo_2.html">
                                                 <i class="icon-rocket"></i> My Tasks
                                                 <span class="badge badge-success"> 7 </span>
                                             </a>
-                                        </li>
+                                        </li> --}}
                                         <li class="divider"> </li>
-                                        <li>
+                            {{--             <li>
                                             <a href="page_user_lock_1.html">
                                                 <i class="icon-lock"></i> Lock Screen </a>
-                                        </li>
+                                        </li> --}}
                                         <li>
                                         <a href="{{ route('logout') }}"
                                                                                     onclick="event.preventDefault();

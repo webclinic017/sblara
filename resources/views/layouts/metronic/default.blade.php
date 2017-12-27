@@ -40,10 +40,10 @@
         </div>
         <!-- END CONTAINER -->
         <!-- BEGIN QUICK SIDEBAR -->
-        @include('includes.metronic.quick_sidebar')
+        {{-- @include('includes.metronic.quick_sidebar') --}}
         <!-- END QUICK SIDEBAR -->
         <!-- BEGIN QUICK NAV -->
-        @include('includes.metronic.quick_nav')
+        {{-- @include('includes.metronic.quick_nav') --}}
         <!-- END QUICK NAV -->
 
          <!-- BEGIN ALL JS SCRIPTS -->
