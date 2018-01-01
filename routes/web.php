@@ -1,4 +1,6 @@
 <?php
+
+app('debugbar')->disable();
 //========================  Contest Start  ======================== 
 // Contest Portfolio Shares routes..
 Route::post('/portfolios/{portfolio}/shares/create', 'PortfolioSharesController@store')->name('portfolios.shares.store');

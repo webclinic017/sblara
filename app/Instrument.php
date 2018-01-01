@@ -1,9 +1,11 @@
 <?php
 
 namespace App;
+use App\Repositories\DataBankEodRepository;
 use App\Repositories\DataBanksIntradayRepository;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
+use Carbon\Carbon;
 use DB;
 
 class Instrument extends Model
@@ -30,6 +32,12 @@ class Instrument extends Model
 
 
     public function data_banks_eods()
+    {
+        return $this->hasMany(DataBanksEod::class);
+    }
+
+
+    public function dataBanksEods()
     {
         return $this->hasMany(DataBanksEod::class);
     }
@@ -225,6 +233,40 @@ class Instrument extends Model
         return $lastTradedDataAllInstruments;
 
 
+    }
+
+    public function corporateActionsChartData()
+    {
+  
+        $data = $this->dataBanksEods()->select('date', 'close')->latest('date')->take(800)->get()->toArray();
+       $data = array_map(function ($value)
+        {
+            $value = [ Carbon::parse($value['date']), $value['close']];
+
+            return $value;
+        }, $data);
+       // dd($data);
+       return json_encode($data);
+    }
+
+    public function getYearEndAttribute()
+    {
+        return (\App\Repositories\FundamentalRepository::getFundamentalData(['year_end', "q1_eps_cont_op","half_year_eps_cont_op","q3_nine_months_eps","earning_per_share"], [$this->id]));
+        // return $this
+    }
+
+    public function epsHistory()
+    {
+        $yearEnd = $this->yearEnd;
+        $data = [];
+        $data['category'] = [];
+        $data['q1_eps_cont_op'] = [];
+        $data['earning_per_share'] = [];
+        $data['q3_nine_months_eps'] = [];
+        $data['half_year_eps_cont_op'] = [];
+
+
+        return $data;
     }
 
 

@@ -1,5 +1,5 @@
 /* theme modification start*/
-/*.page-header .navbar .navbar-nav .dropdown-menu>li>a{
+.page-header .navbar .navbar-nav .dropdown-menu>li>a{
     padding: 10px 30px 10px 25px;
     font-size: 13px;
 }
@@ -8,12 +8,24 @@
     padding: 15px 15px;
 }
 .page-header .navbar-fixed-top{
-    padding: 0px 25px;
+    padding: 2px 25px;
 }
 .page-header .navbar-collapse{
     margin-top: 50px;
-}*/
+}
 /* theme modification end*/
+
+
+
+
+
+
+
+
+
+
+
+
 #editing{
     display: inline-block;
     width: 100%;

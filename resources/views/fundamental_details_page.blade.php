@@ -153,7 +153,7 @@
                         <span class="caption-helper">what happened recently</span>
                     </div>
                     <div class="tools">
-                        <!-- <a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.page:instrument_id={{$instrumentInfo->id}}:render_to=recent_corporate_action{{$instrumentInfo->id}}" class="reload"></a> -->
+                        <a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.recent_corporate_actions:instrument_id={{$instrumentInfo->id}}:render_to=recent_corporate_action{{$instrumentInfo->id}}" class="reload"></a>
 
                         <a href="" class="collapse">
                         </a>
@@ -184,7 +184,7 @@
                         <span class="caption-helper">EPS tracking quarter to quarter</span>
                     </div>
                     <div class="tools">
-                        <!-- <a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.eps_history_chart_quarter_to_quarter:instrument_id={{$instrumentInfo->id}}:render_to=eps_quarter_to_quarter{{$instrumentInfo->id}}" class="reload"></a> -->
+                        <a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.eps_history_chart_quarter_to_quarter:instrument_id={{$instrumentInfo->id}}:render_to=eps_quarter_to_quarter{{$instrumentInfo->id}}" class="reload"></a>
                         <a href="" class="collapse">
                         </a>
 
@@ -236,11 +236,11 @@
                     <div class="caption">
                         <i class="icon-graph font-yellow-casablanca"></i>
 								<span class="caption-subject bold font-yellow-casablanca uppercase">
-								NET PROFIT AFTER TEX (QUARTER TO QUARTER)</span>
+								Yearly NAV</span>
                         <span class="caption-helper"></span>
                     </div>
                     <div class="tools">
-                        <a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.net_profit_history_chart_quarter_to_quarter:instrument_id={{$instrumentInfo->id}}:render_to=net_profit_after_tex_quarter_to_quarter{{$instrumentInfo->id}}" class="reload"></a>
+                        <a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.yearly_nav:instrument_id={{$instrumentInfo->id}}:render_to=yearly_nav{{$instrumentInfo->id}}" class="reload"></a>
                         <a href="" class="collapse">
                         </a>
 
@@ -262,11 +262,11 @@
                     <div class="caption">
                         <i class="icon-graph font-yellow-casablanca"></i>
 								<span class="caption-subject bold font-yellow-casablanca uppercase">
-								NET PROFIT AFTER TEX (UP TO QUARTER)</span>
+								Yearly EPS</span>
                         <span class="caption-helper"></span>
                     </div>
                     <div class="tools">
-                        <a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.net_profit_history_chart_up_to_quarter:instrument_id={{$instrumentInfo->id}}:render_to=net_profit_after_tex_up_to_quarter{{$instrumentInfo->id}}" class="reload"></a>
+                        <a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.yearly_eps:instrument_id={{$instrumentInfo->id}}:render_to=yearly_eps{{$instrumentInfo->id}}" class="reload"></a>
                         <a href="" class="collapse">
                         </a>
 

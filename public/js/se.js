@@ -404,3 +404,9 @@ $.feedback({
     html2canvasURL: '/vendor/feedback/html2canvas.js',
 });
 }, false);
+
+Highcharts.setOptions({
+	credits: {
+		enabled:false
+	}
+});

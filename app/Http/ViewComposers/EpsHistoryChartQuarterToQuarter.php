@@ -29,16 +29,25 @@ class EpsHistoryChartQuarterToQuarter
         $render_to='eps_history_per_quarter';
         if(isset($viewdata['instrument_id']))
         {
-            $instrument_id=$viewdata['instrument_id'];
+            $instrument_id= (int) $viewdata['instrument_id'];
         }
         if(isset($viewdata['render_to']))
         {
             $render_to=$viewdata['render_to'];
         }
-
-        $metaKey=array("q1_eps_cont_op","q2_eps_cont_op","q3_eps_cont_op","q3_nine_months_eps","earning_per_share");
+   
+        $metaKey=array('year_end', "q1_eps_cont_op","q2_eps_cont_op","q3_eps_cont_op","q3_nine_months_eps","earning_per_share");
         $fundaData=FundamentalRepository::getFundamentalDataHistory($metaKey,array($instrument_id));
-
+        $year_end = $fundaData['year_end'];
+        unset($fundaData['year_end']);
+        foreach ($year_end->first() as $y) {
+            if($y->is_latest)
+            {
+                $year_end_month = Carbon::parse($y->meta_value)->addMonth(3)->format('m');
+                break;
+            }
+            continue;
+        }
         $start_year_ts=strtotime('2012-01-01');
 
         foreach($fundaData as $meta_key=>$metaDataForAllInstrument)
@@ -51,6 +60,27 @@ class EpsHistoryChartQuarterToQuarter
                     continue;
 
                 $year=$data->meta_date->format('Y');
+                if($year_end_month == '09')
+                {
+
+                    if ($meta_key == 'q1_eps_cont_op') {
+                        $nextYear = $year + 1;
+                        $year = "$year - $nextYear";
+                    } else if ($meta_key == 'half_year_eps_cont_op') {
+
+                        $nextYear = $year + 1;
+                        $year = "$year - $nextYear";
+                    } else if ($meta_key == 'q3_nine_months_eps') {
+
+                        $nextYear = $year - 1;
+                        $year = "$nextYear - $year";
+                    } else {
+
+                        $nextYear = $year - 1;
+                        $year = "$nextYear - $year";
+
+                    }
+                }                
                 $sortedByYear[$year][$meta_key]=$data;
             }
 
@@ -75,7 +105,11 @@ class EpsHistoryChartQuarterToQuarter
             {
                 $all_data_of_this_year['q4_eps_cont_op']['meta_value']=$all_data_of_this_year['earning_per_share']['meta_value']-$all_data_of_this_year['q3_nine_months_eps']['meta_value'];
             }
-
+            
+             if($all_data_of_this_year['q1_eps_cont_op']->meta_date->format('m') != $year_end_month)
+            {
+                continue;
+            }
 
             $eps_history_per_quarter_data['category'][]=$year;
 
@@ -86,8 +120,27 @@ class EpsHistoryChartQuarterToQuarter
 
         }
 
+        if(!isset($eps_history_per_quarter_data['category']))
+        {
+            $eps_history_per_quarter_data['category'] = [];
+        }
+        if(!isset($eps_history_per_quarter_data['q1_eps_cont_op']))
+        {
+            $eps_history_per_quarter_data['q1_eps_cont_op'] = [];
+        }
 
-
+        if(!isset($eps_history_per_quarter_data['q2_eps_cont_op']))
+        {
+            $eps_history_per_quarter_data['q2_eps_cont_op'] = [];
+        }
+        if(!isset($eps_history_per_quarter_data['q3_eps_cont_op']))
+        {
+            $eps_history_per_quarter_data['q3_eps_cont_op'] = [];
+        }
+        if(!isset($eps_history_per_quarter_data['q4_eps_cont_op']))
+        {
+            $eps_history_per_quarter_data['q4_eps_cont_op'] = [];
+        }
 
         $view->with('render_to', $render_to)
             ->with('category', collect($eps_history_per_quarter_data['category'])->toJson())

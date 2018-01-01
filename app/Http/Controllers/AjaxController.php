@@ -140,7 +140,7 @@ class AjaxController extends Controller
 
             ]
         //);
-        )->setTtl(60);
+        );//->setTtl(60);
         //return view('load_block',['viewData' => $viewData,'insid' => 12]);
     }
 

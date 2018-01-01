@@ -17,6 +17,6 @@
         });
     })
 </script>
-    <script src="{{ asset('js/filter.js') }}" type="text/javascript"></script>
+    {{-- <script src="{{ asset('js/filter.js') }}" type="text/javascript"></script> --}}
 <script src="{{ asset('js/se.js') }}?v={{uniqid()}}"></script>
             @stack('scripts')

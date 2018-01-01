@@ -1,7 +1,5 @@
-sdfsfd
 <div id="{{$render_to}}"></div>
 
-@push('scripts')
 
 <script>
     $(function () {
@@ -75,4 +73,3 @@ sdfsfd
 
 
 </script>
-@endpush

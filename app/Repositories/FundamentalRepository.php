@@ -110,6 +110,7 @@ class FundamentalRepository {
     public static function getFundamentalDataHistory($meta=array(),$ins=array())
     {
 
+
         // if id provided
         if(is_int($meta[0]))
         {
@@ -136,14 +137,15 @@ class FundamentalRepository {
         }else
         {
             // instrument code provided
+   
 
             $instrumentInfo = InstrumentRepository::getInstrumentsByCode($ins);
             $instrumentId = $instrumentInfo->pluck('id')->toArray();
 
         }
+ 
 
-
-        $groupByMetaData = Fundamental::getData($metaId,$instrumentId)->groupby('meta_id');
+            $groupByMetaData = Fundamental::getData($metaId,$instrumentId)->groupby('meta_id');    
 
 
 
