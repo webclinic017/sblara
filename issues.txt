@@ -1,0 +1,1 @@
+# `data_banks_intradays` Cron need to be fixed.  same rows are inserting by difrent batch.

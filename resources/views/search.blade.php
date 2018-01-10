@@ -7,9 +7,6 @@
     <a href="javascript:;" class="btn submit md-skip">
         <i class="fa fa-search"></i>
     </a>
-    <a href="javascript:;" class="btn md-skip ">
-        <i class="fa fa-gear show-search-options" style="right: 40px"></i>
-    </a>
 
 
     </div>
@@ -37,11 +34,11 @@
                                 <div class="search-container">
                                     <table class="table table-striped table-hover" style="margin-top: 10px;">
                                         <thead>
-                                            <th>TICKER</th>
+                                            <th>Name</th>
                                             <th>LTP</th>
-                                            <th>HIGH</th>
-                                            <th>LOW</th>
-                                            <th>%CHANGE</th>
+                                            <th>High</th>
+                                            <th>Low</th>
+                                            <th>%Ch</th>
                                         </thead>
                                                 <tbody class="company-search">
 

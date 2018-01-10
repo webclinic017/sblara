@@ -5,7 +5,66 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
 @endsection
 
 @section('content')
+        {{--  New block Starts--}}
+        <div class="row">
+            
+            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                <div class="portlet light bordered">
+                  <div class="portlet-title tabbable-line">
+                        <div class="caption">
+                            <i class="icon-graph font-yellow-casablanca"></i>
+                            <span class="caption-subject bold font-yellow-casablanca uppercase">
+                              Upcoming Courses </span>
 
+                          </div>
+                            <div class="tools">
+                                <a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.upcoming_courses:render_to=upcoming_courses" class="reload"></a>
+
+                                <a href="" class="collapse">
+                                </a>
+
+                            </a>
+                            <a href="" class="remove">
+                            </a>
+                        </div>
+                    </div>
+
+                <div class="portlet-body">
+
+                </div>
+            </div>
+            </div>    
+            <!-- news -->          
+            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                <div class="portlet light bordered">
+                  <div class="portlet-title tabbable-line">
+                        <div class="caption">
+                            <i class="icon-graph font-yellow-casablanca"></i>
+                            <span class="caption-subject bold font-yellow-casablanca uppercase">
+                              Recent News </span>
+
+                          </div>
+                            <div class="tools">
+                                <a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.recent_news:render_to=recent_news" class="reload"></a>
+
+                                <a href="" class="collapse">
+                                </a>
+
+                            </a>
+                            <a href="" class="remove">
+                            </a>
+                        </div>
+                    </div>
+
+                <div class="portlet-body">
+
+                </div>
+            </div>
+            </div>            
+
+            <!-- news /-->          
+        </div>
+        {{--  New block Ends--}}
 <div class="row">
     <div class="col-lg-12 col-md-12 col-sm-6 col-xs-12">
 
@@ -13,8 +72,9 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
     </div>
 </div>
 <div class="row">
-    <div class="col-lg-12 col-md-12 col-sm-6 col-xs-12">
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
         @include('block.index_chart')
+
     </div>
 </div>
 

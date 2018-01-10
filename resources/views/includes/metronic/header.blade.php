@@ -1,3 +1,4 @@
+            @include('includes.metronic.topAdvertise')         
             <header class="page-header">
                 <nav class="navbar mega-menu" role="navigation">
                     <div class="container-fluid">
@@ -15,10 +16,12 @@
                             <!-- BEGIN LOGO -->
                             <a id="index" class="page-logo" href="{{url('/')}}">
                                 <img src="{{ URL::asset('metronic/assets/layouts/layout5/img/logo.jpg') }}" alt="Logo"> </a>
+                                
                             <!-- END LOGO -->
                             <!-- BEGIN SEARCH -->
                             @include('search')
                             <!-- END SEARCH -->
+
                             <!-- BEGIN TOPBAR ACTIONS -->
                             @if (Auth::guest())
                                  @include('includes.metronic.topbar_guest')

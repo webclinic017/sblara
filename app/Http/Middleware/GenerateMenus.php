@@ -25,7 +25,7 @@ class GenerateMenus
             $menu->home->attr(['class' => 'dropdown dropdown-fw  '])->prepend('<i class="icon-home" ></i > ');
 
             //submenu
-            $menu->home->add('Dashboard', ['route' => '/'])->prepend('<i class="icon-bar-chart" ></i > ');
+            $menu->home->add('Dashboard', ['route' => 'home'])->prepend('<i class="icon-bar-chart" ></i > ');
             $menu->home->add('News', ['class' => 'dropdown more-dropdown-sub closed'])->prepend('<i class="icon-bar-chart" ></i > '); //should remove open class
             $menu->news->link->href('javascript:;');
             $menu->news->add('News from newspaper', ['route' => 'collective-news'])->prepend('<i class="icon-bar-chart" ></i > ');

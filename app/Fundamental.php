@@ -7,11 +7,7 @@ use Carbon\Carbon;
 
 class Fundamental extends Model
 {
-    protected $dates = [
-        'created_at',
-        'updated_at',
-
-    ];
+    protected  $fillable = ['is_latest', 'instrument_id', 'meta_id', 'meta_value', 'meta_date'];
     public function getMetaDateAttribute($value) {
         return Carbon::parse($value);
     }
@@ -42,5 +38,11 @@ class Fundamental extends Model
     {
         $deletedRows = self::whereIn('meta_id', $meta_ids)->delete();
         return true;
+    }
+
+    
+    public function storeMeta()
+    {
+
     }
 }

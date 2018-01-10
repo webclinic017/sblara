@@ -389,8 +389,9 @@ $('body').on('click',  '.confirmSell', function () {
 	/*pop over ta chart*/
 
 	/*menu fix*/
-	/*menu fix*/
 	$('.more-dropdown-sub.closed').removeClass('open');
+	$('.active').parent('.active').addClass('open');
+	/*menu fix*/
 	$('.select2-multiple').select2({
 		maximumSelectionLength: 5,
 		 placeholder: "Please Select",

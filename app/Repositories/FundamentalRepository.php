@@ -394,6 +394,25 @@ class FundamentalRepository {
 
     }
 
+    public static function store($instrument_id, $meta_key, $meta_value)
+    {
+        $meta_id = \App\Meta::where('meta_key', $meta_key)->first()->id;
+       /*set preivous latest to 0*/
+        \App\Fundamental::where('instrument_id', $instrument_id)
+                         ->where('meta_id', $meta_id)
+                         ->update(['is_latest' => 0]);
+                         
+
+        /*insert new row*/
+        \App\Fundamental::create([
+                            'is_latest' => 1, 
+                            'instrument_id' => $instrument_id, 
+                            'meta_id' => $meta_id, 
+                            'meta_value' => $meta_value,
+                            'meta_date' => date('Y-m-d')
+                        ]);
+    }
+
 
 
 } 

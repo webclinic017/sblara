@@ -9,7 +9,7 @@
 @include('includes.metronic.head')
     <!-- END HEAD -->
 
-    <body class="page-header-fixed page-sidebar-closed-hide-logo page-md">
+    <body class=" page-sidebar-closed-hide-logo page-md">
         <!-- BEGIN CONTAINER -->
         <div class="wrapper">
             <!-- BEGIN HEADER -->

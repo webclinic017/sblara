@@ -1,0 +1,40 @@
+body, td, p
+{
+	font-family: Verdana;
+	font-size: 10pt;
+}
+h1
+{
+	font-family: Verdana;
+	font-size: 14pt;
+}
+table
+{
+	border-collapse: collapse;
+}
+td, th
+{
+	border-top: solid 1px #666666;
+	border-bottom: solid 1px #666666;
+	white-space: nowrap;
+	padding-left: 10px;
+	padding-right: 10px;
+	text-align: left;
+}
+th
+{
+	background-color: #666666;
+	color: #ffffff;
+}
+#outerDiv
+{
+	position: relative;
+}
+#innerDiv
+{
+	overflow: auto;
+}
+#innerDiv td
+{
+	white-space: nowrap;
+}

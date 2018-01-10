@@ -269,5 +269,9 @@ class Instrument extends Model
         return $data;
     }
 
+    public function dseSharePercentage()
+    {
+        return $this->hasOne(DseSharePercentage::class)        ;
+    }
 
 }

@@ -8,7 +8,7 @@ use Illuminate\Contracts\Auth\Authenticatable as Ath;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 
-class User extends Authenticatable implements Ath{
+class User extends \TCG\Voyager\Models\User implements Ath{
 
     use Notifiable, HasApiTokens, HasRole;
 
@@ -87,9 +87,5 @@ class User extends Authenticatable implements Ath{
         return Carbon::parse($join_date)->format('d-M-Y');
     }
 
-    public function getAvatarAttribute()
-    {
-        return "https://www.aber.ac.uk/staff-profile-assets/img/noimg.png";
-        return $this->pic_path;
-    }
+
 }

@@ -41,7 +41,7 @@ Route::post('/filter', 'FilterController@filter');
 Route::post('/save_filter', 'FilterController@save_filter');
 //
 // Route to courses
-Route::group(['middleware' => 'admin'], function()
+Route::group([], function()
 {
   Route::resource('/courses', 'CoursesController');//->middleware('admin');
   Route::resource('/categories_course', 'CourseCategoriesController');//->middleware('auth');;
@@ -89,7 +89,8 @@ Route::get('/test', function () {
 });
 Route::get('/se', function () {
 app('debugbar')->disable();
-return view('se');
+        $trade_date_Info=\App\Market::getActiveDates()->first();
+        return response()->view('se', ['trade_date_Info' => $trade_date_Info]);
 });
 Route::get('/download', 'DownloadController@index');
 Route::post('/download', 'DownloadController@download');
@@ -118,8 +119,11 @@ Route::get('/pluginIntra2', function () {
 
 Route::get('/data', 'PagesController@data')->name('/data');
 Route::get('/d', 'PagesController@dashboard2')->name('/dashboard2')->middleware('httpcache');
-Route::get('/', 'PagesController@dashboard')->name('/')->middleware('httpcache');
-Route::get('/home', 'PagesController@dashboard')->name('/')->middleware('httpcache');
+Route::get('/', 'PagesController@dashboard')->name('home')->middleware('httpcache');
+Route::get('/home', function ()
+{
+  return redirect('/');
+});
 Route::get('/market-depth', function () {return view('market_depth_page');})->name('market-depth');
 Route::get('/market-frame', function () {return view('market_frame_page');})->name('market-frame');
 Route::get('/market-composition', function () {return view('market_composition_page');})->name('market-composition');
@@ -195,10 +199,14 @@ Route::get('/ipos/results', 'IpoController@results')->name('ipos-results');
 /* Se Routes */
 Route::group(['prefix' => 'admin'], function ()
 {
-    
-  Route::resource('/ipos', 'IpoController');
-  
-Route::resource('/news', 'newspaperNewsController');
+
+
+    Voyager::routes();
+  Route::resource('/ipos', 'IpoController');  
+  Route::resource('/news', 'newspaperNewsController');
+    Route::get('/data-extractors/share-percentage', 'DataExtractController@sharePercentage')->name('voyger.data-extractor.share-precentage');
+    Route::get('/data-extractors/eps-parsing', 'DataExtractController@epsParsing')->name('admin.data-extract.eps-parsing');
+  Route::get('/data-extractors/share-percentage-dse-import', 'DataExtractController@sharePercentageDseImport');
 });
 /* Se Routes */
 

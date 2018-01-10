@@ -1,5 +1,5 @@
 /* theme modification start*/
-.page-header .navbar .navbar-nav .dropdown-menu>li>a{
+/* .page-header .navbar .navbar-nav .dropdown-menu>li>a{
     padding: 10px 30px 10px 25px;
     font-size: 13px;
 }
@@ -11,19 +11,16 @@
     padding: 2px 25px;
 }
 .page-header .navbar-collapse{
-    margin-top: 50px;
+    margin-top: 60px;
+    padding-left: 15px;
 }
+.container, .container-fluid{
+    padding:0px;
+}
+.wrapper{
+     margin: 0px !important; 
+} */
 /* theme modification end*/
-
-
-
-
-
-
-
-
-
-
 
 
 #editing{
@@ -108,14 +105,13 @@ div.center select{
 .search-result{
     visibility: hidden;
     position: absolute;
-    min-width: 500px;
     top:45px;
     border:1px solid #eee;
     z-index: 999;
 }
 .se-search{
     position: relative;
-    display: inline-block;
+    display: block;
 }
 .se-search .portlet.box.yellow{
     border:0;
@@ -145,4 +141,33 @@ div.center select{
 .company-search i{
     margin-left: 10px;
     float: right;
+}
+
+/* top advertise */
+.topAdvertise{
+    position: absolute;
+    z-index: 9999;
+    display: block;
+    width: 45%;
+    height: 80px;
+    top: 7px;
+    text-align: center;
+    right: 18%;
+}
+.topAdvertise img{
+    float: right;
+}
+/* top advertise */
+
+@media only screen and (min-width: 992px) {
+    .search-result{
+         left: 149px;
+        width: 500px !important;
+    }
+}
+@media only screen and (max-width: 1260px) {
+    .topAdvertise{
+    width: 30%;
+    right: 21%;        
+    }
 }

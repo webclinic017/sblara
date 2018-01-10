@@ -21,6 +21,7 @@ class AppServiceProvider extends ServiceProvider {
         View::composer('html.breadcrumbs', 'App\Http\ViewComposers\BreadcrumbMaker');
         View::composer('html.instrument_list_bs_select', 'App\Http\ViewComposers\InstrumentListBsSelect');
         View::composer('block.index_chart', 'App\Http\ViewComposers\IndexChart');
+        View::composer('block.index_chart2', 'App\Http\ViewComposers\IndexChart');
         View::composer('block.index_mover', 'App\Http\ViewComposers\IndexMover');
         View::composer('block.home_page_index', 'App\Http\ViewComposers\HomePageIndexChart');
         View::composer('block.market_summary', 'App\Http\ViewComposers\MarketSummary');

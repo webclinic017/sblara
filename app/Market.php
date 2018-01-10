@@ -280,6 +280,43 @@ class Market extends Model
             return false;
     }
 
+/*latest market methods. (if holiday then previous) */
+    public static function gainerLoserMinuteChart()
+    {
+        $query = "
+                    SELECT *, COUNT(priceChange) as items FROM  (SELECT 
+                    IF( (close_price - yday_close_price) > 0, 1, IF( (close_price - yday_close_price) < 0 , -1, 0) ) as priceChange,
+                    `trade_time`
+                    FROM `data_banks_intradays` WHERE `market_id` = (SELECT id FROM `markets`  
+                    where data_bank_intraday_batch != 0
+                    ORDER BY `markets`.`trade_date` DESC
+                    LIMIT 1) and batch != 0) AS priceChange
+                    GROUP BY priceChange, trade_time  
+                    ORDER BY `priceChange`.`trade_time`  ASC
+        ";
+        $data = new \stdClass();
+        $data->times = [];
+        $data->gainers = [];
+        $data->losers = [];
+        $data->unchanges = [];
+        $rows = \DB::select(\DB::raw($query));
+        $prev;
+        foreach ($rows as $key => $row) {
+            $prev = $row->trade_time;
+            $data->times[] = $row->trade_time;
+            if($row->priceChange > 0)
+            {
+                $data->gainers[] = $row->priceChange;
+            }else if($row->priceChange < 0)
+            {
+                $data->losers[] = $row->priceChange;
+            }else{
+                $data->unchanges[] = $row->priceChange;
+            }
+        }
 
+        return $data;
+    }
+/**/
 
 }
