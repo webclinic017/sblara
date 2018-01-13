@@ -6,7 +6,7 @@
     <div class="page-content container-fluid">
         <div class="col-md-12">
             <a href="/admin/data-extractors/share-percentage-dse-import" target="_blank" class="btn btn-success">Update DSE Data</a>
-            <a href="?update=sb" onclick="return confirm('Are you sure?')" class="btn btn-warning disabled">Auto Update SB Data</a>
+            {{-- <a href="?update=sb" onclick="return confirm('Are you sure?')" class="btn btn-warning disable" disabled >Auto Update SB Data</a> --}}
         </div>
           {{-- content start  --}}
             <table class="table table-striped">

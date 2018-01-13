@@ -5,7 +5,14 @@
 @endsection
 
 @section('content')
+<div class="row margin-bottom-20">
+<div class="col-lg-6 col-md-3 col-sm-6 col-xs-12">
+</div>
+<div class="col-lg-6 col-md-3 col-sm-6 col-xs-12">
+@include('html.instrument_list_bs_select',['bs_select_id'=>'instruments'])
+</div>
 
+</div>
 
 <div class="clearfix"></div>
 

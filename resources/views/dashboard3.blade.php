@@ -5,8 +5,26 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
 @endsection
 
 @section('content')
+
+ 
         {{--  New block Starts--}}
         <div class="row">
+
+            <!-- news /-->          
+        </div>
+        {{--  New block Ends--}}
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-6 col-xs-12">
+
+        @include('block.market_summary')
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+        @include('block.index_chart')
+
+    </div>
+
             
             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                 <div class="portlet light bordered">
@@ -14,7 +32,8 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
                         <div class="caption">
                             <i class="icon-graph font-yellow-casablanca"></i>
                             <span class="caption-subject bold font-yellow-casablanca uppercase">
-                              Upcoming Courses </span>
+                                Course </span>
+                                <span class="caption-helper"> upcoming course</span>
 
                           </div>
                             <div class="tools">
@@ -41,7 +60,8 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
                         <div class="caption">
                             <i class="icon-graph font-yellow-casablanca"></i>
                             <span class="caption-subject bold font-yellow-casablanca uppercase">
-                              Recent News </span>
+                                Live news </span>
+                                <span class="caption-helper"> share market news</span>
 
                           </div>
                             <div class="tools">
@@ -62,20 +82,6 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
             </div>
             </div>            
 
-            <!-- news /-->          
-        </div>
-        {{--  New block Ends--}}
-<div class="row">
-    <div class="col-lg-12 col-md-12 col-sm-6 col-xs-12">
-
-        @include('block.market_summary')
-    </div>
-</div>
-<div class="row">
-    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-        @include('block.index_chart')
-
-    </div>
 </div>
 
 
@@ -85,39 +91,6 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 
 
-        {{--  New block Starts--}}
-        <div class="row">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <!-- BEGIN Portlet PORTLET-->
-                <div class="portlet light bordered">
-                    <div class="portlet-title">
-                        <div class="caption">
-                            <i class="icon-graph font-yellow-casablanca"></i>
-                            <span class="caption-subject bold font-yellow-casablanca uppercase">
-                                Live news </span>
-                                <span class="caption-helper"> share market news</span>
-                            </div>
-                            <div class="tools">
-                                <a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.dsb_news:render_to=live_news" class="reload"></a>
-
-                                <a href="" class="collapse">
-                                </a>
-
-                            </a>
-                            <a href="" class="remove">
-                            </a>
-                        </div>
-
-                    </div>
-                    <div class="portlet-body">
-
-                    </div>
-                </div>
-                <!-- END Portlet PORTLET-->
-
-            </div>
-        </div>
-        {{--  New block Ends--}}
 
 
 
@@ -322,41 +295,7 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 
 
-        {{--  New block Starts--}}
-        <div class="row">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <!-- BEGIN Portlet PORTLET-->
-                <div class="portlet light bordered">
-                    <div class="portlet-title">
-                        <div class="caption">
-                            <i class="icon-graph font-yellow-casablanca"></i>
-                            <span class="caption-subject bold font-yellow-casablanca uppercase">
-                                Course </span>
-                                <span class="caption-helper"> upcoming course</span>
-                            </div>
-                            <div class="tools">
-                                {{--<a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.courses:render_to=course" class="reload"></a>--}}
-
-                                <a href="" class="collapse">
-                                </a>
-
-                            </a>
-                            <a href="" class="remove">
-                            </a>
-                        </div>
-
-                    </div>
-                    <div class="portlet-body">
-
-
-                    </div>
-                </div>
-                <!-- END Portlet PORTLET-->
-
-
-            </div>
-        </div>
-        {{--  New block Ends--}}
+  
 
 
         {{--  New block Starts--}}

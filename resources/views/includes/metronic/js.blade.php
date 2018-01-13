@@ -3,6 +3,9 @@
 <script src="{{ asset('metronic/assets/global/plugins/excanvas.min.js') }}"></script>
 <script src="{{ asset('metronic/assets/global/plugins/ie8.fix.min.js') }}"></script>
 <![endif]-->
+<script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+ <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+ 
 <script src="{{ asset('metronic_custom/custom.js') }}"></script>
 <script src="{{ asset('js/application.js') }}"></script>
 @include('includes.flash.toastr')
