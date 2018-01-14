@@ -29,7 +29,7 @@
                     </a>
 
                     </a>
-                    <a href="#" data-url="#" id="buyer_seller_reload" class="reload"></a>
+                    {{-- <a href="#" data-url="#" id="buyer_seller_reload" class="reload"></a> --}}
                     <a href="" class="remove">
                     </a>
                 </div>

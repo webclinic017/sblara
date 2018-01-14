@@ -79,8 +79,10 @@ class PerformanceTotalItem {
 
         }
 
-        $totalChangeSincePurchase = $totalPurchaseWithCommission?($totalProfitSincePurchase/($totalPurchaseWithCommission+ $portfolio->cash_amount))*100:0;
-        $cash_amount_per = $totalPurchaseWithCommission? ($portfolio->cash_amount / ($totalPurchaseWithCommission + $portfolio->cash_amount)) * 100:0;
+        $total_portfolio_value= $totalPurchaseWithCommission + $portfolio->cash_amount;
+
+        $totalChangeSincePurchase = $total_portfolio_value?($totalProfitSincePurchase/$total_portfolio_value)*100:0;
+        $cash_amount_per = $total_portfolio_value? ($portfolio->cash_amount / $total_portfolio_value) * 100:0;
 
         $view->with('totalPurchaseWithCommission', round($totalPurchaseWithCommission, 2));
         $view->with('totalProfitSincePurchase', round($totalProfitSincePurchase, 2));

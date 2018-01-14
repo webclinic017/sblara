@@ -51,9 +51,7 @@ class PluginAdjustedEodDataResetCommand extends Command
         }
         Storage::append($file, $strToadd);
 
-        $zipper = new \Chumper\Zipper\Zipper;
-        $files = glob(storage_path() .'/app/plugin/adjusted_eod/*');
-        $zipper->make(storage_path() .'/app/plugin/adjusted_eod.zip')->add($files)->close();
+
 
     }
 
@@ -72,6 +70,7 @@ class PluginAdjustedEodDataResetCommand extends Command
             $instrument_id = $ins->id;
             dump("started  " . $ins->instrument_code);
             $to=date('Y-m-d');
+            //$from='2007-01-01';
             $from='2007-01-01';
             $data=DataBankEodRepository::getEodDataAdjusted($instrument_id, $from,$to,0);
 
@@ -79,6 +78,9 @@ class PluginAdjustedEodDataResetCommand extends Command
 
 //            dd($data->first());
         }
+        $zipper = new \Chumper\Zipper\Zipper;
+        $files = glob(storage_path() . '/app/plugin/adjusted_eod/*');
+        $zipper->make(storage_path() . '/app/plugin/adjusted_eod.zip')->add($files)->close();
 
         $this->info('adjusted eod data written successfully');
     }

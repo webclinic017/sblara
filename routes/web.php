@@ -24,7 +24,7 @@ Route::get('/contests', 'ContestsController@index')->name('contests');
 //========================  Contest End  ======================== 
 
 // User routes
-Route::get('user-information', 'UserController@userInformationChange')->name('user-information')->middleware('auth');
+Route::get('user-information', 'UserController@userInformationChange')->name('user-information')->middleware(['auth']);
 Route::get('user-name-change', 'UserController@userNameChange')->name('user-name-change');
 Route::get('user-password-change', 'UserController@passwordChange')->name('user-password-change');
 
@@ -41,20 +41,19 @@ Route::post('/filter', 'FilterController@filter');
 Route::post('/save_filter', 'FilterController@save_filter');
 //
 // Route to courses
-Route::group([], function()
-{
-  Route::resource('/courses', 'CoursesController');//->middleware('admin');
-  Route::resource('/categories_course', 'CourseCategoriesController');//->middleware('auth');;
-  Route::resource('/venues_course', 'CourseVenuesController');//->middleware('admin');
-  Route::resource('/participants_course', 'CourseParticipantsController');//->middleware('admin');
-  Route::resource('/facilitators_course', 'CourseFacilitatorsController');//->middleware('admin');
+Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
+    Route::resource('/courses', 'CoursesController');//->middleware('admin');
+    Route::resource('/categories_course', 'CourseCategoriesController');//->middleware('auth');;
+    Route::resource('/venues_course', 'CourseVenuesController');//->middleware('admin');
+    Route::resource('/participants_course', 'CourseParticipantsController');//->middleware('admin');
+    Route::resource('/facilitators_course', 'CourseFacilitatorsController');//->middleware('admin');
 
-  Route::resource('/batch_transfer', 'BatchTransferController');//->middleware('admin');
+    Route::resource('/batch_transfer', 'BatchTransferController');//->middleware('admin');
 
-  Route::get('participant_payment/{id}', ['as' => 'participant_payment.index', 'uses' => 'CoursePaymentsController@index']);
-  Route::get('participant_payment/create/{id}', ['as' => 'participant_payment.create', 'uses' => 'CoursePaymentsController@create']);
-  Route::post('participant_payment/store', ['as' => 'participant_payment.store', 'uses' => 'CoursePaymentsController@store']);
-  //Route::resource('/participant_payment', 'CoursePaymentsController', ['except' => ['index']]);//->middleware('admin');
+    Route::get('participant_payment/{id}', ['as' => 'participant_payment.index', 'uses' => 'CoursePaymentsController@index']);
+    Route::get('participant_payment/create/{id}', ['as' => 'participant_payment.create', 'uses' => 'CoursePaymentsController@create']);
+    Route::post('participant_payment/store', ['as' => 'participant_payment.store', 'uses' => 'CoursePaymentsController@store']);
+    //Route::resource('/participant_payment', 'CoursePaymentsController', ['except' => ['index']]);//->middleware('admin');
 });
 
 Route::get('/courses-avaliable', 'UserParticipantsController@index')->name('courses');
@@ -64,18 +63,18 @@ Route::post('/registration', 'UserParticipantsController@store')->name('registra
 
 //Route::get('/mail', 'MailController@index');
 
-Route::get('mail', function(){
+Route::get('mail', function () {
     return view('mail');
 });
 
 //Route::post('/categories_course', 'CourseCategoriesController@store')->name('qwer');
 
-Route::get('my-page', function(){
+Route::get('my-page', function () {
     return Response::make('Hello!')->setTtl(60); // Cache 1 minute
 });
 
 
-Route::get('head', function(){
+Route::get('head', function () {
     return response()->view('includes.metronic.head')->setTtl(60);
 });
 
@@ -88,14 +87,14 @@ Route::get('/test', function () {
     return view('test');
 });
 Route::get('/se', function () {
-app('debugbar')->disable();
-        $trade_date_Info=\App\Market::getActiveDates()->first();
-        return response()->view('se', ['trade_date_Info' => $trade_date_Info]);
+    app('debugbar')->disable();
+    $trade_date_Info = \App\Market::getActiveDates()->first();
+    return response()->view('se', ['trade_date_Info' => $trade_date_Info]);
 });
-Route::get('/download', 'DownloadController@index');
+Route::get('/download', 'DownloadController@index')->name('download');
 Route::post('/download', 'DownloadController@download');
 Route::get('/pluginEod', function () {
-    return response()->download(storage_path() .'/app/plugin/eod.zip');
+    return response()->download(storage_path() . '/app/plugin/eod.zip');
 });
 
 Route::get('/pluginAdjustedEod', function () {
@@ -104,7 +103,7 @@ Route::get('/pluginAdjustedEod', function () {
 
 
 Route::get('/pluginIntra', function () {
-    return response()->download(storage_path() .'/app/plugin/intra.zip');
+    return response()->download(storage_path() . '/app/plugin/intra.zip');
 });
 
 Route::get('/pluginResources', function () {
@@ -120,28 +119,43 @@ Route::get('/pluginIntra2', function () {
 Route::get('/data', 'PagesController@data')->name('/data');
 Route::get('/d', 'PagesController@dashboard2')->name('/dashboard2')->middleware('httpcache');
 Route::get('/', 'PagesController@dashboard')->name('home')->middleware('httpcache');
-Route::get('/home', function ()
-{
-  return redirect('/');
+Route::get('/home', function () {
+    return redirect('/');
 });
-Route::get('/market-depth', function () {return view('market_depth_page');})->name('market-depth');
-Route::get('/market-frame', function () {return view('market_frame_page');})->name('market-frame');
-Route::get('/market-composition', function () {return view('market_composition_page');})->name('market-composition');
+Route::get('/market-depth', function () {
+        return view('market_depth_page');
+    })->name('market-depth');
+Route::get('/data-matrix', function () {
+        return view('data_matrix_page');
+    })->name('data-matrix');
+Route::get('/price-matrix', function () {
+        return view('price_matrix_page');
+    })->name('price-matrix');
+Route::get('/market-frame', function () {
+        return view('market_frame_page');
+    })->name('market-frame');
+Route::get('/market-composition', function () {
+        return view('market_composition_page');
+    })->name('market-composition');
 Route::get('news-chart/{instrument_id?}', 'PagesController@newsChart')->name('news-chart');
 Route::get('minute-chart/{instrument_id?}', 'PagesController@minuteChart')->name('minute-chart')->middleware('httpcache'); //httpcache implemented in PagesController@minuteChart
 Route::get('company-details/{instrument_id?}', 'PagesController@companyDetails')->name('company-details')->middleware('httpcache');
-Route::get('fundamental-details/{instrument_id?}', 'PagesController@fundamentalDetails')->name('fundamental-details')/*->middleware('httpcache')*/;
+Route::get('fundamental-details/{instrument_id?}', 'PagesController@fundamentalDetails')->name('fundamental-details')/*->middleware('httpcache')*/
+;
 
 
-
-Route::get('/advance-ta-chart', function () {return view('ta_chart.advance_ta_chart');})->name('advance-ta-chart');
+Route::get('/advance-ta-chart', function () {
+        return view('ta_chart.advance_ta_chart');
+    })->name('advance-ta-chart');
 Route::get('/ta-chart', 'DataBanksEodController@panel')->name('ta-chart');
 Route::get('/ta/ajax/{reportrange?}/{instrument?}/{comparewith?}/{Indicators?}/{configure?}/{charttype?}/{overlay?}/{mov1?}/{avgPeriod1?}/{mov2?}/{avgPeriod2?}/{adj?}/', 'DataBanksEodController@chart_img_trac');
 Route::get('/getchart/{img}', 'DataBanksEodController@getchart');
 
 
 Route::get('/dd', 'TestController@funtest');
-Route::get('/monitor', function () {return view('monitor');})->name('monitor');
+Route::get('/monitor', function () {
+        return view('monitor');
+    })->name('monitor');
 
 Route::get('/ajax/monitor/{inst_id}/{period}/{day_before?}', 'AjaxController@monitor')->name('Ajax.Monitor')->middleware('httpcache');
 Route::get('/ajax/yDay/{inst_id}/{period}', 'AjaxController@yDay')->name('Ajax.yDay');
@@ -197,16 +211,13 @@ Route::get('/ipos/history', 'IpoController@history')->name('ipos-history');
 Route::get('/ipos/results', 'IpoController@results')->name('ipos-results');
 
 /* Se Routes */
-Route::group(['prefix' => 'admin'], function ()
-{
-
-
+Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
     Voyager::routes();
-  Route::resource('/ipos', 'IpoController');  
-  Route::resource('/news', 'newspaperNewsController');
+    Route::resource('/ipos', 'IpoController');
+    Route::resource('/news', 'newspaperNewsController');
     Route::get('/data-extractors/share-percentage', 'DataExtractController@sharePercentage')->name('voyger.data-extractor.share-precentage');
     Route::get('/data-extractors/eps-parsing', 'DataExtractController@epsParsing')->name('admin.data-extract.eps-parsing');
-  Route::get('/data-extractors/share-percentage-dse-import', 'DataExtractController@sharePercentageDseImport');
+    Route::get('/data-extractors/share-percentage-dse-import', 'DataExtractController@sharePercentageDseImport');
 });
 /* Se Routes */
 

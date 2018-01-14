@@ -85,7 +85,7 @@ class PerformanceItem {
                     $temp['total_buying_cost_including_commission_of_this_instrument']= $temp['total_buy_commission_of_this_instrument'] + ($transaction->buying_price * $transaction->no_of_shares);
                     $temp['gain_loss_today_for_this_instrument'] = $temp['sell_value_deducting_commission_of_this_instrument']-$temp['total_buying_cost_including_commission_of_this_instrument'];
                     $temp['gain_loss_since_purchased_for_this_instrument'] = ($dataBankIntraDays->close_price - $transaction->buying_price) * $transaction->no_of_shares;
-                    $temp['gain_loss_per_since_purchased_for_this_instrument'] = $temp['gain_loss_since_purchased_for_this_instrument'] / $temp['total_buying_cost_including_commission_of_this_instrument'] * 100;
+                    $temp['gain_loss_per_since_purchased_for_this_instrument'] = $temp['total_buying_cost_including_commission_of_this_instrument']?$temp['gain_loss_since_purchased_for_this_instrument'] / $temp['total_buying_cost_including_commission_of_this_instrument'] * 100:0;
                     $temp['gain_loss_per_since_purchased_for_this_instrument'] = round($temp['gain_loss_per_since_purchased_for_this_instrument'], 2);
                     $temp['has_child']=0;
                //     $temp['childTransactions']=array();
@@ -100,7 +100,8 @@ class PerformanceItem {
             }
 
             $total_buying_cost_including_commission_of_this_instrument= $total_buying_cost_of_this_instrument+ $total_buy_commission_of_this_instrument;
-            $avg_buy_cost_of_this_instrument= round(($total_buying_cost_of_this_instrument/ $total_shares_of_this_instrument),2);
+            $avg_buy_cost_of_this_instrument= $total_shares_of_this_instrument?($total_buying_cost_of_this_instrument / $total_shares_of_this_instrument):0;
+            $avg_buy_cost_of_this_instrument= round($avg_buy_cost_of_this_instrument,2);
 
 
             $temp = array();
@@ -123,7 +124,7 @@ class PerformanceItem {
             $temp['total_buying_cost_including_commission_of_this_instrument'] = $total_buying_cost_including_commission_of_this_instrument;
             $temp['gain_loss_today_for_this_instrument'] = $total_shares_of_this_instrument * $dataBankIntraDays->price_change;
             $temp['gain_loss_since_purchased_for_this_instrument'] = $temp['sell_value_deducting_commission_of_this_instrument']-$total_buying_cost_including_commission_of_this_instrument;
-            $temp['gain_loss_per_since_purchased_for_this_instrument'] = $temp['gain_loss_since_purchased_for_this_instrument'] / $temp['total_buying_cost_including_commission_of_this_instrument'] * 100;
+            $temp['gain_loss_per_since_purchased_for_this_instrument'] = $temp['total_buying_cost_including_commission_of_this_instrument']?($temp['gain_loss_since_purchased_for_this_instrument'] / $temp['total_buying_cost_including_commission_of_this_instrument'] * 100):0;
             $temp['gain_loss_per_since_purchased_for_this_instrument'] = round($temp['gain_loss_per_since_purchased_for_this_instrument'], 2);
             $temp['has_child']=count($childTransactions);
 
@@ -142,9 +143,9 @@ class PerformanceItem {
         }
 
 
-
-        $total_gain_loss_per_of_this_portfolio_since_purchased= round($total_gain_loss_of_this_portfolio_since_purchased/($total_buy_cost_of_this_portfolio_with_commission+$cash_amount)*100,2);
-        $cash_amount_per= ($cash_amount/($total_sell_value_of_this_portfolio_deducting_commission+ $cash_amount))*100;
+        $total_portfolio_value_with_commision=$total_buy_cost_of_this_portfolio_with_commission + $cash_amount;
+        $total_gain_loss_per_of_this_portfolio_since_purchased= $total_portfolio_value_with_commision?round($total_gain_loss_of_this_portfolio_since_purchased/ $total_portfolio_value_with_commision*100,2):0;
+        $cash_amount_per= $total_portfolio_value_with_commision?($cash_amount/$total_portfolio_value_with_commision)*100:0;
         $cash_amount_per=round($cash_amount_per,2);
         $total_portfolio_value_with_cash= round($total_sell_value_of_this_portfolio_deducting_commission + $cash_amount,2);
 
@@ -153,7 +154,7 @@ class PerformanceItem {
         $all_transaction_array2=array();
         foreach($all_transaction_array as $transaction)
         {
-            $transaction['percent_of_portfolio_holding_by_this_instrument']= $transaction['sell_value_deducting_commission_of_this_instrument']/ $total_portfolio_value_with_cash*100;
+            $transaction['percent_of_portfolio_holding_by_this_instrument']= $total_portfolio_value_with_cash?$transaction['sell_value_deducting_commission_of_this_instrument']/ $total_portfolio_value_with_cash*100:0;
             $transaction['percent_of_portfolio_holding_by_this_instrument']=round($transaction['percent_of_portfolio_holding_by_this_instrument'],2);
             $all_transaction_array2[]= $transaction;
         }

@@ -23,6 +23,7 @@ class Fundamental extends Model
     }
 
 
+    // will return all data
     public static function getData($metaId=array(),$instrumentId=array())
     {
         $query=self::whereIn('meta_id',$metaId);
@@ -30,7 +31,22 @@ class Fundamental extends Model
         if(!empty($instrumentId))
         $query->whereIn('instrument_id',$instrumentId);
 
-        $returnData=$query->orderby('meta_date','asc')->get();
+        $returnData=$query->orderby('meta_date','desc')->get();
+        return  $returnData;
+    }
+
+    //will return where is_latest=1
+    public static function getDataLatest($metaId=array(),$instrumentId=array())
+    {
+        $query=self::whereIn('meta_id',$metaId);
+
+        if(!empty($instrumentId))
+        $query->whereIn('instrument_id',$instrumentId);
+        $query->where('is_latest',1);
+
+        $returnData=$query->orderby('meta_date','desc')->get();
+
+        
         return  $returnData;
     }
 

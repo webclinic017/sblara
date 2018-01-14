@@ -81,7 +81,8 @@ class FundamentalRepository {
         }
 
 
-        $groupByMetaData = Fundamental::getData($metaId,$instrumentId)->groupby('meta_id');
+        $groupByMetaData = Fundamental::getDataLatest($metaId,$instrumentId)->groupby('meta_id');
+        //$groupByMetaData = Fundamental::getData($metaId,$instrumentId)->groupby('meta_id');
 
 
 
@@ -156,6 +157,7 @@ class FundamentalRepository {
             $groupByInstrumentData=$metaData->groupby('instrument_id');
             $fundamentalData[$meta_key]=$groupByInstrumentData;
         }
+
         return collect($fundamentalData);
 
     }

@@ -3,7 +3,7 @@
 @section('content')
     <div class="container-fluid">
             <div class="page-content-row">
-                    <!-- BEGIN PAGE SIDEBAR -->
+{{--                     <!-- BEGIN PAGE SIDEBAR -->
                     <div class="page-sidebar">
                         <nav class="navbar" role="navigation">
                             <!-- Brand and toggle get grouped for better mobile display -->
@@ -55,7 +55,7 @@
                             </ul>
                         </nav>
                     </div>
-                    <!-- END PAGE SIDEBAR -->
+                    <!-- END PAGE SIDEBAR --> --}}
                     <div class="page-content-col">
                         <!-- BEGIN PAGE BASE CONTENT -->
                         <div class="row">
@@ -71,17 +71,17 @@
                                         <!-- SIDEBAR USER TITLE -->
                                         <div class="profile-usertitle">
                                             <div class="profile-usertitle-name"> {{ Auth::user()->name }} </div>
-                                            <div class="profile-usertitle-job"> Developer </div>
+                                            {{-- <div class="profile-usertitle-job"> Developer </div> --}}
                                         </div>
                                         <!-- END SIDEBAR USER TITLE -->
                                         <!-- SIDEBAR BUTTONS -->
-                                        <div class="profile-userbuttons">
+                       {{--                  <div class="profile-userbuttons">
                                             <button type="button" class="btn btn-circle green btn-sm">Follow</button>
                                             <button type="button" class="btn btn-circle red btn-sm">Message</button>
-                                        </div>
+                                        </div> --}}
                                         <!-- END SIDEBAR BUTTONS -->
                                         <!-- SIDEBAR MENU -->
-                                        <div class="profile-usermenu">
+                          {{--               <div class="profile-usermenu">
                                             <ul class="nav">
                                                 <li>
                                                     <a href="page_user_profile_1.html">
@@ -96,12 +96,12 @@
                                                         <i class="icon-info"></i> Help </a>
                                                 </li>
                                             </ul>
-                                        </div>
+                                        </div> --}}
                                         <!-- END MENU -->
                                     </div>
                                     <!-- END PORTLET MAIN -->
                                     <!-- PORTLET MAIN -->
-                                    <div class="portlet light bordered">
+                {{--                     <div class="portlet light bordered">
                                         <!-- STAT -->
                                         <div class="row list-separated profile-stat">
                                             <div class="col-md-4 col-sm-4 col-xs-6">
@@ -134,7 +134,7 @@
                                                 <a href="http://www.facebook.com/keenthemes/">keenthemes</a>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <!-- END PORTLET MAIN -->
                                 </div>
                                 <!-- END BEGIN PROFILE SIDEBAR -->
@@ -179,9 +179,9 @@
                                                         <li>
                                                             <a href="#tab_1_3" data-toggle="tab">Change Password</a>
                                                         </li>
-                                                        <li>
+{{--                                                         <li>
                                                             <a href="#tab_1_4" data-toggle="tab">Privacy Settings</a>
-                                                        </li>
+                                                        </li> --}}
                                                     </ul>
                                                 </div>
                                                 <div class="portlet-body">

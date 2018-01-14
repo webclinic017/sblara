@@ -42,6 +42,7 @@ class PluginEodDataResetCommand extends Command
 
     public function writeData($data, $instrumentList, $file)
     {
+
         $strToadd='';
         foreach ($data as $row) {
             $instrumentInfo = $instrumentList->where('id', $row->instrument_id);
@@ -54,15 +55,15 @@ class PluginEodDataResetCommand extends Command
             }
 
         }
-        Storage::append($file, $strToadd);
 
+        Storage::append($file, $strToadd);
         $zipper = new \Chumper\Zipper\Zipper;
         $files = glob(storage_path() .'/app/plugin/eod/*');
         $zipper->make(storage_path() .'/app/plugin/eod.zip')->add($files)->close();
 
     }
 
-// live server command   /opt/cpanel/ea-php70/root/usr/bin/php /home/hostingmonitors/artisan plugin:resetEod
+// live server command   /opt/cpanel/ea-php70/root/usr/bin/php /home/stock/sblara/artisan plugin:resetEod
     public function handle()
     {
         $file="plugin/eod/data.txt";
@@ -74,6 +75,9 @@ class PluginEodDataResetCommand extends Command
         $last_trade_date= $tradeDate->first()->trade_date->format('Y-m-d');
 
         $instrumentList=InstrumentRepository::getInstrumentsScripWithIndex();
+
+        //dump($last_trade_date);
+        //dd($instrumentList);
 
         //$result = DB::select('SELECT count(id) as total FROM data_banks_eods');
         //$total_row= $result[0]->total;

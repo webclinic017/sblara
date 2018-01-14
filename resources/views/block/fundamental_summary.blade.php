@@ -7,7 +7,7 @@
                         <span data-counter="counterup" data-value="{{$epsData['annualized_eps']}}">{{$epsData['annualized_eps']}}</span>
                         <small class="font-green-sharp"></small>
                     </h3>
-                    <small>EPS</small>
+                    <small>ANNUALIZED EPS</small>
                 </div>
                 <div class="icon">
                     <i class="icon-pie-chart"></i>
@@ -20,7 +20,7 @@
                                         </span>
                 </div>
                 <div class="status">
-                    <div class="status-title"> {{$epsData['text']}}</div>
+                    <div class="status-title">based on {{$epsData['text']}}</div>
                     <div class="status-number">{{$epsData['meta_date']->format('d-m-Y')}}</span></div>
                 </div>
             </div>

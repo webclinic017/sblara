@@ -40,17 +40,68 @@ class ShareHoldingsHistoryChart
 
         $fundaData=FundamentalRepository::getFundamentalDataHistory($metaKey,array($instrument_id));
 
-        $category=array();
-        foreach($fundaData['share_percentage_director']->first()->pluck('meta_date') as $meta_date)
+
+
+        $result=array();
+        foreach($fundaData as $key=>$data_arr)
         {
-            $category[]=$meta_date->format('M,Y');
+            foreach($data_arr[$instrument_id] as $data)
+            {
+                $date = $data->meta_date->format('M,Y');
+                $result[$date][$key] = $data->meta_value;
+            }
+
         }
 
-        $director=$fundaData['share_percentage_director']->first()->pluck('meta_value')->toArray();
-        $govt=$fundaData['share_percentage_govt']->first()->pluck('meta_value')->toArray();
-        $institute=$fundaData['share_percentage_institute']->first()->pluck('meta_value')->toArray();
-        $foreign=$fundaData['share_percentage_foreign']->first()->pluck('meta_value')->toArray();
-        $public=$fundaData['share_percentage_public']->first()->pluck('meta_value')->toArray();
+        $result=array_reverse($result, true);
+        $category = array();
+        $director = array();
+        $govt = array();
+        $institute = array();
+        $foreign = array();
+        $public = array();
+
+        foreach($result as $month=>$holding_data_of_this_month)
+        {
+
+            $category[]= $month;
+            if(isset($holding_data_of_this_month['share_percentage_director']))
+            {
+                $director[] = $holding_data_of_this_month['share_percentage_director'];
+                //sbdump($holding_data_of_this_month['share_percentage_director'], 'afmsohail@gmail.com');
+            }else
+            {
+                $director[] = 0;
+            }
+
+            if (isset($holding_data_of_this_month['share_percentage_govt']))
+            {
+                $govt[] = $holding_data_of_this_month['share_percentage_govt'];
+            } else {
+                $govt[] = 0;
+            }
+
+            if (isset($holding_data_of_this_month['share_percentage_institute'])) {
+                $institute[] = $holding_data_of_this_month['share_percentage_institute'];
+            } else {
+                $institute[] = 0;
+            }
+
+            if (isset($holding_data_of_this_month['share_percentage_foreign'])) {
+                $foreign[] = $holding_data_of_this_month['share_percentage_foreign'];
+            } else {
+                $foreign[] = 0;
+            }
+
+            if (isset($holding_data_of_this_month['share_percentage_public'])) {
+                $public[] = $holding_data_of_this_month['share_percentage_public'];
+            } else {
+                $public[] = 0;
+            }
+
+        }
+
+        //sbdd($public, 'afmsohail@gmail.com');
 
        // dd($fundaData['share_percentage_director']->first()->pluck('meta_value')->toArray());
 

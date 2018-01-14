@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Http\File;
 use Illuminate\Http\Request;
 use App\Instrument;
 use App\SectorList;
@@ -28,6 +28,10 @@ class DownloadController extends Controller
         if($request->has('nonadjusted'))
         {
             return response()->download(storage_path() .'/app/plugin/eod.zip');
+        }
+        if($request->has('allTogetherByDate'))
+        {
+            return $this->allTogetherByDate();
         }
         if($request->has('adjusted'))
         {
@@ -133,5 +137,23 @@ class DownloadController extends Controller
 		$zip->close();
 		unlink($filename);
 		return response()->download($zipname)->deleteFileAfterSend(true);
+    }
+
+    public function allTogetherByDate()
+    {
+        $date = request()->allTogetherByDate;
+        $query = "SELECT instrument_code, date, open, high, low, close, volume  FROM `data_banks_eods` 
+                    left join instruments on instruments.id = instrument_id
+                    where `date` = '$date'
+                    order by instrument_code asc";
+        $data = \DB::select(\DB::raw($query));
+
+        $path = uniqid()."csv";
+        $file  = Storage::put($path, "");
+        foreach ($data as  $instrument) {
+            // dd($instrument);
+         Storage::append($path, "$instrument->instrument_code,$instrument->date,$instrument->open,$instrument->high,$instrument->low,$instrument->close,$instrument->volume");
+        }
+        return response()->download(storage_path() ."/app/".$path, 'stockbangladesh.com_EOD_'. str_replace('-', '_', $date).'.csv' )->deleteFileAfterSend(true);
     }
 }

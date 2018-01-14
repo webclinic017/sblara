@@ -25,10 +25,10 @@ Route::post('login', 'MyApiLoginController@login');
 });*/
 
 
-Route::get('/test', function () {
-    return $data = DataBankEodRepository::getEodDataAsc(12, '2016-06-01', '2017-04-01');
-    // Access token has both "check-status" and "place-orders" scopes...
-})->middleware(['auth:api', 'scopes:paid-plugin-data']);
+// Route::get('/test', function () {
+//     return $data = DataBankEodRepository::getEodDataAsc(12, '2016-06-01', '2017-04-01');
+//     // Access token has both "check-status" and "place-orders" scopes...
+// })->middleware(['auth:api', 'scopes:paid-plugin-data']);
 
 
 Route::get('symbol_list/', function () {

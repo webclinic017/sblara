@@ -26,12 +26,7 @@ class RegisterController extends Controller
     use RegistersUsers;
     use VerifiesUsers;
 
-    /**
-     * Where to redirect users after registration.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/register';
+
 
     /**
      * Create a new controller instance.

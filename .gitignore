@@ -1,8 +1,9 @@
 /node_modules
 /public/hot
 /public/storage
+/public/blog/*
 /storage/*.key
-/storage/httpcache
+/storage/httpcache/*
 /vendor
 /.idea
 /.vagrant

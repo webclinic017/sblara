@@ -34,6 +34,7 @@ class FundamentalSummary
         $metaKey=array("net_asset_val_per_share","paid_up_capital","agm_date");
         $epsData=FundamentalRepository::getAnnualizedEPS(array($instrument_id));
         $fundaData=FundamentalRepository::getFundamentalData($metaKey,array($instrument_id));
+
         $epsData=$epsData[$instrument_id];
         $fundaData=r_collect($fundaData);
 

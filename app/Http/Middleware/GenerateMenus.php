@@ -31,11 +31,15 @@ class GenerateMenus
             $menu->news->add('News from newspaper', ['route' => 'collective-news'])->prepend('<i class="icon-bar-chart" ></i > ');
             $menu->home->add('News Search', ['route' => 'news-search'])->prepend('<i class="fa fa-search" ></i > ');
             $menu->home->add('Knowledge Basket', ['route' => 'knowledge-basket'])->prepend('<i class="fa fa-sun-o" ></i > ');
+            $menu->home->add('Company Details', ['route' => 'company-details'])->prepend('<i class="fa fa-dollar" ></i > ')->active('company-details/*');
+            $menu->home->add('Fundamental Details', ['route' => 'fundamental-details'])->prepend('<i class="fa fa-paperclip" ></i > ')->active('fundamental-details/*');
+            $menu->home->add('Data Matrix', ['route' => 'data-matrix'])->prepend('<i class="fa fa-paperclip" ></i > ');
+            $menu->home->add('Price Matrix', ['route' => 'price-matrix'])->prepend('<i class="fa fa-paperclip" ></i > ');
 
             /*Chart*/
             $menu->add('Chart', ['class' => 'dropdown dropdown-fw  ']);
             $menu->chart->link->href('javascript:;')->attr(['class' => 'text-uppercase']);
-            $menu->chart->attr(['class' => 'dropdown dropdown-fw  '])->prepend('<i class="icon-bar-chart" ></i > ');
+            $menu->chart->attr(['class' => 'dropdown dropdown-fw  '])->prepend('<i class="fa fa-line-chart" ></i > ');
 
             //submenu
             $menu->chart->add('Minute chart', ['route' => 'minute-chart'])->prepend('<i class="fa fa-clock-o" ></i > ')->active('minute-chart/*');
@@ -45,9 +49,9 @@ class GenerateMenus
 
             //Monitor submenu
             $menu->chart->add('Market Monitor', ['route' => 'monitor'])->prepend('<i class="fa fa-dashboard" ></i > ');
-            $menu->chart->add('Market Depth', ['route' => 'market-depth'])->prepend('<i class="icon-bar-chart" ></i > ');
-            $menu->chart->add('Market Frame', ['route' => 'market-frame'])->prepend('<i class="icon-bar-chart" ></i > ');
-            $menu->chart->add('Market Composition', ['route' => 'market-composition'])->prepend('<i class="icon-bar-chart" ></i > ');
+            $menu->chart->add('Market Depth', ['route' => 'market-depth'])->prepend('<i class="fa fa-gavel" ></i > ');
+            $menu->chart->add('Market Frame', ['route' => 'market-frame'])->prepend('<i class="fa fa-tv" ></i > ');
+            $menu->chart->add('Market Composition', ['route' => 'market-composition'])->prepend('<i class="fa fa-pie-chart" ></i > ');
 
 
 
@@ -67,13 +71,11 @@ class GenerateMenus
 
             //submenu
 
-            $menu->home->add('Company Details', ['route' => 'company-details'])->prepend('<i class="fa fa-dollar" ></i > ')->active('company-details/*');
-            $menu->home->add('Fundamental Details', ['route' => 'fundamental-details'])->prepend('<i class="fa fa-paperclip" ></i > ')->active('fundamental-details/*');
 
             /*Sector*/
-            $menu->add('Sector', ['class' => 'dropdown dropdown-fw  ']);
-            $menu->sector->link->href('javascript:;')->attr(['class' => 'text-uppercase']);
-            $menu->sector->attr(['class' => 'dropdown dropdown-fw  '])->prepend('<i class="icon-link" ></i > ');
+            // $menu->add('Sector', ['class' => 'dropdown dropdown-fw  ']);
+            // $menu->sector->link->href('javascript:;')->attr(['class' => 'text-uppercase']);
+            // $menu->sector->attr(['class' => 'dropdown dropdown-fw  '])->prepend('<i class="icon-link" ></i > ');
 
             //submenu
           //  $menu->sector->add('Trade Details', ['route' => 'company-details'])->prepend('<i class="icon-bar-chart" ></i > ');
@@ -82,7 +84,7 @@ class GenerateMenus
             /*Contest*/
             $menu->add('Contest', ['class' => 'dropdown dropdown-fw  ']);
             $menu->contest->link->href('javascript:;')->attr(['class' => 'text-uppercase']);
-            $menu->contest->attr(['class' => 'dropdown dropdown-fw  '])->prepend('<i class="icon-link" ></i > ');
+            $menu->contest->attr(['class' => 'dropdown dropdown-fw  '])->prepend('<i class="fa fa-trophy" ></i > ');
 
             //submenu
             $menu->contest->add('All Contests', ['route' => 'contests'])->prepend('<i class="icon-link" ></i > ');
@@ -92,7 +94,7 @@ class GenerateMenus
             /*Corse*/
             $menu->add('Course', ['class' => 'dropdown dropdown-fw  ']);
             $menu->course->link->href('javascript:;')->attr(['class' => 'text-uppercase']);
-            $menu->course->attr(['class' => 'dropdown dropdown-fw  '])->prepend('<i class="icon-link" ></i > ');
+            $menu->course->attr(['class' => 'dropdown dropdown-fw  '])->prepend('<i class="fa fa-graduation-cap" ></i > ');
 
             //submenu
             $menu->course->add('Upcoming Courses', ['route' => 'courses'])->prepend('<i class="icon-link" ></i > ');
@@ -101,13 +103,21 @@ class GenerateMenus
             /*IPO*/
             $menu->add('Ipo', ['class' => 'dropdown dropdown-fw  ']);
             $menu->ipo->link->href('javascript:;')->attr(['class' => 'text-uppercase']);
-            $menu->ipo->attr(['class' => 'dropdown dropdown-fw  '])->prepend('<i class="icon-link" ></i > ');
+            $menu->ipo->attr(['class' => 'dropdown dropdown-fw  '])->prepend('<i class="fa fa-flag" ></i > ');
 
             //submenu
             $menu->ipo->add('Upcoming IPO', ['route' => 'ipos'])->prepend('<i class="icon-link" ></i > ');
             $menu->ipo->add('IPO History', ['route' => 'ipos-history'])->prepend('<i class="icon-link" ></i > ');
             $menu->ipo->add('IPO Results', ['route' => 'ipos-results'])->prepend('<i class="icon-link" ></i > ');
+        
+            /*IPO*/
+            $menu->add('Resources', ['class' => 'dropdown dropdown-fw  ']);
+            $menu->resources->link->href('javascript:;')->attr(['class' => 'text-uppercase']);
+            $menu->resources->attr(['class' => 'dropdown dropdown-fw  '])->prepend('<i class="fa fa-database" ></i > ');
 
+            //submenu
+            $menu->resources->add('Data download', ['route' => 'download'])->prepend('<i class="fa fa-download" ></i > ');
+         
 
         });
 

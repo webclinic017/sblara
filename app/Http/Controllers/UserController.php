@@ -12,7 +12,7 @@ class UserController extends Controller
 {
     public function userInformationChange()
     {
-        return view('user.index');
+        return response()-> view('user.index');
     }
 
     public function userNameChange()

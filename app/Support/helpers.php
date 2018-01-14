@@ -1,5 +1,30 @@
 <?php
+function sbdd($var,$user_email)
+{
 
+    $user = Auth::user();
+
+    if(!is_null($user))
+    {
+        if ($user->email == $user_email) {
+            dd($var);
+        }
+    }
+
+}
+
+function sbdump($var, $user_email)
+{
+
+    $user = Auth::user();
+
+    if (!is_null($user)) {
+        if ($user->email == $user_email) {
+            dump($var);
+        }
+    }
+
+}
 function getWebPage($url)
 {
     $options = array(

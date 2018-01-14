@@ -1,7 +1,7 @@
 <?php
 set_time_limit(0);
  include_once public_path()."/data-extract/share_per/simplehtmldom/simple_html_dom.php";
-$instruments =\App\Instrument::with('dseSharePercentage')->orderBy('instrument_code', 'asc')->where('active', '=', '1')->get();
+$instruments =\App\Instrument::with('dseSharePercentage')->orderBy('instrument_code', 'asc')->whereNotIn('sector_list_id', [5, 23, 22])->where('active', '=', '1')->get();
 
 function _startsWith($haystack, $needle) {
 	// search backwards starting from haystack length characters from the end
