@@ -1,0 +1,98 @@
+@font-face {
+	font-family: 'FontAwesomeShare';
+	src: url('../fonts/fontawesome-webfont.eot?v=3.2.1');
+	src: url('../fonts/fontawesome-webfont.eot?#iefix&v=3.2.1') format('embedded-opentype'), url('../fonts/fontawesome-webfont.woff?v=3.2.1') format('woff'), url('../fonts/fontawesome-webfont.ttf?v=3.2.1') format('truetype'), url('../fonts/fontawesome-webfont.svg#fontawesomeregular?v=3.2.1') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+.wp-share-container{
+	overflow: hidden;
+}
+.share-heading{
+	width: 14.99%;
+	float: left;
+	font-weight: bold;
+}
+.share-buttons{
+	width: 84.99%;
+	float: right;
+}
+.share-buttons ul{
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	line-height: 0;
+}
+.share-buttons ul li{
+	display: block;
+	float: left;
+	margin: 0 5px;
+	line-height: 0;
+}
+
+.share-icon-text li a,
+.share-icon li a{
+	display: block;
+	padding: 2px 5px;
+	border: 1px solid #eee;
+	border-radius: 3px;
+	color: #000;
+	font-size: 14px;
+	line-height: 18px;
+	text-decoration: none;
+}
+.share-icon-text li a:hover,
+.share-icon li a:hover{
+	text-decoration: none;
+}
+.share-icon-text li a:before,
+.share-icon li a:before{
+	font-family: 'FontAwesomeShare';
+	font-size: 18px;
+	display: inline-block;
+	width: 24px;
+	height: 24px;
+	line-height: 24px;
+	margin-right: 5px;
+	text-align: center;
+	background: #000;
+}
+.share-icon li a{
+	max-width: 22px;
+	font-size: 0;
+	line-height: 0;
+	border: 0;
+}
+li[class*='share-button-export'] a:before{
+	content:"\F045";
+}
+li[class*='share-button-facebook'] a:before{
+	content:"\F09A";
+	color: #fff;
+	background: #3b5998;
+}
+li[class*='share-button-twitter'] a:before{
+	content:"\F099";
+	color: #fff;
+	background: #6cdfea;
+}
+li[class*='share-button-google-plus'] a:before{
+	content:"\F0D5";
+	color: #fff;
+	background: #e34429;
+}
+li[class*='share-button-pinterest'] a:before{
+	content:"\F0D2";
+	background: #cb2027;
+	color: #fff;
+}
+li[class*='share-button-linkedin'] a:before{
+	content:"\F0E1";
+	color: #fff;
+	background: #007bb6;
+}
+li[class*='share-button-email'] a:before{
+	content:"\F0E0";
+	background: none;
+}

@@ -1,0 +1,90 @@
+_SECTION_BEGIN("Unnamed 7");
+//Support and resistance levels using RSI.
+//Mehedi Arafat
+//www.stockbangladesh.com
+//Load into Indicator Builder
+//Sensitivity of the levels can be changed with the variables
+//Can test different numbers live with the Param function ctrl-R with open pane
+RSIperiod	= 5;	// Param("RSI p",3,14,30,1);
+Percent 		= 5;	//	Param("ZIG %",8,9,15,1);
+EMAperiod 	= 5;	//Param("EMA p",4,5,10,1);
+HHVperiod 	= 5;	//Param("HHV p",3,5,10,1);
+NumLine 		= 1;	//Param("Num Lines",3,1,20,1);
+
+Base = DEMA(RSI(RSIperiod),EMAperiod);
+
+GraphXSpace=0.5;
+Plot(C,"",colorBlack,styleCandle);
+
+for( i = 1; i <= numline; i++ )
+{
+ResBase = LastValue(Peak(Base,Percent,i));
+SupBase = LastValue(Trough(Base,Percent,i));
+Plot(ValueWhen( ResBase==Base, HHV(H,HHVperiod) ), "Resist Level", colorRed, styleLine);
+Plot(ValueWhen( supbase==Base, LLV(L,HHVperiod) ), "Support Level", colorGreen, styleLine);
+}
+Title = Name() + "; " + Date() + ": Support & Resistance Levels using RSI: " + /*EncodeColor(colorGreen)+ "Support Levels are Green; "+EncodeColor(colorRed)+ "Resistance Levels are Red: "+EncodeColor(colorBlack)+*/ "Num lines ="+WriteVal(numline,1) ; 
+//  Linear Regression Line with 2 Standard Deviation Channels Plotted Above and Below 
+//  Written by Patrick Hargus, with critical hints from Marcin Gorzynski, Amibroker.com Technical Support 
+//      Designed for use with AB 4.63 beta and above, using drag and drop feature.  
+//  Permits plotting a linear regression line of any price field available on the chart for a period determined by the user.  
+//     2 Channels, based on a standard deviation each determined by the user, are plotted above and below the linear regression line. 
+// 		A look back feature is also provided for examining how the indicator would have appeared on a chart X periods in the past.    
+
+
+P = ParamField("Price field",-1);
+Daysback = Param("Period for Liner Regression Line",21,1,240,1);
+shift = Param("Look back period",0,0,240,1); 
+
+
+//  =============================== Math Formula =============================================================
+
+x = Cum(1);
+lastx = LastValue( x ) - shift; 
+aa = LastValue( Ref(LinRegIntercept( p, Daysback), -shift) ); 
+bb = LastValue( Ref(LinRegSlope( p, Daysback ), -shift) ); 
+y = Aa + bb * ( x - (Lastx - DaysBack +1 ) ); 
+
+
+// ==================Plot the Linear Regression Line ==========================================================
+
+
+LRColor = ParamColor("LR Color", colorCycle ); 
+LRStyle = ParamStyle("LR Style");
+
+LRLine =  IIf( x > (lastx - Daysback) AND BarIndex() < Lastx, y, Null );
+Plot( LRLine , "LinReg", LRCOLOR, LRSTYLE ); //  styleDots ); 
+
+// ==========================  Plot 1st SD Channel ===============================================================
+
+SDP = Param("Standard Deviation", 1.5, 0, 6, 0.1);
+SD = SDP/2;
+
+width = LastValue( Ref(SD*StDev(p, Daysback),-shift) );   // THIS IS WHERE THE WIDTH OF THE CHANELS IS SET  
+SDU = IIf( x > (lastx - Daysback) AND BarIndex() < Lastx, y+width , Null ) ;
+SDL = IIf( x > (lastx - Daysback) AND BarIndex() < Lastx, y-width , Null ) ;
+
+SDColor = ParamColor("SD Color", colorCycle ); 
+SDStyle = ParamStyle("SD Style");
+
+Plot( SDU , "Upper Lin Reg", SDColor,SDStyle ); 
+Plot( SDL , "Lower Lin Reg", SDColor,SDStyle ); 
+
+//  ==========================  Plot 2d SD Channel ===============================================================
+
+SDP2 = Param("2d Standard Deviation", 2.0, 0, 6, 0.1);
+SD2 = SDP2/2;
+
+width2 = LastValue( Ref(SD2*StDev(p, Daysback),-shift) );   // THIS IS WHERE THE WIDTH OF THE CHANELS IS SET  
+SDU2 = IIf( x > (lastx - Daysback) AND BarIndex() < Lastx, y+width2 , Null ) ;
+SDL2 = IIf( x > (lastx - Daysback) AND BarIndex() < Lastx, y-width2 , Null ) ;
+
+SDColor2 = ParamColor("2 SD Color", colorCycle ); 
+SDStyle2 = ParamStyle("2 SD Style");
+
+Plot( SDU2 , "Upper Lin Reg", SDColor2,SDStyle2 ); 
+Plot( SDL2 , "Lower Lin Reg", SDColor2,SDStyle2 ); 
+
+// ============================ End Indicator Code ==============================================================
+
+_SECTION_END();

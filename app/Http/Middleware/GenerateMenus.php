@@ -25,12 +25,12 @@ class GenerateMenus
             $menu->home->attr(['class' => 'dropdown dropdown-fw  '])->prepend('<i class="icon-home" ></i > ');
 
             //submenu
-            $menu->home->add('Dashboard', ['route' => 'home'])->prepend('<i class="icon-bar-chart" ></i > ');
-            $menu->home->add('News', ['class' => 'dropdown more-dropdown-sub closed'])->prepend('<i class="icon-bar-chart" ></i > '); //should remove open class
+            $menu->home->add('Dashboard', ['route' => 'home'])->prepend('<i class="fa fa-dashboard" ></i > ');
+            $menu->home->add('News', ['class' => 'dropdown more-dropdown-sub closed'])->prepend('<i class="fa fa-newspaper-o" ></i > '); //should remove open class
             $menu->news->link->href('javascript:;');
             $menu->news->add('News from newspaper', ['route' => 'collective-news'])->prepend('<i class="icon-bar-chart" ></i > ');
-            $menu->home->add('News Search', ['route' => 'news-search'])->prepend('<i class="icon-bar-chart" ></i > ');
-            $menu->home->add('Knowledge Basket', ['route' => 'knowledge-basket'])->prepend('<i class="icon-bar-chart" ></i > ');
+            $menu->home->add('News Search', ['route' => 'news-search'])->prepend('<i class="fa fa-search" ></i > ');
+            $menu->home->add('Knowledge Basket', ['route' => 'knowledge-basket'])->prepend('<i class="fa fa-sun-o" ></i > ');
 
             /*Chart*/
             $menu->add('Chart', ['class' => 'dropdown dropdown-fw  ']);
@@ -38,13 +38,13 @@ class GenerateMenus
             $menu->chart->attr(['class' => 'dropdown dropdown-fw  '])->prepend('<i class="icon-bar-chart" ></i > ');
 
             //submenu
-            $menu->chart->add('Minute chart', ['route' => 'minute-chart'])->prepend('<i class="icon-bar-chart" ></i > ')->active('minute-chart/*');
+            $menu->chart->add('Minute chart', ['route' => 'minute-chart'])->prepend('<i class="fa fa-clock-o" ></i > ')->active('minute-chart/*');
 
             $menu->chart->add('TA Chart', ['route' => 'ta-chart'])->prepend('<i class="icon-bar-chart" ></i > ');
-            $menu->chart->add('Advance TA Chart', ['route' => 'advance-ta-chart'])->prepend('<i class="icon-bar-chart" ></i > ');
+            $menu->chart->add('Advance TA Chart', ['route' => 'advance-ta-chart'])->prepend('<i class="fa fa-line-chart" ></i > ');
 
             //Monitor submenu
-            $menu->chart->add('Market Monitor', ['route' => 'monitor'])->prepend('<i class="icon-bar-chart" ></i > ');
+            $menu->chart->add('Market Monitor', ['route' => 'monitor'])->prepend('<i class="fa fa-dashboard" ></i > ');
             $menu->chart->add('Market Depth', ['route' => 'market-depth'])->prepend('<i class="icon-bar-chart" ></i > ');
             $menu->chart->add('Market Frame', ['route' => 'market-frame'])->prepend('<i class="icon-bar-chart" ></i > ');
             $menu->chart->add('Market Composition', ['route' => 'market-composition'])->prepend('<i class="icon-bar-chart" ></i > ');
@@ -61,14 +61,14 @@ class GenerateMenus
             $menu->portfolio->add('Create new portfolio', ['route' => 'portfolio.create'])->prepend('<i class="icon-bar-chart" ></i > ');
 
             /*Company*/
-            $menu->add('Company', ['class' => 'dropdown dropdown-fw  ']);
-            $menu->company->link->href('javascript:;')->attr(['class' => 'text-uppercase']);
-            $menu->company->attr(['class' => 'dropdown dropdown-fw  '])->prepend('<i class="icon-link" ></i > ');
+            // $menu->add('Company', ['class' => 'dropdown dropdown-fw  ']);
+            // $menu->company->link->href('javascript:;')->attr(['class' => 'text-uppercase']);
+            // $menu->company->attr(['class' => 'dropdown dropdown-fw  '])->prepend('<i class="icon-link" ></i > ');
 
             //submenu
 
-            $menu->company->add('Trade Details', ['route' => 'company-details'])->prepend('<i class="icon-bar-chart" ></i > ')->active('company-details/*');
-            $menu->company->add('Fundamental Details', ['route' => 'fundamental-details'])->prepend('<i class="icon-bar-chart" ></i > ')->active('fundamental-details/*');
+            $menu->home->add('Company Details', ['route' => 'company-details'])->prepend('<i class="fa fa-dollar" ></i > ')->active('company-details/*');
+            $menu->home->add('Fundamental Details', ['route' => 'fundamental-details'])->prepend('<i class="fa fa-paperclip" ></i > ')->active('fundamental-details/*');
 
             /*Sector*/
             $menu->add('Sector', ['class' => 'dropdown dropdown-fw  ']);

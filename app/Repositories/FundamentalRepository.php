@@ -156,7 +156,6 @@ class FundamentalRepository {
             $groupByInstrumentData=$metaData->groupby('instrument_id');
             $fundamentalData[$meta_key]=$groupByInstrumentData;
         }
-
         return collect($fundamentalData);
 
     }

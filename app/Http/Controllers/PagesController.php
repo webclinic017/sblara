@@ -47,7 +47,7 @@ return $d;
 
         $trade_date_Info=Market::getActiveDates()->first();
         return response()->view('dashboard3', ['trade_date_Info' => $trade_date_Info])
-        // ->setTtl(1)
+        ->setTtl(60)
         ;
     }
     public function dashboard2()

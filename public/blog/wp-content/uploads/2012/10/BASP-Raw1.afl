@@ -1,0 +1,32 @@
+//Indicator Buy and sell pressure
+// By Karthik Marar - www.karthikmarar.blogspot.com
+// Public release for personal use only.
+//Please do not commercialize this indicator in its original or modified form
+_SECTION_BEGIN("Buy & Sell Pressure - Raw - V.1.0");
+SetChartOptions(0,chartShowArrows|chartShowDates);
+sp 		= H-C;
+bp 		= C-L;
+bpavg 	= EMA(bp,80);
+spavg 	= EMA(sp,80);
+nbp 	= bp/bpavg;
+nsp 	= sp/spavg;
+diff 	= nbp-nsp;
+diffcolor = IIf(diff>0,colorGreen,colorOrange);
+Varg = EMA(V,80);
+nv = V/Varg;
+nbfraw = nbp * nv;
+nsfraw = - nsp * nv;
+nbf = EMA(nbp * nv,20);
+nsf = EMA(nsp * nv,20);
+SetBarFillColor(colorGreen ); 
+PlotOHLC(0,nbfraw,0,nbfraw,"",colorLime, styleCandle ) ;
+SetBarFillColor(colorRed ); 
+PlotOHLC(0,nsfraw,0,nsfraw,"",colorOrange, styleCandle ) ;
+_SECTION_END();
+_SECTION_BEGIN("Title");
+if( Status("action") == actionIndicator ) 
+(
+Title = EncodeColor(colorWhite)+ "Buy & Selll Pressure - Raw V.1.0 " + " - " +  Name() + " - " + EncodeColor(colorRed)+ Interval(2) + EncodeColor(colorWhite) +
+ "  - " + Date() +" - "+"\n" + EncodeColor(colorYellow) + "Raw Buying pressure = "+ EncodeColor(colorLime) + WriteVal(nbfraw)+
+"\n"+ EncodeColor(colorYellow) + "Raw Selling pressure = "+ EncodeColor(colorRed) +  WriteVal(nsfraw));
+_SECTION_END(); 

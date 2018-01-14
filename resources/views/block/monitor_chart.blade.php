@@ -121,7 +121,7 @@ $(document).ready(function(){
     function drawChart{{ $id }}(get_url) {
         $.ajax({url: get_url, success: function(result){
             document.getElementById('chart_placeholder{{ $id }}').style.display = 'block';
-            var returnData = JSON.parse(result);
+            var returnData = result;
 
             if(window.se_chart{{$id}} )
             {

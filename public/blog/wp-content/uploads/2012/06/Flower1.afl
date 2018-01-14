@@ -1,0 +1,242 @@
+SetChartOptions(0,chartShowArrows|chartShowDates);
+
+_SECTION_BEGIN("Background_Setting");
+SetChartBkGradientFill( ParamColor("BgTop", colorBlack),
+
+ParamColor("BgBottom", colorBlack),ParamColor("titleblock",colorDarkTeal ));
+_SECTION_END();
+
+
+
+_SECTION_BEGIN("Flower");
+Prd1=Param("ATR Period",4,1,20,1);
+Prd2=Param("Look Back",7,1,20,1);
+green = HHV(LLV(L,Prd1)+ATR(Prd1),Prd2);
+red = LLV(HHV(H,Prd1)-ATR(Prd1),Prd2);
+flowerClose = EMA((Open+High+Low+Close)/4,3) ;
+flowerOpen = EMA((Ref(Open,-1) + Ref(flowerClose,-1))/2,3);
+Temp = Max(High, flowerOpen);
+flowerHigh = EMA(Max(Temp, flowerClose),3);
+Temp = Min(Low,flowerOpen);
+flowerLow = EMA(Min(Temp, flowerClose),3);
+barColor=IIf(C>Green ,colorBrightGreen,IIf(C < RED,colorRed,colorWhite));
+PlotOHLC( IIf(flowerOpen<flowerClose, flowerOpen, flowerClose),flowerHigh,flowerLow,IIf(flowerOpen<flowerClose, flowerClose, flowerOpen), "Close", barColor, styleNoTitle | styleCandle);
+
+
+_SECTION_END();
+
+_SECTION_BEGIN("OsSetting");
+
+OBSetting=Param("Setting",45,1,500,1);
+Bline = StochD(OBSetting);
+Oversold=Bline<=30;
+Overbought=Bline>=85;
+
+
+PlotShapes (IIf(Oversold, shapeSmallCircle, shapeNone) ,colorBrightGreen, layer = 0, yposition = flowerLow, offset = -8 );
+PlotShapes (IIf(Overbought, shapeSmallCircle, shapeNone) ,colorRed, layer = 0, yposition = flowerHigh, offset = 7 );
+_SECTION_END();
+
+_SECTION_BEGIN("Breakout Setting");
+Buyperiods=Param("Breakout periods best is usually 18",5,1,100,1,1); //10 is good for adding
+Sellperiods=Param("Exit Breakout",6,1,100,1,1); //4 is good for adding
+Buy= C>Ref(HHV(H,Buyperiods),-1);
+Sell= O<Ref(LLV(O,Sellperiods),-1);
+
+/* exrem is one method to remove surplus strade signals. It removes excessive signals of arrow */
+top=Max(Close,Ref(Close,-1));
+
+Buy = ExRem(Buy, Sell);
+Sell = ExRem(Sell, Buy);
+shapeUpArrow = Param("Buy Shape Typ",59,1,60,1);
+//shapeDownArrow = Param("Sell Shape Typ",60,1,60,1);
+PlotShapes(shapeUpArrow * Buy, ParamColor("Buy Arrow", colorYellow),0,flowerLow, - 15);
+//PlotShapes(shapeDownArrow * Sell, ParamColor("sell Arrow", colorRed),0,flowerLow, - 15);
+PlotShapes( IIf( Sell, shapeDownArrow, shapeNone ), colorCustom12, layer = 0, yposition = top, offset = -60  );
+
+
+_SECTION_END();
+
+
+
+
+_SECTION_BEGIN("Parameters");
+LB1= Param("Long LookBack Periods",42,1,60,1);
+LB3= Param("Mid LookBack Periods",18,1,30,1);
+LB2= Param("Short LookBack Periods",6,1,30,1);
+
+_SECTION_END();
+
+
+
+
+_SECTION_BEGIN("ResistanceLong");
+
+RsColor=ParamColor("LongResColor",colorOrange);
+BrCount=Param("LongBarLength",65,1,500,1);
+for (i=0;i<BarCount-BrCount;i++) //hide the line except most recent 10 bars
+{
+	RsColor[i] = colorBlack;
+}
+
+flowerClose = EMA((Open+High+Low+Close)/4,3) ;
+flowerOpen = EMA((Ref(Open,-1) + Ref(flowerClose,-1))/2,3);
+Temp = Max(High, flowerOpen);
+flowerHigh = EMA(Max(Temp, flowerClose),3);
+Temp = Min(Low,flowerOpen);
+flowerLow = EMA(Min(Temp, flowerClose),3);
+
+R=ValueWhen(Cross(MA(flowerClose,LB1),C),HHV(flowerHigh,LB1),-1);
+Plot(R,"Resistance",RsColor,ParamStyle("LongResStyle",styleNoTitle|styleLine|styleDots|styleStaircase|styleThick,maskAll));
+_SECTION_END();
+
+_SECTION_BEGIN("ResistanceMid");
+Rs3Color=ParamColor("MidResColor",colorCustom4);
+BrCount3=Param("MidBarLength",40,1,500,1);
+for (i=0;i<BarCount-BrCount3;i++) //hide the line except most recent 10 bars
+{
+	Rs3Color[i] =colorBlack;
+}
+
+flowerClose = EMA((Open+High+Low+Close)/4,3) ;
+flowerOpen = EMA((Ref(Open,-1) + Ref(flowerClose,-1))/2,3);
+Temp = Max(High, flowerOpen);
+flowerHigh = EMA(Max(Temp, flowerClose),3);
+Temp = Min(Low,flowerOpen);
+flowerLow = EMA(Min(Temp, flowerClose),3);
+
+RM2=ValueWhen(Cross(EMA(flowerClose,LB3),C),HHV(flowerHigh,LB3),-1);
+Plot(RM2,"MidRes",Rs3Color,ParamStyle("MidResStyle",styleLine|styleStaircase|styleNoTitle,maskAll));
+_SECTION_END();
+
+_SECTION_BEGIN("ResistanceShort");
+Rs2Color=ParamColor("ShortResColor",colorCustom12);
+BrCount2=Param("ShortResLength",12,1,500,1);
+for (i=0;i<BarCount-BrCount2;i++) //hide the line except most recent 10 bars
+{
+	Rs2Color[i] = colorBlack;
+}
+
+flowerClose = EMA((Open+High+Low+Close)/4,3) ;
+flowerOpen = EMA((Ref(Open,-1) + Ref(flowerClose,-1))/2,3);
+Temp = Max(High, flowerOpen);
+flowerHigh = EMA(Max(Temp, flowerClose),3);
+Temp = Min(Low,flowerOpen);
+flowerLow = EMA(Min(Temp, flowerClose),3);
+
+RM=ValueWhen(Cross(TEMA(flowerClose,LB2),C),HHV(flowerHigh,LB2),-1);
+Plot(RM,"ShortRes",Rs2Color,ParamStyle("ShortResStyle",styleDashed|styleThick|styleNoTitle|styleStaircase,maskAll));
+_SECTION_END();
+
+
+
+
+_SECTION_BEGIN("SupportLong");
+Sup1Color=ParamColor("LongSupColor",colorBlue);
+BrCount4=Param("LongSupBarLength",65,1,500,1);
+for (i=0;i<BarCount-BrCount4;i++) //hide the line except most recent 10 bars
+{
+	Sup1Color[i] =colorBlack;
+}
+
+flowerClose = EMA((Open+High+Low+Close)/4,3) ;
+flowerOpen = EMA((Ref(Open,-1) + Ref(flowerClose,-1))/2,3);
+Temp = Max(High, flowerOpen);
+flowerHigh = EMA(Max(Temp, flowerClose),3);
+Temp = Min(Low,flowerOpen);
+flowerLow = EMA(Min(Temp, flowerClose),3);
+
+S=ValueWhen(Cross(MA(flowerClose,LB1),C),LLV(flowerLow,LB1),-1);
+Plot(s,"Support",Sup1Color,ParamStyle("SupStyle",styleLine|styleDots|styleStaircase|styleThick|styleNoTitle,maskAll));
+_SECTION_END();
+
+_SECTION_BEGIN("SupportMid");
+Sup3Color=ParamColor("MidSupColor",colorDarkYellow);
+BrCount6=Param("MidBarLength",40,1,500,1);
+for (i=0;i<BarCount-BrCount6;i++) //hide the line except most recent 10 bars
+{
+	Sup3Color[i] =colorBlack;
+}
+
+flowerClose = EMA((Open+High+Low+Close)/4,3) ;
+flowerOpen = EMA((Ref(Open,-1) + Ref(flowerClose,-1))/2,3);
+Temp = Max(High, flowerOpen);
+flowerHigh = EMA(Max(Temp, flowerClose),3);
+Temp = Min(Low,flowerOpen);
+flowerLow = EMA(Min(Temp, flowerClose),3);
+
+SM2=ValueWhen(Cross(EMA(flowerClose,LB3),C),LLV(flowerLow,LB3),-1);
+Plot(SM2,"MidSup",Sup3Color,ParamStyle("MidSupStyle",styleLine|styleStaircase|styleNoTitle,maskAll));
+_SECTION_END();
+
+_SECTION_BEGIN("SupportShort");
+Sup2Color=ParamColor("ShortSupColor",colorPink);
+BrCount5=Param("ShortSupBarLength",12,1,500,1);
+for (i=0;i<BarCount-BrCount5;i++) //hide the line except most recent 10 bars
+{
+	Sup2Color[i] =colorBlack;
+}
+
+
+flowerClose = EMA((Open+High+Low+Close)/4,3) ;
+flowerOpen = EMA((Ref(Open,-1) + Ref(flowerClose,-1))/2,3);
+Temp = Max(High, flowerOpen);
+flowerHigh = EMA(Max(Temp, flowerClose),3);
+Temp = Min(Low,flowerOpen);
+flowerLow = EMA(Min(Temp, flowerClose),3);
+
+SM=ValueWhen(Cross(TEMA(flowerClose,LB2),C),LLV(flowerLow,LB2),-1);
+Plot(SM,"ShortSup",Sup2Color,ParamStyle("ShortSupStyle",styleDashed|styleThick|styleNoTitle|styleStaircase,maskAll));
+_SECTION_END();
+
+_SECTION_BEGIN("Cloud Setting");
+//Cloud
+ParmCloud = ParamToggle("Cloud", "No|Yes", 0);
+
+CloudResColor=ParamColor("CloudResColor",colorDarkTeal);
+BrCount7=Param("CloudResLength",15,1,500,1);
+for (i=0;i<BarCount-BrCount7;i++) //hide the line except most recent 10 bars
+{
+	CloudResColor[i] = colorBlack;
+}
+
+flowerClose = EMA((Open+High+Low+Close)/4,3) ;
+flowerOpen = EMA((Ref(Open,-1) + Ref(flowerClose,-1))/2,3);
+Temp = Max(High, flowerOpen);
+flowerHigh = EMA(Max(Temp, flowerClose),3);
+Temp = Min(Low,flowerOpen);
+flowerLow = EMA(Min(Temp, flowerClose),3);
+
+CS=ValueWhen(Cross(WMA(flowerClose,LB2),C),LLV(flowerLow,LB2),-1);
+CR=ValueWhen(Cross(WMA(flowerClose,LB2),C),HHV(flowerHigh,LB2),-1);
+
+
+if(parmCloud == 1)
+{
+	PlotOHLC( CS, CS, CR,CR, "Band", CloudResColor, styleCloud | styleNoLabel|styleNoTitle); 
+}
+
+_SECTION_END();
+
+
+
+Title = StrFormat("\\c02 {{NAME}} | {{DATE}} | Open : %g | High : %g | Low : %g | Close : %g | Change = %.1f%% | Volume = " +WriteVal( V, 1.0 ) +", {{VALUES}}",
+O, H, L, C, SelectedValue( ROC( C, 1 )) );
+
+
+_SECTION_BEGIN("Keltner Bands");
+Smooth = Param("Smoothness",14,2,100,1);
+Length = 20; Num_ATRs = 1.5;
+// Length and Num_ATRs parameters should be personalized for your preferred settings.
+
+Mov_Avg = MA((H+L+C)/3,Length);
+KUP = Mov_Avg + Num_ATRs * ATR(Length);
+KDOWN = Mov_Avg - Num_ATRs * ATR(Length);
+
+
+Plot (MA(KUP,smooth),"KUP",colorGreen,styleLine);
+Plot (MA(KDown,smooth), "Kdown",colorRed,styleLine);
+Plot (MA(Mov_Avg,smooth),"Mov_Avg",colorYellow , styleDashed);
+_SECTION_END();
+
+

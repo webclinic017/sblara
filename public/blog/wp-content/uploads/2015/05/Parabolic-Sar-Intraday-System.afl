@@ -1,0 +1,32 @@
+ accel = Param("Acceleration", 0.03, 0, 1, 0.001);
+ mx = Param("Max. acceleration", 0.5, 0, 1, 0.001);
+ 
+ f_sar = SAR(accel,mx);
+ 
+ colordots = IIf(f_sar < L,colorBrightGreen,IIf( f_sar > 
+ H,colorRed,colorWhite));
+ 
+ Buy = Cross(H,f_sar); Buy = Ref(Buy,-1); BuyPrice = O;
+ Sell = Cross(f_sar,L); Sell = Ref(Sell,-1); SellPrice = O;
+ 
+ SetBarsRequired(-2,-2);
+ SetChartOptions(0, chartShowDates);
+ Plot(C,"\nClose",colorWhite,64);
+ Plot(f_sar,"\nf_sar",colordots,styleDots|styleNoLine);
+ 
+ PlotShapes(IIf(Buy,shapeUpArrow,shapeNone),colorGreen,0,L,-15);
+ PlotShapes(IIf(Buy,shapeHollowUpArrow,shapeNone),colorWhite,0,L,-15);
+  
+ 
+ PlotShapes(IIf(Buy,shapeHollowSmallCircle,shapeNone),colorWhite,0,BuyPrice,0);
+  
+ 
+ 
+ PlotShapes(IIf(Sell,shapeDownArrow,shapeNone),colorRed,0,H,-15);
+ PlotShapes(IIf(Sell,shapeHollowDownArrow,shapeNone),colorWhite,0,H,-15);
+  
+ 
+ PlotShapes(IIf(Sell,shapeHollowSmallCircle,shapeNone),colorWhite,0,SellPrice,0);
+SetChartBkColor(3 ) ;
+  
+ 

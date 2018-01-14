@@ -1,0 +1,24 @@
+_SECTION_BEGIN("RSI");
+
+SetChartOptions(0,0,chartGrid30|chartGrid70);
+RP = Param("RSI",14,2,20,1);
+UL= Param("Upper Limit",70,0,100,1);
+LL= Param("Lower Limit",30,0,100,1);
+PlotGrid(UL,colorBlue);    
+PlotGrid(LL,colorBlue); 
+Plot(50, "",colorDarkBlue,styleDots+styleNoLine);
+R= RSIa(C, RP);
+Plot(R, "RSI",  colorBlue, styleLine);
+Overbought=70;
+Oversold=30;
+Plot(Overbought,"Overbought Zone",colorRed);
+Plot(Oversold,"Oversold Zone",colorGreen); 
+
+PlotOHLC( R,R,50,R, "", IIf( R > 50, colorRed , colorGreen ), styleCloud | styleClipMinMax, LL, UL ); 
+
+
+myRSI  = RSI( RP);
+if (SelectedValue(myRSI)   < Oversold) Say(" Oversold Zone ");
+if (SelectedValue(myRSI) >   Overbought) Say("Overbought Zone ");
+
+_SECTION_END();

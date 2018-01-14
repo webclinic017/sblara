@@ -173,7 +173,7 @@ class DataBanksEodController extends Controller
         $metaKey[] = 'category';
         $metaKey[] = 'market_lot';
         $metaKey[] = 'no_of_securities';
-        $metaKey[] = 'net_asset_value_per_share';
+        $metaKey[] = 'net_asset_val_per_share';
         $metaKey[] = 'year_end';
         $metaKey[] = 'share_percentage_public';
 
@@ -198,8 +198,8 @@ class DataBanksEodController extends Controller
         if(isset($fundamentalDataOrganized['year_end']['meta_value']))
         $topText .= '<*font=arial.ttf,size=9*> YearEnd:- ' . $fundamentalDataOrganized['year_end']['meta_value'] . ',';
 
-        if(isset($fundamentalDataOrganized['net_asset_value_per_share']['meta_value']))
-        $topText .= '<*font=arial.ttf,size=9*> NAV:- ' . $fundamentalDataOrganized['net_asset_value_per_share']['meta_value'] . ',';
+        if(isset($fundamentalDataOrganized['net_asset_val_per_share']['meta_value']))
+        $topText .= '<*font=arial.ttf,size=9*> NAV:- ' . $fundamentalDataOrganized['net_asset_val_per_share']['meta_value'] . ',';
 
         $no_of_securities=0;
         if(isset($fundamentalDataOrganized['no_of_securities']['meta_value']))
@@ -404,7 +404,7 @@ class DataBanksEodController extends Controller
             $metaKey[] = 'category';
             $metaKey[] = 'market_lot';
             $metaKey[] = 'no_of_securities';
-            $metaKey[] = 'net_asset_value_per_share';
+            $metaKey[] = 'net_asset_val_per_share';
             $metaKey[] = 'year_end';
             $metaKey[] = 'share_percentage_public';
 
@@ -416,7 +416,7 @@ class DataBanksEodController extends Controller
             $topText .= '<*font=arial.ttf,size=9*> CAT:- ' . $fundamentalDataOrganized['category'][$instrumentId]['meta_value'] . ',';
             $topText .= '<*font=arial.ttf,size=9*> LOT:- ' . $fundamentalDataOrganized['market_lot'][$instrumentId]['meta_value'] . ',';
             $topText .= '<*font=arial.ttf,size=9*> YearEnd:- ' . $fundamentalDataOrganized['year_end'][$instrumentId]['meta_value'] . ',';
-            $topText .= '<*font=arial.ttf,size=9*> NAV:- ' . $fundamentalDataOrganized['net_asset_value_per_share'][$instrumentId]['meta_value'] . ',';
+            $topText .= '<*font=arial.ttf,size=9*> NAV:- ' . $fundamentalDataOrganized['net_asset_val_per_share'][$instrumentId]['meta_value'] . ',';
 
             $share_percentage_public = ($fundamentalDataOrganized['no_of_securities'][$instrumentId]['meta_value'] * $fundamentalDataOrganized['share_percentage_public'][$instrumentId]['meta_value']) / 100;
 

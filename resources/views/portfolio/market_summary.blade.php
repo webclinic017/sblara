@@ -1,3 +1,4 @@
+{{--
 @foreach($data['transactions'] as $transaction)
 <div class="row">
 
@@ -75,3 +76,6 @@
     </div>
 
 @endforeach
+--}}
+
+UNDER CONSTRUCTION- Sorry for inconvenience

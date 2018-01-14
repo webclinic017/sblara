@@ -28,6 +28,7 @@ class SearchController extends Controller {
                                             }
                                         )
                                         ->whereNotNull('data_banks_intradays.id')
+                                        ->take(10)
                                        ->get();
      
         

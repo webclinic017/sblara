@@ -60,7 +60,7 @@ class SectorMinuteChart
         $volumeData=$data->pluck('volume_difference');
 
         $indexData=$data->pluck('index_change');
-        dump($category);
+        //dump($category);
         $view->with('indexData', collect($indexData)->toJson(JSON_NUMERIC_CHECK))
             ->with('volumeData', collect($volumeData)->toJson(JSON_NUMERIC_CHECK))
             ->with('category', collect($category)->toJson())

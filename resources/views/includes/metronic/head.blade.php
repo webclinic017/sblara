@@ -13,7 +13,7 @@
             <!-- END LAYOUT FIRST STYLES -->
             <!-- BEGIN GLOBAL MANDATORY STYLES -->
             
-                <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
+                <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
                 <link href="/metronic_home.css" rel="stylesheet" type="text/css" />
             <!-- END PAGE LEVEL PLUGINS -->
              <link href="{{ URL::asset('metronic_custom/custom.css') }}" rel="stylesheet" type="text/css" />

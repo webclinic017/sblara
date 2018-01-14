@@ -279,7 +279,7 @@ class PortfolioController extends Controller {
             $temp['total_sell_cost_deducting_commission_of_this_instrument']= ($transaction->sell_price* $transaction->no_of_shares)- $temp['total_sell_commission_of_this_instrument'];
             $temp['sell_date']= $transaction->sell_date->format('d M, Y');
             $temp['profit']= $temp['total_sell_cost_deducting_commission_of_this_instrument']- $temp['total_buy_cost_with_commission_of_this_instrument'];
-            $temp['profit_per'] = round($temp['profit']/ $temp['total_buy_cost_with_commission_of_this_instrument']*100,2);
+            $temp['profit_per'] = $temp['total_buy_cost_with_commission_of_this_instrument']?$temp['profit'] / $temp['total_buy_cost_with_commission_of_this_instrument']:0;
             $temp['id']= $transaction->id;
             $total_profit+= $temp['profit'];
             $all_transaction[]=$temp;

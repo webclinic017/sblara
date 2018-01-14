@@ -1,0 +1,102 @@
+_SECTION_BEGIN("Price");
+SetChartOptions(0,chartShowArrows|chartShowDates);
+_N(Title = StrFormat("{{NAME}} - {{INTERVAL}} {{DATE}} Open %g, Hi %g, Lo %g, Close %g (%.1f%%) Vol " +WriteVal( V, 1.0 ) +" {{VALUES}}", O, H, L, C, SelectedValue( ROC( C, 1 )) ));
+
+trendup = IIf(MACD(12,26) > 0 AND MACD(12,26) > Signal(12,26,9), colorGreen, colorWhite);
+trendcolor = IIf(MACD(12,26) < 0 AND MACD(12,26) < Signal(12,26,9), colorRed, trendup);
+Plot( C, "Close", trendcolor, styleBar | styleThick );
+
+//RSIup = RSI(7) > 70;
+//RSIdown = RSI(7) < 30;
+
+sp = Param( "RSI Period", 7, 1, 100 );
+r = RSI( sp );
+RSIup = r > 70; 
+RSIdown = r < 30;
+
+shape = RSIup * shapeSmallUpTriangle + RSIdown * shapeSmallDownTriangle;
+PlotShapes(shape, IIf( RSIup, colorGreen, colorRed ), 0, IIf( RSIup, Low, High ) );
+ 
+if( ParamToggle("Tooltip shows", "All Values | Only Prices" ) )
+{
+ ToolTip=StrFormat("Open: %g\nHigh:  %g\nLow:   %g\nClose:  %g (%.1f%%)\nVolume: "+NumToStr( V, 1 ), O, H, L, C, SelectedValue( ROC( C, 1 )));
+}
+_SECTION_END();
+
+
+_SECTION_BEGIN("BBands");
+P = ParamField("Price field",-1);
+Periods = Param("Periods", 12, 2, 100, 1 );
+Width = Param("Width", 2, 0, 10, 0.05 );
+Color = ParamColor("Color", colorLightGrey );
+Style = ParamStyle("Style") | styleNoRescale;
+Plot( BBandTop( P, Periods, Width ), "BBTop" + _PARAM_VALUES(), Color, Style ); 
+Plot( BBandBot( P, Periods, Width ), "BBBot" + _PARAM_VALUES(), Color, Style );
+
+// calcul average daily range pe ultimele 7 zile
+
+HD1 = TimeFrameGetPrice("H", inDaily, -1);
+LD1 = TimeFrameGetPrice("L", inDaily, -1);
+M1 = HD1 - LD1;
+HD2 = TimeFrameGetPrice("H", inDaily, -2);
+LD2 = TimeFrameGetPrice("L", inDaily, -2);
+M2 = HD2 - LD2;
+HD3 = TimeFrameGetPrice("H", inDaily, -3);
+LD3 = TimeFrameGetPrice("L", inDaily, -3);
+M3 = HD3 - LD3;
+HD4 = TimeFrameGetPrice("H", inDaily, -4);
+LD4 = TimeFrameGetPrice("L", inDaily, -4);
+M4 = HD4 - LD4;
+HD5 = TimeFrameGetPrice("H", inDaily, -5);
+LD5 = TimeFrameGetPrice("L", inDaily, -5);
+M5 = HD5 - LD5;
+HD6 = TimeFrameGetPrice("H", inDaily, -6);
+LD6 = TimeFrameGetPrice("L", inDaily, -6);
+M6 = HD6 - LD6;
+HD7 = TimeFrameGetPrice("H", inDaily, -7);
+LD7 = TimeFrameGetPrice("L", inDaily, -7);
+M7 = HD7 - LD7;
+
+//ADR = MA(High - Low,7);
+ADR = (M1+M2+M3+M4+M5+M6+M7)/7;
+tp = ADR*0.15;
+sl = ADR*0.1;
+//TimeFrameRestore();
+Plot(ADR, "\nADR", colorBlue, styleNoLine | styleNoRescale | styleNoLabel);
+Plot(tp, "TP", colorBlue, styleNoLine | styleNoRescale | styleNoLabel);
+Plot(sl, "SL", colorBlue, styleNoLine | styleNoRescale | styleNoLabel);
+
+// ----------------
+ 
+_SECTION_END();
+
+_SECTION_BEGIN("Price");
+SetChartOptions(0,chartShowArrows|chartShowDates);
+_N(Title = StrFormat("{{NAME}} - {{INTERVAL}} {{DATE}} Open %g, Hi %g, Lo %g, Close %g (%.1f%%) Vol " +WriteVal( V, 1.0 ) +" {{VALUES}}", O, H, L, C, SelectedValue( ROC( C, 1 )) ));
+
+trendup = IIf(MACD(12,26) > 0 AND MACD(12,26) > Signal(12,26,9), colorGreen, colorBlack);
+trendcolor = IIf(MACD(12,26) < 0 AND MACD(12,26) < Signal(12,26,9), colorRed, trendup);
+Plot( C, "Close", trendcolor, styleBar | styleThick );
+
+//RSIup = RSI(7) > 70;
+//RSIdown = RSI(7) < 30;
+
+sp = Param( "RSI Period", 7, 1, 100 );
+r = RSI( sp );
+RSIup = r > 70; 
+RSIdown = r < 30;
+
+shape = RSIup * shapeSmallUpTriangle + RSIdown * shapeSmallDownTriangle;
+PlotShapes(shape, IIf( RSIup, colorGreen, colorRed ), 0, IIf( RSIup, Low, High ) );
+ 
+if( ParamToggle("Tooltip shows", "All Values | Only Prices" ) )
+{
+ ToolTip=StrFormat("Open: %g\nHigh:  %g\nLow:   %g\nClose:  %g (%.1f%%)\nVolume: "+NumToStr( V, 1 ), O, H, L, C, SelectedValue( ROC( C, 1 )));
+}
+_SECTION_END();
+
+_SECTION_BEGIN("SAR");
+acc = Param("Acceleration", 0.02, 0, 1, 0.001 );
+accm = Param("Max. acceleration", 0.2, 0, 1, 0.001 );
+Plot( SAR( acc, accm ), _DEFAULT_NAME(), ParamColor( "Color", colorCycle ), ParamStyle("Style", styleDots | styleNoLine, maskDefault | styleDots | styleNoLine ) );
+_SECTION_END();

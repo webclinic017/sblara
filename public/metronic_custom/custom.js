@@ -33,7 +33,7 @@ $('body').on('click', '.portlet > .portlet-title > .tools > a.reload', function(
                         life: 3000
                     });
                 } else {
-                    alert(msg);
+                    el.html(msg);
                 }
             }
         });

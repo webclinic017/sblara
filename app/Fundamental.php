@@ -30,7 +30,7 @@ class Fundamental extends Model
         if(!empty($instrumentId))
         $query->whereIn('instrument_id',$instrumentId);
 
-        $returnData=$query->orderby('meta_date','desc')->get();
+        $returnData=$query->orderby('meta_date','asc')->get();
         return  $returnData;
     }
 

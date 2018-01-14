@@ -1,0 +1,16 @@
+<wpml-config>
+	<admin-texts>
+	 <key name="rehub_option">
+	  <key name="rehub_text_logo" />
+	  <key name="rehub_text_slogan" />
+	  <key name="rehub_newstick_label" />
+	  <key name="rehub_footer_text" />
+	  <key name="rehub_homecarousel_label_text" />
+	  <key name="rehub_btn_text" />
+	  <key name="rehub_btn_text_aff_links" />
+	  <key name="rehub_mask_text" />
+	  <key name="rehub_review_text" />
+	  <key name="rehub_adblock_notice" />
+	 </key>
+	</admin-texts>  
+</wpml-config>

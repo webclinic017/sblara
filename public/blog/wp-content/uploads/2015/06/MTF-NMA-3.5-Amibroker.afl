@@ -1,0 +1,334 @@
+//NMA System Modified by Cas
+_SECTION_BEGIN("graph");   
+SetChartOptions(0,chartShowArrows|chartShowDates);     
+gxs=Param("GRAPH spaceing",10,5,50,5);  
+GraphXSpace = gxs; 
+strWeekday = StrMid("SunMonTueWedThuFriSat", SelectedValue(DayOfWeek())*3,3);
+_SECTION_END(); 
+_SECTION_BEGIN("NMA ");    
+k =  Optimize("K",Param("K",1.75,1,5,0.25),1,5,0.25); 
+Per= Optimize("atr",Param("atr",10,3,30,1),3,30,1); 
+j=(O+H+L+C)/4; 
+nm= (H-L);
+rfsctor = WMA(nm, PER); 
+revers = K * rfsctor; 
+Trend = 1;   
+NW[0] = 0;   
+for(i = 1; i < BarCount; i++) 
+{ 
+ if(Trend[i-1] == 1)                 
+ { 
+  if(j[i] < NW[i-1])                  
+  { 
+   Trend[i] = -1;                    
+   NW[i] = j[i] + Revers[i];         
+  } 
+  else                               
+  { 
+   Trend[i] = 1; 
+   if((j[i] - Revers[i]) > NW[i-1]) 
+   { 
+    NW[i] = j[i] - Revers[i];  
+   } 
+   else 
+   { 
+    NW[i] = NW[i-1]; 
+   } 
+  }  
+ } 
+ if(Trend[i-1] == -1)                
+ { 
+  if(j[i] > NW[i-1])                 
+  { 
+   Trend[i] = 1;                     
+   NW[i] = j[i] - Revers[i];         
+  } 
+  else                               
+  { 
+   Trend[i] = -1; 
+   if((j[i] + Revers[i]) < NW[i-1])  
+   { 
+    NW[i] = j[i] + Revers[i];  
+   } 
+   else 
+   { 
+    NW[i] = NW[i-1]; 
+   } 
+  } 
+ } 
+} 
+
+Plot(NW, "", IIf(Trend == 1, 6, 4), 4); 
+
+//---------------trading  -------------
+
+Buy=Cross(j,nw);
+Short=Cross(nw,j);
+Sell=Cross(nw,j);
+Cover=Cross(j,nw);
+Buy=ExRem(Buy,Sell);
+Sell=ExRem(Sell,Buy);
+Short=ExRem(Short,Cover);
+Cover=ExRem(Cover,Short);
+PlotShapes(IIf(Buy, shapeUpArrow, shapeNone),colorSkyblue, 0,Low,-15);  
+PlotShapes(IIf(Sell, shapeHollowDownArrow, shapeNone),colorLightYellow, 0,High,-15);  
+PlotShapes(IIf(Cover, shapeHollowUpArrow, shapeNone),colorTan, 0,Low,-25);  
+PlotShapes(IIf(Short, shapeDownArrow, shapeNone),colorGold, 0,High,-25); 
+//-----------end--------------
+Long=Flip(Buy,Sell OR Cover); 
+Shrt=Flip(Sell,Buy OR Cover); 
+NOTrade= NOT (Long OR shrt); 
+BuyPrice=ValueWhen(Buy,C);
+SellPrice=ValueWhen(Sell,C);
+ShortPrice=ValueWhen(Short,C);
+CoverPrice=ValueWhen(Cover,C);
+_SECTION_END();
+grid_day = IIf(Day()!=Ref(Day(),-1),1,0);  
+Plot(grid_day,"",colorDarkGrey,styleHistogram|styleDashed|styleNoLabel|styleOwnScale);
+///--------------------------------------------------------------------------------------------------
+Candletype=ParamList("Candle Type","Candle|Heinkin",0);
+UpCandle = ParamColor("Up Color", colorBrightGreen ); 
+DownCandle = ParamColor("Down Color", colorDarkRed );
+Consolidation = ParamColor("Consolidation", colorBlack ); 
+BG2a=HHV(LLV(L,4)+ATR(4),8); 
+BR2a=LLV(HHV(H,4)-ATR(4),8);
+if(Candletype=="Candle")
+{
+Candlecolor = IIf(Close>BG2a ,UpCandle,IIf(Close < BR2a,DownCandle,Consolidation)); 
+SetBarFillColor( IIf(O <C, colorSeaGreen,colorOrange) ); 
+Plot( Close, "Price", CandleColor, styleCandle ); 
+TimeFrameSet( 2*Interval() );
+BG2=HHV(LLV(L,4)+ATR(4),8); 
+BR2=LLV(HHV(H,4)-ATR(4),8);
+C1=C; 
+TimeFrameRestore();
+M5 = TimeFrameExpand(BG2,2*Interval(),expandFirst );
+MM5=TimeFrameExpand( BR2,2*Interval(),expandFirst  );
+cM5=TimeFrameExpand( C1, 2*Interval(),expandFirst  );
+TimeFrameSet( 4*Interval() );
+BG2=HHV(LLV(L,4)+ATR(4),8); 
+BR2=LLV(HHV(H,4)-ATR(4),8); 
+C1=C;  
+TimeFrameRestore();
+M15 = TimeFrameExpand(BG2,4*Interval(),expandFirst  );
+MM15=TimeFrameExpand(BR2,4*Interval(),expandFirst  );
+cM15=TimeFrameExpand( C1,4*Interval(),expandFirst  );
+TimeFrameSet( 6*Interval() );
+BG2=HHV(LLV(L,4)+ATR(4),8); 
+BR2=LLV(HHV(H,4)-ATR(4),8);
+C1=C; 
+TimeFrameRestore();
+M30 = TimeFrameExpand(BG2,6*Interval(),expandFirst  );
+MM30=TimeFrameExpand(BR2,6*Interval(),expandFirst  );
+cM30=TimeFrameExpand( C1,6*Interval(),expandFirst  );
+TimeFrameSet( 8*Interval() );
+BG2=HHV(LLV(L,4)+ATR(4),8); 
+BR2=LLV(HHV(H,4)-ATR(4),8);
+C1=C; 
+TimeFrameRestore();
+H1 = TimeFrameExpand(BG2 ,8*Interval(),expandFirst  );
+HH1=TimeFrameExpand( BR2,8*Interval(),expandFirst  );
+Ch1=TimeFrameExpand( C1,8*Interval(),expandFirst  );
+TimeFrameSet( 16*Interval() );
+BG2=HHV(LLV(L,4)+ATR(4),8); 
+BR2=LLV(HHV(H,4)-ATR(4),8); 
+C1=C;  
+TimeFrameRestore();
+H4 = TimeFrameExpand( BG2,16*Interval(),expandFirst  );
+HH4=TimeFrameExpand( BR2,16*Interval(),expandFirst  );
+cH4 = TimeFrameExpand( C1,16*Interval(),expandFirst  );
+Com=("\n "+Name()+ " - Trend  in "+Candletype)+"\n "+
+EncodeColor(colorLightGrey)+(""+Interval(2)+":")+
+WriteIf(Close>BG2a,EncodeColor(colorLime)+" UP",WriteIf(Close<BR2a,EncodeColor(colorRed)+" DN",EncodeColor(colorGrey50)+" ~~"))+
+EncodeColor(colorLightGrey)+("   "+2*Interval()/60+"m:")+
+WriteIf(Cm5>M5,EncodeColor(colorLime)+"  UP",WriteIf(Cm5<MM5,EncodeColor(colorRed)+"  DN",EncodeColor(colorGrey50)+"  ~~"))+
+EncodeColor(colorLightGrey)+("   "+4*Interval()/60+"m:")+
+WriteIf(Cm15>M15,EncodeColor(colorLime)+"  UP",WriteIf(Cm15<MM15,EncodeColor(colorRed)+"   DN",EncodeColor(colorGrey50)+"   ~~"))+
+EncodeColor(colorLightGrey)+("   "+6*Interval()/60+"m:")+
+WriteIf(Cm30>M30,EncodeColor(colorLime)+"   UP",WriteIf(Cm30<MM30,EncodeColor(colorRed)+"    DN",EncodeColor(colorGrey50)+"    ~~"))+
+EncodeColor(colorLightGrey)+("  "+8*Interval()/60+"m:")+
+WriteIf(CH1>H1,EncodeColor(colorLime)+"      UP",WriteIf(CH1<HH1,EncodeColor(colorRed)+"      DN",EncodeColor(colorGrey50)+"     ~~"))+
+EncodeColor(colorLightGrey)+("  "+16*Interval()/60+"m: ")+
+WriteIf(Ch4>H4,EncodeColor(colorLime)+"       UP",WriteIf(Ch4<HH4,EncodeColor(colorRed)+"      DN",EncodeColor(colorGrey50)+"    ~~" ));
+}
+else if(Candletype=="Heinkin")
+{
+aC =(O+H+L+C)/4; 
+aO = AMA( Ref( aC, -1 ), 0.5 );  
+aH = Max( H, Max( aC, aO) ); 
+aL = Min( L, Min( aC, aO) );
+BGH=HHV(LLV(aL,4)+ATR(4),8); 
+BRH=LLV(HHV(aH,4)-ATR(4),8);
+co = IIf(ac>BGH ,UpCandle,IIf(ac < BRH,DownCandle,Consolidation));  
+SetBarFillColor( IIf(aO <aC, colorSeaGreen,colorOrange) ); 
+PlotOHLC(aO,ah,aL,ac ,"Price", Co, styleCandle ); 
+TimeFrameSet( 2*Interval() );
+BG2H=HHV(LLV(aL,4)+ATR(4),8); 
+BR2H=LLV(HHV(aH,4)-ATR(4),8);
+C1=aC; 
+TimeFrameRestore();
+H5 = TimeFrameExpand(BG2H,2*Interval(),expandFirst  );
+MH5=TimeFrameExpand( BR2H,2*Interval(),expandFirst  );
+cH5=TimeFrameExpand( C1, 2*Interval(),expandFirst  );
+TimeFrameSet( 4*Interval() );
+BG2H=HHV(LLV(aL,4)+ATR(4),8); 
+BR2H=LLV(HHV(aH,4)-ATR(4),8); 
+C1=aC;  
+TimeFrameRestore();
+H15 = TimeFrameExpand(BG2H,4*Interval(),expandFirst  );
+MH15=TimeFrameExpand(BR2H,4*Interval(),expandFirst  );
+cH15=TimeFrameExpand( C1,4*Interval(),expandFirst  );
+TimeFrameSet( 6*Interval() );
+BG2H=HHV(LLV(aL,4)+ATR(4),8); 
+BR2H=LLV(HHV(aH,4)-ATR(4),8);
+C1=aC; 
+TimeFrameRestore();
+H30 = TimeFrameExpand(BG2H,6*Interval(),expandFirst  );
+MH30=TimeFrameExpand(BR2H,6*Interval(),expandFirst  );
+cH30=TimeFrameExpand( C1,6*Interval(),expandFirst  );
+TimeFrameSet( 8*Interval() );
+BG2H=HHV(LLV(aL,4)+ATR(4),8); 
+BR2H=LLV(HHV(aH,4)-ATR(4),8);
+C1=aC; 
+TimeFrameRestore();
+
+H1A = TimeFrameExpand(BG2H ,8*Interval(),expandFirst  );
+HH1A=TimeFrameExpand( BR2H,8*Interval(),expandFirst  );
+Ch1A=TimeFrameExpand( C1,8*Interval(),expandFirst  );
+TimeFrameSet( 16*Interval() );
+BG2H=HHV(LLV(aL,4)+ATR(4),8); 
+BR2H=LLV(HHV(aH,4)-ATR(4),8); 
+C1=aC;  
+TimeFrameRestore();
+H4 = TimeFrameExpand( BG2H,16*Interval(),expandFirst  );
+HH4=TimeFrameExpand( BR2H,16*Interval(),expandFirst  );
+cH4 = TimeFrameExpand( C1,16*Interval(),expandFirst  );
+Com=("\n "+Name()+ " - Trend  in  "+Candletype)+"\n "+
+EncodeColor(colorLightGrey)+(""+Interval(2)+":")+
+WriteIf(aC>BGH,EncodeColor(colorLime)+" UP",WriteIf(aC<BRH,EncodeColor(colorRed)+" DN",EncodeColor(colorGrey50)+" ~~"))+
+EncodeColor(colorLightGrey)+("   "+2*Interval()/60+"m:")+
+WriteIf(cH5>H5,EncodeColor(colorLime)+"  UP",WriteIf(cH5<MH5,EncodeColor(colorRed)+"  DN",EncodeColor(colorGrey50)+"  ~~"))+
+EncodeColor(colorLightGrey)+("   "+4*Interval()/60+"m:")+
+WriteIf(cH15>H15,EncodeColor(colorLime)+"  UP",WriteIf(cH15<MH15,EncodeColor(colorRed)+"   DN",EncodeColor(colorGrey50)+"   ~~"))+
+EncodeColor(colorLightGrey)+("   "+6*Interval()/60+"m:")+
+WriteIf(cH30>H30,EncodeColor(colorLime)+"   UP",WriteIf(cH30<MH30,EncodeColor(colorRed)+"    DN",EncodeColor(colorGrey50)+"    ~~"))+
+EncodeColor(colorLightGrey)+("  "+8*Interval()/60+"m:")+
+WriteIf(Ch1A>H1A,EncodeColor(colorLime)+"      UP",WriteIf(Ch1A<HH1A,EncodeColor(colorRed)+"      DN",EncodeColor(colorGrey50)+"     ~~"))+
+EncodeColor(colorLightGrey)+("  "+16*Interval()/60+"m: ")+
+WriteIf(Ch4>H4,EncodeColor(colorLime)+"       UP",WriteIf(Ch4<HH4,EncodeColor(colorRed)+"      DN",EncodeColor(colorGrey50)+"    ~~" ));
+}
+//---------------------------------------------------------------------------------------
+Vr=ParamList("Index",List = "^NSEI,^NSEBANK,NIFTY_F1,RELIANCE.NS,SBIN.NS",0);  
+SetForeign(Vr);
+HaC =(O+H+L+C)/4; 
+HaO = AMA( Ref( HaC, -1 ), 0.5 );  
+HaH = Max( H, Max( HaC, HaO) ); 
+HaL = Min( L, Min( HaC, HaO) );
+HBG=HHV(LLV(HaL,4)+ATR(4),8); 
+HBR=LLV(HHV(HaH ,4)-ATR(4),8); 
+co = IIf(Hac>HBG ,colorAqua,IIf(Hac < HBR,colorCustom12,colorGrey50)); 
+if( SetForeign(Vr) )
+{Plot(2, "", Co,styleArea+styleOwnScale | styleNoLabel, -1, 100);
+}else{
+Plot(2, "", 1,styleArea+styleOwnScale | styleNoLabel, -1, 100);}
+
+
+//=====================================================================================
+TimeFrameSet( 2*Interval() );
+BG2H=HHV(LLV(HaL,4)+ATR(4),8); 
+BR2H=LLV(HHV(HaH,4)-ATR(4),8);
+C1H=HaC; 
+TimeFrameRestore();
+M5H = TimeFrameExpand(BG2H,2*Interval(),expandFirst  );
+MM5H=TimeFrameExpand( BR2H,2*Interval(),expandFirst  );
+cM5H=TimeFrameExpand( C1H, 2*Interval(),expandFirst  );
+TimeFrameSet( 4*Interval() );
+BG2H=HHV(LLV(HaL,4)+ATR(4),8); 
+BR2H=LLV(HHV(HaH,4)-ATR(4),8); 
+C1H=HaC;  
+TimeFrameRestore();
+M15H = TimeFrameExpand(BG2H,4*Interval(),expandFirst  );
+MM15H=TimeFrameExpand(BR2H,4*Interval(),expandFirst  );
+cM15H=TimeFrameExpand( C1H,4*Interval(),expandFirst  );
+TimeFrameSet( 6*Interval() );
+BG2H=HHV(LLV(HaL,4)+ATR(4),8); 
+BR2H=LLV(HHV(HaH,4)-ATR(4),8);
+C1H=HaC; 
+TimeFrameRestore();
+M30H = TimeFrameExpand(BG2H,6*Interval(),expandFirst  );
+MM30H=TimeFrameExpand(BR2H,6*Interval(),expandFirst  );
+cM30H=TimeFrameExpand( C1H,6*Interval(),expandFirst  );
+TimeFrameSet( 8*Interval() );
+BG2H=HHV(LLV(HaL,4)+ATR(4),8); 
+BR2H=LLV(HHV(HaH,4)-ATR(4),8);
+C1H=HaC; 
+TimeFrameRestore();
+H1H = TimeFrameExpand(BG2H ,8*Interval(),expandFirst  );
+HH1H=TimeFrameExpand( BR2H,8*Interval(),expandFirst  );
+Ch1H=TimeFrameExpand( C1H,8*Interval(),expandFirst  );
+TimeFrameSet( 16*Interval() );
+BG2H=HHV(LLV(HaL,4)+ATR(4),8); 
+BR2H=LLV(HHV(HaH,4)-ATR(4),8); 
+C1H=HaC;  
+TimeFrameRestore();
+H4H = TimeFrameExpand( BG2H,16*Interval(),expandFirst  );
+HH4H=TimeFrameExpand( BR2H,16*Interval(),expandFirst  );
+cH4H = TimeFrameExpand( C1H,16*Interval(),expandFirst  ); 
+RestorePriceArrays();
+
+Comm2=("\n "+VR+ " - Phase  in  ")+"\n "+
+EncodeColor(colorLightYellow)+(""+Interval(2)+":")+
+WriteIf(Hac>HBG,EncodeColor(colorLime)+" UP",WriteIf(Hac < HBR,EncodeColor(colorRed)+" DN",EncodeColor(colorGrey50)+" ~~"))+
+EncodeColor(colorLightYellow)+("   "+2*Interval()/60+"m:")+
+WriteIf(cM5H>M5H,EncodeColor(colorLime)+"  UP",WriteIf(cM5H<MM5H,EncodeColor(colorRed)+"  DN",EncodeColor(colorGrey50)+"  ~~"))+
+EncodeColor(colorLightYellow)+("   "+4*Interval()/60+"m:")+
+WriteIf(cM15H>M15H,EncodeColor(colorLime)+"  UP",WriteIf(cM15H<MM15H,EncodeColor(colorRed)+"   DN",EncodeColor(colorGrey50)+"   ~~"))+
+EncodeColor(colorLightYellow)+("   "+6*Interval()/60+"m:")+
+WriteIf(cM30H>M30H,EncodeColor(colorLime)+"   UP",WriteIf(cM30H<MM30H,EncodeColor(colorRed)+"    DN",EncodeColor(colorGrey50)+"    ~~"))+
+EncodeColor(colorLightYellow)+("  "+8*Interval()/60+"m:")+
+WriteIf(Ch1H>H1H,EncodeColor(colorLime)+"      UP",WriteIf(Ch1H<HH1H,EncodeColor(colorRed)+"      DN",EncodeColor(colorGrey50)+"     ~~"))+
+EncodeColor(colorLightYellow)+("  "+16*Interval()/60+"m: ")+
+WriteIf(cH4H>H4H,EncodeColor(colorLime)+"       UP",WriteIf(cH4H<HH4H,EncodeColor(colorRed)+"      DN",EncodeColor(colorGrey50)+"    ~~" ));
+
+
+//============
+//=====Title================================================================================================ 
+_SECTION_BEGIN("Title"); 
+if( Status("action") == actionIndicator )  
+( 
+Title = EncodeColor(colorWhite)+ "NMA I.T v-3.5("+k+" - "+per+")" + " - " +  Name() + "-" + EncodeColor(colorRed)+ Interval(2) + EncodeColor(colorWhite) + 
+ "  - " + Date() +"   -  "+ strWeekday +"  -  "+"\n" +EncodeColor(colorYellow) +"Op-"+O+"  "+"Hi-"+H+"  "+"Lo-"+L+"  "+ 
+"Cl-"+C+"  "+ "Vol= "+ WriteVal(V)+"\n----------------------"+
+EncodeColor(colorTan)+ Com+
+EncodeColor(colorYellow)+Comm2+"\n---------system-------------"+"\n"+
+EncodeColor(colorLime)+ 
+WriteIf (Buy AND Ref(shrt,-1), " GO LONG / Reverse Signal at "+C+"  ","")+ 
+WriteIf (Buy AND Ref(NOTrade,-1), " GO LONG at "+C+"  ","")+EncodeColor(colorRed)+   
+WriteIf (Sell AND Ref(NOTrade,-1), " GO Short at "+C+"  ","")+ 
+WriteIf (Sell AND Ref(Long,-1), " EXIT LONG / Reverse Signal at "+C+"  ","")+
+WriteIf (Cover, " cover "+C+"  ",""));
+_SECTION_END();
+_SECTION_BEGIN("Background text");
+SetChartOptions(0,chartShowArrows|chartShowDates);
+C11=ParamColor("up panel",colorDarkOliveGreen );
+C12=ParamColor("dn panel",colorDarkGrey );
+C13=Param("fonts",20,10,30,1 );
+C14=Param("left-right",2.1,1.0,5.0,0.1 );
+C15=Param("up-down",12,1,20,1 );
+Miny = Status("axisminy");
+Maxy = Status("axismaxy");
+lvb = Status("lastvisiblebar");
+fvb = Status("firstvisiblebar");
+pxwidth = Status("pxwidth");
+pxheight = Status("pxheight");
+GfxSetBkMode( 0 ); 
+GfxSetOverlayMode(1);
+GfxGradientRect(0,0,pxwidth, pxheight, C11, C12 ); 
+GfxSelectFont("Tahoma", Status("pxheight")/C13 );
+GfxSetTextAlign( 6 );
+GfxTextOut( Name(), Status("pxwidth")/C14, Status("pxheight")/C15 );
+GfxSelectFont("Tahoma", Status("pxheight")/C13*0.5 );
+GfxTextOut( "VPA V2", Status("pxwidth")/C14, Status("pxheight")/C15*2.5 );
+GfxSelectFont("Tahoma", Status("pxheight")/C13*0.5 );
+GfxTextOut( " www.TAtechnics.in", Status("pxwidth")/C14, Status("pxheight")/C15*4 );
+_SECTION_END();

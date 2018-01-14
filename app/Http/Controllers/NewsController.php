@@ -176,7 +176,7 @@ class NewsController extends Controller
         $metaKey[] = 'category';
         $metaKey[] = 'market_lot';
         $metaKey[] = 'no_of_securities';
-        $metaKey[] = 'net_asset_value_per_share';
+        $metaKey[] = 'net_asset_val_per_share';
         $metaKey[] = 'year_end';
         $metaKey[] = 'share_percentage_public';
 
@@ -419,7 +419,7 @@ class NewsController extends Controller
             $topText .= '<*font=arial.ttf,size=9*> CAT:- ' . $fundamentalDataOrganized['category']['meta_value'] . ',';
             $topText .= '<*font=arial.ttf,size=9*> LOT:- ' . $fundamentalDataOrganized['market_lot']['meta_value'] . ',';
             $topText .= '<*font=arial.ttf,size=9*> YearEnd:- ' . $fundamentalDataOrganized['year_end']['meta_value'] . ',';
-            $topText .= '<*font=arial.ttf,size=9*> NAV:- ' . $fundamentalDataOrganized['net_asset_value_per_share']['meta_value'] . ',';
+            $topText .= '<*font=arial.ttf,size=9*> NAV:- ' . $fundamentalDataOrganized['net_asset_val_per_share']['meta_value'] . ',';
 
             $share_percentage_public = ($fundamentalDataOrganized['no_of_securities']['meta_value'] * $fundamentalDataOrganized['share_percentage_public']['meta_value']) / 100;
 

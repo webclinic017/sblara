@@ -38,7 +38,8 @@ class AjaxController extends Controller
         $returnData['bullBear'] = array_reverse($minuteChartData['bullBear']);
         $returnData['day_total_volume'] = $minuteChartData['day_total_volume'];
 
-        return collect($returnData)->toJson(JSON_NUMERIC_CHECK);
+        return response()
+         ->json(collect($returnData))->setTtl(60);
     }
 
     public function market($inst_id)
@@ -140,7 +141,7 @@ class AjaxController extends Controller
 
             ]
         //);
-        );//->setTtl(60);
+        )->setTtl(60);
         //return view('load_block',['viewData' => $viewData,'insid' => 12]);
     }
 

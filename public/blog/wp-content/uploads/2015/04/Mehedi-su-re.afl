@@ -1,0 +1,139 @@
+//MehediArafat
+//www.stockbangladesh.com
+
+   SetChartOptions(0,chartShowDates);
+   SetChartBkColor(16);
+   GraphXSpace=Param("GraphXSpace",10,-100,100,1);
+   SetBarFillColor(IIf(O>C,24,19));
+   Plot(C,"Price",IIf(O>C,32,34),64);
+   dtn=DateNum();
+   haC=EMA((O+H+L+C)/4,3);    haO=AMA(Ref(haC,-1),0.5);
+   haH=Max(H,Max(haC,haO));   haL=Min(L,Min(haC,haO));
+_SECTION_BEGIN("Name");
+   GfxSetOverlayMode(1);
+   pxh= Status("pxHeight");  pxw=Status("pxWidth");
+   GfxSelectFont("Tahoma",pxh/8);
+   GfxSetTextColor(ColorHSB(42,42,42));
+   GfxSetTextAlign(6);  GfxSetBkMode(0);
+   GfxTextOut(Name(),pxw/2,pxh/12);
+   GfxSelectFont("Tahoma",pxh/18);
+   GfxTextOut(IndustryID(1),pxw/2,pxh/4);
+   GfxSelectFont("Tahoma",pxh/18);
+   GfxSelectFont("Tahoma",pxh/36);
+   GfxTextOut("Sup/Res",pxw/2,pxh/3);
+_SECTION_END();
+//==============================
+_SECTION_BEGIN("HL Pivots");
+//==============================
+   psh= ParamToggle("Pivot Shapes","Off|On",1);
+   plb= ParamToggle("Pivot Labels","Off|On",1);
+   snd= ParamToggle("Sound Alerts","Off|On",1);
+   lbk= Param("Hi Lo Lookback",350,50,5000,10);
+   nbz= Param("Swing Bars",20,5,150,1);
+   tht= Param("Hi Label Adjust",0.65,0.10,5,0.05)*ATR(5);
+   lbk= Min(BarCount-1,Lbk);
+   bc=BarCount-1;
+//================
+   xH=H-H;   xL=L-L;   yH=H-H;   yL=L-L;   xR=H-H;   xS=L-L;
+   xrb=0;    xSb=0;    yR0=0;    yS0=0;    xR0=0;    xS0=0;   xx=0;
+   xHH= HHVBars(H,nbz);  xLL= LLVBars(L,nbz);
+   yHH= HHV(H,nbz);      yLL= LLV(L,nbz);
+   viz= Status("BarVisible");
+   vbz= LastValue(Highest(IIf(viz,BarIndex(),0)));
+   _TRACE("Last visible bar: "+ vbz);
+   bct= (BarCount-1);  dir = "";
+   if(xLL[bc]<xHH[bc])  { dir="D"; } else { dir="U"; }
+    for(i=0; i<lbk; i++)  {  bc=bct-i;
+     if(xLL[bc]<xHH[bc])  { if(dir=="U"){dir="D";
+      xx=bc-xLL[bc];  xL[xx]=1;  
+      yL[xSb]=L[xx];  xS[xSb]=xx; xSb++; }
+     } else { if(dir=="D")  { dir = "U";
+        xx=bc-xHH[bc];  xH[xx]=1;  yH[xrb]=H[xx];  xR[xrb]=xx;xrb++; }}}
+        xP= 0;  yP= 0;  xS0= xS[0];  yS0=yL[0];  xR0= xR[0];  yR0= yH[0];
+     if(xS0>xR0) { xP=bc-xHH[bc];  yP= yHH[bc];
+      if(yR0<yP AND xP>xS0 AND xP<bc) {  xH[xP]=1;
+       for(j=0; j<xrb; j++) { yH[xrb-j]= yH[xrb-(j+1)];
+        xR[xrb-j]= xR[xrb-(j+1)];  }
+        yH[0]= yP;  xR[0]= xP;  xrb++;  }
+        } else { xP= bc-xLL[bc]; yP= yLL[bc];
+           if(yS0>yP AND xP>xR0 AND xP<bc) {  xL[xP]=1;
+            for(j=0; j<xSb; j++) { yL[xSb-j]= yL[xSb-(j+1)];  xS[xSb-j]= xS[xSb-(j+1)];  }
+             yL[0]=yP;  xS[0]=xP;  xSb++;  }}
+   ushp=shapeHollowUpArrow;   dshp=shapeHollowDownArrow;
+   if(psh) { PlotShapes(xH*dshp,42,0,H,-10);  PlotShapes(xL*ushp,43,0,L,-10); }
+   if(snd) {
+    AlertIf(xL==1,"SOUND C:\\Windows\\Media\\Windows XP Startup.wav","Audio alert",2);
+    AlertIf(xH==1,"SOUND C:\\Windows\\Media\\Ringin.wav","Audio alert",2);  }
+   Buy=(xL);  Sell=(xH);  Cover=(xL);  Short=(xH); Long=Flip(Buy,Sell);  Shrt=Flip(Sell,Buy);
+   SellPrice=ValueWhen(Sell,H,1);  BuyPrice= ValueWhen(Buy,L,1);
+   if(plb) {
+    for(i=0; i<BarCount; i++) { 
+     if(Buy[i] )PlotText("\n\n"+ StrRight(NumToStr(L[i],6.2),5),i-1,L[i],43,16); 
+     if(Sell[i])PlotText(StrRight(NumToStr(H[i],6.2),5),i-1,H[i]+tht[i],32,16); }
+   }
+_SECTION_END();
+//===========================
+_SECTION_BEGIN("Sup & Res");
+//===========================
+   plt= ParamToggle("Sup_Res","Off|On",1);
+   rpd= Param("Res Periods",2,0,200,1);
+   spd= Param("Sup Periods",2,0,200,1);
+   rsc= ParamToggle("Sup_Res","Off|On",1)*2048;
+   sty= ParamStyle("Style",1)|rsc;
+   rco= ParamColor("Res Color",22);
+   sco= ParamColor("Sup Color",22);
+   if(plt){
+    pma= TEMA(H,rpd);
+    pk= pma>Ref(pma,-1)AND Ref(pma,1)<H;//Peak
+    yp0= ValueWhen(pk,haH,0);
+    yp1= ValueWhen(pk,haH,1);
+    yp2= ValueWhen(pk,haH,2);
+    pkM= yp2<yp1 AND yp1>yp0;   prq=Ref(pkM,-1)==0 AND pkM==1;//MajorPeak
+    yR1= ValueWhen(prq,yp1,1);  xR1= ValueWhen(prq,dtn,1);
+    yR1= IIf(dtn<SelectedValue(xR1),Null,SelectedValue(yR1));
+    yR2= ValueWhen(prq,yp1,2);  xR2= ValueWhen(prq,dtn,2);
+    yR2= IIf(dtn<SelectedValue(xR2),Null,SelectedValue(yR2));
+    yR3= ValueWhen(prq,yp1,3);  xR3= ValueWhen(prq,dtn,3);
+    yR3= IIf(dtn<SelectedValue(xR3),Null,SelectedValue(yR3));
+    yR4= ValueWhen(prq,yp1,4);  xR4= ValueWhen(prq,dtn,4);
+    yR4= IIf(dtn<SelectedValue(yR4),Null,SelectedValue(yR4));
+    yR5= ValueWhen(prq,yp1,5);  xR5= ValueWhen(prq,dtn,5);
+    yR5= IIf(dtn<SelectedValue(xR5),Null,SelectedValue(yR5));
+    yR6= ValueWhen(prq,yp1,6);  xR6=ValueWhen(prq,dtn,6);
+    yR6= IIf(dtn<SelectedValue(xR6),Null,SelectedValue(yR6));
+    Plot(yR1,"R1",rco,1);
+    Plot(IIf(yR2!=yR1,yR2,Null),"R2",rco,sty);  
+    Plot(IIf(yR3!=yR2 AND yR3!=yR1,yR3,Null),"R3",rco,sty);
+    Plot(IIf(yR4!=yR3 AND yR4!=yR2 AND yR4!= yR1,yR4,Null),"R4",rco,sty);  
+    Plot(IIf(yR5!=yR4 AND yR5!=yR3 AND yR5!=yR2 AND yR5!=yR1,yR5,Null),"R5",rco,sty);
+    Plot(IIf(yR6!=yR5 AND yR6!=yR4 AND yR6!=yR3 AND yR6!=yR2 AND yR6!=yR1,yR6,Null),"R6",rco,sty);
+//=========================
+//======== SUPPORT ========
+//=========================
+    tma= TEMA(L,spd);   
+    tr= Ref(tma,1)>L AND tma<Ref(tma,-1);//Trough
+    yt0= ValueWhen(tr,haL,0);
+    yt1= ValueWhen(tr,haL,1);
+    yt2= ValueWhen(tr,haL,2);
+    trM= yt2>yt1 AND yt1<yt0;
+    psq= Ref(trM,-1)==0 AND trM==1;
+    yS1= ValueWhen(psq,yt1,1);  xS1= ValueWhen(psq,dtn,1);
+    yS1= IIf(dtn<SelectedValue(xS1),Null,SelectedValue(yS1));
+    yS2= ValueWhen(psq,yt1,2);  xS2= ValueWhen(psq,dtn,2);
+    yS2= IIf(dtn<SelectedValue(xS2),Null,SelectedValue(yS2));
+    yS3= ValueWhen(psq,yt1,3);  xS3= ValueWhen(psq,dtn,3);
+    yS3= IIf(dtn<SelectedValue(xS3),Null,SelectedValue(yS3));
+    yS4= ValueWhen(psq,yt1,4);  xS4= ValueWhen(psq,dtn,4);
+    yS4= IIf(dtn<SelectedValue(xS4),Null,SelectedValue(yS4));
+    yS5= ValueWhen(psq,yt1,5);  xS5= ValueWhen(psq,dtn,5);
+    yS5= IIf(dtn<SelectedValue(xS5),Null,SelectedValue(yS5));
+    yS6= ValueWhen(psq,yt1,6);  xS6= ValueWhen(psq,dtn,6);
+    yS6= IIf(dtn<SelectedValue(xS6),Null,SelectedValue(yS6));
+    Plot(yS1,"S1",sco,sty);  
+    Plot(IIf(yS2!=yS1,yS2,Null),"S2",sco,sty);  
+    Plot(IIf(yS3!=yS2 AND yS3!=yS1,yS3,Null),"S3",sco,sty);
+    Plot(IIf(yS4!=yS3 AND yS4!=yS2 AND yS4!= yS1,yS4,Null),"S4",sco,sty);  
+    Plot(IIf(yS5!=yS4 AND yS5!=yS3 AND yS5!=yS2 AND yS5!=yS1,yS5,Null),"S4",sco,sty);
+    Plot(IIf(yS6!=yS5 AND yS6!=yS4 AND yS6!=yS3 AND yS6!=yS2 AND yS6!=yS1,yS6,Null),"S4",sco,sty);
+   }
+_SECTION_END();

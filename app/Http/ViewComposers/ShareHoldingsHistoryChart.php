@@ -54,7 +54,6 @@ class ShareHoldingsHistoryChart
 
        // dd($fundaData['share_percentage_director']->first()->pluck('meta_value')->toArray());
 
-
         $view->with('render_to', $render_to)
             ->with('category', collect($category)->toJson())
             ->with('director',collect($director)->toJson(JSON_NUMERIC_CHECK))

@@ -1,0 +1,40 @@
+formulaName = "Sum of Bull and Bear Volumes";
+SetChartOptions(0,chartShowArrows|chartShowDates);
+GfxSetBkMode(1);
+GfxSelectFont("Verdana", 12, 600, italic=False);
+GfxSetTextColor(colorLightYellow); 
+GfxTextOut(FormulaName, 4, 20);
+
+
+_SECTION_BEGIN("Sum of Bull and Bear Volumes");
+SetChartOptions(0, chartShowArrows|chartShowDates);
+GfxSetBkMode(1);
+periods = Param("Periods to Sum", 5, 1, 100, 1);
+
+BullCond = V>Ref(V,-1)	AND C>Ref(C,-1) OR 	V<Ref(V,-1)	AND C<Ref(C,-1);
+BearCond = V>Ref(V,-1) AND C<Ref(C,-1) OR V<Ref(V,-1) AND C>Ref(C,-1);
+
+SumBull= Sum (V*BullCond, periods);
+SumBear= Sum (V*BearCond, periods);
+Delta  = SumBull-SumBear;
+Summa  = SumBull+SumBear;
+
+Out = ParamToggle("Show Style", "Bull+Bear|Bull-Bear", 0 );
+if ( Out == 0 )
+{
+GraphXSpace = 20;
+	Plot(SumBull,"Bull Vol", colorLime, styleThick);
+	Plot(SumBear,"Bear Vol", colorRed, styleThick);
+	Plot(SumBear,"", colorBrown, styleHistogram|styleNoLabel|styleNoTitle);
+	Plot(SumBull,"", colorDarkGreen, styleHistogram|styleNoLabel|styleNoTitle);
+	Plot(Summa,  "All Vol", colorWhite, styleDashed|styleNoRescale);
+} 
+else 
+{ 
+GraphXSpace = 10;
+	DeltaColor = IIf( Delta==0, colorWhite, IIf(Delta>0, colorGreen,colorRed));
+	Plot(Delta,"Delta", DeltaColor, styleLine|styleNoLine|styleNoRescale);
+	Plot(Delta,"Delta", colorWhite, styleThick|styleNoLabel|styleNoTitle|styleNoRescale);
+	PlotOHLC(Delta,Delta,0,Delta,"",DeltaColor, styleCloud|styleClipMinMax|styleNoLabel);
+}
+_SECTION_END();

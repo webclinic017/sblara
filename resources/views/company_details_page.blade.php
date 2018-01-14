@@ -6,7 +6,8 @@
 @section('content')
 <div class="row margin-bottom-20">
 <div class="col-lg-6 col-md-3 col-sm-6 col-xs-12">
-<h4>Update: {{$lastTradeInfo->lm_date_time->format('d-m-Y H:i')}}</h4>
+{{--<h4>Update: {{$lastTradeInfo->lm_date_time->format('d-m-Y H:i')}}</h4>--}}
+<a target="_blank" href="{{ url('fundamental-details/') }}/{{$instrumentInfo->id}}" class="btn green-sharp btn-block btn-outline sbold uppercase">Fundamental details of {{$instrumentInfo->name}} </a>
 </div>
 <div class="col-lg-6 col-md-3 col-sm-6 col-xs-12">
 @include('html.instrument_list_bs_select',['bs_select_id'=>'instruments'])
