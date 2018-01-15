@@ -135,42 +135,6 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
                     <div class="caption">
                         <i class="icon-graph font-yellow-casablanca"></i>
                         <span class="caption-subject bold font-yellow-casablanca uppercase">
-                            Gainer/Loser (last minute) </span>
-                            <span class="caption-helper"></span>
-                        </div>
-                        <div class="tools">
-                            <a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.sector_gainer_loser_last_minute:render_to=gainer_loser_last_minute" class="reload"></a>
-
-                            <a href="" class="collapse">
-                            </a>
-
-                        </a>
-                        <a href="" class="remove">
-                        </a>
-                    </div>
-
-                </div>
-                <div class="portlet-body">
-
-
-                </div>
-            </div>
-            <!-- END Portlet PORTLET-->
-
-            </div>
-        </div>
-        {{--  New block Ends--}}
-
-
-        {{--  New block Starts--}}
-        <div class="row">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <!-- BEGIN Portlet PORTLET-->
-            <div class="portlet light bordered">
-                <div class="portlet-title">
-                    <div class="caption">
-                        <i class="icon-graph font-yellow-casablanca"></i>
-                        <span class="caption-subject bold font-yellow-casablanca uppercase">
                             Sector Compare </span>
                             <span class="caption-helper"> Today vs Previous day</span>
                         </div>
@@ -195,6 +159,7 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
             </div>
         </div>
         {{--  New block Ends--}}
+
 
 
         {{--  New block Starts--}}
@@ -277,6 +242,50 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
         {{--  New block Ends--}}
 
 
+        {{--  New block Starts--}}
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="portlet light bordered">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="icon-graph font-yellow-casablanca"></i>
+                        <span class="caption-subject bold font-yellow-casablanca uppercase">
+                            Significant Value </span>
+                            <span class="caption-helper"></span>
+                        </div>
+                        <div class="tools">
+                             <a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.significant_movement_value:render_to=significant_value" class="reload"></a>
+
+                            <a href="" class="collapse">
+                            </a>
+
+                        </a>
+                        <a href="" class="remove">
+                        </a>
+                    </div>
+
+                </div>
+                <div class="portlet-body">
+
+                </div>
+            </div>
+
+            </div>
+        </div>
+        {{--  New block Ends--}}
+
+
+
+
+        {{--  New block Starts--}}
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+            </div>
+        </div>
+        {{--  New block Ends--}}
+
+
 
         {{--  New block Starts--}}
         <div class="row">
@@ -295,39 +304,43 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 
 
-  
-
 
         {{--  New block Starts--}}
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <div class="portlet light bordered">
-                  <div class="portlet-title tabbable-line">
-                        <div class="caption">
-                            <i class="icon-graph font-yellow-casablanca"></i>
-                            <span class="caption-subject bold font-yellow-casablanca uppercase">
-                              Gainer Loser : Whole Day (UP/DOWN FRAME) </span>
-
-                          </div>
-                            <div class="tools">
-                                {{--<a href="#" data-load="false" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.market_frame_by_gainer_lose:render_to=gainer_loser_whole_day_up_down_frame" class="reload"></a>--}}
-
-                                <a href="" class="collapse">
-                                </a>
-
-                            </a>
-                            <a href="" class="remove">
-                            </a>
+            <!-- BEGIN Portlet PORTLET-->
+            <div class="portlet light bordered">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="icon-graph font-yellow-casablanca"></i>
+                        <span class="caption-subject bold font-yellow-casablanca uppercase">
+                            Gainer/Loser (last minute) </span>
+                            <span class="caption-helper"></span>
                         </div>
+                        <div class="tools">
+                            <a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.sector_gainer_loser_last_minute:render_to=gainer_loser_last_minute" class="reload"></a>
+
+                            <a href="" class="collapse">
+                            </a>
+
+                        </a>
+                        <a href="" class="remove">
+                        </a>
                     </div>
 
+                </div>
                 <div class="portlet-body">
-                    @include('block.market_frame_by_gainer_lose')
+
+
                 </div>
             </div>
+            <!-- END Portlet PORTLET-->
+
             </div>
         </div>
         {{--  New block Ends--}}
+
+
 
 
         {{--  New block Starts--}}
@@ -363,6 +376,41 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
         {{--  New block Ends--}}
 
 
+
+        {{--  New block Starts--}}
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="portlet light bordered">
+                  <div class="portlet-title tabbable-line">
+                        <div class="caption">
+                            <i class="icon-graph font-yellow-casablanca"></i>
+                            <span class="caption-subject bold font-yellow-casablanca uppercase">
+                              Gainer Loser : Whole Day (UP/DOWN FRAME) </span>
+
+                          </div>
+                            <div class="tools">
+                                {{--<a href="#" data-load="false" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.market_frame_by_gainer_lose:render_to=gainer_loser_whole_day_up_down_frame" class="reload"></a>--}}
+
+                                <a href="" class="collapse">
+                                </a>
+
+                            </a>
+                            <a href="" class="remove">
+                            </a>
+                        </div>
+                    </div>
+
+                <div class="portlet-body">
+                    @include('block.market_frame_by_gainer_lose')
+                </div>
+            </div>
+            </div>
+        </div>
+        {{--  New block Ends--}}
+
+
+
+
         {{--  New block Starts--}}
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -394,47 +442,6 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
         </div>
         {{--  New block Ends--}}
 
-
-        {{--  New block Starts--}}
-        <div class="row">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <div class="portlet light bordered">
-                <div class="portlet-title">
-                    <div class="caption">
-                        <i class="icon-graph font-yellow-casablanca"></i>
-                        <span class="caption-subject bold font-yellow-casablanca uppercase">
-                            Significant Value </span>
-                            <span class="caption-helper"></span>
-                        </div>
-                        <div class="tools">
-                             <a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.significant_movement_value:render_to=significant_value" class="reload"></a>
-
-                            <a href="" class="collapse">
-                            </a>
-
-                        </a>
-                        <a href="" class="remove">
-                        </a>
-                    </div>
-
-                </div>
-                <div class="portlet-body">
-
-                </div>
-            </div>
-
-            </div>
-        </div>
-        {{--  New block Ends--}}
-
-
-        {{--  New block Starts--}}
-        <div class="row">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-
-            </div>
-        </div>
-        {{--  New block Ends--}}
 
 
 
