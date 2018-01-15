@@ -14,7 +14,7 @@ Homestead.yaml
 .env
 /.vscode
 error_log
-
+.well-known/
 ./public/img/35x35
 /public/img/35x35
 /public/img/149x149
