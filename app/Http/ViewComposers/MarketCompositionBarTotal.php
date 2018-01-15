@@ -44,64 +44,58 @@ class MarketCompositionBarTotal
         $today=array();
         $prevDay=array();
         $category=array();
-        foreach($instrumentList as $sector_id=>$instrument_arr)
-        {
-            $todayTemp=array();
-            $prevTemp=array();
 
+        $raw_value_today = array();
+        $raw_value_prev = array();
+        foreach ($instrumentList as $sector_id => $instrument_arr) {
 
+            $sector_name = $instrument_arr->first()->sector_list->name;
 
-            $sector_name=$instrument_arr->first()->sector_list->name;
+            $sector_area_total = 0;
+            $sector_area_total_prev = 0;
 
-            $sector_area_total=0;
-            $sector_area_total_prev=0;
-
-            foreach($instrument_arr as $instrument)
-            {
-
-                $instrument_id=$instrument->id;
+            foreach ($instrument_arr as $instrument) {
+                $instrument_id = $instrument->id;
                 //dd($instrumentTradeDataPrev[$instrument_id]);
-                if(isset($instrumentTradeData[$instrument_id]))
-                    $sector_area_total+=$instrumentTradeData[$instrument_id]->$base;
+                if (isset($instrumentTradeData[$instrument_id]))
+                    $sector_area_total += $instrumentTradeData[$instrument_id]->$base;
 
-
-                if(isset($instrumentTradeDataPrev[$instrument_id]))
-                    $sector_area_total_prev+=$instrumentTradeDataPrev[$instrument_id]->$base;
-
+                if (isset($instrumentTradeDataPrev[$instrument_id]))
+                    $sector_area_total_prev += $instrumentTradeDataPrev[$instrument_id]->$base;
             }
 
-            $todayTemp['name']=$sector_name;
-            $todayTemp['color']='#50B432';
-            $todayTemp['y']=$sector_area_total;
 
-            $prevTemp['name']=$sector_name;
-            $prevTemp['color']='#FF9655';
-            $prevTemp['y']=$sector_area_total_prev;
-
-
-
-            $today[]=$todayTemp;
-            $prevDay[]=$prevTemp;
-            $category[]=$sector_name;
-
+            $raw_value_today[$sector_name] = $sector_area_total;
+            $raw_value_prev[$sector_name] = $sector_area_total_prev;
 
         }
+        arsort($raw_value_today);
 
-        $today=collect($today)->sortByDesc('y')->toArray();
-        $today=array_values($today);
-        $prevDay=collect($prevDay);
 
-        $prevDaySorted=array();
-        foreach($today as $row)
-        {
-            $prevDaySorted[]=$prevDay->where('name',$row['name'])->first();
+        foreach ($raw_value_today as $sector_name => $data) {
+            $todayTemp = array();
+            $prevTemp = array();
+
+            $todayTemp['name'] = $sector_name;
+            $todayTemp['color'] = '#1BA39C';
+            $todayTemp['y'] = round($data, 2);
+
+            $prevTemp['name'] = $sector_name;
+            $prevTemp['color'] = '#EF4836';
+            $prevTemp['y'] = round($raw_value_prev[$sector_name], 2);
+
+            $today[] = $todayTemp;
+            $prevDay[] = $prevTemp;
+            $category[] = $sector_name;
+
+
         }
 
         $todayDate=$instrumentTradeData->first()->lm_date_time;
         $prevDate=$instrumentTradeDataPrev->first()->lm_date_time;
 
         $view->with('today', collect($today)->toJson())
-            ->with('prevDay', collect($prevDaySorted)->toJson())
+            ->with('prevDay', collect($prevDay)->toJson())
             ->with('category', collect($category)->toJson())
             ->with('todayDate', $todayDate)
             ->with('prevDate', $prevDate)

@@ -50,6 +50,25 @@ class SectorGainerLoser
             $category[]=$sector_name;
         }
 
+        // new
+
+        $instrumentList = InstrumentRepository::getInstrumentsScripOnly();
+        sbdump($instrumentList,'afmsohail@gmail.com');
+
+/*
+        if (isset($raw_up[$sector_name])) {
+            $raw_up[$sector_name] += 1;
+        } else {
+            $raw_up[$sector_name] = 1;
+        }*/
+
+        //new end
+
+
+
+
+
+
         $category=json_encode($category);
         $upArr=json_encode($upArr);
         $downArr=json_encode($downArr);

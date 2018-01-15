@@ -29,7 +29,6 @@ class UserRepository {
 
         $query=UserInformation::whereIn('meta_id',$metaId)->where('user_id',$userId);
         $returnData=$query->get();
-
         return $returnData;
     }
 

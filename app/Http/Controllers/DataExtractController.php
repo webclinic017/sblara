@@ -10,7 +10,7 @@ class DataExtractController extends Controller
     public function sharePercentage()
     {
     	$query = "
-			SELECT instruments.instrument_code, fundamental.*, dse_share_percentage.* FROM instruments
+			SELECT instruments.instrument_code, instruments.sector_list_id, fundamental.*, dse_share_percentage.* FROM instruments
 
 			LEFT JOIN
 
@@ -35,7 +35,7 @@ class DataExtractController extends Controller
 				                
 				  on instruments.id = fundamental.instrument_id
 				  LEFT JOIN dse_share_percentage on instruments.id = dse_share_percentage.instrument_id
-				  WHERE instruments.active = '1'	
+				  WHERE instruments.active = '1'	and instruments.sector_list_id not in (5, 23, 22)
 				  order by instrument_code asc
     	";
 

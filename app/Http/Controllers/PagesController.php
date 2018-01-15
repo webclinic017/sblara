@@ -52,10 +52,112 @@ return $d;
     }
     public function dashboard2()
     {
-        $ismatured=InstrumentRepository::isMature(12,'2017-05-07');
+        $instrumentTradeData = DataBanksIntradayRepository::getLatestTradeDataAll();
+        $instrumentTradeData = $instrumentTradeData->keyBy('instrument_id');
+
+        $instrumentList = InstrumentRepository::getInstrumentsScripOnly();
+        $up=array();
+        $down=array();
+        $eq=array();
+        foreach($instrumentList as $instrument)
+        {
+            $instrument_id= $instrument->id;
+            $sector_name=$instrument->sector_list->name;
+
+            if(isset($instrumentTradeData[$instrument_id]))
+            {
+                if ($instrumentTradeData[$instrument_id]->price_change > 0) {
+                    if (isset($up[$sector_name])) {
+                        $up[$sector_name] += 1;
+                    } else {
+                        $up[$sector_name] = 1;
+                    }
+
+                }
+
+                if ($instrumentTradeData[$instrument_id]->price_change < 0) {
+                    if (isset($down[$sector_name])) {
+                        $down[$sector_name] += 1;
+                    } else {
+                        $down[$sector_name] = 1;
+                    }
+
+                }
+                if ($instrumentTradeData[$instrument_id]->price_change == 0) {
+                    if (isset($eq[$sector_name])) {
+                        $eq[$sector_name] += 1;
+                    } else {
+                        $eq[$sector_name] = 1;
+                    }
+
+                }
+            }
+
+
+
+
+        }
+        arsort($up);
+        arsort($down);
+        arsort($eq);
+
+
+
+        $category_arr=array();
+
+        foreach($up as $sector_name=>$share_no)
+        {
+            $category_arr[$sector_name]= $sector_name;
+
+        }
+
+        foreach($down as $sector_name=>$share_no)
+        {
+            $category_arr[$sector_name]= $sector_name;
+        }
+
+        foreach($eq as $sector_name=>$share_no)
+        {
+            $category_arr[$sector_name]= $sector_name;
+        }
+
+        $up_arr = array();
+        $down_arr = array();
+        $eq_arr = array();
+        $category=array();
+
+        foreach($category_arr as $sector_name)
+        {
+            if(isset($up[$sector_name]))
+                $up_arr[]= $up[$sector_name];
+            else
+                $up_arr[] =0;
+
+            if(isset($down[$sector_name]))
+                $down_arr[]= $down[$sector_name];
+            else
+                $down_arr[] =0;
+
+            if(isset($eq[$sector_name]))
+                $eq_arr[]= $eq[$sector_name];
+            else
+                $eq_arr[] =0;
+        }
+
+
+
+        dump($eq_arr);
+        dump($down_arr);
+        dump($up_arr);
+        dump($category_arr);
+        dump($up);
+        dump($down);
+        dd($eq);
+
+    /*    $ismatured=InstrumentRepository::isMature(12,'2017-05-07');
 
        $trade_date_Info=Market::getActiveDates()->first();
-       return response()->view('dashboard2', ['trade_date_Info' => $trade_date_Info])->setTtl(1);
+       return response()->view('dashboard2', ['trade_date_Info' => $trade_date_Info])->setTtl(1);*/
     }
     public function newsChart($instrument_id=13)
     {

@@ -117,8 +117,8 @@ class AjaxController extends Controller
     	$savedUserData = ['symbols'=>array(),'periods' => array()];
     	$savedUserData['symbols'] = explode(',', $request->input('symbols'));
     	$savedUserData['periods'] = explode(',', $request->input('periods'));
-    	UserRepository::saveUserInfo(array('market_monitor_settings'),serialize($savedUserData),5);
-    	return view('monitor');
+    	UserRepository::saveUserInfo(array('market_monitor_settings'),serialize($savedUserData));
+    	return redirect()->back();
     }
     public function load_block($param)
     {
