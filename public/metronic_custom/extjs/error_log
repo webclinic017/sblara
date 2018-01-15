@@ -1,9 +1,0 @@
-[30-May-2013 21:39:23 UTC] PHP Parse error:  syntax error, unexpected T_STRING in /home/stock/public_html/app/webroot/extjs/ext-all.js on line 21
-[30-May-2013 21:41:55 UTC] PHP Parse error:  syntax error, unexpected T_STRING in /home/stock/public_html/app/webroot/extjs/ext-all.js on line 21
-[30-May-2013 21:45:50 UTC] PHP Parse error:  syntax error, unexpected T_STRING in /home/stock/public_html/app/webroot/extjs/ext-all.js on line 21
-[30-May-2013 21:54:41 UTC] PHP Parse error:  syntax error, unexpected T_STRING in /home/stock/public_html/app/webroot/extjs/ext-all.js on line 21
-[30-May-2013 21:55:04 UTC] PHP Parse error:  syntax error, unexpected T_STRING in /home/stock/public_html/app/webroot/extjs/ext-all.js on line 21
-[30-May-2013 21:56:05 UTC] PHP Parse error:  syntax error, unexpected T_STRING in /home/stock/public_html/app/webroot/extjs/ext-all.js on line 21
-[30-May-2013 21:57:13 UTC] PHP Warning:  ob_start() [<a href='ref.outcontrol'>ref.outcontrol</a>]: output handler 'ob_gzhandler' cannot be used twice in /home/stock/public_html/app/webroot/extjs/ext-all.php on line 2
-[30-May-2013 21:57:13 UTC] PHP Parse error:  syntax error, unexpected T_STRING in /home/stock/public_html/app/webroot/extjs/ext-all.js on line 21
-[30-May-2013 22:05:32 UTC] PHP Warning:  readfile(0js) [<a href='function.readfile'>function.readfile</a>]: failed to open stream: No such file or directory in /home/stock/public_html/app/webroot/extjs/ext-all.php on line 14

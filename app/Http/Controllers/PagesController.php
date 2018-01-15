@@ -50,23 +50,51 @@ return $d;
         // ->setTtl(60)
         ;
     }
+
+    function upDownStats($allTradeData)
+    {
+
+        $up = $allTradeData->filter(function ($value, $key) {
+            return $value->price_change_growth > 0;
+        });
+
+        $down = $allTradeData->filter(function ($value, $key) {
+            return $value->price_change_growth < 0;
+        });
+
+        $eq = $allTradeData->filter(function ($value, $key) {
+            if ($value->price_change_growth == 0)
+                return true;
+            else
+                return false;
+
+        });
+
+        $returnData = array();
+        $returnData['up'] = $up;
+        $returnData['down'] = $down;
+        $returnData['eq'] = $eq;
+
+
+        return $returnData;
+    }
     public function dashboard2()
     {
-        $instrumentTradeData = DataBanksIntradayRepository::getLatestTradeDataAll();
-        $instrumentTradeData = $instrumentTradeData->keyBy('instrument_id');
+
+        $latestTradeDataAll = DataBanksIntradayRepository::getLatestTradeDataAll();
+        $prevMinuteTradeDataAll = DataBanksIntradayRepository::getMinuteAgoTradeDataAll();
+        $instrumentTradeData = growthCalculate($latestTradeDataAll, $prevMinuteTradeDataAll, 'price_change', 500);
 
         $instrumentList = InstrumentRepository::getInstrumentsScripOnly();
-        $up=array();
-        $down=array();
-        $eq=array();
-        foreach($instrumentList as $instrument)
-        {
-            $instrument_id= $instrument->id;
-            $sector_name=$instrument->sector_list->name;
+        $up = array();
+        $down = array();
+        $eq = array();
+        foreach ($instrumentList as $instrument) {
+            $instrument_id = $instrument->id;
+            $sector_name = $instrument->sector_list->name;
 
-            if(isset($instrumentTradeData[$instrument_id]))
-            {
-                if ($instrumentTradeData[$instrument_id]->price_change > 0) {
+            if (isset($instrumentTradeData[$instrument_id])) {
+                if ($instrumentTradeData[$instrument_id]->price_change_growth > 0) {
                     if (isset($up[$sector_name])) {
                         $up[$sector_name] += 1;
                     } else {
@@ -75,7 +103,7 @@ return $d;
 
                 }
 
-                if ($instrumentTradeData[$instrument_id]->price_change < 0) {
+                if ($instrumentTradeData[$instrument_id]->price_change_growth < 0) {
                     if (isset($down[$sector_name])) {
                         $down[$sector_name] += 1;
                     } else {
@@ -83,7 +111,7 @@ return $d;
                     }
 
                 }
-                if ($instrumentTradeData[$instrument_id]->price_change == 0) {
+                if ($instrumentTradeData[$instrument_id]->price_change_growth == 0) {
                     if (isset($eq[$sector_name])) {
                         $eq[$sector_name] += 1;
                     } else {
@@ -94,70 +122,59 @@ return $d;
             }
 
 
-
-
         }
         arsort($up);
         arsort($down);
         arsort($eq);
 
 
+        $category_arr = array();
 
-        $category_arr=array();
-
-        foreach($up as $sector_name=>$share_no)
-        {
-            $category_arr[$sector_name]= $sector_name;
+        foreach ($up as $sector_name => $share_no) {
+            $category_arr[$sector_name] = $sector_name;
 
         }
 
-        foreach($down as $sector_name=>$share_no)
-        {
-            $category_arr[$sector_name]= $sector_name;
+        foreach ($down as $sector_name => $share_no) {
+            $category_arr[$sector_name] = $sector_name;
         }
 
-        foreach($eq as $sector_name=>$share_no)
-        {
-            $category_arr[$sector_name]= $sector_name;
+        foreach ($eq as $sector_name => $share_no) {
+            $category_arr[$sector_name] = $sector_name;
         }
 
         $up_arr = array();
         $down_arr = array();
         $eq_arr = array();
-        $category=array();
+        $category = array();
 
-        foreach($category_arr as $sector_name)
-        {
-            if(isset($up[$sector_name]))
-                $up_arr[]= $up[$sector_name];
+        foreach ($category_arr as $sector_name) {
+            $category[] = $sector_name;
+            if (isset($up[$sector_name]))
+                $up_arr[] = $up[$sector_name];
             else
-                $up_arr[] =0;
+                $up_arr[] = 0;
 
-            if(isset($down[$sector_name]))
-                $down_arr[]= $down[$sector_name];
+            if (isset($down[$sector_name]))
+                $down_arr[] = $down[$sector_name];
             else
-                $down_arr[] =0;
+                $down_arr[] = 0;
 
-            if(isset($eq[$sector_name]))
-                $eq_arr[]= $eq[$sector_name];
+            if (isset($eq[$sector_name]))
+                $eq_arr[] = $eq[$sector_name];
             else
-                $eq_arr[] =0;
+                $eq_arr[] = 0;
         }
 
-
-
-        dump($eq_arr);
-        dump($down_arr);
+        dump($category);
         dump($up_arr);
-        dump($category_arr);
-        dump($up);
-        dump($down);
-        dd($eq);
+dump($down_arr);
+dd($eq_arr);
 
-    /*    $ismatured=InstrumentRepository::isMature(12,'2017-05-07');
+        /*    $ismatured=InstrumentRepository::isMature(12,'2017-05-07');
 
-       $trade_date_Info=Market::getActiveDates()->first();
-       return response()->view('dashboard2', ['trade_date_Info' => $trade_date_Info])->setTtl(1);*/
+           $trade_date_Info=Market::getActiveDates()->first();
+           return response()->view('dashboard2', ['trade_date_Info' => $trade_date_Info])->setTtl(1);*/
     }
     public function newsChart($instrument_id=13)
     {

@@ -2,6 +2,7 @@
 /public/hot
 /public/storage
 /public/blog
+public/blog/*
 /storage/*.key
 /storage/httpcache/*
 /vendor

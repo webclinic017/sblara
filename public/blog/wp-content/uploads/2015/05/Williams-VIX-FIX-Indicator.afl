@@ -1,9 +1,0 @@
-// Williams-VIX-FIX-Indicator
-// Concept By kallal
-// Coded by stockbangladesh.com
-
-_N(Title = StrFormat(FullName() + "  {{INTERVAL}} {{DATE}} Open %g, High %g, Low %g, Close %g (%.1f%%) Volume " +WriteVal( V, 1.0 ) +"\n{{VALUES}}", O, H, L, C, SelectedValue( ROC( C, 1 )) ));
-WVF = (HHV (Close,22) - Low)/(HHV(Close,22))*100;
-
-Plot(WVF, "Williams VIX FIX", colorBlue, styleLine);
-
