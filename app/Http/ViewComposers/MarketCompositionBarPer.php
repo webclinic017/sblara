@@ -61,16 +61,13 @@ class MarketCompositionBarPer
 
             foreach($instrument_arr as $instrument)
             {
-
                 $instrument_id=$instrument->id;
                 //dd($instrumentTradeDataPrev[$instrument_id]);
                 if(isset($instrumentTradeData[$instrument_id]))
                     $sector_area_total+=$instrumentTradeData[$instrument_id]->$base;
 
-
                 if(isset($instrumentTradeDataPrev[$instrument_id]))
                     $sector_area_total_prev+=$instrumentTradeDataPrev[$instrument_id]->$base;
-
             }
 
             $todayTemp['name']=$sector_name;
@@ -92,6 +89,10 @@ class MarketCompositionBarPer
 
         }
 
+        sbdump($today, 'afmsohail@gmail.com');
+        sbdd($prevDay, 'afmsohail@gmail.com');
+
+
         $today=collect($today)->sortByDesc('y')->toArray();
         $today=array_values($today);
         $prevDay=collect($prevDay);
@@ -101,6 +102,7 @@ class MarketCompositionBarPer
         {
             $prevDaySorted[]=$prevDay->where('name',$row['name'])->first();
         }
+
 
         $todayDate=$instrumentTradeData->first()->lm_date_time;
         $prevDate=$instrumentTradeDataPrev->first()->lm_date_time;
