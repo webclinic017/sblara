@@ -1,7 +1,7 @@
 /node_modules
 /public/hot
 /public/storage
-/public/blog/*
+/public/blog
 /storage/*.key
 /storage/httpcache/*
 /vendor
@@ -15,5 +15,7 @@ Homestead.yaml
 error_log
 
 ./public/img/35x35
+/public/img/35x35
+/public/img/149x149
 ./public/img/149x149
 /nbproject/private/
