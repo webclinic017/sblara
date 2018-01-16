@@ -1,7 +1,7 @@
 <tfoot>
     
 <tr>
-    <th colspan="4">Cash</th>
+    <th colspan="4">Casdsh</th>
     <th colspan="1"></th>
     <th colspan="3"></th>
     <th colspan="1"></th>

@@ -203,6 +203,10 @@ class PortfolioController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function show(Portfolio $portfolio) {
+        if($portfolio->user_id != user()->id)
+            {
+                abort(404);
+            }
         $data = [
             'navigation' => [
                 'Portfolio',

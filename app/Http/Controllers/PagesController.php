@@ -82,8 +82,23 @@ return $d;
     public function dashboard2()
     {
 
+
+
+
         $latestData = DataBanksIntradayRepository::getLatestTradeDataAll();
         $instrument_arr = $latestData->pluck('instrument_id');
+        $epsData = FundamentalRepository::getAnnualizedEPS($instrument_arr);
+
+        dd($epsData);
+
+
+     /*   $epsData = Cache::remember("annualized_eps_all_instruments", 1440, function () use ($instrument_arr) {
+            $epsData = FundamentalRepository::getAnnualizedEPS($instrument_arr);
+            return $epsData;
+        });*/
+
+
+
         $metaKey = array("market_lot", "face_value", "net_asset_val_per_share");
         $fundamentaInfo = FundamentalRepository::getFundamentalDataAll($metaKey)->keyBy('instrument_id');
         dd($fundamentaInfo);

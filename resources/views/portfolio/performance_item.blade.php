@@ -11,16 +11,14 @@
             @if($transaction['is_child'])
     
             <i class="fa fa-chevron-right"></i>
-            {{$transaction['buying_date_of_this_instrument']}}
-            <div>
+            ({{$transaction['buying_date_of_this_instrument']}})
                 {{$transaction['total_shares_of_this_instrument']}} @ TK{{$transaction['avg_buy_cost_of_this_instrument']}}
-            </div>
             @else
             {{$transaction['instrument_code'] or 'N/A'}}
             @endif
     
         </td>
-    <td>
+    <td class="hidden-xs hidden-sm">
         @if($transaction['is_child'])
         ...
         @else
@@ -74,22 +72,32 @@
 @endforeach
 
 <tr>
-    <th colspan="4">Cash</th>
-    <th colspan="1"></th>
-    <th colspan="3"></th>
-    <th colspan="1"></th>
-    <th colspan="1"></th>
-    <th colspan="1"></th>
-    <th colspan="1"></th>
+    <th colspan="1">Cash</th>
+    <th class="hidden-xs hidden-sm" colspan="1"><span style="color:#fff">...</span></th>
+    <th colspan="1"><span style="color:#fff">...</span></th>
+    <th colspan="1"><span style="color:#fff">...</span></th>
+    <th colspan="1"><span style="color:#fff">...</span></th>
+    <th colspan="1"><span style="color:#fff">...</span></th>
+    <th colspan="1"><span style="color:#fff">...</span></th>
+    <th colspan="1"><span style="color:#fff">...</span></th>
+    <th colspan="1"><span style="color:#fff">...</span></th>
+    <th colspan="1"><span style="color:#fff">...</span></th>
+    <th colspan="1"><span style="color:#fff">...</span></th>
+    <th colspan="1"><span style="color:#fff">...</span></th>
     <th colspan="1" class="{{$cash_amount<0?'text-danger':'text-success'}}">{{$cash_amount_per}}</th>
     <th colspan="1" class="{{$cash_amount<0?'text-danger':'text-success'}}">{{$cash_amount}}</th>
 </tr>
 
 <tr>
-    <th colspan="4">Total</th>
+    <th colspan="1">Total</th>
+    <th class="hidden-xs hidden-sm"  colspan="1"><span style="color:#fff">...</span></th>
+    <th colspan="1"><span style="color:#fff">...</span></th>
+    <th colspan="1"><span style="color:#fff">...</span></th>
     <th colspan="1" class="{{fontCss($gainLossToday)}}">{{$gainLossToday}}</th>
-    <th colspan="3"></th>
-    <th colspan="1"></th>
+    <th colspan="1"><span style="color:#fff">...</span></th>
+    <th colspan="1"><span style="color:#fff">...</span></th>
+    <th colspan="1"><span style="color:#fff">...</span></th>
+    <th colspan="1"><span style="color:#fff">...</span></th>
     <th colspan="1" class="{{$totalPurchaseWithCommission<0?'text-danger':'text-success'}}">{{$totalPurchaseWithCommission}}</th>
     <th colspan="1" class="{{$totalProfitSincePurchase<0?'text-danger':'text-success'}}">{{$totalProfitSincePurchase}}</th>
     <th colspan="1"class="{{$totalChangeSincePurchase<0?'text-danger':'text-success'}}">{{$totalChangeSincePurchase}}%</th>

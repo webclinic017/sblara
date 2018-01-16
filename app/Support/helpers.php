@@ -200,4 +200,9 @@ function imageUploader($name = 'image')
 {
     return uploader($name, 'image');
 }   
+
+ function user()
+{
+    return Auth::user();
+}
 /*se functions*/

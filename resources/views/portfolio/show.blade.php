@@ -16,24 +16,24 @@
 
         <table class="table table-striped table-bordered table-advance table-hover table-condensed flip-content">
             <thead class="flip-content">
-                <tr>
+                <tr class="visible-md visible-lg">
                     <th colspan="2"></th>
-                    <th colspan="3" class="text-center">Today</th>
+                    <th colspan="3" class="text-center ">Today</th>
                     <th colspan="3"></th>
                     <th colspan="4" class="text-center">Since Purchased</th>
                     <th colspan="2"></th>
                 </tr>
                 <tr>
-                    <th>Company Code</th>
-                    <th>Market</th>
-                    <th>Last Trade Price</th>
+                    <th>Code</th>
+                    <th class="hidden-xs hidden-sm" >Market</th>
+                    <th>LTP</th>
                     <th>Change</th>
                     <th>Gain/Loss</th>
                     <th>Shares</th>
                     <th>Buy Price</th>
-                    <th>Purchase Date</th>
-                    <th>Buy Commission</th>
-                    <th>Total Purchase</th>
+                    <th><span class="hidden-xs hidden-sm">Purchase Date</span> <span class="visible-xs visible-sm">Date</span></th>
+                    <th><span class="hidden-xs hidden-sm">Buy Commission </span> <span class="visible-xs visible-sm">Comm </span></th>
+                    <th><span class="hidden-xs hidden-sm">Total Purchase</span> <span class="visible-xs visible-sm">Total Pur </span></th>
                     <th>Gain/Loss</th>
                     <th>%Change</th>
                     <th>%Portfolio</th>

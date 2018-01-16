@@ -1,27 +1,30 @@
-/* theme modification start*/
-/* .page-header .navbar .navbar-nav .dropdown-menu>li>a{
-    padding: 10px 30px 10px 25px;
-    font-size: 13px;
+.container, .container-fluid {
+     padding-left: 0px; 
+     padding-right: 0px; 
 }
-.page-header .navbar .navbar-nav>li>a{
-    font-size: 16px;
-    padding: 15px 15px;
+@media(max-width: 991px)
+{
+    .page-header .navbar-fixed-top {
+    margin: 0 15px;
 }
-.page-header .navbar-fixed-top{
-    padding: 2px 25px;
+.page-content{
+    padding: 10px 5px;
 }
-.page-header .navbar-collapse{
-    margin-top: 60px;
-    padding-left: 15px;
+.portlet{
+        padding: 5px 5px !important;
 }
-.container, .container-fluid{
-    padding:0px;
 }
-.wrapper{
-     margin: 0px !important; 
-} */
-/* theme modification end*/
+@media (min-width: 991px)
+{
 
+    .mega-menu .dropdown-menu-fw {
+        left: 0px;
+        right: 0px;
+    }
+    .wrapper {
+    margin: 10px 0px;
+    }
+}
 
 #editing{
     display: inline-block;

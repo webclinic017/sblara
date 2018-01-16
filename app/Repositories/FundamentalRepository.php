@@ -218,51 +218,40 @@ class FundamentalRepository {
         $metaKey=array('q1_eps_cont_op','half_year_eps_cont_op','q3_nine_months_eps','earning_per_share');
 
         $fundaData=self::getFundamentalData($metaKey,$instrumentIdArr);
-        $fundaData=r_collect($fundaData);
 
         $returnData=array();
         foreach($instrumentIdArr as $instrument_id)
         {
 
-            // collecting all q data for this instrument
 
-            $qData[]=$fundaData['q1_eps_cont_op']->where('instrument_id',$instrument_id)->first();
-            $qData[]=$fundaData['half_year_eps_cont_op']->where('instrument_id',$instrument_id)->first();
-            $qData[]=$fundaData['q3_nine_months_eps']->where('instrument_id',$instrument_id)->first();
-            $qData[]=$fundaData['earning_per_share']->where('instrument_id',$instrument_id)->first();
-
-            // sorting by q data publish date and taking latest published data into consideration
-
-            $latestQdata=collect($qData)->sortByDesc('meta_date')->first()->toArray();
-
-
-            if($latestQdata['meta_key']=='q1_eps_cont_op')
+          if(isset($fundaData['q1_eps_cont_op'][$instrument_id]['meta_value']))
             {
-                $returnData[$instrument_id]['annualized_eps']= floatval($latestQdata['meta_value'])*4;
-                $returnData[$instrument_id]['meta_date']= $latestQdata['meta_date'];
+                $returnData[$instrument_id]['annualized_eps']= floatval($fundaData['q1_eps_cont_op'][$instrument_id]['meta_value'])*4;
+                $returnData[$instrument_id]['meta_date']= $fundaData['q1_eps_cont_op'][$instrument_id]['meta_date'];
                 $returnData[$instrument_id]['text']= 'Q1';
             }
 
-            if($latestQdata['meta_key']=='half_year_eps_cont_op')
+            if (isset($fundaData['half_year_eps_cont_op'][$instrument_id]['meta_value']))
             {
-                $returnData[$instrument_id]['annualized_eps']= floatval($latestQdata['meta_value'])*2;
-                $returnData[$instrument_id]['meta_date']= $latestQdata['meta_date'];
+                $returnData[$instrument_id]['annualized_eps']= floatval($fundaData['half_year_eps_cont_op'][$instrument_id]['meta_value'])*2;
+                $returnData[$instrument_id]['meta_date']= $fundaData['half_year_eps_cont_op'][$instrument_id]['meta_date'];
                 $returnData[$instrument_id]['text']= 'Half year';
             }
 
-            if($latestQdata['meta_key']=='q3_nine_months_eps')
+
+            if (isset($fundaData['q3_nine_months_eps'][$instrument_id]['meta_value']))
             {
 
-                $returnData[$instrument_id]['annualized_eps']= (float) number_format((floatval($latestQdata['meta_value'])/3)*4, 2, '.', '');
-                $returnData[$instrument_id]['meta_date']= $latestQdata['meta_date'];
+                $returnData[$instrument_id]['annualized_eps']= (float) number_format((floatval($fundaData['q3_nine_months_eps'][$instrument_id]['meta_value'])/3)*4, 2, '.', '');
+                $returnData[$instrument_id]['meta_date']= $fundaData['q3_nine_months_eps'][$instrument_id]['meta_date'];
                 $returnData[$instrument_id]['text']= '9 months';
 
             }
 
-            if($latestQdata['meta_key']=='earning_per_share')
+            if (isset($fundaData['earning_per_share'][$instrument_id]['meta_value']))
             {
-                $returnData[$instrument_id]['annualized_eps']= floatval($latestQdata['meta_value']);
-                $returnData[$instrument_id]['meta_date']= $latestQdata['meta_date'];
+                $returnData[$instrument_id]['annualized_eps']= floatval($fundaData['earning_per_share'][$instrument_id]['meta_value']);
+                $returnData[$instrument_id]['meta_date']= $fundaData['earning_per_share'][$instrument_id]['meta_date'];
                 $returnData[$instrument_id]['text']= 'Annual';
             }
 

@@ -1,6 +1,4 @@
 <?php
-
-app('debugbar')->disable();
 //========================  Contest Start  ======================== 
 // Contest Portfolio Shares routes..
 Route::post('/portfolios/{portfolio}/shares/create', 'PortfolioSharesController@store')->name('portfolios.shares.store');
@@ -87,7 +85,6 @@ Route::get('/test', function () {
     return view('test');
 });
 Route::get('/se', function () {
-    app('debugbar')->disable();
     $trade_date_Info = \App\Market::getActiveDates()->first();
     return response()->view('se', ['trade_date_Info' => $trade_date_Info]);
 });
