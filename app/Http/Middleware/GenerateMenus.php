@@ -30,8 +30,7 @@ class GenerateMenus
             $menu->news->link->href('javascript:;');
             $menu->news->add('News from newspaper', ['route' => 'collective-news'])->prepend('<i class="icon-bar-chart" ></i > ');
             $menu->home->add('News Search', ['route' => 'news-search'])->prepend('<i class="fa fa-search" ></i > ');
-            $menu->home->add('Knowledge Basket', ['route' => 'knowledge-basket'])->prepend('<i class="fa fa-sun-o" ></i > ');
-            $menu->home->add('Company Details', ['route' => 'company-details'])->prepend('<i class="fa fa-dollar" ></i > ')->active('company-details/*');
+              $menu->home->add('Company Details', ['route' => 'company-details'])->prepend('<i class="fa fa-dollar" ></i > ')->active('company-details/*');
             $menu->home->add('Fundamental Details', ['route' => 'fundamental-details'])->prepend('<i class="fa fa-paperclip" ></i > ')->active('fundamental-details/*');
             $menu->home->add('Data Matrix', ['route' => 'data-matrix'])->prepend('<i class="fa fa-paperclip" ></i > ');
             $menu->home->add('Price Matrix', ['route' => 'price-matrix'])->prepend('<i class="fa fa-paperclip" ></i > ');
@@ -50,10 +49,17 @@ class GenerateMenus
             //Monitor submenu
             $menu->chart->add('Market Monitor', ['route' => 'monitor'])->prepend('<i class="fa fa-dashboard" ></i > ');
             $menu->chart->add('Market Depth', ['route' => 'market-depth'])->prepend('<i class="fa fa-gavel" ></i > ');
-            $menu->chart->add('Market Frame', ['route' => 'market-frame'])->prepend('<i class="fa fa-tv" ></i > ');
-            $menu->chart->add('Market Composition', ['route' => 'market-composition'])->prepend('<i class="fa fa-pie-chart" ></i > ');
+
+              $menu->chart->add('News Chart', ['route' => 'news-chart'])->prepend('<i class="fa fa-newspaper-o " ></i > ');
 
 
+            /*Sector*/
+            $menu->add('Sector', ['class' => 'dropdown dropdown-fw  ']);
+            $menu->sector->link->href('javascript:;')->attr(['class' => 'text-uppercase']);
+            $menu->sector->attr(['class' => 'dropdown dropdown-fw  '])->prepend('<i class="icon-link" ></i > ');
+
+            $menu->sector->add('Market Frame', ['route' => 'market-frame'])->prepend('<i class="fa fa-tv" ></i > ');
+            $menu->sector->add('Market Composition', ['route' => 'market-composition'])->prepend('<i class="fa fa-pie-chart" ></i > ');
 
             /*Portfolio*/
             $menu->add('Portfolio', ['class' => 'dropdown dropdown-fw  ']);
@@ -72,10 +78,6 @@ class GenerateMenus
             //submenu
 
 
-            /*Sector*/
-            // $menu->add('Sector', ['class' => 'dropdown dropdown-fw  ']);
-            // $menu->sector->link->href('javascript:;')->attr(['class' => 'text-uppercase']);
-            // $menu->sector->attr(['class' => 'dropdown dropdown-fw  '])->prepend('<i class="icon-link" ></i > ');
 
             //submenu
           //  $menu->sector->add('Trade Details', ['route' => 'company-details'])->prepend('<i class="icon-bar-chart" ></i > ');
@@ -113,9 +115,15 @@ class GenerateMenus
             /*IPO*/
             $menu->add('Resources', ['class' => 'dropdown dropdown-fw  ']);
             $menu->resources->link->href('javascript:;')->attr(['class' => 'text-uppercase']);
-            $menu->resources->attr(['class' => 'dropdown dropdown-fw  '])->prepend('<i class="fa fa-database" ></i > ');
+           
 
+            $menu->resources->add('Online Market Order', ['url' => 'http://www.new.stockbangladesh.net/users/login'])->prepend('<i class="fa fa-flash" ></i > ');
+            $menu->resources->add('SB Blog', ['url' => '/blog'])->prepend('<i class="fa fa-globe" ></i > ');
+            $menu->resources->add('Knowledge Basket', ['route' => 'knowledge-basket'])->prepend('<i class="fa fa-sun-o" ></i > ');
+            $menu->resources->attr(['class' => 'dropdown dropdown-fw  '])->prepend('<i class="fa fa-database" ></i > ');
+      
             //submenu
+            $menu->resources->add('Amibroker Plugin', ['route' => 'amibrokerplugin'])->prepend('<i class="fa fa-plug" ></i > ');
             $menu->resources->add('Data download', ['route' => 'download'])->prepend('<i class="fa fa-download" ></i > ');
          
 

@@ -171,7 +171,7 @@ class AjaxController extends Controller
 
         //cache for 1 day=1440 minutes
 
-        $epsData = Cache::remember("annualized_eps_all_instruments", 1440 , function () use ($instrument_arr) {
+        $epsData = Cache::remember("annualized_eps_all_instruments", 720 , function () use ($instrument_arr) {
             $epsData = FundamentalRepository::getAnnualizedEPS($instrument_arr);
             return $epsData;
         });

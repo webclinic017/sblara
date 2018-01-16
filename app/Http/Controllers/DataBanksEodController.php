@@ -182,7 +182,12 @@ class DataBanksEodController extends Controller
         //$fundamentalDataOrganized = $StockBangladesh->getFundamentalInfo($instrumentId,$metaKey);
         $fundamentalDataOrganized = FundamentalRepository::getFundamentalData($metaKey, array($instrumentId));
         $epsData = FundamentalRepository::getAnnualizedEPS(array($instrumentId));
-        $epsData = $epsData[$instrumentId];
+        if(isset( $epsData[$instrumentId]))
+        {
+            $epsData = $epsData[$instrumentId];
+        }else{
+            $epsData = 'N/A';
+        }
         $annualized_eps = 'N/A';
         $eps_text = 'N/A';
         $eps_date = 'N/A';
@@ -197,7 +202,7 @@ class DataBanksEodController extends Controller
         $publicText='';
         if(isset($fundamentalDataOrganized['share_percentage_public'][$instrumentId]['meta_value'])) {
             $publicText = $fundamentalDataOrganized['share_percentage_public'][$instrumentId]['meta_value'] . '%';
-            $share_percentage_public = ($fundamentalDataOrganized['no_of_securities'][$instrumentId]['meta_value'] * $fundamentalDataOrganized['share_percentage_public'][$instrumentId]['meta_value']) / 100;
+            $share_percentage_public = isset($fundamentalDataOrganized['no_of_securities'])?($fundamentalDataOrganized['no_of_securities'][$instrumentId]['meta_value'] * $fundamentalDataOrganized['share_percentage_public'][$instrumentId]['meta_value']) / 100:"";
         }
 
         $topText =$instrumentInfo->name;
@@ -244,6 +249,7 @@ class DataBanksEodController extends Controller
         $chartData['avgPeriod2']=$avgPeriod2;
 
 
+
         # Set the data into the chart object
         $m = new \FinanceChart($width);
         $m->setData($chartData['timeStamps'], $chartData['highData'], $chartData['lowData'], $chartData['openData'], $chartData['closeData'], $chartData['volData'],$extraPoints);
@@ -269,9 +275,10 @@ class DataBanksEodController extends Controller
         }
 
 
+
         //$m->addPlotAreaTitle(BottomLeft, sprintf("<*font=arial.ttf,size=8*>%s - Open: %s High: %s Low: %s Close: %s Volume: %s   NOS: %s Public( %s ): %s", $lastday, $open,$high,$low,$close,$volume,$no_of_securities,$publicText,$share_percentage_public));
         //$m->addPlotAreaTitle(BottomLeft, sprintf("<*font=arial.ttf,size=8*>%s - Open: %s High: %s Low: %s Close: %s Volume: %s   NOS: %s Public( %s ): %s", $chartData['lastday'], $chartData['open'],$chartData['high'],$chartData['low'],$chartData['close'],$chartData['volume'],$chartData['fundamentalDataOrganized']['no_of_securities']['meta_value'],$chartData['publicText'],$chartData['share_percentage_public']));
-        $m->addPlotAreaTitle(BottomLeft, sprintf("<*font=arial.ttf,size=8*>%s - Open: %s High: %s Low: %s Close: %s Volume: %s   NOS: %s Public( %s ): %s  NAV: %s  Annualized EPS: %s (%s published at %s)", $chartData['lastday'], $chartData['open'], $chartData['high'], $chartData['low'], $chartData['close'], $chartData['volume'], $chartData['fundamentalDataOrganized']['no_of_securities'][$instrumentId]['meta_value'], $chartData['publicText'], $chartData['share_percentage_public'], $chartData['fundamentalDataOrganized']['net_asset_val_per_share'][$instrumentId]['meta_value'], $chartData['annualized_eps'], $chartData['eps_text'], $chartData['eps_date']));
+       @$m->addPlotAreaTitle(BottomLeft, sprintf("<*font=arial.ttf,size=8*>%s - Open: %s High: %s Low: %s Close: %s Volume: %s   NOS: %s Public( %s ): %s  NAV: %s  Annualized EPS: %s (%s published at %s)", $chartData['lastday'], $chartData['open'], $chartData['high'], $chartData['low'], $chartData['close'], $chartData['volume'], isset($chartData['fundamentalDataOrganized']['no_of_securities'])?$chartData['fundamentalDataOrganized']['no_of_securities'][$instrumentId]['meta_value']:'N/A', $chartData['publicText'], $chartData['share_percentage_public'], isset($chartData['fundamentalDataOrganized']['net_asset_val_per_share'])? $chartData['fundamentalDataOrganized']['net_asset_val_per_share'][$instrumentId]['meta_value']:'N/A', $chartData['annualized_eps'], $chartData['eps_text'], $chartData['eps_date']));
 
         ChartRepository::addMovingAvg($m, $mov1, $avgPeriod1, 0x663300);
 

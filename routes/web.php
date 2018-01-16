@@ -225,6 +225,7 @@ Route::get('/collective/news', 'newspaperNewsController@collectiveNews')->name('
 Route::get('/news/search', 'NewsController@newsSearch')->name('news-search');
 Route::get('/news/details/{id}', 'NewsController@viewNews');
 
+Route::get('/resources/amibrokerplugin', 'ComingSoonController@index')->name('amibrokerplugin');
 
 //Route::get('/test/ak', 'TestController@testAK');
 Route::get('/test/ak', 'SearchController@testSearch');

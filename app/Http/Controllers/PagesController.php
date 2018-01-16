@@ -12,10 +12,6 @@ use App\Market;
 
 class PagesController extends Controller
 {
-    function __construct()
-    {
-        app('debugbar')->disable();
-    }
     /**
      * Display a listing of the resource.
      *
