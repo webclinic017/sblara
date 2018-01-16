@@ -220,7 +220,6 @@ class FundamentalRepository {
         $fundaData=self::getFundamentalData($metaKey,$instrumentIdArr);
         $fundaData=r_collect($fundaData);
 
-
         $returnData=array();
         foreach($instrumentIdArr as $instrument_id)
         {
@@ -239,14 +238,14 @@ class FundamentalRepository {
 
             if($latestQdata['meta_key']=='q1_eps_cont_op')
             {
-                $returnData[$instrument_id]['annualized_eps']= $latestQdata['meta_value']*4;
+                $returnData[$instrument_id]['annualized_eps']= floatval($latestQdata['meta_value'])*4;
                 $returnData[$instrument_id]['meta_date']= $latestQdata['meta_date'];
                 $returnData[$instrument_id]['text']= 'Q1';
             }
 
             if($latestQdata['meta_key']=='half_year_eps_cont_op')
             {
-                $returnData[$instrument_id]['annualized_eps']= $latestQdata['meta_value']*2;
+                $returnData[$instrument_id]['annualized_eps']= floatval($latestQdata['meta_value'])*2;
                 $returnData[$instrument_id]['meta_date']= $latestQdata['meta_date'];
                 $returnData[$instrument_id]['text']= 'Half year';
             }
@@ -254,7 +253,7 @@ class FundamentalRepository {
             if($latestQdata['meta_key']=='q3_nine_months_eps')
             {
 
-                $returnData[$instrument_id]['annualized_eps']= (float) number_format(((float)$latestQdata['meta_value']/3)*4, 2, '.', '');
+                $returnData[$instrument_id]['annualized_eps']= (float) number_format((floatval($latestQdata['meta_value'])/3)*4, 2, '.', '');
                 $returnData[$instrument_id]['meta_date']= $latestQdata['meta_date'];
                 $returnData[$instrument_id]['text']= '9 months';
 
@@ -262,7 +261,7 @@ class FundamentalRepository {
 
             if($latestQdata['meta_key']=='earning_per_share')
             {
-                $returnData[$instrument_id]['annualized_eps']= $latestQdata['meta_value'];
+                $returnData[$instrument_id]['annualized_eps']= floatval($latestQdata['meta_value']);
                 $returnData[$instrument_id]['meta_date']= $latestQdata['meta_date'];
                 $returnData[$instrument_id]['text']= 'Annual';
             }

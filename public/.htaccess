@@ -7,6 +7,13 @@
     </IfModule>
 
     RewriteEngine On
+    
+    # Redirect all www to non www and all http to https
+    #It should be place on the top htaccess to work in laravel or it will add index.php
+    RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+    RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
+    RewriteCond %{HTTPS} !on
+    RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
@@ -28,3 +35,9 @@
 </IfModule>
 
 
+
+# php -- BEGIN cPanel-generated handler, do not edit
+# NOTE this account's php is controlled via FPM and the vhost, this is a place holder.
+# Do not edit. This next line is to support the cPanel php wrapper (php_cli).
+# AddType application/x-httpd-ea-php71 .php .phtml
+# php -- END cPanel-generated handler, do not edit

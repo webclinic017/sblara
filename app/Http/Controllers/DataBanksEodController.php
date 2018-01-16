@@ -176,34 +176,46 @@ class DataBanksEodController extends Controller
         $metaKey[] = 'net_asset_val_per_share';
         $metaKey[] = 'year_end';
         $metaKey[] = 'share_percentage_public';
+        $metaKey[] = 'net_asset_val_per_share';
+
 
         //$fundamentalDataOrganized = $StockBangladesh->getFundamentalInfo($instrumentId,$metaKey);
+        $fundamentalDataOrganized = FundamentalRepository::getFundamentalData($metaKey, array($instrumentId));
+        $epsData = FundamentalRepository::getAnnualizedEPS(array($instrumentId));
+        $epsData = $epsData[$instrumentId];
+        $annualized_eps = 'N/A';
+        $eps_text = 'N/A';
+        $eps_date = 'N/A';
+        if (isset($epsData['annualized_eps'])) {
+            $annualized_eps = $epsData['annualized_eps'];
+            $eps_text = $epsData['text'];
+            $eps_date = $epsData['meta_date']->format('d-m-Y');
 
-        $fundamentalDataOrganized=FundamentalRepository::getFundamentalData($metaKey,array($instrumentId))->toArray();
+        }
 
         $share_percentage_public=0;
         $publicText='';
-        if(isset($fundamentalDataOrganized['share_percentage_public']['meta_value'])) {
-            $publicText = $fundamentalDataOrganized['share_percentage_public']['meta_value'] . '%';
-            $share_percentage_public = ($fundamentalDataOrganized['no_of_securities']['meta_value'] * $fundamentalDataOrganized['share_percentage_public']['meta_value']) / 100;
+        if(isset($fundamentalDataOrganized['share_percentage_public'][$instrumentId]['meta_value'])) {
+            $publicText = $fundamentalDataOrganized['share_percentage_public'][$instrumentId]['meta_value'] . '%';
+            $share_percentage_public = ($fundamentalDataOrganized['no_of_securities'][$instrumentId]['meta_value'] * $fundamentalDataOrganized['share_percentage_public'][$instrumentId]['meta_value']) / 100;
         }
 
         $topText =$instrumentInfo->name;
-        if(isset($fundamentalDataOrganized['category']['meta_value']))
-        $topText .= '<*font=arial.ttf,size=9*> CAT:- ' . $fundamentalDataOrganized['category']['meta_value'] . ',';
+        if(isset($fundamentalDataOrganized['category'][$instrumentId]['meta_value']))
+        $topText .= '<*font=arial.ttf,size=9*> CAT:- ' . $fundamentalDataOrganized['category'][$instrumentId]['meta_value'] . ',';
 
-        if(isset($fundamentalDataOrganized['market_lot']['meta_value']))
-        $topText .= '<*font=arial.ttf,size=9*> LOT:- ' . $fundamentalDataOrganized['market_lot']['meta_value'] . ',';
+        if(isset($fundamentalDataOrganized['market_lot'][$instrumentId]['meta_value']))
+        $topText .= '<*font=arial.ttf,size=9*> LOT:- ' . $fundamentalDataOrganized['market_lot'][$instrumentId]['meta_value'] . ',';
 
-        if(isset($fundamentalDataOrganized['year_end']['meta_value']))
-        $topText .= '<*font=arial.ttf,size=9*> YearEnd:- ' . $fundamentalDataOrganized['year_end']['meta_value'] . ',';
+        if(isset($fundamentalDataOrganized['year_end'][$instrumentId]['meta_value']))
+        $topText .= '<*font=arial.ttf,size=9*> YearEnd:- ' . $fundamentalDataOrganized['year_end'][$instrumentId]['meta_value'] . ',';
 
-        if(isset($fundamentalDataOrganized['net_asset_val_per_share']['meta_value']))
-        $topText .= '<*font=arial.ttf,size=9*> NAV:- ' . $fundamentalDataOrganized['net_asset_val_per_share']['meta_value'] . ',';
+        if(isset($fundamentalDataOrganized['net_asset_val_per_share'][$instrumentId]['meta_value']))
+        $topText .= '<*font=arial.ttf,size=9*> NAV:- ' . $fundamentalDataOrganized['net_asset_val_per_share'][$instrumentId]['meta_value'] . ',';
 
         $no_of_securities=0;
-        if(isset($fundamentalDataOrganized['no_of_securities']['meta_value']))
-            $no_of_securities=$fundamentalDataOrganized['no_of_securities']['meta_value'];
+        if(isset($fundamentalDataOrganized['no_of_securities'][$instrumentId]['meta_value']))
+            $no_of_securities=$fundamentalDataOrganized['no_of_securities'][$instrumentId]['meta_value'];
 
 
         $chartData['timeStamps']=$timeStamps;
@@ -223,6 +235,9 @@ class DataBanksEodController extends Controller
         $chartData['share_percentage_public']=$share_percentage_public;
         $chartData['extraPoints']=$extraPoints;
         $chartData['fundamentalDataOrganized']=$fundamentalDataOrganized;
+        $chartData['annualized_eps'] = $annualized_eps;
+        $chartData['eps_date'] = $eps_date;
+        $chartData['eps_text'] = $eps_text;
         $chartData['mov1']=$mov1;
         $chartData['mov2']=$mov2;
         $chartData['avgPeriod1']=$avgPeriod1;
@@ -254,8 +269,9 @@ class DataBanksEodController extends Controller
         }
 
 
-        $m->addPlotAreaTitle(BottomLeft, sprintf("<*font=arial.ttf,size=8*>%s - Open: %s High: %s Low: %s Close: %s Volume: %s   NOS: %s Public( %s ): %s", $lastday, $open,$high,$low,$close,$volume,$no_of_securities,$publicText,$share_percentage_public));
+        //$m->addPlotAreaTitle(BottomLeft, sprintf("<*font=arial.ttf,size=8*>%s - Open: %s High: %s Low: %s Close: %s Volume: %s   NOS: %s Public( %s ): %s", $lastday, $open,$high,$low,$close,$volume,$no_of_securities,$publicText,$share_percentage_public));
         //$m->addPlotAreaTitle(BottomLeft, sprintf("<*font=arial.ttf,size=8*>%s - Open: %s High: %s Low: %s Close: %s Volume: %s   NOS: %s Public( %s ): %s", $chartData['lastday'], $chartData['open'],$chartData['high'],$chartData['low'],$chartData['close'],$chartData['volume'],$chartData['fundamentalDataOrganized']['no_of_securities']['meta_value'],$chartData['publicText'],$chartData['share_percentage_public']));
+        $m->addPlotAreaTitle(BottomLeft, sprintf("<*font=arial.ttf,size=8*>%s - Open: %s High: %s Low: %s Close: %s Volume: %s   NOS: %s Public( %s ): %s  NAV: %s  Annualized EPS: %s (%s published at %s)", $chartData['lastday'], $chartData['open'], $chartData['high'], $chartData['low'], $chartData['close'], $chartData['volume'], $chartData['fundamentalDataOrganized']['no_of_securities'][$instrumentId]['meta_value'], $chartData['publicText'], $chartData['share_percentage_public'], $chartData['fundamentalDataOrganized']['net_asset_val_per_share'][$instrumentId]['meta_value'], $chartData['annualized_eps'], $chartData['eps_text'], $chartData['eps_date']));
 
         ChartRepository::addMovingAvg($m, $mov1, $avgPeriod1, 0x663300);
 
@@ -407,9 +423,24 @@ class DataBanksEodController extends Controller
             $metaKey[] = 'net_asset_val_per_share';
             $metaKey[] = 'year_end';
             $metaKey[] = 'share_percentage_public';
+            $metaKey[] = 'net_asset_val_per_share';
+
 
             //$fundamentalDataOrganized = $StockBangladesh->getFundamentalInfo($instrumentId,$metaKey);
             $fundamentalDataOrganized=FundamentalRepository::getFundamentalData($metaKey,array($instrumentId));
+            $epsData = FundamentalRepository::getAnnualizedEPS(array($instrumentId));
+            $epsData=$epsData[$instrumentId];
+            $annualized_eps='N/A';
+            $eps_text='N/A';
+            $eps_date='N/A';
+            if(isset($epsData['annualized_eps']))
+            {
+                $annualized_eps = $epsData['annualized_eps'];
+                $eps_text = $epsData['text'];
+                $eps_date = $epsData['meta_date']->format('d-m-Y');
+
+            }
+
             $publicText = $fundamentalDataOrganized['share_percentage_public'][$instrumentId]['meta_value'] . '%';
 
             $topText =$instrumentInfo->name;
@@ -438,6 +469,9 @@ class DataBanksEodController extends Controller
             $chartData['share_percentage_public']=$share_percentage_public;
             $chartData['extraPoints']=$extraPoints;
             $chartData['fundamentalDataOrganized']=$fundamentalDataOrganized;
+            $chartData['annualized_eps']= $annualized_eps;
+            $chartData['eps_date']= $eps_date;
+            $chartData['eps_text']= $eps_text;
             $chartData['mov1']=$mov1;
             $chartData['mov2']=$mov2;
             $chartData['avgPeriod1']=$avgPeriod1;
@@ -471,7 +505,7 @@ class DataBanksEodController extends Controller
         }
 
 
-        $m->addPlotAreaTitle(BottomLeft, sprintf("<*font=arial.ttf,size=8*>%s - Open: %s High: %s Low: %s Close: %s Volume: %s   NOS: %s Public( %s ): %s", $chartData['lastday'], $chartData['open'],$chartData['high'],$chartData['low'],$chartData['close'],$chartData['volume'],$chartData['fundamentalDataOrganized']['no_of_securities'][$instrumentId]['meta_value'],$chartData['publicText'],$chartData['share_percentage_public']));
+        $m->addPlotAreaTitle(BottomLeft, sprintf("<*font=arial.ttf,size=8*>%s - Open: %s High: %s Low: %s Close: %s Volume: %s   NOS: %s Public( %s ): %s  NAV: %s  Annualized EPS: %s (%s published at %s)", $chartData['lastday'], $chartData['open'],$chartData['high'],$chartData['low'],$chartData['close'],$chartData['volume'],$chartData['fundamentalDataOrganized']['no_of_securities'][$instrumentId]['meta_value'],$chartData['publicText'],$chartData['share_percentage_public'], $chartData['fundamentalDataOrganized']['net_asset_val_per_share'][$instrumentId]['meta_value'], $chartData['annualized_eps'], $chartData['eps_text'], $chartData['eps_date']));
 
         ChartRepository::addMovingAvg($m, $mov1, $avgPeriod1, 0x663300);
 

@@ -33,12 +33,12 @@ Highcharts.chart('sector_gainer_loser', {
              data: {{$eqArr}}
              },{
                     name: 'Down',
-                    color: "#EF4836",
+                    color: "#E7505A",
                     data: {{$downArr}}
                 },
                 {
                  name: 'Up',
-                 color: "#1BA39C",
+                 color: "#32C5D2",
                  data: {{$upArr}}
 
              }

@@ -6,6 +6,7 @@ use \App\DataBanksEod;
 use App\Repositories\DataBankEodRepository;
 use Illuminate\Support\Facades\DB;
 use App\Repositories\InstrumentRepository;
+use App\Repositories\FundamentalRepository;
 use App\Repositories\DataBanksIntradayRepository;
 use App\Market;
 
@@ -81,6 +82,11 @@ return $d;
     public function dashboard2()
     {
 
+        $latestData = DataBanksIntradayRepository::getLatestTradeDataAll();
+        $instrument_arr = $latestData->pluck('instrument_id');
+        $metaKey = array("market_lot", "face_value", "net_asset_val_per_share");
+        $fundamentaInfo = FundamentalRepository::getFundamentalDataAll($metaKey)->keyBy('instrument_id');
+        dd($fundamentaInfo);
         $latestTradeDataAll = DataBanksIntradayRepository::getLatestTradeDataAll();
         $prevMinuteTradeDataAll = DataBanksIntradayRepository::getMinuteAgoTradeDataAll();
         $instrumentTradeData = growthCalculate($latestTradeDataAll, $prevMinuteTradeDataAll, 'price_change', 500);

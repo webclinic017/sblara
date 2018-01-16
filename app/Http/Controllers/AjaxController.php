@@ -10,6 +10,7 @@ use App\Repositories\FundamentalRepository;
 use App\Repositories\SectorListRepository;
 use App\Repositories\UserRepository;
 use Log;
+use Illuminate\Support\Facades\Cache;
 
 class AjaxController extends Controller
 {
@@ -164,9 +165,18 @@ class AjaxController extends Controller
     public function data_matrix()
     {
         $latestData=DataBanksIntradayRepository::getLatestTradeDataAll();
+        $instrument_arr= $latestData->pluck('instrument_id');
 
-        $metaKey=array("market_lot","face_value");
-        $fundamentaInfo=FundamentalRepository::getFundamentalDataAll($metaKey);
+        $metaKey=array("market_lot","face_value","net_asset_val_per_share");
+
+        //cache for 1 day=1440 minutes
+
+        $epsData = Cache::remember("annualized_eps_all_instruments", 1440 , function () use ($instrument_arr) {
+            $epsData = FundamentalRepository::getAnnualizedEPS($instrument_arr);
+            return $epsData;
+        });
+
+        $fundamentaInfo = FundamentalRepository::getFundamentalData($metaKey, $instrument_arr);
 
         $instrumentList=InstrumentRepository::getInstrumentsScripOnly();
         $sectorList=SectorListRepository::getSectorList();
@@ -183,11 +193,20 @@ class AjaxController extends Controller
             $temp['id']=$arr->instrument_id;
             $temp['code']=$instrumentList->where('id',$instrument_id)->first()->instrument_code;
             $temp['sector']=$sectorList->where('id',$sector_list_id)->first()->name;
-            
+
             $temp['category']=$category;
             $temp['market_lot']=1;
             $temp['face_value']=10;
-            $temp['nav']=0;
+            if(isset($fundamentaInfo['net_asset_val_per_share'][$instrument_id]))
+            {
+                $temp['nav'] = $fundamentaInfo['net_asset_val_per_share'][$instrument_id]['meta_value'];
+            }
+            else
+            {
+                $temp['nav']=0;
+            }
+
+
             $temp['lastprice']=$arr->close_price;
             $temp['open']=$arr->open_price;
             $temp['high']=$arr->high_price;
@@ -198,8 +217,22 @@ class AjaxController extends Controller
             $temp['ycp']=$arr->yday_close_price;
             $temp['pchange']=$arr->price_change_per;
             $temp['change']=$arr->price_change;
-            $temp['pe']=0;
-            $temp['eps']=0;
+
+            if(isset($epsData[$instrument_id]))
+            {
+                $temp['eps'] = $epsData[$instrument_id]['annualized_eps'];
+            }else
+            {
+                $temp['eps'] = 0;
+            }
+            if(isset($epsData[$instrument_id]))
+            {
+                $temp['pe'] = $epsData[$instrument_id]['annualized_eps']?round($arr->close_price/$epsData[$instrument_id]['annualized_eps'],2):0;
+            }else
+            {
+                $temp['pe'] = 0;
+            }
+
             $maingrid[]=$temp;
         }
 
