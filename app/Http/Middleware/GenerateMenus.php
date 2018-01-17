@@ -118,7 +118,7 @@ class GenerateMenus
            
 
             $menu->resources->add('Online Market Order', ['url' => 'http://www.new.stockbangladesh.net/users/login'])->prepend('<i class="fa fa-flash" ></i > ');
-            $menu->resources->add('SB Blog', ['url' => '/blog'])->prepend('<i class="fa fa-globe" ></i > ');
+            $menu->resources->add('SB Blog', ['url' => 'https://stockbangladesh.com/blog'])->prepend('<i class="fa fa-globe" ></i > ');
             $menu->resources->add('Knowledge Basket', ['route' => 'knowledge-basket'])->prepend('<i class="fa fa-sun-o" ></i > ');
             $menu->resources->attr(['class' => 'dropdown dropdown-fw  '])->prepend('<i class="fa fa-database" ></i > ');
       

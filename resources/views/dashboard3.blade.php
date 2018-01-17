@@ -65,7 +65,7 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
 
                           </div>
                             <div class="tools">
-                                <a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.recent_news:render_to=recent_news" class="reload"></a>
+                                <a href="#" data-load="false" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.recent_news:render_to=recent_news" class="reload"></a>
 
                                 <a href="" class="collapse">
                                 </a>
@@ -77,7 +77,16 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
                     </div>
 
                 <div class="portlet-body">
-
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- responsive -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-5791519434695332"
+     data-ad-slot="2806709297"
+     data-ad-format="auto"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
                 </div>
             </div>
             </div>            
