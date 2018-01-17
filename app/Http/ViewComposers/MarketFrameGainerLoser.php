@@ -67,7 +67,7 @@ class MarketFrameGainerLoser
 
             $sector_data=array();
             $sector_data['playcount']=$up;
-            $sector_data['$color']='blue';
+            $sector_data['$color']='#3598DC';
             $sector_data['image']='#';
             //$sector_data['$area']=$up+$down+$eq;
             $sector_data['$area']=$up;

@@ -15,6 +15,7 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
         {{--  New block Ends--}}
 <div class="row">
     <div class="col-lg-12 col-md-12 col-sm-6 col-xs-12">
+
         @include('block.market_summary')
     </div>
 </div>
@@ -83,6 +84,17 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
 
 </div>
 
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="portlet light bordered">
+                <div class="portlet-body">
+                   @include('ads.google_responsive')
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 
 <div class="row">
 
@@ -149,6 +161,8 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
 
                 </div>
                 <div class="portlet-body">
+
+                    @include('block.market_composition_bar_per',['base'=>'total_value','height'=>500])
                 </div>
             </div>
             <!-- END Portlet PORTLET-->
@@ -365,6 +379,7 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
                 </div>
                 <div class="portlet-body">
 
+                    @include('block.intraday_market_composition_bar_per',['base'=>'total_value','height'=>500])
                 </div>
             </div>
             </div>
@@ -385,7 +400,7 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
 
                           </div>
                             <div class="tools">
-                                <a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.market_frame_by_gainer_lose:render_to=gainer_loser_whole_day_up_down_frame" class="reload"></a>
+                                {{--<a href="#" data-load="false" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.market_frame_by_gainer_lose:render_to=gainer_loser_whole_day_up_down_frame" class="reload"></a>--}}
 
                                 <a href="" class="collapse">
                                 </a>
@@ -397,7 +412,7 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
                     </div>
 
                 <div class="portlet-body">
-
+                    @include('block.market_frame_by_gainer_lose')
                 </div>
             </div>
             </div>
@@ -445,6 +460,15 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
     {{--Main 2nd content column: End--}}
 
 </div>
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="portlet light bordered">
+                <div class="portlet-body">
+                   @include('ads.google_responsive')
+                </div>
+            </div>
+        </div>
+    </div>
 
 {{-- full row at the bottom START--}}
 <div class="row">
@@ -459,8 +483,6 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
                         <span class="caption-helper"></span>
                     </div>
                     <div class="tools">
-                             <a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.news_box_today:render_to=news_box_today" class="reload"></a>
-
                         <a href="" class="collapse">
                         </a>
 
@@ -471,7 +493,7 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
 
             </div>
             <div class="portlet-body">
-
+                @include('block.news_box_today')
             </div>
         </div>
         <!-- END Portlet PORTLET-->

@@ -44,7 +44,7 @@ function init(){
     //where to inject the visualization
     injectInto: 'infovis',
     //parent box title heights
-    titleHeight: 15,
+    titleHeight: 18,
     //enable animations
     animate: animate,
     //box offsets
@@ -118,7 +118,7 @@ function init(){
     tm.out();
   });*/
 }
-setTimeout(function() { init(); }, 500);
+setTimeout(function() { init(); }, 50);
         
 </script>
 

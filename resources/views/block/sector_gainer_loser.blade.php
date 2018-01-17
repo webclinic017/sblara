@@ -4,7 +4,8 @@
 
 Highcharts.chart('sector_gainer_loser', {
     chart: {
-        type: 'bar'
+        type: 'bar',
+        pointWidth: '200',
     },
     title: {
         text: null
@@ -24,7 +25,8 @@ Highcharts.chart('sector_gainer_loser', {
     },
     plotOptions: {
         series: {
-            stacking: 'normal'
+            stacking: 'normal',
+            pointWidth:9,
         }
     },
     series: [ {
@@ -33,7 +35,7 @@ Highcharts.chart('sector_gainer_loser', {
              data: {{$eqArr}}
              },{
                     name: 'Down',
-                    color: "#E7505A",
+                    color: "#EF4836",
                     data: {{$downArr}}
                 },
                 {

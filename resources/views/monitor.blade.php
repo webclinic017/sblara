@@ -1,5 +1,5 @@
 @section('meta-title', 'Real Time Monitoring Tools Of Share Market Prices')
-@section('meta-description', 'Price and volume chart monitoring. You can monitor multiple shares at a time. Bull and bear volume'. $instrumentInfo->instrument_code)
+@section('meta-description', 'Price and volume chart monitoring. You can monitor multiple shares at a time. Bull and bear volume')
 @extends('layouts.metronic.default')
 
 @section('content')
@@ -31,6 +31,15 @@
 	}
 
 </script>
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="portlet light bordered">
+                <div class="portlet-body">
+                   @include('ads.google_responsive')
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 <div class="row">
