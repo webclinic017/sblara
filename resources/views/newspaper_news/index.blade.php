@@ -1,3 +1,5 @@
+@section('meta-title', 'Important Share Market News Curated From Various Sources Of Bangladesh')
+@section('meta-description', 'Regularly updated news from various newspaper related to stock exchange of Bangladesh')
 @extends('layouts.metronic.default')
 @section('content')
 

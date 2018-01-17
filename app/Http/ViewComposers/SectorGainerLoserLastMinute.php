@@ -32,6 +32,7 @@ class SectorGainerLoserLastMinute
         $instrumentTradeData = growthCalculate($latestTradeDataAll, $prevMinuteTradeDataAll, 'price_change', 500);
 
         $instrumentList = InstrumentRepository::getInstrumentsScripOnly();
+        $instrumentList->load('sector_list');
         $up = array();
         $down = array();
         $eq = array();

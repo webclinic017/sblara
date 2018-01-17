@@ -61,6 +61,7 @@ class SectorGainerLoser
         $instrumentTradeData = $instrumentTradeData->keyBy('instrument_id');
 
         $instrumentList = InstrumentRepository::getInstrumentsScripOnly();
+        $instrumentList->load('sector_list');
         $up = array();
         $down = array();
         $eq = array();

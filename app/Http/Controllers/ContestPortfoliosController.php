@@ -93,8 +93,10 @@ class ContestPortfoliosController extends Controller
 
 
         if ($id = request()->company_info) {
-            $company_info = Instrument::with('data_banks_intraday')->find($id);
-            $buying_price = $company_info->data_banks_intraday->close_price;
+            $company_info = Instrument::with('latestDataBanksEod')->find($id);
+
+            $buying_price = $company_info->latestDataBanksEod->close;
+            
 
             if ($portfolio->shares) {
                 $sum_shares     = $portfolio->shares->sum('no_of_shares');

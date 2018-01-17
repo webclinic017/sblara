@@ -1,3 +1,5 @@
+@section('meta-title', $instrumentInfo->name . ': Fundamental Details')
+@section('meta-description', 'Easy representation of EPS, dividend history, shareholding chart as well as share holding history of '. $instrumentInfo->instrument_code)
 @extends('layouts.metronic.default')
 
 @section('page_heading')

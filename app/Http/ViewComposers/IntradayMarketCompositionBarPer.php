@@ -33,6 +33,7 @@ class IntradayMarketCompositionBarPer
             $height=$viewdata['height'];
 
         $instrumentListMain=InstrumentRepository::getInstrumentsScripOnly();
+         $instrumentListMain->load('sector_list');
         $instrumentList=$instrumentListMain->groupBy('sector_list_id');
 
         $instrumentTradeData=DataBanksIntradayRepository::getLatestTradeDataAll();

@@ -1,3 +1,5 @@
+@section('meta-title', 'Advance Technical Analysis Chart Of Bangladesh')
+@section('meta-description', 'Highly configurable and nice looking technical analysis chart of Bangladesh')
 @extends('layouts.metronic.default')
 
 @section('content')

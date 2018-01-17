@@ -1,3 +1,5 @@
+@section('meta-title', 'Real Time Monitoring Tools Of Share Market Prices')
+@section('meta-description', 'Price and volume chart monitoring. You can monitor multiple shares at a time. Bull and bear volume'. $instrumentInfo->instrument_code)
 @extends('layouts.metronic.default')
 
 @section('content')

@@ -1,3 +1,6 @@
+<link href="{{ URL::asset('metronic/assets/global/plugins/cubeportfolio/css/cubeportfolio.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ URL::asset('metronic/assets/pages/css/portfolio.min.css') }}" rel="stylesheet" type="text/css" />
+
 <div class="portfolio-content portfolio-3">
     <div class="clearfix">
 
@@ -47,16 +50,10 @@
 
 </div>
 
-@push('css')
 
-<link href="{{ URL::asset('metronic/assets/global/plugins/cubeportfolio/css/cubeportfolio.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ URL::asset('metronic/assets/pages/css/portfolio.min.css') }}" rel="stylesheet" type="text/css" />
-@endpush
 
-@push('scripts')
 <script src="{{ URL::asset('metronic/assets/global/plugins/cubeportfolio/js/jquery.cubeportfolio.min.js') }}" type="text/javascript"></script>
 <script src="{{ URL::asset('metronic/assets/pages/scripts/portfolio-3.min.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
 
 </script>
-@endpush

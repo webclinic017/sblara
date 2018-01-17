@@ -26,6 +26,7 @@ class MarketFrameGainerLoser
     {
 
         $instrumentListMain=InstrumentRepository::getInstrumentsScripOnly();
+        $instrumentListMain->load('sector_list');
         $instrumentList=$instrumentListMain->groupBy('sector_list_id');
 
         $upDownData=DataBanksIntradayRepository::upDownStats();

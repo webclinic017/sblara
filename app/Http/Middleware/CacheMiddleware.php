@@ -10,6 +10,9 @@ class CacheMiddleware
 
     function __construct()
     {
+        if(config('app.debug')){
+            return ;
+        }
         return $this->active = $this->pagesToCache();
     }
     /**

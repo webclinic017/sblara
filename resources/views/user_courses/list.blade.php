@@ -1,3 +1,6 @@
+@section('meta-title', 'Available Technical Analysis and Fundamental Analysis Courses')
+@section('meta-description', 'Profitable Technical Analysis Masterclass - Your Critical Foundation to Trading Stocks In Bangladesh')
+
 @extends('layouts.metronic.default')
 <!-- BEGIN GLOBAL MANDATORY STYLES -->
 @section('page_heading')

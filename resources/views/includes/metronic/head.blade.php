@@ -3,10 +3,9 @@
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
             <meta content="width=device-width, initial-scale=1" name="viewport" />
             <meta name="csrf-token" content="{{ csrf_token() }}">
-            <title>{{ config('app.name', 'Stock Bangladesh') }}</title>
-            <meta content="Bangladesh share market analysis portal" name="description" />
+            <title>@yield('meta-title','Share Market Analysis Portal For Dhaka Stock Exchange-Bangladesh')</title>
+            <meta content="@yield('meta-description','First and oldest financial portal based on share markets of Bangladesh. Pioneer in technical analysis of Bangladesh')" name="description" />
             <meta content="" name="author" />
-            
             
             <!-- BEGIN LAYOUT FIRST STYLES -->
             <link href="//fonts.googleapis.com/css?family=Oswald:400,300,700" rel="stylesheet" type="text/css" />

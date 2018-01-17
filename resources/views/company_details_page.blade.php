@@ -1,3 +1,5 @@
+@section('meta-title', $instrumentInfo->name . ': Trade And Company Details')
+@section('meta-description', 'Latest trade information, insight data and important statistics of '. $instrumentInfo->instrument_code)
 @extends('layouts.metronic.default')
 @section('page_heading')
 {{$instrumentInfo->name}}

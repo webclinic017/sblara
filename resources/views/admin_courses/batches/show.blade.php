@@ -1,3 +1,6 @@
+@section('meta-title', $batch->course->course_name)
+@section('meta-description', 'Exclusive Training Program on '.$batch->course->course_name . '. Start date: '.$batch->c_start_date. '. End date: '.$batch->c_end_date)
+
 @extends('layouts.metronic.default')
 <!-- BEGIN GLOBAL MANDATORY STYLES -->
 

@@ -1,9 +1,9 @@
+<link href="{{ URL::asset('metronic_custom/market_frame/treemap.css') }}" rel="stylesheet" type="text/css" />
+<script src="{{ URL::asset('metronic_custom/market_frame/jit-yc.js') }}"></script>
 <div id="infovis"></div>
 
-<link href="{{ URL::asset('metronic_custom/market_frame/treemap.css') }}" rel="stylesheet" type="text/css" />
 
  
-<script src="{{ URL::asset('metronic_custom/market_frame/jit-yc.js') }}"></script>
 
 <script>
 
@@ -118,21 +118,8 @@ function init(){
     tm.out();
   });*/
 }
-
-
-
-        init();
-
-
-
-
-
-
-
-
-
-
-
+setTimeout(function() { init(); }, 500);
+        
 </script>
 
 

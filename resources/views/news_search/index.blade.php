@@ -1,3 +1,6 @@
+@section('meta-title', 'User Friendly And Easy Search of Search Panel of Share Market News')
+@section('meta-description', '')
+
 @extends('layouts.metronic.default')
 @section('content')
 

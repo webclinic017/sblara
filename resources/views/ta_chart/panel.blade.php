@@ -8,15 +8,17 @@
             <li class="active">
                 <a href="#tab_1_1" data-toggle="tab"> Chart </a>
             </li>
-            <li>
+
+{{--             <li>
                 <a href="#tab_1_2" data-toggle="tab"> COMPANY DETAILS </a>
             </li>
+            
             <li>
                 <a href="#tab_1_3" data-toggle="tab"> MARKET DEPTH </a>
             </li>
             <li>
                 <a href="#tab_1_4" data-toggle="tab"> Others </a>
-            </li>
+            </li> --}}
         </ul>
         <div class="tab-content" >
             <div class="tab-pane fade active in" id="tab_1_1">
