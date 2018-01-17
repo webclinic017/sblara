@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http;
+
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -58,13 +59,12 @@ class Kernel extends HttpKernel
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        // 'httpcache' => \App\Http\Middleware\CacheMiddleware::class,
-        'httpcache' => \Barryvdh\HttpCache\Middleware\CacheRequests::class,
+        // 'httpcache' => \Barryvdh\HttpCache\Middleware\CacheRequests::class,
+        'httpcache' => \App\Http\Middleware\CacheMiddleware::class,
         'isAdmin' => \App\Http\Middleware\MustBeAdmin::class,
         'scopes' => \Laravel\Passport\Http\Middleware\CheckScopes::class,
         'scope' => \Laravel\Passport\Http\Middleware\CheckForAnyScope::class,
         'admin' => \App\Http\Middleware\IsAdmin::class,
          'isVerified' => \Jrean\UserVerification\Middleware\IsVerified::class,
     ];
-
 }

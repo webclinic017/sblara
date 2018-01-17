@@ -6,6 +6,12 @@ use Closure;
 
 class CacheMiddleware
 {
+    protected $active = false;
+
+    function __construct()
+    {
+        return $this->active = $this->pagesToCache();
+    }
     /**
      * Handle an incoming request.
      *
@@ -15,11 +21,32 @@ class CacheMiddleware
      */
     public function handle($request, Closure $next)
     {
-         app(\Barryvdh\HttpCache\Middleware\CacheRequests::class)->handle($request, function ($request) use ($next)
+        if(!$this->active)
+        {
+            return $next($request);
+        }
+
+       return $cache = app(\Barryvdh\HttpCache\Middleware\CacheRequests::class)->handle($request, function ($request) use ($next)
         {
             return $next($request);
         });
+    }
 
-        return $next($request);
+    public function pagesToCache()
+    {
+        $route = \Request::route()->getName();
+        /*always cache block*/
+        if($route == "Ajax.load_block")
+        {
+            return true;
+        }
+        /*always cache block*/
+
+        /*never cache auth user pages because one user will see another user information*/
+        if(\Auth::guest())
+        {
+            return true;
+        }
+        /*never cache auth user pages*/
     }
 }
