@@ -45,6 +45,13 @@ class CacheMiddleware
         }
         /*always cache block*/
 
+        /*always cache market  monitor*/
+        if($route == "Ajax.Monitor")
+        {
+            return true;
+        }
+        /*always cache market monitor*/
+
         /*never cache auth user pages because one user will see another user information*/
         if(\Auth::guest())
         {

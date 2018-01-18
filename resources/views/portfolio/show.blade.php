@@ -4,15 +4,6 @@
 @section('page_heading')
 {{$portfolio->portfolio_name}}
 @endsection
-    <div class="row">
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <div class="portlet light bordered">
-                <div class="portlet-body">
-                   @include('ads.google_responsive')
-                </div>
-            </div>
-        </div>
-    </div>
 
 <div class="portlet light bordered ">
     <div class="portlet-title">
@@ -55,7 +46,15 @@
         </table>
     </div>
 </div>
-
+ <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="portlet light bordered">
+                <div class="portlet-body">
+                   @include('ads.google_responsive')
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 @section('js')
 <script>
