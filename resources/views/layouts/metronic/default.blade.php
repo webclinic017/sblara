@@ -29,7 +29,32 @@
                     <!-- END BREADCRUMBS -->
                     <!-- BEGIN SIDEBAR CONTENT LAYOUT -->
                     <div class="page-content-container">
+
+{{-- custom mod for ad --}}
+
+
+                        <div class="col-md-2" style="padding: 0; float: right;">  
+                                <a href="/batches/152">
+                                    
+                                <div class="col-md-12" style="background:#fff; padding: 5px; max-height: 230px; margin-bottom:20px; "> 
+                                    <img src="/img/1st_sidebar.gif" alt="" class="img-responsive">
+                                </div>
+                                </a>
+                                <a href="/batches/150">
+                                    
+                                <div class="col-md-12" style="background:#fff; padding: 5px; max-height: 392px;  margin-bottom:20px; "> 
+                                    <img src="/img/2nd_sidebar.gif" class="img-responsive" alt="">
+                                </div>
+                                </a>
+                                
+
+                        </div>
+                        <div class="col-md-10">  
                          @yield('content')
+                        </div>
+{{-- custom mod for ad --}}
+
+
                     </div>
                     <!-- END SIDEBAR CONTENT LAYOUT -->
                 </div>

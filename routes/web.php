@@ -234,3 +234,10 @@ Route::get('/test/speed', function () {
 
     return view('speed');
 });
+
+/*old urls*/
+Route::get('/resources/monitor', function ()
+{
+    return redirect('/monitor');
+});
+/*old urls*/
