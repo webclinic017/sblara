@@ -85,7 +85,13 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
 </div>
 
 
+
+@endsection
+
+@section('full-width-content')
+
 <div class="row">
+
 
     {{--Main content 1st column: Start--}}
     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
@@ -299,7 +305,6 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
 
     </div>
     {{--Main 1st content column: End--}}
-
     {{--Main content 2nd column: Start--}}
     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 
@@ -446,8 +451,7 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
 
 
     </div>
-    {{--Main 2nd content column: End--}}
-
+    {{--Main 2nd content column: End--}}    
 </div>
 
 {{-- full row at the bottom START--}}
@@ -480,8 +484,4 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
     </div>
 </div>
 {{-- full row at the bottom END--}}
-
-
-
-
 @endsection

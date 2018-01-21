@@ -32,8 +32,9 @@
 
 {{-- custom mod for ad --}}
 
-
-                        <div class="col-md-2" style="padding: 0; float: right;">  
+        <div class="row">
+            
+                        <div class="col-md-2 hidden-sm hidden-xs" style="padding-left:0;  float: right;">  
                                 <a href="/batches/152">
                                     
                                 <div class="col-md-12" style="background:#fff; padding: 5px; max-height: 230px; margin-bottom:20px; "> 
@@ -49,9 +50,14 @@
                                 
 
                         </div>
-                        <div class="col-md-10">  
+                        <div class="col-md-10 col-sm-12 col-xs-12">  
                          @yield('content')
                         </div>
+        </div>
+
+        {{-- full width content --}}
+                         @yield('full-width-content')        
+        {{-- full width content --}}
 {{-- custom mod for ad --}}
 
 
