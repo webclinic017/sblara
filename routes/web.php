@@ -240,4 +240,8 @@ Route::get('/resources/monitor', function ()
 {
     return redirect('/monitor');
 });
+Route::get('/users/login', function ()
+{
+    return redirect('/login');
+});
 /*old urls*/
