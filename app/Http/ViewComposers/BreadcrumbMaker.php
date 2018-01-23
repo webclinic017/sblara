@@ -65,6 +65,8 @@ class BreadcrumbMaker
             $bread[] = $temp;
         }else
         {
+            \Menu::get('MyNavBar')->add('Dashboard', ['route' => 'home'])->prepend('<i class="fa fa-dashboard" ></i > ')->active();
+
             $temp = array();
             $temp['text'] = 'Non-Menu Item';
             $temp['url'] = '/';
