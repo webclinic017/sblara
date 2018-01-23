@@ -1,4 +1,4 @@
-<p class="copyright"> 2018 &copy; StockBangladesh Ltd &nbsp;|&nbsp;</p>
+<p class="copyright"> 2018 &copy; StockBangladesh Ltd &nbsp;|&nbsp; <a style="color: #fff" href="/contact-us">Contact Us</a></p>
                 <a href="#index" class="go2top">
                     <i class="icon-arrow-up"></i>
                 </a>

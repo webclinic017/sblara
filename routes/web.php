@@ -84,10 +84,7 @@ Route::get('/test', function () {
 
     return view('test');
 });
-Route::get('/se', function () {
-    $trade_date_Info = \App\Market::getActiveDates()->first();
-    return response()->view('se', ['trade_date_Info' => $trade_date_Info]);
-});
+Route::get('/se', 'seController@index');
 Route::get('/download', 'DownloadController@index')->name('download');
 Route::post('/download', 'DownloadController@download');
 Route::get('/pluginEod', function () {
@@ -215,7 +212,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
     Route::get('/data-extractors/share-percentage', 'DataExtractController@sharePercentage')->name('voyger.data-extractor.share-precentage');
     Route::get('/data-extractors/eps-parsing', 'DataExtractController@epsParsing')->name('admin.data-extract.eps-parsing');
     Route::get('/data-extractors/share-percentage-dse-import', 'DataExtractController@sharePercentageDseImport');
+    Route::view('/feedbacks', 'admin.feedbacks');
 });
+    Route::view('/contact-us', 'contact');
 /* Se Routes */
 
 

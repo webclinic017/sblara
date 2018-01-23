@@ -17,6 +17,7 @@
             <!-- END HEADER -->
             <div class="container-fluid">
                 <div class="page-content">
+
                     <!-- BEGIN BREADCRUMBS -->
                     <div class="breadcrumbs hidden-xs hidden-sm">
                         <h1>@yield('page_heading')</h1>
@@ -24,39 +25,23 @@
 
                      </div>
 
-
-
                     <!-- END BREADCRUMBS -->
+
+
+                    <!-- BEGIN ads beneath the main menu -->
+                     @include('ads.under_the_menu_1')
+                     <!-- END ads beneath the main menu -->
+
+
                     <!-- BEGIN SIDEBAR CONTENT LAYOUT -->
                     <div class="page-content-container">
 
 {{-- custom mod for ad --}}
 
-        <div class="row">
-            
-                        <div class="col-md-2 hidden-sm hidden-xs" style="padding-left:0;  float: right;">  
-                                <a href="/batches/152">
-                                    
-                                <div class="col-md-12" style="background:#fff; padding: 5px; max-height: 230px; margin-bottom:20px; "> 
-                                    <img src="/img/1st_sidebar.gif" alt="" class="img-responsive">
-                                </div>
-                                </a>
-                                <a href="/batches/150">
-                                    
-                                <div class="col-md-12" style="background:#fff; padding: 5px; max-height: 392px;  margin-bottom:20px; "> 
-                                    <img src="/img/2nd_sidebar.gif" class="img-responsive" alt="">
-                                </div>
-                                </a>
-                                
-
-                        </div>
-                        <div class="col-md-10 col-sm-12 col-xs-12">  
                          @yield('content')
-                        </div>
-        </div>
 
         {{-- full width content --}}
-                         @yield('full-width-content')        
+                         @yield('full-width-content')
         {{-- full width content --}}
 {{-- custom mod for ad --}}
 

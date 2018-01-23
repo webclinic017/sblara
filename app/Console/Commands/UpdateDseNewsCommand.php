@@ -57,13 +57,6 @@ class UpdateDseNewsCommand extends Command
     public function handle()
     {
 
-        if(!Market::isMarketOpen())
-        {
-            $this->info('market is not open');
-
-        }
-        else
-        {
 
 
             $querystr = "select * from MAN ORDER BY MAN_ANNOUNCEMENT_DATE_TIME ASC";
@@ -134,7 +127,7 @@ class UpdateDseNewsCommand extends Command
             }
 
 
-        }
+
 
     }
 }

@@ -396,6 +396,9 @@ $('body').on('click',  '.confirmSell', function () {
 		maximumSelectionLength: 5,
 		 placeholder: "Please Select",
 	});
+
+	$('.date-picker').datepicker();
+	$('.select2').select2();
 });
 
 document.addEventListener('DOMContentLoaded',
@@ -411,3 +414,4 @@ Highcharts.setOptions({
 		enabled:false
 	}
 });
+

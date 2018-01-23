@@ -590,10 +590,32 @@ class NewsController extends Controller
               $result = $result->where('post_date', '<=', $request->to_date.' 23:59:59');
            }
                     
-             $result = $result->orderBy('post_date', 'desc')->get();
+             $result = $result->orderBy('post_date', 'desc')->paginate(10);
         }
         $instrument = Instrument:: all();
         $request->flash();
+        $params = request()->except('page');
+        if(request()->has('keyword'))
+        {
+            
+        if(!$params['keyword'])
+        {
+            $params['keyword'] = '';
+        }
+        if(!$params['instrument_id'])
+        {
+            $params['instrument_id'] = '';
+        }
+        if(!$params['from_date'])
+        {
+            $params['from_date'] = '';
+        }
+        if(!$params['to_date'])
+        {
+            $params['to_date'] = '';
+        }
+        $result->appends($params);
+        }
         return view('news_search.index',['instrument' => $instrument, 'result' => $result]);
     }
     

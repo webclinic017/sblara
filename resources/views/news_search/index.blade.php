@@ -29,7 +29,7 @@
                 </div>
                 <div class="col-md-6">
                     <label class="control-label">Select Company Name</label>
-                    <select class="form-control" name="instrument_id" id="instrument_id">
+                    <select class="form-control select2 " name="instrument_id" id="instrument_id">
                         <option value="">--Select--</option>
                         @foreach($instrument as $instruments)
                         <option value="{{$instruments->id}}">{{$instruments->instrument_code}}</option>
@@ -40,18 +40,32 @@
             <div class="clearx"></div>
             <div class="row">
                 <div class="col-md-4">
-                    <label class="control-label">From(date)</label>
-                    <div class="input-icon right">
-                        <i class="icon-calendar"></i>
-                        <input class="form-control date-picker" type="text" name="from_date" value="{{old('from_date')}}" data-date-format="yyyy-mm-dd" placeholder="From(date)" /> 
-                    </div>
+
+{{--  --}}
+              <label class="control-label">From(date)</label>
+             <div class="input-group input-medium date date-picker" data-date-format="yyyy-mm-dd"  >
+                    <input type="text" name="from_date" value="{{old('from_date')}}"  class="form-control" readonly="">
+                    <span class="input-group-btn">
+                        <button class="btn default" type="button">
+                            <i class="fa fa-calendar"></i>
+                        </button>
+                    </span>
+                </div>
+{{--  --}}
+
                 </div>
                 <div class="col-md-4">
-                    <label class="control-label">To(date)</label>
-                    <div class="input-icon right">
-                        <i class="icon-calendar"></i>
-                        <input class="form-control date-picker" type="text" name="to_date" value="{{old('to_date')}}" data-date-format="yyyy-mm-dd" placeholder="To(date)" /> 
-                    </div>
+{{--  --}}
+              <label class="control-label">To(date)</label>
+             <div class="input-group input-medium date date-picker" data-date-format="yyyy-mm-dd"  >
+                    <input type="text" name="to_date" value="{{old('to_date')}}" class="form-control" readonly="">
+                    <span class="input-group-btn">
+                        <button class="btn default" type="button">
+                            <i class="fa fa-calendar"></i>
+                        </button>
+                    </span>
+                </div>
+{{--  --}}  
                 </div>
                 <div class="col-md-4">
                     <label class="control-label"></label>
@@ -79,6 +93,9 @@
         @endforeach
         @endif
     </div>
+    @if(count($result))
+        {{$result->links()}}
+        @endif
 </div>
 {!! Form::close() !!}
 
