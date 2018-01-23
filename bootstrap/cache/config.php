@@ -3,7 +3,7 @@
   array (
     'name' => 'StockBangladesh',
     'env' => 'local',
-    'debug' => true,
+    'debug' => false,
     'url' => 'https://stockbangladesh.com',
     'timezone' => 'Asia/Dhaka',
     'locale' => 'en',
@@ -46,12 +46,13 @@
       29 => 'App\\Providers\\RouteServiceProvider',
       30 => 'Barryvdh\\Debugbar\\ServiceProvider',
       31 => 'Collective\\Html\\HtmlServiceProvider',
-      32 => 'Intervention\\Image\\ImageServiceProvider',
-      33 => 'Chumper\\Zipper\\ZipperServiceProvider',
-      34 => 'Unisharp\\Ckeditor\\ServiceProvider',
-      35 => 'Unisharp\\Laravelfilemanager\\LaravelFilemanagerServiceProvider',
-      36 => 'Yajra\\DataTables\\DataTablesServiceProvider',
-      37 => 'TCG\\Voyager\\VoyagerServiceProvider',
+      32 => 'Barryvdh\\HttpCache\\ServiceProvider',
+      33 => 'Intervention\\Image\\ImageServiceProvider',
+      34 => 'Chumper\\Zipper\\ZipperServiceProvider',
+      35 => 'Unisharp\\Ckeditor\\ServiceProvider',
+      36 => 'Unisharp\\Laravelfilemanager\\LaravelFilemanagerServiceProvider',
+      37 => 'Yajra\\DataTables\\DataTablesServiceProvider',
+      38 => 'TCG\\Voyager\\VoyagerServiceProvider',
     ),
     'aliases' => 
     array (
@@ -186,7 +187,7 @@
       'file' => 
       array (
         'driver' => 'file',
-        'path' => '/home/stock/sbdev/storage/framework/cache/data',
+        'path' => '/home/stock/sblara/storage/framework/cache/data',
       ),
       'memcached' => 
       array (
@@ -361,12 +362,12 @@
   ),
   'debugbar' => 
   array (
-    'enabled' => true,
+    'enabled' => false,
     'storage' => 
     array (
       'enabled' => true,
       'driver' => 'file',
-      'path' => '/home/stock/sbdev/storage/debugbar',
+      'path' => '/home/stock/sblara/storage/debugbar',
       'connection' => NULL,
       'provider' => '',
     ),
@@ -449,12 +450,12 @@
       'local' => 
       array (
         'driver' => 'local',
-        'root' => '/home/stock/sbdev/storage/app',
+        'root' => '/home/stock/sblara/storage/app',
       ),
       'public' => 
       array (
         'driver' => 'local',
-        'root' => '/home/stock/sbdev/storage/app/public',
+        'root' => '/home/stock/sblara/storage/app/public',
         'url' => 'https://stockbangladesh.com/storage',
         'visibility' => 'public',
       ),
@@ -472,7 +473,7 @@
   array (
     'enabled' => true,
     'esi' => false,
-    'cache_dir' => '/home/stock/sbdev/storage/httpcache',
+    'cache_dir' => '/home/stock/sblara/storage/httpcache',
     'options' => 
     array (
     ),
@@ -620,7 +621,7 @@
       'theme' => 'default',
       'paths' => 
       array (
-        0 => '/home/stock/sbdev/resources/views/vendor/mail',
+        0 => '/home/stock/sblara/resources/views/vendor/mail',
       ),
     ),
   ),
@@ -700,7 +701,7 @@
     'lifetime' => 120,
     'expire_on_close' => false,
     'encrypt' => false,
-    'files' => '/home/stock/sbdev/storage/framework/sessions',
+    'files' => '/home/stock/sblara/storage/framework/sessions',
     'connection' => NULL,
     'table' => 'sessions',
     'store' => NULL,
@@ -728,9 +729,9 @@
   array (
     'paths' => 
     array (
-      0 => '/home/stock/sbdev/resources/views',
+      0 => '/home/stock/sblara/resources/views',
     ),
-    'compiled' => '/home/stock/sbdev/storage/framework/views',
+    'compiled' => '/home/stock/sblara/storage/framework/views',
   ),
   'voyager' => 
   array (
@@ -917,7 +918,7 @@
         'host' => 'localhost',
         'port' => 11211,
       ),
-      'dir' => '/home/stock/sbdev/storage/cache',
+      'dir' => '/home/stock/sblara/storage/cache',
     ),
     'properties' => 
     array (
@@ -983,7 +984,7 @@
       ),
       'store' => 
       array (
-        'path' => '/home/stock/sbdev/storage/exports',
+        'path' => '/home/stock/sblara/storage/exports',
         'returnInfo' => false,
       ),
       'pdf' => 
@@ -993,15 +994,15 @@
         array (
           'DomPDF' => 
           array (
-            'path' => '/home/stock/sbdev/vendor/dompdf/dompdf/',
+            'path' => '/home/stock/sblara/vendor/dompdf/dompdf/',
           ),
           'tcPDF' => 
           array (
-            'path' => '/home/stock/sbdev/vendor/tecnick.com/tcpdf/',
+            'path' => '/home/stock/sblara/vendor/tecnick.com/tcpdf/',
           ),
           'mPDF' => 
           array (
-            'path' => '/home/stock/sbdev/vendor/mpdf/mpdf/',
+            'path' => '/home/stock/sblara/vendor/mpdf/mpdf/',
           ),
         ),
       ),
