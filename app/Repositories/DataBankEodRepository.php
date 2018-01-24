@@ -51,6 +51,39 @@ class DataBankEodRepository {
         return collect($returnData)->toJson();
 
     }
+    public static function getAdjustedDataForTradingView($instrumentId,$from,$to,$resolution)
+    {
+        $from=Carbon::createFromTimestamp($from);
+        $to=Carbon::createFromTimestamp($to);
+
+        $returnData = array();
+
+        $eodData = self::getEodDataAdjusted($instrumentId, $from, $to, 0);
+
+            if(count($eodData)) {
+                $eodData = $eodData->reverse();
+                $dateArr = $eodData->pluck('date_timestamp')->toArray();
+                $closeArr = $eodData->pluck('close')->toArray();
+                $openArr = $eodData->pluck('open')->toArray();
+                $highArr = $eodData->pluck('high')->toArray();
+                $lowArr = $eodData->pluck('low')->toArray();
+                $volumeArr = $eodData->pluck('volume')->toArray();
+
+                $returnData['t'] = $dateArr;
+                $returnData['c'] = $closeArr;
+                $returnData['o'] = $openArr;
+                $returnData['h'] = $highArr;
+                $returnData['l'] = $lowArr;
+                $returnData['v'] = $volumeArr;
+                $returnData['s'] = "ok";
+            }else
+            {
+                $returnData['s'] = "no_data";
+                $returnData['nextTime'] = strtotime('yesterday');
+            }
+        return collect($returnData)->toJson();
+
+    }
 
     // return data desc
     public static function getEodData($instrumentId,$from,$to)

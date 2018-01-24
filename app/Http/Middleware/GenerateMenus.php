@@ -95,7 +95,7 @@ class GenerateMenus
 
             /*Corse*/
             $menu->add('Course', ['class' => 'dropdown dropdown-fw  ']);
-            $menu->course->link->href('javascript:;')->attr(['class' => 'text-uppercase']);
+            $menu->course->link->href('/courses-avaliable')->attr(['class' => 'text-uppercase']);
             $menu->course->attr(['class' => 'dropdown dropdown-fw  '])->prepend('<i class="fa fa-graduation-cap" ></i > ');
 
             //submenu

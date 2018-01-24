@@ -1,5 +1,10 @@
 var token = $('meta[name="csrf-token"]').attr('content');
 var url = window.location;
+var loadingDiv = `
+            <div style="text-align: center; width: 100%; margin-top: 10px;">
+                   <img src="/img/se_loading.gif" width="70" class="" alt="" />
+               </div>
+`;
 var loadingHtml = `
 	<img src="/img/se_loading.gif" class='loading' alt="" />
 `;
@@ -399,6 +404,26 @@ $('body').on('click',  '.confirmSell', function () {
 
 	$('.date-picker').datepicker();
 	$('.select2').select2();
+
+	//ta-chart tabs
+$('.ta-chart-tabs [data-toggle="tab"]').on('click', function (e) {
+	var url = $(this).data('url');
+	 instrument = $('#shareList').val();
+	 if(instrument == '')
+	 {
+	 	instrument = 12;
+	 }
+	if(url == '#')
+	{
+		return;
+	}
+	url = url + instrument;
+	var target = $(this).attr('href');
+	$(target).html(loadingDiv);
+	$.get(url, function (html) {
+		$(target).html(html);
+	})
+})	
 });
 
 document.addEventListener('DOMContentLoaded',

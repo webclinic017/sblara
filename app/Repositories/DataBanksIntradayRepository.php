@@ -452,12 +452,16 @@ class DataBanksIntradayRepository {
                   $candle['v']=$end['total_volume']-$start['total_volume'];
                   $data[]=$candle;*/
 
-                $returnData['t'][] = $end['date_timestamp'];;
-                $returnData['c'][] = $end['pub_last_traded_price'];;
-                $returnData['o'][] = $start['pub_last_traded_price'];;
-                $returnData['h'][] = $chunk->max('pub_last_traded_price');;
-                $returnData['l'][] = $chunk->min('pub_last_traded_price');;
-                $returnData['v'][] = $end['total_volume']-$start['total_volume'];
+                if($end['pub_last_traded_price'])
+                {
+                    $returnData['t'][] = $end['date_timestamp'];
+                    $returnData['c'][] = $end['pub_last_traded_price'];
+                    $returnData['o'][] = $start['pub_last_traded_price'];
+                    $returnData['h'][] = $chunk->max('pub_last_traded_price');
+                    $returnData['l'][] = $chunk->min('pub_last_traded_price');
+                    $returnData['v'][] = $end['total_volume']-$start['total_volume'];
+
+                }
 
 
             }

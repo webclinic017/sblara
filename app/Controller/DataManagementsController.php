@@ -311,7 +311,7 @@ class DataManagementsController extends AppController
         $xcrud = Xcrud::get_instance();
         $xcrud->table('news');
         $xcrud->relation('instrument_id', 'instruments', 'id', 'instrument_code');
-        $xcrud->relation('market_id', 'markets', 'id', 'trade_date');
+      //  $xcrud->relation('market_id', 'markets', 'id', 'trade_date');
 
 
         $this->set('xcrud',$xcrud);
@@ -351,17 +351,17 @@ class DataManagementsController extends AppController
         $xcrud = Xcrud::get_instance();
         $xcrud->table('instruments');
         $xcrud->default_tab('Instrument list');
-        $xcrud->relation('exchange_id','exchanges','id','name');
-        $xcrud->relation('sector_list_id','sector_lists','id','name');
+       // $xcrud->relation('exchange_id','exchanges','id','name');
+  //      $xcrud->relation('sector_list_id','sector_lists','id','name');
 //        $xcrud->change_type('name', 'image');
 
-        $year_news_Info = $xcrud->nested_table('Year news Info','id','fundamentals','instrument_id'); // 2nd level
-        $year_news_Info->join('meta_id','metas','id','metastable',true);
-        $year_news_Info->where('metastable.meta_group_id =', 7);
-        $year_news_Info->columns('fundamentals.instrument_id,fundamentals.meta_id,fundamentals.meta_value,fundamentals.meta_date,fundamentals.created_at,fundamentals.updated_at');
-        $year_news_Info->fields('fundamentals.instrument_id,fundamentals.meta_id,fundamentals.meta_value,fundamentals.meta_date,fundamentals.created_at,fundamentals.updated_at');
-        $year_news_Info->relation('meta_id','metas','id','meta_key','metas.meta_group_id = 7');
-        $year_news_Info->relation('instrument_id','instruments','id','instrument_code');
+        // $year_news_Info = $xcrud->nested_table('Year news Info','id','fundamentals','instrument_id'); // 2nd level
+        // $year_news_Info->join('meta_id','metas','id','metastable',true);
+        // $year_news_Info->where('metastable.meta_group_id =', 7);
+        // $year_news_Info->columns('fundamentals.instrument_id,fundamentals.meta_id,fundamentals.meta_value,fundamentals.meta_date,fundamentals.created_at,fundamentals.updated_at');
+        // $year_news_Info->fields('fundamentals.instrument_id,fundamentals.meta_id,fundamentals.meta_value,fundamentals.meta_date,fundamentals.created_at,fundamentals.updated_at');
+        // $year_news_Info->relation('meta_id','metas','id','meta_key','metas.meta_group_id = 7');
+        // $year_news_Info->relation('instrument_id','instruments','id','instrument_code');
 
 
 // se change
@@ -370,12 +370,12 @@ class DataManagementsController extends AppController
         $q1_eps_cont_op->join('meta_id','metas','id','metastable',true);
         $q1_eps_cont_op->where('metastable.id =', 225);
         $q1_eps_cont_op->columns('fundamentals.instrument_id,fundamentals.meta_id,fundamentals.meta_value,fundamentals.meta_date,fundamentals.is_latest,fundamentals.created_at,fundamentals.updated_at');
-        $q1_eps_cont_op->fields('fundamentals.instrument_id,fundamentals.meta_value,fundamentals.meta_date,fundamentals.is_latest,fundamentals.created_at,fundamentals.updated_at');
+        $q1_eps_cont_op->fields('fundamentals.instrument_id,fundamentals.meta_id,fundamentals.meta_value,fundamentals.meta_date,fundamentals.is_latest,fundamentals.created_at,fundamentals.updated_at');
         // $q1_report_news_info->relation('meta_id','metas','id','meta_key','metas.meta_group_id = 12');
         $q1_eps_cont_op->relation('instrument_id','instruments','id','instrument_code');
        ///////////////////////////////////////////////////////
        ///////////////////////////////////////////////////////
-        $q2_eps_cont_op = $xcrud->nested_table('q2_eps_cont_op','id','fundamentals','instrument_id'); // 2nd level
+       /* $q2_eps_cont_op = $xcrud->nested_table('q2_eps_cont_op','id','fundamentals','instrument_id'); // 2nd level
         $q2_eps_cont_op->join('meta_id','metas','id','metastable',true);
         $q2_eps_cont_op->where('metastable.id =', 226);
         $q2_eps_cont_op->columns('fundamentals.instrument_id,fundamentals.meta_id,fundamentals.meta_value,fundamentals.meta_date,fundamentals.is_latest,fundamentals.created_at,fundamentals.updated_at');
@@ -386,7 +386,7 @@ class DataManagementsController extends AppController
        ///////////////////////////////////////////////////////
         $q2_eps_cont_op = $xcrud->nested_table('half_year_eps_cont_op','id','fundamentals','instrument_id'); // 2nd level
         $q2_eps_cont_op->join('meta_id','metas','id','metastable',true);
-        $q2_eps_cont_op->where('metastable.id =', 443);
+        $q2_eps_cont_op->where('metastable.id =', 434);
         $q2_eps_cont_op->columns('fundamentals.instrument_id,fundamentals.meta_id,fundamentals.meta_value,fundamentals.meta_date,fundamentals.is_latest,fundamentals.created_at,fundamentals.updated_at');
         $q2_eps_cont_op->fields('fundamentals.instrument_id,fundamentals.meta_value,fundamentals.meta_date,fundamentals.is_latest,fundamentals.created_at,fundamentals.updated_at');
         // $q1_report_news_info->relation('meta_id','metas','id','meta_key','metas.meta_group_id = 12');
@@ -426,75 +426,75 @@ class DataManagementsController extends AppController
         $earning_per_share->columns('fundamentals.instrument_id,fundamentals.meta_id,fundamentals.meta_value,fundamentals.meta_date,fundamentals.is_latest,fundamentals.created_at,fundamentals.updated_at');
         $earning_per_share->fields('fundamentals.instrument_id,fundamentals.meta_value,fundamentals.meta_date,fundamentals.is_latest,fundamentals.created_at,fundamentals.updated_at');
         // $q1_report_news_info->relation('meta_id','metas','id','meta_key','metas.meta_group_id = 12');
-        $earning_per_share->relation('instrument_id','instruments','id','instrument_code');
+        $earning_per_share->relation('instrument_id','instruments','id','instrument_code');*/
        ///////////////////////////////////////////////////////
 // se change
-        $yearly_change_info = $xcrud->nested_table('Yearly change info','id','fundamentals','instrument_id'); // 2nd level
-        $yearly_change_info->join('meta_id','metas','id','metastable',true);
-        $yearly_change_info->where('metastable.meta_group_id =', 8);
-        $yearly_change_info->columns('fundamentals.instrument_id,fundamentals.meta_id,fundamentals.meta_value,fundamentals.meta_date,fundamentals.created_at,fundamentals.updated_at');
-        $yearly_change_info->fields('fundamentals.instrument_id,fundamentals.meta_id,fundamentals.meta_value,fundamentals.meta_date,fundamentals.created_at,fundamentals.updated_at');
-        $yearly_change_info->relation('meta_id','metas','id','meta_key','metas.meta_group_id = 8');
-        $yearly_change_info->relation('instrument_id','instruments','id','instrument_code');
+        // $yearly_change_info = $xcrud->nested_table('Yearly change info','id','fundamentals','instrument_id'); // 2nd level
+        // $yearly_change_info->join('meta_id','metas','id','metastable',true);
+        // $yearly_change_info->where('metastable.meta_group_id =', 8);
+        // $yearly_change_info->columns('fundamentals.instrument_id,fundamentals.meta_id,fundamentals.meta_value,fundamentals.meta_date,fundamentals.created_at,fundamentals.updated_at');
+        // $yearly_change_info->fields('fundamentals.instrument_id,fundamentals.meta_id,fundamentals.meta_value,fundamentals.meta_date,fundamentals.created_at,fundamentals.updated_at');
+        // $yearly_change_info->relation('meta_id','metas','id','meta_key','metas.meta_group_id = 8');
+        // $yearly_change_info->relation('instrument_id','instruments','id','instrument_code');
 
 
-        $yearly_fixed_info = $xcrud->nested_table('yearly_fixed_info','id','fundamentals','instrument_id'); // 2nd level
-        $yearly_fixed_info->join('meta_id','metas','id','metastable',true);
-        $yearly_fixed_info->where('metastable.meta_group_id =', 9);
-        $yearly_fixed_info->columns('fundamentals.instrument_id,fundamentals.meta_id,fundamentals.meta_value,fundamentals.meta_date,fundamentals.created_at,fundamentals.updated_at');
-        $yearly_fixed_info->fields('fundamentals.instrument_id,fundamentals.meta_id,fundamentals.meta_value,fundamentals.meta_date,fundamentals.created_at,fundamentals.updated_at');
-        $yearly_fixed_info->relation('meta_id','metas','id','meta_key','metas.meta_group_id = 9');
-        $yearly_fixed_info->relation('instrument_id','instruments','id','instrument_code');
+        // $yearly_fixed_info = $xcrud->nested_table('yearly_fixed_info','id','fundamentals','instrument_id'); // 2nd level
+        // $yearly_fixed_info->join('meta_id','metas','id','metastable',true);
+        // $yearly_fixed_info->where('metastable.meta_group_id =', 9);
+        // $yearly_fixed_info->columns('fundamentals.instrument_id,fundamentals.meta_id,fundamentals.meta_value,fundamentals.meta_date,fundamentals.created_at,fundamentals.updated_at');
+        // $yearly_fixed_info->fields('fundamentals.instrument_id,fundamentals.meta_id,fundamentals.meta_value,fundamentals.meta_date,fundamentals.created_at,fundamentals.updated_at');
+        // $yearly_fixed_info->relation('meta_id','metas','id','meta_key','metas.meta_group_id = 9');
+        // $yearly_fixed_info->relation('instrument_id','instruments','id','instrument_code');
 
-        $yearly_other_info = $xcrud->nested_table('yearly_other_info','id','fundamentals','instrument_id'); // 2nd level
-        $yearly_other_info->join('meta_id','metas','id','metastable',true);
-        $yearly_other_info->where('metastable.meta_group_id =', 10);
-        $yearly_other_info->columns('fundamentals.instrument_id,fundamentals.meta_id,fundamentals.meta_value,fundamentals.meta_date,fundamentals.created_at,fundamentals.updated_at');
-        $yearly_other_info->fields('fundamentals.instrument_id,fundamentals.meta_id,fundamentals.meta_value,fundamentals.meta_date,fundamentals.created_at,fundamentals.updated_at');
-        $yearly_other_info->relation('meta_id','metas','id','meta_key','metas.meta_group_id = 10');
-        $yearly_other_info->relation('instrument_id','instruments','id','instrument_code');
+        // $yearly_other_info = $xcrud->nested_table('yearly_other_info','id','fundamentals','instrument_id'); // 2nd level
+        // $yearly_other_info->join('meta_id','metas','id','metastable',true);
+        // $yearly_other_info->where('metastable.meta_group_id =', 10);
+        // $yearly_other_info->columns('fundamentals.instrument_id,fundamentals.meta_id,fundamentals.meta_value,fundamentals.meta_date,fundamentals.created_at,fundamentals.updated_at');
+        // $yearly_other_info->fields('fundamentals.instrument_id,fundamentals.meta_id,fundamentals.meta_value,fundamentals.meta_date,fundamentals.created_at,fundamentals.updated_at');
+        // $yearly_other_info->relation('meta_id','metas','id','meta_key','metas.meta_group_id = 10');
+        // $yearly_other_info->relation('instrument_id','instruments','id','instrument_code');
 
-        $q1_report_news_info = $xcrud->nested_table('q1_report_news_info','id','fundamentals','instrument_id'); // 2nd level
-        $q1_report_news_info->join('meta_id','metas','id','metastable',true);
-        $q1_report_news_info->where('metastable.meta_group_id =', 12);
-        $q1_report_news_info->columns('fundamentals.instrument_id,fundamentals.meta_id,fundamentals.meta_value,fundamentals.meta_date,fundamentals.created_at,fundamentals.updated_at');
-        $q1_report_news_info->fields('fundamentals.instrument_id,fundamentals.meta_id,fundamentals.meta_value,fundamentals.meta_date,fundamentals.created_at,fundamentals.updated_at');
-        $q1_report_news_info->relation('meta_id','metas','id','meta_key','metas.meta_group_id = 12');
-        $q1_report_news_info->relation('instrument_id','instruments','id','instrument_code');
+        // $q1_report_news_info = $xcrud->nested_table('q1_report_news_info','id','fundamentals','instrument_id'); // 2nd level
+        // $q1_report_news_info->join('meta_id','metas','id','metastable',true);
+        // $q1_report_news_info->where('metastable.meta_group_id =', 12);
+        // $q1_report_news_info->columns('fundamentals.instrument_id,fundamentals.meta_id,fundamentals.meta_value,fundamentals.meta_date,fundamentals.created_at,fundamentals.updated_at');
+        // $q1_report_news_info->fields('fundamentals.instrument_id,fundamentals.meta_id,fundamentals.meta_value,fundamentals.meta_date,fundamentals.created_at,fundamentals.updated_at');
+        // $q1_report_news_info->relation('meta_id','metas','id','meta_key','metas.meta_group_id = 12');
+        // $q1_report_news_info->relation('instrument_id','instruments','id','instrument_code');
        
-        $q2_report_news_info = $xcrud->nested_table('q2_report_news_info','id','fundamentals','instrument_id'); // 2nd level
-        $q2_report_news_info->join('meta_id','metas','id','metastable',true);
-        $q2_report_news_info->where('metastable.meta_group_id =', 14);
-        $q2_report_news_info->columns('fundamentals.instrument_id,fundamentals.meta_id,fundamentals.meta_value,fundamentals.meta_date,fundamentals.created_at,fundamentals.updated_at');
-        $q2_report_news_info->fields('fundamentals.instrument_id,fundamentals.meta_id,fundamentals.meta_value,fundamentals.meta_date,fundamentals.created_at,fundamentals.updated_at');
-        $q2_report_news_info->relation('meta_id','metas','id','meta_key','metas.meta_group_id = 14');
-        $q2_report_news_info->relation('instrument_id','instruments','id','instrument_code');
+        // $q2_report_news_info = $xcrud->nested_table('q2_report_news_info','id','fundamentals','instrument_id'); // 2nd level
+        // $q2_report_news_info->join('meta_id','metas','id','metastable',true);
+        // $q2_report_news_info->where('metastable.meta_group_id =', 14);
+        // $q2_report_news_info->columns('fundamentals.instrument_id,fundamentals.meta_id,fundamentals.meta_value,fundamentals.meta_date,fundamentals.created_at,fundamentals.updated_at');
+        // $q2_report_news_info->fields('fundamentals.instrument_id,fundamentals.meta_id,fundamentals.meta_value,fundamentals.meta_date,fundamentals.created_at,fundamentals.updated_at');
+        // $q2_report_news_info->relation('meta_id','metas','id','meta_key','metas.meta_group_id = 14');
+        // $q2_report_news_info->relation('instrument_id','instruments','id','instrument_code');
 
-        $q3_report_news_info = $xcrud->nested_table('q3_report_news_info','id','fundamentals','instrument_id'); // 2nd level
-        $q3_report_news_info->join('meta_id','metas','id','metastable',true);
-        $q3_report_news_info->where('metastable.meta_group_id =', 13);
-        $q3_report_news_info->columns('fundamentals.instrument_id,fundamentals.meta_id,fundamentals.meta_value,fundamentals.meta_date,fundamentals.created_at,fundamentals.updated_at');
-        $q3_report_news_info->fields('fundamentals.instrument_id,fundamentals.meta_id,fundamentals.meta_value,fundamentals.meta_date,fundamentals.created_at,fundamentals.updated_at');
-        $q3_report_news_info->relation('meta_id','metas','id','meta_key','metas.meta_group_id = 13');
-        $q3_report_news_info->relation('instrument_id','instruments','id','instrument_code');
+        // $q3_report_news_info = $xcrud->nested_table('q3_report_news_info','id','fundamentals','instrument_id'); // 2nd level
+        // $q3_report_news_info->join('meta_id','metas','id','metastable',true);
+        // $q3_report_news_info->where('metastable.meta_group_id =', 13);
+        // $q3_report_news_info->columns('fundamentals.instrument_id,fundamentals.meta_id,fundamentals.meta_value,fundamentals.meta_date,fundamentals.created_at,fundamentals.updated_at');
+        // $q3_report_news_info->fields('fundamentals.instrument_id,fundamentals.meta_id,fundamentals.meta_value,fundamentals.meta_date,fundamentals.created_at,fundamentals.updated_at');
+        // $q3_report_news_info->relation('meta_id','metas','id','meta_key','metas.meta_group_id = 13');
+        // $q3_report_news_info->relation('instrument_id','instruments','id','instrument_code');
 
-        $logo = $xcrud->nested_table('Logo','id','fundamentals','instrument_id'); // 2nd level
-        $logo->join('meta_id','metas','id','metastable',true);
-        $logo->where('metastable.meta_group_id =', 15);
-        $logo->columns('fundamentals.instrument_id,fundamentals.meta_id,fundamentals.meta_value,fundamentals.meta_date,fundamentals.created_at,fundamentals.updated_at');
-        $logo->fields('fundamentals.instrument_id,fundamentals.meta_id,fundamentals.meta_value,fundamentals.meta_date,fundamentals.created_at,fundamentals.updated_at');
-        $logo->change_type('fundamentals.meta_value','image','', array('path'=>'../files/uploads','url'=>'http://www.new.stockbangladesh.com/files/uploads/'));
-        $logo->relation('meta_id','metas','id','meta_key','metas.meta_group_id = 15');
-        $logo->relation('instrument_id','instruments','id','instrument_code');
+        // $logo = $xcrud->nested_table('Logo','id','fundamentals','instrument_id'); // 2nd level
+        // $logo->join('meta_id','metas','id','metastable',true);
+        // $logo->where('metastable.meta_group_id =', 15);
+        // $logo->columns('fundamentals.instrument_id,fundamentals.meta_id,fundamentals.meta_value,fundamentals.meta_date,fundamentals.created_at,fundamentals.updated_at');
+        // $logo->fields('fundamentals.instrument_id,fundamentals.meta_id,fundamentals.meta_value,fundamentals.meta_date,fundamentals.created_at,fundamentals.updated_at');
+        // $logo->change_type('fundamentals.meta_value','image','', array('path'=>'../files/uploads','url'=>'http://www.new.stockbangladesh.com/files/uploads/'));
+        // $logo->relation('meta_id','metas','id','meta_key','metas.meta_group_id = 15');
+        // $logo->relation('instrument_id','instruments','id','instrument_code');
 
-        $report = $xcrud->nested_table('Reports','id','fundamentals','instrument_id'); // 2nd level
-        $report->join('meta_id','metas','id','metastable',true);
-        $report->where('metastable.meta_group_id =', 16);
-        $report->columns('fundamentals.instrument_id,fundamentals.meta_id,fundamentals.meta_value,fundamentals.meta_date,fundamentals.created_at,fundamentals.updated_at');
-        $report->fields('fundamentals.instrument_id,fundamentals.meta_id,fundamentals.meta_value,fundamentals.meta_date,fundamentals.created_at,fundamentals.updated_at');
-        $report->change_type('fundamentals.meta_value','file','', array('path'=>'../files/uploads/reports','url'=>'http://www.new.stockbangladesh.com/files/uploads/reports/'));
-        $report->relation('meta_id','metas','id','meta_key','metas.meta_group_id = 16');
-        $report->relation('instrument_id','instruments','id','instrument_code');
+        // $report = $xcrud->nested_table('Reports','id','fundamentals','instrument_id'); // 2nd level
+        // $report->join('meta_id','metas','id','metastable',true);
+        // $report->where('metastable.meta_group_id =', 16);
+        // $report->columns('fundamentals.instrument_id,fundamentals.meta_id,fundamentals.meta_value,fundamentals.meta_date,fundamentals.created_at,fundamentals.updated_at');
+        // $report->fields('fundamentals.instrument_id,fundamentals.meta_id,fundamentals.meta_value,fundamentals.meta_date,fundamentals.created_at,fundamentals.updated_at');
+        // $report->change_type('fundamentals.meta_value','file','', array('path'=>'../files/uploads/reports','url'=>'http://www.new.stockbangladesh.com/files/uploads/reports/'));
+        // $report->relation('meta_id','metas','id','meta_key','metas.meta_group_id = 16');
+        // $report->relation('instrument_id','instruments','id','instrument_code');
 
 
 

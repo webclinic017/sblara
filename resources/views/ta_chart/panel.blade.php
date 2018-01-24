@@ -3,22 +3,22 @@
 <div class="row widget-row">
 <div class="col-md-12 margin-bottom-20">
     <!-- BEGIN WIDGET TAB -->
-    <div class="widget-bg-color-white widget-tab">
-        <ul class="nav nav-tabs">
+    <div class="widget-bg-color-white widget-tab ta-chart-tabs">
+        <ul class="nav nav-tabs ">
             <li class="active">
-                <a href="#tab_1_1" data-toggle="tab"> Chart </a>
+                <a href="#tab_1_1" data-url ="#" data-toggle="tab"> Chart </a>
             </li>
 
    {{--          <li>
                 <a href="#tab_1_2" data-toggle="tab"> COMPANY DETAILS </a>
             </li> --}}
             
-   {{--          <li>
-                <a href="#tab_1_3" data-toggle="tab"> MARKET DEPTH </a>
-            </li> --}}
-{{--             <li>
-                <a href="#tab_1_4" data-toggle="tab"> Others </a>
-            </li> --}}
+            <li>
+                <a href="#tab_1_3" data-url="/ajax/load_block/block_name=block.market_depth_single:instrument_id=" data-toggle="tab"> MARKET DEPTH </a>
+            </li>
+            <li>
+                <a href="#tab_1_4" data-url="/ajax/load_block/block_name=block.minute_chart:instrument_id=" data-toggle="tab"> Minute Chart </a>
+            </li>
         </ul>
         <div class="tab-content" >
             <div class="tab-pane fade active in" id="tab_1_1">
@@ -26,6 +26,13 @@
                     <div class="form-body">
 
                         <div class="form-group">
+
+                            <div class="col-md-3">
+                                <div class="margin-bottom-10">
+                                @include('html.instrument_list_bs_select',['bs_select_id'=>'shareList'])
+
+                                </div>
+                            </div>
 
                             <div class="col-md-2">
                                 <div class="margin-bottom-10">
@@ -37,16 +44,46 @@
 
                                 </div>
                             </div>
+
                             <div class="col-md-2">
                                 <div class="margin-bottom-10">
-                                @include('html.instrument_list_bs_select',['bs_select_id'=>'shareList'])
+                                    <select id="configure" class="bs-select form-control" multiple>
+                                        <option value="VOLBAR" title="VOLBAR" selected="">Show volume bar</option>
+                                        <option value="PSAR" title="PSAR">Parabolic SAR</option>
+                                        <option value="LOG" title="LOG">Log Scale</option>
+                                        <option value="PSCALE" title="PSCALE">Percentage Scale</option>
+                                    </select>
+
 
                                 </div>
                             </div>
                             <div class="col-md-2">
                                 <div class="margin-bottom-10">
-                                    <select id="Indicators" class="bs-select form-control" multiple  title='Choose indicators' data-live-search="true">
-                                        <option value="None">None</option>
+                                    <select id="charttype" class="bs-select form-control">
+                                        <option value="CandleStick" selected="">CandleStick</option>
+                                        <option value="Close">Closing Price</option>
+                                        <option value="Median">Median Price</option>
+                                        <option value="OHLC">OHLC</option>
+                                        <option value="TP">Typical Price</option>
+                                        <option value="WC">Weighted Close</option>
+                                    </select>
+
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="margin-bottom-10">
+                                    <select id="overlay" class="bs-select form-control">
+                                        <option value="BB" selected="">Bollinger Band</option>
+                                        <option value="DC">Donchian Channel</option>
+                                        <option value="Envelop">Envelop (SMA 20 +/- 10%)</option>
+                                    </select>
+
+                                </div>
+                            </div>                            
+                            <div class="col-md-12" style="padding: 10px;">
+                                    
+                                    <select id="Indicators" class="select2 form-control" multiple  title='Choose indicators' data-live-search="true">
+                                        <option value="None">Select Indicators</option>
                                         <option value="AccDist" title="A/D">Accu/Dist</option>
                                         <option value="AroonOsc" title="ArnOsc">Aroon Oscillator</option>
                                         <option value="Aroon" title="Aroon">Aroon Up/Down</option>
@@ -83,43 +120,6 @@
                                         <option value="WilliamR" title="WilliamR">William's %R</option>
                                     </select>
 
-
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="margin-bottom-10">
-                                    <select id="configure" class="bs-select form-control" multiple>
-                                        <option value="VOLBAR" title="VOLBAR" selected="">Show volume bar</option>
-                                        <option value="PSAR" title="PSAR">Parabolic SAR</option>
-                                        <option value="LOG" title="LOG">Log Scale</option>
-                                        <option value="PSCALE" title="PSCALE">Percentage Scale</option>
-                                    </select>
-
-
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="margin-bottom-10">
-                                    <select id="charttype" class="bs-select form-control">
-                                        <option value="CandleStick" selected="">CandleStick</option>
-                                        <option value="Close">Closing Price</option>
-                                        <option value="Median">Median Price</option>
-                                        <option value="OHLC">OHLC</option>
-                                        <option value="TP">Typical Price</option>
-                                        <option value="WC">Weighted Close</option>
-                                    </select>
-
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="margin-bottom-10">
-                                    <select id="overlay" class="bs-select form-control">
-                                        <option value="BB" selected="">Bollinger Band</option>
-                                        <option value="DC">Donchian Channel</option>
-                                        <option value="Envelop">Envelop (SMA 20 +/- 10%)</option>
-                                    </select>
-
-                                </div>
                             </div>
                         </div>
 
@@ -343,42 +343,7 @@
             </div>
             </div>
             <div class="tab-pane fade" id="tab_1_3">
-                <div class="widget-news margin-bottom-20">
-                    <img class="widget-news-left-elem" src="../assets/layouts/layout7/img/05.jpg" alt="">
-                    <div class="widget-news-right-body">
-                        <h3 class="widget-news-right-body-title">Most Completed theme
-                            <span class="label label-default"> March 12 </span>
-                        </h3>
-                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit diam nonumy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
-                    </div>
-                </div>
-                <div class="widget-news margin-bottom-20">
-                    <img class="widget-news-left-elem" src="../assets/layouts/layout7/img/07.jpg" alt="">
-                    <div class="widget-news-right-body">
-                        <h3 class="widget-news-right-body-title">San Francisco
-                            <span class="label label-default"> March 10 </span>
-                        </h3>
-                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit diam nonumy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
-                    </div>
-                </div>
-                <div class="widget-news margin-bottom-20">
-                    <img class="widget-news-left-elem" src="../assets/layouts/layout7/img/03.jpg" alt="">
-                    <div class="widget-news-right-body">
-                        <h3 class="widget-news-right-body-title">Wondering anyone did this
-                            <span class="label label-default"> March 25 </span>
-                        </h3>
-                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit diam nonumy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
-                    </div>
-                </div>
-                <div class="widget-news">
-                    <img class="widget-news-left-elem" src="../assets/layouts/layout7/img/04.jpg" alt="">
-                    <div class="widget-news-right-body">
-                        <h3 class="widget-news-right-body-title">New Workstation
-                            <span class="label label-default"> March 16 </span>
-                        </h3>
-                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit diam nonumy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
-                    </div>
-                </div>
+                    
             </div>
             <div class="tab-pane fade" id="tab_1_4">
                 <div class="widget-news margin-bottom-20">

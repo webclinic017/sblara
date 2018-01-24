@@ -36,7 +36,6 @@
 
 
 
-@push('scripts')
 <script type="text/javascript">
 
     $(function () {
@@ -47,7 +46,6 @@
 
         $('#buyer_seller_reload').click(function (e) {
             callAjax({{$instrument_id}});
-
         });
 
 
@@ -244,4 +242,3 @@
     });
 
 </script>
-@endpush
