@@ -417,6 +417,10 @@ $('.ta-chart-tabs [data-toggle="tab"]').on('click', function (e) {
 	{
 		return;
 	}
+
+		  var viewer = JsChartViewer.get('ta_chart');
+		  viewer.hideObj("all");
+		  
 	url = url + instrument;
 	var target = $(this).attr('href');
 	$(target).html(loadingDiv);

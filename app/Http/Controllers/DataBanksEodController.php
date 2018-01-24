@@ -253,7 +253,7 @@ class DataBanksEodController extends Controller
         # Set the data into the chart object
         $m = new \FinanceChart($width);
         $m->setData($chartData['timeStamps'], $chartData['highData'], $chartData['lowData'], $chartData['openData'], $chartData['closeData'], $chartData['volData'],$extraPoints);
-
+        $m->setLegendStyle("normal", 8, Transparent, Transparent);
         $m->addMainChart($mainHeight);
 
         // $m->addCandleStick(0x33ff33, 0xff3333);
@@ -298,7 +298,7 @@ class DataBanksEodController extends Controller
         $chartId = md5($instrumentCode.rand(999,99999));
 
         # Create the WebChartViewer object
-        $viewer = new \WebChartViewer("chart$chartId");
+        $viewer = new \WebChartViewer("ta_chart");
 
         # Output the chart
         $chartQuery = $m->makeSession($viewer->getId());
@@ -310,7 +310,7 @@ class DataBanksEodController extends Controller
 
         # Output Javascript chart model to the browser to support tracking cursor
 
-        //$viewer->setChartModel($m->getJsChartModel());  // SHOULD BE DISABLE IN LIVE AS IT IS NOT WORKING COMPRESSION
+        $viewer->setChartModel($m->getJsChartModel());  // SHOULD BE DISABLE IN LIVE AS IT IS NOT WORKING COMPRESSION
         // $instrumentList=array_flip ($instrumentList);
 
         $imageMap = $m->getHTMLImageMap("", "", "title='".$m->getToolTipDateFormat()." {value|G}'");
@@ -491,6 +491,7 @@ class DataBanksEodController extends Controller
         # Set the data into the chart object
         $m = new \FinanceChart($width);
         $m->setData($chartData['timeStamps'], $chartData['highData'], $chartData['lowData'], $chartData['openData'], $chartData['closeData'], $chartData['volData'],$extraPoints);
+        $m->setLegendStyle("normal", 8, Transparent, Transparent);
         $m->addMainChart($mainHeight);
 
         // $m->addCandleStick(0x33ff33, 0xff3333);
@@ -532,7 +533,8 @@ class DataBanksEodController extends Controller
         $chartId = md5($instrumentCode.rand(999,99999));
 
         # Create the WebChartViewer object
-        $viewer = new \WebChartViewer("chart$chartId");
+        
+        $viewer = new \WebChartViewer("ta_chart");
 
         # Output the chart
         $chartQuery = $m->makeSession($viewer->getId());
@@ -543,13 +545,13 @@ class DataBanksEodController extends Controller
 
         # Output Javascript chart model to the browser to support tracking cursor
 
-        //$viewer->setChartModel($m->getJsChartModel());  // SHOULD BE DISABLE IN LIVE AS IT IS NOT WORKING COMPRESSION
+        $viewer->setChartModel($m->getJsChartModel());  // SHOULD BE DISABLE IN LIVE AS IT IS NOT WORKING COMPRESSION
         // $instrumentList=array_flip ($instrumentList);
 
-        $imageMap = $m->getHTMLImageMap("", "", "title='".$m->getToolTipDateFormat()." {value|G}'");
+        // $imageMap = $m->getHTMLImageMap("", "", "title='".$m->getToolTipDateFormat()." {value|G}'");
 
 
-        return View::make("ta_chart/panel")->with('viewer',$viewer)->with('imageMap',$imageMap);
+        return View::make("ta_chart/panel")->with('viewer',$viewer);
 
 
 
@@ -625,7 +627,7 @@ class DataBanksEodController extends Controller
 
 # Set the data into the finance chart object
         $c->setData($timeStamps, $highData, $lowData, $openData, $closeData, $volData, $extraDays);
-
+        $c->setLegendStyle("normal", 8, Transparent, Transparent);
 # Add the main chart with 240 pixels in height
         $c->addMainChart(240);
 

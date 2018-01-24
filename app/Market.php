@@ -220,8 +220,8 @@ class Market extends Model
         })->whereDate('trade_date', '<=', DB::raw('CURDATE()'))->orderBy('trade_date', 'desc')->skip(0)->take(1)->get()->first();
 
 
-        // adding to minute with market close time. It is needed to ensure run cron at 2.30 minutes to take latest data
-        $activeTradeDates->market_closed=$activeTradeDates->market_closed->addMinutes(2);
+        // adding 5 minutes with market close time. It is needed to ensure run cron at 2.30 minutes to take latest data
+        $activeTradeDates->market_closed=$activeTradeDates->market_closed->addMinutes(5);
 
         // It was not wise keeping the start_time and end time as time data type. It should be date_time.
         // For this mistake we have to join time with date here

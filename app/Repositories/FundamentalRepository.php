@@ -219,44 +219,78 @@ class FundamentalRepository {
 
         $fundaData=self::getFundamentalData($metaKey,$instrumentIdArr);
 
-        $returnData=array();
-        foreach($instrumentIdArr as $instrument_id)
+
+        $returnData = array();
+        foreach ($instrumentIdArr as $instrument_id)
         {
+            $data_to_sort = array();
 
 
-          if(isset($fundaData['q1_eps_cont_op'][$instrument_id]['meta_value']))
-            {
-                $returnData[$instrument_id]['annualized_eps']= floatval($fundaData['q1_eps_cont_op'][$instrument_id]['meta_value'])*4;
-                $returnData[$instrument_id]['meta_date']= $fundaData['q1_eps_cont_op'][$instrument_id]['meta_date'];
-                $returnData[$instrument_id]['text']= 'Q1';
-            }
+            foreach ($fundaData as $eps_name => $data) {
 
-            if (isset($fundaData['half_year_eps_cont_op'][$instrument_id]['meta_value']))
-            {
-                $returnData[$instrument_id]['annualized_eps']= floatval($fundaData['half_year_eps_cont_op'][$instrument_id]['meta_value'])*2;
-                $returnData[$instrument_id]['meta_date']= $fundaData['half_year_eps_cont_op'][$instrument_id]['meta_date'];
-                $returnData[$instrument_id]['text']= 'Half year';
-            }
-
-
-            if (isset($fundaData['q3_nine_months_eps'][$instrument_id]['meta_value']))
-            {
-
-                $returnData[$instrument_id]['annualized_eps']= (float) number_format((floatval($fundaData['q3_nine_months_eps'][$instrument_id]['meta_value'])/3)*4, 2, '.', '');
-                $returnData[$instrument_id]['meta_date']= $fundaData['q3_nine_months_eps'][$instrument_id]['meta_date'];
-                $returnData[$instrument_id]['text']= '9 months';
+                if(isset($data[$instrument_id]))
+                {
+                    $temp = array();
+                    $meta_timestamp = strtotime($data[$instrument_id]['meta_date']);
+                    $temp['eps_name'] = $eps_name;
+                    $temp['meta_timestamp'] = $meta_timestamp;
+                    $temp['meta_date'] = $data[$instrument_id]['meta_date'];
+                    $temp['meta_value'] = floatval($data[$instrument_id]['meta_value']);
+                    $data_to_sort[$meta_timestamp] = $temp;
+                }else
+                {
+                    break;
+                }
 
             }
 
-            if (isset($fundaData['earning_per_share'][$instrument_id]['meta_value']))
+            if(count($data_to_sort))
             {
-                $returnData[$instrument_id]['annualized_eps']= floatval($fundaData['earning_per_share'][$instrument_id]['meta_value']);
-                $returnData[$instrument_id]['meta_date']= $fundaData['earning_per_share'][$instrument_id]['meta_date'];
-                $returnData[$instrument_id]['text']= 'Annual';
+                krsort($data_to_sort);
+
+                $data_to_sort = array_values($data_to_sort);
+
+                if ($data_to_sort[0]['eps_name'] == 'q1_eps_cont_op') {
+                    $returnData[$instrument_id]['annualized_eps'] = $data_to_sort[0]['meta_value'] * 4;
+                    $returnData[$instrument_id]['meta_date'] = $data_to_sort[0]['meta_date'];
+                    $returnData[$instrument_id]['text'] = 'Q1';
+                }
+
+                if ($data_to_sort[0]['eps_name'] == 'half_year_eps_cont_op') {
+                    $returnData[$instrument_id]['annualized_eps'] = $data_to_sort[0]['meta_value'] * 2;
+                    $returnData[$instrument_id]['meta_date'] = $data_to_sort[0]['meta_date'];
+                    $returnData[$instrument_id]['text'] = 'Half year';
+                }
+
+
+                if ($data_to_sort[0]['eps_name'] == 'q3_nine_months_eps') {
+                    $returnData[$instrument_id]['annualized_eps'] = ($data_to_sort[0]['meta_value'] / 3) * 4;
+                    $returnData[$instrument_id]['annualized_eps'] = round($returnData[$instrument_id]['annualized_eps'], 2);
+                    $returnData[$instrument_id]['meta_date'] = $data_to_sort[0]['meta_date'];
+                    $returnData[$instrument_id]['text'] = '9 months';
+
+                }
+
+                if ($data_to_sort[0]['eps_name'] == 'earning_per_share') {
+                    $returnData[$instrument_id]['annualized_eps'] = $data_to_sort[0]['meta_value'];
+                    $returnData[$instrument_id]['meta_date'] = $data_to_sort[0]['meta_date'];
+                    $returnData[$instrument_id]['text'] = 'Annual';
+                }
+            }
+            else
+            {
+                $returnData[$instrument_id]['annualized_eps'] = 0;
+                $returnData[$instrument_id]['meta_date'] = 'n/a';
+                $returnData[$instrument_id]['text'] = 'n/a';
             }
 
 
         }
+
+/*        sbdump($returnData,'afmsohail@gmail.com');
+        sbdump($data_to_sort,'afmsohail@gmail.com');
+        sbdd($fundaData->toArray(),'afmsohail@gmail.com');*/
+
         return $returnData;
     }
 

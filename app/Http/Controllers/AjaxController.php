@@ -170,7 +170,7 @@ class AjaxController extends Controller
         $metaKey=array("market_lot","face_value","net_asset_val_per_share");
 
         //cache for 1 day=1440 minutes
-
+        //Cache::forget('annualized_eps_all_instruments');
         $epsData = Cache::remember("annualized_eps_all_instruments", 720 , function () use ($instrument_arr) {
             $epsData = FundamentalRepository::getAnnualizedEPS($instrument_arr);
             return $epsData;
