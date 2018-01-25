@@ -1,12 +1,3 @@
-                              @foreach ($portfolio->shares as $company)
-                                                                        @php
-                                                                        if(!$company->isMature)
-                                                                        {
-                                                                             continue;
-                                                                        }
-                                                                        @endphp
-                                                                        <option value="{{ $company->instrument->id }}">{{ $company->instrument->instrument_code }}</option>
-                                                                        @endforeach
 @extends('layouts.metronic.default')
 @section('content')
 <div class="row">
@@ -296,7 +287,14 @@
                                         </tr>
 
 
-                                        @if ($loop->last)
+                                        @empty     
+                                        <tr class="no-records-found text-center">
+                                            <td colspan="13">
+                                                No portfolio available. Please <a href="javascript:" data-toggle="modal" data-target="#buyModal">buy share</a> to create your portfolio.
+                                            </td>
+                                        </tr>
+                                        @endforelse
+
                                         <tr class="active">
                                             <td colspan="3">
                                                 <span class="bold">Cash</span>
@@ -354,15 +352,7 @@
                                                 </span>
                                             </td>
                                             <td></td>
-                                        </tr>
-                                        @endif
-                                        @empty     
-                                        <tr class="no-records-found text-center">
-                                            <td colspan="13">
-                                                No portfolio available. Please <a href="javascript:" data-toggle="modal" data-target="#buyModal">buy share</a> to create your portfolio.
-                                            </td>
-                                        </tr>
-                                        @endforelse
+                                        </tr>                                        
                                     </tbody>
                                 </table>
 

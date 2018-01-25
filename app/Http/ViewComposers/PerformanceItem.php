@@ -42,6 +42,7 @@ class PerformanceItem {
         $total_gain_loss_of_this_portfolio_today=0;
 
         $all_transaction_array=array();
+
         foreach($all_buy_transactions_of_this_portfolio_group_by_instrument_id as $instrument_id=>$all_transactions_of_this_instrument)
         {
             $dataBankIntraDays = \App\DataBanksIntraday::where('instrument_id', $instrument_id)
@@ -113,13 +114,47 @@ class PerformanceItem {
             $temp['total_buy_commission_of_this_instrument'] = $total_buy_commission_of_this_instrument;
             $temp['is_parent'] = 1;
             $temp['is_child'] = 0;
-            $temp['last_traded_datetime_of_this_instrument'] = $dataBankIntraDays->lm_date_time->format('h:i a');
+            if($dataBankIntraDays)
+            {
+
+             $temp['last_traded_datetime_of_this_instrument'] = $dataBankIntraDays->lm_date_time->format('h:i a');
+            }else{
+             $temp['last_traded_datetime_of_this_instrument'] = " ";
+
+            }
+
+            if($dataBankIntraDays)
+            {
             $temp['last_traded_price_of_this_instrument'] = $dataBankIntraDays->close_price;
+            }else{
+                $temp['last_traded_price_of_this_instrument'] = "";
+            }
+            
+            if($dataBankIntraDays)
+            {
             $temp['change_today_of_this_instrument'] = $dataBankIntraDays->price_change;
+            }else{
+                $temp['change_today_of_this_instrument'] = "";
+            }
+
+            if($dataBankIntraDays)
+            {
             $temp['change_today_per_of_this_instrument'] = $dataBankIntraDays->price_change_per;
+            }else{
+                $temp['change_today_per_of_this_instrument'] = "";
+            }
+
+    if(!$dataBankIntraDays)
+    {
+        $dataBankIntraDays = new \stdClass();
+        $dataBankIntraDays->close_price = 0;
+        $dataBankIntraDays->price_change = 0;
+    }
             $temp['percent_of_portfolio_holding_by_this_instrument'] = 0;
             $sell_value_of_this_instrument = $dataBankIntraDays->close_price * $total_shares_of_this_instrument;
-            $sell_commission_of_this_instrument = $transaction->commission ? ($transaction->commission / 100) * $sell_value_of_this_instrument : 0;
+        
+
+        $sell_commission_of_this_instrument = $transaction->commission ? ($transaction->commission / 100) * $sell_value_of_this_instrument : 0;
             $temp['sell_value_deducting_commission_of_this_instrument'] = $sell_value_of_this_instrument - $sell_commission_of_this_instrument;
             $temp['total_buying_cost_including_commission_of_this_instrument'] = $total_buying_cost_including_commission_of_this_instrument;
             $temp['gain_loss_today_for_this_instrument'] = $total_shares_of_this_instrument * $dataBankIntraDays->price_change;

@@ -59,17 +59,16 @@ class EodIntradayCommand extends Command
     public function handle()
     {
 
+
         $querystr = "select SUM(MKISTAT_TOTAL_TRADES) as total_trades from MKISTAT ORDER BY MKISTAT_LM_DATE_TIME DESC LIMIT 0 , 600";
         $from_dse = DB::connection('dse')->select($querystr);
 
         $batch_total_trades_from_dse = $from_dse[0]->total_trades;
 
-
-
         $querystr = "select * from MKISTAT ORDER BY MKISTAT_LM_DATE_TIME DESC LIMIT 0 , 600";
         $dataFromDseServer = DB::connection('dse')->select($querystr);
 
-
+        dump(count($dataFromDseServer));
 
         if(!Market::isMarketOpen())
         {
@@ -88,7 +87,6 @@ class EodIntradayCommand extends Command
             {
                 // its returning today data. So we will proceed here
                 $market_id=$activeTradeDates->id;
-
 
                 //////////////////////////// BATCH DEALINGS \\\\\\\\\\\\\\\\\\\\\\\\
 
@@ -117,13 +115,29 @@ class EodIntradayCommand extends Command
                 // Check if it is same row of previous minute
                 if ($batch_total_trades != $batch_total_trades_from_dse) {
 
+
                     $instrumentList = InstrumentRepository::getInstrumentsScripOnly();
+                    $instrumentList=$instrumentList->keyBy('instrument_code');
+
+
+                    $existing_eod_data = DataBanksEod::where('market_id', $market_id)->select('id', 'instrument_id')->get();
+                    $existing_eod_data = $existing_eod_data->keyBy('instrument_id');
+                    $primary_id_max= $existing_eod_data->max('id');
+
                     $dataToSave = array();
                     $instrument_ids = [];
-
+                    $eod_update_sql="INSERT into data_banks_eods (id,market_id,instrument_id,open,high,low,close,volume,trade,tradevalues,updated,date) VALUES";
+                    $update_values="";
+                    $c=0;
                     foreach ($dataFromDseServer as $data) {
 
-                        $instrument_info = $instrumentList->where('instrument_code', trim($data->MKISTAT_INSTRUMENT_CODE))->first();
+
+                        //$instrument_info = $instrumentList->where('instrument_code', trim($data->MKISTAT_INSTRUMENT_CODE))->first();
+                        $instrument_info=array();
+                        if(isset($instrumentList[trim($data->MKISTAT_INSTRUMENT_CODE)]))
+                        {
+                            $instrument_info = $instrumentList[trim($data->MKISTAT_INSTRUMENT_CODE)];
+                        }
 
                         if (count($instrument_info)) {
                             $instrument_id = $instrument_info->id;
@@ -135,22 +149,35 @@ class EodIntradayCommand extends Command
                           //  dump($instrument_id);
                           //  dump($data->MKISTAT_OPEN_PRICE);
                                 if($data->MKISTAT_PUBLIC_TOTAL_VOLUME + $data->MKISTAT_SPOT_TOTAL_VOLUME > 0){
-                                 $eod = DataBanksEod::updateOrCreate(
-                                     ['market_id' => $market_id, 'instrument_id' => $instrument_id],
-                                     [
-                                         'open' => $data->MKISTAT_OPEN_PRICE,
-                                         'high' => $data->MKISTAT_HIGH_PRICE,
-                                         'low' => $data->MKISTAT_LOW_PRICE,
-                                         'close' => $ltp,
-                                         'volume' => $data->MKISTAT_TOTAL_VOLUME,
-                                         'trade' => $data->MKISTAT_TOTAL_TRADES,
-                                         'tradevalues' => $data->MKISTAT_TOTAL_VALUE,
-                                         'updated' => date('Y-m-d H:i:s'),
-                                         'date' => $trade_date
-                                     ]
-                                 );
-                                 //$this->info($instrument_info->instrument_code . ' Inserted/ Updated into DataBankEod');
 
+                                 $open= $data->MKISTAT_OPEN_PRICE;
+                                 $high=$data->MKISTAT_HIGH_PRICE;
+                                 $low=$data->MKISTAT_LOW_PRICE;
+                                 $volume=$data->MKISTAT_TOTAL_VOLUME;
+                                 $trade=$data->MKISTAT_TOTAL_TRADES;
+                                 $tradevalues=$data->MKISTAT_TOTAL_VALUE;
+                                 $updated=date('Y-m-d H:i:s');
+
+
+                                    if(isset($existing_eod_data[$instrument_id]))
+                                    {
+                                        $id= $existing_eod_data[$instrument_id]['id'];
+
+
+                                    }else
+                                    {
+                                        $id=$primary_id_max++;
+
+                                    }
+
+
+                                    if ($c == 0) {
+                                        $values = "($id,$market_id,$instrument_id,$open,$high,$low,$ltp,$volume,$trade,$tradevalues,'$updated','$trade_date')";
+                                    } else {
+                                        $values = ",($id,$market_id,$instrument_id,$open,$high,$low,$ltp,$volume,$trade,$tradevalues,'$updated','$trade_date')";
+                                    }
+
+                                    $update_values .= $values;
 
                                 /////////////////// WE WILL PROCESS INTRADAY DATA NOW \\\\\\\\\\\\\\\\\\\\\\\
 
@@ -193,7 +220,13 @@ class EodIntradayCommand extends Command
 
                         }
 
+                        $c++;
                     }
+
+                    $eod_update_sql.= $update_values;
+                    $eod_update_sql.= "ON DUPLICATE KEY UPDATE open= VALUES(open),high=VALUES(high),low=VALUES(low),close=VALUES(close),volume=VALUES(volume),trade=VALUES(trade),tradevalues=VALUES(tradevalues),updated=VALUES(updated),date=VALUES(date)";
+
+                    DB::select(DB::raw($eod_update_sql));
 
                     if (!empty($dataToSave)) {
                         /*set last updated batch_id in instruments table start*/
@@ -201,6 +234,7 @@ class EodIntradayCommand extends Command
                         /*set last updated batch_id in instruments table end*/
 
                         DB::table('data_banks_intradays')->insert($dataToSave);
+
 
 
                         //recording new value of data_bank_intraday_batch and batch_total_trades of markets table

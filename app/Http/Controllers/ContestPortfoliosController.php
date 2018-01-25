@@ -98,19 +98,9 @@ class ContestPortfoliosController extends Controller
             $buying_price = $company_info->latestDataBanksEod->close;
             
 
-            if ($portfolio->shares) {
-                $sum_shares     = $portfolio->shares->sum('no_of_shares');
-                $total_shares   = $sum_shares * $buying_price;
-
-                $purchase_power = $portfolio->contest->contest_amount * $portfolio->contest->max_amount / 100;
-                $purchase_power -= $total_shares;
-
-                $max_shares     = $purchase_power / $buying_price;
-            } else {
                 $purchase_power = $portfolio->cash_amount * $portfolio->contest->max_amount / 100;
                 $max_shares     = $purchase_power / $buying_price;
-            }
-
+            
             if (request()->has('type') && request()->type == 'sell') {
                 // find saleable qty
                 $saleableQty = 0;

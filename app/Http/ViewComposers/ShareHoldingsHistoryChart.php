@@ -40,20 +40,21 @@ class ShareHoldingsHistoryChart
 
         $fundaData=FundamentalRepository::getFundamentalDataHistory($metaKey,array($instrument_id));
 
+        $sorted_arr=array();
 
-
-        $result=array();
         foreach($fundaData as $key=>$data_arr)
         {
             foreach($data_arr[$instrument_id] as $data)
             {
-                $date = $data->meta_date->format('M,Y');
-                $result[$date][$key] = $data->meta_value;
+                $date = $data->meta_date->timestamp;
+                $sorted_arr[$date][$key]=$data->meta_value;
+
             }
 
         }
 
-        $result=array_reverse($result, true);
+        ksort($sorted_arr);
+
         $category = array();
         $director = array();
         $govt = array();
@@ -61,10 +62,10 @@ class ShareHoldingsHistoryChart
         $foreign = array();
         $public = array();
 
-        foreach($result as $month=>$holding_data_of_this_month)
+        foreach($sorted_arr as $timestamp=>$holding_data_of_this_month)
         {
 
-            $category[]= $month;
+            $category[]= date('M,Y',$timestamp);
             if(isset($holding_data_of_this_month['share_percentage_director']))
             {
                 $director[] = $holding_data_of_this_month['share_percentage_director'];
