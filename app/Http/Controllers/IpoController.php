@@ -11,9 +11,9 @@ class IpoController extends Controller
 {
     public function upcoming()
     {
-        $ipos = Ipo::whereDate('subscription_close', '>=', date('Y-m-d'));
-        return view('ipo.upcoming')->with(compact('ipos'));
-               
+        $ipos = Ipo::whereDate('subscription_close', '>=', date('Y-m-d'))->get();
+        // dd($ipos);
+        return view('ipo.upcoming')->with(compact('ipos'));    
     }
 
     public function index(Request $request)

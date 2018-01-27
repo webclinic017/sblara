@@ -13,6 +13,7 @@ Use App\DataBanksIntraday;
 use App\Repositories\InstrumentRepository;
 Use App\Market;
 use Carbon\Carbon;
+use DB;
 
 class DataBanksIntradayRepository {
 
@@ -29,6 +30,27 @@ class DataBanksIntradayRepository {
 
     public static function getPreviousDayData($instrumentsIdArr=array(),$tradeDate = null, $minute = 1, $exchangeId = 0)  {
         return DataBanksIntraday::getPreviousDayData($instrumentsIdArr,$tradeDate,$minute,$exchangeId, $exchangeId);
+    }
+
+    /*
+     * It will return tradedata for all shares even it was not traded today
+     * */
+
+    public static function getAvailableLTP($instrumentsIdArr=array())  {
+
+        $sql="SELECT data_banks_intradays.*
+FROM data_banks_intradays,instruments
+where (data_banks_intradays.batch=instruments.batch_id) and (data_banks_intradays.instrument_id=instruments.id)";
+
+        if(count($instrumentsIdArr))
+        {
+            $sql.=" and (instruments.id in (12,18,79))";
+        }
+
+        $data=DB::select(DB::raw($sql));
+
+        return $data;
+
     }
 
     public static function upDownStats()

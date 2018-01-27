@@ -37,5 +37,7 @@
 <script src="{{ URL::asset('metronic/assets/global/plugins/cubeportfolio/js/jquery.cubeportfolio.min.js') }}" type="text/javascript"></script>
 <script src="{{ URL::asset('metronic/assets/pages/scripts/portfolio-3.min.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
-
+$('.scroller').slimScroll({
+  height: '400px'
+})
 </script>

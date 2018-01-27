@@ -100,7 +100,7 @@ class ContestPortfoliosController extends Controller
 
                 $purchase_power = $portfolio->cash_amount * $portfolio->contest->max_amount / 100;
                 $max_shares     = $purchase_power / $buying_price;
-            
+            $max_shares = $max_shares - 1;
             if (request()->has('type') && request()->type == 'sell') {
                 // find saleable qty
                 $saleableQty = 0;

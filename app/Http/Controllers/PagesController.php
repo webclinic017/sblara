@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use App\Repositories\InstrumentRepository;
 use App\Repositories\FundamentalRepository;
 use App\Repositories\DataBanksIntradayRepository;
+use App\Repositories\SectorListRepository;
 use App\Market;
 
 class PagesController extends Controller
@@ -20,6 +21,7 @@ class PagesController extends Controller
 
     public function data()
     {
+
 
         $d = DB::select("select * from `data_banks_eods` where `date` between '2017-05-30' and '2017-05-31' order by `date` desc");
 
@@ -79,13 +81,9 @@ return $d;
     {
 
 
+        dd(SectorListRepository::getSectorPE());
 
-
-        $latestData = DataBanksIntradayRepository::getLatestTradeDataAll();
-        $instrument_arr = $latestData->pluck('instrument_id');
-        $epsData = FundamentalRepository::getAnnualizedEPS($instrument_arr);
-
-        dd($epsData);
+        
 
 
      /*   $epsData = Cache::remember("annualized_eps_all_instruments", 1440, function () use ($instrument_arr) {

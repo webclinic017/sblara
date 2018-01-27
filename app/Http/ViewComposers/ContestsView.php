@@ -23,8 +23,8 @@ class ContestsView
                 ->withCount('approvedContestUsers')
                  ->where('contest_category', 1)
                 ->where('is_active', true)
-                ->orderBy('id', 'desc')->limit(25)->get();
-                dd($contests);
+                ->orderBy('id', 'desc')->paginate(25);
+                // dd($contests);
             $contests->appends(request()->except('page'));
         }else{
             $contests = ContestRepository::index();

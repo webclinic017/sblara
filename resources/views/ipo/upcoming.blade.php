@@ -1,5 +1,6 @@
 @extends('layouts.metronic.default')
 @section('content')
+
 <div class="row">
     <div class="col-md-12">
         <div class="portlet box green">
@@ -17,13 +18,13 @@
             Currently there is no IPO. Please check again later.
             @endif
                 @foreach( $ipos as $ipo )
-                <div class="panel-group accordion" id="ipo-accordion_{{$ipo->id}}">
+                <div class="panel-group accordion show" id="ipo-accordion_{{$ipo->id}}">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h4 class="panel-title">
-                                <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion1" href="#collapse_{{$ipo->id}}" aria-expanded="false"> <span><h3>Company Name</h3></span> <br>
-                                    <span>Subscription Open: <b>September 5, 2017</b> </span>
-                                    <span>Subscription Close: <b>September 5, 2017</b> </span>
+                                <a class="accordion-toggle  @if($loop->first) first-accordion @endif " data-toggle="collapse" data-parent="#accordion1" href="#collapse_{{$ipo->id}}" aria-expanded="true"> <span><h3>{{$ipo->ipo_name}}</h3></span> <br>
+                                    <span>Subscription Open: <b>{{\Carbon\Carbon::parse($ipo->subscription_open)->format('F d, Y')}}</b> </span>
+                                    <span>Subscription Close: <b>{{\Carbon\Carbon::parse($ipo->subscription_close)->format('F d, Y')}}</b> </span>
                                 </a>
                             </h4>
                         </div>
@@ -78,4 +79,9 @@
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function () {
+        $('.first-accordion').trigger('click');
+    });
+</script>
 @endsection

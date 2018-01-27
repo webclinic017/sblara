@@ -492,16 +492,19 @@ class DataBanksEodController extends Controller
         $m = new \FinanceChart($width);
         $m->setData($chartData['timeStamps'], $chartData['highData'], $chartData['lowData'], $chartData['openData'], $chartData['closeData'], $chartData['volData'],$extraPoints);
         $m->setLegendStyle("normal", 8, Transparent, Transparent);
+            
+        $indiArr = explode(",", $Indicators);
+        ChartRepository::addIndicator($m, $indiArr[0], $indicatorHeight);
+        unset($indiArr[0]);
+
         $m->addMainChart($mainHeight);
 
         // $m->addCandleStick(0x33ff33, 0xff3333);
 
         // $m->addVolBars(75, 0x99ff99, 0xff9999, 0x808080);
 
-        $indiArr = explode(",", $Indicators);
-
+            $i = 0;
         foreach ($indiArr as $indi) {
-
             ChartRepository::addIndicator($m, $indi, $indicatorHeight);
 
         }
