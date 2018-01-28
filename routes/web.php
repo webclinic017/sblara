@@ -131,6 +131,9 @@ Route::get('/market-frame', function () {
 Route::get('/market-composition', function () {
         return view('market_composition_page');
     })->name('market-composition');
+Route::get('/sector-pe', function () {
+        return view('sector_pe_page');
+    })->name('sector-pe');
 Route::get('news-chart/{instrument_id?}', 'PagesController@newsChart')->name('news-chart');
 Route::get('minute-chart/{instrument_id?}', 'PagesController@minuteChart')->name('minute-chart')->middleware('httpcache'); //httpcache implemented in PagesController@minuteChart
 Route::get('company-details/{instrument_id?}', 'PagesController@companyDetails')->name('company-details')->middleware('httpcache');

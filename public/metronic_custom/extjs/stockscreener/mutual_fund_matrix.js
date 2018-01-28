@@ -57,7 +57,7 @@ Ext.define('DataObjectMutual', {
         {name: 'sunday_date', type: 'string'},
         {name: 'market_lot', type: 'int'},
         {name: 'outstanding_capital', type: 'float'},
-        {name: 'no_of_securities', type: 'int'},
+        {name: 'total_no_securities', type: 'int'},
         {name: 'share_percentage_director', type: 'float'},
         {name: 'share_percentage_govt', type: 'float'},
         {name: 'share_percentage_institute', type: 'float'},
@@ -413,7 +413,7 @@ Ext.onReady(function () {
             {
 
                 header: 'No of Unit',
-                dataIndex: 'no_of_securities',
+                dataIndex: 'total_no_securities',
                 width: 60,
                 readOnly: true,
                 filter: {

@@ -1,5 +1,5 @@
 <?php
-	$sqlStr="SELECT id,dse_code,no_of_securities,share_percentage_director as sponsor,share_percentage_govt as govt,share_percentage_institute as institute,share_percentage_foreign as fr,share_percentage_public as p_share,outstanding_capital as paid_up,face_value,market_lot,category,last_agm_held,reserve_and_surplus
+	$sqlStr="SELECT id,dse_code,total_no_securities,share_percentage_director as sponsor,share_percentage_govt as govt,share_percentage_institute as institute,share_percentage_foreign as fr,share_percentage_public as p_share,outstanding_capital as paid_up,face_value,market_lot,category,last_agm_held,reserve_and_surplus
 	FROM symbols WHERE inactive='No' AND otc_market='No' AND id!=1 ORDER BY dse_code";
 	$sqlQuery=mysql_query($sqlStr);
 	while($share_info=mysql_fetch_assoc($sqlQuery)){
@@ -93,9 +93,9 @@ color:#FF0000;}
             <th scope="row" abbr="Model" class="<?php echo $class;?>"><?php echo ++$count;?></th>
             <th scope="row" abbr="Model" class="<?php echo $class;?>"><?php echo $key;?></th>
             <td>
-	        <?php if((int)$share["no_of_securities"]!=(int)$dseShareInfo[$key]["total"]){?><span class="mismatch"><?php echo (int)$share["no_of_securities"]-(int)$dseShareInfo[$key]["total"];}?>
-	        <?php echo $share["no_of_securities"];?>/<?php echo $dseShareInfo[$key]["total"];?>
-	        <?php if(($share["no_of_securities"]-$dseShareInfo[$key]["total"])!=0){?></span><?php }?>	</td>
+	        <?php if((int)$share["total_no_securities"]!=(int)$dseShareInfo[$key]["total"]){?><span class="mismatch"><?php echo (int)$share["total_no_securities"]-(int)$dseShareInfo[$key]["total"];}?>
+	        <?php echo $share["total_no_securities"];?>/<?php echo $dseShareInfo[$key]["total"];?>
+	        <?php if(($share["total_no_securities"]-$dseShareInfo[$key]["total"])!=0){?></span><?php }?>	</td>
             <td>
 	        <?php if(($share["sponsor"]-$dseShareInfo[$key]["sponsor"])!=0){?><span class="mismatch"><?php }?>
 	        <?php echo $share["sponsor"];?>/<?php echo $dseShareInfo[$key]["sponsor"];?>

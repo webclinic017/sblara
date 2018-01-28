@@ -86,7 +86,7 @@
             <div class="display">
                 <div class="number">
                     <h3 class="font-green-sharp">
-                        <span >{{$fundaData['agm_date']->first()->meta_value->format('d-m-Y')}}</span>
+                        <span >{{$fundaData['last_agm_held']->first()->meta_value->format('d-m-Y')}}</span>
                         <small class="font-green-sharp"></small>
                     </h3>
                     <small>Last agm held</small>
@@ -103,7 +103,7 @@
                 </div>
                 <div class="status">
                     <div class="status-title"></div>
-                    <div class="status-number">{{$fundaData['agm_date']->first()->meta_value->diffForHumans()}}</span></div>
+                    <div class="status-number">{{$fundaData['last_agm_held']->first()->meta_value->diffForHumans()}}</span></div>
                 </div>
             </div>
         </div>

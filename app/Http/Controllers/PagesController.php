@@ -81,9 +81,10 @@ return $d;
     {
 
 
-        dd(SectorListRepository::getSectorPE());
+        dd(SectorListRepository::getSectorPE([20,16]));
+        //dd(SectorListRepository::getSectorPE());
 
-        
+        //dd('hhhh');
 
 
      /*   $epsData = Cache::remember("annualized_eps_all_instruments", 1440, function () use ($instrument_arr) {

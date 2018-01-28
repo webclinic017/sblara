@@ -221,8 +221,8 @@ class MetasTableSeeder extends Seeder
             array (
                 'id' => 13,
                 'meta_group_id' => 1,
-                'meta_key' => 'no_of_securities',
-                'meta_description' => 'no_of_securities',
+                'meta_key' => 'total_no_securities',
+                'meta_description' => 'total_no_securities',
                 'meta_created' => '2014-07-21 12:22:29',
                 'single' => '',
                 'dual' => '',
@@ -681,7 +681,7 @@ class MetasTableSeeder extends Seeder
             array (
                 'id' => 121,
                 'meta_group_id' => 8,
-                'meta_key' => 'total_no_of_securities',
+                'meta_key' => 'total_no_securities',
                 'meta_description' => NULL,
                 'meta_created' => '2014-12-01 13:09:39',
                 'single' => '',
@@ -1341,7 +1341,7 @@ class MetasTableSeeder extends Seeder
             array (
                 'id' => 253,
                 'meta_group_id' => 18,
-                'meta_key' => 'agm_date',
+                'meta_key' => 'last_agm_held_for_the_year',
                 'meta_description' => NULL,
                 'meta_created' => '2016-07-25 15:00:00',
                 'single' => 'single_year_meta_date',

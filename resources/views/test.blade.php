@@ -12,11 +12,11 @@
         {{--  New block Ends--}}
 
         <div class="row">
-            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <!-- BEGIN Portlet PORTLET-->
                         <div class="portlet light bordered">
                             <div class="portlet-body">
-{{--@include('ads.google_responsive')--}}
+{{--@include('block.sector_pe_details')--}}
                             </div>
                         </div>
                         <!-- END Portlet PORTLET-->
@@ -28,7 +28,7 @@
                         <!-- BEGIN Portlet PORTLET-->
                         <div class="portlet light bordered">
                             <div class="portlet-body">
-@include('ads.google_responsive')
+@include('block.sector_pe')
                             </div>
                         </div>
                         <!-- END Portlet PORTLET-->

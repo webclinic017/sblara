@@ -21,7 +21,7 @@
                 </div>
                 <div class="status">
                     <div class="status-title">based on {{$epsData['text']}}</div>
-                    <div class="status-number">{{$epsData['meta_date']->format('d-m-Y')}}</span></div>
+                    <div class="status-number"><span>{{$epsData['meta_date']->format('d-m-Y')}}</span></div>
                 </div>
             </div>
         </div>
@@ -49,7 +49,7 @@
                 </div>
                 <div class="status">
                     <div class="status-title"> Last updated </div>
-                    <div class="status-number">{{$fundaData['net_asset_val_per_share']->first()->meta_date->format('d-m-Y')}}</span></div>
+                    <div class="status-number"><span>{{$fundaData['net_asset_val_per_share']->first()->meta_date->format('d-m-Y')}}</span></div>
                 </div>
             </div>
         </div>
@@ -76,7 +76,7 @@
                 </div>
                 <div class="status">
                     <div class="status-title"> Last updated </div>
-                    <div class="status-number">{{$fundaData['paid_up_capital']->first()->meta_date->format('d-m-Y')}}</span></div>
+                    <div class="status-number"><span>{{$fundaData['paid_up_capital']->first()->meta_date->format('d-m-Y')}}</span></div>
                 </div>
             </div>
         </div>
@@ -86,7 +86,7 @@
             <div class="display">
                 <div class="number">
                     <h3 class="font-green-sharp">
-                        <span >{{$fundaData['agm_date']->first()->meta_value->format('d-m-Y')}}</span>
+                        <span >{{$fundaData['last_agm_held']->first()->meta_value->format('d-m-Y')}}</span>
                         <small class="font-green-sharp"></small>
                     </h3>
                     <small>Last agm held</small>
@@ -103,7 +103,7 @@
                 </div>
                 <div class="status">
                     <div class="status-title"></div>
-                    <div class="status-number">{{$fundaData['agm_date']->first()->meta_value->diffForHumans()}}</span></div>
+                    <div class="status-number"><span>{{$fundaData['last_agm_held']->first()->meta_value->diffForHumans()}}</span></div>
                 </div>
             </div>
         </div>

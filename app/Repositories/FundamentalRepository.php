@@ -14,9 +14,9 @@ use App\Repositories\SectorListRepository;
 class FundamentalRepository {
     /*
      * Sample call
-     * dump(FundamentalRepository::getFundamentalData(array('stock_dividend','no_of_securities'),array('ABBANK','ACI'))->toArray());
+     * dump(FundamentalRepository::getFundamentalData(array('stock_dividend','total_no_securities'),array('ABBANK','ACI'))->toArray());
         dump(FundamentalRepository::getFundamentalData(array(13,211),array('ABBANK','ACI'))->toArray());
-        dump(FundamentalRepository::getFundamentalData(array('stock_dividend','no_of_securities'),array(12,13))->toArray());
+        dump(FundamentalRepository::getFundamentalData(array('stock_dividend','total_no_securities'),array(12,13))->toArray());
         dd(FundamentalRepository::getFundamentalData(array(13,211),array(12,13))->toArray());
      *
      * sample return
@@ -32,7 +32,7 @@ class FundamentalRepository {
     "meta_key" => "stock_dividend"
     "instrument_code" => "ABBANK"
   ]
-  "no_of_securities" => array:9 [▼
+  "total_no_securities" => array:9 [▼
     "id" => 3389
     "instrument_id" => 13
     "meta_id" => 13
@@ -40,7 +40,7 @@ class FundamentalRepository {
     "meta_date" => Carbon {#893 ▶}
     "created" => "2014-10-29 11:38:31"
     "updated" => "2014-10-29 11:38:31"
-    "meta_key" => "no_of_securities"
+    "meta_key" => "total_no_securities"
     "instrument_code" => "ACI"
   ]
 ]

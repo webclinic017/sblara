@@ -127,6 +127,7 @@ class Instrument extends Model
             $returnData = static::whereHas('sector_list', function($q) use($exchangeId) {
                 $q->where('exchange_id', $exchangeId);
                 $q->where('name', 'not like', "Index");
+                $q->where('name', 'not like', "custom_index");
                 $q->where('name', 'not like', "Debenture");
                 $q->where('name', 'not like', "Treasury Bond");
             })->where('active','1')->orderBy('instrument_code', 'asc')->get();

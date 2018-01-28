@@ -31,14 +31,14 @@ class FundamentalSummary
             $instrument_id=$viewdata['instrument_id'];
         }
 
-        $metaKey=array("net_asset_val_per_share","paid_up_capital","agm_date");
+        $metaKey=array("net_asset_val_per_share","paid_up_capital","last_agm_held");
         $epsData=FundamentalRepository::getAnnualizedEPS(array($instrument_id));
         $fundaData=FundamentalRepository::getFundamentalData($metaKey,array($instrument_id));
 
         $epsData=$epsData[$instrument_id];
         $fundaData=r_collect($fundaData);
 
-        $fundaData['agm_date']->first()->meta_value=Carbon::parse($fundaData['agm_date']->first()->meta_value);
+        $fundaData['last_agm_held']->first()->meta_value=Carbon::parse($fundaData['last_agm_held']->first()->meta_value);
 
         $view->with('epsData', $epsData)
             ->with('fundaData',$fundaData);

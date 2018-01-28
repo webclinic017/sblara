@@ -29,6 +29,8 @@ class AppServiceProvider extends ServiceProvider {
         View::composer('block.sector_gainer_loser', 'App\Http\ViewComposers\SectorGainerLoser');
         View::composer('block.sector_gainer_loser_last_minute', 'App\Http\ViewComposers\SectorGainerLoserLastMinute');
 
+        View::composer('block.sector_pe', 'App\Http\ViewComposers\SectorPE');
+        View::composer('block.sector_pe_details', 'App\Http\ViewComposers\SectorPeDetails');
         View::composer('block.sector_minute_chart', 'App\Http\ViewComposers\SectorMinuteChart');
         View::composer('block.news_chart', 'App\Http\ViewComposers\NewsChart');
         View::composer('block.recent_corporate_actions', 'App\Http\ViewComposers\CorporateActionChart');

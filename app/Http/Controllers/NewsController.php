@@ -175,7 +175,7 @@ class NewsController extends Controller
         $metaKey = array();
         $metaKey[] = 'category';
         $metaKey[] = 'market_lot';
-        $metaKey[] = 'no_of_securities';
+        $metaKey[] = 'total_no_securities';
         $metaKey[] = 'net_asset_val_per_share';
         $metaKey[] = 'year_end';
         $metaKey[] = 'share_percentage_public';
@@ -188,7 +188,7 @@ class NewsController extends Controller
         $publicText='';
         if(isset($fundamentalDataOrganized['share_percentage_public']['meta_value'])) {
             $publicText = $fundamentalDataOrganized['share_percentage_public']['meta_value'] . '%';
-            $share_percentage_public = ($fundamentalDataOrganized['no_of_securities']['meta_value'] * $fundamentalDataOrganized['share_percentage_public']['meta_value']) / 100;
+            $share_percentage_public = ($fundamentalDataOrganized['total_no_securities']['meta_value'] * $fundamentalDataOrganized['share_percentage_public']['meta_value']) / 100;
         }
 
         $topText =$instrumentInfo->name;
@@ -205,8 +205,8 @@ class NewsController extends Controller
         $topText .= '<*font=arial.ttf,size=9*> NAV:- ' . $fundamentalDataOrganized['net_asset_value_per_share']['meta_value'] . ',';
 
         $no_of_securities=0;
-        if(isset($fundamentalDataOrganized['no_of_securities']['meta_value']))
-            $no_of_securities=$fundamentalDataOrganized['no_of_securities']['meta_value'];
+        if(isset($fundamentalDataOrganized['total_no_securities']['meta_value']))
+            $no_of_securities=$fundamentalDataOrganized['total_no_securities']['meta_value'];
 
 
         $chartData['timeStamps']=$timeStamps;
@@ -258,7 +258,7 @@ class NewsController extends Controller
 
 
         $m->addPlotAreaTitle(BottomLeft, sprintf("<*font=arial.ttf,size=8*>%s - Open: %s High: %s Low: %s Close: %s Volume: %s   NOS: %s Public( %s ): %s", $lastday, $open,$high,$low,$close,$volume,$no_of_securities,$publicText,$share_percentage_public));
-        //$m->addPlotAreaTitle(BottomLeft, sprintf("<*font=arial.ttf,size=8*>%s - Open: %s High: %s Low: %s Close: %s Volume: %s   NOS: %s Public( %s ): %s", $chartData['lastday'], $chartData['open'],$chartData['high'],$chartData['low'],$chartData['close'],$chartData['volume'],$chartData['fundamentalDataOrganized']['no_of_securities']['meta_value'],$chartData['publicText'],$chartData['share_percentage_public']));
+        //$m->addPlotAreaTitle(BottomLeft, sprintf("<*font=arial.ttf,size=8*>%s - Open: %s High: %s Low: %s Close: %s Volume: %s   NOS: %s Public( %s ): %s", $chartData['lastday'], $chartData['open'],$chartData['high'],$chartData['low'],$chartData['close'],$chartData['volume'],$chartData['fundamentalDataOrganized']['total_no_securities']['meta_value'],$chartData['publicText'],$chartData['share_percentage_public']));
 
         ChartRepository::addMovingAvg($m, $mov1, $avgPeriod1, 0x663300);
 
@@ -404,7 +404,7 @@ class NewsController extends Controller
             $metaKey = array();
             $metaKey[] = 'category';
             $metaKey[] = 'market_lot';
-            $metaKey[] = 'no_of_securities';
+            $metaKey[] = 'total_no_securities';
             $metaKey[] = 'net_asset_value_per_share';
             $metaKey[] = 'year_end';
             $metaKey[] = 'share_percentage_public';
@@ -421,7 +421,7 @@ class NewsController extends Controller
             $topText .= '<*font=arial.ttf,size=9*> YearEnd:- ' . $fundamentalDataOrganized['year_end']['meta_value'] . ',';
             $topText .= '<*font=arial.ttf,size=9*> NAV:- ' . $fundamentalDataOrganized['net_asset_val_per_share']['meta_value'] . ',';
 
-            $share_percentage_public = ($fundamentalDataOrganized['no_of_securities']['meta_value'] * $fundamentalDataOrganized['share_percentage_public']['meta_value']) / 100;
+            $share_percentage_public = ($fundamentalDataOrganized['total_no_securities']['meta_value'] * $fundamentalDataOrganized['share_percentage_public']['meta_value']) / 100;
 
 
             $chartData['timeStamps']=$timeStamps;
@@ -474,7 +474,7 @@ class NewsController extends Controller
         }
 
 
-        $m->addPlotAreaTitle(BottomLeft, sprintf("<*font=arial.ttf,size=8*>%s - Open: %s High: %s Low: %s Close: %s Volume: %s   NOS: %s Public( %s ): %s", $chartData['lastday'], $chartData['open'],$chartData['high'],$chartData['low'],$chartData['close'],$chartData['volume'],$chartData['fundamentalDataOrganized']['no_of_securities']['meta_value'],$chartData['publicText'],$chartData['share_percentage_public']));
+        $m->addPlotAreaTitle(BottomLeft, sprintf("<*font=arial.ttf,size=8*>%s - Open: %s High: %s Low: %s Close: %s Volume: %s   NOS: %s Public( %s ): %s", $chartData['lastday'], $chartData['open'],$chartData['high'],$chartData['low'],$chartData['close'],$chartData['volume'],$chartData['fundamentalDataOrganized']['total_no_securities']['meta_value'],$chartData['publicText'],$chartData['share_percentage_public']));
 
         ChartRepository::addMovingAvg($m, $mov1, $avgPeriod1, 0x663300);
 

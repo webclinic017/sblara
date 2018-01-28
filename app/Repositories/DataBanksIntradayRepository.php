@@ -33,7 +33,7 @@ class DataBanksIntradayRepository {
     }
 
     /*
-     * It will return tradedata for all shares even it was not traded today
+     * It will return trade data for all shares even it was not traded today
      * */
 
     public static function getAvailableLTP($instrumentsIdArr=array())  {
@@ -44,7 +44,8 @@ where (data_banks_intradays.batch=instruments.batch_id) and (data_banks_intraday
 
         if(count($instrumentsIdArr))
         {
-            $sql.=" and (instruments.id in (12,18,79))";
+            $str = implode (", ", $instrumentsIdArr);
+            $sql.=" and (instruments.id in ($str))";
         }
 
         $data=DB::select(DB::raw($sql));
