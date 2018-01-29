@@ -38,7 +38,7 @@ class DataBanksIntradayRepository {
 
     public static function getAvailableLTP($instrumentsIdArr=array())  {
 
-        $sql="SELECT data_banks_intradays.*
+        $sql="SELECT data_banks_intradays.*,instruments.instrument_code,instruments.sector_list_id
 FROM data_banks_intradays,instruments
 where (data_banks_intradays.batch=instruments.batch_id) and (data_banks_intradays.instrument_id=instruments.id)";
 

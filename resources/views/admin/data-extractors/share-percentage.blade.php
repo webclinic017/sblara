@@ -41,15 +41,21 @@
                             <td @if($instrument->paid_up_capital != $instrument->paid_up)style="color:red" @endif >{{$instrument->paid_up_capital}}||{{$instrument->paid_up}}</td>
                             <td @if($instrument->authorized_capital != $instrument->authorized)style="color:red" @endif >{{$instrument->authorized_capital}}||{{$instrument->authorized}}</td>
                             @php
-                            if(strlen($instrument->last_agm_held_for_the_year) > 5)
+                            if(isset($instrument->last_agm_held)):
+                                $instrument->last_agm_held = str_replace('/', '-', $instrument->last_agm_held);
+                            if(strlen($instrument->last_agm_held) > 5)
                             {
-                                $date = \Carbon\Carbon::parse($instrument->last_agm_held_for_the_year)->format('d/m/Y');
+                                $date = \Carbon\Carbon::parse($instrument->last_agm_held)->format('d/m/Y');
                             }else{
-                                $date = $instrument->last_agm_held_for_the_year;
+                                $date = $instrument->last_agm_held;
 
                             }
+                        else:
+                            $date = 'N/A';
+                            $instrument->last_agm_held = null;
+                            endif;
                             @endphp
-                            <td @if($date != $instrument->last_agm)style="color:red" @endif >@if($instrument->last_agm_held_for_the_year == null) @else {{$date}}@endif||{{$instrument->last_agm}}</td>
+                            <td @if($date != $instrument->last_agm)style="color:red" @endif >@if($instrument->last_agm_held == null) @else {{$date}}@endif||{{$instrument->last_agm}}</td>
                             <td @if($instrument->reserve_and_surp != $instrument->rserve_surplus)style="color:red" @endif >{{$instrument->reserve_and_surp}}||{{$instrument->rserve_surplus}}</td>
                         </tr>
                     @endforeach

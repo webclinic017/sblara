@@ -68,6 +68,7 @@ class AppServiceProvider extends ServiceProvider {
         View::composer('block.significant_movement_trade', 'App\Http\ViewComposers\SignificantMovementTrade');
         View::composer('block.top_by_price_change', 'App\Http\ViewComposers\TopByPriceChange');
         View::composer('block.top_by_price_change_per', 'App\Http\ViewComposers\TopByPriceChangePer');
+        View::composer('block.company_list_table', 'App\Http\ViewComposers\CompanyListTable');
 
         View::composer('block.advance_chart', 'App\Http\ViewComposers\AdvanceChart');
         View::composer('block.monitor_chart', 'App\Http\ViewComposers\MonitorChart');

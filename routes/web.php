@@ -116,9 +116,10 @@ Route::get('/', 'PagesController@dashboard')->name('home')->middleware('httpcach
 Route::get('/home', function () {
     return redirect('/');
 });
-Route::get('/company-list', function () {
+
+Route::get('/dse-price-list', function () {
         return view('company_list_page');
-    })->name('company-list');
+    })->name('dse-price-list');
 
 Route::get('/market-depth', function () {
         return view('market_depth_page');

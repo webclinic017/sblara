@@ -1,10 +1,6 @@
-@if(isset($_GET['dev']))
-@push('css')
 <link href="{{ URL::asset('metronic/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css') }}" rel="stylesheet" type="text/css" />
-@endpush
-
 <div class="row">
-<div class="col-md-12">
+<div class="col-md-12" style="z-index: 99">
 	<div class="form-group">
         <div class="input-group select2-bootstrap-prepend " style="max-width: 300px">
             <span class="input-group-btn">
@@ -19,7 +15,7 @@
 
 
 {{--  --}}
-<div class="col-md-12 global-panel" style="background: #fff; margin-top: -15px; display: none; padding-top: 10px ">
+<div class="col-md-12 global-panel" style=" margin-top: -15px; display: none; padding-top: 10px ">
 {{--  --}}
 
 <style>
@@ -27,7 +23,7 @@
         color:#000 !important;
     }
 </style>
-<div class="row widget-row">
+<div class="row widget-row" style=" margin-top: -48px;display: inline-block; width: 100%">
 <div class="col-md-12 margin-bottom-20">
     <!-- BEGIN WIDGET TAB -->
     <div class=" ta-chart-tabs tabbable-custom ">
@@ -75,7 +71,7 @@
                 <form action="index.html" class="form-horizontal ">
                     <div class="form-body" >
 
-                        <div class="form-group " style="background: #f5f5f5; padding-top: 10px; display: inline-block; margin-right: 10px;">
+                        <div class="form-group " style="background: #f5f5f5; padding-top: 10px; display: inline-block; margin-right: 0px; margin-left: 0">
 							<div class="col-md-9">
                             <div class="col-md-3">
                                 <div class="margin-bottom-10">
@@ -121,6 +117,7 @@
                                     </select>
 
                                 </div>
+
                             </div>     
                        
 
@@ -373,20 +370,11 @@ function traceFinance(viewer, mouseX)
 </script>
 {{--  --}}
             <div id="chartContainer" class="chartcontent thumbnail">
-<input type="hidden" id="chart_id" value="">
+				<input type="hidden" id="chart_id" value="">
 
 
                 </div>
 
- <div class="row">
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <div class="portlet light bordered">
-                <div class="portlet-body">
-                   @include('ads.google_responsive')
-                </div>
-            </div>
-        </div>
-    </div>
 
             </div>
             <div class="tab-pane fade" id="tab_1_2">
@@ -560,9 +548,15 @@ function traceFinance(viewer, mouseX)
         </div>
     </div>
     <!-- END WIDGET TAB -->
+
 </div>
-
-
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="portlet light bordered">
+                <div class="portlet-body">
+                   @include('ads.google_responsive')
+                </div>
+            </div>
+        </div>
 </div>
 
 
@@ -570,6 +564,8 @@ function traceFinance(viewer, mouseX)
 {{--  --}}
 </div>
 {{--  --}}
+
+
 	
 </div>
 
@@ -625,7 +621,7 @@ function traceFinance(viewer, mouseX)
     viewer.attachHandler(["MouseMovePlotArea", "TouchStartPlotArea", "TouchMovePlotArea", "ChartMove", "Now"],
     function(e) {
         this.preventDefault(e);   // Prevent the browser from using touch events for other actions
-            if($('#tab_1_1').hasClass('active'))
+            if($('#tab_1_1').hasClass('active') && $('.toggle-button').attr('data-state') == 'open')
             {
                 traceFinance(viewer, viewer.getPlotAreaMouseX());
 
@@ -745,7 +741,6 @@ maxboostedstep: 10000000
 
 
     });
-
 function loadFundamental(e) {
 		$("div[id^='ta_chart_']").remove();
 		url = e.data('url');
@@ -761,11 +756,17 @@ function loadFundamental(e) {
 }
 
 	$(document).ready(function () {
-		$('.instrument-select').change(function () {
+		$('.instrument-select, #sharelist').change(function () {
+			if($(this).val() == null)
+			{
+				return;
+			}
 			if($('.toggle-button').data('state') != 'open')
 			{
 			$('.toggle-button').attr('data-state', 'open');
-				$('.global-panel').slideDown();
+				$('.global-panel').show();
+				$('.toggle-button').html("<i class='fa fa-close'></i> Close");
+
 			}
 			var e = $('.ta-chart-tabs li[class="active"] a');
 			var url = e.data('url');
@@ -778,22 +779,37 @@ function loadFundamental(e) {
 			}
 		});
 
+		$('.ta-chart-tabs li[class="active"] a[data-url="#"]').click(function () {	
+			var target = $(this).attr('href');
+			$('.chartcontent').html(loadingDiv);
+			loadChart($(this));
+		});
+
 		$('.toggle-button').click(function () {
-			$('.select2-container').trigger('click');
-			if($(this).data('state') == 'open')
+			if($('.toggle-button').attr('data-state') == 'open')
 			{
-				$(this).html("<i class='fa fa-close'></i> Close");
+			$("div[id^='ta_chart_']").remove();
+				$('.global-panel').hide();
+				$(this).html("<i class='fa fa-line-chart'></i> Chart");
 				$(this).attr('data-state', 'close');
 				
-			}else{
+			$('#shareList').val('');
+			$('#shareList').trigger('change');
 				
-				$(this).html("<i class='fa fa-line-chart'></i> Chart");
-				$(this).attr('data-state', 'open');
+			}else{
+			$('#shareList').select2('open');
 				
 			}
 
 		});
+
+		$('#adj, #configure, #charttype, #overlay, #Indicators, #mov1, #mov2, #touchspin_demo1, #touchspin_demo2, #dashboard-report-range').change(function () {
+			loadChart($(this));
+		});
 	})
+
+		$('#dashboard-report-range').on('hide.daterangepicker', function () {
+			loadChart($(this));
+		});
 </script>
 @endpush
-@endif

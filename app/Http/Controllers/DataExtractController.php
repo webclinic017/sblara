@@ -24,11 +24,11 @@ class DataExtractController extends Controller
 				max(case when meta_key = 'net_asset_val_per_share' then meta_value end) net_asset_val_per_share  ,
 				max(case when meta_key = 'paid_up_capital' then meta_value end) paid_up_capital,
 				max(case when meta_key = 'authorized_capital' then meta_value end) authorized_capital  ,
-				max(case when meta_key = 'last_agm_held_for_the_year' then meta_value end) last_agm_held_for_the_year,  
+				max(case when meta_key = 'last_agm_held' then meta_value end) last_agm_held,
 				max(case when meta_key = 'reserve_and_surp' then meta_value end) reserve_and_surp 
 				from
 				 (SELECT meta_key, meta_id, meta_value, instrument_id FROM `fundamentals`   
-				left join metas on metas.id = fundamentals.meta_id where  meta_key in ('total_no_securities', 'share_percentage_director', 'share_percentage_director', 'share_percentage_govt', 'share_percentage_institute', 'share_percentage_foreign', 'share_percentage_public', 'net_asset_val_per_share', 'paid_up_capital', 'authorized_capital', 'last_agm_held_for_the_year', 'reserve_and_surp')
+				left join metas on metas.id = fundamentals.meta_id where  meta_key in ('total_no_securities', 'share_percentage_director', 'share_percentage_director', 'share_percentage_govt', 'share_percentage_institute', 'share_percentage_foreign', 'share_percentage_public', 'net_asset_val_per_share', 'paid_up_capital', 'authorized_capital', 'last_agm_held', 'reserve_and_surp')
 				and is_latest = '1' ) funda
 				
 				group by funda.instrument_id) fundamental
@@ -100,12 +100,12 @@ class DataExtractController extends Controller
                     /*********************/
 
 
-                    if(strlen($instrument->last_agm_held_for_the_year) > 5 )
+                    if(strlen($instrument->last_agm_held) > 5 )
                     {
-                        $date = \Carbon\Carbon::parse($instrument->last_agm_held_for_the_year)->format('d/m/Y');
+                        $date = \Carbon\Carbon::parse($instrument->last_agm_held)->format('d/m/Y');
                     }else{
 
-                        $date = $instrument->last_agm_held_for_the_year;
+                        $date = $instrument->last_agm_held;
                     }   
 
 
@@ -122,7 +122,7 @@ class DataExtractController extends Controller
                             $date = $instrument->last_agm;
                         }
 
-                        FundamentalRepository::store($instrument->instrument_id, 'last_agm_held_for_the_year', $date );
+                        FundamentalRepository::store($instrument->instrument_id, 'last_agm_held', $date );
 
                     }
                     /*********************/            

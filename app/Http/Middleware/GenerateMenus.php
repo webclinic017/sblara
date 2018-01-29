@@ -30,6 +30,7 @@ class GenerateMenus
             $menu->news->link->href('javascript:;');
             $menu->news->add('News from newspaper', ['route' => 'collective-news'])->prepend('<i class="icon-bar-chart" ></i > ');
             $menu->home->add('News Search', ['route' => 'news-search'])->prepend('<i class="fa fa-search" ></i > ');
+            $menu->home->add('Price List', ['route' => 'dse-price-list'])->prepend('<i class="fa fa-search" ></i > ');
               $menu->home->add('Company Details', ['route' => 'company-details'])->prepend('<i class="fa fa-dollar" ></i > ')->active('company-details/*');
             $menu->home->add('Fundamental Details', ['route' => 'fundamental-details'])->prepend('<i class="fa fa-paperclip" ></i > ')->active('fundamental-details/*');
             $menu->home->add('Data Matrix', ['route' => 'data-matrix'])->prepend('<i class="fa fa-paperclip" ></i > ');

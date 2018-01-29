@@ -259,13 +259,16 @@ class DataBanksEodController extends Controller
         $m = new \FinanceChart($width);
         $m->setData($chartData['timeStamps'], $chartData['highData'], $chartData['lowData'], $chartData['openData'], $chartData['closeData'], $chartData['volData'],$extraPoints);
         $m->setLegendStyle("normal", 8, Transparent, Transparent);
+
+                $indiArr = explode(",", $Indicators);
+        ChartRepository::addIndicator($m, $indiArr[0], $indicatorHeight);
+        unset($indiArr[0]);
         $m->addMainChart($mainHeight);
 
         // $m->addCandleStick(0x33ff33, 0xff3333);
 
         // $m->addVolBars(75, 0x99ff99, 0xff9999, 0x808080);
 
-        $indiArr = explode(",", $Indicators);
 
         foreach ($indiArr as $indi) {
 
@@ -559,7 +562,7 @@ class DataBanksEodController extends Controller
         // $imageMap = $m->getHTMLImageMap("", "", "title='".$m->getToolTipDateFormat()." {value|G}'");
 
 
-        return View::make("ta_chart/panel")->with('viewer',$viewer)->with('instrumentInfo',$instrumentInfo);
+        return View::make("ta_chart/panel")->with('viewer',$viewer);
 
 
 
@@ -637,6 +640,7 @@ class DataBanksEodController extends Controller
         $c->setData($timeStamps, $highData, $lowData, $openData, $closeData, $volData, $extraDays);
         $c->setLegendStyle("normal", 8, Transparent, Transparent);
 # Add the main chart with 240 pixels in height
+
         $c->addMainChart(240);
 
 # Add candlestick symbols to the main chart, using green/red for up/down days

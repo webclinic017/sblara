@@ -46,11 +46,12 @@
               </div>
               <div class="form-group">
                 <label for="batch_name">Batch:</label>
-                <select id="batch_name" name="batch_name" class="bs-select form-control select-filter" data-live-search="true">
+                <input type="text" class="form-control" name="batch_name" value="{{old('batch_name')}}">
+{{--                 <select id="batch_name" name="batch_name" class="bs-select form-control select-filter" data-live-search="true">
           				@foreach($batches as $batch)
           					<option value="{{$batch->batch_name}}" @if (old('batch_name') == $batch->batch_name) selected="selected" @endif>{{$batch->batch_name}}</option>
           				@endforeach
-          			</select>
+          			</select> --}}
               </div>
               <!--  -->
               <div class="form-group">

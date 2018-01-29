@@ -18,7 +18,7 @@ class newspaperNewsController extends Controller {
     }
     
     public function collectiveNews(){
-        $news = NewspaperNews::all();
+        $news = NewspaperNews::orderBy('created_at', 'desc')->paginate(10);
         return view('newspaper_news.index', ['news' => $news]);
     }
 

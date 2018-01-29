@@ -18,8 +18,8 @@
              <link href="{{ URL::asset('metronic_custom/custom.css') }}" rel="stylesheet" type="text/css" />
             <link href="{{ URL::asset('css/se.css') }}" rel="stylesheet" type="text/css" />
             <link rel="shortcut icon" type="image/png" href="/favicon.ico" />
-            @stack('css')
 
+            @stack('css')
             <script>
                     window.Laravel = {!! json_encode([
                         'csrfToken' => csrf_token(),

@@ -1,14 +1,13 @@
-@section('meta-title','List of all companies of Dhaka Stock Exchange')
-@section('meta-description', 'DSE listed companies ')
+@section('meta-title','Price Of All Companies Listed At Dhaka Stock Exchange')
+@section('meta-description', 'A goto page for DSE listed companies. You can see price in a simple table with search and sorting features ')
 
 @extends('layouts.metronic.default')
-
 @section('page_heading')
 All Companies
 @endsection
 
 @section('content')
-
+{{--@include('block.company_list')--}}
     <div class="row">
 
         <div class="col-md-12">
@@ -22,7 +21,7 @@ All Companies
                         <span class="caption-helper">List</span>
                     </div>
                     <div class="tools">
-<a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.company_list" class="reload"></a>
+    <a href="#" data-load="false" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.company_list_table" class="reload"></a>
                         <a href="" class="collapse">
                         </a>
 
@@ -33,6 +32,7 @@ All Companies
 
                 </div>
                 <div class="portlet-body">
+@include('block.company_list_table')
 
                 </div>
             </div>
@@ -42,17 +42,48 @@ All Companies
 
     </div>
 
+
 @endsection
 
-{{--
+
 @push('scripts')
 
-<script type="text/javascript">
-   $( "#instruments" ).change(function() {
-      var insId = $("#instruments").selectpicker("val");
-      var url = "{{ url('/fundamental-details/') }}/"+insId;
-      window.location = url;
-    });
+<script src="{{ asset('metronic_custom/datatable/jquery.dataTables.min.js') }}"></script>
 
-</script>
-@endpush--}}
+@endpush
+
+
+
+@push('css')
+
+{{--
+<style>
+.color-down .irs-bar,
+.color-down .irs-bar-edge {
+    background: red;
+}
+
+.color-up .irs-bar,
+.color-up .irs-bar-edge {
+    background: green;
+}
+</style>
+--}}
+
+<link href="{{ URL::asset('metronic/assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ URL::asset('metronic/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
+{{--<link href="{{ URL::asset('metronic/assets/global/plugins/ion.rangeslider/css/ion.rangeSlider.css') }}" rel="stylesheet" type="text/css" />--}}
+{{--<link href="{{ URL::asset('metronic/assets/global/plugins/ion.rangeslider/css/ion.rangeSlider.skinFlat.css') }}" rel="stylesheet" type="text/css" />--}}
+{{--<link href="{{ URL::asset('metronic/assets/global/plugins/ion.rangeslider/css/ion.rangeSlider.skinNice.css') }}" rel="stylesheet" type="text/css" />--}}
+{{--<link href="{{ URL::asset('metronic/assets/global/plugins/ion.rangeslider/css/ion.rangeSlider.skinModern.css') }}" rel="stylesheet" type="text/css" />--}}
+@endpush
+
+@push('scripts')
+{{--
+<script src="{{ URL::asset('metronic/assets/global/plugins/ion.rangeslider/js/ion.rangeSlider.min.js') }}"></script>
+<script src="{{ URL::asset('metronic/assets/pages/scripts/components-ion-sliders.min.js') }}"></script>
+--}}
+
+@endpush
+
+

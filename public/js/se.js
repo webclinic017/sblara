@@ -414,9 +414,15 @@ $('.ta-chart-tabs [data-toggle="tab"]').on('click', function (e) {
 	 {
 	 	instrument = 12;
 	 }
-	if($(this).attr('aria-expanded'))
+
+	if($(this).attr('aria-expanded') == true && url != '#' )
 	{
 		return;
+	}else{
+		if(url == '#')
+		{
+			return;
+		}
 	}
 $("div[id^='ta_chart_']").remove();
 

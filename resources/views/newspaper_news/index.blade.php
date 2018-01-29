@@ -11,6 +11,9 @@
             <span class="caption-subject font-green-sharp sbold">News Details</span>
         </div>
     </div>
+    @php
+    $nws = $news; 
+    @endphp
     @foreach($news as $news)
     <div class="portlet box green">
         <div class="portlet-title">
@@ -35,6 +38,7 @@
         </div>
     </div>
     @endforeach
+    {{$nws->links()}}
 </div>
 
 
