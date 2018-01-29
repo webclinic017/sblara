@@ -194,7 +194,12 @@ class DataBanksEodController extends Controller
         if (isset($epsData['annualized_eps'])) {
             $annualized_eps = $epsData['annualized_eps'];
             $eps_text = $epsData['text'];
-            $eps_date = $epsData['meta_date']->format('d-m-Y');
+            if(strlen($epsData['meta_date']) > 5)
+            {
+                $eps_date = $epsData['meta_date']->format('d-m-Y');
+            }else{
+                $eps_date = 'N/A';
+            }
 
         }
 
@@ -554,7 +559,7 @@ class DataBanksEodController extends Controller
         // $imageMap = $m->getHTMLImageMap("", "", "title='".$m->getToolTipDateFormat()." {value|G}'");
 
 
-        return View::make("ta_chart/panel")->with('viewer',$viewer);
+        return View::make("ta_chart/panel")->with('viewer',$viewer)->with('instrumentInfo',$instrumentInfo);
 
 
 

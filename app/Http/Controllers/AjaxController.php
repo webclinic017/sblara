@@ -256,7 +256,7 @@ class AjaxController extends Controller
 
         $from_date=date("Y-m-d", strtotime("-3 month"));
         $to_date=date("Y-m-d");
-        $instrumentList=InstrumentRepository::getInstrumentsScripOnly();
+        $instrumentList=InstrumentRepository::getInstrumentsScripWithIndex();
         $sectorList=SectorListRepository::getSectorList();
 
         $eodData=DataBankEodRepository::getPriceChangeHistory($from_date,$to_date,array(1,2,3,7,15,21,30),array(),array('close','high'));

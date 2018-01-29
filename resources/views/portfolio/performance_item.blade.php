@@ -14,7 +14,7 @@
             ({{$transaction['buying_date_of_this_instrument']}})
                 {{$transaction['total_shares_of_this_instrument']}} @ TK{{$transaction['avg_buy_cost_of_this_instrument']}}
             @else
-            {{$transaction['instrument_code'] or 'N/A'}}
+            <a target="_blank" href="{{url('/ta-chart?instrumentCode='.$transaction['instrument_code'])}}">{{$transaction['instrument_code'] or 'N/A'}}</a>
             @endif
     
         </td>

@@ -1,3 +1,6 @@
+@section('meta-title', $instrument_name . ' Minute Chart With Bull/Bear Pressure')
+@section('meta-description', 'Watch each movement of '. $instrument_code.'. You can see whether buyers are strong or seller. Last 5 days bull and bear volume history ')
+
 @extends('layouts.metronic.default')
 
 @section('content')

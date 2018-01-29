@@ -1,4 +1,7 @@
-<select id='{{$bs_select_id}}' class="bs-select form-control" data-live-search="true" title="Select share">
+<select id='{{$bs_select_id}}' class="{{isset($class)?$class:'bs-select'}} form-control" data-live-search="true" title="Select share">
+		@if(isset($prepend))
+		<option >Select Share</option>
+		@endif
         @foreach($instrumentList as $instrument)
             {{--<option value="AL">Alabama</option>--}}
             <option value="{{$instrument->id}}" >{{$instrument->instrument_code}} </option>

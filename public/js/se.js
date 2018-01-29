@@ -406,6 +406,7 @@ $('body').on('click',  '.confirmSell', function () {
 	$('.select2').select2();
 
 	//ta-chart tabs
+
 $('.ta-chart-tabs [data-toggle="tab"]').on('click', function (e) {
 	var url = $(this).data('url');
 	 instrument = $('#shareList').val();
@@ -413,7 +414,7 @@ $('.ta-chart-tabs [data-toggle="tab"]').on('click', function (e) {
 	 {
 	 	instrument = 12;
 	 }
-	if(url == '#')
+	if($(this).attr('aria-expanded'))
 	{
 		return;
 	}

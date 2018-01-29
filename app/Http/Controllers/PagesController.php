@@ -201,7 +201,12 @@ dd($eq_arr);
     {
 
         // cache is working separately for every share. That means minute chart page of 300 share will create 300 cache
-        return response()->view('minute_chart_page', ['instrument_id' => (int)$instrument_id])->setTtl(60);
+        $instrument_id=(int)$instrument_id;
+        $instrument_info=InstrumentRepository::getInstrumentsById([$instrument_id])->keyBy('id');
+        $instrument_name=ucwords(strtolower($instrument_info[$instrument_id]->name));
+        $instrument_code=$instrument_info[$instrument_id]->instrument_code;
+
+        return response()->view('minute_chart_page', ['instrument_id' => (int)$instrument_id,'instrument_name'=>$instrument_name,'instrument_code'=>$instrument_code])->setTtl(60);
         //return View::make("minute_chart_page")->with('instrument_id',(int)$instrument_id);
 
     }

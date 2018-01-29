@@ -59,6 +59,7 @@ class GenerateMenus
             $menu->sector->attr(['class' => 'dropdown dropdown-fw  '])->prepend('<i class="icon-link" ></i > ');
 
             $menu->sector->add('Sector P/E', ['route' => 'sector-pe'])->prepend('<i class="fa fa-tv" ></i > ');
+            $menu->sector->add('Category P/E', ['route' => 'category-pe'])->prepend('<i class="fa fa-tv" ></i > ');
             $menu->sector->add('Market Frame', ['route' => 'market-frame'])->prepend('<i class="fa fa-tv" ></i > ');
             $menu->sector->add('Market Composition', ['route' => 'market-composition'])->prepend('<i class="fa fa-pie-chart" ></i > ');
 

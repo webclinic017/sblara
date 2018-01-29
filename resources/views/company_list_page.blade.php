@@ -1,6 +1,11 @@
-@section('meta-title', 'Advance Technical Analysis Chart Of Bangladesh')
-@section('meta-description', 'Highly configurable and nice looking technical analysis chart of Bangladesh. From 5 minutes candle to 1 hour candle available as well as daily data')
+@section('meta-title','List of all companies of Dhaka Stock Exchange')
+@section('meta-description', 'DSE listed companies ')
+
 @extends('layouts.metronic.default')
+
+@section('page_heading')
+All Companies
+@endsection
 
 @section('content')
 
@@ -13,10 +18,11 @@
                     <div class="caption">
                         <i class="icon-graph font-yellow-casablanca"></i>
 								<span class="caption-subject bold font-yellow-casablanca uppercase">
-								Advance Chart </span>
-                        <span class="caption-helper">Enjoy both realtime intra-day and EOD TA chart</span>
+								Listed Company </span>
+                        <span class="caption-helper">List</span>
                     </div>
                     <div class="tools">
+<a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.company_list" class="reload"></a>
                         <a href="" class="collapse">
                         </a>
 
@@ -27,22 +33,26 @@
 
                 </div>
                 <div class="portlet-body">
-                    @include('block.advance_chart')
+
                 </div>
             </div>
             <!-- END Portlet PORTLET-->
         </div>
-    </div>
 
-    <div class="row">
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <div class="portlet light bordered">
-                <div class="portlet-body">
-                   @include('ads.google_responsive')
-                </div>
-            </div>
-        </div>
-    </div>
 
+    </div>
 
 @endsection
+
+{{--
+@push('scripts')
+
+<script type="text/javascript">
+   $( "#instruments" ).change(function() {
+      var insId = $("#instruments").selectpicker("val");
+      var url = "{{ url('/fundamental-details/') }}/"+insId;
+      window.location = url;
+    });
+
+</script>
+@endpush--}}

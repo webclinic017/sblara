@@ -11,6 +11,7 @@ namespace App\Http\ViewComposers;
 
 use Illuminate\View\View;
 use App\Repositories\InstrumentRepository;
+use App\Repositories\SectorListRepository;
 use App\Repositories\DataBanksIntradayRepository;
 
 class MarketCompositionBarTotal
@@ -41,6 +42,9 @@ class MarketCompositionBarTotal
         $instrumentTradeDataPrev=DataBanksIntradayRepository::getPreviousDayData();
         $instrumentTradeDataPrev=$instrumentTradeDataPrev->keyBy('instrument_id');
 
+        $sector_list = SectorListRepository::getSectorList();
+        $sector_list = $sector_list->keyBy('id');
+
         $today=array();
         $prevDay=array();
         $category=array();
@@ -49,7 +53,7 @@ class MarketCompositionBarTotal
         $raw_value_prev = array();
         foreach ($instrumentList as $sector_id => $instrument_arr) {
 
-            $sector_name = $instrument_arr->first()->sector_list->name;
+            $sector_name = $sector_list[$sector_id]->name;
 
             $sector_area_total = 0;
             $sector_area_total_prev = 0;

@@ -11,6 +11,7 @@ namespace App\Http\ViewComposers;
 
 use Illuminate\View\View;
 use App\Repositories\InstrumentRepository;
+use App\Repositories\SectorListRepository;
 use App\Repositories\DataBanksIntradayRepository;
 
 class GainerLoserDepth
@@ -37,6 +38,10 @@ class GainerLoserDepth
         $instrumentTradeData=DataBanksIntradayRepository::getLatestTradeDataAll();
         $instrumentTradeData=$instrumentTradeData->keyBy('instrument_id');
 
+        $sector_list = SectorListRepository::getSectorList();
+        $sector_list = $sector_list->keyBy('id');
+
+
         $range_plus_2=array();
         $range_0_to_plus_2=array();
         $range_0_to_minus_2=array();
@@ -48,7 +53,7 @@ class GainerLoserDepth
         foreach($instrumentList as $sector_id=>$instrument_arr)
         {
 
-            $sector_name=$instrument_arr->first()->sector_list->name;
+            $sector_name = $sector_list[$sector_id]->name;
 
             $sector_plus_2=0;
             $sector_0_to_plus_2=0;

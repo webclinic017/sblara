@@ -29,6 +29,7 @@ class AppServiceProvider extends ServiceProvider {
         View::composer('block.sector_gainer_loser', 'App\Http\ViewComposers\SectorGainerLoser');
         View::composer('block.sector_gainer_loser_last_minute', 'App\Http\ViewComposers\SectorGainerLoserLastMinute');
 
+        View::composer('block.category_pe', 'App\Http\ViewComposers\CategoryPE');
         View::composer('block.sector_pe', 'App\Http\ViewComposers\SectorPE');
         View::composer('block.sector_pe_details', 'App\Http\ViewComposers\SectorPeDetails');
         View::composer('block.sector_minute_chart', 'App\Http\ViewComposers\SectorMinuteChart');
@@ -52,6 +53,7 @@ class AppServiceProvider extends ServiceProvider {
         View::composer('block.market_frame_by_gainer_lose', 'App\Http\ViewComposers\MarketFrameGainerLoser');
         View::composer('block.market_frame_old_site', 'App\Http\ViewComposers\MarketFrameOldSite');
         View::composer('block.price_tree', 'App\Http\ViewComposers\PriceTree');
+        View::composer('block.market_composition_table', 'App\Http\ViewComposers\MarketCompositionTable');
         View::composer('block.market_composition_pie', 'App\Http\ViewComposers\MarketCompositionPie');
         View::composer('block.market_composition_bar_total', 'App\Http\ViewComposers\MarketCompositionBarTotal');
         View::composer('block.market_composition_bar_per', 'App\Http\ViewComposers\MarketCompositionBarPer');

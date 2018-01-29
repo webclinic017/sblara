@@ -1,9 +1,27 @@
-@section('meta-title', ucwords(strtolower($instrumentInfo->name)) . ' Technical Analysis Chart')
-@section('meta-description', 'Analyze '. $instrumentInfo->instrument_code.' with our most accurate and well maintained dse data. A lot of indicators will let you know the probable trends of the share')
+@if(isset($_GET['dev']))
+@push('css')
+<link href="{{ URL::asset('metronic/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css') }}" rel="stylesheet" type="text/css" />
+@endpush
+
+<div class="row">
+<div class="col-md-12">
+	<div class="form-group">
+        <div class="input-group select2-bootstrap-prepend " style="max-width: 300px">
+            <span class="input-group-btn">
+                <button class="btn red mt-ladda-btn toggle-button"  type="button" data-select2-open="multi-prepend"> <i class="fa fa-line-chart"></i> Chart </button>
+            </span>
+              @include('html.instrument_list_bs_select',['bs_select_id'=>'shareList', 'class' => 'instrument-select select2', 'prepend' => true])
+        </div>
+    </div>
+</div>
+
+{{--  --}}
 
 
-@extends('layouts.metronic.default')
-@section('content')
+{{--  --}}
+<div class="col-md-12 global-panel" style="background: #fff; margin-top: -15px; display: none; padding-top: 10px ">
+{{--  --}}
+
 <style>
     table td{
         color:#000 !important;
@@ -12,19 +30,23 @@
 <div class="row widget-row">
 <div class="col-md-12 margin-bottom-20">
     <!-- BEGIN WIDGET TAB -->
-    <div class="widget-bg-color-white widget-tab ta-chart-tabs">
-        <ul class="nav nav-tabs ">
-            <li class="active">
-                <a href="#tab_1_1" data-url ="#" data-toggle="tab"> Chart </a>
-            </li>
+    <div class=" ta-chart-tabs tabbable-custom ">
+        <ul class="nav nav-tabs tabs-reversed">
 
             <li>
-                <a href="#tab_1_4" data-url="/ajax/load_block/block_name=block.minute_chart:instrument_id=" data-toggle="tab"> Minute Chart </a>
+                <a href="#tab_1_3" data-url="/ajax/load_block/block_name=block.share_holdings_history_chart:instrument_id=" data-toggle="tab"> Share Holding History </a>
             </li>
 
+
             <li>
-                <a href="#tab_1_3" data-url="/ajax/load_block/block_name=block.market_depth_single:instrument_id=" data-toggle="tab"> MARKET DEPTH </a>
+                <a href="#tab_1_3" data-url="/ajax/load_block/block_name=block.dividend_history:instrument_id=" data-toggle="tab"> Dividend History </a>
             </li>
+
+
+            <li>
+                <a href="#tab_1_3" data-url="/ajax/load_block/block_name=block.news_chart:instrument_id=" data-toggle="tab"> News Chart </a>
+            </li>            
+
             <li>
                 <a href="#tab_1_3" data-url="/ajax/load_block/block_name=block.news_box:instrument_id=" data-toggle="tab"> News </a>
             </li>
@@ -34,42 +56,38 @@
             <li>
                 <a href="#tab_1_3" data-url="/ajax/load_block/block_name=block.market_depth_single:instrument_id=" data-toggle="tab"> Fundamental Details </a>
             </li> --}}
+
+         
             <li>
-                <a href="#tab_1_3" data-url="/ajax/load_block/block_name=block.news_chart:instrument_id=" data-toggle="tab"> News Chart </a>
+                <a href="#tab_1_3" data-url="/ajax/load_block/block_name=block.market_depth_single:instrument_id=" data-toggle="tab"> MARKET DEPTH </a>
+            </li>            
+
+            <li>
+                <a href="#tab_1_4" data-url="/ajax/load_block/block_name=block.minute_chart:instrument_id=" data-toggle="tab"> Minute Chart </a>
             </li>
-            <li>
-                <a href="#tab_1_3" data-url="/ajax/load_block/block_name=block.dividend_history:instrument_id=" data-toggle="tab"> Dividend History </a>
-            </li>
-            <li>
-                <a href="#tab_1_3" data-url="/ajax/load_block/block_name=block.share_holdings_history_chart:instrument_id=" data-toggle="tab"> Share Holding History </a>
+
+            <li class="active">
+                <a href="#tab_1_1" data-url ="#" data-toggle="tab">TA Chart </a>
             </li>
         </ul>
         <div class="tab-content" >
             <div class="tab-pane fade active in" id="tab_1_1">
-                <form action="index.html" class="form-horizontal form-row-seperated">
-                    <div class="form-body">
+                <form action="index.html" class="form-horizontal ">
+                    <div class="form-body" >
 
-                        <div class="form-group">
-
+                        <div class="form-group " style="background: #f5f5f5; padding-top: 10px; display: inline-block; margin-right: 10px;">
+							<div class="col-md-9">
                             <div class="col-md-3">
-                                <div class="margin-bottom-10">
-                                @include('html.instrument_list_bs_select',['bs_select_id'=>'shareList'])
-
-                                </div>
-                            </div>
-
-                            <div class="col-md-2">
                                 <div class="margin-bottom-10">
                                     <select id="adj" class="bs-select form-control" >
                                         <option value="1" selected>Adjusted Data</option>
                                         <option value="0" >Non Adjusted Data</option>
                                     </select>
 
-
                                 </div>
                             </div>
 
-                            <div class="col-md-2">
+                            <div class="col-md-3">
                                 <div class="margin-bottom-10">
                                     <select id="configure" class="bs-select form-control" multiple>
                                         <option value="VOLBAR" title="VOLBAR" selected="">Show volume bar</option>
@@ -81,7 +99,7 @@
 
                                 </div>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-3">
                                 <div class="margin-bottom-10">
                                     <select id="charttype" class="bs-select form-control">
                                         <option value="CandleStick" selected="">CandleStick</option>
@@ -96,64 +114,16 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="margin-bottom-10">
-                                    <select id="overlay" class="bs-select form-control">
+                                    <select id="overlay" class="bs-select form-control ">
                                         <option value="BB" selected="">Bollinger Band</option>
                                         <option value="DC">Donchian Channel</option>
                                         <option value="Envelop">Envelop (SMA 20 +/- 10%)</option>
                                     </select>
 
                                 </div>
-                            </div>                            
-                            <div class="col-md-12" style="padding: 10px;">
-                                    
-                                    <select id="Indicators" class="select2 form-control" multiple  title='Choose indicators' data-live-search="true">
-                                        <option value="None">Select Indicators</option>
-                                        <option value="AccDist" title="A/D">Accu/Dist</option>
-                                        <option value="AroonOsc" title="ArnOsc">Aroon Oscillator</option>
-                                        <option value="Aroon" title="Aroon">Aroon Up/Down</option>
-                                        <option value="ADX" title="ADX">Avg Directional Index</option>
-                                        <option value="ATR" title="ATR">Avg True Range</option>
-                                        <option value="BBW" title="BBW">Bollinger Band Width</option>
-                                        <option value="CMF" title="CMF">Chaikin Money Flow</option>
-                                        <option value="COscillator" title="COsc">Chaikin Oscillator</option>
-                                        <option value="CVolatility" title="CVol">Chaikin Volatility</option>
-                                        <option value="CLV" title="CLV">Close Location Value</option>
-                                        <option value="CCI" title="CCI">CCI</option>
-                                        <option value="DPO" title="DPO">Detrended Price Osc</option>
-                                        <option value="DCW" title="DCW">Donchian Channel</option>
-                                        <option value="EMV" title="EMV">Ease of Movement</option>
-                                        <option value="FStoch" title="FStoch">Fast Stochastic</option>
-                                        <option value="MACD" title="MACD" selected="">MACD</option>
-                                        <option value="MDX" title="MDX">Mass Index</option>
-                                        <option value="Momentum" title="Momentum">Momentum</option>
-                                        <option value="MFI" title="MFI">Money Flow Index</option>
-                                        <option value="NVI" title="NVI">Neg Volume Index</option>
-                                        <option value="OBV" title="OBV">On Balance Volume</option>
-                                        <option value="Performance" title="Perfornamce">Performance</option>
-                                        <option value="PPO" title="PPO">% Price Oscillator</option>
-                                        <option value="PVO" title="PVO">% Volume Oscillator</option>
-                                        <option value="PVI" title="PVI">Pos Volume Index</option>
-                                        <option value="PVT" title="PVT">Price Volume Trend</option>
-                                        <option value="ROC" title="ROC">Rate of Change</option>
-                                        <option value="RSI" selected="" title="RSI">RSI</option>
-                                        <option value="SStoch" title="SStoch">Slow Stochastic</option>
-                                        <option value="StochRSI" title="StochRSI">StochRSI</option>
-                                        <option value="TRIX" title="TRIX">TRIX</option>
-                                        <option value="UO" title="UO">Ultimate Oscillator</option>
-                                        <option value="Vol" title="VOL">Volume</option>
-                                        <option value="WilliamR" title="WilliamR">William's %R</option>
-                                    </select>
+                            </div>     
+                       
 
-                            </div>
-                        </div>
-
-                    </div>
-
-                </form>
-                <form action="index.html" class="form-horizontal form-row-seperated">
-                    <div class="form-body">
-
-                        <div class="form-group">
 
                             <div class="col-md-2">
                                 <div class="margin-bottom-10">
@@ -204,26 +174,57 @@
                             </div>
                         </div>
 
+
+                  	  <div class="col-md-3 ">
+                                    <select id="Indicators" class="select2 double-row" multiple  title='Choose indicators' data-live-search="true">
+                                        <option value="None">Select Indicators</option>
+                                        <option value="AccDist" title="A/D">Accu/Dist</option>
+                                        <option value="AroonOsc" title="ArnOsc">Aroon Oscillator</option>
+                                        <option value="Aroon" title="Aroon">Aroon Up/Down</option>
+                                        <option value="ADX" title="ADX">Avg Directional Index</option>
+                                        <option value="ATR" title="ATR">Avg True Range</option>
+                                        <option value="BBW" title="BBW">Bollinger Band Width</option>
+                                        <option value="CMF" title="CMF">Chaikin Money Flow</option>
+                                        <option value="COscillator" title="COsc">Chaikin Oscillator</option>
+                                        <option value="CVolatility" title="CVol">Chaikin Volatility</option>
+                                        <option value="CLV" title="CLV">Close Location Value</option>
+                                        <option value="CCI" title="CCI">CCI</option>
+                                        <option value="DPO" title="DPO">Detrended Price Osc</option>
+                                        <option value="DCW" title="DCW">Donchian Channel</option>
+                                        <option value="EMV" title="EMV">Ease of Movement</option>
+                                        <option value="FStoch" title="FStoch">Fast Stochastic</option>
+                                        <option value="MACD" title="MACD" selected="">MACD</option>
+                                        <option value="MDX" title="MDX">Mass Index</option>
+                                        <option value="Momentum" title="Momentum">Momentum</option>
+                                        <option value="MFI" title="MFI">Money Flow Index</option>
+                                        <option value="NVI" title="NVI">Neg Volume Index</option>
+                                        <option value="OBV" title="OBV">On Balance Volume</option>
+                                        <option value="Performance" title="Perfornamce">Performance</option>
+                                        <option value="PPO" title="PPO">% Price Oscillator</option>
+                                        <option value="PVO" title="PVO">% Volume Oscillator</option>
+                                        <option value="PVI" title="PVI">Pos Volume Index</option>
+                                        <option value="PVT" title="PVT">Price Volume Trend</option>
+                                        <option value="ROC" title="ROC">Rate of Change</option>
+                                        <option value="RSI" selected="" title="RSI">RSI</option>
+                                        <option value="SStoch" title="SStoch">Slow Stochastic</option>
+                                        <option value="StochRSI" title="StochRSI">StochRSI</option>
+                                        <option value="TRIX" title="TRIX">TRIX</option>
+                                        <option value="UO" title="UO">Ultimate Oscillator</option>
+                                        <option value="Vol" title="VOL">Volume</option>
+                                        <option value="WilliamR" title="WilliamR">William's %R</option>
+                                    </select>  
+                   	  </div>
+
+
+                  	  </div>
+
+
                     </div>
 
                 </form>
-                <form action="index.html" class="form-horizontal form-row-seperated">
-                    <div class="form-body">
 
-                        <div class="form-group">
 
-                            <div class="col-md-12">
-                                <div class="margin-bottom-10">
-                                    <a id="Button1" name="Button1" href="javascript:;" class="btn blue btn-block"> Update chart </a>
 
-                                </div>
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </form>
 
 {{--  --}}
  <script type="text/javascript" src="/cdjcv.js"></script>
@@ -369,32 +370,12 @@ function traceFinance(viewer, mouseX)
     }
 }
 
-
-$(document).ready(function () {
-        var viewer = JsChartViewer.get('ta_chart');
-        // Draw track cursor when mouse is moving over plotarea
-   
-
-        viewer.attachHandler(["MouseMovePlotArea", "TouchStartPlotArea", "TouchMovePlotArea", "ChartMove", "Now"],
-        function(e) {
-            this.preventDefault(e);   // Prevent the browser from using touch events for other actions
-            if($('#tab_1_1').hasClass('active'))
-            {
-                traceFinance(viewer, viewer.getPlotAreaMouseX());
-
-            }
-        });
-
-});    
-
-
 </script>
 {{--  --}}
             <div id="chartContainer" class="chartcontent thumbnail">
-<input type="hidden" id="chart_id" value="{{$viewer->getId()}}">
+<input type="hidden" id="chart_id" value="">
 
 
-                <?php echo $viewer->renderHTML('usemap="#map1"'); ?>
                 </div>
 
  <div class="row">
@@ -430,7 +411,7 @@ $(document).ready(function () {
             <div class="portlet-body form">
             <!-- BEGIN FORM-->
             <form action="index.html" class="form-horizontal form-row-seperated">
-            <div class="form-body">
+            <div class="form-body" >
 
             <div class="form-group">
                 <label class="control-label col-md-3">Bootstrap Styles</label>
@@ -585,23 +566,78 @@ $(document).ready(function () {
 </div>
 
 
-@endsection
 
-
-@push('css')
-<link href="{{ URL::asset('metronic/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css') }}" rel="stylesheet" type="text/css" />
-@endpush
+{{--  --}}
+</div>
+{{--  --}}
+	
+</div>
 
 @push('scripts')
 <script src="{{ URL::asset('metronic/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js') }}"></script>
 
 <script src="{{ URL::asset('metronic/assets/global/plugins/bootstrap-touchspin/bootstrap.touchspin.js') }}"></script>
 
-
 <script>
-$('#shareList').selectpicker({
-  size: 20
-});
+
+
+    function loadChart(el) {
+        var content = $('.chartcontent');
+        var loading = $('.chart-loading');
+
+
+
+        var chartRange = $('#dashboard-report-range').attr("data-range");
+        //var chartRange='2012-10-25|2013-04-25';
+        var url = "{{ url('/ta/ajax/') }}";
+
+        // var comparewith=$('#comparewith').val();
+        var comparewith = 'null';
+        if ($('#shareList').val() == "") {
+            sharelist = "DSEX";
+        } else {
+            sharelist = $('#shareList').val();
+        }
+
+        url = url + "/" + chartRange + "/" + sharelist + "/" + comparewith + "/" + $('#Indicators').val() + "/" + $('#configure').val() + "/" + $('#charttype').val() + "/" + $('#overlay').val() + "/" + $('#mov1').val() + "/" + $('#touchspin_demo1').val() + "/" + $('#mov2').val() + "/" + $('#touchspin_demo2').val() + "/" + $('#adj').val();
+
+        var companyDetailsUrl = 'http://www.new.stockbangladesh.com/TechnicalAnalysis/company_details/' + sharelist
+        var marketDepthUrl = 'http://www.new.stockbangladesh.com/TechnicalAnalysis/market_depth/' + sharelist
+
+        $('#portlet_tab2_company').attr("data-url", companyDetailsUrl);
+        $('#portlet_tab1_market_depth').attr("data-url", marketDepthUrl);
+
+
+        $.ajax({
+            type: "GET",
+            cache: false,
+            url: url,
+            async: false,
+            dataType: "html"
+
+
+        }).done(function (data) {
+          //  App.unblockUI('#testdiv');
+            content.html(data);
+    // JsChartViewer.hideObj('all');
+    var viewer = JsChartViewer.get('ta_chart');
+    // Draw track cursor when mouse is moving over plotarea
+    viewer.attachHandler(["MouseMovePlotArea", "TouchStartPlotArea", "TouchMovePlotArea", "ChartMove", "Now"],
+    function(e) {
+        this.preventDefault(e);   // Prevent the browser from using touch events for other actions
+            if($('#tab_1_1').hasClass('active'))
+            {
+                traceFinance(viewer, viewer.getPlotAreaMouseX());
+
+            }
+    });
+
+
+
+        });
+
+    }	
+
 
 
 
@@ -697,69 +733,6 @@ maxboostedstep: 10000000
         }, 2000);
     });
 
-
-    function loadChart(el) {
-        var content = $('.chartcontent');
-        var loading = $('.chart-loading');
-
-
-
-        var chartRange = $('#dashboard-report-range').attr("data-range");
-        //var chartRange='2012-10-25|2013-04-25';
-        var url = "{{ url('/ta/ajax/') }}";
-
-        // var comparewith=$('#comparewith').val();
-        var comparewith = 'null';
-        if ($('#shareList').val() == "") {
-            sharelist = "DSEX";
-        } else {
-            sharelist = $('#shareList').val();
-        }
-
-        url = url + "/" + chartRange + "/" + sharelist + "/" + comparewith + "/" + $('#Indicators').val() + "/" + $('#configure').val() + "/" + $('#charttype').val() + "/" + $('#overlay').val() + "/" + $('#mov1').val() + "/" + $('#touchspin_demo1').val() + "/" + $('#mov2').val() + "/" + $('#touchspin_demo2').val() + "/" + $('#adj').val();
-
-        var companyDetailsUrl = 'http://www.new.stockbangladesh.com/TechnicalAnalysis/company_details/' + sharelist
-        var marketDepthUrl = 'http://www.new.stockbangladesh.com/TechnicalAnalysis/market_depth/' + sharelist
-
-        $('#portlet_tab2_company').attr("data-url", companyDetailsUrl);
-        $('#portlet_tab1_market_depth').attr("data-url", marketDepthUrl);
-
-
-        $.ajax({
-            type: "GET",
-            cache: false,
-            url: url,
-            async: false,
-            dataType: "html"
-
-
-        }).done(function (data) {
-          //  App.unblockUI('#testdiv');
-            content.html(data);
-    // JsChartViewer.hideObj('all');
-    var viewer = JsChartViewer.get('ta_chart');
-    // Draw track cursor when mouse is moving over plotarea
-    viewer.attachHandler(["MouseMovePlotArea", "TouchStartPlotArea", "TouchMovePlotArea", "ChartMove", "Now"],
-    function(e) {
-        this.preventDefault(e);   // Prevent the browser from using touch events for other actions
-            if($('#tab_1_1').hasClass('active'))
-            {
-                traceFinance(viewer, viewer.getPlotAreaMouseX());
-
-            }
-    });
-
-
-
-        });
-
-    }
-
-    $("#shareList")
-        .on("change", function () {
-            loadChart($(this));
-
-        })
     $("#Button1")
         .on("click", function () {
             loadChart($(this));
@@ -773,9 +746,54 @@ maxboostedstep: 10000000
 
     });
 
+function loadFundamental(e) {
+		$("div[id^='ta_chart_']").remove();
+		url = e.data('url');
+	 	
+	 	instrument = $('#shareList').val();
+
+		url = url + instrument;
+		var target = e.attr('href');
+		$(target).html(loadingDiv);
+		$.get(url, function (html) {
+			$(target).html(html);
+		});
+}
+
+	$(document).ready(function () {
+		$('.instrument-select').change(function () {
+			if($('.toggle-button').data('state') != 'open')
+			{
+			$('.toggle-button').attr('data-state', 'open');
+				$('.global-panel').slideDown();
+			}
+			var e = $('.ta-chart-tabs li[class="active"] a');
+			var url = e.data('url');
+
+			if(url == '#')
+			{
+            	loadChart($(this));
+			}else{
+				loadFundamental(e);
+			}
+		});
+
+		$('.toggle-button').click(function () {
+			$('.select2-container').trigger('click');
+			if($(this).data('state') == 'open')
+			{
+				$(this).html("<i class='fa fa-close'></i> Close");
+				$(this).attr('data-state', 'close');
+				
+			}else{
+				
+				$(this).html("<i class='fa fa-line-chart'></i> Chart");
+				$(this).attr('data-state', 'open');
+				
+			}
+
+		});
+	})
 </script>
 @endpush
-
-
-
-
+@endif

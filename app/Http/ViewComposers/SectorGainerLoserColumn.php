@@ -12,6 +12,7 @@ namespace App\Http\ViewComposers;
 use Illuminate\View\View;
 use App\Repositories\InstrumentRepository;
 use App\Repositories\DataBanksIntradayRepository;
+use App\Repositories\SectorListRepository;
 
 class SectorGainerLoserColumn
 {
@@ -35,6 +36,10 @@ class SectorGainerLoserColumn
         $instrumentList=InstrumentRepository::getInstrumentsScripOnly();
         $instrumentList=$instrumentList->groupBy('sector_list_id');
 
+        $sector_list = SectorListRepository::getSectorList();
+        $sector_list = $sector_list->keyBy('id');
+
+
         $upDownData=DataBanksIntradayRepository::upDownStats();
 
         $upArr=array();
@@ -43,7 +48,7 @@ class SectorGainerLoserColumn
         $category=array();
         foreach($instrumentList as $sector_id=>$instrument_arr)
         {
-            $sector_name=$instrument_arr->first()->sector_list->name;
+            $sector_name = $sector_list[$sector_id]->name;
             $set_of_sectors_instrumentid=$instrument_arr->pluck('id');
 
             $set_of_up_instrument_id=$upDownData['up']->pluck('instrument_id');

@@ -174,3 +174,8 @@ div.center select{
     right: 21%;        
     }
 }
+
+.double-row .select2-selection {
+    overflow: auto !important;
+  height: 80px !important;
+}

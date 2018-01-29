@@ -67,8 +67,9 @@ class SectorListRepository {
         $latestData = DataBanksIntradayRepository::getAvailableLTP($instrument_arr);
         $latestData=collect($latestData)->keyBy('instrument_id');
 
-        $metaKey = array('total_no_securities');
+        $metaKey = array('total_no_securities','list_of_life_insurance');
         $fundamentalInfo = FundamentalRepository::getFundamentalData($metaKey, $instrument_arr);
+        $all_life_insurance_instrument_id = collect($fundamentalInfo['list_of_life_insurance'])->where('meta_value',1);
 
 
 
@@ -107,6 +108,10 @@ class SectorListRepository {
 
                     // skipping Z category
                     if($category=='Z')
+                        continue;
+
+                    // skip life insurance
+                    if(isset($all_life_insurance_instrument_id[$instrument_id]))
                         continue;
 
                     $ltp = $last_trade_data_of_this_instrument->close_price != 0 ? $last_trade_data_of_this_instrument->close_price : ($last_trade_data_of_this_instrument->pub_last_traded_price != 0 ? $last_trade_data_of_this_instrument->pub_last_traded_price : $last_trade_data_of_this_instrument->spot_last_traded_price);
@@ -165,6 +170,106 @@ class SectorListRepository {
         $return['sector_pe_arr']=$sector_pe_arr;
         $return['market_capital_arr']=$market_capital_arr;
         $return['total_earnings_arr']=$total_earnings_arr;
+
+        return $return;
+
+    }
+    public static function getCategoryPE($category_arr=array())
+    {
+        $instrumentList = InstrumentRepository::getInstrumentsScripOnly();
+
+        $grouped_instrument_list=$instrumentList->groupBy('sector_list_id');
+        $instrument_arr = $instrumentList->pluck('id')->toArray();
+
+        $epsData = Cache::remember("annualized_eps_all_instruments", 720, function () use ($instrument_arr) {
+            $epsData = FundamentalRepository::getAnnualizedEPS($instrument_arr);
+            return $epsData;
+        });
+            unset($grouped_instrument_list[14]); //skipping mutual fund sector
+
+
+        $latestData = DataBanksIntradayRepository::getAvailableLTP($instrument_arr);
+        $latestData = collect($latestData)->keyBy('instrument_id');
+
+
+
+
+        $metaKey = array('total_no_securities','list_of_life_insurance');
+        $fundamentalInfo = FundamentalRepository::getFundamentalData($metaKey, $instrument_arr);
+        $all_life_insurance_instrument_id = collect($fundamentalInfo['list_of_life_insurance'])->where('meta_value',1);
+
+
+
+        $market_capital_arr = array();
+        $total_earnings_arr = array();
+        $instrumentList = $instrumentList->keyBy('id');
+
+        foreach($instrument_arr as $instrument_id)
+        {
+            if (isset($all_life_insurance_instrument_id[$instrument_id]))
+                continue;
+
+            if (isset($latestData[$instrument_id])) {
+                $last_trade_data_of_this_instrument = $latestData[$instrument_id];
+            } else {
+
+                continue;
+            }
+
+
+            $explode_arr = explode('-', $last_trade_data_of_this_instrument->quote_bases);
+            $category = $explode_arr[0];
+
+            $ltp = $last_trade_data_of_this_instrument->close_price != 0 ? $last_trade_data_of_this_instrument->close_price : ($last_trade_data_of_this_instrument->pub_last_traded_price != 0 ? $last_trade_data_of_this_instrument->pub_last_traded_price : $last_trade_data_of_this_instrument->spot_last_traded_price);
+
+            if (isset($fundamentalInfo['total_no_securities'][$instrument_id])) {
+                $nos = (int)$fundamentalInfo['total_no_securities'][$instrument_id]['meta_value'];
+            } else {
+                //      dump("no total_no_securities for $instrument_id");
+                continue;
+            }
+
+            $instrument_code = $instrumentList[$instrument_id]->instrument_code;
+
+            $market_capital_of_this_instrument = $ltp * $nos;
+
+            $market_capital_arr[$category][$instrument_code] = $market_capital_of_this_instrument;
+            //$market_capital_arr[$category][$instrument_code]['cap'] = $market_capital_of_this_instrument;
+            //$market_capital_arr[$category][$instrument_code]['instrument_id'] = $instrument_id;
+
+
+            if (isset($epsData[$instrument_id])) {
+                $annualized_eps = $epsData[$instrument_id]['annualized_eps'];
+            } else {
+                //    dump("no annualized_eps for $instrument_id");
+                continue;
+            }
+
+            $total_earnings_of_this_instrument = $annualized_eps * $nos;
+            $total_earnings_arr[$category][$instrument_code] = $total_earnings_of_this_instrument;
+          //  $total_earnings_arr[$category][$instrument_code]['earnings'] = $total_earnings_of_this_instrument;
+          //  $total_earnings_arr[$category][$instrument_code]['instrument_id'] = $instrument_id;
+
+
+        }
+
+        $category_pe_arr = array();
+        foreach($market_capital_arr as $category=>$capital_arr)
+        {
+            $category_pe_arr[$category]['cap']=array_sum($capital_arr);
+            $category_pe_arr[$category]['earnings']=array_sum($total_earnings_arr[$category]);
+            $category_pe_arr[$category]['pe']= round($category_pe_arr[$category]['cap']/ $category_pe_arr[$category]['earnings'],2);
+        }
+
+/*        dump($category_pe_arr);
+        dump($market_capital_arr);
+        dd($total_earnings_arr);
+*/
+
+        // Calculate all sectors pe
+
+        $return=array();
+        $return['category_pe_arr']=$category_pe_arr;
 
         return $return;
 

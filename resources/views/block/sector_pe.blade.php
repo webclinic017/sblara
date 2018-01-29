@@ -82,8 +82,10 @@
 </div>
 <span class="label label-info">* Mutual fund excluded</span>
 <span class="label label-info">* Z category excluded</span>
+<span class="label label-info">* Life insurance excluded</span>
 <span class="label label-info">* OTC excluded</span>
 <span class="label label-info">* Annualized EPS used  </span>
+
 
 <script>
     $(function () {
