@@ -30,44 +30,44 @@
         <ul class="nav nav-tabs tabs-reversed">
 
             <li>
-                <a href="#tab_1_3" data-url="/ajax/load_block/block_name=block.share_holdings_history_chart:instrument_id=" data-toggle="tab"> Share Holding History </a>
+                <a href="#share_holdings" data-url="/ajax/load_block/block_name=block.share_holdings_history_chart:instrument_id=" data-toggle="tab"> Share Holding History </a>
             </li>
 
 
             <li>
-                <a href="#tab_1_3" data-url="/ajax/load_block/block_name=block.dividend_history:instrument_id=" data-toggle="tab"> Dividend History </a>
+                <a href="#share_holdings" data-url="/ajax/load_block/block_name=block.dividend_history:instrument_id=" data-toggle="tab"> Dividend History </a>
             </li>
 
 
             <li>
-                <a href="#tab_1_3" data-url="/ajax/load_block/block_name=block.news_chart:instrument_id=" data-toggle="tab"> News Chart </a>
+                <a href="#share_holdings" data-url="/ajax/load_block/block_name=block.news_chart:instrument_id=" data-toggle="tab"> News Chart </a>
             </li>            
 
             <li>
-                <a href="#tab_1_3" data-url="/ajax/load_block/block_name=block.news_box:instrument_id=" data-toggle="tab"> News </a>
+                <a href="#share_holdings" data-url="/ajax/load_block/block_name=block.news_box:instrument_id=" data-toggle="tab"> News </a>
             </li>
 {{--             <li>
-                <a href="#tab_1_3" data-url="/ajax/load_block/block_name=block.market_depth_single:instrument_id=" data-toggle="tab"> Company Details </a>
+                <a href="#share_holdings" data-url="/ajax/load_block/block_name=block.market_depth_single:instrument_id=" data-toggle="tab"> Company Details </a>
             </li>
             <li>
-                <a href="#tab_1_3" data-url="/ajax/load_block/block_name=block.market_depth_single:instrument_id=" data-toggle="tab"> Fundamental Details </a>
+                <a href="#share_holdings" data-url="/ajax/load_block/block_name=block.market_depth_single:instrument_id=" data-toggle="tab"> Fundamental Details </a>
             </li> --}}
 
          
             <li>
-                <a href="#tab_1_3" data-url="/ajax/load_block/block_name=block.market_depth_single:instrument_id=" data-toggle="tab"> MARKET DEPTH </a>
+                <a href="#share_holdings" data-url="/ajax/load_block/block_name=block.market_depth_single:instrument_id=" data-toggle="tab"> MARKET DEPTH </a>
             </li>            
 
             <li>
-                <a href="#tab_1_4" data-url="/ajax/load_block/block_name=block.minute_chart:instrument_id=" data-toggle="tab"> Minute Chart </a>
+                <a href="#share_holdings" data-url="/ajax/load_block/block_name=block.minute_chart:instrument_id=" data-toggle="tab"> Minute Chart </a>
             </li>
 
             <li class="active">
-                <a href="#tab_1_1" data-url ="#" data-toggle="tab">TA Chart </a>
+                <a href="#taChartTab" data-url ="#" data-toggle="tab">TA Chart </a>
             </li>
         </ul>
         <div class="tab-content" >
-            <div class="tab-pane fade active in" id="tab_1_1">
+            <div class="tab-pane fade active in" id="taChartTab">
                 <form action="index.html" class="form-horizontal ">
                     <div class="form-body" >
 
@@ -161,11 +161,17 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="margin-bottom-10">
-                                    <div id="dashboard-report-range" class="pull-right tooltips btn btn-fit-height green" data-placement="top" data-original-title="Change dashboard date range">
+                                    <div class="input-group ">
+                                    <input data-placement="top" data-original-title="Change  date range" class="btn-fit-height green tooltips btn form-control"  type="text" id="dashboard-report-range">
+                            {{--         <span class="input-group-addon">
                                         <i class="icon-calendar"></i>&nbsp;
                                         <span class="thin uppercase hidden-xs"></span>&nbsp;
                                         <i class="fa fa-angle-down"></i>
+                                    </span> --}}
+                                        
+
                                     </div>
+
 
                                 </div>
                             </div>
@@ -219,9 +225,6 @@
                     </div>
 
                 </form>
-
-
-
 
 {{--  --}}
  <script type="text/javascript" src="/cdjcv.js"></script>
@@ -377,186 +380,16 @@ function traceFinance(viewer, mouseX)
 
 
             </div>
-            <div class="tab-pane fade" id="tab_1_2">
-            <div class="portlet light form-fit bordered">
-            <div class="portlet-title">
-                <div class="caption">
-                    <i class="icon-social-dribbble font-green"></i>
-                    <span class="caption-subject font-green bold uppercase">Bootstrap Select</span>
-                </div>
-                <div class="actions">
-                    <a class="btn btn-circle btn-icon-only btn-default" href="javascript:;">
-                        <i class="icon-cloud-upload"></i>
-                    </a>
-                    <a class="btn btn-circle btn-icon-only btn-default" href="javascript:;">
-                        <i class="icon-wrench"></i>
-                    </a>
-                    <a class="btn btn-circle btn-icon-only btn-default" href="javascript:;">
-                        <i class="icon-trash"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="portlet-body form">
-            <!-- BEGIN FORM-->
-            <form action="index.html" class="form-horizontal form-row-seperated">
-            <div class="form-body" >
 
-            <div class="form-group">
-                <label class="control-label col-md-3">Bootstrap Styles</label>
-                <div class="col-md-9">
-                    <div class="margin-bottom-10">
-                        <select class="bs-select form-control input-small" data-style="btn-primary">
-                            <option>Mustard</option>
-                            <option>Ketchup</option>
-                            <option>Relish</option>
-                        </select>
-                        <select class="bs-select form-control input-small" data-style="btn-success">
-                            <option>Mustard</option>
-                            <option>Ketchup</option>
-                            <option>Relish</option>
-                        </select>
-                        <select class="bs-select form-control input-small" data-style="btn-info">
-                            <option>Mustard</option>
-                            <option>Ketchup</option>
-                            <option>Relish</option>
-                        </select>
-                        <select class="bs-select form-control input-small" data-style="btn-warning">
-                            <option>Mustard</option>
-                            <option>Ketchup</option>
-                            <option>Relish</option>
-                        </select>
-                        <select class="bs-select form-control input-small" data-style="btn-danger">
-                            <option>Mustard</option>
-                            <option>Ketchup</option>
-                            <option>Relish</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-            </div>
-            <div class="form-actions">
-                <div class="row">
-                    <div class="col-md-offset-3 col-md-9">
-                        <button type="submit" class="btn green">
-                            <i class="fa fa-check"></i> Submit</button>
-                        <button type="button" class="btn default">Cancel</button>
-                    </div>
-                </div>
-            </div>
-            </form>
-            <!-- END FORM-->
-            <div id="form_modal11" class="modal fade" role="dialog" aria-labelledby="myModalLabel10" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                            <h4 class="modal-title">Sample Form in Modal</h4>
-                        </div>
-                        <div class="modal-body">
-                            <form action="#" class="form-horizontal" role="form">
-                                <div class="form-group">
-                                    <label class="control-label col-md-4">Default</label>
-                                    <div class="col-md-8">
-                                        <select class="bs-select form-control">
-                                            <option>Mustard</option>
-                                            <option>Ketchup</option>
-                                            <option>Relish</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-md-4">Disabled</label>
-                                    <div class="col-md-8">
-                                        <select class="bs-select form-control" disabled>
-                                            <option>Mustard</option>
-                                            <option>Ketchup</option>
-                                            <option>Relish</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-md-4">Grouped</label>
-                                    <div class="col-md-8">
-                                        <select class="bs-select form-control">
-                                            <optgroup label="Picnic">
-                                                <option>Mustard</option>
-                                                <option>Ketchup</option>
-                                                <option>Relish</option>
-                                            </optgroup>
-                                            <optgroup label="Camping">
-                                                <option>Tent</option>
-                                                <option>Flashlight</option>
-                                                <option>Toilet Paper</option>
-                                            </optgroup>
-                                        </select>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button class="btn grey-salsa btn-outline" data-dismiss="modal" aria-hidden="true">Close</button>
-                            <button class="btn green" data-dismiss="modal">Save changes</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            </div>
-            </div>
-            </div>
-            <div class="tab-pane fade" id="tab_1_3">
+            <div class="tab-pane fade" id="share_holdings">
                     
-            </div>
-            <div class="tab-pane fade" id="tab_1_4">
-                <div class="widget-news margin-bottom-20">
-                    <img class="widget-news-left-elem" src="../assets/layouts/layout7/img/07.jpg" alt="">
-                    <div class="widget-news-right-body">
-                        <h3 class="widget-news-right-body-title">San Francisco
-                            <span class="label label-default"> March 10 </span>
-                        </h3>
-                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit diam nonumy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
-                    </div>
-                </div>
-                <div class="widget-news margin-bottom-20">
-                    <img class="widget-news-left-elem" src="../assets/layouts/layout7/img/04.jpg" alt="">
-                    <div class="widget-news-right-body">
-                        <h3 class="widget-news-right-body-title">New Workstation
-                            <span class="label label-default"> March 16 </span>
-                        </h3>
-                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit diam nonumy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
-                    </div>
-                </div>
-                <div class="widget-news margin-bottom-20">
-                    <img class="widget-news-left-elem" src="../assets/layouts/layout7/img/05.jpg" alt="">
-                    <div class="widget-news-right-body">
-                        <h3 class="widget-news-right-body-title">Most Completed theme
-                            <span class="label label-default"> March 12 </span>
-                        </h3>
-                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit diam nonumy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
-                    </div>
-                </div>
-                <div class="widget-news">
-                    <img class="widget-news-left-elem" src="../assets/layouts/layout7/img/03.jpg" alt="">
-                    <div class="widget-news-right-body">
-                        <h3 class="widget-news-right-body-title">Wondering anyone did this
-                            <span class="label label-default"> March 25 </span>
-                        </h3>
-                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit diam nonumy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
     <!-- END WIDGET TAB -->
 
 </div>
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <div class="portlet light bordered">
-                <div class="portlet-body">
-                   @include('ads.google_responsive')
-                </div>
-            </div>
-        </div>
+
 </div>
 
 
@@ -575,13 +408,84 @@ function traceFinance(viewer, mouseX)
 <script src="{{ URL::asset('metronic/assets/global/plugins/bootstrap-touchspin/bootstrap.touchspin.js') }}"></script>
 
 <script>
+    function getCookie(cname) {
+        var name = cname + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for(var i = 0; i <ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+
+    function loadChartSettings() {
+        data = getCookie('sbtachartsettings');
+        if(data == '')
+        {
+            data = "{}";
+        }
+        var data = JSON.parse(data);
+        $.each(data, function (k, v) {
+            if(k == 'dashboard-report-range')
+            {
+                date = v.split('|');
+                start = date[0].split('-');
+                end = date[1].split('-');
+                start = start[1]+'/'+start[2]+'/'+start[0];
+                end = end[1]+'/'+end[2]+'/'+end[0];
+                $("#dashboard-report-range").data('daterangepicker').setStartDate(start);
+                //use end if user want to store end date;
+                $('#dashboard-report-range').data('daterangepicker').setEndDate(moment());
+                $('#dashboard-report-range').attr('data-range', v);
+            }else{
+                $('#'+k).val(v);
+                $('#'+k).trigger('change');    
+            }
 
 
-    function loadChart(el) {
+        })
+    }
+
+    function storeChartSettings() {
+        var fields = {};
+        //#adj, #configure, #charttype, #overlay, #Indicators, #mov1, #mov2, #touchspin_demo1, #touchspin_demo2, #dashboard-report-range
+            
+        fields['adj'] = $('#adj').val();
+        fields['configure'] = $('#configure').val();
+        fields['charttype'] = $('#charttype').val();
+        fields['overlay'] = $('#overlay').val();
+        fields['Indicators'] = $('#Indicators').val();
+        fields['mov1'] = $('#mov1').val();
+        fields['mov2'] = $('#mov2').val();
+        fields['touchspin_demo1'] = $('#touchspin_demo1').val();
+        fields['touchspin_demo2'] = $('#touchspin_demo2').val();
+        fields['dashboard-report-range'] = $('#dashboard-report-range').attr('data-range');
+        fields = JSON.stringify(fields);
+
+        var d = new Date();
+        var exdays = 365;
+        d.setTime(d.getTime() + (exdays*24*60*60*1000));
+        var expires = "expires="+ d.toUTCString();
+        document.cookie = "sbtachartsettings" + "=" + fields + ";" + expires + ";path=/";
+        
+    }
+
+    function loadChart() {
+        $("div[id^='ta_chart_']").remove();
+        $('.chartcontent').html(loadingDiv);
+        if($('.toggle-button').attr('data-state') != 'open')
+        {
+            return;
+        }
+        storeChartSettings();
         var content = $('.chartcontent');
         var loading = $('.chart-loading');
-
-
 
         var chartRange = $('#dashboard-report-range').attr("data-range");
         //var chartRange='2012-10-25|2013-04-25';
@@ -603,32 +507,21 @@ function traceFinance(viewer, mouseX)
         $('#portlet_tab2_company').attr("data-url", companyDetailsUrl);
         $('#portlet_tab1_market_depth').attr("data-url", marketDepthUrl);
 
+        $.get(url, function (data) {
+                  //  App.unblockUI('#testdiv');
+                    content.html(data);
+            // JsChartViewer.hideObj('all');
+            var viewer = JsChartViewer.get('ta_chart');
+            // Draw track cursor when mouse is moving over plotarea
+            viewer.attachHandler(["MouseMovePlotArea", "TouchStartPlotArea", "TouchMovePlotArea", "ChartMove", "Now"],
+            function(e) {
+                this.preventDefault(e);   // Prevent the browser from using touch events for other actions
+                    if($('#taChartTab').hasClass('active') && $('.toggle-button').attr('data-state') == 'open')
+                    {
+                        traceFinance(viewer, viewer.getPlotAreaMouseX());
 
-        $.ajax({
-            type: "GET",
-            cache: false,
-            url: url,
-            async: false,
-            dataType: "html"
-
-
-        }).done(function (data) {
-          //  App.unblockUI('#testdiv');
-            content.html(data);
-    // JsChartViewer.hideObj('all');
-    var viewer = JsChartViewer.get('ta_chart');
-    // Draw track cursor when mouse is moving over plotarea
-    viewer.attachHandler(["MouseMovePlotArea", "TouchStartPlotArea", "TouchMovePlotArea", "ChartMove", "Now"],
-    function(e) {
-        this.preventDefault(e);   // Prevent the browser from using touch events for other actions
-            if($('#tab_1_1').hasClass('active') && $('.toggle-button').attr('data-state') == 'open')
-            {
-                traceFinance(viewer, viewer.getPlotAreaMouseX());
-
-            }
-    });
-
-
+                    }
+            });
 
         });
 
@@ -731,11 +624,11 @@ maxboostedstep: 10000000
 
     $("#Button1")
         .on("click", function () {
-            loadChart($(this));
+            loadChart();
         })
     $("#Button2")
         .on("click", function () {
-            loadChart($(this));
+            loadChart();
         })
 
 
@@ -756,6 +649,7 @@ function loadFundamental(e) {
 }
 
 	$(document).ready(function () {
+        loadChartSettings();
 		$('.instrument-select, #sharelist').change(function () {
 			if($(this).val() == null)
 			{
@@ -773,7 +667,8 @@ function loadFundamental(e) {
 
 			if(url == '#')
 			{
-            	loadChart($(this));
+
+            	loadChart();
 			}else{
 				loadFundamental(e);
 			}
@@ -782,7 +677,7 @@ function loadFundamental(e) {
 		$('.ta-chart-tabs li[class="active"] a[data-url="#"]').click(function () {	
 			var target = $(this).attr('href');
 			$('.chartcontent').html(loadingDiv);
-			loadChart($(this));
+			loadChart();
 		});
 
 		$('.toggle-button').click(function () {
@@ -804,12 +699,12 @@ function loadFundamental(e) {
 		});
 
 		$('#adj, #configure, #charttype, #overlay, #Indicators, #mov1, #mov2, #touchspin_demo1, #touchspin_demo2, #dashboard-report-range').change(function () {
-			loadChart($(this));
+			loadChart();
 		});
 	})
 
 		$('#dashboard-report-range').on('hide.daterangepicker', function () {
-			loadChart($(this));
+			loadChart();
 		});
 </script>
 @endpush

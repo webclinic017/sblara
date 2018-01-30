@@ -1,0 +1,1 @@
+<img src="{{'/price-scale-chart/50/60/55/ABBANK'}}" />

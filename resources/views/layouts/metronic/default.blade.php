@@ -42,12 +42,20 @@
 
         {{-- full width content --}}
                          @yield('full-width-content')
+                                             <!-- resposive_new_site -->
+<div class="row">
+    <div class="col-md-12">
+        @include('ads.google_responsive')
+    </div>
+</div>
+                         </div>
         {{-- full width content --}}
 {{-- custom mod for ad --}}
 
 
                     </div>
                     <!-- END SIDEBAR CONTENT LAYOUT -->
+
                 </div>
                 <!-- BEGIN FOOTER -->
                 @include('includes.metronic.footer')

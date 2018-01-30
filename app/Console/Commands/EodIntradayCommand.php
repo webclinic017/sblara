@@ -60,10 +60,18 @@ class EodIntradayCommand extends Command
     {
 
 
-        $querystr = "select SUM(MKISTAT_TOTAL_TRADES) as total_trades from MKISTAT ORDER BY MKISTAT_LM_DATE_TIME DESC LIMIT 0 , 600";
+        $querystr = "select SUM(MKISTAT_TOTAL_TRADES) as total_trades,SUM(MKISTAT_TOTAL_VALUE) as total_value,SUM(MKISTAT_TOTAL_VOLUME) as total_volume,MAX(MKISTAT_LM_DATE_TIME) as MKISTAT_LM_DATE_TIME from MKISTAT ORDER BY MKISTAT_LM_DATE_TIME";
         $from_dse = DB::connection('dse')->select($querystr);
 
+
         $batch_total_trades_from_dse = $from_dse[0]->total_trades;
+        $batch_total_value_from_dse = $from_dse[0]->total_value;
+        $batch_total_volume_from_dse = $from_dse[0]->total_volume;
+        $batch_max_time = $from_dse[0]->MKISTAT_LM_DATE_TIME;
+
+
+
+
 
         $querystr = "select * from MKISTAT ORDER BY MKISTAT_LM_DATE_TIME DESC LIMIT 0 , 600";
         $dataFromDseServer = DB::connection('dse')->select($querystr);
@@ -110,10 +118,27 @@ class EodIntradayCommand extends Command
 
                 // incrementing
                 $data_bank_intraday_batch++;
-
+                $dataToSaveInTradesTable = array();
 
                 // Check if it is same row of previous minute
                 if ($batch_total_trades != $batch_total_trades_from_dse) {
+
+
+                    // saving trade data in TRD table. This is alternative solution as TradeDataCommand corn missing data. disable code from here if not needed. and enable dse:TradeData from kernel also -- STARTS
+                    $temp = array();
+                    $temp['market_id'] = 100;
+                    $temp['TRD_SNO'] = 1;
+                    $temp['TRD_TOTAL_TRADES'] = $batch_total_trades_from_dse;
+                    $temp['TRD_TOTAL_VOLUME'] = $batch_total_volume_from_dse;
+                    $temp['TRD_TOTAL_VALUE'] = $batch_total_value_from_dse;
+                    $temp['TRD_LM_DATE_TIME'] = date('Y-m-d H:i:s', strtotime($batch_max_time));
+                    $temp['trade_time'] = date('H:i', strtotime($batch_max_time));
+                    $temp['trade_date'] = date('Y-m-d', strtotime($batch_max_time));
+                    $dataToSaveInTradesTable[] = $temp;
+                    DB::table('trades')->insert($dataToSaveInTradesTable);
+                    $this->info(count($dataToSaveInTradesTable) . ' row inserted into trades');
+
+                    // saving trade data in TRD table. This is alternative solution as TradeDataCommand corn missing data. -- ENDS
 
 
                     $instrumentList = InstrumentRepository::getInstrumentsScripOnly();
@@ -125,6 +150,7 @@ class EodIntradayCommand extends Command
                     $primary_id_max= $existing_eod_data->max('id');
 
                     $dataToSave = array();
+
                     $instrument_ids = [];
                     $eod_update_sql="INSERT into data_banks_eods (id,market_id,instrument_id,open,high,low,close,volume,trade,tradevalues,updated,date) VALUES";
                     $update_values="";

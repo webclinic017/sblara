@@ -14,7 +14,6 @@
 <div class="col-lg-6 col-md-3 col-sm-6 col-xs-12">
 @include('html.instrument_list_bs_select',['bs_select_id'=>'instruments'])
 </div>
-
 </div>
 <div class="mt-element-step">
     <div class="row step-thin margin-bottom-20">
@@ -157,6 +156,15 @@
     <div class="clearfix"></div>
 
 
+<div class="row">
+       <div class="portlet light bordered">
+                       <div class="portlet-body">
+                          @include('ads.google_responsive')
+                       </div>
+                   </div>
+    </div>
+
+
  {{--@include('html.instrument_list_bs_select',['bs_select_id'=>'instruments'])--}}
     <div class="row">
 
@@ -221,15 +229,6 @@
     </div>
 
 @include('block.market_depth_single', array('instrument_id' => $instrumentInfo->id))
-    <div class="row">
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <div class="portlet light bordered">
-                <div class="portlet-body">
-                   @include('ads.google_responsive')
-                </div>
-            </div>
-        </div>
-    </div>
 
 
 <div class="row">
@@ -303,6 +302,37 @@
                     <div class="tools">
                                                 <a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.news_box:limit=30:instrument_id={{$instrumentInfo->id}}" class="reload"></a>
                                                 
+                        <a href="" class="collapse">
+                        </a>
+
+                        </a>
+                        <a href="" class="remove">
+                        </a>
+
+                    </div>
+
+                </div>
+                <div class="portlet-body">
+                  {{--   @include('block.news_box', array('instrument_id' => $instrumentInfo->id,'limit' =>30))--}}
+                     {{--@include('block.news_box_today')--}}
+                     {{--@include('block.news_box', array('instrument_id' => array(12,13),'limit' =>5))--}}
+                </div>
+            </div>
+            <!-- END Portlet PORTLET-->
+        </div>
+        <div class="col-md-6">
+            <!-- BEGIN Portlet PORTLET-->
+            <div class="portlet light bordered">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="icon-graph font-yellow-casablanca"></i>
+								<span class="caption-subject bold font-yellow-casablanca uppercase">
+								Trade summary</span>
+                        <span class="caption-helper">Stattistics of trades</span>
+                    </div>
+                    <div class="tools">
+                                                <a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.trade_summary:limit=30:instrument_id={{$instrumentInfo->id}}" class="reload"></a>
+
                         <a href="" class="collapse">
                         </a>
 

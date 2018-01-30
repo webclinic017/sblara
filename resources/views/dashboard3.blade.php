@@ -89,6 +89,15 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
 @endsection
 
 @section('full-width-content')
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="portlet light bordered">
+                <div class="portlet-body">
+                   @include('ads.google_responsive')
+                </div>
+            </div>
+        </div>
+    </div>
 
 <div class="row">
 
@@ -453,6 +462,18 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
     </div>
     {{--Main 2nd content column: End--}}    
 </div>
+
+
+<div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="portlet light bordered">
+                <div class="portlet-body">
+                   @include('ads.google_responsive')
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 {{-- full row at the bottom START--}}
 <div class="row">

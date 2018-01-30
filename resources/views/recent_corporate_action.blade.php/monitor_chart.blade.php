@@ -139,7 +139,7 @@ $(document).ready(function(){
                                                         // plotBackgroundImage: 'http://www.new.stockbangladesh.com/img/chart_logo.gif',
                                                          events: {
                                                              load: function() {
-                                                                 this.renderer.image('http://www.new.stockbangladesh.com/img/chart_logo.gif', this.chartWidth/2.5, this.chartHeight/2.5, 86, 63).add();  // add image(url, x, y, w, h)
+                                                                 this.renderer.image('{{url('/img/chart_logo.gif')}}', this.chartWidth/2.5, this.chartHeight/2.5, 86, 63).add();  // add image(url, x, y, w, h)
                                                              }
                                                          },
                                                          showAxes: true,

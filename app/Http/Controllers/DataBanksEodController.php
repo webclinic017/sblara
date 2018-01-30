@@ -657,4 +657,51 @@ class DataBanksEodController extends Controller
 
     }
 
+    public function price_scale_chart($high=50, $low=40, $close=45, $text="ABBANK")
+    {
+        include(app_path() . '/ChartDirector/phpchartdir.php');
+
+        $scal = ($high - $low) / 3;
+        // $scal=round($scal,0);
+        //$value = 75.35;
+# Create an LinearMeter object of size 250 x 75 pixels, using silver background with
+# a 2 pixel black 3D depressed border.
+        $m = new \LinearMeter(250, 75, 0xffffff, 0xffffff, 0);
+
+# Set the scale region top-left corner at (15, 25), with size of 200 x 50 pixels. The
+# scale labels are located on the top (implies horizontal meter)
+        $m->setMeter(15, 25, 220, 20, Top);
+
+# Set meter scale from 0 - 100, with a tick every 10 units
+        $m->setScale($low, $high, $scal);
+
+# Set 0 - 50 as green (99ff99) zone, 50 - 80 as yellow (ffff66) zone, and 80 - 100 as
+# red (ffcccc) zone
+        $colorgap = ($high - $low) / 3;
+
+
+        $m->addZone($low, $low + $colorgap, 0xEDDE15);
+        $m->addZone($low + $colorgap, $low + $colorgap + $colorgap, 0xF7BD00);
+        $m->addZone($low + $colorgap + $colorgap, $high, 0xF79000);
+
+# Add a blue (0000cc) pointer at the specified value
+        $m->addPointer($close, 0x0000cc);
+
+# Add a label at bottom-left (10, 68) using Arial Bold/8 pts/red (c00000)
+        $m->addText(10, 68, "$text", 'arialbd.ttf', 8, 0xc00000, BottomLeft);
+
+# Add a text box to show the value formatted to 2 decimal places at bottom right. Use
+# white text on black background with a 1 pixel depressed 3D border.
+        $textBoxObj = $m->addText(238, 70, $m->formatValue($close, "2"), 'arialbd.ttf', 8,
+            0xffffff, BottomRight);
+        $textBoxObj->setBackground(0, 0, -1);
+
+# Output the chart
+        header("Content-type: image/png");
+        print($m->makeChart2(PNG));
+
+
+
+    }
+
 }

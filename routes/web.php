@@ -174,6 +174,7 @@ Route::get('/ajax/price_matrix_data', 'AjaxController@price_matrix_data')->name(
 Route::get('/ajax/load_block/{param}', 'AjaxController@load_block')->name('Ajax.load_block')->middleware('httpcache'); //example: /ajax/load_block/bock_name=block.minute_chart:instrument_id=13
 
 Route::get('/tooltip_chart/{instrumentId}', 'DataBanksEodController@tooltip_chart')->name('tooltip_chart');
+Route::get('/price-scale-chart/{high}/{low}/{close}/{text}/', 'DataBanksEodController@price_scale_chart')->name('price-scale-chart');
 
 //trading view
 Route::get('config/', 'TradingViewController@config');

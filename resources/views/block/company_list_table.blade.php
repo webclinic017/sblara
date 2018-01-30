@@ -21,14 +21,14 @@
         <tbody>
         @foreach($all_data as $data)
             <tr>
-            @if(($data->close_price-$data->yday_close_price)>0)
+            @if(($data->pub_last_traded_price-$data->yday_close_price)>0)
 
                 <td class="highlight"><div class="success"></div> <a href="javascript:;">@include('html.tooltip_chart',array('instrumentId'=>$data->instrument_id,'instrument_code'=>$data->instrument_code))</a></td>
             @endif
-            @if(($data->close_price-$data->yday_close_price)<0)
+            @if(($data->pub_last_traded_price-$data->yday_close_price)<0)
                 <td class="highlight"><div class="danger"></div> <a href="javascript:;">@include('html.tooltip_chart',array('instrumentId'=>$data->instrument_id,'instrument_code'=>$data->instrument_code))</a></td>
             @endif
-            @if(($data->close_price-$data->yday_close_price)==0)
+            @if(($data->pub_last_traded_price-$data->yday_close_price)==0)
                 <td class="highlight"><div class="info"></div> <a href="javascript:;">@include('html.tooltip_chart',array('instrumentId'=>$data->instrument_id,'instrument_code'=>$data->instrument_code))</a></td>
             @endif
                 <td> <div class="btn-group">
@@ -75,8 +75,8 @@
                 <td> {{$data->pub_last_traded_price}} </td>
                 <td> {{$data->close_price}} </td>
                 <td> {{$data->yday_close_price}} </td>
-                <td> {{round($data->close_price-$data->yday_close_price,2)}} </td>
-                <td> {{round(($data->close_price-$data->yday_close_price)/$data->yday_close_price*100,2)}}% </td>
+                <td> {{round($data->pub_last_traded_price-$data->yday_close_price,2)}} </td>
+                <td> {{round(($data->pub_last_traded_price-$data->yday_close_price)/$data->yday_close_price*100,2)}}% </td>
                 <td> {{$data->total_volume}} </td>
                 <td> {{$data->total_trades}} </td>
                 <td> {{$data->total_value}} </td>

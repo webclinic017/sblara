@@ -5,7 +5,7 @@
 <![endif]-->
 <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
  <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
- 
+ <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 <script src="{{ asset('metronic_custom/custom.js?v=1') }}"></script>
 <script src="{{ asset('js/application.js') }}"></script>
 @include('includes.flash.toastr')
