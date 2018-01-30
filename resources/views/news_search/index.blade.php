@@ -1,4 +1,4 @@
-@section('meta-title', 'User Friendly And Easy Search of Search Panel of Share Market News')
+@section('meta-title', $meta_title)
 @section('meta-description', '')
 
 @extends('layouts.metronic.default')
@@ -81,10 +81,19 @@
                     <div class="search-container bordered ">
                         <div class="search-content" style="margin-left: 15px; margin-right: 15px">
                             <h2 class="search-title">
-                                <a href="javascript:;">{{$results->prefix}}</a>
-                                <label class="pull-right">{{date('d-m-Y', strtotime($results->post_date))}}</label>
+                                <a target="_blank" href="{{'/ta-chart?instrumentCode='.$results->prefix}}">{{$results->prefix}}</a>
+                                <label class="pull-right">{{date('d-M-Y', strtotime($results->post_date))}}</label>
                             </h2>
                             <p class="search-desc">{!!str_replace(old('keyword'),"<span style='background-color: yellow'>".old('keyword')."</span>",$results->details)!!}</p>
+                              <div class="btn-group btn-group btn-group-justified hidden-xs">
+                                <a target="_blank" href="{{'/news-chart/'.$results->instrument_id}}" class="btn red"> News Chart </a>
+                                <a target="_blank" href="{{'/ta-chart?instrumentCode='.$results->prefix}}" class="btn blue"> TA Chart </a>
+                                <a target="_blank" href="{{'/advance-ta-chart?instrumentCode='.$results->prefix}}" class="btn green"> Advance TA Chart </a>
+                                <a target="_blank" href="{{'/minute-chart/'.$results->instrument_id}}" class="btn red"> Minute Chart  </a>
+                                <a target="_blank" href="{{'/company-details/'.$results->instrument_id}}" class="btn blue"> Company Details </a>
+                                <a target="_blank" href="{{'/fundamental-details'.$results->instrument_id}}" class="btn green"> Fundamental Details </a>
+
+                            </div>
                         </div>
                     </div>
                 </div>

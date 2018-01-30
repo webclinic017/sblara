@@ -32,7 +32,7 @@
                 <td class="highlight"><div class="info"></div> <a href="javascript:;">@include('html.tooltip_chart',array('instrumentId'=>$data->instrument_id,'instrument_code'=>$data->instrument_code))</a></td>
             @endif
                 <td> <div class="btn-group">
-                     <button class="btn green btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Go
+                     <button class="btn green btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Go To
                          <i class="fa fa-angle-down"></i>
                      </button>
                      <ul class="dropdown-menu" role="menu">

@@ -1,6 +1,6 @@
 <link href="{{ URL::asset('metronic/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css') }}" rel="stylesheet" type="text/css" />
 <div class="row">
-<div class="col-md-12" style="z-index: 99">
+<div class="col-md-12" style="z-index: 99; max-width:300px;">
 	<div class="form-group">
         <div class="input-group select2-bootstrap-prepend " style="max-width: 300px">
             <span class="input-group-btn">

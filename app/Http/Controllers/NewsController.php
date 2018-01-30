@@ -566,33 +566,40 @@ class NewsController extends Controller
     public function newsSearch(Request $request){
                     
             $result = [];
+        $instrument = Instrument:: all();
+        $meta_title="User Friendly And Easy Search Panel of DSE Published News";
+        $meta_desc="";
         if($request->has('keyword')){
-            
+            $meta_title="DSE News of";
             $result = new News();
             
            if($request->instrument_id){
-               
+               $instrument_info=$instrument->where('id',$request->instrument_id)->first();
+               $instrument_code=$instrument_info->instrument_code;
+               $meta_title.=" $instrument_code";
             $result = $result->where('instrument_id',$request->instrument_id);
-            
+
            }
            if($request->keyword)
            {
-               
+            $meta_title.=" Related to ".ucwords(strtolower($request->keyword));
             $result = $result->where('details','like', '%'.$request->keyword.'%');
            }
            if($request->from_date)
            {
+              $meta_title.=" Published From ".$request->from_date;
               $result = $result->where('post_date', '>=', $request->from_date);
            }
            
            if($request->to_date)
            {
+               $meta_title.=" to ".$request->to_date;
               $result = $result->where('post_date', '<=', $request->to_date.' 23:59:59');
            }
                     
              $result = $result->orderBy('post_date', 'desc')->paginate(10);
         }
-        $instrument = Instrument:: all();
+
         $request->flash();
         $params = request()->except('page');
         if(request()->has('keyword'))
@@ -616,7 +623,7 @@ class NewsController extends Controller
         }
         $result->appends($params);
         }
-        return view('news_search.index',['instrument' => $instrument, 'result' => $result]);
+        return view('news_search.index',['instrument' => $instrument, 'result' => $result, 'meta_title' => $meta_title, 'meta_desc' => $meta_desc]);
     }
     
     public function viewNews($id){
