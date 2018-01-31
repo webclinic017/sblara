@@ -1,43 +1,1 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: sohail
- * Date: 4/16/2017
- * Time: 12:13 PM
- */
-
-namespace App\Http\ViewComposers;
-
-
-use Illuminate\View\View;
-use App\Repositories\DataBanksIntradayRepository;
-use App\Repositories\InstrumentRepository;
-
-class TradeSummary
-{
-
-    /**
-     * Bind data to the view.
-     *
-     * @param  View  $view
-     * @return void
-     */
-    public function compose(View $view)
-    {
-       /*   //getting top 10 list by total_trades
-        $totalTradeList=DataBanksIntradayRepository::significantValueLastMinute('total_trades',10);
-        $totalTradeData=DataBanksIntradayRepository::getMinuteData($totalTradeList->keys(),15,'total_trades');
-
-        // getting 15 minutes data for each share.
-        // We have to discard last (15th) value of difference. So we are adding slice(0,14) in view
-        $instrumentList=InstrumentRepository::getInstrumentList();
-        $instrumentList=$instrumentList->keyBy('id');
-
-        $viewData=array();
-        $viewData['totalTradeList']=$totalTradeList;
-        $viewData['totalTradeData']=$totalTradeData;
-        $viewData['instrumentList']=$instrumentList;*/
-
-        $view->with('viewData', '1');
-    }
-}
+<?php/** * Created by PhpStorm. * User: sohail * Date: 4/16/2017 * Time: 12:13 PM */namespace App\Http\ViewComposers;use Illuminate\View\View;use App\Repositories\DataBanksIntradayRepository;use App\Repositories\DataBankEodRepository;use App\Repositories\InstrumentRepository;use DB;class TradeSummary{    /**     * Bind data to the view.     *     * @param  View  $view     * @return void     */    public function compose(View $view)    {        $instrument_id=13;        if(isset($viewdata['instrument_id']))            $instrument_id=(int)$viewdata['instrument_id'];       /* $sql="SELECT max(high) as max_high,min(low) as min_low FROM data_banks_eods WHERE  date >= DATE_SUB(NOW(),INTERVAL 1 YEAR) and instrument_id=$instrument_id";        $high_low_data=DB::select(DB::raw($sql));        $sql="SELECT avg(volume) as avg_vol,avg(trade) as avg_trd, avg(volume)/avg(trade) as per_trade_volume FROM data_banks_eods WHERE  date >= DATE_SUB(NOW(),INTERVAL 30 DAY) and instrument_id=$instrument_id";        $avg_data=DB::select(DB::raw($sql));        $latest_trade_data=DataBanksIntradayRepository::getAvailableLTP([$instrument_id]);*/        $latest_trade_data=DataBanksIntradayRepository::getDataForMinuteChart($instrument_id);        $eod=DataBankEodRepository::getEodData($instrument_id,'2017-01-30','2018-01-30');        $eod_adj=DataBankEodRepository::getEodDataAdjusted($instrument_id,'2017-01-30','2018-01-30');        dump($latest_trade_data);        dump($eod);        dump($eod_adj);       /*   //getting top 10 list by total_trades        $totalTradeList=DataBanksIntradayRepository::significantValueLastMinute('total_trades',10);        $totalTradeData=DataBanksIntradayRepository::getMinuteData($totalTradeList->keys(),15,'total_trades');        // getting 15 minutes data for each share.        // We have to discard last (15th) value of difference. So we are adding slice(0,14) in view        $instrumentList=InstrumentRepository::getInstrumentList();        $instrumentList=$instrumentList->keyBy('id');        $viewData=array();        $viewData['totalTradeList']=$totalTradeList;        $viewData['totalTradeData']=$totalTradeData;        $viewData['instrumentList']=$instrumentList;*/        $view->with('viewData', '1');    }}

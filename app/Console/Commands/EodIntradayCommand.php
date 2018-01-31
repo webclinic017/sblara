@@ -126,7 +126,7 @@ class EodIntradayCommand extends Command
 
                     // saving trade data in TRD table. This is alternative solution as TradeDataCommand corn missing data. disable code from here if not needed. and enable dse:TradeData from kernel also -- STARTS
                     $temp = array();
-                    $temp['market_id'] = 100;
+                    $temp['market_id'] = $market_id;
                     $temp['TRD_SNO'] = 1;
                     $temp['TRD_TOTAL_TRADES'] = $batch_total_trades_from_dse;
                     $temp['TRD_TOTAL_VOLUME'] = $batch_total_volume_from_dse;
