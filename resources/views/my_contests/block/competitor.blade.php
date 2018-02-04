@@ -45,7 +45,7 @@
                                         @endif
                                     </td>
                                     <td>
-                                        <a href="{{ route('contests.portfolios.show', $contest->id) }}" class="btn btn-primary btn-xs">View</a>
+                                        <a href="{{ route('contests.portfolios.show', $portfolio->id) }}" class="btn btn-primary btn-xs">View</a>
                                     </td>
                                 </tr>
                             @else

@@ -27,7 +27,8 @@
                     <div class="panel-heading">
                         <h4 class="panel-title">
                             <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion1" href="#collapse_{{$ipo->id}}" aria-expanded="false"> <span><h3>{{$ipo->ipo_name}}</h3></span> <br>
-                                <span>SUBSCRIPTION PERIOD: SUNDAY, SEP 24, 2017 -- TUESDAY, OCT 03, 2017</span>
+                                
+                                <span style="text-transform: uppercase;">SUBSCRIPTION PERIOD: {{\Carbon\Carbon::parse($ipo->subscription_open)->format('l, M d, Y')}} -- {{\Carbon\Carbon::parse($ipo->subscription_close)->format('l, M d, Y')}}  </span>
                              </a>
                         </h4>
                     </div>
@@ -39,9 +40,18 @@
                                 <ul>
                                     @php
                                     $i = 0;
+                                    $ipo =  $ipo->toArray(); 
                                     @endphp
-                                    @foreach($ipo->attachments as $attachment)
-                                    <li><a href="{{$attachment->path?asset($attachment->path):'javascript:'}}">{{$attachment->title}}</a></li>
+                                    @foreach($ipo as $key => $attachment)
+                                    @php
+                                    $attachment = json_decode($attachment);
+                                    if(!is_array($attachment) || $key == 'logo' || !isset($attachment[0]->download_link))
+                                    {
+                                        continue;
+                                    }
+                                    $attachment = $attachment[0];
+                                    @endphp
+                                    <li><a href="{{$attachment->download_link?asset('/storage/'.$attachment->download_link):'javascript:'}}">{{$attachment->original_name}}</a></li>
                                     @php
                                     $i++;
                                     @endphp

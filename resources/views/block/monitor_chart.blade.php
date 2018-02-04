@@ -390,7 +390,11 @@ $(document).ready(function(){
             if (i == {{ $id }}) continue;
             var sel = 'symbol' + i;
             if(document.getElementById(sel).value == inst){
-                alert("Already Selected");
+                if(inst == '')
+                {
+                    return;
+                }
+                swal('Already selected');
                 document.getElementById('chart_placeholder{{ $id }}').style.display = 'none';
                 return;
             }

@@ -52,15 +52,17 @@ class ContestsController extends Controller
             $this->authorize('show', $contest);
         }
 
-
         $users = \Cache::remember('contest_'.$contest, now()->addSeconds(1200), function () use($contest)
         {
-         $sql = "SELECT no_of_shares , sell_quantity, users.name, users.id user_id,  contest_portfolios.id, contest_portfolios.join_date, 
+         $sql = "SELECT no_of_shares , sell_quantity, users.name, users.id user_id,  contest_portfolios.id, 
+           IFNULL(contest_portfolios.join_date, contest_portfolios.created_at) join_date, 
                     (select count(distinct  id) from contest_portfolio_shares where contest_portfolio_id = contest_portfolios.id) share_holdings, round(IFNULL(sum((no_of_shares - sell_quantity)* IFNULL(ltp, (select close from data_banks_eods where data_banks_eods.instrument_id = contest_portfolio_shares.instrument_id and close != 0 and close is not null order by id desc limit 1))), 0) +cash_amount, 2) portfolio_value FROM `contest_portfolios` 
                     LEFT JOIN contest_portfolio_shares on contest_portfolios.id = contest_portfolio_shares.contest_portfolio_id 
-                    LEFT JOIN (SELECT instrument_id, ROUND( COALESCE(  NULLIF(close_price, 0), NULLIF(pub_last_traded_price, 0) , NULLIF(spot_last_traded_price, 0), NULLIF(yday_close_price,  0) ), 2 ) as ltp FROM `data_banks_intradays` where batch = ( select max(batch) from data_banks_intradays) ) as ltp on ltp.instrument_id = contest_portfolio_shares.instrument_id LEFT JOIN users on users.id = user_id WHERE contest_portfolios.contest_id = $contest->id   group by contest_portfolios.id ORDER BY `portfolio_value` DESC";            
+                    LEFT JOIN (SELECT instrument_id, ROUND( COALESCE(  NULLIF(close_price, 0), NULLIF(pub_last_traded_price, 0) , NULLIF(spot_last_traded_price, 0), NULLIF(yday_close_price,  0) ), 2 ) as ltp FROM `data_banks_intradays` where batch = ( select max(batch) from data_banks_intradays) ) as ltp on ltp.instrument_id = contest_portfolio_shares.instrument_id LEFT JOIN users on users.id = user_id WHERE contest_portfolios.contest_id = $contest->id   group by contest_portfolios.id ORDER BY `portfolio_value` DESC";       
             return \DB::select(\DB::raw($sql)); 
         });
+
+        
          $contest->load(['contestPortfolios.shares', 'contestPortfolios.user']);
          // dd($sql);
         // Retrieve all contests that have at least one approved user..

@@ -159,7 +159,7 @@ Route::get('/advance-ta-chart', function () {
     })->name('advance-ta-chart');
 Route::get('/ta-chart', 'DataBanksEodController@panel')->name('ta-chart');
 Route::get('/java-chart', 'DataBanksEodController@java_chart')->name('java-chart');
-Route::get('/ta/ajax/{reportrange?}/{instrument?}/{comparewith?}/{Indicators?}/{configure?}/{charttype?}/{overlay?}/{mov1?}/{avgPeriod1?}/{mov2?}/{avgPeriod2?}/{adj?}/', 'DataBanksEodController@chart_img_trac');
+Route::get('/ta/ajax/{reportrange?}/{instrument?}/{comparewith?}/{Indicators?}/{configure?}/{charttype?}/{overlay?}/{mov1?}/{avgPeriod1?}/{mov2?}/{avgPeriod2?}/{adj?}/{interval?}', 'DataBanksEodController@chart_img_trac');
 Route::get('/getchart/{img}', 'DataBanksEodController@getchart');
 
 

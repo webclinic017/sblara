@@ -165,6 +165,7 @@ function growthCalculatePer($lastMinuteData, $prevMinuteData, $field = 'price_ch
 
 function fontCss($val)
 {
+
     $css = ($val < 0) ? "font-red-haze" : "font-green-jungle";
     return $css;
 }

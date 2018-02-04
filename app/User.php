@@ -87,5 +87,9 @@ class User extends \TCG\Voyager\Models\User implements Ath{
         return Carbon::parse($join_date)->format('d-M-Y');
     }
 
+    public function getAvatarAttribute($value)
+    {
+        return $this->image?"/img/35x35/".$this->image:"/img/user-default.png";
+    }
 
 }

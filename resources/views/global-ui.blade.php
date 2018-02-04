@@ -26,6 +26,11 @@
 <div class="row widget-row" style=" margin-top: -48px;display: inline-block; width: 100%">
 <div class="col-md-12 margin-bottom-20">
     <!-- BEGIN WIDGET TAB -->
+        <style>
+        .ta-chart-tabs ul li a{
+            text-transform: uppercase !important;
+        }
+    </style>
     <div class=" ta-chart-tabs tabbable-custom ">
         <ul class="nav nav-tabs tabs-reversed">
 
@@ -73,20 +78,37 @@
 
                         <div class="form-group " style="background: #f5f5f5; padding-top: 10px; display: inline-block; margin-right: 0px; margin-left: 0">
 							<div class="col-md-9">
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <div class="margin-bottom-10">
                                     <select id="adj" class="bs-select form-control" >
-                                        <option value="1" selected>Adjusted Data</option>
-                                        <option value="0" >Non Adjusted Data</option>
+                                        <option value="1" selected>Adjusted</option>
+                                        <option value="0" >Non Adjusted</option>
                                     </select>
 
                                 </div>
                             </div>
 
-                            <div class="col-md-3">
+                            <div class="col-md-2">
+                                <div class="margin-bottom-10">
+                                    <select id="interval" class="bs-select form-control" >
+                                        <option value="{{1*60}}" >1 Minute</option>
+                                        <option value="{{5*60}}" >5 Minute</option>
+                                        <option value="{{15*60}}" >15 Minute</option>
+                                        <option value="{{30*60}}" >30 Minute</option>
+                                        <option value="{{45*60}}" >45 Minute</option>
+                                        <option value="{{60*60}}" >1 Hour</option>
+                                        <option value="{{24*60*60}}" selected>1 Day</option>{{-- 
+                                        <option value="{{7*24*60*60}}" >7 Days</option>
+                                        <option value="{{30*24*60*60}}" >30 Days</option> --}}
+                                    </select>
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-2">
                                 <div class="margin-bottom-10">
                                     <select id="configure" class="bs-select form-control" multiple>
-                                        <option value="VOLBAR" title="VOLBAR" selected="">Show volume bar</option>
+                                        <option value="VOLBAR" title="VOLBAR" selected="">Volume bar</option>
                                         <option value="PSAR" title="PSAR">Parabolic SAR</option>
                                         <option value="LOG" title="LOG">Log Scale</option>
                                         <option value="PSCALE" title="PSCALE">Percentage Scale</option>
@@ -159,7 +181,7 @@
                                     <input id="touchspin_demo2" type="text" value="19" name="demo1" class="form-control">
 
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <div class="margin-bottom-10">
                                     <div class="input-group ">
                                     <input data-placement="top" data-original-title="Change  date range" class="btn-fit-height green tooltips btn form-control"  type="text" id="dashboard-report-range">
@@ -174,6 +196,10 @@
 
 
                                 </div>
+                            </div>
+
+                            <div class="col-md-1">
+                                <button type="button" onclick="loadChart()" class="btn btn-success"><i class="fa fa-refresh"></i></button>      
                             </div>
                         </div>
 
@@ -442,7 +468,7 @@ function traceFinance(viewer, mouseX)
                 $("#dashboard-report-range").data('daterangepicker').setStartDate(start);
                 //use end if user want to store end date;
                 $('#dashboard-report-range').data('daterangepicker').setEndDate(moment());
-                $('#dashboard-report-range').attr('data-range', v);
+                $('#dashboard-report-range').attr('data-range', date[0]+'|{{date('Y-m-d')}}');
             }else{
                 $('#'+k).val(v);
                 $('#'+k).trigger('change');    
@@ -457,6 +483,7 @@ function traceFinance(viewer, mouseX)
         //#adj, #configure, #charttype, #overlay, #Indicators, #mov1, #mov2, #touchspin_demo1, #touchspin_demo2, #dashboard-report-range
             
         fields['adj'] = $('#adj').val();
+        fields['interval'] = $('#interval').val();
         fields['configure'] = $('#configure').val();
         fields['charttype'] = $('#charttype').val();
         fields['overlay'] = $('#overlay').val();
@@ -499,7 +526,7 @@ function traceFinance(viewer, mouseX)
             sharelist = $('#shareList').val();
         }
 
-        url = url + "/" + chartRange + "/" + sharelist + "/" + comparewith + "/" + $('#Indicators').val() + "/" + $('#configure').val() + "/" + $('#charttype').val() + "/" + $('#overlay').val() + "/" + $('#mov1').val() + "/" + $('#touchspin_demo1').val() + "/" + $('#mov2').val() + "/" + $('#touchspin_demo2').val() + "/" + $('#adj').val();
+        url = url + "/" + chartRange + "/" + sharelist + "/" + comparewith + "/" + $('#Indicators').val() + "/" + $('#configure').val() + "/" + $('#charttype').val() + "/" + $('#overlay').val() + "/" + $('#mov1').val() + "/" + $('#touchspin_demo1').val() + "/" + $('#mov2').val() + "/" + $('#touchspin_demo2').val() + "/" + $('#adj').val()+ "/" + $('#interval').val();
 
         var companyDetailsUrl = 'http://www.new.stockbangladesh.com/TechnicalAnalysis/company_details/' + sharelist
         var marketDepthUrl = 'http://www.new.stockbangladesh.com/TechnicalAnalysis/market_depth/' + sharelist
@@ -698,7 +725,7 @@ function loadFundamental(e) {
 
 		});
 
-		$('#adj, #configure, #charttype, #overlay, #Indicators, #mov1, #mov2, #touchspin_demo1, #touchspin_demo2, #dashboard-report-range').change(function () {
+		$('#adj, #configure, #charttype, #overlay, #Indicators, #mov1, #mov2, #touchspin_demo1, #touchspin_demo2, #dashboard-report-range', '#interval').change(function () {
 			loadChart();
 		});
 	})

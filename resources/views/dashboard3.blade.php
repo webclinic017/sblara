@@ -150,11 +150,11 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
                         <div class="caption">
                             <i class="icon-graph font-yellow-casablanca"></i>
                             <span class="caption-subject bold font-yellow-casablanca uppercase">
-                              Stock Bangladesh TV </span>
+                              Gainer Loser : Whole Day (UP/DOWN BAR) </span>
 
                           </div>
                             <div class="tools">
-                                {{--<a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.sector_gainer_loser:render_to=gainer_loser_whole_day_up_down_bar" class="reload"></a>--}}
+                                <a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.sector_gainer_loser:render_to=gainer_loser_whole_day_up_down_bar" class="reload"></a>
 
                                 <a href="" class="collapse">
                                 </a>
@@ -166,7 +166,7 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
                     </div>
 
                 <div class="portlet-body">
-        <iframe width="640" height="360" src="https://www.youtube.com/embed/xiEhxC_oid8" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
                 </div>
             </div>
             </div>
@@ -350,7 +350,34 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
     {{--Main content 2nd column: Start--}}
     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="portlet light bordered">
+                  <div class="portlet-title tabbable-line">
+                        <div class="caption">
+                            <i class="icon-graph font-yellow-casablanca"></i>
+                            <span class="caption-subject bold font-yellow-casablanca uppercase">
+                              Stock Bangladesh TV </span>
 
+                          </div>
+                            <div class="tools">
+                                {{--<a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.sector_gainer_loser:render_to=gainer_loser_whole_day_up_down_bar" class="reload"></a>--}}
+
+                                <a href="" class="collapse">
+                                </a>
+
+                            </a>
+                            <a href="" class="remove">
+                            </a>
+                        </div>
+                    </div>
+
+                <div class="portlet-body">
+        <iframe width="100%" height="400" src="https://www.youtube.com/embed/xiEhxC_oid8" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                </div>
+            </div>
+            </div>
+        </div>
 
         {{--  New block Starts--}}
         <div class="row">

@@ -9,6 +9,7 @@
             
             <!-- BEGIN LAYOUT FIRST STYLES -->
             <link href="//fonts.googleapis.com/css?family=Oswald:400,300,700" rel="stylesheet" type="text/css" />
+            <link rel="stylesheet" href="/css/animate.css">
             <!-- END LAYOUT FIRST STYLES -->
             <!-- BEGIN GLOBAL MANDATORY STYLES -->
             

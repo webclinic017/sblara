@@ -132,7 +132,7 @@
                                 <div class="btn-group-img btn-group">
                                     <button type="button" class="btn btn-sm md-skip dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
                                         <span>Hi, {{ Auth::user()->name }}</span>
-                                        <img src="{{ Auth::user()->image ? url("img/35x35/".Auth::user()->image) : "http://www.cdn.innesvienna.net//Content/user-default.png" }}" alt=""> </button>
+                                        <img src="{{ Auth::user()->image ? url("img/35x35/".Auth::user()->image) : "/img/user-default.png" }}" alt=""> </button>
                                     <ul class="dropdown-menu-v2" role="menu">
                                         <li>
                                             <a href="{{ route('user-information') }}">

@@ -24,6 +24,11 @@ class ContestPortfoliosController extends Controller
      */
     public function show(ContestPortfolio $portfolio)
     {
+        if(request()->user()->id != $portfolio->user_id)
+        {
+            throw new \Exception("Error Processing Request", 404);
+            
+        }
         $portfolio->load('shares.intrument');
 
         $lastTradePrice     = null;

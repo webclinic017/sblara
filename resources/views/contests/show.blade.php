@@ -20,7 +20,7 @@
                    @foreach($top3 as $user)
                         <div class="col-md-4">
                             <h4 class="text-center"> {{strtoupper($user->name)}}</h4>
-                            <img class="img-responsive" src="{{$user->avatar}}" alt="User Image">
+                            <img class="img-responsive" style="max-width: 100px; margin:auto;" src="{{$user->avatar}}" alt="User Image">
                         </div>
                   @endforeach
  

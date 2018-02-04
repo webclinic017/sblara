@@ -13,7 +13,24 @@ use App\Market;
 
 class ChartRepository {
 
+    public static function getIntradayCandle($instrumentId, $from, $to, $interval = 6000000)
+    {
+        $candleData = DataBankEodRepository::getIntradayCandle($instrumentId, $from, $to, $interval);
+        $ohlcArr=array();
+        foreach($candleData as $data)
+        {
+            $realtimeStamps=strtotime($data->lm_date_time);
+            $ohlcArr['realtimeStamps'][] = $realtimeStamps;
+            $ohlcArr['date'][] = chartTime2($realtimeStamps);
+            $ohlcArr['open'][] = $data->open;
+            $ohlcArr['high'][] = $data->high;
+            $ohlcArr['low'][] = $data->low;
+            $ohlcArr['close'][] = $data->close;
+            $ohlcArr['volume'][] = $data->volume;
 
+        }
+        return $ohlcArr;            
+    }
 
     public static function getDailyData($instrumentId = 12, $from = '2010-10-25', $to = '2013-04-25', $extraPoint = 0)
     {

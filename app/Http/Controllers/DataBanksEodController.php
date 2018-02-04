@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\DataBanksEod;
 use App\Repositories\DataBanksIntradayRepository;
+use App\Repositories\DataBankEodRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use View;
@@ -91,7 +92,7 @@ class DataBanksEodController extends Controller
     }
 
    // public function chart_img_trac(Request $request,$reportrange = "", $instrumentCode = 'DSEX', $comparewith = 'ABBANK', $Indicators = "RSI,MACD", $configure = "VOLBAR", $charttype = "CandleStick", $overlay = "BB", $mov1 = "SMA",$avgPeriod1=20, $mov2 = "SMA",$avgPeriod2=30,$adj=1)
-    public function  chart_img_trac($reportrange = "", $instrument = '10001', $comparewith = 'ABBANK', $Indicators = "RSI,MACD", $configure = "VOLBAR", $charttype = "CandleStick", $overlay = "BB", $mov1 = "SMA", $avgPeriod1 = 20, $mov2 = "SMA", $avgPeriod2 = 30, $adj = 1)
+    public function  chart_img_trac($reportrange = "", $instrument = '10001', $comparewith = 'ABBANK', $Indicators = "RSI,MACD", $configure = "VOLBAR", $charttype = "CandleStick", $overlay = "BB", $mov1 = "SMA", $avgPeriod1 = 20, $mov2 = "SMA", $avgPeriod2 = 30, $adj = 1, $interval = 24*60*60)
     {
 
         $instrument_arr=explode('_',$instrument);  //example $instrument=sector_11
@@ -177,16 +178,22 @@ class DataBanksEodController extends Controller
             $ohlcData = ChartRepository::getDailySectorData($sector_id, $from, $to, $extraPoints);
 
 
-
         }else
         {
             if ($adj)
                 $ohlcData = ChartRepository::getAdjustedDailyData($instrumentId, $from, $to, $extraPoints);
 
             else
-                $ohlcData = ChartRepository::getDailyData($instrumentId, $from, $to, $extraPoints);
+                if($interval == 24*60*60)
+                {
+                        $ohlcData = ChartRepository::getDailyData($instrumentId, $from, $to, $extraPoints);
+                }else{
+                        $ohlcData = ChartRepository::getIntradayCandle($instrumentId, $from, $to, $interval);
+
+                }
 
         }
+
 
 
         $ohlcData['realtimeStamps'] = array_reverse($ohlcData['realtimeStamps']);

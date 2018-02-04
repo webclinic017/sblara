@@ -65,7 +65,7 @@ class DsbNews
             $temp['guid'] = $row->guid;
             $temp['post_content'] = strip_tags(words($row->post_content, $words = 15, $end = '...'));
             $temp['post_title'] = $row->post_title;
-            $temp['thmbnail'] = $thumbArr[0]->guid;
+            $temp['thmbnail'] = str_replace('http','https', $thumbArr[0]->guid);
            // $temp['taxonomy'] = $tagArr;
             $liveNews[] = $temp;
         }
