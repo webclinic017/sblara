@@ -69,8 +69,10 @@ class SectorListRepository {
 
         $metaKey = array('total_no_securities','list_of_life_insurance');
         $fundamentalInfo = FundamentalRepository::getFundamentalData($metaKey, $instrument_arr);
-        $all_life_insurance_instrument_id = collect($fundamentalInfo['list_of_life_insurance'])->where('meta_value',1);
 
+        $all_life_insurance_instrument_id=array();
+        if(isset($fundamentalInfo['list_of_life_insurance']))
+        $all_life_insurance_instrument_id = collect($fundamentalInfo['list_of_life_insurance'])->where('meta_value',1);
 
 
         // Calculate all sectors pe

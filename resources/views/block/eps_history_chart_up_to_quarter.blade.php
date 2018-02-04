@@ -4,7 +4,6 @@
 <script>
     $(function () {
 
-
 Highcharts.chart('{{$render_to}}', {
             chart: {
                 zoomType: 'x',
@@ -37,17 +36,17 @@ Highcharts.chart('{{$render_to}}', {
                 }
             },
             series: [{
-                name: '3 months',
-                data: {!! $q1_eps_cont_op !!}
+                name: '{{$quarterly_label_0}}',
+                data: {!! $quarterly_data_0 !!}
             }, {
-                name: '6 months',
-                data: {!! $half_year_eps_cont_op !!}
+                name: '{{$quarterly_label_1}}',
+                data: {!! $quarterly_data_1 !!}
             }, {
-                name: '9 months',
-                data: {!! $q3_nine_months_eps !!}
+                name: '{{$quarterly_label_2}}',
+                data: {!! $quarterly_data_2 !!}
             }, {
-                name: '12 months/Yearly',
-                data: {!! $earning_per_share !!}
+                name: '{{$quarterly_label_3}}',
+                data: {!! $quarterly_data_3 !!}
             }]
         });
 

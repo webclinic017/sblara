@@ -37,17 +37,17 @@ Highcharts.chart('{{$render_to}}', {
                 }
             },
             series: [{
-                name: 'Q1',
-                data: {!! $q1_eps_cont_op !!}
+                name: '{{$quarterly_label_0}}',
+                data: {!! $quarterly_data_0 !!}
             }, {
-                name: 'Q2',
-                data: {!! $q2_eps_cont_op !!}
+                name: '{{$quarterly_label_1}}',
+                data: {!! $quarterly_data_1 !!}
             }, {
-                name: 'Q3',
-                data: {!! $q3_eps_cont_op !!}
+                name: '{{$quarterly_label_2}}',
+                data: {!! $quarterly_data_2 !!}
             }, {
-                name: 'Q4',
-                data: {!! $q4_eps_cont_op !!}
+                name: '{{$quarterly_label_3}}',
+                data: {!! $quarterly_data_3 !!}
             }]
         });
 

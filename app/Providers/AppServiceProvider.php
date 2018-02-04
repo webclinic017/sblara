@@ -20,6 +20,7 @@ class AppServiceProvider extends ServiceProvider {
 
         View::composer('html.breadcrumbs', 'App\Http\ViewComposers\BreadcrumbMaker');
         View::composer('html.instrument_list_bs_select', 'App\Http\ViewComposers\InstrumentListBsSelect');
+        View::composer('html.instrument_list_bs_select_with_sector', 'App\Http\ViewComposers\InstrumentListBsSelectWithSector');
         View::composer('block.index_chart', 'App\Http\ViewComposers\IndexChart');
         View::composer('block.index_chart2', 'App\Http\ViewComposers\IndexChart');
         View::composer('block.index_mover', 'App\Http\ViewComposers\IndexMover');
@@ -40,7 +41,9 @@ class AppServiceProvider extends ServiceProvider {
         View::composer('block.news_box_today', 'App\Http\ViewComposers\NewsBoxToday');
         View::composer('block.dsb_news', 'App\Http\ViewComposers\DsbNews');
 
-        View::composer('block.trade_summary', 'App\Http\ViewComposers\TradeSummary');
+        View::composer('block.trade_activity', 'App\Http\ViewComposers\TradeActivity');
+        View::composer('block.trade_stats', 'App\Http\ViewComposers\TradeStats');
+        View::composer('block.yearly_high_low', 'App\Http\ViewComposers\YearlyHighLow');
         View::composer('block.fundamental_summary', 'App\Http\ViewComposers\FundamentalSummary');
         View::composer('block.dividend_history', 'App\Http\ViewComposers\DividendHistory');
         View::composer('block.share_holdings_chart', 'App\Http\ViewComposers\ShareHoldingsChart');

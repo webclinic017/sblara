@@ -3,17 +3,16 @@
             <tr>
                 <th><i class="fa fa-briefcase"></i> Company </th>
                 <th> Action </th>
-                <th> Op </th>
+                <th> Ltp </th>
                 <th> Hi </th>
                 <th> Lo </th>
-                <th> Ltp </th>
                 <th> CP </th>
                 <th> YCP </th>
                 <th> Chg </th>
                 <th> Chg % </th>
-                <th> Vol </th>
                 <th> Trd </th>
                 <th> Value </th>
+                <th> Vol </th>
                 <th> Upd </th>
 
             </tr>
@@ -68,18 +67,16 @@
                      </ul>
                  </div>
                  </td>
-               <td> {{$data->open_price}} </td>
-
+                <td> {{$data->pub_last_traded_price}} </td>
                 <td> {{$data->high_price}} </td>
                 <td> {{$data->low_price}} </td>
-                <td> {{$data->pub_last_traded_price}} </td>
                 <td> {{$data->close_price}} </td>
                 <td> {{$data->yday_close_price}} </td>
-                <td> {{round($data->pub_last_traded_price-$data->yday_close_price,2)}} </td>
-                <td> {{round(($data->pub_last_traded_price-$data->yday_close_price)/$data->yday_close_price*100,2)}}% </td>
-                <td> {{$data->total_volume}} </td>
+                <td class="{{fontCss($data->pub_last_traded_price-$data->yday_close_price)}}"> {{round($data->pub_last_traded_price-$data->yday_close_price,2)}} </td>
+                <td class="{{fontCss($data->pub_last_traded_price-$data->yday_close_price)}}"> {{round(($data->pub_last_traded_price-$data->yday_close_price)/$data->yday_close_price*100,2)}}% </td>
                 <td> {{$data->total_trades}} </td>
                 <td> {{$data->total_value}} </td>
+                <td> {{$data->total_volume}} </td>
                 <td> {{date('d-M, H:i',strtotime($data->lm_date_time))}} </td>
             </tr>
         @endforeach

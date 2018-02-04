@@ -248,6 +248,6 @@ class CalculateSectorIntradayCommand extends Command
         $sec = intval($diff);
         $micro = $diff - $sec;
 
-        dump("Time:  " . round($micro * 1000, 4) . " ms");
+        echo "Time:  " . round($micro * 1000, 4) . " ms";
     }
 }

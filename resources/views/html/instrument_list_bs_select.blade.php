@@ -2,8 +2,12 @@
 		@if(isset($prepend))
 		<option >Select Share</option>
 		@endif
+
+        @foreach($sectorList as $sector)
+            <option value="sector_{{$sector->id}}" >{{$sector->name}} </option>
+        @endforeach
+
         @foreach($instrumentList as $instrument)
-            {{--<option value="AL">Alabama</option>--}}
             <option value="{{$instrument->id}}" >{{$instrument->instrument_code}} </option>
         @endforeach
 </select>

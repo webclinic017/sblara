@@ -11,6 +11,7 @@ namespace App\Http\ViewComposers;
 
 use Illuminate\View\View;
 use App\Repositories\InstrumentRepository;
+use App\Repositories\SectorListRepository;
 
 class InstrumentListBsSelect
 {
@@ -27,6 +28,7 @@ class InstrumentListBsSelect
         $bs_select_id=$viewdata['bs_select_id'];
         $instrumentList=InstrumentRepository::getInstrumentsScripWithIndex();
        // dd($instrumentList->toArray());
-        $view->with('instrumentList', $instrumentList)->with('bs_select_id',$bs_select_id);
+        $sectorList=SectorListRepository::getSectorList();
+        $view->with('instrumentList', $instrumentList)->with('sectorList', $sectorList)->with('bs_select_id',$bs_select_id);
     }
 }

@@ -253,12 +253,14 @@ class FundamentalRepository {
                 if ($data_to_sort[0]['eps_name'] == 'q1_eps_cont_op') {
                     $returnData[$instrument_id]['annualized_eps'] = $data_to_sort[0]['meta_value'] * 4;
                     $returnData[$instrument_id]['meta_date'] = $data_to_sort[0]['meta_date'];
+                    $returnData[$instrument_id]['meta_value'] = $data_to_sort[0]['meta_value'];
                     $returnData[$instrument_id]['text'] = 'Q1';
                 }
 
                 if ($data_to_sort[0]['eps_name'] == 'half_year_eps_cont_op') {
                     $returnData[$instrument_id]['annualized_eps'] = $data_to_sort[0]['meta_value'] * 2;
                     $returnData[$instrument_id]['meta_date'] = $data_to_sort[0]['meta_date'];
+                    $returnData[$instrument_id]['meta_value'] = $data_to_sort[0]['meta_value'];
                     $returnData[$instrument_id]['text'] = 'Half year';
                 }
 
@@ -267,6 +269,7 @@ class FundamentalRepository {
                     $returnData[$instrument_id]['annualized_eps'] = ($data_to_sort[0]['meta_value'] / 3) * 4;
                     $returnData[$instrument_id]['annualized_eps'] = round($returnData[$instrument_id]['annualized_eps'], 2);
                     $returnData[$instrument_id]['meta_date'] = $data_to_sort[0]['meta_date'];
+                    $returnData[$instrument_id]['meta_value'] = $data_to_sort[0]['meta_value'];
                     $returnData[$instrument_id]['text'] = '9 months';
 
                 }
@@ -274,6 +277,7 @@ class FundamentalRepository {
                 if ($data_to_sort[0]['eps_name'] == 'earning_per_share') {
                     $returnData[$instrument_id]['annualized_eps'] = $data_to_sort[0]['meta_value'];
                     $returnData[$instrument_id]['meta_date'] = $data_to_sort[0]['meta_date'];
+                    $returnData[$instrument_id]['meta_value'] = $data_to_sort[0]['meta_value'];
                     $returnData[$instrument_id]['text'] = 'Annual';
                 }
             }
@@ -282,6 +286,7 @@ class FundamentalRepository {
                 $returnData[$instrument_id]['annualized_eps'] = 0;
                 $returnData[$instrument_id]['meta_date'] = 'n/a';
                 $returnData[$instrument_id]['text'] = 'n/a';
+                $returnData[$instrument_id]['meta_value'] = 'n/a';
             }
 
 

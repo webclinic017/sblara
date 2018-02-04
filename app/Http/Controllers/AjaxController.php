@@ -167,16 +167,22 @@ class AjaxController extends Controller
         $latestData=DataBanksIntradayRepository::getLatestTradeDataAll();
         $instrument_arr= $latestData->pluck('instrument_id');
 
-        $metaKey=array("market_lot","face_value","net_asset_val_per_share");
+        $metaKey=array("paid_up_capital","earning_per_share","net_asset_val_per_share","share_percentage_director","share_percentage_public","share_percentage_institute","share_percentage_foreign","share_percentage_govt");
+//        Cache::forget('data_matrix_fundamental');
+        $fundamentaInfo = Cache::remember("data_matrix_fundamental", 300 , function () use ($metaKey,$instrument_arr) {
+            $fundamentaInfo = FundamentalRepository::getFundamentalData($metaKey, $instrument_arr);
+            return $fundamentaInfo;
+        });
 
         //cache for 1 day=1440 minutes
         //Cache::forget('annualized_eps_all_instruments');
-        $epsData = Cache::remember("annualized_eps_all_instruments", 720 , function () use ($instrument_arr) {
+        $epsData = Cache::remember("annualized_eps_all_instruments", 300 , function () use ($instrument_arr) {
             $epsData = FundamentalRepository::getAnnualizedEPS($instrument_arr);
             return $epsData;
         });
 
-        $fundamentaInfo = FundamentalRepository::getFundamentalData($metaKey, $instrument_arr);
+
+
 
         $instrumentList=InstrumentRepository::getInstrumentsScripOnly();
         $sectorList=SectorListRepository::getSectorList();
@@ -195,8 +201,6 @@ class AjaxController extends Controller
             $temp['sector']=$sectorList->where('id',$sector_list_id)->first()->name;
 
             $temp['category']=$category;
-            $temp['market_lot']=1;
-            $temp['face_value']=10;
             if(isset($fundamentaInfo['net_asset_val_per_share'][$instrument_id]))
             {
                 $temp['nav'] = $fundamentaInfo['net_asset_val_per_share'][$instrument_id]['meta_value'];
@@ -231,6 +235,69 @@ class AjaxController extends Controller
             }else
             {
                 $temp['pe'] = 0;
+            }
+
+            if(isset($fundamentaInfo['earning_per_share'][$instrument_id]))
+            {
+                $temp['aud_eps'] = floatval($fundamentaInfo['earning_per_share'][$instrument_id]['meta_value']);
+            }else
+            {
+                $temp['aud_eps'] = 0;
+            }
+            if(isset($fundamentaInfo['earning_per_share'][$instrument_id]))
+            {
+                $temp['aud_pe'] = floatval($fundamentaInfo['earning_per_share'][$instrument_id]['meta_value'])?round($arr->close_price/floatval($fundamentaInfo['earning_per_share'][$instrument_id]['meta_value']),2):0;
+            }else
+            {
+                $temp['aud_pe'] = 0;
+            }
+
+            if(isset($fundamentaInfo['share_percentage_director'][$instrument_id]))
+            {
+                $temp['dir'] = floatval($fundamentaInfo['share_percentage_director'][$instrument_id]['meta_value']);
+            }else
+            {
+                $temp['dir'] = 0;
+            }
+
+            if(isset($fundamentaInfo['share_percentage_public'][$instrument_id]))
+            {
+                $temp['pub'] = floatval($fundamentaInfo['share_percentage_public'][$instrument_id]['meta_value']);
+            }else
+            {
+                $temp['pub'] = 0;
+            }
+
+            if(isset($fundamentaInfo['share_percentage_institute'][$instrument_id]))
+            {
+                $temp['inst'] = floatval($fundamentaInfo['share_percentage_institute'][$instrument_id]['meta_value']);
+            }else
+            {
+                $temp['inst'] = 0;
+            }
+
+            if(isset($fundamentaInfo['share_percentage_foreign'][$instrument_id]))
+            {
+                $temp['for'] = floatval($fundamentaInfo['share_percentage_foreign'][$instrument_id]['meta_value']);
+            }else
+            {
+                $temp['for'] = 0;
+            }
+
+            if(isset($fundamentaInfo['share_percentage_govt'][$instrument_id]))
+            {
+                $temp['gov'] = floatval($fundamentaInfo['share_percentage_govt'][$instrument_id]['meta_value']);
+            }else
+            {
+                $temp['gov'] = 0;
+            }
+
+            if(isset($fundamentaInfo['paid_up_capital'][$instrument_id]))
+            {
+                $temp['paid_up'] = floatval($fundamentaInfo['paid_up_capital'][$instrument_id]['meta_value']);
+            }else
+            {
+                $temp['paid_up'] = 0;
             }
 
             $maingrid[]=$temp;

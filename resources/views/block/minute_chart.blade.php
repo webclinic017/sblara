@@ -16,10 +16,11 @@
                 shadow: false,
                 borderWidth: 1,
                 borderColor: "#D5DAE0",
-
                 spacingLeft: 2,
                 spacingRight: 2
-                //,height:{{$chartData["height"]}}   // if height defined, scalling is not taking full canvas
+                @if(isset($chartData["height"]))
+                ,height:{{$chartData["height"]}}   // if height defined, scalling is not taking full canvas
+                @endif
 
 
             },

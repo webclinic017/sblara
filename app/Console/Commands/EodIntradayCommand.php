@@ -76,7 +76,7 @@ class EodIntradayCommand extends Command
         $querystr = "select * from MKISTAT ORDER BY MKISTAT_LM_DATE_TIME DESC LIMIT 0 , 600";
         $dataFromDseServer = DB::connection('dse')->select($querystr);
 
-        dump(count($dataFromDseServer));
+        echo "Data got from DSE " . count($dataFromDseServer);
 
         if(!Market::isMarketOpen())
         {
@@ -107,7 +107,7 @@ class EodIntradayCommand extends Command
                 // if $data_bank_intraday_batch=0, go for fresh query in the market tables
                 if($data_bank_intraday_batch)
                 {
-                    // it will be 0 for the very first entry of a day. So we have to take max(data_bank_intraday_batch) from the market table
+                    // it will be 0 for the very first entry of a day. So we have to take max(data_bank_intraday_batch) frosftm the market table
 
 
                     $mdata = DB::table('markets')

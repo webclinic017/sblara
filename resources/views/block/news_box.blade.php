@@ -31,6 +31,12 @@
 
 
 </div>
+<div class="scroller-footer">
+<div class="btn-arrow-link pull-right">
+    <a target="_blank" href="{{'/news/search?keyword=&instrument_id='.$instrument_id.'&from_date=&to_date='}}">See All {{$news->prefix}} News</a>
+    <i class="icon-arrow-right"></i>
+</div>
+</div>
 
 <link href="{{ URL::asset('metronic/assets/global/plugins/cubeportfolio/css/cubeportfolio.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ URL::asset('metronic/assets/pages/css/portfolio.min.css') }}" rel="stylesheet" type="text/css" />

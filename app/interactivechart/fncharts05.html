@@ -1,0 +1,177 @@
+<html>
+<head><title>FnCharts - Powerful Financial Charts</title></head>
+<body>
+<h3>FnCharts - configuration #5</h3>
+<p>
+<applet name="FnChartsApplet5" width="660" height="490" codebase="fncharts" code="FnChartsApplet.class" archive="fncharts.jar" mayscript="true">
+  <!-- APPLET CONFIGURATION PARAMETERS -->
+  <param name="AppletName" value="FnChartsApplet5">
+  <param name="_UserID" value="sample_id12345">
+  <param name="Copyright" value="Copyright (c) 1999-2012 WD SOFTWARE http://www.wdsoftware.com">
+  <param name="Encoding" value="ISO8859_1">
+  <!-- DATA ACCESS PARAMETERS -->
+  <param name="DataSource" value="data/{symbol}.txt">
+  <param name="IntradayDataSource" value="data/{symbol}_intra.txt.gz">
+  <param name="DataIsTimeCompressed" value="false">
+  <param name="DisplayDataRequests" value="false">
+  <param name="SetRequestProperty_UserAgent" value="FnCharts PRO">
+  <param name="SetRequestProperty_Cookie" value="">
+  <param name="UseBrowserCache" value="true">
+  <param name="EnableWeekends" value="false">
+  <param name="MaxSymbolLength" value="12">
+  <!-- AUTOMATIC DATA REFRESH CONFIGURATION -->
+  <param name="AutoRefreshTime" value="30">
+  <param name="AutoRefreshBeep" value="true">
+  <!-- CACHE MEMORY CONFIGURATION -->
+  <param name="UnusedCacheRecycleTime" value="10">
+  <!-- PREDEFINED SYMBOLS DISPLAYED AUTOMATICALLY AT STARTUP -->
+  <param name="Symbol" value="SAMPLE1">
+  <param name="SecondarySymbol" value="">
+  <!-- PREDEFINED FAVORITE SYMBOLS -->
+  <param name="FavoriteSymbols" value="SAMPLE1,SAMPLE2,SAMPLE3,SAMPLE4">
+  <!-- USER CONFIGURATION SETTINGS-->
+  <param name="_UserConfigurationLoadURL" value="userdata/load_configuration.php?userID={UserID}">
+  <param name="_UserConfigurationSaveURL" value="userdata/save_configuration.php?userID={UserID}">
+  <param name="LoadUserConfigurationOnStartup" value="true">
+  <param name="RestoreSelectedSymbolsFromUserConfiguration" value="false">
+  <!-- USER STUDIES SETTINGS-->
+  <param name="AutoLoadStudies" value="false">
+  <param name="_UserStudiesLoadURL" value="userdata/load_studies.php?userID={UserID}&symbol={symbol}&dataType={Periodicity}">
+  <param name="_UserStudiesSaveURL" value="userdata/save_studies.php?userID={UserID}&symbol={symbol}&dataType={Periodicity}">
+  <!-- CONFIGURATION OF BUY AND SELL BUTTONS -->
+  <param name="BuyURL" value="">
+  <param name="SellURL" value="">
+  <param name="target" value="_blank">
+  <param name="BuySellAction" value="">
+  <param name="EnableStatusBarBuySellButtons" value="false">
+  <!-- USER-DEFINED INDICATORS -->
+  <param name="_PredefinedIndicatorsURL" value="userdata/predefined_indicators.txt">
+  <param name="_UserIndicatorsLoadURL" value="userdata/load_indicators.php?userID={UserID}">
+  <param name="_UserIndicatorsSaveURL" value="userdata/save_indicators.php?userID={UserID}">
+  <param name="EnableUserIndicatorDefinition" value="false">
+  <!-- INITIAL TECHNICAL ANALYSIS SETTINGS (OVERRIDABLE BY USERS) -->
+  <param name="ChartType" value="candle">
+  <param name="Scale" value="LogUncorrelated">
+  <param name="UseOldTimeCompressionMethod" value="false">
+  <param name="TimeCompression" value="day">
+  <param name="Indicators" value="CCVol;MACD(12,26,9);ROC(5,9);RSI(14,30,70)">
+  <param name="PriceIndicators" value="SMA1;SMA2;SMA3">
+
+  <param name="TimeCompressionOptions" value="day,week,month,intraday,intraday_1s,intraday_2s,intraday_3s,intraday_4s,intraday_5s,intraday_10s,intraday_15s,intraday_20s,intraday_30s,intraday_1,intraday_2,intraday_3,intraday_4,intraday_5,intraday_10,intraday_15,intraday_20,intraday_30,intraday_60">
+  <!-- INITIAL VISIBLE RANGE (CUSTOMIZABLE BY USERS)-->
+  <param name="DisplayRange" value="6months">
+  <!-- INITIAL TIMEFRAME SETTINGS (CUSTOMIZABLE BY USERS)-->
+  <param name="Timeframe" value="0">
+  <param name="IntradayTimeframe" value="0">
+  <!-- UI APPEARANCE -->
+  <param name="BorderColor" value="0x000000">
+  <param name="UIFontName" value="">
+  <param name="UIFontSize" value="11">
+  <param name="UIFontStyle" value="PLAIN">
+  <param name="UIBgColor" value="0xC2D3BA">
+  <param name="UITextColor" value="0x000000">
+  <param name="StatusBarFontName" value="">
+  <param name="StatusBarFontSize" value="10">
+  <param name="StatusBarFontStyle" value="PLAIN">
+  <param name="ImageButtonBgColor" value="0xD6E7CE">
+  <param name="ImageButtonFrameColor" value="0x000000">
+  <param name="IconType" value="COLOR">
+  <param name="HideSymbolEntryForm" value="false">
+  <param name="EnableSymbolListModification" value="true">
+  <param name="SymbolEntryFormWidth" value="">
+  <param name="DisableAppletDetachment" value="false">
+  <param name="DisableSymbolEntryFormVisibilitySwitch" value="false">
+  <!-- CHART APPEARANCE -->
+  <param name="DisableMouseWheelScrolling" value="true">
+  <param name="RestrictToolsToChartFg" value="false">
+  <param name="ShowTitle" value="true">
+  <param name="ShowLegend" value="true">
+  <param name="ShowCrosshair" value="true">
+  <param name="ShowGrid" value="true">
+  <param name="ShowBuySellSignals" value="true">
+  <param name="ChartBgColor" value="0xD2E3CA">
+  <param name="ChartFgColor" value="0xFFFFFF">
+  <param name="ChartTitleColor" value="0x000000">
+  <param name="ChartTitleBgColor" value="">
+  <param name="ChartTitleFrameColor" value="">
+  <param name="AxisColor" value="0x808080">
+  <param name="AxisLabelColor" value="0x000000">
+  <param name="AxisLabelBgColor" value="">
+  <param name="AxisLabelFrameColor" value="">
+  <param name="InfoLineColor" value="0xE00000">
+  <param name="InfoLineBgColor" value="">
+  <param name="InfoLineFrameColor" value="">
+  <param name="ProgressBarColor" value="0x000000">
+  <param name="BuySignalColor" value="0x00C800">
+  <param name="SellSignalColor" value="0xE80000">
+  <param name="DecimalPlaces" value="-1">
+  <param name="DateDisplayFormat" value="mm/dd/yyyy">
+  <!-- CHART FONTS -->
+  <param name="ChartTitleFontName" value="">
+  <param name="ChartTitleFontSize" value="10">
+  <param name="ChartTitleFontStyle" value="PLAIN">
+  <param name="InfoLineFontName" value="">
+  <param name="InfoLineFontSize" value="9">
+  <param name="InfoLineFontStyle" value="PLAIN">
+  <param name="AxisLabelFontName" value="">
+  <param name="AxisLabelFontSize" value="9">
+  <param name="AxisLabelFontStyle" value="PLAIN">
+  <param name="LegendFontName" value="SansSerif">
+  <param name="LegendFontStyle" value="BOLD">
+  <param name="LegendFontSize" value="11">
+  <!-- CHART COLORS (CUSTOMIZABLE BY USERS) -->
+  <param name="GridColor" value="0xD8D8D8">
+  <param name="CrosshairColor" value="0xC0C0C0">
+  <param name="PriceColor" value="0x000000">
+  <param name="BullishCandleColor" value="0x00A000">
+  <param name="BearishCandleColor" value="0xFF0000">
+  <param name="UseAdvancedCandleColoringSystem" value="true">
+  <param name="UseAdvancedOHLCColoringSystem" value="true">
+  <param name="BgPriceColor" value="0xB09080">
+  <param name="ExtraPriceColor" value="0xF80000,0x00E000,0x0000F0,0xcc66cc,0xffcc33,0x00cccc,0xc0c0c0,0x996633,0xffff00,0x99aa00">
+  <param name="DMAColor" value="0xFF9A00">
+  <param name="OpenInterestColor" value="0x0000A0">
+  <param name="EMA1Color" value="0x00B0C0">
+  <param name="EMA2Color" value="0xBF00BF">
+  <param name="EMA3Color" value="0x1135BF">
+  <param name="SMA1Color" value="0xF00000">
+  <param name="SMA2Color" value="0xFF00FF">
+  <param name="SMA3Color" value="0x3165FF">
+  <param name="WMAColor" value="0x00DD00">
+  <param name="BOLColor" value="0x808080">
+  <param name="ParabolicSARColor" value="0x5185FF">
+  <param name="IndicatorColor" value="0xD800D8,0x3130FF,0x00A000">
+  <param name="CCVolColor" value="0x00A000,0xF00000,0x202020">
+  <param name="TrendLineColor" value="0xC00000">
+  <param name="IndicatorSpecificLineColor" value="0x000000">
+  <!-- CHART LINE WIDTHS (CUSTOMIZABLE BY USERS) -->
+  <param name="PriceLineWidth" value="2">
+  <param name="BgPriceLineWidth" value="0">
+  <param name="ExtraPriceLineWidth" value="0,0,0,0,0,0,0,0,0,0">
+  <param name="OpenInterestLineWidth" value="1">
+  <param name="EMA1LineWidth" value="0">
+  <param name="EMA2LineWidth" value="0">
+  <param name="EMA3LineWidth" value="0">
+  <param name="SMA1LineWidth" value="0">
+  <param name="SMA2LineWidth" value="0">
+  <param name="SMA3LineWidth" value="0">
+  <param name="WMALineWidth" value="0">
+  <param name="BOLLineWidth" value="0,0">
+  <param name="ParabolicSARLineWidth" value="1">
+  <param name="IndicatorLineWidth" value="1,0,0">
+  <param name="MaxOhlcWidth" value="6">
+  <param name="MinOhlcWidth" value="0">
+  <param name="MaxCandleWidth" value="6">
+  <param name="MinCandleWidth" value="1">
+  <param name="MaxVolumeWidth" value="5">
+  <param name="MinVolumeWidth" value="0">
+  <param name="DoubleVolumeWidth" value="false">
+  <!-- THIS MESSAGE IS DISPLAYED WHEN JAVA SUPPORT IS NOT ENABLED -->
+   Java support must be enabled in order to display FnCharts.
+   <br>You can download Java from <a href="http://www.java.com">http://www.java.com</a>
+</applet>
+
+</p>
+
+</body>
+</html>

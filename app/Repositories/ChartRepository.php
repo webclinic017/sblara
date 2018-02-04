@@ -54,6 +54,39 @@ class ChartRepository {
 
 
     }
+    public static function getDailySectorData($instrumentId = 12, $from = '2010-10-25', $to = '2013-04-25', $extraPoint = 0)
+    {
+        require_once(app_path() . '/ChartDirector/phpchartdir.php');
+      //  $path=public_path('metronic_custom/chart_director/lib/FinanceChart.php');
+     //   File::requireOnce($path);
+
+        if ($extraPoint) {
+            //trade date of extraPoint before $from
+           $tradeDate=Market::getChartActiveDates($extraPoint,$from)->last()->trade_date;
+           $from=$tradeDate->format('Y-m-d');
+        }
+        $sector_data=DataBankEodRepository::getSectorEod($instrumentId,$from,$to);
+
+        $ohlcArr=array();
+        foreach($sector_data as $data)
+        {
+
+            $realtimeStamps=strtotime($data->date);
+            $ohlcArr['realtimeStamps'][] = $realtimeStamps;
+            $ohlcArr['date'][] = chartTime2($realtimeStamps);
+            $ohlcArr['open'][] = $data->open;
+            $ohlcArr['high'][] = $data->high;
+            $ohlcArr['low'][] = $data->low;
+            $ohlcArr['close'][] = $data->close;
+            $ohlcArr['volume'][] = $data->volume;
+
+        }
+
+
+        return $ohlcArr;
+
+
+    }
     public static function getAdjustedDailyData($instrumentId = 12, $from = '2010-10-25', $to = '2013-04-25', $extraPoint = 0)
     {
         require_once(app_path() . '/ChartDirector/phpchartdir.php');

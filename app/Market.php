@@ -55,6 +55,7 @@ class Market extends Model
 
 
         $cacheVar="tradeDateList$tradeDate$limit$exchangeId";
+        Cache::forget("$cacheVar");
         $returnData = Cache::remember("$cacheVar", 1, function ()  use ($exchangeId,$tradeDate,$limit)  {
 
             if(is_null($tradeDate))

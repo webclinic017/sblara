@@ -1,20 +1,13 @@
+@section('meta-title', ucwords(strtolower($instrumentInfo->name)) . ' Technical Analysis Chart')
+@section('meta-description', 'Analyze '. $instrumentInfo->instrument_code.' with our most accurate and well maintained dse data. A lot of indicators will let you know the probable trends of the share')
+
 @extends('layouts.metronic.default')
 @section('content')
-<div class="row">
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <div class="portlet light bordered">
-                <div class="portlet-body">
-                   @include('ads.google_responsive')
-                </div>
-            </div>
-        </div>
-    </div>
-
 @push('scripts')
 <script>
     $(document).ready(function () {
-        setTimeout(function() {   
-                $('#shareList').val('10001');
+        setTimeout(function() {
+                $('#shareList').val('{{$instrumentInfo->id}}');
                 $('#shareList').trigger('change');
         }, 100);
     });

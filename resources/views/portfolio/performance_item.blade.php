@@ -36,7 +36,7 @@
         </small>
         @endif
     </td>
-    <td class="{{$transaction['change_today_of_this_instrument']<0 ?'text-danger': 'text-success'}}">
+    <td class="{{fontCss($transaction['change_today_of_this_instrument'])}}">
         @if($transaction['is_child'])
         ...
         @else
@@ -44,7 +44,7 @@
         ({{$transaction['change_today_per_of_this_instrument']}}%)
         @endif
     </td>
-    <td class="{{$transaction['gain_loss_today_for_this_instrument']<0?'text-danger': 'text-success'}}">{{$transaction['gain_loss_today_for_this_instrument'] or 'N/A'}}</td>
+    <td class="{{fontCss($transaction['gain_loss_today_for_this_instrument'])}}">{{$transaction['gain_loss_today_for_this_instrument'] or 'N/A'}}</td>
     <td>{{$transaction['total_shares_of_this_instrument']}}</td>
     <td>{{$transaction['avg_buy_cost_of_this_instrument']}}</td>
     <td>
@@ -56,8 +56,8 @@
     </td>
     <td>{{$transaction['total_buy_commission_of_this_instrument']}}</td>
     <td>{{$transaction['total_buying_cost_including_commission_of_this_instrument'] or 'N/A'}}</td>
-    <td class="{{$transaction['gain_loss_since_purchased_for_this_instrument']<0?'text-danger': 'text-success'}}">{{$transaction['gain_loss_since_purchased_for_this_instrument'] or 'N/A'}}</td>
-    <td class="{{$transaction['gain_loss_per_since_purchased_for_this_instrument']<0?'text-danger': 'text-success'}}">{{$transaction['gain_loss_per_since_purchased_for_this_instrument'] or 'N/A'}}%</td>
+    <td class="{{fontCss($transaction['gain_loss_since_purchased_for_this_instrument'] )}}">{{$transaction['gain_loss_since_purchased_for_this_instrument'] or 'N/A'}}</td>
+    <td class="{{fontCss($transaction['gain_loss_per_since_purchased_for_this_instrument'])}}">{{$transaction['gain_loss_per_since_purchased_for_this_instrument'] or 'N/A'}}%</td>
     <td>
         @if($transaction['is_child'])
 
@@ -98,10 +98,10 @@
     <th colspan="1"><span style="color:#fff">...</span></th>
     <th colspan="1"><span style="color:#fff">...</span></th>
     <th colspan="1"><span style="color:#fff">...</span></th>
-    <th colspan="1" class="{{$totalPurchaseWithCommission<0?'text-danger':'text-success'}}">{{$totalPurchaseWithCommission}}</th>
-    <th colspan="1" class="{{$totalProfitSincePurchase<0?'text-danger':'text-success'}}">{{$totalProfitSincePurchase}}</th>
-    <th colspan="1"class="{{$totalChangeSincePurchase<0?'text-danger':'text-success'}}">{{$totalChangeSincePurchase}}%</th>
+    <th colspan="1" class="">{{$totalPurchaseWithCommission}}</th>
+    <th colspan="1" class="{{fontCss($totalProfitSincePurchase)}}">{{$totalProfitSincePurchase}}</th>
+    <th colspan="1"class="{{fontCss($totalChangeSincePurchase)}}">{{$totalChangeSincePurchase}}%</th>
     <th colspan="1">100%</th>
-    <th colspan="1" class="{{$totalSellDeductingCommission<0?'text-danger':'text-success'}}">{{$totalSellDeductingCommission}}</th>
+    <th colspan="1" class="{{fontCss($totalSellDeductingCommission)}}">{{$totalSellDeductingCommission}}</th>
 </tr>
 

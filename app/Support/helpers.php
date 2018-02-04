@@ -25,6 +25,33 @@ function sbdump($var, $user_email)
     }
 
 }
+
+
+function cpOrLtp($last_trade_data_of_this_instrument)
+{
+    $ltp = $last_trade_data_of_this_instrument->close_price != 0 ? $last_trade_data_of_this_instrument->close_price : ($last_trade_data_of_this_instrument->pub_last_traded_price != 0 ? $last_trade_data_of_this_instrument->pub_last_traded_price : $last_trade_data_of_this_instrument->spot_last_traded_price);
+    return $ltp;
+}
+
+function category($last_trade_data_of_this_instrument)
+{
+    $explode_arr=explode('-', $last_trade_data_of_this_instrument->quote_bases);
+    $category= $explode_arr[0];
+    return $category;
+}
+
+function addOrdinalNumberSuffix($num) {
+    if (!in_array(($num % 100),array(11,12,13))){
+        switch ($num % 10) {
+            // Handle 1st, 2nd, 3rd
+            case 1:  return $num.'st';
+            case 2:  return $num.'nd';
+            case 3:  return $num.'rd';
+        }
+    }
+    return $num.'th';
+}
+
 function getWebPage($url)
 {
     $options = array(

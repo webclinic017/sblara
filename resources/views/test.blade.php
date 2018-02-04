@@ -2,7 +2,7 @@
 
 @section('content')
 
-
+@include('html.instrument_list_bs_select_with_sector',['bs_select_id'=>'shareList_sds', 'class' => 'bs-select', 'prepend' => true])
         {{--  New block Starts--}}
         <div class="row">
             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">

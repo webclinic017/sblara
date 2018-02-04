@@ -1,9 +1,9 @@
-@section('meta-title', $instrumentInfo->name . ': Fundamental Details')
+@section('meta-title', ucwords(strtolower($instrumentInfo->name)) . ' Fundamental Details')
 @section('meta-description', 'Easy representation of EPS, dividend history, shareholding chart as well as share holding history of '. $instrumentInfo->instrument_code)
 @extends('layouts.metronic.default')
 
 @section('page_heading')
-{{$instrumentInfo->name}}
+Fundamental Insight of {{$instrumentInfo->name}} - Cat: {{$category}}
 @endsection
 
 @section('content')
@@ -37,7 +37,7 @@
                         <span class="caption-helper">History of cash and stock dividend</span>
                     </div>
                     <div class="tools">
-                      <a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.dividend_history:instrument_id={{ $instrumentInfo->id}}:render_to=divident_possible_{{$instrumentInfo->id}}" class="reload"></a>
+                      <a href="#" data-load="false" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.dividend_history:instrument_id={{ $instrumentInfo->id}}:render_to=divident_possible_{{$instrumentInfo->id}}" class="reload"></a>
 
                                                            
                         <a href="" class="collapse">
@@ -50,7 +50,7 @@
 
                 </div>
                 <div class="portlet-body">
-
+@include('block.dividend_history', array('instrument_id' => $instrumentInfo->id,'render_to' => "divident_possible_".$instrumentInfo->id))
 
                 </div>
             </div>
@@ -71,6 +71,13 @@
     <div class="row">
 
         <div class="col-md-6">
+                <div class="btn-group btn-group btn-group-justified">
+                    <a target="_blank" href="{{'/news-chart/'.$instrumentInfo->id}}" class="btn red"> News Chart </a>
+                    <a target="_blank" href="{{'/ta-chart?instrumentCode='.$instrumentInfo->instrument_code}}" class="btn blue"> TA Chart </a>
+                    <a target="_blank" href="{{'/advance-ta-chart?instrumentCode='.$instrumentInfo->instrument_code}}" class="btn green"> Advance TA Chart </a>
+
+                </div>
+
             <!-- BEGIN Portlet PORTLET-->
             <div class="portlet light bordered">
                 <div class="portlet-title">
@@ -101,6 +108,14 @@
             <!-- END Portlet PORTLET-->
         </div>
         <div class="col-md-6">
+        <div class="btn-group btn-group btn-group-justified">
+            <a target="_blank" href="{{'/minute-chart/'.$instrumentInfo->id}}" class="btn red"> Minute Chart  </a>
+            <a target="_blank" href="{{'/company-details/'.$instrumentInfo->id}}" class="btn blue"> Company Details </a>
+            <a target="_blank" href="{{'/fundamental-details'.$instrumentInfo->id}}" class="btn green"> Fundamental Details </a>
+
+        </div>
+
+
             <!-- BEGIN Portlet PORTLET-->
             <div class="portlet light bordered">
                 <div class="portlet-title">

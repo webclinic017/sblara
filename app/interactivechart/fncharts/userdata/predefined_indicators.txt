@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<indicators>
+<indicator>
+<name>%R</name>
+<description>%R defined in JavaScript</description>
+<param1>10</param1><param2>20</param2><param3>80</param3>
+<![CDATA[/* User-defined %R (Williams Percent Range)
+ * Remember to fill-in all three parameter fields with default parameter
+ * values (i.e. 10, 20, 80)
+ */
+
+var n = Param(1);
+var max = Max(High(),n);
+var min = Min(Low(),n);
+var close = Close();
+var percentR = CreateArray(close.length);
+for(var i=0; i<close.length; i++)
+	if(max[i]-min[i] != 0)
+		percentR[i] = 100.0 * (close[i]-min[i]) / (max[i]-min[i]);
+	else
+		percentR[i] = 100.0;
+AddGraph(percentR,n);
+AddHorizLine(Param(2));
+AddHorizLine(Param(3));
+var p2=Param(2);
+var p3=Param(3);
+for(var i=n;i<percentR.length;i++){
+        if(percentR[i-1]<p2 && percentR[i]>p2)
+          AddBuySignal(i);
+        else
+        if(percentR[i-1]>p3 && percentR[i]<p3)
+          AddSellSignal(i);
+}
+]]>
+</indicator>
+<indicator>
+<name>MACD</name>
+<description>MACD with Buy-Sell Signals</description>
+<param1>12</param1><param2>26</param2><param3>9</param3>
+<![CDATA[var close = Close();
+var avg1 = ExpAvg(close,Param(1));
+var avg2 = ExpAvg(close,Param(2));
+var macd = CreateArray(avg1.length);
+for(var i=0; i<avg1.length; i++)
+	macd[i] = avg1[i] - avg2[i];
+AddGraph(macd,Param(2));
+var signal = ExpAvg(macd,Param(3));
+AddGraph(signal,Param(2)+Param(3));
+AddHorizLine(0);
+for(var i=Param(2)+Param(3);i<macd.length;i++){
+        if(macd[i-1]<signal[i-1] && macd[i]>signal[i])
+          AddBuySignal(i);
+        else
+        if(macd[i-1]>signal[i-1] && macd[i]<signal[i])
+          AddSellSignal(i);
+}
+]]>
+</indicator>
+</indicators>

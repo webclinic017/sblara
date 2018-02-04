@@ -50,7 +50,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="tab-pane" id="tab_15_2">
+             {{--   <div class="tab-pane" id="tab_15_2">
                     <div class="search-page search-content-2">
                         <div class="row">
                             <div class="col-md-12">
@@ -141,7 +141,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>--}}
             </div>
         </div>
     </div>

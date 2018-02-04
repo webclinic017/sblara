@@ -1,3 +1,5 @@
+@section('meta-title', 'Portfolio: Track your share performance ')
+
 @extends('layouts.metronic.default')
 @section('content')
 @include('portfolio.portfolio_actions')

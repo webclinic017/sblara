@@ -137,8 +137,8 @@ class NewsBox
         //dd($allNews);
 
         $view->with('allNews', $allNewsResult)
+            ->with('instrument_id', $instrument_id)
             ->with('searchKeyArr', $foundSearchKey);
-
 
     }
 

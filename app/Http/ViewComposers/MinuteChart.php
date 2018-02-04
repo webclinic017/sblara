@@ -98,7 +98,13 @@ class MinuteChart
 
         $chartData=array();
         $chartData['div'] ='mm_div_'.rand(1111,1111111); // required
-        $chartData['height'] = 300; // required
+
+        if(isset($viewdata['height']))
+        {
+            $height=(int)$viewdata['height'];
+            $chartData['height'] = $height; // required
+        }
+
         $chartData['title'] = 'name';
         $chartData['instrumentInfo'] = $instrumentInfo;
         $chartData['xcat'] = collect($minuteChartData['date_data'])->toJson();

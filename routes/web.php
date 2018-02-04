@@ -142,6 +142,11 @@ Route::get('/sector-pe', function () {
 Route::get('/category-pe', function () {
         return view('category_pe_page');
     })->name('category-pe');
+
+Route::get('/cockpit', function () {
+        return view('cockpit_page');
+    })->name('cockpit');
+
 Route::get('news-chart/{instrument_id?}', 'PagesController@newsChart')->name('news-chart');
 Route::get('minute-chart/{instrument_id?}', 'PagesController@minuteChart')->name('minute-chart')->middleware('httpcache'); //httpcache implemented in PagesController@minuteChart
 Route::get('company-details/{instrument_id?}', 'PagesController@companyDetails')->name('company-details')->middleware('httpcache');
@@ -153,6 +158,7 @@ Route::get('/advance-ta-chart', function () {
         return view('ta_chart.advance_ta_chart');
     })->name('advance-ta-chart');
 Route::get('/ta-chart', 'DataBanksEodController@panel')->name('ta-chart');
+Route::get('/java-chart', 'DataBanksEodController@java_chart')->name('java-chart');
 Route::get('/ta/ajax/{reportrange?}/{instrument?}/{comparewith?}/{Indicators?}/{configure?}/{charttype?}/{overlay?}/{mov1?}/{avgPeriod1?}/{mov2?}/{avgPeriod2?}/{adj?}/', 'DataBanksEodController@chart_img_trac');
 Route::get('/getchart/{img}', 'DataBanksEodController@getchart');
 

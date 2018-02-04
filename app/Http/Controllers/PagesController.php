@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 use View;
 use \App\DataBanksEod;
 use App\Repositories\DataBankEodRepository;
-use Illuminate\Support\Facades\DB;
+use App\Repositories\ChartRepository;
 use App\Repositories\InstrumentRepository;
 use App\Repositories\FundamentalRepository;
 use App\Repositories\DataBanksIntradayRepository;
 use App\Repositories\SectorListRepository;
 use App\Market;
+use DB;
 
 class PagesController extends Controller
 {
@@ -81,7 +82,7 @@ return $d;
     {
 
 
-        dd(SectorListRepository::getSectorPE([20,16]));
+        dd(ChartRepository::getDailySectorData(11,'2017-06-28','2018-02-01'));
         //dd(SectorListRepository::getSectorPE());
 
         //dd('hhhh');
@@ -232,9 +233,12 @@ dd($eq_arr);
         $avgVol=$lastFiveDay->avg('volume');
         $avgVolCompareWithToday=$lastTradeInfo->total_volume-$avgVol;
         $avgVolCompareWithToday=(int) $avgVolCompareWithToday;
+        $avgVolCompareWithTodayPer= ($lastTradeInfo->total_volume/ $avgVol)*100;
+        $avgVolCompareWithTodayPer=round($avgVolCompareWithTodayPer,2);
 
         $currentVolDiffThenYday=$lastTradeInfo->total_volume-$prevDayTradeInfo->total_volume;
-        $currentVolDiffThenYdayPer=$currentVolDiffThenYday?$currentVolDiffThenYday/($currentVolDiffThenYday)*100:0;
+        $currentVolDiffThenYdayPer = $currentVolDiffThenYday ? $currentVolDiffThenYday / ($prevDayTradeInfo->total_volume) * 100 : 0;
+        $currentVolDiffThenYdayPer=round($currentVolDiffThenYdayPer,2);
 
        // return response()->view('company_details_page', ['instrumentInfo' => $instrumentInfo,'lastTradeInfo' => $lastTradeInfo])->setTtl(60);
         return response()->view('company_details_page',
@@ -243,6 +247,7 @@ dd($eq_arr);
                 'lastTradeInfo' => $lastTradeInfo,
                 'avgVol' => $avgVol,
                 'avgVolCompareWithToday' => $avgVolCompareWithToday,
+                'avgVolCompareWithTodayPer' => $avgVolCompareWithTodayPer,
                 'currentVolDiffThenYday' => $currentVolDiffThenYday,
                 'currentVolDiffThenYdayPer' => $currentVolDiffThenYdayPer
             ]
@@ -255,13 +260,16 @@ dd($eq_arr);
 
         $instrument_id=(int)$instrument_id;
         $instrumentInfo=InstrumentRepository::getInstrumentsById(array($instrument_id))->first();
+        $category=DB::table('data_banks_intradays')->where('instrument_id',$instrument_id)->select('quote_bases')->orderBy('id')->limit(1)->get();
+        $category=category($category[0]);
 
         //dd(InstrumentRepository::getInstrumentsScripWithIndex());
 
 
         return response()->view('fundamental_details_page',
             [
-                'instrumentInfo' => $instrumentInfo
+                'instrumentInfo' => $instrumentInfo,
+                'category' => $category
 
             ]
         );

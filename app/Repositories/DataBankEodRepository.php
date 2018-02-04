@@ -13,6 +13,7 @@ use Carbon\Carbon;
 use App\Repositories\FundamentalRepository;
 use App\Repositories\InstrumentRepository;
 use App\Repositories\CorporateActionRepository;
+use DB;
 class DataBankEodRepository {
 
 
@@ -84,6 +85,61 @@ class DataBankEodRepository {
         return collect($returnData)->toJson();
 
     }
+
+    // return data desc
+    public static function getSectorEod($sector_list_id=11,$from,$to)
+    {
+        $from=Carbon::parse($from);
+        $to=Carbon::parse($to);
+
+        $from_date=$from->format('Y-m-d');
+        $to_date=$to->format('Y-m-d');
+
+        $sql="SELECT
+count(data_banks_eods.instrument_id) as total_share,
+avg(data_banks_eods.volume) as volume,
+avg(data_banks_eods.open)as open,
+avg(data_banks_eods.high)as high,
+avg(data_banks_eods.low)as low,
+avg(data_banks_eods.close)as close ,
+data_banks_eods.date
+FROM data_banks_eods,instruments
+where (data_banks_eods.instrument_id=instruments.id) and
+(instruments.sector_list_id=$sector_list_id) and
+data_banks_eods.date BETWEEN '$from_date' AND '$to_date'
+GROUP BY data_banks_eods.date ORDER BY data_banks_eods.date desc";
+
+        $data=DB::select(DB::raw($sql));
+
+        return $data;
+    }
+
+    public static function getIntradayCandle($instrument_id=13,$from,$to,$period=60)
+    {
+
+        $from=Carbon::parse($from);
+        $to=Carbon::parse($to);
+
+        $from_date=$from->format('Y-m-d');
+        $to_date=$to->format('Y-m-d');
+
+        $sql="SELECT
+SUBSTRING_INDEX(GROUP_CONCAT(CAST(open_price AS CHAR) ORDER BY lm_date_time), ',', 1 ) as open,
+MAX(high_price) as high,
+MIN(low_price) as low,
+SUBSTRING_INDEX(GROUP_CONCAT(CAST(pub_last_traded_price AS CHAR) ORDER BY lm_date_time DESC), ',', 1 ) as close,
+AVG(total_volume) volume,
+lm_date_time
+FROM data_banks_intradays
+WHERE instrument_id=$instrument_id AND lm_date_time BETWEEN '$from_date' AND '$to_date'
+GROUP BY (UNIX_TIMESTAMP(lm_date_time) + 0) DIV $period
+ORDER BY lm_date_time DESC";
+
+        $data=DB::select(DB::raw($sql));
+
+        return $data;
+    }
+
 
     // return data desc
     public static function getEodData($instrumentId,$from,$to)
