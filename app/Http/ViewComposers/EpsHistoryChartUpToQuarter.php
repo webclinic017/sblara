@@ -26,7 +26,7 @@ class EpsHistoryChartUpToQuarter
     {
         $viewdata= $view->getData();
         $instrument_id=12;
-        $render_to='eps_history_per_quarter';
+        $render_to='eps_history_upto_quarter';
         if(isset($viewdata['instrument_id']))
         {
             $instrument_id= (int) $viewdata['instrument_id'];
@@ -35,15 +35,18 @@ class EpsHistoryChartUpToQuarter
         {
             $render_to=$viewdata['render_to'];
         }
+
         $metaKey=array('year_end', "q1_eps_cont_op","half_year_eps_cont_op","q3_nine_months_eps","earning_per_share");
         $fundaData=FundamentalRepository::getFundamentalDataHistory($metaKey,array($instrument_id));
 
         $year_end = $fundaData['year_end'][$instrument_id]->where('is_latest',1);
-        $year_end=date('d-M',strtotime($year_end[0]['meta_value']));
+        $year_end=date('M',strtotime($year_end[0]['meta_value']));
         unset($fundaData['year_end']);
+
 
         $start_year_ts=strtotime('2012-01-01');
 
+        // creating a
         $sorted_data=array();
         foreach($fundaData as $meta_key=>$metaDataForAllInstrument) {
 
@@ -64,27 +67,8 @@ class EpsHistoryChartUpToQuarter
         ksort($sorted_data);
 
 
+
         $grouped_data=array();
-
-
-        if($year_end=='30-Jun')
-        {
-            $quarter_period_arr=array('30-Sep','31-Dec','31-Mar','30-Jun');
-        }
-
-        if($year_end=='30-Sep')
-        {
-            $quarter_period_arr=array('31-Dec','31-Mar','30-Jun','30-Sep');
-        }
-
-        if($year_end=='31-Dec')
-        {
-            $quarter_period_arr=array('31-Mar','30-Jun','30-Sep','31-Dec');
-        }
-        if($year_end=='31-Mar')
-        {
-            $quarter_period_arr=array('30-Jun','30-Sep','31-Dec','31-Mar');
-        }
 
 
         foreach($sorted_data as $timestamp=>$data)
@@ -93,41 +77,137 @@ class EpsHistoryChartUpToQuarter
             if($start_year_ts>$timestamp)
                 continue;
 
-            $quarter_period=date('d-M',$timestamp);
+            $quarter_period=date('M',$timestamp);
             //$quarter_period_arr[$quarter_period]=$quarter_period;
             $quarter_year=date('Y',$timestamp);
             $grouped_data[$quarter_year][$quarter_period]=$data['meta_value'];
+
         }
+        // finding missing data and setting 0
+        $quarter_period_arr = array('Mar', 'Jun', 'Sep', 'Dec');
 
-//        dump($grouped_data);
-        $category=array();
 
-        $quarterly_data_grouped_by_period=array();
+        $grouped_data2=array();
         foreach($grouped_data as $year=>$data_of_this_year)
         {
-            $category[]=$year;
+            $temp=array();
 
 
             foreach($quarter_period_arr as $quarter_period)
             {
                 if(isset($data_of_this_year[$quarter_period]))
                 {
-                    $quarterly_data_grouped_by_period[$quarter_period][]=$data_of_this_year[$quarter_period];
+                    $temp[$quarter_period]=floatval($data_of_this_year[$quarter_period]);
+                    $non_grouped_data["$year-$quarter_period"] = floatval($data_of_this_year[$quarter_period]);
                 }else
                 {
-                    $quarterly_data_grouped_by_period[$quarter_period][]=0;
+                    $temp[$quarter_period]=0; // setting 0 if any period data missing
+                    $non_grouped_data["$year-$quarter_period"]=0;
                 }
+            }
+
+            $grouped_data2[$year]=$temp;
+
+
+        }
+
+
+        $all_years=array_keys($grouped_data2);
+
+        array_unshift($all_years,$all_years[0]-1);
+
+
+        $financial_years=array();
+
+        foreach($all_years as $year)
+        {
+            $temp=array();
+            $year_start=$year."-".date('m-d',strtotime($year_end));
+            $from=Carbon::parse($year_start);
+            $q1=$from->addMonths(3)->format("Y-M");
+            $q2=$from->addMonths(3)->format("Y-M");
+            $q3=$from->addMonths(3)->format("Y-M");
+            $q4=$from->addMonths(3)->format("Y-M");
+
+            $temp['q1']=$q1;
+            $temp['q2']=$q2;
+            $temp['q3']=$q3;
+            $temp['q4']=$q4;
+            $financial_years[]=$temp;
+        }
+
+        $qaurter_to_quarter_data=array();
+        foreach($financial_years as $quarter)
+        {
+
+
+            $temp=array();
+
+            if(!isset($non_grouped_data[$quarter['q1']]))
+                $non_grouped_data[$quarter['q1']]=0;
+            if(!isset($non_grouped_data[$quarter['q2']]))
+                $non_grouped_data[$quarter['q2']]=0;
+            if(!isset($non_grouped_data[$quarter['q3']]))
+                $non_grouped_data[$quarter['q3']]=0;
+            if(!isset($non_grouped_data[$quarter['q4']]))
+                $non_grouped_data[$quarter['q4']]=0;
+
+
+            if($non_grouped_data[$quarter['q1']]) {
+                $temp['q1'] = $non_grouped_data[$quarter['q1']]; // 1st quarter data
+            }else
+            {
+                $temp['q1'] = 0;
+            }
+
+            if($non_grouped_data[$quarter['q2']]) {
+                $temp['q2'] = $non_grouped_data[$quarter['q2']]; // 1st quarter data
+            }else
+            {
+                $temp['q2'] = 0;
+            }
+
+            if($non_grouped_data[$quarter['q3']]) {
+                $temp['q3'] = $non_grouped_data[$quarter['q3']]; // 1st quarter data
+            }else
+            {
+                $temp['q3'] = 0;
+            }
+
+            if($non_grouped_data[$quarter['q4']]) {
+                $temp['q4'] = $non_grouped_data[$quarter['q4']]; // 1st quarter data
+            }else
+            {
+                $temp['q4'] = 0;
+            }
+
+
+            $cat=explode("-",$quarter['q1'])[0]."-".explode("-",$quarter['q4'])[0];
+            $qaurter_to_quarter_data[$cat]=$temp;
+
+
+        }
+
+
+
+        $category=array();
+
+        $quarterly_data_grouped_by_period=array();
+        foreach($qaurter_to_quarter_data as $year=>$data_of_this_year)
+        {
+            $category[]=$year;
+
+
+            foreach($data_of_this_year as $quarter_period=>$data)
+            {
+                $quarterly_data_grouped_by_period[$quarter_period][]=$data;
             }
 
 
         }
         $label=array_keys($quarterly_data_grouped_by_period);
         $quarterly_data_grouped_by_period=array_values($quarterly_data_grouped_by_period);
-//        dd($quarterly_data_grouped_by_period);
 
-       /* dump($sorted_data);
-        dump($category);
-        dd($quarterly_data_grouped_by_period);*/
 
 
         $view->with('render_to', $render_to)

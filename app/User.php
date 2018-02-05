@@ -89,7 +89,7 @@ class User extends \TCG\Voyager\Models\User implements Ath{
 
     public function getAvatarAttribute($value)
     {
-        return $this->image?"/img/35x35/".$this->image:"/img/user-default.png";
+        return $this->image?"/img/149x149/".$this->image:"/img/user-default.png";
     }
 
 }

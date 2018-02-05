@@ -6,7 +6,7 @@
             <span class="input-group-btn">
                 <button class="btn red mt-ladda-btn toggle-button"  type="button" data-select2-open="multi-prepend"> <i class="fa fa-line-chart"></i> Chart </button>
             </span>
-              @include('html.instrument_list_bs_select',['bs_select_id'=>'shareList', 'class' => 'instrument-select select2', 'prepend' => true])
+              @include('html.instrument_list_bs_select_with_sector',['bs_select_id'=>'shareList', 'class' => 'instrument-select select2', 'prepend' => true])
         </div>
     </div>
 </div>
@@ -483,7 +483,7 @@ function traceFinance(viewer, mouseX)
         //#adj, #configure, #charttype, #overlay, #Indicators, #mov1, #mov2, #touchspin_demo1, #touchspin_demo2, #dashboard-report-range
             
         fields['adj'] = $('#adj').val();
-        fields['interval'] = $('#interval').val();
+        // fields['interval'] = $('#interval').val();
         fields['configure'] = $('#configure').val();
         fields['charttype'] = $('#charttype').val();
         fields['overlay'] = $('#overlay').val();
@@ -725,7 +725,26 @@ function loadFundamental(e) {
 
 		});
 
-		$('#adj, #configure, #charttype, #overlay, #Indicators, #mov1, #mov2, #touchspin_demo1, #touchspin_demo2, #dashboard-report-range', '#interval').change(function () {
+		$('#adj, #configure, #charttype, #overlay, #Indicators, #mov1, #mov2, #touchspin_demo1, #touchspin_demo2, #dashboard-report-range, #interval').change(function () {
+            if($(this).attr('id') == 'interval')
+            {
+                if($(this).val() != {{24*60*60}})
+                {
+                    $('#adj').val(0);
+                    $('#adj').trigger('change');
+                return;
+                }
+            }
+
+            if($(this).attr('id') == 'adj')
+            {
+                if($(this).val() == 1)
+                {
+                    $('#interval').val( {{24*60*60}});
+                    $('#interval').trigger('change');
+
+                }
+            }
 			loadChart();
 		});
 	})

@@ -66,7 +66,7 @@
                                     <div class="portlet light profile-sidebar-portlet bordered">
                                         <!-- SIDEBAR USERPIC -->
                                         <div class="profile-userpic">
-                                            <img src="{{ Auth::user()->image ? URL::asset("img/149x149/" . Auth::user()->image) : url('metronic/assets/layouts/layout5/img/avatar1.jpg') }}" class="img-responsive" alt=""> </div>
+                                            <img src="{{ Auth::user()->avatar }}" class="img-responsive" alt=""> </div>
                                         <!-- END SIDEBAR USERPIC -->
                                         <!-- SIDEBAR USER TITLE -->
                                         <div class="profile-usertitle">
@@ -192,25 +192,23 @@
                                                                 <div class="form-group">
                                                                     <label class="control-label">First Name</label>
                                                                     <input type="text" placeholder="John" class="form-control" name="name" value="{{ Auth::user()->name }}" /> </div>
-                                                                <div class="form-group">
-                                                                    <label class="control-label">Last Name</label>
-                                                                    <input type="text" placeholder="Doe" class="form-control" /> </div>
+
                                                                 <div class="form-group">
                                                                     <label class="control-label">Mobile Number</label>
-                                                                    <input type="text" placeholder="+1 646 580 DEMO (6284)" class="form-control" /> </div>
-                                                                <div class="form-group">
+                                                                    <input type="text" name="contact_no" placeholder="01XXXXXXXXX" class="form-control" value="{{Auth::user()->contact_no}}" /> </div>
+                                                            {{--     <div class="form-group">
                                                                     <label class="control-label">Interests</label>
                                                                     <input type="text" placeholder="Design, Web etc." class="form-control" /> </div>
                                                                 <div class="form-group">
                                                                     <label class="control-label">Occupation</label>
-                                                                    <input type="text" placeholder="Web Developer" class="form-control" /> </div>
-                                                                <div class="form-group">
+                                                                    <input type="text" placeholder="Web Developer" class="form-control" /> </div> --}}
+                                                   {{--              <div class="form-group">
                                                                     <label class="control-label">About</label>
                                                                     <textarea class="form-control" rows="3" placeholder="We are KeenThemes!!!"></textarea>
-                                                                </div>
-                                                                <div class="form-group">
+                                                                </div> --}}
+                                                {{--                 <div class="form-group">
                                                                     <label class="control-label">Website Url</label>
-                                                                    <input type="text" placeholder="http://www.mywebsite.com" class="form-control" /> </div>
+                                                                    <input type="text" placeholder="http://www.mywebsite.com" class="form-control" /> </div> --}}
                                                                 <div class="margiv-top-10">
                                                                     <input type="submit" class="btn green" value="Save Changes">
                                                                     <a href="javascript:;" class="btn default"> Cancel </a>
@@ -220,8 +218,7 @@
                                                         <!-- END PERSONAL INFO TAB -->
                                                         <!-- CHANGE AVATAR TAB -->
                                                         <div class="tab-pane" id="tab_1_2">
-                                                            <p> Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt
-                                                                laborum eiusmod. </p>
+
                                                             <form action="{{ route('change-image') }}" method="POST" role="form" enctype="multipart/form-data">
                                                                 {{ csrf_field() }}
 

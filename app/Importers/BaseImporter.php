@@ -8,6 +8,7 @@ class BaseImporter
 	protected $oldDB = 'old';
 	protected $limit = '1000';
 	protected $instruments = false;
+	protected $truncate = true;
 	public $console;
 	function __construct($console)
 	{
@@ -30,7 +31,10 @@ class BaseImporter
 	{
 		$total =  $this->old($form)->count();
 		$skip = 0;
-		$this->new($to)->truncate();
+		if($this->truncate)
+		{
+			$this->new($to)->truncate();
+		}
 		while ($total > 0) {
 			$data = [];
 			foreach ($this->old($form)->take($this->limit)->skip($skip)->get() as $row) {
@@ -40,7 +44,38 @@ class BaseImporter
 					{
 						continue;
 					}
+					/*apply filter on all value*/
+					if(method_exists($this, 'filter'))
+					{
+						$value = $this->filter($value);
+					}
+					/*apply filter on all value*/
 					$key = $this->oneToOneMap($to)[$key];
+
+					if(is_array($key))
+					{
+						$keys = $key;
+						foreach ($keys as $key) {
+
+								$exploded = explode('|', $key);
+								if(count($exploded) > 1){
+									$function = $exploded[0].ucfirst($exploded[1]); 
+									$key = $exploded[0];
+
+									$value = $this->$function($value);
+									/*additional filter if neseccery*/
+								}
+								/*Resolve the instrument id*/
+								if($key == 'instrument_id' /* || additional column name check here*/){
+									$value = $this->newInstrumentId($value);
+									$hasInstrument_id = true;
+								}
+								/*Resolve the instrument id*/
+								  $newRow[$key] =	$value;
+								  /*for end*/
+						}
+					}else{
+
 					$exploded = explode('|', $key);
 					if(count($exploded) > 1){
 						$function = $exploded[0].ucfirst($exploded[1]); 
@@ -55,6 +90,10 @@ class BaseImporter
 					}
 					/*Resolve the instrument id*/
 					  $newRow[$key] =	$value;
+					  /*for end*/
+					}
+//for start 
+
 				}
 
 				if(isset($hasInstrument_id) && !isset($newRow['instrument_id']))

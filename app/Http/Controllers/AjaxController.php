@@ -321,10 +321,12 @@ class AjaxController extends Controller
     public function price_matrix_data()
     {
 
-        $from_date=date("Y-m-d", strtotime("-3 month"));
+        $from_date=date("Y-m-d", strtotime("-1 month"));
         $to_date=date("Y-m-d");
         $instrumentList=InstrumentRepository::getInstrumentsScripWithIndex();
-        $sectorList=SectorListRepository::getSectorList();
+        $sectorList=SectorListRepository::getSectorList()->keyBy('id');
+
+
 
         $eodData=DataBankEodRepository::getPriceChangeHistory($from_date,$to_date,array(1,2,3,7,15,21,30),array(),array('close','high'));
 
@@ -348,7 +350,8 @@ class AjaxController extends Controller
             $temp['lastprice']=$data[1]['close'];
             $temp['sector']=$sector_name;
             $temp['oneDay']=$data[1]['price_change_per'];
-            $temp['twoDay']=$data[2]['price_change_per'];
+
+            $temp['twoDay']=$data[2]['close'];
             $temp['threeDay']=$data[3]['price_change_per'];
             $temp['oneWeek']=$data[7]['price_change_per'];
             $temp['twoWeek']=$data[15]['price_change_per'];

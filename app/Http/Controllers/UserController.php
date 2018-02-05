@@ -20,6 +20,7 @@ class UserController extends Controller
 
         $user = User::find(Auth::user()->id);
         $user->name = request('name');
+        $user->contact_no = request('contact_no');
         $user->save();
 
         return redirect()->back();

@@ -98,6 +98,7 @@ class IntradayMarketCompositionBarPer
 
         }
 
+        // need to fix.. if today market don't have any data project throw a error.
         $todayDate=$instrumentTradeData->first()->lm_date_time;
         $prevDate=$instrumentTradeDataPrev->first()->lm_date_time;
 

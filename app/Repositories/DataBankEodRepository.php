@@ -123,7 +123,9 @@ GROUP BY data_banks_eods.date ORDER BY data_banks_eods.date desc";
         $from_date=$from->format('Y-m-d');
         $to_date=$to->format('Y-m-d');
 
-        $sql="SELECT
+        $sql="
+        select open, high, low, if(close != 0, close, low ) as close, volume, lm_date_time from 
+        (SELECT
 SUBSTRING_INDEX(GROUP_CONCAT(CAST(open_price AS CHAR) ORDER BY lm_date_time), ',', 1 ) as open,
 MAX(high_price) as high,
 MIN(low_price) as low,
@@ -133,7 +135,8 @@ lm_date_time
 FROM data_banks_intradays
 WHERE instrument_id=$instrument_id AND lm_date_time BETWEEN '$from_date' AND '$to_date'
 GROUP BY (UNIX_TIMESTAMP(lm_date_time) + 0) DIV $period
-ORDER BY lm_date_time DESC";
+ORDER BY lm_date_time DESC) data
+";
 
         $data=DB::select(DB::raw($sql));
 
@@ -633,6 +636,8 @@ ORDER BY lm_date_time DESC";
             }
 
         }
+
+
         return collect($returnArr);
 
     }

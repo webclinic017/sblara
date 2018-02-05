@@ -160,7 +160,7 @@ class IpoController extends Controller
 
     public function history(Request $request)
     {
-        $year = $request->has('year')?$request->year:2017;
+        $year = $request->has('year')?$request->year:date('Y');
         $ipos = Ipo::where('year', $year)->get();
         return view('ipo.history')
                 ->with(compact('year', 'ipos'));

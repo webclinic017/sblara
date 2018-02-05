@@ -433,6 +433,22 @@ $("div[id^='ta_chart_']").remove();
 		$(target).html(html);
 	})
 })	
+
+var lastScrollTop = 0;
+$(window).scroll(function(event){
+   var st = $(this).scrollTop();
+   if (st > lastScrollTop){
+       if(lastScrollTop > 99)
+       {
+       	$('.navbar-fixed-top').hide();
+       }
+   } else {
+   	$('.navbar-fixed-top').show();
+   }
+   lastScrollTop = st;
+});
+
+
 });
 
 document.addEventListener('DOMContentLoaded',

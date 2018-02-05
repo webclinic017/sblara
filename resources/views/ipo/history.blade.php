@@ -21,7 +21,7 @@
                     <table class="table table-bordered table-striped table-condensed flip-content">
                         <thead class="flip-content">
                             <tr>
-                                <th width="20%"> Ticker </th>
+                                {{-- <th width="20%"> Ticker </th> --}}
                                 <th> Company </th>
                                 <th class="numeric">Subscription Open </th>
                                 <th class="numeric"> Subscription Close </th>
@@ -34,7 +34,7 @@
                         <tbody>
                             @foreach($ipos as $ipo)
                             <tr>
-                                <td> {{$ipo->short_name}} </td>
+                                {{-- <td> {{$ipo->short_name}} </td> --}}
                                 <td> {{$ipo->ipo_name}}  </td>
                                 <td class="numeric"> {{$ipo->subscription_open}}</td>
                                 <td class="numeric"> {{$ipo->subscription_close}} </td>
