@@ -75,17 +75,31 @@ class PerformanceItem {
                     $temp['total_buy_commission_of_this_instrument']= $transaction->commission ? ($transaction->commission / 100) * ($transaction->buying_price* $transaction->no_of_shares) : 0;
                     $temp['is_parent']=0;
                     $temp['is_child']=1;
-                    $temp['last_traded_datetime_of_this_instrument']= $dataBankIntraDays->lm_date_time->format('h:i a');
-                    $temp['last_traded_price_of_this_instrument']= $dataBankIntraDays->close_price;
-                    $temp['change_today_of_this_instrument']= $dataBankIntraDays->price_change;
-                    $temp['change_today_per_of_this_instrument']= $dataBankIntraDays->price_change_per;
-                    $temp['percent_of_portfolio_holding_by_this_instrument']=0;
-                    $sell_value_of_this_instrument= $dataBankIntraDays->close_price* $transaction->no_of_shares;
+                    if($dataBankIntraDays)
+                    {
+                         $temp['last_traded_datetime_of_this_instrument']= $dataBankIntraDays->lm_date_time->format('h:i a');
+                          $temp['last_traded_price_of_this_instrument']= $dataBankIntraDays->close_price;
+                            $temp['change_today_of_this_instrument']= $dataBankIntraDays->price_change;
+                            $temp['change_today_per_of_this_instrument']= $dataBankIntraDays->price_change_per;
+                            $temp['percent_of_portfolio_holding_by_this_instrument']=0;
+                         
+                      $sell_value_of_this_instrument= $dataBankIntraDays->close_price* $transaction->no_of_shares;
+                        @ $temp['gain_loss_today_for_this_instrument'] = $temp['sell_value_deducting_commission_of_this_instrument']-$temp['total_buying_cost_including_commission_of_this_instrument'];
+                         $temp['gain_loss_since_purchased_for_this_instrument'] = ($dataBankIntraDays->close_price - $transaction->buying_price) * $transaction->no_of_shares;
+                    }else{
+                            $temp['last_traded_datetime_of_this_instrument']= '';
+                            $temp['last_traded_price_of_this_instrument']= "";
+                            $temp['change_today_of_this_instrument']= "";
+                            $temp['change_today_per_of_this_instrument']= "";
+                            $temp['percent_of_portfolio_holding_by_this_instrument']=0;
+                            $sell_value_of_this_instrument= 0;
+                         
+                    $temp['gain_loss_today_for_this_instrument'] = 0;
+                    $temp['gain_loss_since_purchased_for_this_instrument'] = 0;
+                    }
                     $sell_commission_of_this_instrument = $transaction->commission ? ($transaction->commission / 100) * $sell_value_of_this_instrument : 0;
                     $temp['sell_value_deducting_commission_of_this_instrument']= $sell_value_of_this_instrument- $sell_commission_of_this_instrument;
                     $temp['total_buying_cost_including_commission_of_this_instrument']= $temp['total_buy_commission_of_this_instrument'] + ($transaction->buying_price * $transaction->no_of_shares);
-                    $temp['gain_loss_today_for_this_instrument'] = $temp['sell_value_deducting_commission_of_this_instrument']-$temp['total_buying_cost_including_commission_of_this_instrument'];
-                    $temp['gain_loss_since_purchased_for_this_instrument'] = ($dataBankIntraDays->close_price - $transaction->buying_price) * $transaction->no_of_shares;
                     $temp['gain_loss_per_since_purchased_for_this_instrument'] = $temp['total_buying_cost_including_commission_of_this_instrument']?$temp['gain_loss_since_purchased_for_this_instrument'] / $temp['total_buying_cost_including_commission_of_this_instrument'] * 100:0;
                     $temp['gain_loss_per_since_purchased_for_this_instrument'] = round($temp['gain_loss_per_since_purchased_for_this_instrument'], 2);
                     $temp['has_child']=0;

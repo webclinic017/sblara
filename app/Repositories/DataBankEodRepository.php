@@ -622,18 +622,27 @@ ORDER BY lm_date_time DESC) data
 
             foreach($resolutionArr as $period)
             {
+                $temp=array();
                 $chunk=collect($allDataOfThisInstrument)->chunk($period);
-                $latest=$chunk->first()->first()->toArray();
-                $oldest=$chunk->last()->first()->toArray();
+
+
+                $latest=$chunk[0]->first()->toArray();
+                $oldest=$chunk[0]->last()->toArray();
+
 
                 $price_change=$latest['close']-$oldest['close'];
-                $price_change_per=$price_change/$oldest['close']*100;
-                $latest['price_change']=$price_change;
-                $latest['price_change_per']= (float) number_format($price_change_per, 2, '.', '');
 
-                $returnArr[$instrument_id][$period]=$latest;
+                $price_change_per=$price_change/$oldest['close']*100;
+                $temp['code']=$latest['code'];
+                $temp['close']=$latest['close'];
+                $temp['price_change']=$price_change;
+                $temp['price_change_per']= (float) number_format($price_change_per, 2, '.', '');
+
+
+                $returnArr[$instrument_id][$period]=$temp;
 
             }
+
 
         }
 

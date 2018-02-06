@@ -136,12 +136,15 @@ class DataBanksEodController extends Controller
         //File::requireOnce($path);
         include(app_path() . '/ChartDirector/FinanceChart.php');
 
-        $width = 1230;
-        $mainHeight = 320;
+        $width = request()->width?:1230;
+        $mainHeight = request()->height?:320;
         $indicatorHeight = 90;
         $extraPoints = 21;
 
-
+        if($mainHeight > 500)
+        {
+            $mainHeight = 500;
+        }
         if ($reportrange == '') {
             $from = date('Y-m-d', strtotime(' -120 days'));
             $to = date('Y-m-d');
@@ -348,7 +351,11 @@ class DataBanksEodController extends Controller
         ChartRepository::addOverlay($m, $overlay);
 
         # A copyright message at the bottom right corner the title area
-        $m->addPlotAreaTitle(BottomRight, "<*font=arial.ttf,size=8*>(c) StockBangladesh Ltd.");
+        if($width > 1000)
+        {
+            $m->addPlotAreaTitle(BottomRight,"<*font=arial.ttf,size=8*>(c) StockBangladesh Ltd.");
+            
+        }
         $textBoxObj = $m->addText(650, 270, "www.stockbangladesh.com", 'arial.ttf', 20, 0xc09090, '', 0);
         $textBoxObj->setAlignment(TopRight);
         $m->addPlotAreaTitle(TopLeft, $chartData['topText']);
@@ -368,8 +375,12 @@ class DataBanksEodController extends Controller
 
 
         # Output Javascript chart model to the browser to support tracking cursor
-
-        $viewer->setChartModel($m->getJsChartModel());  // SHOULD BE DISABLE IN LIVE AS IT IS NOT WORKING COMPRESSION
+        // se modification
+        if($width > 768)
+        {
+                $viewer->setChartModel($m->getJsChartModel());  // SHOULD BE DISABLE IN LIVE AS IT IS NOT WORKING COMPRESSION
+        }
+        // se modification
         // $instrumentList=array_flip ($instrumentList);
 
         $imageMap = $m->getHTMLImageMap("", "", "title='" . $m->getToolTipDateFormat() . " {value|G}'");
@@ -585,7 +596,11 @@ class DataBanksEodController extends Controller
         ChartRepository::addOverlay($m,$overlay);
 
         # A copyright message at the bottom right corner the title area
-        $m->addPlotAreaTitle(BottomRight,"<*font=arial.ttf,size=8*>(c) StockBangladesh Ltd.");
+        if($width > 500)
+        {
+            $m->addPlotAreaTitle(BottomRight,"<*font=arial.ttf,size=8*>(c) StockBangladesh Ltd.");
+            
+        }
         $textBoxObj = $m->addText(650, 270, "www.stockbangladesh.com", 'arial.ttf', 20, 0xc09090, '', 0);
         $textBoxObj->setAlignment(TopRight);
         $m->addPlotAreaTitle(TopLeft, $chartData['topText']);

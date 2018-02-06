@@ -1,4 +1,7 @@
 @extends('layouts.metronic.default')
+@section('title')
+Historical Background of IPO [for the Year: <b>{{$year}}</b>]
+@endsection
 @section('content')
 <div class="row">
 
@@ -11,42 +14,78 @@
                         <a href="javascript:;" class="collapse" data-original-title="" title=""> </a>
                     </div>
                 </div>
-                <div class="portlet-body flip-scroll">
+
+{{--  --}}
+            <div class="portlet-body">
                     <div class="center form-group" >    
                         <select class="form-control" id="year" onchange="window.location.href='?year='+this.value">
                             <option>Select a Year</option>
                             {!!yearsAsOption()!!}
                          </select>
+                        </div>                
+            @if(count($ipos) == 0)
+            Currently there is no IPO. Please check again later.
+            @endif
+                @foreach( $ipos as $ipo )
+                <div class="panel-group accordion show" id="ipo-accordion_{{$ipo->id}}">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a class="accordion-toggle  @if($loop->first) first-accordion @endif " data-toggle="collapse" data-parent="#accordion1" href="#collapse_{{$ipo->id}}" aria-expanded="true"> <span><h3>{{$ipo->ipo_name}}</h3></span> <br>
+                                    <span>Subscription Open: <b>{{\Carbon\Carbon::parse($ipo->subscription_open)->format('F d, Y')}}</b> </span>
+                                    <span>Subscription Close: <b>{{\Carbon\Carbon::parse($ipo->subscription_close)->format('F d, Y')}}</b> </span>
+                                </a>
+                            </h4>
                         </div>
-                    <table class="table table-bordered table-striped table-condensed flip-content">
-                        <thead class="flip-content">
-                            <tr>
-                                {{-- <th width="20%"> Ticker </th> --}}
-                                <th> Company </th>
-                                <th class="numeric">Subscription Open </th>
-                                <th class="numeric"> Subscription Close </th>
-                                <th class="numeric"> Issue Manager </th>
-                                <th class="numeric"> 1st Day Close </th>
-                                <th class="numeric"> Return [%] </th>
-                                <th class="numeric"> Prospectus </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($ipos as $ipo)
-                            <tr>
-                                {{-- <td> {{$ipo->short_name}} </td> --}}
-                                <td> {{$ipo->ipo_name}}  </td>
-                                <td class="numeric"> {{$ipo->subscription_open}}</td>
-                                <td class="numeric"> {{$ipo->subscription_close}} </td>
-                                <td class="numeric"> {{$ipo->issue_manager}} </td>
-                                <td class="numeric"> {{$ipo->firstDayClose}} </td>
-                                <td class="numeric"> {{$ipo->return}} </td>
-                                <td class="numeric"> {{$ipo->prospectus}} </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                        <div id="collapse_{{$ipo->id}}" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                            <div class="panel-body">
+                                <div class="col-md-4">
+                                    <table>
+                                        <tr>
+                                            <td width="120px;"><strong>Proposed Share</strong></td>
+                                            <td>: {{$ipo->proposed_share}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Face Value</strong></td>
+                                            <td>: {{$ipo->share_price}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Offered Value</strong></td>
+                                            <td>: {{$ipo->offeredValue}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Market Lot</strong></td>
+                                            <td>: {{$ipo->lot}}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>EPS</strong></td>
+                                            <td>: {{$ipo->eps}}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="col-md-8">
+                                    <strong>Nature of Businesss :</strong>
+                                    <p>{{$ipo->nature_of_business}}</p>
+                                    <strong>Major Product :</strong>
+                                    <p>{{$ipo->major_product}}</p>
+                                    <strong>Use IPO of Proceeds :</strong>
+                                    <p>{{$ipo->use_of_ipo_proceeds}}</p>
+                                    <strong>Issue Manager :</strong>
+                                    <p>{{$ipo->issue_manager}}</p>
+                                    <strong>NAV :</strong>
+                                    <p>
+                                        {{$ipo->revaluation_reserve}} :<br>
+                                        {{$ipo->w_revaluation_reserve}} :
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+                @endforeach
+            </div>
+{{--  --}}
+
         </div>
     </div>
 </div>

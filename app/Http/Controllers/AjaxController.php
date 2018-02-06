@@ -321,45 +321,45 @@ class AjaxController extends Controller
     public function price_matrix_data()
     {
 
-        $from_date=date("Y-m-d", strtotime("-1 month"));
-        $to_date=date("Y-m-d");
-        $instrumentList=InstrumentRepository::getInstrumentsScripWithIndex();
-        $sectorList=SectorListRepository::getSectorList()->keyBy('id');
+        $returnData = Cache::remember("price_matrix_data_all", 1, function (){
 
+            $from_date = date("Y-m-d", strtotime("-2 month"));
+            $to_date = date("Y-m-d");
+            $instrumentList = InstrumentRepository::getInstrumentsScripWithIndex();
+            $sectorList = SectorListRepository::getSectorList()->keyBy('id');
 
+            $eodData = DataBankEodRepository::getPriceChangeHistory($from_date, $to_date, array(2, 3, 4, 6, 15, 21, 30), array(), array('close', 'high'));
 
-        $eodData=DataBankEodRepository::getPriceChangeHistory($from_date,$to_date,array(1,2,3,7,15,21,30),array(),array('close','high'));
+            $returnData = array();
+            foreach ($eodData as $instrument_id => $data) {
 
-        $returnData=array();
-        foreach($eodData as $instrument_id=>$data)
-        {
-            $instrumentInfo=$instrumentList->where('id',$instrument_id)->first();
-            if(count($instrumentInfo))
-            {
-                $sector_list_id=$instrumentInfo->sector_list_id;
+                $instrumentInfo = $instrumentList->where('id', $instrument_id)->first();
+                if (count($instrumentInfo)) {
+                    $sector_list_id = $instrumentInfo->sector_list_id;
+                } else {
+                    // we dont want index data those are exist in $eodData
+                    continue;
+                }
+
+                $sector_name = $sectorList->where('id', $sector_list_id)->first()->name;
+                $temp = array();
+                $temp['code'] = $data[2]['code'];
+                $temp['lastprice'] = $data[2]['close'];
+                $temp['sector'] = $sector_name;
+                $temp['oneDay'] = $data[2]['price_change_per'];
+                $temp['twoDay'] = $data[3]['price_change_per'];
+                $temp['threeDay'] = $data[4]['price_change_per'];
+                $temp['oneWeek'] = $data[6]['price_change_per'];
+                $temp['twoWeek'] = $data[15]['price_change_per'];
+                $temp['threeWeek'] = $data[21]['price_change_per'];
+                $temp['oneMonth'] = $data[30]['price_change_per'];
+
+                $returnData[] = $temp;
             }
-            else
-            {
-                // we dont want index data those are exist in $eodData
-               continue;
-            }
 
-            $sector_name=$sectorList->where('id',$sector_list_id)->first()->name;
-            $temp=array();
-            $temp['code']=$data[1]['code'];
-            $temp['lastprice']=$data[1]['close'];
-            $temp['sector']=$sector_name;
-            $temp['oneDay']=$data[1]['price_change_per'];
+            return $returnData;
+        });
 
-            $temp['twoDay']=$data[2]['close'];
-            $temp['threeDay']=$data[3]['price_change_per'];
-            $temp['oneWeek']=$data[7]['price_change_per'];
-            $temp['twoWeek']=$data[15]['price_change_per'];
-            $temp['threeWeek']=$data[21]['price_change_per'];
-            $temp['oneMonth']=$data[30]['price_change_per'];
-
-            $returnData[]=$temp;
-        }
 
         return json_encode($returnData,JSON_NUMERIC_CHECK);
 

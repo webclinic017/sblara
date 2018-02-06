@@ -6,7 +6,7 @@
             <span class="input-group-btn">
                 <button class="btn red mt-ladda-btn toggle-button"  type="button" data-select2-open="multi-prepend"> <i class="fa fa-line-chart"></i> Chart </button>
             </span>
-              @include('html.instrument_list_bs_select_with_sector',['bs_select_id'=>'shareList', 'class' => 'instrument-select select2', 'prepend' => true])
+              @include('html.instrument_list_bs_select_with_sector',['bs_select_id'=>'shareList', 'class' => 'instrument-select bs-select'])
         </div>
     </div>
 </div>
@@ -88,6 +88,7 @@
                                 </div>
                             </div>
 
+{{-- 
                             <div class="col-md-2">
                                 <div class="margin-bottom-10">
                                     <select id="interval" class="bs-select form-control" >
@@ -97,15 +98,16 @@
                                         <option value="{{30*60}}" >30 Minute</option>
                                         <option value="{{45*60}}" >45 Minute</option>
                                         <option value="{{60*60}}" >1 Hour</option>
-                                        <option value="{{24*60*60}}" selected>1 Day</option>{{-- 
+                                        <option value="{{24*60*60}}" selected>1 Day</option>
                                         <option value="{{7*24*60*60}}" >7 Days</option>
-                                        <option value="{{30*24*60*60}}" >30 Days</option> --}}
+                                        <option value="{{30*24*60*60}}" >30 Days</option> 
                                     </select>
 
                                 </div>
                             </div>
 
-                            <div class="col-md-2">
+ --}}
+                            <div class="col-md-2 hidden-xs hidden-sm">
                                 <div class="margin-bottom-10">
                                     <select id="configure" class="bs-select form-control" multiple>
                                         <option value="VOLBAR" title="VOLBAR" selected="">Volume bar</option>
@@ -130,7 +132,7 @@
 
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-3  hidden-xs hidden-sm">
                                 <div class="margin-bottom-10">
                                     <select id="overlay" class="bs-select form-control ">
                                         <option value="BB" selected="">Bollinger Band</option>
@@ -144,7 +146,7 @@
                        
 
 
-                            <div class="col-md-2">
+                            <div class="col-md-2  hidden-xs hidden-sm">
                                 <div class="margin-bottom-10">
 
                                         <select id="mov1" class="bs-select form-control">
@@ -157,7 +159,7 @@
 
                                 </div>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-2  hidden-xs hidden-sm">
                                 <div class="margin-bottom-10">
 
                                         <input id="touchspin_demo1" type="text" value="13" name="demo1" class="form-control">
@@ -165,7 +167,7 @@
 
                                 </div>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-2  hidden-xs hidden-sm">
                                 <div class="margin-bottom-10">
                                     <select id="mov2" class="bs-select form-control">
                                         <option value="SMA" selected="">Simple</option>
@@ -176,7 +178,7 @@
 
                                 </div>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-2  hidden-xs hidden-sm">
 
                                     <input id="touchspin_demo2" type="text" value="19" name="demo1" class="form-control">
 
@@ -204,7 +206,7 @@
                         </div>
 
 
-                  	  <div class="col-md-3 ">
+                  	  <div class="col-md-3  hidden-xs hidden-sm">
                                     <select id="Indicators" class="select2 double-row" multiple  title='Choose indicators' data-live-search="true">
                                         <option value="None">Select Indicators</option>
                                         <option value="AccDist" title="A/D">Accu/Dist</option>
@@ -434,6 +436,46 @@ function traceFinance(viewer, mouseX)
 <script src="{{ URL::asset('metronic/assets/global/plugins/bootstrap-touchspin/bootstrap.touchspin.js') }}"></script>
 
 <script>
+    // cdir js
+function crossHairAxisLabel(viewer, x, y)
+{
+    // Show cross hair
+    viewer.showCrossHair(x, y);
+
+    // The chart, its plot area and axes
+    var c = viewer.getChart();
+    var xAxis = c.xAxis();
+    var yAxis = c.yAxis();
+
+    // The axis label style
+    var labelStyle = "padding:2px 4px; font: bold 8pt arial; border:1px solid black;" +
+        "background-color:#DDDDFF; -webkit-text-size-adjust:100%;";
+
+    // Draw x-axis label
+    var yPos = xAxis.getY() + ((xAxis.getAlignment() == JsChartViewer.Top) ? -2 : 3);
+    var alignment = (xAxis.getAlignment() == JsChartViewer.Top) ? JsChartViewer.Bottom : JsChartViewer.Top;
+    viewer.showTextBox("xAxisLabel", x, yPos, alignment, c.getXValue(x).toPrecision(4), labelStyle);
+
+    // Draw y-axis label
+    var xPos = yAxis.getX() + ((yAxis.getAlignment() == JsChartViewer.Left) ? -2 : 3);
+    var alignment = (yAxis.getAlignment() == JsChartViewer.Left) ? JsChartViewer.Right : JsChartViewer.Left;
+    viewer.showTextBox("yAxisLabel", xPos, y, alignment, c.getYValue(y, yAxis).toPrecision(4), labelStyle);
+}
+
+function showDataPointToolTip(x, y)
+{
+    var viewer = JsChartViewer.get('ta_chart');
+    viewer.showTextBox("toolTipBox", viewer.getChartMouseX() + 20, viewer.getChartMouseY() + 20, JsChartViewer.TopLeft,
+        "<table><tr><td>Concentration</td><td>: " + x.toPrecision(4) +
+        " g/liter</td></tr><tr><td>Conductivity</td><td>: " + y.toPrecision(4) + " W/K</td></tr></table>",
+        "padding:0px; font:bold 8pt arial; border:1px solid black; background-color:#DDDDFF");
+}
+function hideToolTip()
+{
+    var viewer = JsChartViewer.get('ta_chart');
+    viewer.hideObj("toolTipBox");
+}
+    // cdir js
     function getCookie(cname) {
         var name = cname + "=";
         var decodedCookie = decodeURIComponent(document.cookie);
@@ -526,7 +568,9 @@ function traceFinance(viewer, mouseX)
             sharelist = $('#shareList').val();
         }
 
-        url = url + "/" + chartRange + "/" + sharelist + "/" + comparewith + "/" + $('#Indicators').val() + "/" + $('#configure').val() + "/" + $('#charttype').val() + "/" + $('#overlay').val() + "/" + $('#mov1').val() + "/" + $('#touchspin_demo1').val() + "/" + $('#mov2').val() + "/" + $('#touchspin_demo2').val() + "/" + $('#adj').val()+ "/" + $('#interval').val();
+        url = url + "/" + chartRange + "/" + sharelist + "/" + comparewith + "/" + $('#Indicators').val() + "/" + $('#configure').val() + "/" + $('#charttype').val() + "/" + $('#overlay').val() + "/" + $('#mov1').val() + "/" + $('#touchspin_demo1').val() + "/" + $('#mov2').val() + "/" + $('#touchspin_demo2').val() + "/" + $('#adj').val(); //+ "/" + $('#interval').val();
+            url += '?width='+$(window).width();
+            url += '&height='+$(window).width();
 
         var companyDetailsUrl = 'http://www.new.stockbangladesh.com/TechnicalAnalysis/company_details/' + sharelist
         var marketDepthUrl = 'http://www.new.stockbangladesh.com/TechnicalAnalysis/market_depth/' + sharelist
@@ -546,6 +590,9 @@ function traceFinance(viewer, mouseX)
                     if($('#taChartTab').hasClass('active') && $('.toggle-button').attr('data-state') == 'open')
                     {
                         traceFinance(viewer, viewer.getPlotAreaMouseX());
+
+                        // crossHairAxisLabel(viewer, viewer.getPlotAreaMouseX(), viewer.getPlotAreaMouseY());
+                        // viewer.setAutoHide("all", ["MouseOutPlotArea", "TouchEndPlotArea"]);                        
 
                     }
             });
@@ -677,7 +724,7 @@ function loadFundamental(e) {
 
 	$(document).ready(function () {
         loadChartSettings();
-		$('.instrument-select, #sharelist').change(function () {
+		$('#shareList').on('changed.bs.select', function (e) {
 			if($(this).val() == null)
 			{
 				return;
@@ -716,35 +763,35 @@ function loadFundamental(e) {
 				$(this).attr('data-state', 'close');
 				
 			$('#shareList').val('');
-			$('#shareList').trigger('change');
+			$('#shareList').selectpicker('refresh');
 				
 			}else{
-			$('#shareList').select2('open');
+			$('#shareList').selectpicker('toggle');
 				
 			}
 
 		});
 
-		$('#adj, #configure, #charttype, #overlay, #Indicators, #mov1, #mov2, #touchspin_demo1, #touchspin_demo2, #dashboard-report-range, #interval').change(function () {
-            if($(this).attr('id') == 'interval')
-            {
-                if($(this).val() != {{24*60*60}})
-                {
-                    $('#adj').val(0);
-                    $('#adj').trigger('change');
-                return;
-                }
-            }
+		$('#adj, #configure, #charttype, #overlay, #Indicators, #mov1, #mov2, #touchspin_demo1, #touchspin_demo2, #dashboard-report-range').change(function () {
+            // if($(this).attr('id') == 'interval')
+            // {
+            //     if($(this).val() != {{24*60*60}})
+            //     {
+            //         $('#adj').val(0);
+            //         $('#adj').trigger('change');
+            //     return;
+            //     }
+            // }
 
-            if($(this).attr('id') == 'adj')
-            {
-                if($(this).val() == 1)
-                {
-                    $('#interval').val( {{24*60*60}});
-                    $('#interval').trigger('change');
+            // if($(this).attr('id') == 'adj')
+            // {
+            //     if($(this).val() == 1)
+            //     {
+            //         $('#interval').val( {{24*60*60}});
+            //         $('#interval').trigger('change');
 
-                }
-            }
+            //     }
+            // }
 			loadChart();
 		});
 	})

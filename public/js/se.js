@@ -434,30 +434,34 @@ $("div[id^='ta_chart_']").remove();
 	})
 })	
 
-var lastScrollTop = 0;
-$(window).scroll(function(event){
-   var st = $(this).scrollTop();
-   if (st > lastScrollTop){
-       if(lastScrollTop > 99)
-       {
-       	$('.navbar-fixed-top').hide();
-       }
-   } else {
-   	$('.navbar-fixed-top').show();
-   }
-   lastScrollTop = st;
-});
+// var lastScrollTop = 0;
+// $(window).scroll(function(event){
+//    var st = $(this).scrollTop();
+//    if (st > lastScrollTop){
+//        if(lastScrollTop > 99)
+//        {
+//        	$('.navbar-fixed-top').hide();
+//        }
+//    } else {
+//    	$('.navbar-fixed-top').show();
+//    }
+//    lastScrollTop = st;
+// });
 
 
 });
 
 document.addEventListener('DOMContentLoaded',
 function () {
-$.feedback({
-    ajaxURL: '/feedback',
-    html2canvasURL: '/vendor/feedback/html2canvas.js',
-});
-}, false);
+	if($(this).width() > 1000)
+	{
+				
+		$.feedback({
+		    ajaxURL: '/feedback',
+		    html2canvasURL: '/vendor/feedback/html2canvas.js',
+		});
+	}
+		}, false);
 
 Highcharts.setOptions({
 	credits: {

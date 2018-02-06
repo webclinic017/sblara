@@ -1,4 +1,5 @@
 @extends('layouts.metronic.default')
+@section('title', "Contests Portfolio")
 @section('content')
 <div class="row">
     <div class="col-md-12">
@@ -294,7 +295,64 @@
                                             </td>
                                         </tr>
                                         @endforelse
+  <tr class="active">
+                                            <td colspan="3">
+                                                <span class="bold">Cash</span>
+                                            </td>
+                                            <td colspan="3"></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>{{ number_format($portfolioOfCash, 2) }}%</td>
+                                            <td>
+                                                <span class="bold">
+                                                    {{ number_format($portfolioCashAmount, 2) }}
+                                                </span>
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                        <tr class="active">
+                                            <td colspan="3">
+                                                <span class="bold">Total</span>
+                                            </td>
+                                            <td>
+                                                @if ($sumGainLoss > 0)
+                                                <span class="text-success">{{ number_format($sumGainLoss, 2) }}</span>
+                                                @else
+                                                <span class="text-danger">{{ number_format($sumGainLoss, 2) }}</span>
+                                                @endif
+                                            </td>
+                                            <td>{{ $sumNoOfShare }}</td>
+                                            <td ></td>
+                                            <td>{{ $sumBuyCommissionLoop }}</td>
+                                            <td>{{ $sumTotalPurchaseLoop }}</td>
+                                            <td>
+                                                @if ($sumTotalGainLoop > 0)
+                                                <span class="text-success">{{ $sumTotalGainLoop }}</span>
+                                                @else
+                                                <span class="text-danger">{{ $sumTotalGainLoop }}</span>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @php
+                                                    $growthPercent = ($sumTotalGainLoop/$sumTotalPurchase)*100; 
+                                                @endphp
 
+                                                @if ($growthPercent > 0)
+                                                <span class="text-success">{{ number_format($growthPercent, 2) }}%</span>
+                                                @else
+                                                <span class="text-danger">{{ number_format($growthPercent, 2) }}%</span>
+                                                @endif
+                                            </td>
+                                            <td>100.00%</td>
+                                            <td>
+                                                <span class="bold">
+                                                    {{ number_format($sumSellValueDeductingCommision += $portfolioCashAmount, 2) }}
+                                                </span>
+                                            </td>
+                                            <td></td>
+                                        </tr>                       
                                      
                                     </tbody>
                                 </table>

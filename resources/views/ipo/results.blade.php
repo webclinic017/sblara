@@ -1,5 +1,8 @@
 @extends('layouts.metronic.default')
 @section('content')
+@section('title')
+  IPO Results
+@endsection
 <div class="row">
 <div class="col-md-12">
     <div class="portlet box green">

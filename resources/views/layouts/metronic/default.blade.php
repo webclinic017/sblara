@@ -21,6 +21,7 @@
                     <!-- BEGIN BREADCRUMBS -->
                     <div class="breadcrumbs hidden-xs hidden-sm">
                         <h1>@yield('page_heading')</h1>
+                        <h1>@yield('title')</h1>
                         @include('html.breadcrumbs')
                      </div>
                         @include('global-ui')

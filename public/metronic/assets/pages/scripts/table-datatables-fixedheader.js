@@ -46,10 +46,29 @@ var TableDatatablesFixedHeader = function () {
                 headerOffset: fixedHeaderOffset
             },
 
+            // setup colreorder extension: http://datatables.net/extensions/colreorder/
+            colReorder: {
+                reorderCallback: function () {
+                    console.log('callback');
+                }
+            },
+
             "order": [
                 [0, 'asc']
             ],
-            
+            buttons: [
+                {extend: 'print', className: 'btn dark btn-outline'},
+                {extend: 'copy', className: 'btn red btn-outline'},
+                {extend: 'pdf', className: 'btn green btn-outline'},
+                {extend: 'excel', className: 'btn yellow btn-outline '},
+                {extend: 'csv', className: 'btn purple btn-outline '},
+                {extend: 'colvis', className: 'btn dark btn-outline', text: 'Columns'}
+            ],
+
+            // setup responsive extension: http://datatables.net/extensions/responsive/
+            responsive: true,
+
+
             "lengthMenu": [
                 [5, 10, 15, 20, -1],
                 [5, 10, 15, 20, "All"] // change per page values here

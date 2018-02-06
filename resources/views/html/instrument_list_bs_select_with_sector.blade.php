@@ -1,7 +1,5 @@
 <select id="{{$bs_select_id}}"  class="{{isset($class)?$class:'bs-select'}} form-control" data-live-search="true" title="Select share">
-		@if(isset($prepend))
-		<option >Select Share or Sector</option>
-		@endif
+
 		 <optgroup label="SECTOR LIST">
         @foreach($sectorList as $sector)
             <option value="sector_{{$sector->id}}" >{{$sector->name}} </option>
