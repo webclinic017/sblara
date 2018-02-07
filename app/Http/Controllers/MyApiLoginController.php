@@ -21,7 +21,7 @@ class MyApiLoginController extends Controller
 
             $user = Auth::user();
 
-            if ($user->role_id == 3) {
+            if ($user->group_id == 3) {
                 $request->request->add([
                     'scope' => 'paid-plugin-data' // correct scope sending
                 ]);

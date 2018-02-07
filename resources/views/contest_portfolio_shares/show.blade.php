@@ -295,6 +295,7 @@
                                             </td>
                                         </tr>
                                         @endforelse
+                                        @if(isset($portfolioOfCash))
   <tr class="active">
                                             <td colspan="3">
                                                 <span class="bold">Cash</span>
@@ -353,7 +354,7 @@
                                             </td>
                                             <td></td>
                                         </tr>                       
-                                     
+                                     @endif
                                     </tbody>
                                 </table>
 

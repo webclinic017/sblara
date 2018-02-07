@@ -23,7 +23,7 @@
         color:#000 !important;
     }
 </style>
-<div class="row widget-row" style=" margin-top: -48px;display: inline-block; width: 100%">
+<div class="row widget-row" style=" margin-top: -48px;">
 <div class="col-md-12 margin-bottom-20">
     <!-- BEGIN WIDGET TAB -->
         <style>
@@ -76,9 +76,9 @@
                 <form action="index.html" class="form-horizontal ">
                     <div class="form-body" >
 
-                        <div class="form-group " style="background: #f5f5f5; padding-top: 10px; display: inline-block; margin-right: 0px; margin-left: 0">
+                        <div class="form-group " style="background: #f5f5f5; padding-top: 10px; display: inline-block; margin-right: 0px; margin-left: 0; width: 100%">
 							<div class="col-md-9">
-                            <div class="col-md-2">
+                            <div class="col-md-2 hidden-xs hidden-sm">
                                 <div class="margin-bottom-10">
                                     <select id="adj" class="bs-select form-control" >
                                         <option value="1" selected>Adjusted</option>
@@ -119,7 +119,7 @@
 
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-3 hidden-xs hidden-sm">
                                 <div class="margin-bottom-10">
                                     <select id="charttype" class="bs-select form-control">
                                         <option value="CandleStick" selected="">CandleStick</option>
@@ -185,13 +185,11 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="margin-bottom-10">
-                                    <div class="input-group ">
-                                    <input data-placement="top" data-original-title="Change  date range" class="btn-fit-height green tooltips btn form-control"  type="text" id="dashboard-report-range">
-                            {{--         <span class="input-group-addon">
+                                        <div id="dashboard-report-range" class="pull-right tooltips btn btn-fit-height green" data-placement="top" data-original-title="Change dashboard date range">                            
                                         <i class="icon-calendar"></i>&nbsp;
                                         <span class="thin uppercase hidden-xs"></span>&nbsp;
                                         <i class="fa fa-angle-down"></i>
-                                    </span> --}}
+                               
                                         
 
                                     </div>
@@ -205,9 +203,16 @@
                             </div>
                         </div>
 
-
-                  	  <div class="col-md-3  hidden-xs hidden-sm">
-                                    <select id="Indicators" class="select2 double-row" multiple  title='Choose indicators' data-live-search="true">
+<style>
+    @media (max-width: 990px) {
+        .se-sm-margin{
+         margin: 10px 0 10px 0;
+            
+        }
+    }
+</style>
+                  	  <div class="col-md-3 se-sm-margin" >
+                                    <select  id="Indicators" class="select2 double-row" multiple  title='Choose indicators' data-live-search="true">
                                         <option value="None">Select Indicators</option>
                                         <option value="AccDist" title="A/D">Accu/Dist</option>
                                         <option value="AroonOsc" title="ArnOsc">Aroon Oscillator</option>
@@ -402,8 +407,6 @@ function traceFinance(viewer, mouseX)
 {{--  --}}
             <div id="chartContainer" class="chartcontent thumbnail">
 				<input type="hidden" id="chart_id" value="">
-
-
                 </div>
 
 
@@ -511,6 +514,8 @@ function hideToolTip()
                 //use end if user want to store end date;
                 $('#dashboard-report-range').data('daterangepicker').setEndDate(moment());
                 $('#dashboard-report-range').attr('data-range', date[0]+'|{{date('Y-m-d')}}');
+                $('#dashboard-report-range span').html(moment(date[0], "YYYY-MM-DD").format('MMM DD, YYYY') +' - {{date('M d, Y')}}'); //'data-range',
+
             }else{
                 $('#'+k).val(v);
                 $('#'+k).trigger('change');    
@@ -569,8 +574,8 @@ function hideToolTip()
         }
 
         url = url + "/" + chartRange + "/" + sharelist + "/" + comparewith + "/" + $('#Indicators').val() + "/" + $('#configure').val() + "/" + $('#charttype').val() + "/" + $('#overlay').val() + "/" + $('#mov1').val() + "/" + $('#touchspin_demo1').val() + "/" + $('#mov2').val() + "/" + $('#touchspin_demo2').val() + "/" + $('#adj').val(); //+ "/" + $('#interval').val();
-            url += '?width='+$(window).width();
-            url += '&height='+$(window).width();
+            url += '?width='+$("#chartContainer").width();
+            url += '&height='+$(window).height();
 
         var companyDetailsUrl = 'http://www.new.stockbangladesh.com/TechnicalAnalysis/company_details/' + sharelist
         var marketDepthUrl = 'http://www.new.stockbangladesh.com/TechnicalAnalysis/market_depth/' + sharelist
@@ -587,12 +592,9 @@ function hideToolTip()
             viewer.attachHandler(["MouseMovePlotArea", "TouchStartPlotArea", "TouchMovePlotArea", "ChartMove", "Now"],
             function(e) {
                 this.preventDefault(e);   // Prevent the browser from using touch events for other actions
-                    if($('#taChartTab').hasClass('active') && $('.toggle-button').attr('data-state') == 'open')
+                    if($('#taChartTab').hasClass('active') && $('.toggle-button').attr('data-state') == 'open' )
                     {
-                        traceFinance(viewer, viewer.getPlotAreaMouseX());
-
-                        // crossHairAxisLabel(viewer, viewer.getPlotAreaMouseX(), viewer.getPlotAreaMouseY());
-                        // viewer.setAutoHide("all", ["MouseOutPlotArea", "TouchEndPlotArea"]);                        
+                        traceFinance(viewer, viewer.getPlotAreaMouseX());                        
 
                     }
             });
@@ -634,15 +636,10 @@ maxboostedstep: 10000000
             endDate: moment(),
             minDate: '01/01/1999',
             maxDate: moment(),
-            dateLimit: {
-                days: 3000
-            },
-            showDropdowns: true,
-            showWeekNumbers: true,
-            timePicker: false,
-            "showCustomRangeLabel": false,
-            timePickerIncrement: 1,
-            timePicker12Hour: true,
+           showCustomRangeLabel: true,
+            // showDropdowns: true,
+            // showWeekNumbers: true,
+            // timePicker: false,
             ranges: {
                 //  'Last 7 Days': [moment().subtract('days', 6), moment()],
                 //  'Last 30 Days': [moment().subtract('days', 29), moment()],
@@ -672,12 +669,12 @@ maxboostedstep: 10000000
             },
             opens: App.isRTL() ? "right" : "left"
         }, function (e, t, a) {
-            $("#dashboard-report-range span").html(e.format("MMMM D, YYYY") + " - " + t.format("MMMM D, YYYY"))
+            $("#dashboard-report-range span").html(e.format("MMM D, YYYY") + " - " + t.format("MMM D, YYYY"))
             chartRange=e.format('YYYY-MM-DD')+'|'+t.format('YYYY-MM-DD');
             $('#dashboard-report-range').attr("data-range",chartRange);
-        }), $("#dashboard-report-range span").html(moment().subtract("days", 120).format("MMMM D, YYYY") + " - " + moment().format("MMMM D, YYYY")), $("#dashboard-report-range").show())
+        }), $("#dashboard-report-range span").html(moment().subtract("days", 120).format("MMM D, YYYY") + " - " + moment().format("MMM D, YYYY")), $("#dashboard-report-range").show())
 
-        $('#dashboard-report-range span').html(moment().subtract('days', 120).format('MMMM D, YYYY') + ' - ' + moment().format('MMMM D, YYYY'));
+        $('#dashboard-report-range span').html(moment().subtract('days', 120).format('MMM D, YYYY') + ' - ' + moment().format('MMM D, YYYY'));
         chartRange=moment().subtract('days', 120).format('YYYY-MM-DD') + '|' + moment().format('YYYY-MM-DD');
         $('#dashboard-report-range').attr("data-range",chartRange);
 

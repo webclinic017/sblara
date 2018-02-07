@@ -91,9 +91,8 @@ Route::get('plugin_user_stats/{username}/{hdd}/{cpu}/', function ($username, $hd
     $message['eod_mode_enable'] = true;
     $message['intraday_mode_enable'] = true;
     $message['adjusted_mode_enable'] = true;
-    $message['fundamental_button_enable'] = true;
-    $message['resources_button_enable'] = true;
-
+    $message['fundamental_button_enable'] = false;
+    $message['resources_button_enable'] = false;
     $message['interval'] = 30;
     return json_encode($message, JSON_UNESCAPED_SLASHES);
 })->middleware(['auth:api', 'scopes:paid-plugin-data']);

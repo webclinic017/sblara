@@ -85,7 +85,7 @@ class PluginEodDataResetCommand extends Command
         $limit=10000;
         for($i=0;$i<$total_row;$i=$i+ $limit)
         {
-            dump(".... processing start=$i, limit=$limit");
+            echo (".... processing start=$i, limit=$limit \n");
             $data = DB::select("select instrument_id,open,high,low,close,volume,date from data_banks_eods where date<'$last_trade_date' ORDER BY date desc limit $i,$limit");
             self::writeData($data, $instrumentList, $file);
         }

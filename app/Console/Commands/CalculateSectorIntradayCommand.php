@@ -126,6 +126,7 @@ class CalculateSectorIntradayCommand extends Command
             $tsym = array();
             $dataToSave = array();
 
+
             foreach ($instrument_list as $sector_id => $all_instrument_of_this_sector) {
 
                 $total_contribution_sector = 0;
@@ -140,7 +141,15 @@ class CalculateSectorIntradayCommand extends Command
 
                     $instrument_id=$instrument_info->id;
 
-                    if (!is_null($trade_data_of_this_instrument=$data_banks_intraday_data->where('instrument_id',$instrument_id)->first())) {
+                    if (!is_null($trade_data_of_this_instrument=$data_banks_intraday_data->where('instrument_id',$instrument_id)->first()))
+                    {
+                        if(!$trade_data_of_this_instrument->trade_time->isToday())
+                        {
+                             /*sometimes very first $data_banks_intraday_data returns previous day data.
+                             This happen normally if calculateSectorIntray corn runs before any data inserted of today in the database
+                             so we are avoiding this case*/
+                            break;
+                        }
 
                         $yday_close_price=$trade_data_of_this_instrument->yday_close_price;
 
@@ -248,6 +257,6 @@ class CalculateSectorIntradayCommand extends Command
         $sec = intval($diff);
         $micro = $diff - $sec;
 
-        echo "Time:  " . round($micro * 1000, 4) . " ms";
+        dump("Time:  " . round($micro * 1000, 4) . " ms");
     }
 }

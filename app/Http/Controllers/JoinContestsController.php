@@ -33,6 +33,12 @@ class JoinContestsController extends Controller
 
                 flash('Please wait for the approval!', 'success');
             } else {
+                $con = auth()->user()->contestPortfolios()->where('contest_id', $contest)->first();
+                if($con)
+                {
+                    flash('Already joined', 'error');
+                    return redirect()->back();
+                }
                 auth()->user()->contestPortfolios()
                             ->attach($contest, [
                                 'approved' => true, 

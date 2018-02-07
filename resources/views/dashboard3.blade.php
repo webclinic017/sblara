@@ -373,7 +373,7 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
                     </div>
 
                 <div class="portlet-body">
-        <iframe width="100%" height="400" src="https://www.youtube.com/embed/xiEhxC_oid8" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        <iframe width="100%" height="400" src="https://www.youtube.com/embed/xYK4Ni385nQ" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
                 </div>
             </div>
             </div>

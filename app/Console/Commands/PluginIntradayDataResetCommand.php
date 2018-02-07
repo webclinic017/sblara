@@ -133,7 +133,7 @@ class PluginIntradayDataResetCommand extends Command
 
         foreach ($instrumentList as $ins) {
             $instrument_id = $ins->id;
-            dump("started  " . $ins->instrument_code);
+            echo "\nstarted  " . $ins->instrument_code;
             $data = DataBanksIntraday::whereBetween('lm_date_time', [$from_trade_date, $last_trade_date])->where('instrument_id', $instrument_id)->orderBy('lm_date_time', 'desc')->get();
 
             self::writeData($data, $ins->instrument_code, $file);

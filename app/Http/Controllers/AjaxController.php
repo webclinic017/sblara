@@ -168,7 +168,7 @@ class AjaxController extends Controller
         $instrument_arr= $latestData->pluck('instrument_id');
 
         $metaKey=array("paid_up_capital","earning_per_share","net_asset_val_per_share","share_percentage_director","share_percentage_public","share_percentage_institute","share_percentage_foreign","share_percentage_govt");
-//        Cache::forget('data_matrix_fundamental');
+        //Cache::forget('data_matrix_fundamental');
         $fundamentaInfo = Cache::remember("data_matrix_fundamental", 300 , function () use ($metaKey,$instrument_arr) {
             $fundamentaInfo = FundamentalRepository::getFundamentalData($metaKey, $instrument_arr);
             return $fundamentaInfo;

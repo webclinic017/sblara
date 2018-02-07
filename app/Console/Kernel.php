@@ -41,9 +41,9 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
 
-        $schedule->command('plugin:resetEod')->dailyAt('16:15')->emailOutputTo('fazalmohammad19@gmail.com');
-        $schedule->command('plugin:resetIntra')->dailyAt('17:00')->emailOutputTo('fazalmohammad19@gmail.com');
-        $schedule->command('plugin:resetAdjustedEod')->dailyAt('17:45')->emailOutputTo('fazalmohammad19@gmail.com');
+        $schedule->command('plugin:resetEod')->dailyAt('16:00')->emailOutputTo('fazalmohammad19@gmail.com');
+        //$schedule->command('plugin:resetIntra')->dailyAt('17:00')->emailOutputTo('fazalmohammad19@gmail.com');
+        $schedule->command('plugin:resetAdjustedEod')->dailyAt('14:45')->emailOutputTo('fazalmohammad19@gmail.com');
 
        /*$schedule->command('index:generateCustomIndex')->cron('* 10,11,12,13,14 * * 0,1,2,3,4')->when(function () {
             return Market::isMarketOpen();

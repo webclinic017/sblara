@@ -68,7 +68,7 @@ class PluginAdjustedEodDataResetCommand extends Command
 
         foreach ($instrumentList as $ins) {
             $instrument_id = $ins->id;
-            dump("started  " . $ins->instrument_code);
+            echo "\n started  " . $ins->instrument_code;
             $to=date('Y-m-d');
             //$from='2007-01-01';
             $from='2007-01-01';

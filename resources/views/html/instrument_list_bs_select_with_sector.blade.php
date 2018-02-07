@@ -6,12 +6,8 @@
         @endforeach
         </optgroup>
 
-        @foreach($instrumentList as $sector=>$all_shares_of_this_sectors)
-        <optgroup label="{{$sector}}">
-        @foreach($all_shares_of_this_sectors as $instrument)
+        @foreach($instrumentList as $instrument)
             <option value="{{$instrument->id}}" >{{$instrument->instrument_code}} </option>
-        @endforeach
-        </optgroup>
         @endforeach
 
 </select>

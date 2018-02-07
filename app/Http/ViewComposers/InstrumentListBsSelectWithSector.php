@@ -29,7 +29,7 @@ class InstrumentListBsSelectWithSector
         /*$sectorList=SectorListRepository::getSectorList();
         $instrumentList=InstrumentRepository::getInstrumentsScripWithIndex();*/
         $sectorList=SectorListRepository::getSectorList();
-        $instrumentList=InstrumentRepository::getInstrumentsGroupBySector();
+        $instrumentList=InstrumentRepository::getInstrumentList();
         unset($instrumentList['custom_index']);
         unset($instrumentList['Treasury Bond']);
 

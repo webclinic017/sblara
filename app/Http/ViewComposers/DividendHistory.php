@@ -39,7 +39,13 @@ class DividendHistory
         $metaKey=array("stock_dividend","cash_dividend");
         $fundaData=FundamentalRepository::getFundamentalDataHistory($metaKey,array($instrument_id));
 
+        $stock_dividend_data=array();
+
+        if(isset($fundaData['stock_dividend']))
         $stock_dividend_data=$fundaData['stock_dividend']->first()->sortBy('meta_date');
+
+        $cash_dividend_data=array();
+        if(isset($fundaData['cash_dividend']))
         $cash_dividend_data=$fundaData['cash_dividend']->first()->sortBy('meta_date');
 
 

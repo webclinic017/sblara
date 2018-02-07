@@ -339,7 +339,7 @@ class DataBanksEodController extends Controller
         }
 
 
-        //$m->addPlotAreaTitle(BottomLeft, sprintf("<*font=arial.ttf,size=8*>%s - Open: %s High: %s Low: %s Close: %s Volume: %s   NOS: %s Public( %s ): %s", $lastday, $open,$high,$low,$close,$volume,$no_of_securities,$publicText,$share_percentage_public));
+        // $m->addPlotAreaTitle(BottomLeft, sprintf("<*font=arial.ttf,size=8*>%s - Open: %s High: %s Low: %s Close: %s Volume: %s   NOS: %s Public( %s ): %s", $lastday, $open,$high,$low,$close,$volume,$no_of_securities,$publicText,$share_percentage_public));
         //$m->addPlotAreaTitle(BottomLeft, sprintf("<*font=arial.ttf,size=8*>%s - Open: %s High: %s Low: %s Close: %s Volume: %s   NOS: %s Public( %s ): %s", $chartData['lastday'], $chartData['open'],$chartData['high'],$chartData['low'],$chartData['close'],$chartData['volume'],$chartData['fundamentalDataOrganized']['total_no_securities']['meta_value'],$chartData['publicText'],$chartData['share_percentage_public']));
         @$m->addPlotAreaTitle(BottomLeft, sprintf("<*font=arial.ttf,size=8*>%s - Open: %s High: %s Low: %s Close: %s Volume: %s   NOS: %s Public( %s ): %s  NAV: %s  Annualized EPS: %s (%s published at %s)", $chartData['lastday'], $chartData['open'], $chartData['high'], $chartData['low'], $chartData['close'], $chartData['volume'], isset($chartData['fundamentalDataOrganized']['total_no_securities']) ? $chartData['fundamentalDataOrganized']['total_no_securities'][$instrumentId]['meta_value'] : 'N/A', $chartData['publicText'], $chartData['share_percentage_public'], isset($chartData['fundamentalDataOrganized']['net_asset_val_per_share']) ? $chartData['fundamentalDataOrganized']['net_asset_val_per_share'][$instrumentId]['meta_value'] : 'N/A', $chartData['annualized_eps'], $chartData['eps_text'], $chartData['eps_date']));
 
@@ -351,11 +351,15 @@ class DataBanksEodController extends Controller
         ChartRepository::addOverlay($m, $overlay);
 
         # A copyright message at the bottom right corner the title area
+        $imageMap = $m->getHTMLImageMap("", "", "title='".$m->getToolTipDateFormat()." {value|G}'");
         if($width > 1000)
         {
+
+
             $m->addPlotAreaTitle(BottomRight,"<*font=arial.ttf,size=8*>(c) StockBangladesh Ltd.");
             
         }
+        $viewer = new \WebChartViewer("ta_chart");
         $textBoxObj = $m->addText(650, 270, "www.stockbangladesh.com", 'arial.ttf', 20, 0xc09090, '', 0);
         $textBoxObj->setAlignment(TopRight);
         $m->addPlotAreaTitle(TopLeft, $chartData['topText']);
@@ -365,24 +369,22 @@ class DataBanksEodController extends Controller
         $chartId = md5($instrumentCode . rand(999, 99999));
 
         # Create the WebChartViewer object
-        $viewer = new \WebChartViewer("ta_chart");
 
         # Output the chart
         $chartQuery = $m->makeSession($viewer->getId());
 
         # Set the chart URL to the viewer
         $viewer->setImageUrl("getchart/" . $chartQuery);
-
+        $viewer->setImageMap($imageMap);
 
         # Output Javascript chart model to the browser to support tracking cursor
         // se modification
-        if($width > 768)
-        {
+   
                 $viewer->setChartModel($m->getJsChartModel());  // SHOULD BE DISABLE IN LIVE AS IT IS NOT WORKING COMPRESSION
-        }
+        
         // se modification
         // $instrumentList=array_flip ($instrumentList);
-
+// dd($m->getToolTipDateFormat());
         $imageMap = $m->getHTMLImageMap("", "", "title='" . $m->getToolTipDateFormat() . " {value|G}'");
 
         /*        header("Content-type: image/png");
