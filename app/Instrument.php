@@ -121,7 +121,7 @@ class Instrument extends Model
         }
 
         $cacheVar="InstrumentsScripOnly$exchangeId";
-
+        //Cache::forget("$cacheVar");
         $returnData = Cache::remember("$cacheVar", 1, function ()  use ($exchangeId)  {
 
             $returnData = static::whereHas('sector_list', function($q) use($exchangeId) {
@@ -130,6 +130,7 @@ class Instrument extends Model
                 $q->where('name', 'not like', "custom_index");
                 $q->where('name', 'not like', "Debenture");
                 $q->where('name', 'not like', "Treasury Bond");
+               // $q->where('name', 'not like', "Corporate Bond");
             })->where('active','1')->orderBy('instrument_code', 'asc')->get();
 
             return $returnData;

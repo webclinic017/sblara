@@ -19,17 +19,17 @@
                         <li class="mt-list-item done">
                             <div class="list-icon-container">
                                 @if($instrument->price_change<0)
-                                    <span class="inlinesparkline_value"  sparklineColor ="red">{{$viewData['totalValueData'][$instrumentId]->implode('close_price', ', ')}}</span>
+                                    <span class="inlinesparkline_value"  sparklineColor ="red">{{$viewData['totalValueData'][$instrumentId]->reverse()->implode('close_price', ', ')}}</span>
                                 @else
-                                    <span class="inlinesparkline_value"  sparklineColor ="green">{{$viewData['totalValueData'][$instrumentId]->implode('close_price', ', ')}}</span>
+                                    <span class="inlinesparkline_value"  sparklineColor ="green">{{$viewData['totalValueData'][$instrumentId]->reverse()->implode('close_price', ', ')}}</span>
                                 @endif
                             </div>
                             <div class="list-datetime-c">
 
                                 @if($instrument->price_change<0)
-                                    <span class="inlinesparkline_value" sparkType="bar" sparkbarcolor ="red">{{$viewData['totalValueData'][$instrumentId]->slice(0,14)->implode('total_value_difference', ', ')}}</span>
+                                    <span class="inlinesparkline_value" sparkType="bar" sparkbarcolor ="red">{{$viewData['totalValueData'][$instrumentId]->slice(0,14)->reverse()->implode('total_value_difference', ', ')}}</span>
                                 @else
-                                    <span class="inlinesparkline_value" sparkType="bar" sparkbarcolor ="green">{{$viewData['totalValueData'][$instrumentId]->slice(0,14)->implode('total_value_difference', ', ')}}</span>
+                                    <span class="inlinesparkline_value" sparkType="bar" sparkbarcolor ="green">{{$viewData['totalValueData'][$instrumentId]->slice(0,14)->reverse()->implode('total_value_difference', ', ')}}</span>
 
                                 @endif
 

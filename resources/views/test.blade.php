@@ -1,6 +1,7 @@
 @extends('layouts.metronic.default')
 
 @section('content')
+@include("block.dividend_yield_and_payout_ratio");
 
                         <div class="row">
                             <div class="col-md-12">
@@ -18,14 +19,11 @@
                                                                                         <i class="icon-cloud-upload"></i>
                                                                                     </a>
                                                                                     <a class="btn btn-circle btn-icon-only btn-default fullscreen" href="javascript:;" data-original-title="" title=""> </a>
-                                                                                    <a href="" class="collapse" data-original-title="" title=""> </a>
                                                                                 </div>
-{{--
                                         <div class="tools">
                                          <a href="" class="collapse" data-original-title="" title=""> </a>
                                          <a href="" class="remove" data-original-title="" title=""></a>
                                         </div>
---}}
                                     </div>
                                     <div class="portlet-body">
 
@@ -35,9 +33,9 @@
                                         <table class="table table-striped table-bordered table-hover" id="sample_1">
                                                                                 <thead>
                                                                                     <tr>
-                                                                                        <th>Name</th>
-                                                                                        <th>Position</th>
-                                                                                        <th>Office</th>
+                                                                                        <th>Company</th>
+                                                                                        <th>LTP</th>
+                                                                                        <th>Change</th>
                                                                                         <th>Age</th>
                                                                                         <th>Start date</th>
                                                                                         <th>Salary</th>

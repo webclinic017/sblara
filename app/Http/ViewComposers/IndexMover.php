@@ -11,9 +11,10 @@ namespace App\Http\ViewComposers;
 use Illuminate\View\View;
 use App\Repositories\FundamentalRepository;
 use App\Repositories\InstrumentRepository;
+use App\Repositories\CorporateActionRepository;
 use App\Instrument;
 use App\Repositories\DataBanksIntradayRepository;
-use App\Repositories\DataBankEodRepository;
+use App\Repositories\MarketStatRepository;
 use App\Repositories\IndexRepository;
 use Illuminate\Support\Facades\Cache;
 
@@ -44,129 +45,196 @@ class IndexMover
     {
 
 
+        //Cache::forget("index_mover");
 
-        $instrumentList = InstrumentRepository::getInstrumentsScripOnly();
-        //$instrumentList = InstrumentRepository::getInstrumentsAll();
-        $instrumentList=$instrumentList->whereNotIn('sector_list_id', [23, 24]); //filtering index and custom_index
-
-        $listed_company_ids = $instrumentList->pluck('id');
+        $indexmover = Cache::remember("index_mover", 1, function () {
 
 
-        $posts = Instrument::with(['data_banks_eods' => function ($query) {
-
-            $query->latest('date')->first();
-
-        }])->get();
-        //$hives = App\Hive::with('latestMeasure')->get()
+            $instrument_list = InstrumentRepository::getInstrumentsScripOnly()->keyBy('id');
 
 
-        foreach ($posts as $r) {
-            dump($r->latestDataBanksEod->close);
-        }
-
-       /* $posts = Instrument::with(['data_banks_eods' => function ($q) {
-            //$q->orderBy('date','desc')->take(1);
-            $q->where('date','desc')->take(1);
-        }])
-            ->get();*/
-
-        //$posts = Instrument::with('data_banks_eods')->where('instrument_id', 79)->take(1)->get();
-
-      /*  dump($posts);
-
-        $posts = Instrument::where('id', $listed_company_ids)
-            ->with(['data_banks_eod' => function ($q) {
-                $q->latest('date')->take(1);
-            }])
-            ->get();*/
-
-        /*foreach($posts->chunk(5)->first() as $r)
-        {
-            dump($r->latestDataBanksEod);
-        }
-
-        dd($posts->chunk(2)->first()->toArray());
+            $cap_equity = MarketStatRepository::getMarketStatsData(array('cap_equity'), null);
+            $ob_cap_equity_today = $cap_equity->first();
+            $ob_cap_equity_yesterday = $cap_equity->last();
+            $cap_equity_yesterday = $ob_cap_equity_yesterday['cap_equity']['meta_value'];
 
 
-        $lastTradedDataAllInstruments = InstrumentRepository::getDateLessTradeData($listed_company_ids);
+            // DSEX is using here. instrument_id of dsex=10001
 
-        dd($lastTradedDataAllInstruments->chunk(35)->first()->toArray());
+            $index_data_yesterday = IndexRepository::getIndexDataYesterday(10, null, 0);
+            $trade_date_yesterday = $index_data_yesterday['index']['10001']['data'][0]->index_date->format('Y-m-d');
+            $dsex_yesterday = $index_data_yesterday['index']['10001']['data'][0]->capital_value;
+            $market_id_yesterday = $index_data_yesterday['index']['10001']['data'][0]->market_id;
 
-        //dump($lastTradedDataAllInstruments->toarray());
 
-        //fundamental data can be cache for 24 hours as it updated daily basis
-        $needed_fundamentals_of_listed_company = Cache::remember("index_mover_fundamentals", 60, function () use ($listed_company_ids) {
+            $index_data_today = IndexRepository::getIndexData(10, null, 0);
+            $trade_date_today = $index_data_today['index']['10001']['data'][0]->index_date->format('Y-m-d');
+            $market_id_today = $index_data_today['index']['10001']['data'][0]->market_id;
 
-            $needed_fundamentals_of_listed_company = FundamentalRepository::getFundamentalData(array('total_no_securities', 'public_share_per'), $listed_company_ids);
-            return $needed_fundamentals_of_listed_company;
+
+            $all_corporate_action_of_yesterday = CorporateActionRepository::getCorporateActionAll($trade_date_yesterday, $trade_date_yesterday);
+            $adjustmentFactor = array();
+            foreach ($all_corporate_action_of_yesterday as $row) {
+                if ($row->action == 'stockdiv') {
+                    $adjustmentFactor[$row->instrument_id] = (100 + $row->value) / 100;
+                }
+            }
+
+
+            $instrument_list_of_dsex = FundamentalRepository::getFundamentalDataAll(array('dsex_listed'));
+            $instrument_list_of_dsex = collect($instrument_list_of_dsex['dsex_listed'])->where('meta_value', '1');
+            // extracting all instrument_id
+            $instrument_id_of_all_dsex_listed_company = $instrument_list_of_dsex->pluck('instrument_id');
+
+
+            // total_no_securities,public_share_per under meta_group=company_financial_performance
+            $needed_fundamentals_of_dsex_listed_company = FundamentalRepository::getFundamentalData(array('total_no_securities', 'public_share_per'), $instrument_id_of_all_dsex_listed_company);
+
+
+            $latestTradeDataAll = DataBanksIntradayRepository::getLatestTradeDataAll()->keyBy('instrument_id');
+
+
+            $market_capital_public_yesterday = 0;
+            $market_capital_public_today = 0;
+
+
+            $impact_arr = array();
+
+            foreach ($instrument_id_of_all_dsex_listed_company as $instrument_id) {
+
+                // skip mutual fund
+                if ($instrument_list[$instrument_id]->sector_list_id == 14)
+                    continue;
+
+                //skip corporate bond
+                if ($instrument_list[$instrument_id]->sector_list_id == 4)
+                    continue;
+
+
+                //checking if this share has been traded. If traded taking the $total_volume. Other wise setting the $total_volume=0
+                if (isset($latestTradeDataAll[$instrument_id])) {
+
+                    $category = category($latestTradeDataAll[$instrument_id]);
+                    //skip Z category
+                    if ($category == 'Z')
+                        continue;
+
+                    if (isset($needed_fundamentals_of_dsex_listed_company['total_no_securities'][$instrument_id])) {
+                        $total_no_securities = $needed_fundamentals_of_dsex_listed_company['total_no_securities'][$instrument_id]->meta_value;
+                        //dump($total_no_securities);
+                    } else {
+                        $total_no_securities = 0;
+
+                        //send an email to rnd manager informing  that  $total_no_securities is missing for this share
+
+                    }
+                    if (isset($needed_fundamentals_of_dsex_listed_company['public_share_per'][$instrument_id])) {
+                        $public_share_per = $needed_fundamentals_of_dsex_listed_company['public_share_per'][$instrument_id]->meta_value;
+
+                    } else {
+                        $public_share_per = 0;
+                        //send an email to rnd manager informing  that  $public_share_per is missing for this share
+
+                    }
+
+                    $total_no_securities_public = $total_no_securities * $public_share_per / 100;
+
+                    $volume = $latestTradeDataAll[$instrument_id]->total_volume;
+                    $instrument_code = $instrument_list[$instrument_id]->instrument_code;
+                    $yday_close_price = $latestTradeDataAll[$instrument_id]->yday_close_price;
+
+                    if (isset($adjustmentFactor[$instrument_id])) {
+                        $yday_close_price = $yday_close_price / $adjustmentFactor[$instrument_id];
+                    }
+
+
+                    $pub_last_traded_price = $latestTradeDataAll[$instrument_id]->close_price;
+                    $market_capital_public_yesterday += $total_no_securities_public * $yday_close_price;
+                    $market_capital_public_today += $total_no_securities_public * $pub_last_traded_price;
+
+
+                    $price_change = $pub_last_traded_price - $yday_close_price;
+
+
+                    $total_impact_for_this_instrument = $price_change * $total_no_securities;
+                    $market_capital_increased_for_this_instrument = $cap_equity_yesterday + $total_impact_for_this_instrument;
+
+
+                    /*
+                     *                                  Yesterday's Closing Index X Current M.Cap
+                                Current Index = --------------------------------------------------------------
+                                                                    Opening M.Cap
+                     * */
+
+                    // Yesterday's Closing Index =$dsex_yesterday
+                    //  Opening M.Cap= $cap_equity_yesterday
+
+
+                    $final_index = ($dsex_yesterday * $market_capital_increased_for_this_instrument) / $cap_equity_yesterday;
+                    $final_index_change = $final_index - $dsex_yesterday;
+                    $final_index_change_per = $final_index_change / $dsex_yesterday;
+
+
+                    $impact_arr[$instrument_id]['final_index_change'] = round($final_index_change, 5);
+                    $impact_arr[$instrument_id]['instrument_code'] = $instrument_code;
+                    $impact_arr[$instrument_id]['final_index_change_per'] = round($final_index_change_per, 6);
+                    $impact_arr[$instrument_id]['contribution'] = $price_change ? $final_index_change / $price_change : 0;
+                    $impact_arr[$instrument_id]['yday_close_price'] = $yday_close_price;
+                    $impact_arr[$instrument_id]['ltp'] = $pub_last_traded_price;
+                    $impact_arr[$instrument_id]['volume'] = $volume;
+
+
+                }
+
+            }
+
+
+            // dump($impact_arr);
+            arsort($impact_arr);
+            $count = 0;
+            $indexmover = array();
+            foreach ($impact_arr as $instrument_id => $info) {
+                //pr($id);
+                $indexmover['positive'][$count]['instrument_id'] = $instrument_id;
+                $indexmover['positive'][$count]['instrument_code'] = $info['instrument_code'];
+                $indexmover['positive'][$count]['ltp'] = $info['ltp'];
+                $indexmover['positive'][$count]['yday_close_price'] = $info['yday_close_price'];
+                $indexmover['positive'][$count]['final_index_change'] = round($info['final_index_change'],4);
+                $indexmover['positive'][$count]['final_index_change_per'] = round($info['final_index_change_per'],4);
+                $indexmover['positive'][$count]['volume'] = $info['volume'];
+                $count++;
+                if ($count == 7) {
+                    break;
+                }
+            }
+            asort($impact_arr);
+
+            //$indexmover = array();
+            $count = 0;
+            foreach ($impact_arr as $instrument_id => $info) {
+
+                $indexmover['negative'][$count]['instrument_id'] = $instrument_id;
+                $indexmover['negative'][$count]['instrument_code'] = $info['instrument_code'];
+                $indexmover['negative'][$count]['ltp'] = $info['ltp'];
+                $indexmover['negative'][$count]['yday_close_price'] = $info['yday_close_price'];
+                $indexmover['negative'][$count]['final_index_change'] = round($info['final_index_change'],4);
+                $indexmover['negative'][$count]['final_index_change_per'] = round($info['final_index_change_per'],4);
+                $indexmover['negative'][$count]['volume'] = $info['volume'];
+                $count++;
+                if ($count == 7) {
+                    break;
+                }
+            }
+
+
+            return $indexmover;
 
         });
 
 
-        $total_market_capital=0;
-        $out="<table>";
-        foreach($lastTradedDataAllInstruments as $row)
-        {
-            $instrumentData=$row->data_banks_eod;
-            echo "<pre>";
-            print_r($instrumentData->toArray());
-            $instrument_id = $instrumentData->instrument_id;
-            $instrument_code = $instrumentList->where('id', $instrument_id)->first()->instrument_code;
 
 
-            if(isset($needed_fundamentals_of_listed_company['total_no_securities'][$instrument_id]))
-            {
-                $out.="<tr>";
-                $total_no_securities =$needed_fundamentals_of_listed_company['total_no_securities'][$instrument_id]->meta_value;
-                $total_no_securities=trim($total_no_securities);
-                //$out .= "<td>$instrument_code=$total_no_securities</td>";
-                $nos_updated= $needed_fundamentals_of_listed_company['total_no_securities'][$instrument_id]->meta_date;
-                $cp= $instrumentData->close;
-                $trade_date= $instrumentData->date;
-                $market_cap_of_this_instrument = $total_no_securities * $cp;
-                $total_market_capital+= $market_cap_of_this_instrument;
-
-                $out .= "<td>$instrument_id= $instrument_code  </td><td>  $total_no_securities  </td><td>  $cp  </td><td> $market_cap_of_this_instrument  </td><td>  close price =$trade_date </td><td>  nos of= $nos_updated </td>";
-
-
-                $out .= "</tr>";
-
-            }else
-            {
-                dump(" total_no_securities of $instrument_code not found");
-            }
-
-
-        }
-        $out .= "</table>";
-
-        echo $out;
-
-        dd("Total market capital = $total_market_capital ");
-exit;*/
-
-
-        /* FundamentalRepository::showOrphan();
-         $cap_equity=MarketStatRepository::getMarketStatsData(array('cap_equity'), null);
-         $ob_cap_equity_today=$cap_equity->first();
-         $ob_cap_equity_yesterday=$cap_equity->last();
-
-         $index_data_yesterday = IndexRepository::getIndexDataYesterday(10,null,0);
-         $index_data_today = IndexRepository::getIndexData(10,null,0);
-
-         $dsex_yesterday= $index_data_yesterday['index']['10001']['data'][0]->capital_value;
-         $cap_equity_today= $ob_cap_equity_yesterday['cap_equity']['meta_value'];
-         $trade_date_today= $index_data_today['index']['10001']['data'][0]->index_date->format('Y-m-d');
-         $trade_date_yesterday= $index_data_yesterday['index']['10001']['data'][0]->index_date->format('Y-m-d');
-
- dd($cap_equity);*/
-       /* $TindexData = $this->Symbol->query('select id,symbol_id,close,date_time,lastprice from data_banks_intraday where symbol_id =3 AND date_time LIKE ' . "'$ydate%'" . ' ORDER BY id DESC LIMIT 1');
-        $lastdayTindex = $TindexData[0]['data_banks_intraday']['lastprice'];*/
-
-
-        //$view->with('bread', $bread);
-
-
+        $view->with('indexmover', $indexmover);
 
 
     }

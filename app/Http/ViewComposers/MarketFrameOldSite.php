@@ -34,16 +34,30 @@ class MarketFrameOldSite
             $height_css="height: ".$height."px";
         }
 
-
-
         $instrumentListMain=InstrumentRepository::getInstrumentsScripOnly();
         $instrumentList=$instrumentListMain->groupBy('sector_list_id');
+
+        $sector_list_arr=array();
+        if(isset($viewdata['sector_list_arr']))
+        {
+
+            if(!is_array($viewdata['sector_list_arr'])) {
+                $sector_list_arr = explode(',', $viewdata['sector_list_arr']);
+            }else
+            {
+                $sector_list_arr=$viewdata['sector_list_arr'];
+            }
+        }
 
         $sector_list_id=0;
         if(isset($viewdata['instrument_id']))
         {
             $sector_list_id=$instrumentListMain->where('id',$viewdata['instrument_id'])->first()->sector_list_id;
+            $sector_list_arr[]=$sector_list_id;
         }
+
+        $sector_list_arr=array_unique($sector_list_arr);
+        $sector_list_arr = array_combine($sector_list_arr, $sector_list_arr);  //Array copy values to keys
 
         $instrumentTradeData=DataBanksIntradayRepository::getLatestTradeDataAll();
         $instrumentTradeData=$instrumentTradeData->keyBy('instrument_id');
@@ -57,10 +71,18 @@ class MarketFrameOldSite
         foreach($instrumentList as $sector_id=>$instrument_arr)
         {
             //if $sector_list_id found it will skip other sector and market frame will return only that sector.
-            if($sector_list_id)
+       /*     if($sector_list_id)
             {
                 if($sector_id!=$sector_list_id)
                     continue;
+            }*/
+
+            //if $sector_list_arr found it will skip other sector and market frame will return only that sector.
+            if(count($sector_list_arr))
+            {
+                if (!isset($sector_list_arr[$sector_id])) {
+                    continue;
+                }
             }
 
             $sector_node['children']=array();

@@ -23,7 +23,7 @@
 <script>
     $('.courseTicker').easyTicker({
         interval: 3000,
-        height: 298,
+        height: 350,
         visible: 3
 });
 </script>

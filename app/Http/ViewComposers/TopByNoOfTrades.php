@@ -16,7 +16,7 @@ use App\Market;
 use DB;
 
 
-class TopByPriceChangePer
+class TopByNoOfTrades
 {
 
     /**
@@ -30,7 +30,7 @@ class TopByPriceChangePer
     public function compose(View $view)
     {
         //getting top 10 list by total_trades
-        $market_info=Market::getActiveDates(2);
+        $market_info=Market::getActiveDates();
         $batch_id=$market_info[0]->data_bank_intraday_batch;
 
         $sql="SELECT instruments.instrument_code,
@@ -39,7 +39,8 @@ data_banks_intradays.pub_last_traded_price,
 data_banks_intradays.close_price,
 data_banks_intradays.spot_last_traded_price,
 data_banks_intradays.yday_close_price,
-data_banks_intradays.total_volume,
+data_banks_intradays.total_value,
+data_banks_intradays.total_trades,
 instrument_id,
 (
     (case when close_price>0 then close_price else
@@ -51,35 +52,12 @@ instrument_id,
  WHERE
  data_banks_intradays.batch=$batch_id and
  data_banks_intradays.instrument_id=instruments.id and  instruments.sector_list_id=sector_lists.id
- ORDER BY pchange_per desc LIMIT 10";
+ ORDER BY total_trades desc LIMIT 10";
 
-        $top_list_gainer=DB::select($sql);
-
-
-        $sql="SELECT instruments.instrument_code,
-sector_lists.name as sector,
-data_banks_intradays.pub_last_traded_price,
-data_banks_intradays.close_price,
-data_banks_intradays.spot_last_traded_price,
-data_banks_intradays.yday_close_price,
-data_banks_intradays.total_volume,
-instrument_id,
-(
-    (case when close_price>0 then close_price else
-     (case when spot_last_traded_price>0 then spot_last_traded_price else pub_last_traded_price end
-     )
-     end
-) - yday_close_price)/yday_close_price*100 as pchange_per
- FROM data_banks_intradays,instruments,sector_lists
- WHERE
- data_banks_intradays.batch=$batch_id and
- data_banks_intradays.instrument_id=instruments.id and  instruments.sector_list_id=sector_lists.id
- ORDER BY pchange_per asc LIMIT 10";
-
-        $top_list_losser=DB::select($sql);
+        $top_list=DB::select($sql);
 
 
 
-        $view->with('top_list_gainer', $top_list_gainer)->with('top_list_losser', $top_list_losser);
+        $view->with('top_list', $top_list);
     }
 }

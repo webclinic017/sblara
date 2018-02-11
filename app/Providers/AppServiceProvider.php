@@ -24,9 +24,11 @@ class AppServiceProvider extends ServiceProvider {
         View::composer('block.index_chart', 'App\Http\ViewComposers\IndexChart');
         View::composer('block.index_chart2', 'App\Http\ViewComposers\IndexChart');
         View::composer('block.index_mover', 'App\Http\ViewComposers\IndexMover');
+        View::composer('block.dividend_yield_and_payout_ratio', 'App\Http\ViewComposers\DividendYieldAndPayoutRatio');
         View::composer('block.home_page_index', 'App\Http\ViewComposers\HomePageIndexChart');
         View::composer('block.market_summary', 'App\Http\ViewComposers\MarketSummary');
-        View::composer('block.up_down', 'App\Http\ViewComposers\UpDownChart');
+        View::composer('block.up_down_chart', 'App\Http\ViewComposers\UpDownChart');
+        View::composer('block.top_sectors', 'App\Http\ViewComposers\TopSectors');
         View::composer('block.sector_gainer_loser', 'App\Http\ViewComposers\SectorGainerLoser');
         View::composer('block.sector_gainer_loser_last_minute', 'App\Http\ViewComposers\SectorGainerLoserLastMinute');
 
@@ -70,6 +72,9 @@ class AppServiceProvider extends ServiceProvider {
 
         View::composer('block.significant_movement_value', 'App\Http\ViewComposers\SignificantMovementValue');
         View::composer('block.significant_movement_trade', 'App\Http\ViewComposers\SignificantMovementTrade');
+        View::composer('block.top_by_no_of_trades', 'App\Http\ViewComposers\TopByNoOfTrades');
+        View::composer('block.top_by_trade_value', 'App\Http\ViewComposers\TopByTradeValue');
+        View::composer('block.top_by_big_buyer', 'App\Http\ViewComposers\TopByBigBuyer');
         View::composer('block.top_by_price_change', 'App\Http\ViewComposers\TopByPriceChange');
         View::composer('block.top_by_price_change_per', 'App\Http\ViewComposers\TopByPriceChangePer');
         View::composer('block.company_list_table', 'App\Http\ViewComposers\CompanyListTable');

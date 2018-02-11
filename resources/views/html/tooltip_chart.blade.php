@@ -1,1 +1,2 @@
-<a class="popovers" data-container="body" data-html="true" data-trigger="hover" data-placement="top" data-content="<img src='{{url('/tooltip_chart/')}}/{{$instrumentId}}' />">{{$instrument_code}}</a>
+{{--<a class="popovers" data-container="body" data-html="true" data-trigger="hover" data-placement="top" data-content="<img src='{{url('/tooltip_chart/')}}/{{$instrumentId}}' />">{{$instrument_code}}</a>--}}
+<a target="_blank" href="{{url('company-details')."/".$instrumentId}}">{{$instrument_code}}</a>

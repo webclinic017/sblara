@@ -1,0 +1,1 @@
+@include('block.market_frame_old_site',['base'=>'total_value','sector_list_arr'=>$top_sectors_list,'height'=>400])

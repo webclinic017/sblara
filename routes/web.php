@@ -54,7 +54,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
     //Route::resource('/participant_payment', 'CoursePaymentsController', ['except' => ['index']]);//->middleware('admin');
 });
 
-Route::get('/courses-avaliable', 'UserParticipantsController@index')->name('courses');
+Route::get('/courses-avaliable', 'UserParticipantsController@index')->name('courses-avaliable');
 Route::resource('/batches', 'CourseManageController');//->middleware('admin');
 Route::get('/registration/{id}', 'UserParticipantsController@create')->name('registration.create');
 Route::post('/registration', 'UserParticipantsController@store')->name('registration.store');
@@ -84,6 +84,14 @@ Route::get('/test', function () {
 
     return view('test');
 });
+
+
+Route::get('/dashboardnew', function () {
+
+    return view('dashboard_new');
+});
+
+
 Route::get('/se', 'seController@index');
 Route::get('/download', 'DownloadController@index')->name('download');
 Route::post('/download', 'DownloadController@download');
@@ -142,6 +150,10 @@ Route::get('/sector-pe', function () {
 Route::get('/category-pe', function () {
         return view('category_pe_page');
     })->name('category-pe');
+
+Route::get('/dividend-yield-payout-ratio', function () {
+        return view('dividend-yield-payout-ratio-page');
+    })->name('dividend-yield-payout-ratio');
 
 Route::get('/cockpit', function () {
         return view('cockpit_page');

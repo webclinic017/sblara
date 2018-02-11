@@ -46,7 +46,7 @@ return $d;
         dd($prevMinuteTradeDataAll->where('instrument_id',128)->toArray());*/
 
         $trade_date_Info=Market::getActiveDates()->first();
-        return response()->view('dashboard3', ['trade_date_Info' => $trade_date_Info])
+        return response()->view('dashboard_new', ['trade_date_Info' => $trade_date_Info])
         ->setTtl(60)
         ;
     }

@@ -19,17 +19,17 @@
                         <li class="mt-list-item done">
                             <div class="list-icon-container">
                                 @if($instrument->price_change<0)
-                                    <span class="inlinesparkline_trade"  sparklineColor ="red">{{$viewData['totalTradeData'][$instrumentId]->implode('close_price', ', ')}}</span>
+                                    <span class="inlinesparkline_trade"  sparklineColor ="red">{{$viewData['totalTradeData'][$instrumentId]->reverse()->implode('close_price', ', ')}}</span>
                                 @else
-                                    <span class="inlinesparkline_trade"  sparklineColor ="green">{{$viewData['totalTradeData'][$instrumentId]->implode('close_price', ', ')}}</span>
+                                    <span class="inlinesparkline_trade"  sparklineColor ="green">{{$viewData['totalTradeData'][$instrumentId]->reverse()->implode('close_price', ', ')}}</span>
                                 @endif
                             </div>
                             <div class="list-datetime-c">
 
                                 @if($instrument->price_change<0)
-                                    <span class="inlinesparkline_trade" sparkType="bar" sparkbarcolor ="red">{{$viewData['totalTradeData'][$instrumentId]->slice(0,14)->implode('total_trades_difference', ', ')}}</span>
+                                    <span class="inlinesparkline_trade" sparkType="bar" sparkbarcolor ="red">{{$viewData['totalTradeData'][$instrumentId]->slice(0,14)->reverse()->implode('total_trades_difference', ', ')}}</span>
                                 @else
-                                    <span class="inlinesparkline_trade" sparkType="bar" sparkbarcolor ="green">{{$viewData['totalTradeData'][$instrumentId]->slice(0,14)->implode('total_trades_difference', ', ')}}</span>
+                                    <span class="inlinesparkline_trade" sparkType="bar" sparkbarcolor ="green">{{$viewData['totalTradeData'][$instrumentId]->slice(0,14)->reverse()->implode('total_trades_difference', ', ')}}</span>
 
                                 @endif
 

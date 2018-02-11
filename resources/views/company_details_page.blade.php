@@ -34,7 +34,15 @@
             <div class="mt-step-content font-grey-cascade">Low</div>
         </div>
 
-        <div class="col-md-3 bg-grey done mt-step-col active">
+            @if($lastTradeInfo->price_change>0)
+                    <div class="col-md-3 bg-grey done mt-step-col">
+            @endif
+            @if($lastTradeInfo->price_change<0)
+                    <div class="col-md-3 bg-grey error mt-step-col">
+            @endif
+            @if($lastTradeInfo->price_change==0)
+                    <div class="col-md-3 bg-grey active mt-step-col">
+            @endif
             <div class="mt-step-number bg-white font-grey">C</div>
             <div class="mt-step-title uppercase font-grey-cascade">{{$lastTradeInfo->close_price}}</div>
             <div class="mt-step-content font-grey-cascade">Close </div>
@@ -157,13 +165,23 @@
 <div class="row">
 
         <div class="col-md-12">
+                <div class="btn-group btn-group btn-group-justified">
+                    <a target="_blank" href="{{'/news-chart/'.$instrumentInfo->id}}" class="btn red"> News Chart </a>
+                    <a target="_blank" href="{{'/ta-chart?instrumentCode='.$instrumentInfo->instrument_code}}" class="btn blue"> TA Chart </a>
+                    <a target="_blank" href="{{'/advance-ta-chart?instrumentCode='.$instrumentInfo->instrument_code}}" class="btn green"> Advance TA Chart </a>
+                    <a target="_blank" href="{{'/minute-chart/'.$instrumentInfo->id}}" class="btn red"> Minute Chart  </a>
+                    <a target="_blank" href="{{'/company-details/'.$instrumentInfo->id}}" class="btn blue"> Company Details </a>
+                    <a target="_blank" href="{{'/fundamental-details'.$instrumentInfo->id}}" class="btn green"> Fundamental Details </a>
+
+                </div>
+
             <!-- BEGIN Portlet PORTLET-->
             <div class="portlet light bordered">
                 <div class="portlet-title">
                     <div class="caption">
                         <i class="icon-graph font-yellow-casablanca"></i>
 								<span class="caption-subject bold font-yellow-casablanca uppercase">
-								Stats</span>
+								Trade Stats</span>
                         <span class="caption-helper">Stats</span>
                     </div>
                     <div class="tools">
@@ -200,13 +218,6 @@
     </div>
 <div class="row">
         <div class="col-md-6">
-        <div class="btn-group btn-group btn-group-justified">
-            <a target="_blank" href="{{'/news-chart/'.$instrumentInfo->id}}" class="btn red"> News Chart </a>
-            <a target="_blank" href="{{'/ta-chart?instrumentCode='.$instrumentInfo->instrument_code}}" class="btn blue"> TA Chart </a>
-            <a target="_blank" href="{{'/advance-ta-chart?instrumentCode='.$instrumentInfo->instrument_code}}" class="btn green"> Advance TA Chart </a>
-
-        </div>
-
             <!-- BEGIN Portlet PORTLET-->
             <div class="portlet light bordered">
                 <div class="portlet-title">
@@ -235,13 +246,6 @@
             <!-- END Portlet PORTLET-->
         </div>
         <div class="col-md-6">
-        <div class="btn-group btn-group btn-group-justified">
-            <a target="_blank" href="{{'/minute-chart/'.$instrumentInfo->id}}" class="btn red"> Minute Chart  </a>
-            <a target="_blank" href="{{'/company-details/'.$instrumentInfo->id}}" class="btn blue"> Company Details </a>
-            <a target="_blank" href="{{'/fundamental-details'.$instrumentInfo->id}}" class="btn green"> Fundamental Details </a>
-
-        </div>
-
             <!-- BEGIN Portlet PORTLET-->
             <div class="portlet light bordered">
                 <div class="portlet-title">

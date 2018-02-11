@@ -587,17 +587,17 @@ function hideToolTip()
                   //  App.unblockUI('#testdiv');
                     content.html(data);
             // JsChartViewer.hideObj('all');
-            var viewer = JsChartViewer.get('ta_chart');
+            // var viewer = JsChartViewer.get('ta_chart');
             // Draw track cursor when mouse is moving over plotarea
-            viewer.attachHandler(["MouseMovePlotArea", "TouchStartPlotArea", "TouchMovePlotArea", "ChartMove", "Now"],
-            function(e) {
-                this.preventDefault(e);   // Prevent the browser from using touch events for other actions
-                    if($('#taChartTab').hasClass('active') && $('.toggle-button').attr('data-state') == 'open' )
-                    {
-                        traceFinance(viewer, viewer.getPlotAreaMouseX());                        
+            // viewer.attachHandler(["MouseMovePlotArea", "TouchStartPlotArea", "TouchMovePlotArea", "ChartMove", "Now"],
+            // function(e) {
+            //     this.preventDefault(e);   // Prevent the browser from using touch events for other actions
+            //         if($('#taChartTab').hasClass('active') && $('.toggle-button').attr('data-state') == 'open' )
+            //         {
+            //             // traceFinance(viewer, viewer.getPlotAreaMouseX());                        
 
-                    }
-            });
+            //         }
+            // });
 
         });
 

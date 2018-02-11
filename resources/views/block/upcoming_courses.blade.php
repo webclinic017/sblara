@@ -75,6 +75,6 @@
 <script>
     $('.courseTicker').easyTicker({
         interval: 4000,
-        height:298
+        height:350
 });
 </script>
