@@ -121,7 +121,7 @@ class Instrument extends Model
         }
 
         $cacheVar="InstrumentsScripOnly$exchangeId";
-        //Cache::forget("$cacheVar");
+
         $returnData = Cache::remember("$cacheVar", 1, function ()  use ($exchangeId)  {
 
             $returnData = static::whereHas('sector_list', function($q) use($exchangeId) {
@@ -130,7 +130,6 @@ class Instrument extends Model
                 $q->where('name', 'not like', "custom_index");
                 $q->where('name', 'not like', "Debenture");
                 $q->where('name', 'not like', "Treasury Bond");
-               // $q->where('name', 'not like', "Corporate Bond");
             })->where('active','1')->orderBy('instrument_code', 'asc')->get();
 
             return $returnData;
@@ -274,6 +273,31 @@ class Instrument extends Model
     public function dseSharePercentage()
     {
         return $this->hasOne(DseSharePercentage::class)        ;
+    }
+
+    public function getLtpAttribute()
+    {
+        return  @\App\Repositories\DataBanksIntradayRepository::getAvailableLTP([$this->id])[0]->close_price;
+    }
+
+    public function getLastintradayAttribute()
+    {
+        if(!isset(\App\Repositories\DataBanksIntradayRepository::getAvailableLTP([$this->id])[0]))
+            {
+                return null;
+            }
+        return \App\Repositories\DataBanksIntradayRepository::getAvailableLTP([$this->id])[0];
+    }
+
+    public function metaValuesByKey($keys = [])
+    {
+         return  \App\Repositories\FundamentalRepository::getFundamentalData($keys, array($this->id));
+  
+    }
+
+    public function eod()
+    {
+        return $this->hasOne(DataBanksEod::class)->latest('id');
     }
 
 }

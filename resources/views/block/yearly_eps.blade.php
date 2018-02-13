@@ -9,6 +9,7 @@ Highcharts.chart('{{$render_to}}', {
             chart: {
                 zoomType: 'x',
                 type: 'column'
+
             },
             title: {
                 text: 'Yearly EPS'

@@ -1,3 +1,18 @@
+/*ta chart section cutomization*/
+@media(max-width: 1240px)
+{   
+    .ta-chart-tabs{
+     margin-top: 45px !important;
+    }
+    .share-list{
+        width:100% !important;
+        max-width: 100% !important;
+    }
+    .input-group.select2-bootstrap-prepend{
+        max-width: 100% !important;
+    }
+}
+/*ta chart section cutomization*/
 .container, .container-fluid {
      padding-left: 0px; 
      padding-right: 0px; 

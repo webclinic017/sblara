@@ -1,8 +1,8 @@
 <link href="{{ URL::asset('metronic/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css') }}" rel="stylesheet" type="text/css" />
 
-<div class="row" style="margin-right: 0">
-<div class="col-md-12 share-list" style="z-index: 99; max-width:300px;">
-    <div class="form-group">
+<div class="row">
+<div class="col-md-12" style="z-index: 99; max-width:300px;">
+	<div class="form-group">
         <div class="input-group select2-bootstrap-prepend " style="max-width: 300px">
             <span class="input-group-btn">
                 <button class="btn red mt-ladda-btn toggle-button"  type="button" data-select2-open="multi-prepend"> <i class="fa fa-line-chart"></i> Chart </button>
@@ -12,19 +12,20 @@
     </div>
 </div>
 
-<div class="col-md-12 global-panel" style=" margin-top: -15px; display: none;  padding-top: 10px; padding: 0 ">
+{{--  --}}
+
+
+{{--  --}}
+<div class="col-md-12 global-panel" style=" margin-top: -15px; visibility: hidden; padding-top: 10px ">
 {{--  --}}
 
 <style>
     table td{
         color:#000 !important;
     }
-    div.col-md-2{
-        /*z-index: 100;*/
-    }
 </style>
-<div class=" widget-row" style=" margin-top: -35px; margin-right: 0 !important">
-<div class="col-md-12 margin-bottom-20" style="padding-right: 0">
+<div class="row widget-row" style=" margin-top: -48px;">
+<div class="col-md-12 margin-bottom-20">
     <!-- BEGIN WIDGET TAB -->
         <style>
         .ta-chart-tabs ul li a{
@@ -51,7 +52,12 @@
             <li>
                 <a href="#share_holdings" data-url="/ajax/load_block/block_name=block.news_box:instrument_id=" data-toggle="tab"> News </a>
             </li>
-
+{{--             <li>
+                <a href="#share_holdings" data-url="/ajax/load_block/block_name=block.market_depth_single:instrument_id=" data-toggle="tab"> Company Details </a>
+            </li>
+            <li>
+                <a href="#share_holdings" data-url="/ajax/load_block/block_name=block.market_depth_single:instrument_id=" data-toggle="tab"> Fundamental Details </a>
+            </li> --}}
 
          
             <li>
@@ -68,38 +74,18 @@
         </ul>
         <div class="tab-content" >
             <div class="tab-pane fade active in" id="taChartTab">
-                {{-- modal start --}}
-
-                                        {{-- modal fade --}}                                                 <div  class="" id="modalFade" tabindex="-1" role="dialog" aria-hidden="true">
-                                                    <div class="" id="modalDialogModalFull">
-                                                        <div class="" id="modalContent">
-                                                            <div class="modal-header" style="display: none;">
-                                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-                                                                <h4 class="modal-title">Chart Options</h4>
-                                                            </div>
-                                                            <div class="" id="modalBody">
-{{-- settings start --}}
-    <div class="options">
-                    
                 <form action="index.html" class="form-horizontal ">
                     <div class="form-body" >
 
                         <div class="form-group " style="background: #f5f5f5; padding-top: 10px; display: inline-block; margin-right: 0px; margin-left: 0; width: 100%">
-                            <div class="col-md-12" style="padding: 0">
+							<div class="col-md-12">
                             <div class="col-md-2 ">
                                 <div class="margin-bottom-10">
-                                    <select name="" id="chartRange" class="bs-select form-control">
-                                        <option value="{{4*30}}">4 Months</option>
-                                        <option selected value="{{5*30}}">5 Months</option>
-                                        <option  value="{{6*30}}">6 Months</option>
-                                        <option value="{{365}}">1 Year</option>
-                                        <option value="{{365*2}}">2 Years</option>
-                                        <option value="{{365*3}}">3 Years</option>
-                                        <option value="{{365*4}}">4 Years</option>
-                                        <option value="{{365*5}}">5 Years</option>
-                                        <option value="{{365*6}}">6 Years</option>
-                                        <option value="{{365*7}}">7 Years</option>
+                                    <select id="adj" class="bs-select form-control" >
+                                        <option value="1" selected>Adjusted</option>
+                                        <option value="0" >Non Adjusted</option>
                                     </select>
+
                                 </div>
                             </div>
 
@@ -115,7 +101,30 @@
 
                                 </div>
                             </div>
+                            <div class="col-md-2 ">
+                                <div class="margin-bottom-10">
+                                    <select id="charttype" class="bs-select form-control">
+                                        <option value="CandleStick" selected="">CandleStick</option>
+                                        <option value="Close">Closing Price</option>
+                                        <option value="Median">Median Price</option>
+                                        <option value="OHLC">OHLC</option>
+                                        <option value="TP">Typical Price</option>
+                                        <option value="WC">Weighted Close</option>
+                                    </select>
 
+                                </div>
+                            </div>
+                            <div class="col-md-2  ">
+                                <div class="margin-bottom-10">
+                                    <select id="overlay" class="bs-select form-control ">
+                                        <option value="BB" selected="">Bollinger Band</option>
+                                        <option value="DC">Donchian Channel</option>
+                                        <option value="Envelop">Envelop (SMA 20 +/- 10%)</option>
+                                    </select>
+
+                                </div>
+
+                            </div>     
                        
 
 
@@ -287,30 +296,7 @@
                                     </select>  
                             </div>                                    
                       </div>          
-                            <div class="col-md-2 ">
-                                <div class="margin-bottom-10">
-                                    <select id="charttype" class="bs-select form-control">
-                                        <option value="CandleStick" selected="">CandleStick</option>
-                                        <option value="Close">Closing Price</option>
-                                        <option value="Median">Median Price</option>
-                                        <option value="OHLC">OHLC</option>
-                                        <option value="TP">Typical Price</option>
-                                        <option value="WC">Weighted Close</option>
-                                    </select>
 
-                                </div>
-                            </div>
-                            <div class="col-md-2  ">
-                                <div class="margin-bottom-10">
-                                    <select id="overlay" class="bs-select form-control ">
-                                        <option value="BB" selected="">Bollinger Band</option>
-                                        <option value="DC">Donchian Channel</option>
-                                        <option value="Envelop">Envelop (SMA 20 +/- 10%)</option>
-                                    </select>
-
-                                </div>
-
-                            </div>     
                             <div class="col-md-2  ">
                                 <div class="margin-bottom-10">
 
@@ -352,14 +338,13 @@
 
 
 
-                            <div class="col-md-2">
+                            <div class="col-md-3">
                                 <div class="margin-bottom-10">
-                                    <select id="adj" class="bs-select form-control" >
-                                        <option value="1" selected>Adjusted</option>
-                                        <option value="0" >Non Adjusted</option>
-                                    </select>   
-
-
+                                        <div id="dashboard-report-range" style="width: 100%" class=" tooltips btn btn-fit-height green" data-placement="top" data-original-title="Change dashboard date range">                            
+                                        <i class="icon-calendar"></i>&nbsp;
+                                        <span class="thin uppercase hidden-xs"></span>&nbsp;
+                                        <i class="fa fa-angle-down"></i>
+                                    </div>
                                 </div>
                             </div>
 
@@ -370,7 +355,7 @@
                                         <option value="S">Small</option>
                                         <option value="M">Medium</option>
                                         <option value="L">Large</option>
-                                        <option value="H" selected>Huge</option>
+                                        <option value="H">Huge</option>
                                     </select>
                                 </div>
                             </div>                            
@@ -378,7 +363,7 @@
                             <div class="col-md-2">
                                 <div class="margin-bottom-10">
                                     
-                                <button data-dismiss="modal" type="button" onclick="loadChart()" class="btn btn-success form-control"><i class="fa fa-refresh"></i> Update</button>      
+                                <button type="button" onclick="loadChart()" class="btn btn-success"><i class="fa fa-refresh"></i> Update</button>      
                                 </div>
                             </div>
                         </div>
@@ -394,36 +379,16 @@
 
 
 
-                      </div>
+                  	  </div>
 
 
                     </div>
 
                 </form>
 
-                </div>
-{{-- settings end --}}
-                                                             </div>
-                                              
-                                                        </div>
-                                                        <!-- /.modal-content -->
-                                                    </div>
-                                                    <!-- /.modal-dialog -->
-                                                </div>
-           
-                {{-- modal end --}}
-                <div class="row margin-bottom-10" >      
-                    <div class="col-xs-6">
-                        <a class="btn red btn-sm  visible-sm visible-xs" data-toggle="modal" href="#modalFade"> <i class="fa fa-bars"></i> Options </a>
-                    </div>
-                    <div class="col-xs-6">
-                        <a onclick="loadChart()" class="btn red btn-sm  visible-sm visible-xs" ><i class="fa fa-refresh"></i> Refresh </a>
-                    </div>
-                </div>
-            
 {{--  --}}
             <div id="chartContainer" class="chartcontent thumbnail">
-                <input type="hidden" id="chart_id" value="">
+				<input type="hidden" id="chart_id" value="">
                 </div>
 
 
@@ -447,7 +412,7 @@
 {{--  --}}
 
 
-    
+	
 </div>
 
 @push('scripts')
@@ -482,8 +447,24 @@
         }
         var data = JSON.parse(data);
         $.each(data, function (k, v) {
+            if(k == 'dashboard-report-range')
+            {
+                date = v.split('|');
+                start = date[0].split('-');
+                end = date[1].split('-');
+                start = start[1]+'/'+start[2]+'/'+start[0];
+                end = end[1]+'/'+end[2]+'/'+end[0];
+                $("#dashboard-report-range").data('daterangepicker').setStartDate(start);
+                //use end if user want to store end date;
+                $('#dashboard-report-range').data('daterangepicker').setEndDate(moment());
+                $('#dashboard-report-range').attr('data-range', date[0]+'|{{date('Y-m-d')}}');
+                $('#dashboard-report-range span').html(moment(date[0], "YYYY-MM-DD").format('MMM DD, YYYY') +' - {{date('M d, Y')}}'); //'data-range',
+
+            }else{
                 $('#'+k).val(v);
-                $('#'+k).trigger('change');  
+                $('#'+k).trigger('change');    
+            }
+
 
         })
     }
@@ -506,7 +487,7 @@
         fields['mov2'] = $('#mov2').val();
         fields['touchspin_demo1'] = $('#touchspin_demo1').val();
         fields['touchspin_demo2'] = $('#touchspin_demo2').val();
-        fields['chartRange'] = $('#chartRange').val();
+        fields['dashboard-report-range'] = $('#dashboard-report-range').attr('data-range');
         fields = JSON.stringify(fields);
 
         var d = new Date();
@@ -519,7 +500,7 @@
 
     function loadChart() {
         $("div[id^='ta_chart_']").remove();
-        // $('.chartcontent').html(loadingDiv);
+        $('.chartcontent').html(loadingDiv);
         if($('.toggle-button').attr('data-state') != 'open')
         {
             return;
@@ -528,9 +509,9 @@
         var content = $('.chartcontent');
         var loading = $('.chart-loading');
 
-        var chartRange = $('#chartRange').val();
+        var chartRange = $('#dashboard-report-range').attr("data-range");
         //var chartRange='2012-10-25|2013-04-25';
-  
+        var url = "{{ url('/ta/ajax/') }}";
 
         // var comparewith=$('#comparewith').val();
         var comparewith = 'null';
@@ -540,6 +521,9 @@
             sharelist = $('#shareList').val();
         }
 
+     //   url = url + "/" + chartRange + "/" + sharelist + "/" + comparewith + "/" + $('#Indicators').val() + "/" + $('#configure').val() + "/" + $('#charttype').val() + "/" + $('#overlay').val() + "/" + $('#mov1').val() + "/" + $('#touchspin_demo1').val() + "/" + $('#mov2').val() + "/" + $('#touchspin_demo2').val() + "/" + $('#adj').val(); //+ "/" + $('#interval').val();
+       //     url += '?width='+$("#chartContainer").width();
+         //   url += '&height='+$(window).height();
         var Volume = 0;
         var ParabolicSAR = 0;
         var LogScale = 0;
@@ -552,8 +536,8 @@
             if(v == "PSCALE"){PercentageScale = 1; }
         })
 
-        url = "/ta-chart?Adjusted="+$('#adj').val()+"&TickerSymbol="+sharelist+"&CompareWith=&TimeRange="+chartRange+"&ChartSize="+$('#ChartSize').val()+"&Volume="+Volume+"&ParabolicSAR="+ParabolicSAR+"&LogScale="+LogScale+"&PercentageScale="+PercentageScale+"&ChartType="+$('#charttype').val()+"&Band="+$('#overlay').val()+"&avgType1="+$('#mov1').val()+"&movAvg1="+$('#touchspin_demo1').val()+"&avgType2="+$('#mov2').val()+"&movAvg2="+$('#touchspin_demo2').val()+"&Indicator1="+$('#Indicator1').val()+"&Indicator2="+$('#Indicator2').val()+"&Indicator3="+$('#Indicator3').val()+"&Indicator4="+$('#Indicator4').val()+"&Button1=Update%20Chart&";
-        
+        url = "/ta-chart?Adjusted="+$('#adj').val()+"&TickerSymbol="+sharelist+"&CompareWith=&TimeRange="+chartRange+"&ChartSize="+$('#ChartSize').val()+"&Volume="+Volume+"&ParabolicSAR="+ParabolicSAR+"&LogScale="+LogScale+"&PercentageScale="+PercentageScale+"&ChartType="+$('#charttype').val()+"&Band="+$('#overlay').val()+"&avgType1="+$('#mov1').val()+"&movAvg1="+$('#touchspin_demo1').val()+"&avgType2="+$('#mov2').val()+"&movAvg2="+$('#touchspin_demo2').val()+"&Indicator1="+$('#Indicator1')+"&Indicator2="+$('#Indicator2')+"&Indicator3="+$('#Indicator3')+"&Indicator4="+$('#Indicator4')+"&Button1=Update%20Chart&";
+        console.log(url);
         var companyDetailsUrl = 'http://www.new.stockbangladesh.com/TechnicalAnalysis/company_details/' + sharelist
         var marketDepthUrl = 'http://www.new.stockbangladesh.com/TechnicalAnalysis/market_depth/' + sharelist
 
@@ -564,7 +548,7 @@
                   //  App.unblockUI('#testdiv');
                     content.html(data);
         });
-    }   
+    }	
 
 $("#touchspin_demo1").TouchSpin({
 buttondown_class: 'btn blue',
@@ -588,114 +572,148 @@ maxboostedstep: 10000000
 
 
 
-function loadFundamental(e) {
-        $("div[id^='ta_chart_']").remove();
-        url = e.data('url');
-        
-        instrument = $('#shareList').val();
 
-        url = url + instrument;
-        var target = e.attr('href');
-        $(target).html(loadingDiv);
-        $.get(url, function (html) {
-            $(target).html(html);
+    $(function() {
+        var chartRange;
+        jQuery().daterangepicker && ($("#dashboard-report-range").daterangepicker({
+            startDate: moment().subtract('days', 252),
+            endDate: moment(),
+            minDate: '01/01/1999',
+            maxDate: moment(),
+           showCustomRangeLabel: true,
+            // showDropdowns: true,
+            // showWeekNumbers: true,
+            // timePicker: false,
+            ranges: {
+                //  'Last 7 Days': [moment().subtract('days', 6), moment()],
+                //  'Last 30 Days': [moment().subtract('days', 29), moment()],
+                //  'This Month': [moment().startOf('month'), moment().endOf('month')],
+                //  'Last Month': [moment().subtract('month', 1).startOf('month'), moment().subtract('month', 1).endOf('month')],
+                '4 months': [moment().subtract('month', 4), moment()],
+                '6 months': [moment().subtract('month', 6), moment()],
+                '1 year': [moment().subtract('year', 1), moment()],
+                '2 year': [moment().subtract('year', 2), moment()],
+                '3 year': [moment().subtract('year', 3), moment()],
+                '4 year': [moment().subtract('year', 4), moment()],
+                '5 year': [moment().subtract('year', 5), moment()],
+                '6 year': [moment().subtract('year', 6), moment()],
+                '7 year': [moment().subtract('year', 7), moment()]
+            },
+            locale: {
+                format: "MM/DD/YYYY",
+                separator: " - ",
+                applyLabel: "Apply",
+                cancelLabel: "Cancel",
+                fromLabel: "From",
+                toLabel: "To",
+                customRangeLabel: "Custom",
+                daysOfWeek: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
+                monthNames: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+                firstDay: 1
+            },
+            opens: App.isRTL() ? "right" : "left"
+        }, function (e, t, a) {
+            $("#dashboard-report-range span").html(e.format("MMM D, YYYY") + " - " + t.format("MMM D, YYYY"))
+            chartRange=e.format('YYYY-MM-DD')+'|'+t.format('YYYY-MM-DD');
+            $('#dashboard-report-range').attr("data-range",chartRange);
+        }), $("#dashboard-report-range span").html(moment().subtract("days", 120).format("MMM D, YYYY") + " - " + moment().format("MMM D, YYYY")), $("#dashboard-report-range").show())
+
+        $('#dashboard-report-range span').html(moment().subtract('days', 120).format('MMM D, YYYY') + ' - ' + moment().format('MMM D, YYYY'));
+        chartRange=moment().subtract('days', 120).format('YYYY-MM-DD') + '|' + moment().format('YYYY-MM-DD');
+        $('#dashboard-report-range').attr("data-range",chartRange);
+
+
+
+    $('#tab5').click(function() {
+        App.blockUI({
+            target: '#basic',
+            overlayColor: 'none',
+            cenrerY: true,
+            animate: true
         });
-}
 
-    $(document).ready(function () {
+        window.setTimeout(function() {
+            App.unblockUI('#basic');
+        }, 2000);
+    });
 
-        loadChartSettings();
-        $('#shareList').on('changed.bs.select', function (e) {
-            if($(this).val() == null)
-            {
-                return;
-            }
-            if($('.toggle-button').data('state') != 'open')
-            {
-            $('.toggle-button').attr('data-state', 'open');
-                $('.global-panel').show();
-                window.dispatchEvent(new Event('resize'));
-                $('.toggle-button').html("<i class='fa fa-close'></i> Close");
-
-            }
-            var e = $('.ta-chart-tabs li[class="active"] a');
-            var url = e.data('url');
-
-            if(url == '#')
-            {
-
-                loadChart();
-            }else{
-                loadFundamental(e);
-            }
-        });
-
-        $('.ta-chart-tabs li[class="active"] a[data-url="#"]').click(function () {  
-            var target = $(this).attr('href');
-            $('.chartcontent').html(loadingDiv);
+    $("#Button1")
+        .on("click", function () {
             loadChart();
-        });
-
-        $('.toggle-button').click(function () {
-            if($('.toggle-button').attr('data-state') == 'open')
-            {
-            $("div[id^='ta_chart_']").remove();
-                $('.global-panel').hide();
-                $(this).html("<i class='fa fa-line-chart'></i> Chart");
-                $(this).attr('data-state', 'close');
-                
-            $('#shareList').val('');
-            $('#shareList').selectpicker('refresh');
-                
-            }else{
-            $('#shareList').selectpicker('toggle');
-                
-            }
-
-        });
-// tab rearrange
-window.onresize = function (e) {
-    if($(document).width() < 1240)
-    {
-        ul = $('.ta-chart-tabs ul.nav-tabs'); // your parent ul element
-        if(ul.hasClass("reversed"))
-        {
-            return ;
-        }
-        ul.addClass('reversed');
-        ul.children().each(function(i,li){
-            if($(li).hasClass('dropdown'))
-            {
-                ul.removeClass('tabs-reversed')
-                return true;
-            }
-            ul.prepend(li)
-
         })
-    }
+    $("#Button2")
+        .on("click", function () {
+            loadChart();
+        })
 
-    // set the modal up
-    if($(document).width() < 992)
-    {
-        {{-- 
-        remove (modal fade) class from parent div
-        remove modal-cotent class
-        remove modal-dialog modal-full class
-        remove modal-body class
-        hide modal-header
-        hide modal-footer
 
-        reverse this 
-         --}}
-        $('#modalFade').addClass('modal fade');        
-        $('#modalContent').addClass('modal-content');        
-        $('#modalDialogModalFull').addClass('modal-dialog modal-full');        
-        $('#modalBody').addClass('modal-body');        
-        $('.modal-header').show();        
-    }
-    // set the modal up
+
+    });
+function loadFundamental(e) {
+		$("div[id^='ta_chart_']").remove();
+		url = e.data('url');
+	 	
+	 	instrument = $('#shareList').val();
+
+		url = url + instrument;
+		var target = e.attr('href');
+		$(target).html(loadingDiv);
+		$.get(url, function (html) {
+			$(target).html(html);
+		});
 }
-    })
+
+	$(document).ready(function () {
+        loadChartSettings();
+		$('#shareList').on('changed.bs.select', function (e) {
+			if($(this).val() == null)
+			{
+				return;
+			}
+			if($('.toggle-button').data('state') != 'open')
+			{
+			$('.toggle-button').attr('data-state', 'open');
+				$('.global-panel').css('visibility', 'visible');
+				$('.toggle-button').html("<i class='fa fa-close'></i> Close");
+
+			}
+			var e = $('.ta-chart-tabs li[class="active"] a');
+			var url = e.data('url');
+
+			if(url == '#')
+			{
+
+            	loadChart();
+			}else{
+				loadFundamental(e);
+			}
+		});
+
+		$('.ta-chart-tabs li[class="active"] a[data-url="#"]').click(function () {	
+			var target = $(this).attr('href');
+			$('.chartcontent').html(loadingDiv);
+			loadChart();
+		});
+
+		$('.toggle-button').click(function () {
+			if($('.toggle-button').attr('data-state') == 'open')
+			{
+			$("div[id^='ta_chart_']").remove();
+				$('.global-panel').hide();
+				$(this).html("<i class='fa fa-line-chart'></i> Chart");
+				$(this).attr('data-state', 'close');
+				
+			$('#shareList').val('');
+			$('#shareList').selectpicker('refresh');
+				
+			}else{
+			$('#shareList').selectpicker('toggle');
+				
+			}
+
+		});
+
+	})
 
 
 </script>

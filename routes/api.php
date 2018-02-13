@@ -89,8 +89,8 @@ Route::get('plugin_user_stats/{username}/{hdd}/{cpu}/', function ($username, $hd
     $message['global'] = "Our data maintenance will go on next day ";
     $message['global_message_color'] = '#f36a5a';
     $message['eod_mode_enable'] = true;
-    $message['intraday_mode_enable'] = true;
-    $message['adjusted_mode_enable'] = true;
+    $message['intraday_mode_enable'] = false;
+    $message['adjusted_mode_enable'] = false;
     $message['fundamental_button_enable'] = false;
     $message['resources_button_enable'] = false;
     $message['interval'] = 30;

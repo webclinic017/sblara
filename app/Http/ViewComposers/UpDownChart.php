@@ -29,9 +29,11 @@ class UpDownChart
 
         $market_info=Market::getActiveDates(2);
         $market_id=$market_info[0]->id;
+        $today=$market_info[0]->trade_date->format('d M,Y');
         $batch_id=$market_info[0]->data_bank_intraday_batch;
         $batch_id_prev=$market_info[1]->data_bank_intraday_batch;
         $market_id_prev=$market_info[1]->id;
+        $prevday = $market_info[1]->trade_date->format('d M,Y');
 
 
 
@@ -83,6 +85,12 @@ ORDER BY data_banks_intradays.batch ASC";
         dump($total_traded_time_so_far);
         dump($avg_trade_value_per_second);
         dd($trade_data_today);*/
-        $view->with('up_down_data_today', $up_down_data[1])->with('up_down_data_prev', $up_down_data[0])->with('trade_data_today', $trade_data_today[0])->with('trade_data_prev', $trade_data_prev[0])->with('projected_trade_value', $projected_trade_value);
+        $view->with('up_down_data_today', $up_down_data[1])
+            ->with('up_down_data_prev', $up_down_data[0])
+            ->with('today', $today)
+            ->with('prevday', $prevday)
+            ->with('trade_data_today', $trade_data_today[0])
+            ->with('trade_data_prev', $trade_data_prev[0])
+            ->with('projected_trade_value', $projected_trade_value);
     }
 }

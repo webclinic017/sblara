@@ -82,7 +82,7 @@ Route::get('head', function () {
 
 Route::get('/test', function () {
 
-    return view('test');
+    return view('test', ['instrument_id' => 79]);
 });
 
 
@@ -169,9 +169,9 @@ Route::get('fundamental-details/{instrument_id?}', 'PagesController@fundamentalD
 Route::get('/advance-ta-chart', function () {
         return view('ta_chart.advance_ta_chart');
     })->name('advance-ta-chart');
-Route::get('/ta-chart', 'DataBanksEodController@panel')->name('ta-chart');
 Route::get('/java-chart', 'DataBanksEodController@java_chart')->name('java-chart');
 Route::get('/ta/ajax/{reportrange?}/{instrument?}/{comparewith?}/{Indicators?}/{configure?}/{charttype?}/{overlay?}/{mov1?}/{avgPeriod1?}/{mov2?}/{avgPeriod2?}/{adj?}/{interval?}', 'DataBanksEodController@chart_img_trac');
+Route::get('/ta-chart', 'ChartController@index')->name('ta-chart');
 Route::get('/getchart/{img}', 'DataBanksEodController@getchart');
 
 

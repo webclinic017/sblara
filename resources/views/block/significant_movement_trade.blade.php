@@ -36,7 +36,7 @@
                             </div>
                             <div class="list-item-content">
                                 <h3 class="uppercase">
-                                    <a href="javascript:;">{{$viewData['instrumentList'][$instrumentId]->instrument_code}}</a> ({{$instrument['total_trades_growth']}} trades)
+                                    <a target="_blank" href="{{url('company-details')."/".$instrumentId}}">{{$viewData['instrumentList'][$instrumentId]->instrument_code}}</a> ({{$instrument['total_trades_growth']}} trades)
                                 </h3>
                             </div>
 

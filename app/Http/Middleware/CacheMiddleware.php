@@ -11,8 +11,9 @@ class CacheMiddleware
     function __construct()
     {
         if(config('app.debug')){
-            return ;
+          return ;
         }
+
         return $this->active = $this->pagesToCache();
     }
     /**
@@ -37,7 +38,16 @@ class CacheMiddleware
 
     public function pagesToCache()
     {
+        if(request()->has('nc'))
+        {
+            return false;
+        }
         $route = \Request::route()->getName();
+        $url = request()->path();
+
+        if($url = "ajax/load_block/block_name=block.significant_movement_trade:render_to=significant_trade"){
+            return false;
+        }
         /*always cache block*/
         if($route == "Ajax.load_block")
         {

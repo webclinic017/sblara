@@ -62,15 +62,14 @@ class EodIntraFinalizeCommand extends Command
 
         $querystr = "select SUM(MKISTAT_TOTAL_TRADES) as total_trades,SUM(MKISTAT_TOTAL_VALUE) as total_value,SUM(MKISTAT_TOTAL_VOLUME) as total_volume,MAX(MKISTAT_LM_DATE_TIME) as MKISTAT_LM_DATE_TIME from MKISTAT ORDER BY MKISTAT_LM_DATE_TIME";
         $from_dse = DB::connection('dse')->select($querystr);
-
-
         $batch_total_trades_from_dse = $from_dse[0]->total_trades;
-        $batch_total_value_from_dse = $from_dse[0]->total_value;
-        $batch_total_volume_from_dse = $from_dse[0]->total_volume;
-        $batch_max_time = $from_dse[0]->MKISTAT_LM_DATE_TIME;
 
 
-
+        $querystr = "select * from TRD";
+        $tradeDataFromDseServer = DB::connection('dse')->select($querystr);
+        $trade_date_time = $tradeDataFromDseServer[0]->TRD_LM_DATE_TIME;
+        $convertedTimestamp_trade = strtotime($trade_date_time);
+        $trade_date = date('Y-m-d', $convertedTimestamp_trade);
 
 
         $querystr = "select * from MKISTAT ORDER BY MKISTAT_LM_DATE_TIME DESC LIMIT 0 , 600";
@@ -85,10 +84,9 @@ class EodIntraFinalizeCommand extends Command
 
 
             // Market is open. Now we will check if dse server returning today's data. Sometimes dse return previous day data
-            if($activeTradeDates=Market::validateTradeDate($trade_date))
-            {
+            if ($activeTradeDates = Market::validateTradeDate($trade_date)) {
                 // its returning today data. So we will proceed here
-                $market_id=$activeTradeDates->id;
+                $market_id = $activeTradeDates->id;
 
                 //////////////////////////// BATCH DEALINGS \\\\\\\\\\\\\\\\\\\\\\\\
 
@@ -97,17 +95,15 @@ class EodIntraFinalizeCommand extends Command
                 $batch_total_trades = $activeTradeDates->batch_total_trades;
 
 
-
                 // if $data_bank_intraday_batch=0, go for fresh query in the market tables
-                if($data_bank_intraday_batch)
-                {
+                if ($data_bank_intraday_batch) {
                     // it will be 0 for the very first entry of a day. So we have to take max(data_bank_intraday_batch) frosftm the market table
 
 
                     $mdata = DB::table('markets')
                         ->select(DB::raw('MAX(data_bank_intraday_batch) AS data_bank_intraday_batch'))
                         ->get();
-                    $data_bank_intraday_batch= $mdata[0]->data_bank_intraday_batch;
+                    $data_bank_intraday_batch = $mdata[0]->data_bank_intraday_batch;
                 }
 
                 // incrementing
@@ -118,43 +114,51 @@ class EodIntraFinalizeCommand extends Command
                 if ($batch_total_trades != $batch_total_trades_from_dse) {
 
 
-                    // saving trade data in TRD table. This is alternative solution as TradeDataCommand corn missing data. disable code from here if not needed. and enable dse:TradeData from kernel also -- STARTS
-                    $temp = array();
-                    $temp['market_id'] = $market_id;
-                    $temp['TRD_SNO'] = 1;
-                    $temp['TRD_TOTAL_TRADES'] = $batch_total_trades_from_dse;
-                    $temp['TRD_TOTAL_VOLUME'] = $batch_total_volume_from_dse;
-                    $temp['TRD_TOTAL_VALUE'] = $batch_total_value_from_dse;
-                    $temp['TRD_LM_DATE_TIME'] = date('Y-m-d H:i:s', strtotime($batch_max_time));
-                    $temp['trade_time'] = date('H:i', strtotime($batch_max_time));
-                    $temp['trade_date'] = date('Y-m-d', strtotime($batch_max_time));
-                    $dataToSaveInTradesTable[] = $temp;
-                    DB::table('trades')->insert($dataToSaveInTradesTable);
-                    $this->info(count($dataToSaveInTradesTable) . ' row inserted into trades');
+                    // saving trade data in TRD table.  -- STARTS
+
+                    foreach ($tradeDataFromDseServer as $data) {
+                        $data->TRD_LM_DATE_TIME = str_replace('at', '', $data->TRD_LM_DATE_TIME);
+
+                        $temp = array();
+                        $temp['market_id'] = $market_id;
+                        $temp['TRD_SNO'] = $data->TRD_SNO;
+                        $temp['TRD_TOTAL_TRADES'] = $data->TRD_TOTAL_TRADES;
+                        $temp['TRD_TOTAL_VOLUME'] = $data->TRD_TOTAL_VOLUME;
+                        $temp['TRD_TOTAL_VALUE'] = $data->TRD_TOTAL_VALUE;
+                        $temp['TRD_LM_DATE_TIME'] = date('Y-m-d H:i:s', strtotime($data->TRD_LM_DATE_TIME));
+                        $temp['trade_time'] = date('H:i', strtotime($data->TRD_LM_DATE_TIME));
+                        $temp['trade_date'] = date('Y-m-d', strtotime($data->TRD_LM_DATE_TIME));
+                        $temp['batch'] = $data_bank_intraday_batch;
+                        $dataToSaveInTradesTable[] = $temp;
+
+
+                    }
+
 
                     // saving trade data in TRD table. This is alternative solution as TradeDataCommand corn missing data. -- ENDS
 
 
                     $instrumentList = InstrumentRepository::getInstrumentsScripOnly();
-                    $instrumentList=$instrumentList->keyBy('instrument_code');
+                    $instrumentList = $instrumentList->keyBy('instrument_code');
 
 
                     $dataToSave = array();
+
                     $instrument_ids = [];
 
                     foreach ($dataFromDseServer as $data) {
 
 
                         //$instrument_info = $instrumentList->where('instrument_code', trim($data->MKISTAT_INSTRUMENT_CODE))->first();
-                        $instrument_info=array();
-                        if(isset($instrumentList[trim($data->MKISTAT_INSTRUMENT_CODE)]))
-                        {
+                        $instrument_info = array();
+                        if (isset($instrumentList[trim($data->MKISTAT_INSTRUMENT_CODE)])) {
                             $instrument_info = $instrumentList[trim($data->MKISTAT_INSTRUMENT_CODE)];
                         }
 
                         if (count($instrument_info)) {
                             $instrument_id = $instrument_info->id;
                             $ltp = $data->MKISTAT_CLOSE_PRICE != 0 ? $data->MKISTAT_CLOSE_PRICE : ($data->MKISTAT_PUB_LAST_TRADED_PRICE != 0 ? $data->MKISTAT_PUB_LAST_TRADED_PRICE : $data->MKISTAT_SPOT_LAST_TRADED_PRICE);
+
 
                             /////////////////// WE WILL PROCESS EOD DATA FIRST \\\\\\\\\\\\\\\\\\\\\\\
                             if ($data->MKISTAT_PUBLIC_TOTAL_VOLUME + $data->MKISTAT_SPOT_TOTAL_VOLUME > 0) {
@@ -186,7 +190,8 @@ class EodIntraFinalizeCommand extends Command
                                 $temp['spot_last_traded_price'] = $data->MKISTAT_SPOT_LAST_TRADED_PRICE;
                                 $temp['high_price'] = $data->MKISTAT_HIGH_PRICE;
                                 $temp['low_price'] = $data->MKISTAT_LOW_PRICE;
-                                $temp['close_price'] = $data->MKISTAT_CLOSE_PRICE;
+                                //$temp['close_price'] = $data->MKISTAT_CLOSE_PRICE;
+                                $temp['close_price'] = $ltp;
                                 $temp['yday_close_price'] = $data->MKISTAT_YDAY_CLOSE_PRICE;
                                 $temp['total_trades'] = $data->MKISTAT_TOTAL_TRADES;
                                 $temp['total_volume'] = $data->MKISTAT_TOTAL_VOLUME;
@@ -203,10 +208,9 @@ class EodIntraFinalizeCommand extends Command
                                 $temp['batch'] = $data_bank_intraday_batch;
 
                                 //dd($temp);
-                                 if($data->MKISTAT_PUBLIC_TOTAL_VOLUME + $data->MKISTAT_SPOT_TOTAL_VOLUME > 0)
-                                 {
-                                     $instrument_ids[] = $instrument_id;
-                                 }
+                                if ($data->MKISTAT_PUBLIC_TOTAL_VOLUME + $data->MKISTAT_SPOT_TOTAL_VOLUME > 0) {
+                                    $instrument_ids[] = $instrument_id;
+                                }
 
 
                                 $dataToSave[] = $temp;
@@ -218,15 +222,21 @@ class EodIntraFinalizeCommand extends Command
 
                     }
 
+                    if (!empty($dataToSaveInTradesTable)) {
+
+                        DB::table('trades')->insert($dataToSaveInTradesTable);
+
+                        $this->info(count($dataToSaveInTradesTable) . ' row inserted into trades');
+
+                    }
 
 
                     if (!empty($dataToSave)) {
                         /*set last updated batch_id in instruments table start*/
-                        DB::table('instruments')->whereIn('id', $instrument_ids)->update(['batch_id' => $data_bank_intraday_batch ]);
+                        DB::table('instruments')->whereIn('id', $instrument_ids)->update(['batch_id' => $data_bank_intraday_batch]);
                         /*set last updated batch_id in instruments table end*/
 
                         DB::table('data_banks_intradays')->insert($dataToSave);
-
 
 
                         //recording new value of data_bank_intraday_batch and batch_total_trades of markets table
@@ -246,15 +256,19 @@ class EodIntraFinalizeCommand extends Command
                 }
 
 
-
-            }
-            else
-            {
+            } else {
                 // Its not returning today data. We will just send a message in console
                 $this->info('Dse returning previous data');
             }
 
 
+        // this is alert of current mobile sms balance
+        $mobile_no = "8801929912870"; //Hosting Bangladesh
+        $smsbalance = file_get_contents("http://api.mimsms.com/api/command?user=hostingbd&password=UmThGy69&cmd=Credits");
+        $smsbalance = $smsbalance / 100;
+        $smsText = "Market Started. Remaining SMS Balance= $smsbalance Tk. - StockBangladesh";
+        $text_encoded = urlencode($smsText);
+        file_get_contents("http://api.mimsms.com/api/sendsms/plain?user=hostingbd&password=UmThGy69&sender=StockBD&SMSText=$text_encoded&GSM=$mobile_no");
 
 
     }

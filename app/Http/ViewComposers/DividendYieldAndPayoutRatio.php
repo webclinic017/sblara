@@ -51,6 +51,8 @@ class DividendYieldAndPayoutRatio
 
             $instrument_list = InstrumentRepository::getInstrumentsScripOnly()->keyBy('id');
             $last_trade_data_all=DataBanksIntradayRepository::getAvailableLTP();
+            $last_trade_data_all=collect($last_trade_data_all)->keyBy('instrument_id');
+
             $fundamental_data = FundamentalRepository::getFundamentalDataAll(array('cash_dividend', 'earning_per_share'));
 
             $dividend_yield_arr=array();

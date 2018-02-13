@@ -21,7 +21,7 @@ class Kernel extends ConsoleKernel
         Commands\PluginIntradayDataResetCommand::class,
         Commands\PluginIntradayDataWriteCommand::class,
 
-        Commands\EodIntradayCommand::class,
+        Commands\EodIntradayTradeCommand::class,
         Commands\EodIntraFinalizeCommand::class,
         Commands\TradeDataCommand::class,
         Commands\UpdateDseNewsCommand::class,
@@ -54,8 +54,7 @@ class Kernel extends ConsoleKernel
             return Market::isMarketOpen();
         })->emailOutputTo('fazalmohammad19@gmail.com');*/
 
-        $schedule->command('dse:EodIntraday')->cron('* 10,11,12,13,14 * * 0,1,2,3,4')->emailOutputTo('fazalmohammad19@gmail.com');
-        $schedule->command('dse:TradeData')->cron('* 10,11,12,13,14 * * 0,1,2,3,4');
+        $schedule->command('dse:EodIntradayTrade')->cron('* 10,11,12,13,14 * * 0,1,2,3,4')->emailOutputTo('fazalmohammad19@gmail.com');
         $schedule->command('dse:UpdateDseNews')->cron('2,7,12,17,22,27,32,37,42,47,52,57 10,11,12,13,14,15,16 * * 0,1,2,3,4');
         $schedule->command('dse:UpdateDseIndex')->cron('* 10,11,12,13,14 * * 0,1,2,3,4');
         $schedule->command('dse:ParseMst')->cron('30 16 * * 0,1,2,3,4')->emailOutputTo('fazalmohammad19@gmail.com');

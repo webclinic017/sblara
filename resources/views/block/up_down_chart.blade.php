@@ -299,7 +299,7 @@ Highcharts.chart('trade_compare', {
         text: null
     },
     xAxis: {
-        categories: ['Today', 'PrevDay']
+        categories: ['{{$today}}', '{{$prevday}}']
     },
     yAxis: {
         min: 0,

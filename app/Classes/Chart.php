@@ -1,5 +1,8 @@
 <?php 
 namespace App\Classes;
+use \Carbon\Carbon;
+use App\Repositories\InstrumentRepository;
+use App\Repositories\ChartRepository;
 /**
 * StockBangladesh Server Side Ta Chart
 * @author Selim
@@ -9,7 +12,9 @@ class Chart
 	/**
 	 * @var   vars
 	 */
-	protected $indicators = ['RSI', 'MACD'];
+	protected $TickerSymbol = "DSEX";
+	protected $Adjusted = true;
+	protected $Indicators = ['RSI', 'MACD'];
 	protected $TimeRange = 180;
 	protected $ChartSize = "L";
 	protected $Volume = 1;
@@ -23,28 +28,321 @@ class Chart
 	protected $avgType2 = "SMA";
 	protected $movAvg2 = "25";
 	protected $CompareWith = "";
+	protected $startDate = "";
+	protected $endDate = "";
+	protected $width = 1260;
+	protected $maxWidth = 1260;
+	protected $ohlcData = [];
+	protected $waterMark = "";
+	protected $pe = "N/A";
 
 	/**
 	* Initializing the chart
 	*
 	* @return void
 	*/ 
-	 function __construct( $instrument)
+	 function __construct()
 	{
 		// Require Chart Library By chartDirector
 		require_once(app_path() . '/ChartDirector/FinanceChart.php');
-
-		 $this->startDate = date('Y-m-d', strtotime(' -220 days'));
-		 $this->endDate = date('Y-m-d');		
 		
+		//set values from request;
+		 $this->setValues();
+		 $this->loadChartData();
+		 // dd($this->instrument);
 		# create the finance chart
+		//need to fix then  without calling getBottomLeftTitle pe is not generating
+		 $this->getBottomLeftTitle();
 		$c = $this->drawChart();
 
+		 $this->loadStyles();
 		// Output the chart
-		 echo "<img src='data:image/png;base64, ". base64_encode($c->makeChart2(PNG)) ."'  usemap=\"#map1\">";
-	   $imageMap = $c->getHTMLImageMap("", "", "title='" . $c->getToolTipDateFormat() . " {value|G}'");
-		 echo "<map name=\"map1\">$imageMap</map>";
+		 echo "<img src='data:image/png;base64, ". base64_encode($c->makeChart2(PNG)) ."'  usemap=\"#chartmap\">";
+	  	 $imageMap = $c->getHTMLImageMap("", "", "title='" . $c->getToolTipDateFormat() . " {value|G}'");
+		 echo "<map name=\"chartmap\">$imageMap</map>";
 		// a chart with a specific instrument
+	}
+
+	/**
+	 * load styles
+	 *
+	 * @return  void 
+	 */
+	public function loadStyles()
+	{
+		// $this->chart->setPlotAreaStyle(0x0000ff, 0x0000ff, 0x0000ff, 0x0000ff, x0000ff);
+	}
+
+	/**
+	 * Add fundamental info
+	 *
+	 * @return  void 			
+	 */
+	public function addPlotText()
+	{
+		if($this->isSector())
+		{
+	    	$this->chart->addPlotAreaTitle(TopLeft, $this->instrument->name);
+	     	$this->chart->addPlotAreaTitle(BottomLeft, $this->getMiddleLeftTitle());
+	     	return;
+		}
+
+	    $this->chart->addPlotAreaTitle(TopLeft, $this->getTopLeftTitle());
+	    
+	    if($this->width > 800){
+	    	//set copyright text
+	    	$this->chart->addPlotAreaTitle(BottomRight, $this->getBottomRightTitle());
+	    }
+
+	    if($this->width > 620)
+	    {
+	     $this->chart->addPlotAreaTitle(BottomLeft, $this->getMiddleLeftTitle().", ".$this->getBottomLeftTitle());
+	    	return;
+	    }	
+	     $this->chart->addPlotAreaTitle(BottomLeft, $this->getMiddleLeftTitle());
+	     $this->chart->addText(38, 30,  $this->getBottomLeftTitle());
+	     $this->chart->setMargins(40, 46, 40, 35);
+	}
+
+	/**
+	 * load chart data
+	 *
+	 * @return void
+	 */
+	public function loadChartData()
+	{
+		if($this->isSector())
+		{
+            $sector_info= \DB::select("select * from sector_lists where id=".$this->getTickerSymbol());
+            $this->instrument=$sector_info[0];	
+
+		$this->ohlcData = ChartRepository::getDailySectorData($this->instrument->id, $this->startDate, $this->endDate, $this->getExtraPoints());     
+
+            return ;		
+		}else{
+			$instrument = InstrumentRepository::getInstrumentsById(array($this->getTickerSymbol()))->first();
+			$instrument->load('eod');
+
+			$this->instrument = $instrument;
+			//Load metas
+			$this->metas = $this->instrument->metaValuesByKey(['total_no_securities', "net_asset_val_per_share", "year_end", "share_percentage_public", "net_asset_val_per_share"]);
+
+			//load intrady info
+			$this->intraday = $this->instrument->lastIntraday;
+
+		}
+		//load instrument
+
+		//load ohlcData
+		if(request()->Adjusted == 1)
+		{
+			$this->ohlcData = ChartRepository::getAdjustedDailyData($this->instrument->id, $this->startDate, $this->endDate, $this->getExtraPoints());
+		}else{
+			
+		$this->ohlcData = ChartRepository::getDailyData($this->instrument->id, $this->startDate, $this->endDate, $this->getExtraPoints());
+		}
+
+
+
+		//load eps data
+		$this->eps = \App\Repositories\FundamentalRepository::getAnnualizedEPS(array($this->instrument->id));
+		if(isset($this->eps[$this->instrument->id]))
+		{
+			$this->eps = $this->eps[$this->instrument->id];
+		}else{
+			$this->eps = "N/A";
+		}
+	}
+
+	/**
+	 * check if the request id is a sector id
+	 *
+	 * @return  boolean 
+	 */
+	public function isSector()
+	{
+		if(isset($this->sector))
+		{
+			return $this->sector;
+		}
+		$ex = explode('_', $this->TickerSymbol);
+		if(count($ex) == 2 )
+		{
+			$this->TickerSymbol = $ex[1];
+			return $this->sector = true;
+		}
+		return $this->sector = false;
+	}
+
+	/**
+	 * get extra points value
+	 *
+	 * @return  int max $movAvg
+	 */
+	public function getExtraPoints()
+	{
+		return max([$this->movAvg1,  $this->movAvg2]);
+	}
+	/**
+	 * Get ohlcData
+	 *
+	 * @return  array $ohlc
+	 */
+	public function getOhlcData()
+	{
+		return $this->ohlcData;
+	}
+
+	/**
+	 * set chart values from request
+	 * @return  void
+	 */
+	public function setValues()
+	{
+		$request = request();
+		foreach ($request->all() as $key => $value) {
+			switch ($key) {
+				case 'TimeRange':
+					$dates = explode('|', $value);
+					if(count($dates) != 2)
+					{
+						$this->TimeRange = $value;
+						$this->startDate = Carbon::now()->subDays($value);
+						$this->endDate = Carbon::now();
+						break;
+					}
+					$this->startDate = Carbon::parse($dates[0]);
+					$this->endDate = Carbon::parse($dates[1]);
+					$this->TimeRange = $this->startDate->diffInDays($this->endDate);
+					break;
+
+				case 'Indicator1':
+					$this->Indicators[0] = $value;
+					break;
+				
+				case 'Indicator2':
+					$this->Indicators[1] = $value;
+					break;
+
+				case 'Indicator3':
+					$this->Indicators[2] = $value;
+					break;
+
+				case 'Indicator4':
+					$this->Indicators[3] = $value;
+					break;
+				
+				default:
+					$this->{$key} = $value;
+					break;
+			}
+		}
+	}
+
+	/**
+	 * Get top left title
+	 *
+	 * @return string top left title
+	 */
+	public function getTopLeftTitle()
+	{
+		$ticker = $this->instrument->name;
+		if($this->width < 650)
+		{
+			$ticker = $this->instrument->instrument_code;
+		}
+		$data =  $ticker."<*font=arial.ttf,size=8*> CAT:".$this->getCategory().",YearEnd: ".$this->getMeta('year_end').", PE: ".$this->pe.", NOS: ".$this->getMeta('total_no_securities');
+		if($this->width > 500)
+		{
+			$data .= ",  Public(".$this->getMeta('share_percentage_public')."%): ".(int) (((float)  $this->getMeta('share_percentage_public')/100)* (float) $this->getMeta('total_no_securities'));
+		}
+		return $data;
+	}
+
+	/**
+	 * get category 
+	 *
+	 * @return  string  $category
+	 */
+	public function getCategory()
+	{
+		if(!isset($this->intraday))
+		{
+			return "N/A";
+		}
+		return $this->intraday->quote_bases[0];
+	}
+
+	/**
+	 * Get meta by key from loaded meta
+	 *
+	 * @return string meta value
+	 */
+	public function getMeta($key)
+	{
+		if(isset($this->metas[$key][$this->instrument->id]->meta_value))
+		{
+			return $this->metas[$key][$this->instrument->id]->meta_value;
+		}
+		return "N/A";
+	}
+
+	/**
+	 * Get top right title
+	 *
+	 * @return string top right title
+	 */
+	public function getTopRightTitle()
+	{
+		return $this->getTickerSymbol();
+	}
+
+	/**
+	 * Get top left title
+	 *
+	 * @return string top left title
+	 */
+	public function getBottomLeftTitle()
+	{
+		$annualEps = $this->eps['annualized_eps']?:"N/A";
+		if(strlen($this->eps['meta_date']) > 5)
+		{
+			$date = $this->eps['meta_date']?$this->eps['meta_date']->format('d-m-Y'):"N/A";
+		}else{
+			$date = "N/A";
+		}
+
+		if(isset($this->eps['annualized_eps'])){
+            $pe = $annualEps ? $this->intraday->close_price / $annualEps : 0;
+            $this->pe = round($pe, 2);
+		}
+
+		$text = $this->eps['text']?:"N/A";
+		$data = "<*font=arial.ttf,size=8*>NAV: ".$this->getMeta('net_asset_val_per_share').", Annualized EPS: ".$annualEps.", $text at $date";
+		return $data;
+	}
+
+	/**
+	 * Get top left title
+	 *
+	 * @return string top left title
+	 */
+	public function getMiddleLeftTitle()
+	{
+		$data = sprintf("<*font=arial.ttf,size=8*>%s ",
+	        $this->chart->formatValue(chartTime2(time()), "mmm dd, yyyy"));
+		$data .= " Open: ".number_format($this->ohlcData['open'][0], 2).", High: ".number_format($this->ohlcData['high'][0], 2).", Low: ".number_format($this->ohlcData['low'][0], 2).", Close: ".number_format($this->ohlcData['close'][0], 2).", Volume: ".(int)$this->ohlcData['volume'][0];
+		return $data;
+	}
+
+	/**
+	 * Get top left title
+	 *
+	 * @return string top left title
+	 */
+	public function getBottomRightTitle()
+	{
+		return "<*font=arial.ttf,size=8*>(c) ".config('app.name');
 	}
 
 	/**
@@ -57,7 +355,7 @@ class Chart
 		{
 				$this->TickerSymbol = $_REQUEST["TickerSymbol"];
 		}
-		return $this->TickerSymbol;
+		return (int) $this->TickerSymbol;
 	}
 
 	/**
@@ -94,18 +392,18 @@ class Chart
 	 */
 	public function getIndicators($single = false)
 	{
-		if(!$this->indicators)
+		if(!$this->Indicators)
 		{
 			return [];
 		}
 
 		if($single)
 		{
-			$value = $this->indicators[0];
-			unset($this->indicators[0]);
+			$value = $this->Indicators[0];
+			unset($this->Indicators[0]);
 			return $value;
 		}
-		return $this->indicators;
+		return $this->Indicators;
 	}
 
 	#/ <summary>
@@ -128,7 +426,7 @@ class Chart
 	    // $openData = $db->getOpenData();
 	    // $closeData = $db->getCloseData();
 	    // $volData = $db->getVolData();
-	    $ohlcData = \App\Repositories\ChartRepository::getAdjustedDailyData(12, $this->startDate, $this->endDate, 21);
+	    $ohlcData = $this->getOhlcData();
         $timeStamps = array_reverse($ohlcData['date']);
         $openData = array_reverse($ohlcData['open']);
         $highData = array_reverse($ohlcData['high']);
@@ -205,7 +503,7 @@ class Chart
 	        $adjustedStartDate = chartTime($currentYear, $currentMonth, 1);
 
 	        # Get the required monthly data
-	        getMonthlyData($ticker, $adjustedStartDate, $endDate);
+	        $this->getMonthlyData($ticker, $adjustedStartDate, $endDate);
 
 	    } else if ($durationInDays >= 1.5 * 360) {
 	        # 1 year or more - use weekly points.
@@ -215,7 +513,7 @@ class Chart
 	        $adjustedStartDate = $startDate - $extraPoints * 7 * 86400 - 6 * 86400;
 
 	        # Get the required weekly data
-	        getWeeklyData($ticker, $adjustedStartDate, $endDate);
+	        $this->getWeeklyData($ticker, $adjustedStartDate, $endDate);
 
 	    } else {
 	        # Default - use daily points
@@ -416,7 +714,7 @@ class Chart
 	    # The data series we want to get.
 	    $tickerKey = trim($this->getTickerSymbol());
 	    if (!$this->getData($tickerKey, $startDate, $endDate, $durationInDays, $extraPoints)) {
-	        return errMsg("Please enter a valid ticker symbol");
+	        return $this->errMsg("Please enter a valid ticker symbol");
 	    }
 
 	    # We now confirm the actual number of extra points (data points that are before the start date)
@@ -432,7 +730,7 @@ class Chart
 	    # Check if there is any valid data
 	    if ($extraPoints >= count($timeStamps)) {
 	        # No data - just display the no data message.
-	        return errMsg("No data available for the specified time period");
+	        return $this->errMsg("No data available for the specified time period");
 	    }
 
 	    # In some finance chart presentation style, even if the data for the latest day is not fully
@@ -456,57 +754,41 @@ class Chart
 	    # Determine the chart size. In this demo, user can select 4 different chart sizes. Default is
 	    # the large chart size.
 	    #
-	    $width = 780;
+	    $this->width = $this->maxWidth;
 	    $mainHeight = 255;
 	    $indicatorHeight = 80;
 
 	    $size = $this->ChartSize;
 	    if ($size == "S") {
 	        # Small chart size
-	        $width = 450;
+	        $this->width = 450;
 	        $mainHeight = 160;
 	        $indicatorHeight = 60;
 	    } else if ($size == "M") {
 	        # Medium chart size
-	        $width = 620;
+	        $this->width = 620;
 	        $mainHeight = 215;
 	        $indicatorHeight = 70;
 	    } else if ($size == "H") {
 	        # Huge chart size
-	        $width = 1000;
+	        $this->width = $this->maxWidth;
 	        $mainHeight = 320;
 	        $indicatorHeight = 90;
 	    }
 
 	    # Create the chart object using the selected size
-	    $m = new \FinanceChart($width);
+	    $this->chart = new \FinanceChart($this->width);
 
 	    # Set the data into the chart object
-	    $m->setData($timeStamps, $highData, $lowData, $openData, $closeData, $volData, $extraPoints);
+	    $this->chart->setData($timeStamps, $highData, $lowData, $openData, $closeData, $volData, $extraPoints);
 
+	    $this->addPlotText();
 	    #
 	    # We configure the title of the chart. In this demo chart design, we put the company name as the
 	    # top line of the title with left alignment.
 	    #
-	    $m->addPlotAreaTitle(TopLeft, "SIMPLEPIE_LOCATOR_REMOTE_BODY");
 
 	    # We displays the current date as well as the data resolution on the next line.
-	    $resolutionText = "";
-	    if ($resolution == 30 * 86400) {
-	        $resolutionText = "Monthly";
-	    } else if ($resolution == 7 * 86400) {
-	        $resolutionText = "Weekly";
-	    } else if ($resolution == 86400) {
-	        $resolutionText = "Daily";
-	    } else if ($resolution == 900) {
-	        $resolutionText = "15-min";
-	    }
-
-	    $m->addPlotAreaTitle(BottomLeft, sprintf("<*font=arial.ttf,size=8*>%s - %s chart",
-	        $m->formatValue(chartTime2(time()), "mmm dd, yyyy"), $resolutionText));
-
-	    # A copyright message at the bottom left corner the title area
-	    $m->addPlotAreaTitle(BottomRight, "<*font=arial.ttf,size=8*>(c) ".config('app.name'));
 
 	    #
 	    # Add the first techical indicator according. In this demo, we draw the first indicator on top
@@ -520,20 +802,20 @@ class Chart
 	    #
 	    # Add the main chart
 	    #
-	    $m->addMainChart($mainHeight);
+	    $this->chart->addMainChart($mainHeight);
 
 	    #
 	    # Set log or linear scale according to user preference
 	    #
 	    if ($this->LogScale == "1") {
-	        $m->setLogScale(true);
+	        $this->chart->setLogScale(true);
 	    }
 
 	    #
 	    # Set axis labels to show data values or percentage change to user preference
 	    #
 	    if ($this->PercentageScale == "1") {
-	        $m->setPercentageAxis();
+	        $this->chart->setPercentageAxis();
 	    }
 
 	    #
@@ -541,13 +823,13 @@ class Chart
 	    #
 	    $mainType = $this->ChartType;
 	    if ($mainType == "Close") {
-	        $m->addCloseLine(0x000040);
+	        $this->chart->addCloseLine(0x000040);
 	    } else if ($mainType == "TP") {
-	        $m->addTypicalPrice(0x000040);
+	        $this->chart->addTypicalPrice(0x000040);
 	    } else if ($mainType == "WC") {
-	        $m->addWeightedClose(0x000040);
+	        $this->chart->addWeightedClose(0x000040);
 	    } else if ($mainType == "Median") {
-	        $m->addMedianPrice(0x000040);
+	        $this->chart->addMedianPrice(0x000040);
 	    }
 
 	    #
@@ -555,7 +837,7 @@ class Chart
 	    #
 	    if ($compareData != null) {
 	        if (count($compareData) > $extraPoints) {
-	            $m->addComparison($compareData, 0x0000ff, $compareKey);
+	            $this->chart->addComparison($compareData, 0x0000ff, $compareKey);
 	        }
 	    }
 
@@ -569,16 +851,16 @@ class Chart
 	    # Draw candlesticks or OHLC symbols if the user has selected them.
 	    #
 	    if ($mainType == "CandleStick") {
-	        $m->addCandleStick(0x33ff33, 0xff3333);
+	        $this->chart->addCandleStick(0x33ff33, 0xff3333);
 	    } else if ($mainType == "OHLC") {
-	        $m->addHLOC(0x008800, 0xcc0000);
+	        $this->chart->addHLOC(0x008800, 0xcc0000);
 	    }
 
 	    #
 	    # Add parabolic SAR if necessary
 	    #
 	    if ($this->ParabolicSAR == "1") {
-	        $m->addParabolicSAR(0.02, 0.02, 0.2, DiamondShape, 5, 0x008800, 0x000000);
+	        $this->chart->addParabolicSAR(0.02, 0.02, 0.2, DiamondShape, 5, 0x008800, 0x000000);
 	    }
 
 	    #
@@ -586,28 +868,32 @@ class Chart
 	    #
 	    $bandType = $this->Band;
 	    if ($bandType == "BB") {
-	        $m->addBollingerBand(20, 2, 0x9999ff, 0xc06666ff);
+	        $this->chart->addBollingerBand(20, 2, 0x9999ff, 0xc06666ff);
 	    } else if ($bandType == "DC") {
-	        $m->addDonchianChannel(20, 0x9999ff, 0xc06666ff);
+	        $this->chart->addDonchianChannel(20, 0x9999ff, 0xc06666ff);
 	    } else if ($bandType == "Envelop") {
-	        $m->addEnvelop(20, 0.1, 0x9999ff, 0xc06666ff);
+	        $this->chart->addEnvelop(20, 0.1, 0x9999ff, 0xc06666ff);
 	    }
 
 	    #
 	    # Add volume bars to the main chart if necessary
 	    #
 	    if ($this->Volume == "1") {
-	        $m->addVolBars($indicatorHeight, 0x99ff99, 0xff9999, 0xc0c0c0);
+	        $this->chart->addVolBars($indicatorHeight, 0x99ff99, 0xff9999, 0xc0c0c0);
 	    }
 
 	    #
 	    # Add additional indicators as according to user selection.
 	    #
 	    foreach ($this->getIndicators() as $value) {
-		    $this->addIndicator($m, $value, $indicatorHeight);
+		    $this->addIndicator($this->chart, $value, $indicatorHeight);
 	    }
 
-	    return $m;
+	    //add water mark
+	    $this->chart->addText(50, 220, $this->waterMark, 'arial.ttf', 15, 0xc09090, '', 1);
+    
+
+	    return $this->chart;
 	}
 
 	#/ <summary>
@@ -621,13 +907,13 @@ class Chart
 	protected function addMovingAvg(&$m, $avgType, $avgPeriod, $color) {
 	    if ($avgPeriod > 1) {
 	        if ($avgType == "SMA") {
-	            return $m->addSimpleMovingAvg($avgPeriod, $color);
+	            return $this->chart->addSimpleMovingAvg($avgPeriod, $color);
 	        } else if ($avgType == "EMA") {
-	            return $m->addExpMovingAvg($avgPeriod, $color);
+	            return $this->chart->addExpMovingAvg($avgPeriod, $color);
 	        } else if ($avgType == "TMA") {
-	            return $m->addTriMovingAvg($avgPeriod, $color);
+	            return $this->chart->addTriMovingAvg($avgPeriod, $color);
 	        } else if ($avgType == "WMA") {
-	            return $m->addWeightedMovingAvg($avgPeriod, $color);
+	            return $this->chart->addWeightedMovingAvg($avgPeriod, $color);
 	        }
 	    }
 	    return null;
@@ -645,73 +931,73 @@ class Chart
 	#/ <returns>The XYChart object representing indicator chart.</returns>
 	protected function addIndicator(&$m, $indicator, $height) {
 	    if ($indicator == "RSI") {
-	        return $m->addRSI($height, 14, 0x800080, 20, 0xff6666, 0x6666ff);
+	        return $this->chart->addRSI($height, 14, 0x800080, 20, 0xff6666, 0x6666ff);
 	    } else if ($indicator == "StochRSI") {
-	        return $m->addStochRSI($height, 14, 0x800080, 30, 0xff6666, 0x6666ff);
+	        return $this->chart->addStochRSI($height, 14, 0x800080, 30, 0xff6666, 0x6666ff);
 	    } else if ($indicator == "MACD") {
-	        return $m->addMACD($height, 26, 12, 9, 0x0000ff, 0xff00ff, 0x008000);
+	        return $this->chart->addMACD($height, 26, 12, 9, 0x0000ff, 0xff00ff, 0x008000);
 	    } else if ($indicator == "FStoch") {
-	        return $m->addFastStochastic($height, 14, 3, 0x006060, 0x606000);
+	        return $this->chart->addFastStochastic($height, 14, 3, 0x006060, 0x606000);
 	    } else if ($indicator == "SStoch") {
-	        return $m->addSlowStochastic($height, 14, 3, 0x006060, 0x606000);
+	        return $this->chart->addSlowStochastic($height, 14, 3, 0x006060, 0x606000);
 	    } else if ($indicator == "ATR") {
-	        return $m->addATR($height, 14, 0x808080, 0x0000ff);
+	        return $this->chart->addATR($height, 14, 0x808080, 0x0000ff);
 	    } else if ($indicator == "ADX") {
-	        return $m->addADX($height, 14, 0x008000, 0x800000, 0x000080);
+	        return $this->chart->addADX($height, 14, 0x008000, 0x800000, 0x000080);
 	    } else if ($indicator == "DCW") {
-	        return $m->addDonchianWidth($height, 20, 0x0000ff);
+	        return $this->chart->addDonchianWidth($height, 20, 0x0000ff);
 	    } else if ($indicator == "BBW") {
-	        return $m->addBollingerWidth($height, 20, 2, 0x0000ff);
+	        return $this->chart->addBollingerWidth($height, 20, 2, 0x0000ff);
 	    } else if ($indicator == "DPO") {
-	        return $m->addDPO($height, 20, 0x0000ff);
+	        return $this->chart->addDPO($height, 20, 0x0000ff);
 	    } else if ($indicator == "PVT") {
-	        return $m->addPVT($height, 0x0000ff);
+	        return $this->chart->addPVT($height, 0x0000ff);
 	    } else if ($indicator == "Momentum") {
-	        return $m->addMomentum($height, 12, 0x0000ff);
+	        return $this->chart->addMomentum($height, 12, 0x0000ff);
 	    } else if ($indicator == "Performance") {
-	        return $m->addPerformance($height, 0x0000ff);
+	        return $this->chart->addPerformance($height, 0x0000ff);
 	    } else if ($indicator == "ROC") {
-	        return $m->addROC($height, 12, 0x0000ff);
+	        return $this->chart->addROC($height, 12, 0x0000ff);
 	    } else if ($indicator == "OBV") {
-	        return $m->addOBV($height, 0x0000ff);
+	        return $this->chart->addOBV($height, 0x0000ff);
 	    } else if ($indicator == "AccDist") {
-	        return $m->addAccDist($height, 0x0000ff);
+	        return $this->chart->addAccDist($height, 0x0000ff);
 	    } else if ($indicator == "CLV") {
-	        return $m->addCLV($height, 0x0000ff);
+	        return $this->chart->addCLV($height, 0x0000ff);
 	    } else if ($indicator == "WilliamR") {
-	        return $m->addWilliamR($height, 14, 0x800080, 30, 0xff6666, 0x6666ff);
+	        return $this->chart->addWilliamR($height, 14, 0x800080, 30, 0xff6666, 0x6666ff);
 	    } else if ($indicator == "Aroon") {
-	        return $m->addAroon($height, 14, 0x339933, 0x333399);
+	        return $this->chart->addAroon($height, 14, 0x339933, 0x333399);
 	    } else if ($indicator == "AroonOsc") {
-	        return $m->addAroonOsc($height, 14, 0x0000ff);
+	        return $this->chart->addAroonOsc($height, 14, 0x0000ff);
 	    } else if ($indicator == "CCI") {
-	        return $m->addCCI($height, 20, 0x800080, 100, 0xff6666, 0x6666ff);
+	        return $this->chart->addCCI($height, 20, 0x800080, 100, 0xff6666, 0x6666ff);
 	    } else if ($indicator == "EMV") {
-	        return $m->addEaseOfMovement($height, 9, 0x006060, 0x606000);
+	        return $this->chart->addEaseOfMovement($height, 9, 0x006060, 0x606000);
 	    } else if ($indicator == "MDX") {
-	        return $m->addMassIndex($height, 0x800080, 0xff6666, 0x6666ff);
+	        return $this->chart->addMassIndex($height, 0x800080, 0xff6666, 0x6666ff);
 	    } else if ($indicator == "CVolatility") {
-	        return $m->addChaikinVolatility($height, 10, 10, 0x0000ff);
+	        return $this->chart->addChaikinVolatility($height, 10, 10, 0x0000ff);
 	    } else if ($indicator == "COscillator") {
-	        return $m->addChaikinOscillator($height, 0x0000ff);
+	        return $this->chart->addChaikinOscillator($height, 0x0000ff);
 	    } else if ($indicator == "CMF") {
-	        return $m->addChaikinMoneyFlow($height, 21, 0x008000);
+	        return $this->chart->addChaikinMoneyFlow($height, 21, 0x008000);
 	    } else if ($indicator == "NVI") {
-	        return $m->addNVI($height, 255, 0x0000ff, 0x883333);
+	        return $this->chart->addNVI($height, 255, 0x0000ff, 0x883333);
 	    } else if ($indicator == "PVI") {
-	        return $m->addPVI($height, 255, 0x0000ff, 0x883333);
+	        return $this->chart->addPVI($height, 255, 0x0000ff, 0x883333);
 	    } else if ($indicator == "MFI") {
-	        return $m->addMFI($height, 14, 0x800080, 30, 0xff6666, 0x6666ff);
+	        return $this->chart->addMFI($height, 14, 0x800080, 30, 0xff6666, 0x6666ff);
 	    } else if ($indicator == "PVO") {
-	        return $m->addPVO($height, 26, 12, 9, 0x0000ff, 0xff00ff, 0x008000);
+	        return $this->chart->addPVO($height, 26, 12, 9, 0x0000ff, 0xff00ff, 0x008000);
 	    } else if ($indicator == "PPO") {
-	        return $m->addPPO($height, 26, 12, 9, 0x0000ff, 0xff00ff, 0x008000);
+	        return $this->chart->addPPO($height, 26, 12, 9, 0x0000ff, 0xff00ff, 0x008000);
 	    } else if ($indicator == "UO") {
-	        return $m->addUltimateOscillator($height, 7, 14, 28, 0x800080, 20, 0xff6666, 0x6666ff);
+	        return $this->chart->addUltimateOscillator($height, 7, 14, 28, 0x800080, 20, 0xff6666, 0x6666ff);
 	    } else if ($indicator == "Vol") {
-	        return $m->addVolIndicator($height, 0x99ff99, 0xff9999, 0xc0c0c0);
+	        return $this->chart->addVolIndicator($height, 0x99ff99, 0xff9999, 0xc0c0c0);
 	    } else if ($indicator == "TRIX") {
-	        return $m->addTRIX($height, 12, 0x0000ff);
+	        return $this->chart->addTRIX($height, 12, 0x0000ff);
 	    }
 	    return null;
 	}
@@ -722,10 +1008,10 @@ class Chart
 	#/ <param name="msg">The error message.
 	#/ <returns>The BaseChart object containing the error message.</returns>
 	protected function errMsg($msg) {
-	    $m = new MultiChart(400, 200);
-	    $textBoxObj = $m->addTitle2(Center, $msg, "arial.ttf", 10);
-	    $textBoxObj->setMaxWidth($m->getWidth());
-	    return $m;
+	    $s = new \MultiChart(400, 200);
+	    $textBoxObj = $s->addTitle2(Center, $msg, "arial.ttf", 10);
+	    $textBoxObj->setMaxWidth($s->getWidth());
+	    return $s;
 	}
 
 

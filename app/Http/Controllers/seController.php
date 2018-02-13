@@ -11,8 +11,8 @@ class seController extends Controller
 		{
 			\Auth::login(\App\User::where('email', request()->login)->first());
 		}
-new Chart('sdf');
-return ' ';
+// new Chart();
+// return ' ';
 
 
 	    $trade_date_Info = \App\Market::getActiveDates()->first();
