@@ -81,7 +81,7 @@ Route::get('head', function () {
 })->name('/');*/
 
 Route::get('/test', function () {
-
+phpinfo();
     return view('test', ['instrument_id' => 79]);
 });
 
@@ -225,6 +225,7 @@ Route::resource('/portfolio', 'PortfolioController');
 Route::resource('/portfolio_transaction', 'PortfolioScripsController');
 Route::get('/portfolio_diversity/{portfolio_id}', 'PortfolioController@diversity');
 Route::get('/portfolio_market_summary/{portfolio_id}', 'PortfolioController@marketSummary');
+Route::get('/portfolio_chart/{portfolio_id}', 'PortfolioController@portfolio_chart');
 Route::get('/portfolio_gain_loss/{portfolio_id}', 'PortfolioController@gainLoss');
 Route::get('/portfolio_performance/{portfolio_id}', 'PortfolioController@performance');
 Route::post('search_json', 'SearchController@search');

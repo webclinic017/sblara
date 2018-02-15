@@ -50,7 +50,8 @@ class MarketRadarCategory
         $sql = "SELECT data_banks_intradays.quote_bases as PriceRange, count(data_banks_intradays.instrument_id) as TotalWithinRange  FROM
  data_banks_intradays
  WHERE
- data_banks_intradays.batch=$batch_id
+ data_banks_intradays.batch=$batch_id and
+ data_banks_intradays.quote_bases NOT LIKE '%A-CB%'
  GROUP BY data_banks_intradays.quote_bases";
 
         $category_data_total = DB::select($sql);
@@ -62,22 +63,15 @@ class MarketRadarCategory
 
         $sort=array();
         $i=0;
+
         foreach($category_data_total as $row)
         {
-
-            if($row->PriceRange=='A-CB')
-            {
-                $i++;
-                continue;
-            }
-
-
-            $category[]= 'Cat: '.$row->PriceRange;
-            $total[]=$row->TotalWithinRange;
+            $category[] = 'Cat: ' . $row->PriceRange;
+            $total[] = $row->TotalWithinRange;
             $up[] = $category_data_up[$i]->TotalWithinRange;
 
-            $per= round($category_data_up[$i]->TotalWithinRange / $row->TotalWithinRange * 100, 2);
-            $sort[$row->PriceRange]= $per;
+            $per = round($category_data_up[$i]->TotalWithinRange / $row->TotalWithinRange * 100, 2);
+            $sort[$row->PriceRange] = $per;
             $i++;
         }
         arsort($sort);

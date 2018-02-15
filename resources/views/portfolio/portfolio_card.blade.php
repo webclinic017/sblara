@@ -19,7 +19,7 @@
                         <thead>
                         <tr>
                             <th><i class="fa icon-equalizer"></i> Head</th>
-                            <th class="hidden-xs"><i class="fa fa-bar-chart-o"></i> Stats</th>
+                            <th ><i class="fa fa-bar-chart-o"></i> Stats</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -27,25 +27,25 @@
                             <td class="highlight">
                                 <div class="success"></div>
                                 <a href="#"> Cash </a></td>
-                            <td class="hidden-xs"> {{$portfolio->cash_amount}}</td>
+                            <td > {{$portfolio->cash_amount}}</td>
                         </tr>
                         <tr>
                             <td class="highlight">
                                 <div class="info"></div>
                                 <a href="#"> Today gain/loss </a></td>
-                            <td class="hidden-xs"> {{$gainLossToday}}</td>
+                            <td class="{{fontCss($gainLossToday)}}"> {{$gainLossToday}}</td>
                         </tr>
                         <tr>
                             <td class="highlight">
                                 <div class="success"></div>
                                 <a href="#">Since purchased gain/loss</a></td>
-                            <td class="hidden-xs">{{$totalProfitSincePurchase}} ({{$totalChangeSincePurchase}}%)</td>
+                            <td class="{{fontCss($totalProfitSincePurchase)}}">{{$totalProfitSincePurchase}} ({{$totalChangeSincePurchase}}%)</td>
                         </tr>
                         <tr>
                             <td class="highlight">
                                 <div class="warning"></div>
                                 <a href="#"> Sell value</a></td>
-                            <td class="hidden-xs">{{$totalSellDeductingCommission}}</td>
+                            <td class="{{fontCss($totalProfitSincePurchase)}}" >{{$totalSellDeductingCommission}}</td>
                         </tr>
                         </tbody>
                     </table>

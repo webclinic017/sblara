@@ -223,7 +223,7 @@ class DataBanksIntraday extends Model {
     }
 
     public static function getIntraDayDataByRange($instrumentId=12,$from,$to) {
-        $returnData= static::select('pub_last_traded_price','lm_date_time','total_volume','market_id','batch')->whereBetween('lm_date_time', [$from, $to])->where('instrument_id',$instrumentId)->groupBy('lm_date_time')->orderBy('lm_date_time', 'desc')->get();
+        $returnData= static::select('pub_last_traded_price','lm_date_time','total_volume','market_id', 'batch')->whereBetween('lm_date_time', [$from, $to])->where('instrument_id',$instrumentId)->groupBy('lm_date_time')->orderBy('lm_date_time', 'desc')->get();
         return $returnData;
     }
 

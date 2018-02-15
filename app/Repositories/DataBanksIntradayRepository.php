@@ -17,6 +17,49 @@ use DB;
 
 class DataBanksIntradayRepository {
 
+    public static function getDataForChartDirector($instrumentId,$from,$to,$resolution)
+    {
+
+        $rawdata = DataBanksIntraday::getIntraDayDataByRange($instrumentId, $from->format('Y-m-d').' 00:00:00', $to->format('Y-m-d H:i:s'));
+        $rawdata = $rawdata->reverse();
+        $rawdata=$rawdata->keyBy('batch');
+        $rawdata=$rawdata->groupBy('market_id');
+
+       // dd($rawdata);
+
+        //$data=$data->chunk(5);
+
+
+        $returnData=array();
+        foreach($rawdata as $market_id=>$wholeDayData)
+        {
+            foreach ($wholeDayData->chunk($resolution) as $chunk)
+            {
+                $start=$chunk->first()->toArray();
+                $end=$chunk->last()->toArray();
+
+                // dd($chunk);
+
+                if($end['pub_last_traded_price'])
+                {
+                    $returnData['date'][] = chartTime2($end['date_timestamp']);
+                    $returnData['close'][] = $end['pub_last_traded_price'];
+                    $returnData['open'][] = $start['pub_last_traded_price'];
+                    $returnData['high'][] = $chunk->max('pub_last_traded_price');
+                    $returnData['low'][] = $chunk->min('pub_last_traded_price');
+                    $returnData['volume'][] = $end['total_volume']-$start['total_volume'];
+
+                }
+
+
+
+            }
+        }
+        // dump(time());
+        // dump(date('h i s a'));
+        // dd($returnData);
+        return $returnData;
+    }
 
     public static function getLatestTradeDataAll($tradeDate = null, $exchangeId = 0) {
         return DataBanksIntraday::getLatestTradeDataAll($tradeDate, $exchangeId);

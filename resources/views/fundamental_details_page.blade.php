@@ -111,7 +111,7 @@ Fundamental Insight of {{$instrumentInfo->name}} - Cat: {{$category}}
         <div class="btn-group btn-group btn-group-justified">
             <a target="_blank" href="{{'/minute-chart/'.$instrumentInfo->id}}" class="btn red"> Minute Chart  </a>
             <a target="_blank" href="{{'/company-details/'.$instrumentInfo->id}}" class="btn blue"> Company Details </a>
-            <a target="_blank" href="{{'/fundamental-details'.$instrumentInfo->id}}" class="btn green"> Fundamental Details </a>
+            <a target="_blank" href="{{'/fundamental-details/'.$instrumentInfo->id}}" class="btn green"> Fundamental Details </a>
 
         </div>
 

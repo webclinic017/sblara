@@ -43,17 +43,15 @@ Highcharts.chart('market_radar_paidup', {
         }
     },
     series: [{
-        name: 'Total',
-        color: '#ACB5C3',
-        data: {!! $total !!},
-        pointPadding: 0.3,
-        pointPlacement: -0.2
-    }, {
         name: 'Up',
         color: '#1BA39C',
         data: {!! $up !!},
-        pointPadding: 0.4,
-        pointPlacement: -0.2
+        pointPadding: 0
+    }, {
+        name: 'Total',
+        color: '#ACB5C3',
+        data: {!! $total !!},
+        pointPadding: 0.2
     }]
 });
 

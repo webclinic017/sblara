@@ -13,7 +13,8 @@ class ChartController extends Controller
     	 	new \App\Classes\Chart();		
     	 	return '';
     	}
-    	$instrumentInfo = \App\Instrument::first();
+        $id = request()->instrumentCode?:1;
+    	$instrumentInfo = \App\Instrument::where('instrument_code', $id)->first();
         return view("ta_chart/panel")->with('instrumentInfo', $instrumentInfo);
     }
 }

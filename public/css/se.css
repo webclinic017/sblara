@@ -12,6 +12,13 @@
         max-width: 100% !important;
     }
 }
+@media(min-width: 1240px)
+{   
+    .ta-chart-tabs ul.nav.nav-tabs{
+     margin-left: 300px !important;
+    }
+
+}
 /*ta chart section cutomization*/
 .container, .container-fluid {
      padding-left: 0px; 

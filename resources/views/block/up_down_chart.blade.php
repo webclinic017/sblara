@@ -188,11 +188,9 @@
 
                 <tr>
 
-                    <td class="highlight">
+                    <td >
 
-                        <a href="#">
-
-                            {{$trade_data_today->TRD_TOTAL_TRADES}} </a>
+                            {{$trade_data_today->TRD_TOTAL_TRADES}}
 
                     </td>
 
@@ -201,9 +199,9 @@
                         {{$trade_data_today->TRD_TOTAL_VOLUME}}
                     </td>
 
-                    <td>
+                    <td class="highlight" >
 
-                        {{$trade_data_today->TRD_TOTAL_VALUE}}
+                        <strong>{{$trade_data_today->TRD_TOTAL_VALUE}}</strong>
                     </td>
 
                     <td>

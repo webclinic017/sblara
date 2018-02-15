@@ -10,9 +10,14 @@
             <button class="btn btn-primary ">Fundamental Ratio</button>
         </a>--}}
     </div>
-    <div class="col-md-2">
+    {{--<div class="col-md-2">
         <a href=":;javascript" action="/portfolio_market_summary/{{$portfolioId}}">
             <button class="btn btn-primary ">Market Summary</button>
+        </a>
+    </div>    --}}
+    <div class="col-md-2">
+        <a href=":;javascript" action="/portfolio_chart/{{$portfolioId}}">
+            <button class="btn btn-primary ">Chart</button>
         </a>
     </div>
     <div class="col-md-2">

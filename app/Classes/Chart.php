@@ -34,7 +34,9 @@ class Chart
 	protected $maxWidth = 1260;
 	protected $ohlcData = [];
 	protected $waterMark = "";
+	protected $intradayTable = false;
 	protected $pe = "N/A";
+	protected $eps = [];
 
 	/**
 	* Initializing the chart
@@ -70,7 +72,7 @@ class Chart
 	 */
 	public function loadStyles()
 	{
-		// $this->chart->setPlotAreaStyle(0x0000ff, 0x0000ff, 0x0000ff, 0x0000ff, x0000ff);
+
 	}
 
 	/**
@@ -116,12 +118,10 @@ class Chart
             $sector_info= \DB::select("select * from sector_lists where id=".$this->getTickerSymbol());
             $this->instrument=$sector_info[0];	
 
-		$this->ohlcData = ChartRepository::getDailySectorData($this->instrument->id, $this->startDate, $this->endDate, $this->getExtraPoints());     
-
             return ;		
 		}else{
 			$instrument = InstrumentRepository::getInstrumentsById(array($this->getTickerSymbol()))->first();
-			$instrument->load('eod');
+			// $instrument->load('eod');
 
 			$this->instrument = $instrument;
 			//Load metas
@@ -131,20 +131,7 @@ class Chart
 			$this->intraday = $this->instrument->lastIntraday;
 
 		}
-		//load instrument
-
-		//load ohlcData
-		if(request()->Adjusted == 1)
-		{
-			$this->ohlcData = ChartRepository::getAdjustedDailyData($this->instrument->id, $this->startDate, $this->endDate, $this->getExtraPoints());
-		}else{
-			
-		$this->ohlcData = ChartRepository::getDailyData($this->instrument->id, $this->startDate, $this->endDate, $this->getExtraPoints());
-		}
-
-
-
-		//load eps data
+	
 		$this->eps = \App\Repositories\FundamentalRepository::getAnnualizedEPS(array($this->instrument->id));
 		if(isset($this->eps[$this->instrument->id]))
 		{
@@ -152,6 +139,7 @@ class Chart
 		}else{
 			$this->eps = "N/A";
 		}
+
 	}
 
 	/**
@@ -190,7 +178,33 @@ class Chart
 	 */
 	public function getOhlcData()
 	{
-		return $this->ohlcData;
+		if($this->getTimeRange() < 30)
+		{
+			if($this->isSector())
+			{
+				//return sector 5 minute chart
+				die('Under construction!');
+				return $this->ohlcData = [];
+			 // dd(ChartRepository::getDailySectorData($this->instrument->id, $this->startDate, $this->endDate, $this->getExtraPoints()));
+			}
+			//return instrument minute data
+			$this->intradayTable = true;
+		//	dd(\App\Repositories\DataBanksIntradayRepository::getDataForChartDirector($this->instrument->id, $this->startDate, $this->endDate, 5));
+			return $this->ohlcData = \App\Repositories\DataBanksIntradayRepository::getDataForChartDirector($this->instrument->id, $this->startDate, $this->endDate, 5);
+		}
+
+		if($this->isSector())
+		{
+			// return sector daily data
+			return $this->ohlcData = ChartRepository::getDailySectorData($this->instrument->id, $this->startDate, $this->endDate, $this->getExtraPoints());
+		}
+		//return instrument daily data
+		if(request()->Adjusted == 1)
+		{
+			return $this->ohlcData = ChartRepository::getAdjustedDailyData($this->instrument->id, $this->startDate, $this->endDate, $this->getExtraPoints());
+		}else{
+			return $this->ohlcData = ChartRepository::getDailyData($this->instrument->id, $this->startDate, $this->endDate, $this->getExtraPoints());
+		}
 	}
 
 	/**
@@ -304,20 +318,21 @@ class Chart
 	 */
 	public function getBottomLeftTitle()
 	{
-		$annualEps = $this->eps['annualized_eps']?:"N/A";
-		if(strlen($this->eps['meta_date']) > 5)
+		$annualEps = isset($this->eps['annualized_eps'])?$this->eps['annualized_eps']:"N/A";
+		if(isset($this->eps['meta_date']) && strlen($this->eps['meta_date']) > 5)
 		{
 			$date = $this->eps['meta_date']?$this->eps['meta_date']->format('d-m-Y'):"N/A";
 		}else{
 			$date = "N/A";
 		}
 
-		if(isset($this->eps['annualized_eps'])){
-            $pe = $annualEps ? $this->intraday->close_price / $annualEps : 0;
+		if(isset($this->intraday->close_price) && isset($this->eps['annualized_eps']))
+		{
+            @ $pe = $annualEps ? $this->intraday->close_price / $annualEps : 0;
             $this->pe = round($pe, 2);
 		}
 
-		$text = $this->eps['text']?:"N/A";
+		$text = isset($this->eps['text'])?$this->eps['text']:"N/A";
 		$data = "<*font=arial.ttf,size=8*>NAV: ".$this->getMeta('net_asset_val_per_share').", Annualized EPS: ".$annualEps.", $text at $date";
 		return $data;
 	}
@@ -427,12 +442,25 @@ class Chart
 	    // $closeData = $db->getCloseData();
 	    // $volData = $db->getVolData();
 	    $ohlcData = $this->getOhlcData();
-        $timeStamps = array_reverse($ohlcData['date']);
-        $openData = array_reverse($ohlcData['open']);
-        $highData = array_reverse($ohlcData['high']);
-        $lowData = array_reverse($ohlcData['low']);
-        $closeData = array_reverse($ohlcData['close']);
-        $volData = array_reverse($ohlcData['volume']);	    
+	    // dd($ohlcData);
+	    // dd($this->startDate);
+	    if($this->intradayTable == false)
+	    {
+	        $timeStamps = array_reverse($ohlcData['date']);
+	        $openData = array_reverse($ohlcData['open']);
+	        $highData = array_reverse($ohlcData['high']);
+	        $lowData = array_reverse($ohlcData['low']);
+	        $closeData = array_reverse($ohlcData['close']);
+	        $volData = array_reverse($ohlcData['volume']);	    
+	    }else{
+	        $timeStamps = $ohlcData['date'];
+	        $openData = $ohlcData['open'];
+	        $highData = $ohlcData['high'];
+	        $lowData = $ohlcData['low'];
+	        $closeData = $ohlcData['close'];
+	        $volData = $ohlcData['volume'];	    	   	
+	    }
+
 	}	
 
 	# Utility to compute modulus for large positive numbers. Although PHP has a built-in fmod
@@ -486,7 +514,7 @@ class Chart
 	            $dataPointsPerDay * 7 / 5 + 0.9999999) * 86400 - 2 * 86400;
 
 	        # Get the required 15 min data
-	        get15MinData($ticker, $adjustedStartDate, $endDate);
+	        $this->get15MinData($ticker, $adjustedStartDate, $endDate);
 
 	    } else if ($durationInDays >= 4.5 * 360) {
 	        # 4 years or more - use monthly data points.
@@ -637,7 +665,6 @@ class Chart
 
 	    global $timeStamps, $volData, $highData, $lowData, $openData, $closeData,
 	        $compareData, $resolution;
-
 	    # In this demo, we just assume we plot up to the latest time. So end date is now.
 	    $endDate = chartTime2(time());
 
@@ -726,7 +753,7 @@ class Chart
 	            break;
 	        }
 	    }
-
+	    $extraPoints = 10;
 	    # Check if there is any valid data
 	    if ($extraPoints >= count($timeStamps)) {
 	        # No data - just display the no data message.

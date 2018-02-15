@@ -171,7 +171,7 @@
                     <a target="_blank" href="{{'/advance-ta-chart?instrumentCode='.$instrumentInfo->instrument_code}}" class="btn green"> Advance TA Chart </a>
                     <a target="_blank" href="{{'/minute-chart/'.$instrumentInfo->id}}" class="btn red"> Minute Chart  </a>
                     <a target="_blank" href="{{'/company-details/'.$instrumentInfo->id}}" class="btn blue"> Company Details </a>
-                    <a target="_blank" href="{{'/fundamental-details'.$instrumentInfo->id}}" class="btn green"> Fundamental Details </a>
+                    <a target="_blank" href="{{'/fundamental-details/'.$instrumentInfo->id}}" class="btn green"> Fundamental Details </a>
 
                 </div>
 

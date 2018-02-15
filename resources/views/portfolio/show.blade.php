@@ -7,16 +7,6 @@
 {{$portfolio->portfolio_name}}
 @endsection
 
-<div class="row">
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <div class="portlet light bordered">
-                <div class="portlet-body">
-                   @include('ads.google_responsive')
-                </div>
-            </div>
-        </div>
-    </div>
-
 <div class="portlet light bordered ">
     <div class="portlet-title">
         <div class="caption font-green">
@@ -27,7 +17,7 @@
     <div class="portlet-body portfolio-content-area formn flip-scroll">
          <table class="table table-striped table-bordered table-advance table-hover table-condensed flip-content">
             <thead class="flip-content">
-                <tr>
+                <tr class="hidden-xs hidden-sm">
                     <th colspan="2"></th>
                     <th colspan="3" class="text-center">Today</th>
                     <th colspan="3"></th>
@@ -36,7 +26,7 @@
                 </tr>
                 <tr>
                     <th>Company Code</th>
-                    <th>Market</th>
+                    <th class="hidden-xs hidden-sm">Market</th>
                     <th>Last Trade Price</th>
                     <th>Change</th>
                     <th>Gain/Loss</th>

@@ -32,39 +32,38 @@
         }
     </style>
     <div class=" ta-chart-tabs tabbable  tabbable-tabdrop tabbable-custom">
-        <ul class="nav nav-tabs tabs-reversed">
+        <ul class="nav nav-tabs">
+
+            <li class="active">
+                <a href="#taChartTab" data-url ="#" data-toggle="tab">TA Chart </a>
+            </li>
+            <li>
+                <a href="#share_holdings" data-url="/ajax/load_block/block_name=block.minute_chart:instrument_id=" data-toggle="tab"> Minute Chart </a>
+            </li>      
+            <li>
+                <a href="#share_holdings" data-url="/ajax/load_block/block_name=block.sector_minute_chart:instrument_id=" data-toggle="tab"> Sector Chart </a>
+            </li>                  
 
             <li>
-                <a href="#share_holdings" data-url="/ajax/load_block/block_name=block.share_holdings_history_chart:instrument_id=" data-toggle="tab"> Share Holding History </a>
+                <a href="#share_holdings" data-url="/ajax/load_block/block_name=block.market_depth_single:instrument_id=" data-toggle="tab"> MARKET DEPTH </a>
+            </li>      
+
+            <li>
+                <a href="#share_holdings" data-url="/ajax/load_block/block_name=block.news_box:instrument_id=" data-toggle="tab"> News </a>
             </li>
+      
+            <li>
+                <a href="#share_holdings" data-url="/ajax/load_block/block_name=block.news_chart:instrument_id=" data-toggle="tab"> News Chart </a>
+            </li>   
 
 
             <li>
                 <a href="#share_holdings" data-url="/ajax/load_block/block_name=block.dividend_history:instrument_id=" data-toggle="tab"> Dividend History </a>
             </li>
-
-
+  
             <li>
-                <a href="#share_holdings" data-url="/ajax/load_block/block_name=block.news_chart:instrument_id=" data-toggle="tab"> News Chart </a>
-            </li>            
-
-            <li>
-                <a href="#share_holdings" data-url="/ajax/load_block/block_name=block.news_box:instrument_id=" data-toggle="tab"> News </a>
-            </li>
-
-
-         
-            <li>
-                <a href="#share_holdings" data-url="/ajax/load_block/block_name=block.market_depth_single:instrument_id=" data-toggle="tab"> MARKET DEPTH </a>
-            </li>            
-
-            <li>
-                <a href="#share_holdings" data-url="/ajax/load_block/block_name=block.minute_chart:instrument_id=" data-toggle="tab"> Minute Chart </a>
-            </li>
-
-            <li class="active">
-                <a href="#taChartTab" data-url ="#" data-toggle="tab">TA Chart </a>
-            </li>
+                <a href="#share_holdings" data-url="/ajax/load_block/block_name=block.share_holdings_history_chart:instrument_id=" data-toggle="tab"> Share Holding History </a>
+            </li>              
         </ul>
         <div class="tab-content" >
             <div class="tab-pane fade active in" id="taChartTab">
@@ -89,6 +88,11 @@
                             <div class="col-md-2 ">
                                 <div class="margin-bottom-10">
                                     <select name="" id="chartRange" class="bs-select form-control">
+                                        <option value="{{1}}">1 Day</option>
+                                        <option value="{{2}}">2 Days</option>
+                                        <option value="{{5}}">5 Days</option>
+                                        <option value="{{10}}">10 Days</option>
+                                        <option value="{{30}}">1 Month</option>
                                         <option value="{{4*30}}">4 Months</option>
                                         <option selected value="{{5*30}}">5 Months</option>
                                         <option  value="{{6*30}}">6 Months</option>
@@ -422,14 +426,14 @@
                 </div>
             
 {{--  --}}
-            <div id="chartContainer" class="chartcontent thumbnail">
+            <div id="chartContainer" class="chartcontent thumbnail" style="min-height: 200px;">
                 <input type="hidden" id="chart_id" value="">
                 </div>
 
 
             </div>
 
-            <div class="tab-pane fade" id="share_holdings">
+            <div class="tab-pane fade container-fluid" id="share_holdings">
                     
             </div>
         </div>
@@ -519,7 +523,7 @@
 
     function loadChart() {
         $("div[id^='ta_chart_']").remove();
-        // $('.chartcontent').html(loadingDiv);
+        $('.chartcontent').html(loadingDiv);
         if($('.toggle-button').attr('data-state') != 'open')
         {
             return;
@@ -655,24 +659,6 @@ function loadFundamental(e) {
         });
 // tab rearrange
 window.onresize = function (e) {
-    if($(document).width() < 1240)
-    {
-        ul = $('.ta-chart-tabs ul.nav-tabs'); // your parent ul element
-        if(ul.hasClass("reversed"))
-        {
-            return ;
-        }
-        ul.addClass('reversed');
-        ul.children().each(function(i,li){
-            if($(li).hasClass('dropdown'))
-            {
-                ul.removeClass('tabs-reversed')
-                return true;
-            }
-            ul.prepend(li)
-
-        })
-    }
 
     // set the modal up
     if($(document).width() < 992)

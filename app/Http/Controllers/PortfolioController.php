@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Portfolio;
 use Illuminate\Http\Request;
+use DB;
 
 class PortfolioController extends Controller {
 
@@ -235,21 +236,80 @@ class PortfolioController extends Controller {
         return view('portfolio.performance', $data);
     }
     public function marketSummary($id) {
-        $portfolio = Portfolio::find($id);
-        $data = [
-            'navigation' => [
-                'Portfolio',
-                $portfolio->portfolio_name,
-                'Performance',
-            ],
-            'portfolioId' => $portfolio->id,
-            'portfolio' => $portfolio,
-            'transactions' => $portfolio->portfolio_scrips()->where('share_status', 'buy')->groupBy('instrument_id')->get(),
-        ];
+
+     /*   $sql="SELECT instruments.instrument_code
+,portfolio_scrips.instrument_id
+,instruments.sector_list_id
+,sum(((no_of_shares*buying_price)+commission/100*((no_of_shares*buying_price)))) as buying_cost_with_com
+,sector_lists.name as sector_name
+FROM
+portfolio_scrips,instruments,sector_lists
+WHERE portfolio_scrips.instrument_id=instruments.id
+and sector_lists.id=instruments.sector_list_id
+and portfolio_id=$id
+and share_status like 'buy'
+and instruments.active =1
+GROUP BY instrument_id
+";*/
+
+        $sql="select instrument_id from portfolio_scrips where portfolio_id=$id and share_status like 'buy' GROUP BY instrument_id";
+
+        $portfolio_holdings=DB::select($sql);
+
+/*
+        $sector_wise_holdings=array();
+        foreach($portfolio_holdings as $transaction)
+        {
+            dump($transaction);
+            $this_instruments_value= $transaction->buying_cost_with_com;
+            isset($sector_wise_holdings[$transaction->sector_name])? $sector_wise_holdings[$transaction->sector_name]+=$this_instruments_value: $sector_wise_holdings[$transaction->sector_name]=$this_instruments_value;
+        }*/
+
+
+//        $instrument_id_arr=collect($portfolio_holdings)->pluck('instrument_id');
+
 
 //        dd($data['transactions']->toArray());
-        return view('portfolio.market_summary', ['data' => $data]);
+        return view('portfolio.market_summary', ['portfolio_holdings' => $portfolio_holdings]);
     }
+    public function portfolio_chart($id) {
+
+     /*   $sql="SELECT instruments.instrument_code
+,portfolio_scrips.instrument_id
+,instruments.sector_list_id
+,sum(((no_of_shares*buying_price)+commission/100*((no_of_shares*buying_price)))) as buying_cost_with_com
+,sector_lists.name as sector_name
+FROM
+portfolio_scrips,instruments,sector_lists
+WHERE portfolio_scrips.instrument_id=instruments.id
+and sector_lists.id=instruments.sector_list_id
+and portfolio_id=$id
+and share_status like 'buy'
+and instruments.active =1
+GROUP BY instrument_id
+";*/
+
+        $sql="select instruments.instrument_code,instrument_id from portfolio_scrips,instruments where portfolio_scrips.instrument_id=instruments.id and portfolio_id=$id and share_status like 'buy' GROUP BY instrument_id";
+
+        $portfolio_holdings=DB::select($sql);
+
+/*
+        $sector_wise_holdings=array();
+        foreach($portfolio_holdings as $transaction)
+        {
+            dump($transaction);
+            $this_instruments_value= $transaction->buying_cost_with_com;
+            isset($sector_wise_holdings[$transaction->sector_name])? $sector_wise_holdings[$transaction->sector_name]+=$this_instruments_value: $sector_wise_holdings[$transaction->sector_name]=$this_instruments_value;
+        }*/
+
+
+//        $instrument_id_arr=collect($portfolio_holdings)->pluck('instrument_id');
+
+
+//        dd($data['transactions']->toArray());
+        return view('portfolio.portfolio_chart', ['portfolio_holdings' => $portfolio_holdings]);
+    }
+
 
     public function gainLoss($id) {
         $portfolio = Portfolio::find($id);

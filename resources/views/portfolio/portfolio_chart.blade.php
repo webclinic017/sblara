@@ -3,7 +3,13 @@
 <div class="row">
         <div class="col-md-6">
 
-                    {{--@include('block.minute_chart', array('instrument_id' => $transaction->instrument_id))--}}
+                            <div class="btn-group btn-group btn-group-justified">
+                                <a target="_blank" href="{{'/ta-chart?instrumentCode='.$transaction->instrument_code}}" class="btn red"> TA Chart  </a>
+                                <a target="_blank" href="{{'/company-details/'.$transaction->instrument_id}}" class="btn blue"> Company Details </a>
+                                <a target="_blank" href="{{'/fundamental-details/'.$transaction->instrument_id}}" class="btn green"> Fundamental Details </a>
+
+                            </div>
+
 
 
                     <div class="portlet light bordered">
@@ -33,6 +39,12 @@
         </div>
         </div>
         <div class="col-md-6">
+        <div class="btn-group btn-group btn-group-justified">
+            <a target="_blank" href="{{'/news/search?keyword=&instrument_id='.$transaction->instrument_id.'&from_date=&to_date='}}" class="btn red">{{$transaction->instrument_code}} News</a>
+            <a target="_blank" href="{{'/minute-chart/'.$transaction->instrument_id}}" class="btn blue"> Minute Chart </a>
+            <a target="_blank" href="{{'/advance-ta-chart?instrumentCode='.$transaction->instrument_code}}" class="btn green"> Advance TA Chart </a>
+
+        </div>
 
             <div class="portlet light bordered">
                 <div class="portlet-title">
