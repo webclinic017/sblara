@@ -9,7 +9,6 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
 <div class="row">
     <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
         @include('block.index_chart')
-
     </div>
 
 
@@ -558,3 +557,5 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
 <script src="{{ URL::asset('metronic//assets/global/plugins/bootstrap-tabdrop/js/bootstrap-tabdrop.js') }}"></script>
 
 @endpush
+
+

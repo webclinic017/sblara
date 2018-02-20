@@ -50,6 +50,7 @@ class SectorMinuteChart
         $sectorList=SectorListRepository::getSectorDetailsByInstrumentId($instrument_id);
         $sector_list_id=$sectorList->first()->id;
         $sector_name=$sectorList->first()->name;
+        $sector_name=str_replace('&','And',$sector_name);
 
         $returnData=SectorIntradayRepository::getWholeDayData($limit = 0, $tradeDate = null, $exchangeId = 0,$sector_list_id);
 

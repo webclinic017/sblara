@@ -81,7 +81,7 @@ Route::get('head', function () {
 })->name('/');*/
 
 Route::get('/test', function () {
-phpinfo();
+
     return view('test', ['instrument_id' => 79]);
 });
 
@@ -162,8 +162,8 @@ Route::get('/cockpit', function () {
 Route::get('news-chart/{instrument_id?}', 'PagesController@newsChart')->name('news-chart');
 Route::get('minute-chart/{instrument_id?}', 'PagesController@minuteChart')->name('minute-chart')->middleware('httpcache'); //httpcache implemented in PagesController@minuteChart
 Route::get('company-details/{instrument_id?}', 'PagesController@companyDetails')->name('company-details')->middleware('httpcache');
-Route::get('fundamental-details/{instrument_id?}', 'PagesController@fundamentalDetails')->name('fundamental-details')/*->middleware('httpcache')*/
-;
+Route::get('fundamental-details/{instrument_id?}', 'PagesController@fundamentalDetails')->name('fundamental-details')/*->middleware('httpcache')*/;
+Route::get('technical-analysis-home', 'PagesController@technicalAnalysisHome')->name('technical-analysis-home')/*->middleware('httpcache')*/;
 
 
 Route::get('/advance-ta-chart', function () {
@@ -171,7 +171,7 @@ Route::get('/advance-ta-chart', function () {
     })->name('advance-ta-chart');
 Route::get('/java-chart', 'DataBanksEodController@java_chart')->name('java-chart');
 Route::get('/ta/ajax/{reportrange?}/{instrument?}/{comparewith?}/{Indicators?}/{configure?}/{charttype?}/{overlay?}/{mov1?}/{avgPeriod1?}/{mov2?}/{avgPeriod2?}/{adj?}/{interval?}', 'DataBanksEodController@chart_img_trac');
-Route::get('/ta-chart', 'ChartController@index')->name('ta-chart');
+Route::get('/ta-chart', 'ChartController@index')->name('ta-chart')->middleware('httpcache');
 Route::get('/getchart/{img}', 'DataBanksEodController@getchart');
 
 
@@ -226,6 +226,8 @@ Route::resource('/portfolio_transaction', 'PortfolioScripsController');
 Route::get('/portfolio_diversity/{portfolio_id}', 'PortfolioController@diversity');
 Route::get('/portfolio_market_summary/{portfolio_id}', 'PortfolioController@marketSummary');
 Route::get('/portfolio_chart/{portfolio_id}', 'PortfolioController@portfolio_chart');
+Route::get('/portfolio_fundamental/{portfolio_id}', 'PortfolioController@portfolio_fundamental');
+Route::get('/diversity_model/{portfolio_id}', 'PortfolioController@diversity_model');
 Route::get('/portfolio_gain_loss/{portfolio_id}', 'PortfolioController@gainLoss');
 Route::get('/portfolio_performance/{portfolio_id}', 'PortfolioController@performance');
 Route::post('search_json', 'SearchController@search');
@@ -234,6 +236,7 @@ Route::post('search_json', 'SearchController@search');
 Route::get('/ipos', 'IpoController@upcoming')->name('ipos');
 Route::get('/ipos/history', 'IpoController@history')->name('ipos-history');
 Route::get('/ipos/results', 'IpoController@results')->name('ipos-results');
+Route::post('/user/meta/store', 'UserController@storeMeta');
 
 /* Se Routes */
 Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {

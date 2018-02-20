@@ -59,8 +59,9 @@ class IndexChart
                 $temp[]=$xdata[$i];
                 $xArr[$indexId][]=$temp;
             }
-            $indexData['index'][$indexId]['last']=$indexData['index'][$indexId]['data'][0];
-            $indexData['index'][$indexId]['data']=collect($xArr[$indexId])->toJson();
+            // isset condition. at 10:30 am 
+            $indexData['index'][$indexId]['last']=isset($indexData['index'][$indexId]['data'][0])?$indexData['index'][$indexId]['data'][0]:0;
+            $indexData['index'][$indexId]['data']=collect(isset($xArr[$indexId])?($xArr[$indexId]):[])->toJson();
             $indexData['index'][$indexId]['details']['height']=272;
 
 

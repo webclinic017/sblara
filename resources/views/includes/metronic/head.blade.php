@@ -26,6 +26,7 @@
                     window.Laravel = {!! json_encode([
                         'csrfToken' => csrf_token(),
                     ]) !!};
+                    var loggedIn = {{\Auth::guest()?'false':'true'}};
             </script>
     </head>
 <script src="{{ mix('metronic_home.js') }}"></script>

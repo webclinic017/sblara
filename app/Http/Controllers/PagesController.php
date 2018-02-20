@@ -277,6 +277,82 @@ dd($eq_arr);
 
     }
 
+public function technicalAnalysisHome()
+    {
+
+//DataBankEodRepository::getEodDataAdjusted(10001,'2017-02-01','2018-02-28');
+        $chartData = \App\Repositories\ChartRepository::getAdjustedDailyData(10001, '2018-01-01', '2018-02-28');
+
+
+    $chartData['realtimeStamps'] = array_reverse($chartData['realtimeStamps']);
+    $timeStamps = array_reverse($chartData['date']);
+    $closeData = array_reverse($chartData['close']);
+    $openData = array_reverse($chartData['open']);
+    $lowData = array_reverse($chartData['low']);
+    $highData = array_reverse($chartData['high']);
+    $volData = array_reverse($chartData['volume']);
+
+
+    //dd($chartData);
+        $bop=trader_bop($openData, $highData, $lowData, $closeData);
+    // suppose we have 37 data in $closeData . trader_rsi will return 23 data (37-14) . We are using 10 extra point in
+    // setData() . So when we will call addLineIndicator with 23 data it will again remove 10 data. So we are re-filling 14 data with null
+        $rsi= trader_rsi($closeData, 14);  //
+      //  $rsi=array_values($rsi);
+    $fill=array_fill(0, 14, null);
+
+    $rsi=array_merge($fill, $rsi);
+    $rsi[13]= 39.021;
+
+
+    //dump($closeData);
+    //dd($rsi);
+        //dd($bop);
+        require_once(app_path() . '/ChartDirector/FinanceChart.php');
+        $m = new \FinanceChart(400);
+        $m->setData($timeStamps, $highData, $lowData, $openData, $closeData, $volData, 10);
+
+    $m->addRSI(70, 14, 0x800080, 20, 0xff6666, 0x6666ff);
+        $m->addMainChart(300);
+     $m->addCandleStick(0x33ff33, 0xff3333);
+
+     $m->addVolBars(75, 0x99ff99, 0xff9999, 0x808080);
+
+    $m->addLineIndicator(70, $bop, 0x0000ff, "balance of power");
+    $m->addLineIndicator(70, $rsi, 0x0000ff, "custom rsi");
+
+    $tmpArrayMath1 = new \ArrayMath($rsi);
+    $rsi_obj=$tmpArrayMath1->result();
+
+
+    $c = $m->addIndicator(70);
+    $label = "RSI (14-sb)";
+    $layer = $m->addLineIndicator2($c, $rsi_obj, 0x0000ff, "custom rsi -2");
+
+  /*  #Add range if given
+    $range=20;
+    if (($range > 0) && ($range < 50)) {
+        $m->addThreshold($c, $layer, 50 + $range, '0xff9999', 50 - $range, '0x99ff99');
+    }*/
+
+
+
+
+        header("Content-type: image/png");
+        print($m->makeChart2(PNG));
+exit;
+
+        return response()->view('technical-analysis-home',
+            [
+               /* 'instrumentInfo' => $instrumentInfo,
+                'category' => $category*/
+
+            ]
+        );
+        //)->setTtl(60);
+
+    }
+
 
 
 }

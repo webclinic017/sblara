@@ -73,3 +73,8 @@
 
 </script>
 @endsection
+
+@push('css')
+
+{{--<link href="{{ URL::asset('metronic/assets//assets/pages/css/search.min.css') }}" rel="stylesheet" type="text/css" />--}}
+@endpush

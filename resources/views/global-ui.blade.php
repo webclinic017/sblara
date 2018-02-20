@@ -1,6 +1,7 @@
 <link href="{{ URL::asset('metronic/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css') }}" rel="stylesheet" type="text/css" />
 
-<div class="row" style="margin-right: 0">
+
+<div class="row global-ui" style="margin-right: 0">
 <div class="col-md-12 share-list" style="z-index: 99; max-width:300px;">
     <div class="form-group">
         <div class="input-group select2-bootstrap-prepend " style="max-width: 300px">
@@ -8,7 +9,9 @@
                 <button class="btn red mt-ladda-btn toggle-button"  type="button" data-select2-open="multi-prepend"> <i class="fa fa-line-chart"></i> Chart </button>
             </span>
               @include('html.instrument_list_bs_select_with_sector',['bs_select_id'=>'shareList', 'class' => 'instrument-select bs-select'])
+
         </div>
+                                                                  
     </div>
 </div>
 
@@ -48,19 +51,22 @@
                 <a href="#share_holdings" data-url="/ajax/load_block/block_name=block.market_depth_single:instrument_id=" data-toggle="tab"> MARKET DEPTH </a>
             </li>      
 
+
+            <li>
+                <a href="#share_holdings" data-url="/ajax/load_block/block_name=block.fundamental_summary:instrument_id=" data-toggle="tab"> Fundamental </a>
+            </li>
+
             <li>
                 <a href="#share_holdings" data-url="/ajax/load_block/block_name=block.news_box:instrument_id=" data-toggle="tab"> News </a>
+            </li>
+
+            <li>
+                <a href="#share_holdings" data-url="/ajax/load_block/block_name=block.dividend_history:instrument_id=" data-toggle="tab"> Dividend History </a>
             </li>
       
             <li>
                 <a href="#share_holdings" data-url="/ajax/load_block/block_name=block.news_chart:instrument_id=" data-toggle="tab"> News Chart </a>
             </li>   
-
-
-            <li>
-                <a href="#share_holdings" data-url="/ajax/load_block/block_name=block.dividend_history:instrument_id=" data-toggle="tab"> Dividend History </a>
-            </li>
-  
             <li>
                 <a href="#share_holdings" data-url="/ajax/load_block/block_name=block.share_holdings_history_chart:instrument_id=" data-toggle="tab"> Share Holding History </a>
             </li>              
@@ -119,9 +125,6 @@
 
                                 </div>
                             </div>
-
-                       
-
 
                       <div class="col-md-2 " >
                         <div class="margin-bottom-10">
@@ -251,9 +254,9 @@
                       </div>
                       <div class="col-md-2 " >
                         <div class="margin-bottom-10">
-                            
-                                    <select  id="Indicator4" class="bs-select form-control" >
-                                        <option value="None">Indicator 4</option>
+                        
+                                    <select  id="Indicator4" class="indicator4 form-control indicator4" multiple="">
+                                        
                                         <option value="AccDist" title="A/D">Accu/Dist</option>
                                         <option value="AroonOsc" title="ArnOsc">Aroon Oscillator</option>
                                         <option value="Aroon" title="Aroon">Aroon Up/Down</option>
@@ -369,6 +372,19 @@
 
                             <div class="col-md-2 ">
                                 <div class="margin-bottom-10">
+                                    <select id="interval" class="form-control bs-select">
+                                        <option value="5">5 Minute</option>
+                                        <option value="10">10 Minute</option>
+                                        <option value="15">15 Minute</option>
+                                        <option value="30">30 Minute</option>
+                                        <option value="60">1 Hour</option>
+                                        <option selected="" value="D">Daily</option>
+                                    </select>
+                                </div>
+                            </div> 
+
+                            <div class="col-md-2 ">
+                                <div class="margin-bottom-10">
                                     <select id="ChartSize" class="form-control bs-select">
                                         <option >Chart Size</option>
                                         <option value="S">Small</option>
@@ -385,6 +401,15 @@
                                 <button data-dismiss="modal" type="button" onclick="loadChart()" class="btn btn-success form-control"><i class="fa fa-refresh"></i> Update</button>      
                                 </div>
                             </div>
+
+                            <div class="col-md-2">
+                                <div class="margin-bottom-10">
+                                    <div class="btn-group btn-group-solid">
+                                            <button type="button" class="btn purple prev"><i class="fa fa-arrow-left"></i> Prev</button>
+                                            <button type="button" class="btn purple next">Next <i class="fa fa-arrow-right"></i></button>
+                                    </div> 
+                                </div>
+                            </div>
                         </div>
 
 <style>
@@ -396,15 +421,9 @@
     }
 </style>
 
-
-
                       </div>
-
-
                     </div>
-
                 </form>
-
                 </div>
 {{-- settings end --}}
                                                              </div>
@@ -497,7 +516,7 @@
         //#adj, #configure, #charttype, #overlay, #Indicators, #mov1, #mov2, #touchspin_demo1, #touchspin_demo2, #dashboard-report-range
             
         fields['adj'] = $('#adj').val();
-        // fields['interval'] = $('#interval').val();
+        fields['interval'] = $('#interval').val();
         fields['configure'] = $('#configure').val();
         fields['charttype'] = $('#charttype').val();
         fields['overlay'] = $('#overlay').val();
@@ -512,7 +531,12 @@
         fields['touchspin_demo2'] = $('#touchspin_demo2').val();
         fields['chartRange'] = $('#chartRange').val();
         fields = JSON.stringify(fields);
-
+        //check if loged in
+        // if(loggedIn)
+        // {
+        //     $.post('/user/meta/store', {_token:token, "ta-chart-settings":fields});
+        //     return;
+        // }
         var d = new Date();
         var exdays = 365;
         d.setTime(d.getTime() + (exdays*24*60*60*1000));
@@ -556,7 +580,7 @@
             if(v == "PSCALE"){PercentageScale = 1; }
         })
 
-        url = "/ta-chart?Adjusted="+$('#adj').val()+"&TickerSymbol="+sharelist+"&CompareWith=&TimeRange="+chartRange+"&ChartSize="+$('#ChartSize').val()+"&Volume="+Volume+"&ParabolicSAR="+ParabolicSAR+"&LogScale="+LogScale+"&PercentageScale="+PercentageScale+"&ChartType="+$('#charttype').val()+"&Band="+$('#overlay').val()+"&avgType1="+$('#mov1').val()+"&movAvg1="+$('#touchspin_demo1').val()+"&avgType2="+$('#mov2').val()+"&movAvg2="+$('#touchspin_demo2').val()+"&Indicator1="+$('#Indicator1').val()+"&Indicator2="+$('#Indicator2').val()+"&Indicator3="+$('#Indicator3').val()+"&Indicator4="+$('#Indicator4').val()+"&Button1=Update%20Chart&";
+        url = "/ta-chart?Adjusted="+$('#adj').val()+"&TickerSymbol="+sharelist+"&CompareWith=&TimeRange="+chartRange+"&ChartSize="+$('#ChartSize').val()+"&Volume="+Volume+"&ParabolicSAR="+ParabolicSAR+"&LogScale="+LogScale+"&PercentageScale="+PercentageScale+"&ChartType="+$('#charttype').val()+"&Band="+$('#overlay').val()+"&avgType1="+$('#mov1').val()+"&movAvg1="+$('#touchspin_demo1').val()+"&avgType2="+$('#mov2').val()+"&movAvg2="+$('#touchspin_demo2').val()+"&Indicator1="+$('#Indicator1').val()+"&Indicator2="+$('#Indicator2').val()+"&Indicator3="+$('#Indicator3').val()+"&Indicator4="+$('#Indicator4').val()+"&interval="+$('#interval').val();
         
         var companyDetailsUrl = 'http://www.new.stockbangladesh.com/TechnicalAnalysis/company_details/' + sharelist
         var marketDepthUrl = 'http://www.new.stockbangladesh.com/TechnicalAnalysis/market_depth/' + sharelist
@@ -589,7 +613,6 @@ stepinterval: 1,
 maxboostedstep: 10000000
 
 });
-
 
 
 function loadFundamental(e) {
@@ -679,10 +702,43 @@ window.onresize = function (e) {
         $('#modalBody').addClass('modal-body');        
         $('.modal-header').show();        
     }
-    // set the modal up
+
 }
+    // set the modal up
+    $('.indicator4').selectpicker({
+        dropupAuto: false,
+        actionsBox: true,
+        noneSelectedText: 'More Indicators'
+    });
+    //nex previous by key press;
+    $('.global-ui .next').click(function () {
+        $('#shareList').val($('#shareList option:selected').next().val());
+        $('#shareList').trigger('change');
+    });
+    $('.global-ui .prev').click(function () {
+         $('#shareList').val($('#shareList option:selected').prev().val());
+        $('#shareList').trigger('change');        
+    });
+    $('.global-ui').on('keyup', function (e) {
+        if(e.target.type == 'text')
+        {
+            return;
+        }
+        if($('.toggle-button').attr('data-state') != 'open'){
+            return;
+        }
+        console.log(e.key);
+        if(e.key == 'ArrowRight')
+        {
+           $('.global-ui .next').trigger('click');
+        }
+        if(e.key == 'ArrowLeft')
+        {
+           $('.global-ui .prev').trigger('click');
+        }
+    });
+
     })
-
-
 </script>
+
 @endpush

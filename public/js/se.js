@@ -292,7 +292,8 @@ $('body').on('click',  '.confirmSell', function () {
 			$(this).val('');
 			return;
     }
-		$('.company-search').html('<tr><td colspan="5" ><div class="animated-background"></div><div class="animated-background"></div><div class="animated-background"></div><div class="animated-background"></div></td></tr>');
+		//$('.company-search').html('<tr><td colspan="5" ><div class="animated-background"></div><div class="animated-background"></div><div class="animated-background"></div><div class="animated-background"></div></td></tr>');
+		$('.company-search').html('');
 		var str = $(this).val();
 		if(str.length < 2)
 		{
@@ -309,19 +310,31 @@ $('body').on('click',  '.confirmSell', function () {
 					ltp = 0; 
 					high = 0;
 					low = 0;
+					volume = 0;
+                    earning_per_share=0;
+                    pe=0;
+                    net_asset_val_per_share=0;
+                    share_percentage_public=0;
+                    share_percentage_institute=0;
+                    eps_text='';
 				}else{
-					if (v.data_banks_intraday.pub_last_traded_price != 0)
-					{
-						ltp = v.data_banks_intraday.pub_last_traded_price;
-					}else{
-						ltp = v.data_banks_intraday.spot_last_traded_price;
-					}
+
+                    ltp = v.data_banks_intraday.close_price;
 					yclose = v.data_banks_intraday.yday_close_price;
 					high = v.data_banks_intraday.high_price;
 					low = v.data_banks_intraday.low_price;
+                    volume = v.data_banks_intraday.total_volume;
+                    earning_per_share = v.data_banks_intraday.earning_per_share;
+                    pe= (ltp/ v.data_banks_intraday.annualized_eps).toFixed(2)
+                    net_asset_val_per_share = v.data_banks_intraday.net_asset_val_per_share;
+                    share_percentage_public = v.data_banks_intraday.share_percentage_public;
+                    share_percentage_institute = v.data_banks_intraday.share_percentage_institute;
+                    eps_text= v.data_banks_intraday.annualized_eps_text;
 				}
 				var change =  (((ltp - yclose) / yclose )*100).toFixed(2);
 				var cls = '';
+				var list_class = '';
+				var portlet_icon = '';
 				if(isNaN(change))
 				{
 					change = 0;
@@ -329,12 +342,23 @@ $('body').on('click',  '.confirmSell', function () {
 				if(change == 0)
 				{
 					cls = 'text-warning';
+                    list_class = 'grey-salsa';
+                    portlet_icon = 'fa fa-arrows-v';
+
+
+
 				}
 				else if (change > 0){
 					cls = 'text-success';
+                    list_class='green-jungle';
+                    portlet_icon = 'fa fa-level-up';
 				} else {
 					cls = 'text-danger';
-				}
+                    list_class = 'red-flamingo';
+                    portlet_icon = 'fa fa-level-down';
+
+
+                }
 
 				if((high - yclose) == 0)
 				{
@@ -355,10 +379,72 @@ $('body').on('click',  '.confirmSell', function () {
 					lcls = 'text-danger';
 				}
 
-				// if((yclose - high) < 0)
-				html += `
+
+				html += '<div class="portlet box '+ list_class+' ">\
+                    <div class="portlet-title">\
+                        <div class="caption hidden-xs"><i class="'+ portlet_icon+'"></i> ' + v.instrument_code + ' - ' + v.category +' - ' + v.sector +' | ' + change + '% ('+ v.last_traded+')</div>\
+                        <div class="caption hidden-lg hidden-md hidden-sm"><i class="'+ portlet_icon+'"></i> ' + v.instrument_code  +' | ' + change + '%</div>\
+                        <div class="tools">\
+                            <a href="javascript:;" class="expand" data-original-title="" title=""> </a>\
+                        </div>\
+                    </div>\
+                    <div class="portlet-body" style="display: none;">\
+                        <div class="row">\
+                            <div class="table-scrollable table-scrollable-borderless">\
+                            <table class="table table-condensed table-hover table-light">\
+                                <tbody>\
+                                <thead>\
+                                    <tr>\
+                                        <th class="caption hidden-lg hidden-md hidden-sm">Sector</th>\
+                                        <th class="caption hidden-lg hidden-md hidden-sm">Cat</th>\
+                                        <th>LTP</th>\
+                                        <th>High</th>\
+                                        <th>Low</th>\
+                                        <th>Volume</th>\
+                                        <th>YCP</th>\
+                                        <th>EPS('+eps_text+')</th>\
+                                        <th>P/E(D/A)</th>\
+                                        <th>NAV </th>\
+                                        <th>Public%</th>\
+                                        <th>Inst%</th>\
+                                        <th class="caption hidden-lg hidden-md hidden-sm">Upd</th>\
+                                    </tr>\
+                                </thead>\
+                                    <tr>\
+                                        <td class="caption hidden-lg hidden-md hidden-sm">'+ v.sector+'</td>\
+                                        <td class="caption hidden-lg hidden-md hidden-sm">'+ v.category+'</td>\
+                                        <td>'+ltp+'</td>\
+                                        <td>'+ high+'</td>\
+                                        <td>' + low + '</td>\
+                                        <td>' + volume + '</td>\
+                                        <td>' + yclose + '</td>\
+                                        <td style = "text-align:center;vertical-align:middle">' + earning_per_share + '</td>\
+                                        <td>' + pe + '</td>\
+                                        <td>' + net_asset_val_per_share + '</td>\
+                                        <td>' + share_percentage_public + '%</td>\
+                                        <td>' + share_percentage_institute + '%</td>\
+                                        <td class="caption hidden-lg hidden-md hidden-sm">' + v.last_traded + '</td>\
+                                    </tr>\
+                                </tbody>\
+                            </table>\
+                        </div>\
+                        <div class="row">\
+                        <div class="col-lg-2"><div class="btn-group btn-group btn-group-justified"><a target="_blank" href="/ta-chart?instrumentCode='+ v.instrument_code+'" class="btn btn-xs default"> TA </a></div> </div> \
+                        <div class="col-lg-2"><div class="btn-group btn-group btn-group-justified"><a target="_blank" href="/advance-ta-chart?instrumentCode='+ v.instrument_code +'" class="btn btn-xs default"> Adv TA </a></div></div> \
+                        <div class="col-lg-2"><div class="btn-group btn-group btn-group-justified"><a target="_blank" href="/company-details/' + v.instrument_id + '" class="btn btn-xs default "> Comp. Details </a></div></div> \
+                        <div class="col-lg-2"><div class="btn-group btn-group btn-group-justified"><a target="_blank" href="/fundamental-details/' + v.instrument_id + '" class="btn btn-xs default "> FA Details </a></div></div> \
+                        <div class="col-lg-2"><div class="btn-group btn-group btn-group-justified"><a target="_blank" href="/minute-chart/' + v.instrument_id + '" class="btn btn-xs default "> Min Chart </a></div></div> \
+                        <div class="col-lg-2"><div class="btn-group btn-group btn-group-justified"><a target="_blank" href="/news/search?keyword=&instrument_id=' + v.instrument_id + '&from_date=&to_date=" class="btn btn-xs default "> News </a></div></div> \
+                        </div>\
+                        </div>\
+                    </div>\
+                 </div>';
+
+
+
+                /*html += `
                             <tr>
-                                <td > 
+                                <td >
                                 <a class="popover-ta-chart" data-trigger="hover" data-toggle="popover" title="`+v.instrument_code+`- TA Chart" data-content="<img src='/tooltip_chart/`+v.id+`' />"   target="_blank"  href="/company-details/`+v.id+`">`+ v.instrument_code+`</a>
                                  <a   target="_blank"  href="/news-chart/`+v.id+`" title="News Chart"><i class="fa fa-bullhorn"></i></a>
                                  <a  target="_blank"  href="/advance-ta-chart?instrumentCode=`+v.instrument_code+`" title="Advanced Chart"><i class="fa fa-line-chart"></i></a>
@@ -369,9 +455,9 @@ $('body').on('click',  '.confirmSell', function () {
                                 <td class="`+hcls+`">`+ high +`</td>
                                 <td class="`+lcls+`">`+ low +`</td>
                                 <td class="`+cls+`">`+change+`</td>
-                            </tr>				
-					
-				`;
+                            </tr>
+
+				`;*/
 
 			})
 			$('.company-search').html(html);
@@ -406,7 +492,6 @@ $('body').on('click',  '.confirmSell', function () {
 	$('.select2').select2();
 
 	//ta-chart tabs
-
 $('.ta-chart-tabs [data-toggle="tab"]').on('click', function (e) {
 	var url = $(this).data('url');
 	 instrument = $('#shareList').val();
@@ -414,15 +499,9 @@ $('.ta-chart-tabs [data-toggle="tab"]').on('click', function (e) {
 	 {
 	 	instrument = 12;
 	 }
-
-	if($(this).attr('aria-expanded') == true && url != '#' )
+	if(url == '#')
 	{
 		return;
-	}else{
-		if(url == '#')
-		{
-			return;
-		}
 	}
 $("div[id^='ta_chart_']").remove();
 
@@ -433,35 +512,15 @@ $("div[id^='ta_chart_']").remove();
 		$(target).html(html);
 	})
 })	
-
-// var lastScrollTop = 0;
-// $(window).scroll(function(event){
-//    var st = $(this).scrollTop();
-//    if (st > lastScrollTop){
-//        if(lastScrollTop > 99)
-//        {
-//        	$('.navbar-fixed-top').hide();
-//        }
-//    } else {
-//    	$('.navbar-fixed-top').show();
-//    }
-//    lastScrollTop = st;
-// });
-
-
 });
 
 document.addEventListener('DOMContentLoaded',
 function () {
-	if($(this).width() > 1000)
-	{
-				
-		$.feedback({
-		    ajaxURL: '/feedback',
-		    html2canvasURL: '/vendor/feedback/html2canvas.js',
-		});
-	}
-		}, false);
+$.feedback({
+    ajaxURL: '/feedback',
+    html2canvasURL: '/vendor/feedback/html2canvas.js',
+});
+}, false);
 
 Highcharts.setOptions({
 	credits: {

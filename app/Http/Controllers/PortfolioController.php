@@ -289,7 +289,7 @@ and instruments.active =1
 GROUP BY instrument_id
 ";*/
 
-        $sql="select instruments.instrument_code,instrument_id from portfolio_scrips,instruments where portfolio_scrips.instrument_id=instruments.id and portfolio_id=$id and share_status like 'buy' GROUP BY instrument_id";
+        $sql="select instruments.instrument_code,instrument_id from portfolio_scrips,instruments where portfolio_scrips.instrument_id=instruments.id and portfolio_id=$id and share_status like 'buy' GROUP BY instrument_id ORDER by instrument_code asc";
 
         $portfolio_holdings=DB::select($sql);
 
@@ -308,6 +308,104 @@ GROUP BY instrument_id
 
 //        dd($data['transactions']->toArray());
         return view('portfolio.portfolio_chart', ['portfolio_holdings' => $portfolio_holdings]);
+    }
+    public function diversity_model($id) {
+
+        $sql="SELECT instruments.instrument_code
+,portfolio_scrips.instrument_id
+,instruments.sector_list_id
+,sum(((no_of_shares*buying_price)+commission/100*((no_of_shares*buying_price)))) as buying_cost_with_com
+,sector_lists.name as sector_name
+FROM
+portfolio_scrips,instruments,sector_lists
+WHERE portfolio_scrips.instrument_id=instruments.id
+and sector_lists.id=instruments.sector_list_id
+and portfolio_id=$id
+and share_status like 'buy'
+and instruments.active =1
+GROUP BY instrument_id
+";
+
+      //  $sql="select instruments.instrument_code,instrument_id from portfolio_scrips,instruments where portfolio_scrips.instrument_id=instruments.id and portfolio_id=$id and share_status like 'buy' GROUP BY instrument_id ORDER by instrument_code asc";
+
+        $portfolio_holdings=DB::select($sql);
+
+        $portfolio=DB::select("select cash_amount from portfolios where id=$id");
+
+
+
+        $sector_wise_holdings=array();
+        foreach($portfolio_holdings as $transaction)
+        {
+            $this_instruments_value= $transaction->buying_cost_with_com;
+            isset($sector_wise_holdings[$transaction->sector_name])? $sector_wise_holdings[$transaction->sector_name]+=$this_instruments_value: $sector_wise_holdings[$transaction->sector_name]=$this_instruments_value;
+        }
+        $sector_data=array();
+        foreach($sector_wise_holdings as $sector=>$sector_total)
+        {
+            $temp=array();
+
+            $temp['name']=$sector;
+            $temp['y']=$sector_total;
+            $sector_data[]=$temp;
+        }
+
+        $temp=array();
+        $temp['name']='Cash';
+        $temp['y']=$portfolio[0]->cash_amount;
+        $sector_data[]=$temp;
+
+
+        $portfolio_holdings_data=array();
+        foreach($portfolio_holdings as $row)
+        {
+            $temp=array();
+
+            $temp['name']=$row->instrument_code;
+            $temp['y']=$row->buying_cost_with_com;
+            $portfolio_holdings_data[]=$temp;
+        }
+
+/*        $temp=array();
+        $temp['name']='Cash';
+        $temp['y']=$portfolio[0]->cash_amount;
+        $portfolio_holdings_data[]=$temp;*/
+
+
+        return view('portfolio.diversity_model', ['portfolio_holdings_data' =>  collect($portfolio_holdings_data)->toJson(),'sector_data' => collect($sector_data)->toJson()]);
+    }
+    public function portfolio_fundamental($id) {
+
+        $sql="select instruments.instrument_code,portfolio_scrips.instrument_id from portfolio_scrips,instruments where portfolio_scrips.instrument_id=instruments.id and portfolio_id=$id and share_status like 'buy' GROUP BY instrument_id ORDER by instrument_code asc";
+        $portfolio_holdings=DB::select($sql);
+
+        $instrument_id_arr=collect($portfolio_holdings)->pluck('instrument_id');
+        $instrument_id_arr=$instrument_id_arr->implode(" ,");
+        $sql="SELECT
+    details,
+    instrument_id,
+    post_date
+FROM
+(
+    SELECT
+        details,
+        instrument_id,
+        post_date,
+        @rn := IF(@prev = instrument_id, @rn + 1, 1) AS rn,
+        @prev := instrument_id
+    FROM news
+    JOIN (SELECT @prev := NULL, @rn := 0) AS vars
+    WHERE instrument_id in ($instrument_id_arr)
+    ORDER BY instrument_id, post_date DESC, details
+
+) AS T1
+WHERE rn <= 3";
+        $portfolio_holding_news=DB::select($sql);
+        $portfolio_holding_news=collect($portfolio_holding_news)->groupBy('instrument_id');
+
+
+
+        return view('portfolio.portfolio_fundamental', ['portfolio_holdings' => $portfolio_holdings,'portfolio_holding_news' => $portfolio_holding_news]);
     }
 
 

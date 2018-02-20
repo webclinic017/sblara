@@ -33,7 +33,7 @@ class SectorIntraday extends Model
             $exchangeId = session('active_exchange_id', 1);
         }
 
-        $cacheVar="SectoIntraDay$tradeDate$limit$exchangeId";
+        $cacheVar="SectoIntraDay$tradeDate$limit$exchangeId$sector_list_id";
         $returnData = Cache::remember("$cacheVar", 1, function ()  use ($exchangeId,$tradeDate,$limit, $sector_list_id)  {
 
             $m=new Market();

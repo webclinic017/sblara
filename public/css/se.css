@@ -1,6 +1,6 @@
 /*ta chart section cutomization*/
 @media(max-width: 1240px)
-{   
+{
     .ta-chart-tabs{
      margin-top: 45px !important;
     }
@@ -13,9 +13,12 @@
     }
 }
 @media(min-width: 1240px)
-{   
+{
     .ta-chart-tabs ul.nav.nav-tabs{
      margin-left: 300px !important;
+    }
+    .indicator4 .dropdown-menu.open{
+        right:-20px !important;
     }
 
 }
@@ -128,11 +131,11 @@ div.center select{
 
 /*search*/
 .search-result{
-    visibility: hidden;
-    position: absolute;
-    top:45px;
-    border:1px solid #eee;
-    z-index: 999;
+    /*visibility: hidden;*/
+    /*position: absolute;*/
+    /*top:45px;*/
+    /*border:1px solid #eee;*/
+    z-index: 99999999;
 }
 .se-search{
     position: relative;
@@ -186,8 +189,8 @@ div.center select{
 
 @media only screen and (min-width: 992px) {
     .search-result{
-         left: 149px;
-        width: 500px !important;
+         /*left: 149px;*/
+        /*width: 500px !important;*/
     }
 }
 @media only screen and (max-width: 1260px) {

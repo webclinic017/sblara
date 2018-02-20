@@ -37,6 +37,8 @@ class Chart
 	protected $intradayTable = false;
 	protected $pe = "N/A";
 	protected $eps = [];
+	protected $interval = "D";
+	protected $table;
 
 	/**
 	* Initializing the chart
@@ -59,10 +61,20 @@ class Chart
 
 		 $this->loadStyles();
 		// Output the chart
-		 echo "<img src='data:image/png;base64, ". base64_encode($c->makeChart2(PNG)) ."'  usemap=\"#chartmap\">";
+		// $jsmodel = $c->getJsChartModel();
+		 $chart = "<img src='data:image/png;base64, ". base64_encode($c->makeChart2(PNG)) ."'  usemap=\"#chartmap\">";
 	  	 $imageMap = $c->getHTMLImageMap("", "", "title='" . $c->getToolTipDateFormat() . " {value|G}'");
-		 echo "<map name=\"chartmap\">$imageMap</map>";
+		 $chart .= "<map name=\"chartmap\">$imageMap</map>";
+		 $this->html  = $chart;
 		// a chart with a specific instrument
+	}
+	/**
+	 * return the chart html 
+	 * @return string $chartHtml
+	 */
+	public function html()
+	{
+		return $this->html;
 	}
 
 	/**
@@ -115,11 +127,9 @@ class Chart
 	{
 		if($this->isSector())
 		{
-            $sector_info= \DB::select("select * from sector_lists where id=".$this->getTickerSymbol());
-            $this->instrument=$sector_info[0];	
-
             return ;		
-		}else{
+		}
+
 			$instrument = InstrumentRepository::getInstrumentsById(array($this->getTickerSymbol()))->first();
 			// $instrument->load('eod');
 
@@ -130,8 +140,7 @@ class Chart
 			//load intrady info
 			$this->intraday = $this->instrument->lastIntraday;
 
-		}
-	
+		
 		$this->eps = \App\Repositories\FundamentalRepository::getAnnualizedEPS(array($this->instrument->id));
 		if(isset($this->eps[$this->instrument->id]))
 		{
@@ -171,6 +180,102 @@ class Chart
 	{
 		return max([$this->movAvg1,  $this->movAvg2]);
 	}
+
+	/**
+	 * get the query string for retriving data from eod table
+	 *
+	 * @return  string  $query
+	 */
+	public function getEodQuery()
+	{
+		if($this->isSector())
+		{
+            $sector_info= \DB::select("select * from sector_lists where id=".$this->getTickerSymbol());
+            $this->instrument=$sector_info[0];	
+             $this->ohlcData = ChartRepository::getDailySectorData($this->instrument->id, $this->startDate, $this->endDate, $this->getExtraPoints());
+
+            return false ;		
+		}		
+		if(request()->Adjusted == 1)
+		{
+			 $this->ohlcData = ChartRepository::getAdjustedDailyData($this->instrument->id, $this->startDate, $this->endDate, $this->getExtraPoints());
+		}else{
+			 $this->ohlcData = ChartRepository::getDailyData($this->instrument->id, $this->startDate, $this->endDate, $this->getExtraPoints());
+		}
+		return false;
+	}
+
+	/**
+	 * get the query string for retriving data from eod table
+	 *
+	 * @return  string  $query
+	 */
+	public function getSectorIntradayQuery()
+	{
+		$q = " 
+			SELECT `date`, `hour`, `minute`,  AVG(volume) volume, AVG(`open`) `open`, AVG(`close`) `close`, AVG(`low`) `low`, AVG(`high`) `high` FROM 
+				(SELECT `date`, `hour`, `minute`, `open`, `close`, `high`, `low`, IFNULL((vol - (LAG(vol) OVER ())), vol)  volume, LAG(vol) OVER () vprev FROM (SELECT DISTINCT 
+				SUBSTRING_INDEX(GROUP_CONCAT(CAST(`close_price` AS CHAR) ORDER BY `lm_date_time`), ',', 1 ) AS `open`,
+				SUBSTRING_INDEX(GROUP_CONCAT(CAST(`close_price` AS CHAR) ORDER BY `lm_date_time` DESC), ',', 1 ) AS `close`, instrument_id,
+				MAX(close_price) `high`, MIN(close_price) low,  MAX(total_volume) vol,  lm_date_time, DATE(lm_date_time) `date`, HOUR(lm_date_time) `hour`,  (MINUTE(lm_date_time) DIV {$this->interval})*{$this->interval} `minute`, MINUTE(lm_date_time )
+				FROM data_banks_intradays 
+				WHERE instrument_id IN  (SELECT id FROM instruments WHERE sector_list_id = {$this->instrument->id}) 
+				and `trade_date` >= '{$this->startDate->format('Y-m-d')}'
+				and `trade_date` <= '{$this->endDate->format('Y-m-d')}'
+				GROUP BY  `date`, `hour`, `minute`, `instrument_id`
+				
+				ORDER BY `date`, `hour`, `minute` DESC
+				) `data`)
+				d
+				GROUP BY `date`, `hour`, `minute`
+			";		
+		return $q;
+	}
+
+	/**
+	 * get the query string for retriving data from eod table
+	 *
+	 * @return  string  $query
+	 */
+	public function getIntradayQuery()
+	{
+		$this->nOfCandle = 550;		
+		if($this->isSector())
+		{
+			die("Sector minute chart not available");
+			return $this->getSectorIntradayQuery();
+		}
+		$q = "SELECT `date`, `hour`, `minute`, `open`, `close`, `high`, `low`, IFNULL((vol - (LAG(vol) OVER ())), vol)  volume, LAG(vol) OVER () vprev FROM (SELECT DISTINCT 
+				SUBSTRING_INDEX(GROUP_CONCAT(CAST(`close_price` AS CHAR) ORDER BY `lm_date_time`), ',', 1 ) AS `open`,
+				SUBSTRING_INDEX(GROUP_CONCAT(CAST(`close_price` AS CHAR) ORDER BY `lm_date_time` DESC), ',', 1 ) AS `close`,
+				MAX(close_price) `high`, MIN(close_price) low,  MAX(total_volume) vol,  lm_date_time, DATE(lm_date_time) `date`, HOUR(lm_date_time) `hour`,  (MINUTE(lm_date_time) DIV {$this->interval})*{$this->interval} `minute`, MINUTE(lm_date_time )
+				FROM data_banks_intradays 
+				WHERE instrument_id = {$this->instrument->id} 
+				and `trade_date` >= '{$this->startDate->format('Y-m-d')}'
+				and `trade_date` <= '{$this->endDate->format('Y-m-d')}'
+				GROUP BY `date`, `hour`, `minute`
+				
+				ORDER BY id DESC
+				limit {$this->nOfCandle}
+				) `data`
+			";		
+		return $q;
+	}
+
+	/**
+	 * Generate and get the sql query 
+	 *
+	 * @return  string  $query
+	 */
+	public function getQuery()
+	{
+		if($this->interval == "D")
+		{
+			return $this->getEodQuery();
+		}
+			return $this->getIntradayQuery();
+	}
+
 	/**
 	 * Get ohlcData
 	 *
@@ -178,6 +283,29 @@ class Chart
 	 */
 	public function getOhlcData()
 	{
+		$q = $this->getQuery();
+		if(!$q){return $this->ohlcData; }
+
+			$data = \DB::select(\DB::raw($q));
+			$ohlc = [];
+			$this->intradayTable = false;
+			foreach ($data as $key => $value) {
+				$timestamp =  Carbon::parse($value->date);
+				$timestamp->hour($value->hour);
+				$timestamp->minute($value->minute);
+
+				$ohlc['date'][] = chartTime2($timestamp->timestamp);
+
+				$ohlc['volume'][] = $value->volume;
+				$ohlc['open'][] = $value->open;
+				$ohlc['high'][] = $value->high;
+				$ohlc['low'][] = $value->low;
+				$ohlc['close'][] = $value->close;
+			}
+			return $this->ohlcData = $ohlc ; 
+
+
+
 		if($this->getTimeRange() < 30)
 		{
 			if($this->isSector())
@@ -193,18 +321,7 @@ class Chart
 			return $this->ohlcData = \App\Repositories\DataBanksIntradayRepository::getDataForChartDirector($this->instrument->id, $this->startDate, $this->endDate, 5);
 		}
 
-		if($this->isSector())
-		{
-			// return sector daily data
-			return $this->ohlcData = ChartRepository::getDailySectorData($this->instrument->id, $this->startDate, $this->endDate, $this->getExtraPoints());
-		}
-		//return instrument daily data
-		if(request()->Adjusted == 1)
-		{
-			return $this->ohlcData = ChartRepository::getAdjustedDailyData($this->instrument->id, $this->startDate, $this->endDate, $this->getExtraPoints());
-		}else{
-			return $this->ohlcData = ChartRepository::getDailyData($this->instrument->id, $this->startDate, $this->endDate, $this->getExtraPoints());
-		}
+
 	}
 
 	/**
@@ -243,7 +360,12 @@ class Chart
 					break;
 
 				case 'Indicator4':
-					$this->Indicators[3] = $value;
+					$i = 3;
+					$values = explode(',', $value);
+					foreach ($values as $key => $value) {
+						$this->Indicators[$i] = $value;
+						$i++;
+					}
 					break;
 				
 				default:
@@ -294,6 +416,10 @@ class Chart
 	 */
 	public function getMeta($key)
 	{
+		if($this->isSector())
+		{
+			return 'N/A';
+		}
 		if(isset($this->metas[$key][$this->instrument->id]->meta_value))
 		{
 			return $this->metas[$key][$this->instrument->id]->meta_value;
@@ -731,6 +857,7 @@ class Chart
 	        $extraPoints = $avgPeriod2;
 	    }
 
+
 	    # Get the data series to compare with, if any.
 	    $compareKey = trim($this->CompareWith);
 	    $compareData = null;
@@ -746,18 +873,20 @@ class Chart
 
 	    # We now confirm the actual number of extra points (data points that are before the start date)
 	    # as inferred using actual data from the database.
-	    $extraPoints = count($timeStamps);
-	    for($i = 0; $i < count($timeStamps); ++$i) {
-	        if ($timeStamps[$i] >= $startDate) {
-	            $extraPoints = $i;
-	            break;
-	        }
-	    }
-	    $extraPoints = 10;
+	    // $extraPoints = count($timeStamps);
+	    // for($i = 0; $i < count($timeStamps); ++$i) {
+	    //     if ($timeStamps[$i] >= $startDate) {
+	    //         $extraPoints = $i;
+	    //         break;
+	    //     }
+	    // }
+	    
 	    # Check if there is any valid data
+	    # 
 	    if ($extraPoints >= count($timeStamps)) {
+	    	$extraPoints = 0;
 	        # No data - just display the no data message.
-	        return $this->errMsg("No data available for the specified time period");
+	        // return $this->errMsg("No data available for the specified time period");
 	    }
 
 	    # In some finance chart presentation style, even if the data for the latest day is not fully
@@ -807,6 +936,7 @@ class Chart
 	    $this->chart = new \FinanceChart($this->width);
 
 	    # Set the data into the chart object
+	    # 
 	    $this->chart->setData($timeStamps, $highData, $lowData, $openData, $closeData, $volData, $extraPoints);
 
 	    $this->addPlotText();
@@ -829,7 +959,44 @@ class Chart
 	    #
 	    # Add the main chart
 	    #
+
 	    $this->chart->addMainChart($mainHeight);
+#
+# The following is just an arbitrary algorithm to create some meaningless buySignal and sellSignal.
+# They are just for demonstrating the charting engine. Please do not use them for actual trading.
+#
+/*buy sell signal code start*/
+// $buySignal = array_pad(array(), count($closeData), 0);
+// $sellSignal = array_pad(array(), count($closeData), 0);
+// $tmpArrayMath1 = new \ArrayMath($closeData);
+// $tmpArrayMath1->movAvg(20);
+// $sma5 = $tmpArrayMath1->result();
+// $tmpArrayMath1 = new \ArrayMath($closeData);
+// $tmpArrayMath1->movAvg(40);
+// $sma20 = $tmpArrayMath1->result();
+
+// for($i = 0; $i < count($sma5); ++$i) {
+//     $buySignal[$i] = NoValue;
+//     $sellSignal[$i] = NoValue;
+//     if ($i > 0) {
+//         if (($sma5[$i - 1] <= $sma20[$i - 1]) && ($sma5[$i] > $sma20[$i])) {
+//             $buySignal[$i] = $lowData[$i];
+//         }
+//         if (($sma5[$i - 1] >= $sma20[$i - 1]) && ($sma5[$i] < $sma20[$i])) {
+//             $sellSignal[$i] = $highData[$i];
+//         }
+//     }
+// }
+// 	    $mainChart = $this->chart->addMainChart($mainHeight);
+// 		$buyLayer = $mainChart->addScatterLayer(null, $buySignal, "Buy", ArrowShape(0, 1, 0.4, 0.4), 11,
+//     0x00ffff);
+// 		$dataSetObj = $buyLayer->getDataSet(0);
+// $dataSetObj->setSymbolOffset(0, 20);
+// $sellLayer = $mainChart->addScatterLayer(null, $sellSignal, "Sell", ArrowShape(180, 1, 0.4, 0.4),
+//     11, 0x9900cc);
+//     $dataSetObj = $sellLayer->getDataSet(0);
+// $dataSetObj->setSymbolOffset(0, -20);
+/*buy sell signal code end*/
 
 	    #
 	    # Set log or linear scale according to user preference

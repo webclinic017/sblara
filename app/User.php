@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Contracts\Auth\Authenticatable as Ath;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
+use App\UserInformation;
 
 class User extends \TCG\Voyager\Models\User implements Ath{
 
@@ -90,6 +91,30 @@ class User extends \TCG\Voyager\Models\User implements Ath{
     public function getAvatarAttribute($value)
     {
         return $this->image?"/img/149x149/".$this->image:"/img/user-default.png";
+    }
+
+    public function getTaChartSettingsAttribute()
+    {
+        //ta-chart-settings
+        return $this->getMeta('ta-chart-settings');
+        
+    }
+
+    public function getMeta($key)
+    {
+        return UserInformation::join('metas', 'user_informations.meta_id', 'metas.id')->where('metas.meta_key', $key)->where('user_id', $this->id)->first();
+    }
+
+    public function storeMeta($key, $value)
+    {
+        if($meta = $this->getMeta($key)){
+            UserInformation::where('id', $meta->id)->update(['meta_value' => $value]);
+            print_r($meta);
+            return $meta;
+        }
+        $meta = \App\Meta::where('meta_key', $key)->first();
+        return UserInformation::insert(['meta_id' => $meta->id, 'user_id' => $this->id, 'meta_value' => $value]);
+
     }
 
 }

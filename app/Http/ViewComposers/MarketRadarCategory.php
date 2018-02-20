@@ -37,7 +37,8 @@ class MarketRadarCategory
         $sql = "SELECT data_banks_intradays.quote_bases as PriceRange, count(data_banks_intradays.instrument_id) as TotalWithinRange  FROM
  data_banks_intradays
  WHERE
- data_banks_intradays.batch=$batch_id and data_banks_intradays.close_price -data_banks_intradays.yday_close_price>0
+ data_banks_intradays.batch=$batch_id and data_banks_intradays.close_price -data_banks_intradays.yday_close_price>0 and
+ data_banks_intradays.quote_bases NOT LIKE '%A-CB%'
  GROUP BY data_banks_intradays.quote_bases";
 
         $category_data_up = DB::select($sql);
@@ -55,7 +56,6 @@ class MarketRadarCategory
  GROUP BY data_banks_intradays.quote_bases";
 
         $category_data_total = DB::select($sql);
-
 
 
         $category=array();

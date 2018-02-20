@@ -10,10 +10,10 @@ class ChartController extends Controller
     {
     	if(request()->has('TickerSymbol'))
     	{
-    	 	new \App\Classes\Chart();		
-    	 	return '';
+    	 	$chart = new \App\Classes\Chart();
+    	 	return response()->make($chart->html())->setTtl(60);
     	}
-        $id = request()->instrumentCode?:1;
+        $id = request()->instrumentCode?:'DSEX';
     	$instrumentInfo = \App\Instrument::where('instrument_code', $id)->first();
         return view("ta_chart/panel")->with('instrumentInfo', $instrumentInfo);
     }

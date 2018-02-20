@@ -48,4 +48,13 @@ class UserController extends Controller
 
         return redirect()->back();
     }
+
+    public function storeMeta(Request $request)
+    {
+        $data = $request->except('_token');
+        foreach ($data as $key => $value) {
+             $request->user()->storeMeta($key, $value);
+        }
+        return "";
+    }
 }
