@@ -21,7 +21,8 @@ class MyApiLoginController extends Controller
 
             $user = Auth::user();
 
-            if ($user->group_id == 3) {
+            // non zero group-id is allowed for plugin
+            if ($user->group_id) {
                 $request->request->add([
                     'scope' => 'paid-plugin-data' // correct scope sending
                 ]);

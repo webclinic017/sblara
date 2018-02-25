@@ -41,16 +41,32 @@ class SectorMinuteChart
 
         $instrument_id=12;
         if(isset($viewdata['instrument_id']))
-            $instrument_id=$viewdata['instrument_id'];
+            $instrument_id=(int)$viewdata['instrument_id'];
 
         $height=400;
         if(isset($viewdata['height']))
             $height=$viewdata['height'];
 
-        $sectorList=SectorListRepository::getSectorDetailsByInstrumentId($instrument_id);
-        $sector_list_id=$sectorList->first()->id;
-        $sector_name=$sectorList->first()->name;
-        $sector_name=str_replace('&','And',$sector_name);
+        $sector_list_id=0;
+        if(isset($viewdata['sector_list_id']))
+            $sector_list_id=(int)$viewdata['sector_list_id'];
+
+        if($sector_list_id)
+        {
+
+            $sectorList=SectorListRepository::getSectorList();
+            $sectorList=$sectorList->keyBy('id');
+            $sector_name=$sectorList[$sector_list_id]->name;
+            $sector_name=str_replace('&','And',$sector_name);
+
+        }else
+        {
+            $sectorList=SectorListRepository::getSectorDetailsByInstrumentId($instrument_id);
+            $sector_list_id=$sectorList->first()->id;
+            $sector_name=$sectorList->first()->name;
+            $sector_name=str_replace('&','And',$sector_name);
+        }
+
 
         $returnData=SectorIntradayRepository::getWholeDayData($limit = 0, $tradeDate = null, $exchangeId = 0,$sector_list_id);
 

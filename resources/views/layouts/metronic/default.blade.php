@@ -24,6 +24,12 @@
                         <h1>@yield('title')</h1>
                         @include('html.breadcrumbs')
                      </div>
+                     <div class="alert alert-success alert-dismissable">
+                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>
+                         Dear valued visitors, we have added 59 candlestick patterns in our TA chart
+                         <a target="_blank" href="{{url('/ta-chart')}}" class="alert-link"> Please check this one as well. </a>
+                         If you have any suggestion, you can drop an email to info@stockbangladesh.com
+                     </div>
                         @include('global-ui')
 
                     <!-- END BREADCRUMBS -->

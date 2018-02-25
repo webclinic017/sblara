@@ -48,6 +48,7 @@ class GenerateMenus
             $menu->sector->link->href('javascript:;')->attr(['class' => 'text-uppercase']);
             $menu->sector->attr(['class' => 'dropdown dropdown-fw  '])->prepend('<i class="icon-link" ></i > ');
 
+            $menu->sector->add('Sector Movement', ['route' => 'sector-minute-chart'])->prepend('<i class="fa fa-tv" ></i > ');
             $menu->sector->add('Sector P/E', ['route' => 'sector-pe'])->prepend('<i class="fa fa-tv" ></i > ');
             $menu->sector->add('Category P/E', ['route' => 'category-pe'])->prepend('<i class="fa fa-tv" ></i > ');
 
@@ -114,7 +115,7 @@ class GenerateMenus
             $menu->resources->add('Knowledge Basket', ['route' => 'knowledge-basket'])->prepend('<i class="fa fa-sun-o" ></i > ');
 
             //submenu
-            $menu->resources->add('Amibroker Plugin', ['route' => 'amibrokerplugin'])->prepend('<i class="fa fa-plug" ></i > ');
+            $menu->resources->add('Amibroker Plugin', ['route' => 'amibroker-data-plugin-dse'])->prepend('<i class="fa fa-plug" ></i > ');
             $menu->resources->add('Data download', ['route' => 'download'])->prepend('<i class="fa fa-download" ></i > ');
          
 

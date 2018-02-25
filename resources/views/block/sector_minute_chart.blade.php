@@ -72,7 +72,7 @@
                 shared: true
             },
             credits: {
-                enabled: true,
+                enabled: false,
                 href: "http://www.stockbangladesh.com",
                 text: "stockbangladesh.com",
                 style: {

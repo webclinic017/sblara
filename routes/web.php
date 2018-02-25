@@ -147,6 +147,9 @@ Route::get('/market-composition', function () {
 Route::get('/sector-pe', function () {
         return view('sector_pe_page');
     })->name('sector-pe');
+Route::get('/sector-minute-chart', function () {
+        return view('sector-minute-chart-page');
+    })->name('sector-minute-chart');
 Route::get('/category-pe', function () {
         return view('category_pe_page');
     })->name('category-pe');
@@ -258,7 +261,14 @@ Route::get('/collective/news', 'newspaperNewsController@collectiveNews')->name('
 Route::get('/news/search', 'NewsController@newsSearch')->name('news-search');
 Route::get('/news/details/{id}', 'NewsController@viewNews');
 
-Route::get('/resources/amibrokerplugin', 'ComingSoonController@index')->name('amibrokerplugin');
+//Route::get('/resources/amibroker-data-plugin-dse', 'ComingSoonController@index')->name('amibroker-data-plugin-dse');
+
+Route::get('/resources/amibroker-data-plugin-dse', function () {
+    return view('amibroker-data-plugin');
+})->name('amibroker-data-plugin-dse');
+
+
+
 
 //Route::get('/test/ak', 'TestController@testAK');
 Route::get('/test/ak', 'SearchController@testSearch');

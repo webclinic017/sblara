@@ -63,9 +63,10 @@ class NewsChart
         $volume=array();
         for($i=0;$i<count($data['t']);++$i)
         {
-
+            // highchart needs time in utc. Our data is in asia/dhaka. so need to add 6 hours
             $temp=array();
-            $temp[]=$data['t'][$i]*1000+12*60*60;
+            $temp[]=($data['t'][$i] + 6 * 60 * 60)*1000;
+
             $temp[]=$data['o'][$i];
             $temp[]=$data['h'][$i];
             $temp[]=$data['l'][$i];
@@ -73,7 +74,7 @@ class NewsChart
             $ohlc[]=$temp;
 
             $voltemp=array();
-            $voltemp[]=$data['t'][$i]*1000+12*60*60;
+            $temp[] = ($data['t'][$i] + 6 * 60 * 60) * 1000;
             $voltemp[]=$data['v'][$i];
             $volume[]=$voltemp;
         }
@@ -87,7 +88,7 @@ class NewsChart
             $temp=array();
             $temp2=array();
 
-            $date=strtotime($news['post_date'])*1000;
+            $date=(strtotime($news['post_date'])+6*60*60)*1000;
             $temp['x']=$date;
             $temp['title']='N';
             // $temp['text']=$news['details'];
@@ -139,7 +140,7 @@ class NewsChart
         {
             $temp2=array();
 
-            $date=strtotime($ca['record_date'])*1000;
+            $date=(strtotime($ca['record_date']) + 6 * 60 * 60)*1000;
 
             $temp2['x']=$date;
             $temp2['title']=$ca['action'];

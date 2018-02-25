@@ -8,6 +8,6 @@ class ComingSoonController extends Controller
 {
     public function index()
     {
-    	return view('comingsoon');
+    	return view('amibroker-data-plugin');
     }
 }

@@ -11,6 +11,7 @@ use App\Meta;
 use App\Fundamental;
 use App\Repositories\InstrumentRepository;
 use App\Repositories\SectorListRepository;
+use Illuminate\Support\Facades\Cache;
 class FundamentalRepository {
     /*
      * Sample call
@@ -308,9 +309,37 @@ class FundamentalRepository {
 
         $allInstrumentData=array();
         $instrumentList = InstrumentRepository::getInstrumentsScripWithIndex();
+        $instrument_arr = $instrumentList->pluck('id');
         $sectorList=SectorListRepository::getSectorList();
-       // dd($sectorList);
+
+        $metaKey = array("total_no_securities","paid_up_capital", "earning_per_share", "net_asset_val_per_share", "share_percentage_director", "share_percentage_public", "share_percentage_institute", "share_percentage_foreign", "share_percentage_govt");
+
+        $fundamentaInfo = Cache::remember("plugin_fundamental", 300, function () use ($metaKey, $instrument_arr) {
+            $fundamentaInfo = self::getFundamentalData($metaKey, $instrument_arr);
+            return $fundamentaInfo;
+        });
+
+
+        $epsData = Cache::remember("plugin_annualized_eps", 300, function () use ($instrument_arr) {
+            $epsData = FundamentalRepository::getAnnualizedEPS($instrument_arr);
+            return $epsData;
+        });
+
+
+        $sql="SELECT * from corporate_action where (action LIKE 'stockdiv' or action LIKE 'cashdiv') and record_date in (SELECT MAX(record_date) as record_date FROM corporate_action GROUP BY instrument_id) ORDER BY instrument_id ASC,record_date desc";
+        $corporate_action_all = \DB::select($sql);
+
+
+        $corporate_action=array();
+        foreach($corporate_action_all as $row)
+        {
+            $corporate_action[$row->instrument_id][$row->record_date][$row->action]= $row->value;
+        }
+
+
+        // dd($sectorList);
         foreach ($instrumentList as $ins) {
+            $instrument_id=$ins->id;
             $returnData=array();
             $returnData['Ticker']=$ins->instrument_code;
             $returnData['FullName']=$ins->name;
@@ -333,41 +362,84 @@ class FundamentalRepository {
                 $returnData['Index']=false;
 
 
-            $returnData['EPS']=2.53;
-            $returnData['EPSEstCurrentYear']=3.12;
-            $returnData['EPSEstNextYear']=3.45;
-            $returnData['EPSEstNextQuarter']=0.78;
-            $returnData['PEGRatio']=8;
-            $returnData['SharesFloat']=1245547;
-            $returnData['SharesOut']=545588989;
-            $returnData['DividendPayDate']='17/07/2016';
-            $returnData['ExDividendDate']='17/09/2016';
-            $returnData['BookValuePerShare']=7.5;
-            $returnData['DividendPerShare']=10;
-            $returnData['ProfitMargin']=1521;
-            $returnData['OperatingMargin']=4546;
-            $returnData['OneYearTargetPrice']=200;
-            $returnData['ReturnOnAssets']=124;
-            $returnData['ReturnOnEquity']=120;
-            $returnData['QtrlyRevenueGrowth']=15;
-            $returnData['GrossProfitPerShare']=23;
-            $returnData['SalesPerShare']=30;
-            $returnData['EBITDAPerShare']=14;
-            $returnData['QtrlyEarningsGrowth']=3;
-            $returnData['InsiderHoldPercent']=25;
-            $returnData['InstitutionHoldPercent']=8;
-            $returnData['SharesShort']=10;
-            $returnData['SharesShortPrevMonth']=15;
-            $returnData['ForwardDividendPerShare']=25;
-            $returnData['ForwardEPS']=5.6;
-            $returnData['OperatingCashFlow']=145;
-            $returnData['LeveredFreeCashFlow']=150;
-            $returnData['Beta']=40;
-            $returnData['LastSplitRatio']='2:1';
-            $returnData['LastSplitDate']='19/03/2016';
-            $returnData['Alias']='ABBANK';  //(returns symbol alias - string) - 5.50 and above
-            $returnData['Address']='Address 1'; //(returns symbol address - string) - 5.50 and above
-            $returnData['Country']='Bangladesh'; //(returns symbol country - string) - 5.60 and above
+            if (isset($fundamentaInfo['earning_per_share'][$instrument_id])) {
+                $returnData['EPS'] = $fundamentaInfo['earning_per_share'][$instrument_id]['meta_value'];
+            } else {
+                $returnData['EPS'] = 0;
+            }
+
+            if (isset($epsData[$instrument_id])) {
+                $returnData['EPSEstCurrentYear'] = $epsData[$instrument_id]['annualized_eps'];
+            } else {
+                $returnData['EPSEstCurrentYear'] = 0;
+            }
+
+            $returnData['EPSEstNextYear'] = 0;  // not providing
+            $returnData['EPSEstNextQuarter'] = 0;  // not providing
+            $returnData['PEGRatio'] = 0;  // not providing
+
+
+            $total_no_securities= isset($fundamentaInfo['total_no_securities'][$instrument_id]) ? $fundamentaInfo['total_no_securities'][$instrument_id]['meta_value'] : 0;
+            $total_no_securities=floatval($total_no_securities);
+
+            $share_percentage_director= isset($fundamentaInfo['share_percentage_director'][$instrument_id])? $fundamentaInfo['share_percentage_director'][$instrument_id]['meta_value']:0;
+            $share_percentage_director=floatval($share_percentage_director)/100* $total_no_securities;
+            $share_percentage_public= isset($fundamentaInfo['share_percentage_public'][$instrument_id])? $fundamentaInfo['share_percentage_public'][$instrument_id]['meta_value']:0;
+            $share_percentage_public = floatval($share_percentage_public) / 100 * $total_no_securities;
+            $share_percentage_institute= isset($fundamentaInfo['share_percentage_institute'][$instrument_id])? $fundamentaInfo['share_percentage_institute'][$instrument_id]['meta_value']:0;
+            $share_percentage_institute = floatval($share_percentage_institute) / 100 * $total_no_securities;
+            $share_percentage_foreign= isset($fundamentaInfo['share_percentage_foreign'][$instrument_id])? $fundamentaInfo['share_percentage_foreign'][$instrument_id]['meta_value']:0;
+            $share_percentage_foreign = floatval($share_percentage_foreign) / 100 * $total_no_securities;
+
+            $returnData['SharesFloat'] = $share_percentage_public+ $share_percentage_institute+ $share_percentage_foreign; // providing pub+ins+foriegn
+            $returnData['SharesOut'] = $total_no_securities; // providing
+
+            if (isset($corporate_action[$instrument_id])) {
+                $last_dividend = array_values($corporate_action[$instrument_id])[0];
+                $total_dividend = array_sum($last_dividend);
+
+                $last_dividend_date= array_keys($corporate_action[$instrument_id])[0];
+                $last_dividend_date=date('d/m/Y',strtotime($last_dividend_date));
+
+            }else
+            {
+                $total_dividend=0;
+                $last_dividend_date='01/01/1970';
+            }
+
+
+            $returnData['DividendPayDate'] = $last_dividend_date;
+
+            $returnData['ExDividendDate'] = '01/01/1970';
+
+            $returnData['BookValuePerShare'] = isset($fundamentaInfo['net_asset_val_per_share'][$instrument_id]) ? $fundamentaInfo['net_asset_val_per_share'][$instrument_id]['meta_value'] : 0;
+
+
+            $returnData['DividendPerShare'] = $total_dividend;
+            $returnData['ProfitMargin'] = 0;
+            $returnData['OperatingMargin'] = 0;
+            $returnData['OneYearTargetPrice'] = 0;
+            $returnData['ReturnOnAssets'] = 0;
+            $returnData['ReturnOnEquity'] = 0;
+            $returnData['QtrlyRevenueGrowth'] = 0;
+            $returnData['GrossProfitPerShare'] = 0;
+            $returnData['SalesPerShare'] = 0;
+            $returnData['EBITDAPerShare'] = 0;
+            $returnData['QtrlyEarningsGrowth'] = 0;
+            $returnData['InsiderHoldPercent'] = isset($fundamentaInfo['share_percentage_director'][$instrument_id]) ? $fundamentaInfo['share_percentage_director'][$instrument_id]['meta_value'] : 0;  // providing -director
+            $returnData['InstitutionHoldPercent'] = isset($fundamentaInfo['share_percentage_institute'][$instrument_id]) ? $fundamentaInfo['share_percentage_institute'][$instrument_id]['meta_value'] : 0;
+            $returnData['SharesShort'] = 0;
+            $returnData['SharesShortPrevMonth'] = 0;
+            $returnData['ForwardDividendPerShare'] = 0;
+            $returnData['ForwardEPS'] = 0;
+            $returnData['OperatingCashFlow'] = 0;
+            $returnData['LeveredFreeCashFlow'] = 0;
+            $returnData['Beta'] = 0;
+            $returnData['LastSplitRatio'] = '1:1'; // providing
+            $returnData['LastSplitDate'] = '01/01/1970'; // providing
+            $returnData['Alias'] = $ins->instrument_code;  //(returns symbol alias - string) - 5.50 and above
+            $returnData['Address'] = ''; //(returns symbol address - string) - 5.50 and above
+            $returnData['Country'] = 'Bangladesh'; //(returns symbol country - string) - 5.60 and above
 
             $allInstrumentData[$ins->instrument_code]=$returnData;
         }

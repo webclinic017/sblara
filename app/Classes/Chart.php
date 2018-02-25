@@ -1109,6 +1109,23 @@ class Chart
 	        } else if ($avgType == "WMA") {
 	            return $this->chart->addWeightedMovingAvg($avgPeriod, $color);
 	        }
+            else if ($avgType=='trader_dema') {
+	            return $this->chart->trader_dema($avgPeriod, $color);
+	        }else if ($avgType=='trader_kama') {
+	            return $this->chart->trader_kama($avgPeriod, $color);
+	        }else if ($avgType=='trader_ht_trendline') {
+	            return $this->chart->trader_ht_trendline($color);
+	        }else if ($avgType=='trader_mama') {
+	            return $this->chart->trader_mama(0.1,0.9,$color,0x0077ff);
+	        }else if ($avgType=='trader_midpoint') {
+                return $this->chart->trader_midpoint($avgPeriod, $color);
+	        }else if ($avgType=='trader_t3') {
+                return $this->chart->trader_t3($avgPeriod, $color);
+	        }else if ($avgType=='trader_tema') {
+                return $this->chart->trader_tema($avgPeriod, $color);
+	        }else if ($avgType=='trader_trima') {
+                return $this->chart->trader_trima($avgPeriod, $color);
+	        }
 	    }
 	    return null;
 	}
@@ -1192,6 +1209,10 @@ class Chart
 	        return $this->chart->addVolIndicator($height, 0x99ff99, 0xff9999, 0xc0c0c0);
 	    } else if ($indicator == "TRIX") {
 	        return $this->chart->addTRIX($height, 12, 0x0000ff);
+	    }
+        else if (strstr($indicator,'trader_')) {
+	        //return $this->chart->$indicator(0x9900ff);
+	        return $this->chart->trader_cdl($indicator,0x9900ff,'sohail');
 	    }
 	    return null;
 	}

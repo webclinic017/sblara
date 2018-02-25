@@ -171,84 +171,149 @@
                         <div class="margin-bottom-10">
                             
 
-                                    <select  id="Indicator2" class="bs-select form-control" >
-                                        <option value="None">Indicator 2</option>
-                                        <option value="AccDist" title="A/D">Accu/Dist</option>
-                                        <option value="AroonOsc" title="ArnOsc">Aroon Oscillator</option>
-                                        <option value="Aroon" title="Aroon">Aroon Up/Down</option>
-                                        <option value="ADX" title="ADX">Avg Directional Index</option>
-                                        <option value="ATR" title="ATR">Avg True Range</option>
-                                        <option value="BBW" title="BBW">Bollinger Band Width</option>
-                                        <option value="CMF" title="CMF">Chaikin Money Flow</option>
-                                        <option value="COscillator" title="COsc">Chaikin Oscillator</option>
-                                        <option value="CVolatility" title="CVol">Chaikin Volatility</option>
-                                        <option value="CLV" title="CLV">Close Location Value</option>
-                                        <option value="CCI" title="CCI">CCI</option>
-                                        <option value="DPO" title="DPO">Detrended Price Osc</option>
-                                        <option value="DCW" title="DCW">Donchian Channel</option>
-                                        <option value="EMV" title="EMV">Ease of Movement</option>
-                                        <option value="FStoch" title="FStoch">Fast Stochastic</option>
-                                        <option value="MACD" title="MACD" selected="" >MACD</option>
-                                        <option value="MDX" title="MDX">Mass Index</option>
-                                        <option value="Momentum" title="Momentum">Momentum</option>
-                                        <option value="MFI" title="MFI">Money Flow Index</option>
-                                        <option value="NVI" title="NVI">Neg Volume Index</option>
-                                        <option value="OBV" title="OBV">On Balance Volume</option>
-                                        <option value="Performance" title="Perfornamce">Performance</option>
-                                        <option value="PPO" title="PPO">% Price Oscillator</option>
-                                        <option value="PVO" title="PVO">% Volume Oscillator</option>
-                                        <option value="PVI" title="PVI">Pos Volume Index</option>
-                                        <option value="PVT" title="PVT">Price Volume Trend</option>
-                                        <option value="ROC" title="ROC">Rate of Change</option>
-                                        <option value="RSI"  title="RSI">RSI</option>
-                                        <option value="SStoch" title="SStoch">Slow Stochastic</option>
-                                        <option value="StochRSI" title="StochRSI">StochRSI</option>
-                                        <option value="TRIX" title="TRIX">TRIX</option>
-                                        <option value="UO" title="UO">Ultimate Oscillator</option>
-                                        <option value="Vol" title="VOL">Volume</option>
-                                        <option value="WilliamR" title="WilliamR">William's %R</option>
+                                    <select  id="Indicator2" class="bs-select form-control">
+
+
+                                            <option value="AccDist" title="A/D">Accu/Dist</option>
+                                            <option value="AroonOsc" title="ArnOsc">Aroon Oscillator</option>
+                                            <option value="Aroon" title="Aroon">Aroon Up/Down</option>
+                                            <option value="ADX" title="ADX">Avg Directional Index</option>
+                                            <option value="ATR" title="ATR">Avg True Range</option>
+                                            <option value="BBW" title="BBW">Bollinger Band Width</option>
+                                            <option value="CMF" title="CMF">Chaikin Money Flow</option>
+                                            <option value="COscillator" title="COsc">Chaikin Oscillator</option>
+                                            <option value="CVolatility" title="CVol">Chaikin Volatility</option>
+                                            <option value="CLV" title="CLV">Close Location Value</option>
+                                            <option value="CCI" title="CCI">CCI</option>
+                                            <option value="DPO" title="DPO">Detrended Price Osc</option>
+                                            <option value="DCW" title="DCW">Donchian Channel</option>
+                                            <option value="EMV" title="EMV">Ease of Movement</option>
+                                            <option value="FStoch" title="FStoch">Fast Stochastic</option>
+                                            <option value="MACD" title="MACD" selected="" >MACD</option>
+                                            <option value="MDX" title="MDX">Mass Index</option>
+                                            <option value="Momentum" title="Momentum">Momentum</option>
+                                            <option value="MFI" title="MFI">Money Flow Index</option>
+                                            <option value="NVI" title="NVI">Neg Volume Index</option>
+                                            <option value="OBV" title="OBV">On Balance Volume</option>
+                                            <option value="Performance" title="Perfornamce">Performance</option>
+                                            <option value="PPO" title="PPO">% Price Oscillator</option>
+                                            <option value="PVO" title="PVO">% Volume Oscillator</option>
+                                            <option value="PVI" title="PVI">Pos Volume Index</option>
+                                            <option value="PVT" title="PVT">Price Volume Trend</option>
+                                            <option value="ROC" title="ROC">Rate of Change</option>
+                                            <option value="RSI"  title="RSI">RSI</option>
+                                            <option value="SStoch" title="SStoch">Slow Stochastic</option>
+                                            <option value="StochRSI" title="StochRSI">StochRSI</option>
+                                            <option value="TRIX" title="TRIX">TRIX</option>
+                                            <option value="UO" title="UO">Ultimate Oscillator</option>
+                                            <option value="Vol" title="VOL">Volume</option>
+                                            <option value="WilliamR" title="WilliamR">William's %R</option>
+
                                     </select>  
                         </div>                                    
                       </div>
                       <div class="col-md-2 " >
                         <div class="margin-bottom-10">
                      
-                                    <select  id="Indicator3" class="bs-select form-control" >
-                                        <option value="None">Indicator 3</option>
-                                        <option value="AccDist" title="A/D">Accu/Dist</option>
-                                        <option value="AroonOsc" title="ArnOsc">Aroon Oscillator</option>
-                                        <option value="Aroon" title="Aroon">Aroon Up/Down</option>
-                                        <option value="ADX" title="ADX">Avg Directional Index</option>
-                                        <option value="ATR" title="ATR">Avg True Range</option>
-                                        <option value="BBW" title="BBW">Bollinger Band Width</option>
-                                        <option value="CMF" title="CMF">Chaikin Money Flow</option>
-                                        <option value="COscillator" title="COsc">Chaikin Oscillator</option>
-                                        <option value="CVolatility" title="CVol">Chaikin Volatility</option>
-                                        <option value="CLV" title="CLV">Close Location Value</option>
-                                        <option value="CCI" title="CCI">CCI</option>
-                                        <option value="DPO" title="DPO">Detrended Price Osc</option>
-                                        <option value="DCW" title="DCW">Donchian Channel</option>
-                                        <option value="EMV" title="EMV">Ease of Movement</option>
-                                        <option value="FStoch" title="FStoch">Fast Stochastic</option>
-                                        <option value="MACD" title="MACD" >MACD</option>
-                                        <option value="MDX" title="MDX">Mass Index</option>
-                                        <option value="Momentum" title="Momentum">Momentum</option>
-                                        <option value="MFI" title="MFI">Money Flow Index</option>
-                                        <option value="NVI" title="NVI">Neg Volume Index</option>
-                                        <option value="OBV" title="OBV">On Balance Volume</option>
-                                        <option value="Performance" title="Perfornamce">Performance</option>
-                                        <option value="PPO" title="PPO">% Price Oscillator</option>
-                                        <option value="PVO" title="PVO">% Volume Oscillator</option>
-                                        <option value="PVI" title="PVI">Pos Volume Index</option>
-                                        <option value="PVT" title="PVT">Price Volume Trend</option>
-                                        <option value="ROC" title="ROC">Rate of Change</option>
-                                        <option value="RSI"  title="RSI">RSI</option>
-                                        <option value="SStoch" title="SStoch">Slow Stochastic</option>
-                                        <option value="StochRSI" title="StochRSI">StochRSI</option>
-                                        <option value="TRIX" title="TRIX">TRIX</option>
-                                        <option value="UO" title="UO">Ultimate Oscillator</option>
-                                        <option value="Vol" title="VOL">Volume</option>
-                                        <option value="WilliamR" title="WilliamR">William's %R</option>
+                                    <select  id="Indicator3" class="bs-select form-control" title="Indicators + candle patterns" data-style="yellow">
+                                        <optgroup label="Indicators">
+                                            <option value="AccDist" title="A/D">Accu/Dist</option>
+                                            <option value="AroonOsc" title="ArnOsc">Aroon Oscillator</option>
+                                            <option value="Aroon" title="Aroon">Aroon Up/Down</option>
+                                            <option value="ADX" title="ADX">Avg Directional Index</option>
+                                            <option value="ATR" title="ATR">Avg True Range</option>
+                                            <option value="BBW" title="BBW">Bollinger Band Width</option>
+                                            <option value="CMF" title="CMF">Chaikin Money Flow</option>
+                                            <option value="COscillator" title="COsc">Chaikin Oscillator</option>
+                                            <option value="CVolatility" title="CVol">Chaikin Volatility</option>
+                                            <option value="CLV" title="CLV">Close Location Value</option>
+                                            <option value="CCI" title="CCI">CCI</option>
+                                            <option value="DPO" title="DPO">Detrended Price Osc</option>
+                                            <option value="DCW" title="DCW">Donchian Channel</option>
+                                            <option value="EMV" title="EMV">Ease of Movement</option>
+                                            <option value="FStoch" title="FStoch">Fast Stochastic</option>
+                                            <option value="MACD" title="MACD" >MACD</option>
+                                            <option value="MDX" title="MDX">Mass Index</option>
+                                            <option value="Momentum" title="Momentum">Momentum</option>
+                                            <option value="MFI" title="MFI">Money Flow Index</option>
+                                            <option value="NVI" title="NVI">Neg Volume Index</option>
+                                            <option value="OBV" title="OBV">On Balance Volume</option>
+                                            <option value="Performance" title="Perfornamce">Performance</option>
+                                            <option value="PPO" title="PPO">% Price Oscillator</option>
+                                            <option value="PVO" title="PVO">% Volume Oscillator</option>
+                                            <option value="PVI" title="PVI">Pos Volume Index</option>
+                                            <option value="PVT" title="PVT">Price Volume Trend</option>
+                                            <option value="ROC" title="ROC">Rate of Change</option>
+                                            <option value="RSI"  title="RSI">RSI</option>
+                                            <option value="SStoch" title="SStoch">Slow Stochastic</option>
+                                            <option value="StochRSI" title="StochRSI">StochRSI</option>
+                                            <option value="TRIX" title="TRIX">TRIX</option>
+                                            <option value="UO" title="UO">Ultimate Oscillator</option>
+                                            <option value="Vol" title="VOL">Volume</option>
+                                            <option value="WilliamR" title="WilliamR">William's %R</option>
+                                        </optgroup>
+                                       <optgroup label="Candle Pattern">
+                                           <option value="trader_cdl2crows" >Two Crows</option>
+                                           <option value="trader_cdl3blackcrows">Three Black Crows</option>
+                                           <option value="trader_cdl3inside">Three Inside Up/Down</option>
+                                           <option value="trader_cdl3linestrike">Three-Line Strike</option>
+                                           <option value="trader_cdl3outside">Three Outside Up/Down</option>
+                                           <option value="trader_cdl3starsinsouth">Three Stars In The South</option>
+                                           <option value="trader_cdl3whitesoldiers" >Three Advancing White Soldiers</option>
+                                           <option value="trader_cdlabandonedbaby" >Abandoned Baby</option>
+                                           <option value="trader_cdlbelthold" >Belt-hold</option>
+                                           <option value="trader_cdlbreakaway" >Breakaway</option>
+                                           <option value="trader_cdlclosingmarubozu" >Closing Marubozu</option>
+                                           <option value="trader_cdlconcealbabyswall" >Concealing Baby Swallow</option>
+                                           <option value="trader_cdlcounterattack" >Counterattack</option>
+                                           <option value="trader_cdldarkcloudcover" >Dark Cloud Cover</option>
+                                           <option value="trader_cdldoji" >Doji</option>
+                                           <option value="trader_cdldojistar" >Doji Star</option>
+                                           <option value="trader_cdldragonflydoji" >Dragonfly Doji</option>
+                                           <option value="trader_cdlengulfing" >Engulfing Pattern</option>
+                                           <option value="trader_cdleveningdojistar" >Evening Doji Star</option>
+                                           <option value="trader_cdleveningstar" >Evening Star</option>
+                                           <option value="trader_cdlgapsidesidewhite" >Up/Down-gap side-by-side white lines</option>
+                                           <option value="trader_cdlgravestonedoji" >Gravestone Doji</option>
+                                           <option value="trader_cdlhammer" >Hammer</option>
+                                           <option value="trader_cdlhangingman" >Hanging Man</option>
+                                           <option value="trader_cdlharami" >Harami Pattern</option>
+                                           <option value="trader_cdlharamicross" >Harami Cross Pattern</option>
+                                           <option value="trader_cdlhighwave" >High-Wave Candle</option>
+                                           <option value="trader_cdlhikkake" >Hikkake Pattern</option>
+                                           <option value="trader_cdlhikkakemod" >Modified Hikkake Pattern</option>
+                                           <option value="trader_cdlhomingpigeon" >Homing Pigeon</option>
+                                           <option value="trader_cdlidentical3crows" >Identical Three Crows</option>
+                                           <option value="trader_cdlinneck" >In-Neck Pattern</option>
+                                           <option value="trader_cdlinvertedhammer" >Inverted Hammer</option>
+                                           <option value="trader_cdlkicking" >Kicking</option>
+                                           <option value="trader_cdlkickingbylength" >Kicking - bull/bear determined by the longer marubozu</option>
+                                           <option value="trader_cdlladderbottom" >Ladder Bottom</option>
+                                           <option value="trader_cdllongleggeddoji" >Long Legged Doji</option>
+                                           <option value="trader_cdllongline" >Long Line Candle</option>
+                                           <option value="trader_cdlmarubozu" >Marubozu</option>
+                                           <option value="trader_cdlmatchinglow" >Matching Low</option>
+                                           <option value="trader_cdlmathold" >Mat Hold</option>
+                                           <option value="trader_cdlmorningdojistar" >Morning Doji Star</option>
+                                           <option value="trader_cdlmorningstar" >Morning Star</option>
+                                           <option value="trader_cdlonneck" >On-Neck Pattern</option>
+                                           <option value="trader_cdlpiercing" >Piercing Pattern</option>
+                                           <option value="trader_cdlrickshawman" >Rickshaw Man</option>
+                                           <option value="trader_cdlrisefall3methods" >Rising/Falling Three Methods</option>
+                                           <option value="trader_cdlseparatinglines" >Separating Lines</option>
+                                           <option value="trader_cdlshootingstar" >Shooting Star</option>
+                                           <option value="trader_cdlshortline" >Short Line Candle</option>
+                                           <option value="trader_cdlspinningtop" >Spinning Top</option>
+                                           <option value="trader_cdlstalledpattern" >Stalled Pattern</option>
+                                           <option value="trader_cdlsticksandwich" >Stick Sandwich</option>
+                                           <option value="trader_cdltakuri" >Takuri (Dragonfly Doji with very long lower shadow)</option>
+                                           <option value="trader_cdltasukigap" >Tasuki Gap</option>
+                                           <option value="trader_cdlthrusting" >Thrusting Pattern</option>
+                                           <option value="trader_cdltristar" >Tristar Pattern</option>
+                                           <option value="trader_cdlunique3river" >Unique 3 River</option>
+                                           <option value="trader_cdlupsidegap2crows" >Upside Gap Two Crows</option>
+                                           <option value="trader_cdlxsidegap3methods" >Upside/Downside Gap Three Methods</option>
+                                       </optgroup>
                                     </select>  
                         </div>                                    
                       </div>
@@ -326,6 +391,15 @@
                                             <option value="EMA">Exponential</option>
                                             <option value="TMA">Triangular</option>
                                             <option value="WMA">Weighted</option>
+                                            <option value="trader_dema">DEMA</option>
+                                            <option value="trader_kama">KAMA</option>
+                                            <option value="trader_mama">MAMA</option>
+                                            <option value="trader_midpoint">MidPoint</option>
+                                            <option value="trader_t3">T3</option>
+                                            <option value="trader_tema">TEMA</option>
+                                            <option value="trader_trima">TRIMA</option>
+                                            <option value="trader_ht_trendline">Hilbert Transform</option>
+
                                         </select>
 
 
@@ -405,8 +479,8 @@
                             <div class="col-md-2">
                                 <div class="margin-bottom-10">
                                     <div class="btn-group btn-group-solid">
-                                            <button type="button" class="btn purple prev"><i class="fa fa-arrow-left"></i> Prev</button>
-                                            <button type="button" class="btn purple next">Next <i class="fa fa-arrow-right"></i></button>
+                                            <button type="button" class="btn purple prev tooltips" data-container="body" data-placement="left" data-original-title="Press left arrow of keyboard"><i class="fa fa-arrow-left"></i> Prev</button>
+                                            <button type="button" class="btn purple next tooltips" data-container="body" data-placement="right" data-original-title="Press right arrow of keyboard">Next <i class="fa fa-arrow-right"></i></button>
                                     </div> 
                                 </div>
                             </div>

@@ -2417,4 +2417,631 @@ class FinanceChart extends MultiChart
         $c->yAxis->setLinearScale(-100, 0);
         return $c;
     }
+
+    function candlePositionArr($candleFoundArr)
+    {
+        foreach($this->m_lowData as $key=>$val)
+        {
+            if(!isset($candleFoundArr[$key]))
+            {
+                // if data missing for extra point
+                $candleFoundArr[$key]=1.7E+308;
+            }else
+            {
+                if($candleFoundArr[$key])
+                {
+                    // if it is non zero
+                    $candleFoundArr[$key]=$val;
+                }else
+                {
+                    // if it is zero
+                    $candleFoundArr[$key]=1.7E+308;
+                }
+            }
+
+        }
+
+        return $candleFoundArr;
+    }
+   /* function trader_cdl2crows($color='0x00ffff') {
+        $candleFoundArr=trader_cdl2crows($this->m_openData, $this->m_highData, $this->m_lowData, $this->m_closeData);
+        $candleFoundArr=$this->candlePositionArr($candleFoundArr);
+        $buyLayer = $this->m_mainChart->addScatterLayer(null, $candleFoundArr, "Two Crows", ArrowShape(0, 1, 0.4, 0.4), 11, $color);
+        # Shift the symbol lower by 20 pixels
+        $dataSetObj = $buyLayer->getDataSet(0);
+        $dataSetObj->setSymbolOffset(0, 20);
+
+    }
+    function trader_cdl3blackcrows($color='0x00ffff') {
+        $candleFoundArr=trader_cdl3blackcrows($this->m_openData, $this->m_highData, $this->m_lowData, $this->m_closeData);
+        $candleFoundArr=$this->candlePositionArr($candleFoundArr);
+        $buyLayer = $this->m_mainChart->addScatterLayer(null, $candleFoundArr, "Three Black Crows", ArrowShape(0, 1, 0.4, 0.4), 11, $color);
+        # Shift the symbol lower by 20 pixels
+        $dataSetObj = $buyLayer->getDataSet(0);
+        $dataSetObj->setSymbolOffset(0, 20);
+
+    }
+
+    function trader_cdl3inside($color='0x00ffff') {
+        $candleFoundArr=trader_cdl3inside($this->m_openData, $this->m_highData, $this->m_lowData, $this->m_closeData);
+        $candleFoundArr=$this->candlePositionArr($candleFoundArr);
+        $buyLayer = $this->m_mainChart->addScatterLayer(null, $candleFoundArr, "Three Inside Up/Down", ArrowShape(0, 1, 0.4, 0.4), 11, $color);
+        # Shift the symbol lower by 20 pixels
+        $dataSetObj = $buyLayer->getDataSet(0);
+        $dataSetObj->setSymbolOffset(0, 20);
+
+    }
+    function trader_cdl3linestrike($color='0x00ffff') {
+        $candleFoundArr=trader_cdl3linestrike($this->m_openData, $this->m_highData, $this->m_lowData, $this->m_closeData);
+        $candleFoundArr=$this->candlePositionArr($candleFoundArr);
+        $buyLayer = $this->m_mainChart->addScatterLayer(null, $candleFoundArr, "Three-Line Strike", ArrowShape(0, 1, 0.4, 0.4), 11, $color);
+        # Shift the symbol lower by 20 pixels
+        $dataSetObj = $buyLayer->getDataSet(0);
+        $dataSetObj->setSymbolOffset(0, 20);
+
+    }
+    function trader_cdl3outside($color='0x00ffff') {
+        $candleFoundArr=trader_cdl3outside($this->m_openData, $this->m_highData, $this->m_lowData, $this->m_closeData);
+        $candleFoundArr=$this->candlePositionArr($candleFoundArr);
+        $buyLayer = $this->m_mainChart->addScatterLayer(null, $candleFoundArr, "Three Outside Up/Down", ArrowShape(0, 1, 0.4, 0.4), 11, $color);
+        # Shift the symbol lower by 20 pixels
+        $dataSetObj = $buyLayer->getDataSet(0);
+        $dataSetObj->setSymbolOffset(0, 20);
+
+    }
+    function trader_cdl3starsinsouth($color='0x00ffff') {
+        $candleFoundArr=trader_cdl3starsinsouth($this->m_openData, $this->m_highData, $this->m_lowData, $this->m_closeData);
+        $candleFoundArr=$this->candlePositionArr($candleFoundArr);
+        $buyLayer = $this->m_mainChart->addScatterLayer(null, $candleFoundArr, "Three Stars In The South", ArrowShape(0, 1, 0.4, 0.4), 11, $color);
+        # Shift the symbol lower by 20 pixels
+        $dataSetObj = $buyLayer->getDataSet(0);
+        $dataSetObj->setSymbolOffset(0, 20);
+
+    }
+    function trader_cdl3whitesoldiers($color='0x00ffff') {
+        $candleFoundArr=trader_cdl3whitesoldiers($this->m_openData, $this->m_highData, $this->m_lowData, $this->m_closeData);
+        $candleFoundArr=$this->candlePositionArr($candleFoundArr);
+        $buyLayer = $this->m_mainChart->addScatterLayer(null, $candleFoundArr, "Three Advancing White Soldiers", ArrowShape(0, 1, 0.4, 0.4), 11, $color);
+        # Shift the symbol lower by 20 pixels
+        $dataSetObj = $buyLayer->getDataSet(0);
+        $dataSetObj->setSymbolOffset(0, 20);
+
+    }
+    function trader_cdlabandonedbaby($color='0x00ffff') {
+        $candleFoundArr=trader_cdlabandonedbaby($this->m_openData, $this->m_highData, $this->m_lowData, $this->m_closeData);
+        $candleFoundArr=$this->candlePositionArr($candleFoundArr);
+        $buyLayer = $this->m_mainChart->addScatterLayer(null, $candleFoundArr, "Abandoned Baby", ArrowShape(0, 1, 0.4, 0.4), 11, $color);
+        # Shift the symbol lower by 20 pixels
+        $dataSetObj = $buyLayer->getDataSet(0);
+        $dataSetObj->setSymbolOffset(0, 20);
+
+    }
+    function trader_cdlbelthold($color='0x00ffff') {
+        $candleFoundArr=trader_cdlbelthold($this->m_openData, $this->m_highData, $this->m_lowData, $this->m_closeData);
+        $candleFoundArr=$this->candlePositionArr($candleFoundArr);
+        $buyLayer = $this->m_mainChart->addScatterLayer(null, $candleFoundArr, "Belt-hold", ArrowShape(0, 1, 0.4, 0.4), 11, $color);
+        # Shift the symbol lower by 20 pixels
+        $dataSetObj = $buyLayer->getDataSet(0);
+        $dataSetObj->setSymbolOffset(0, 20);
+    }
+    function trader_cdlbreakaway($color='0x00ffff') {
+        $candleFoundArr=trader_cdlbreakaway($this->m_openData, $this->m_highData, $this->m_lowData, $this->m_closeData);
+        $candleFoundArr=$this->candlePositionArr($candleFoundArr);
+        $buyLayer = $this->m_mainChart->addScatterLayer(null, $candleFoundArr, "Breakaway", ArrowShape(0, 1, 0.4, 0.4), 11, $color);
+        # Shift the symbol lower by 20 pixels
+        $dataSetObj = $buyLayer->getDataSet(0);
+        $dataSetObj->setSymbolOffset(0, 20);
+    }
+    function trader_cdlclosingmarubozu($color='0x00ffff') {
+        $candleFoundArr=trader_cdlclosingmarubozu($this->m_openData, $this->m_highData, $this->m_lowData, $this->m_closeData);
+        $candleFoundArr=$this->candlePositionArr($candleFoundArr);
+        $buyLayer = $this->m_mainChart->addScatterLayer(null, $candleFoundArr, "Closing Marubozu", ArrowShape(0, 1, 0.4, 0.4), 11, $color);
+        # Shift the symbol lower by 20 pixels
+        $dataSetObj = $buyLayer->getDataSet(0);
+        $dataSetObj->setSymbolOffset(0, 20);
+    }
+    function trader_cdlconcealbabyswall($color='0x00ffff') {
+        $candleFoundArr=trader_cdlconcealbabyswall($this->m_openData, $this->m_highData, $this->m_lowData, $this->m_closeData);
+        $candleFoundArr=$this->candlePositionArr($candleFoundArr);
+        $buyLayer = $this->m_mainChart->addScatterLayer(null, $candleFoundArr, "Concealing Baby Swallow", ArrowShape(0, 1, 0.4, 0.4), 11, $color);
+        # Shift the symbol lower by 20 pixels
+        $dataSetObj = $buyLayer->getDataSet(0);
+        $dataSetObj->setSymbolOffset(0, 20);
+    }
+    function trader_cdlcounterattack($color='0x00ffff') {
+        $candleFoundArr=trader_cdlcounterattack($this->m_openData, $this->m_highData, $this->m_lowData, $this->m_closeData);
+        $candleFoundArr=$this->candlePositionArr($candleFoundArr);
+        $buyLayer = $this->m_mainChart->addScatterLayer(null, $candleFoundArr, "Counterattack", ArrowShape(0, 1, 0.4, 0.4), 11, $color);
+        # Shift the symbol lower by 20 pixels
+        $dataSetObj = $buyLayer->getDataSet(0);
+        $dataSetObj->setSymbolOffset(0, 20);
+    }
+    function trader_cdldarkcloudcover($color='0x00ffff') {
+        $candleFoundArr=trader_cdldarkcloudcover($this->m_openData, $this->m_highData, $this->m_lowData, $this->m_closeData);
+        $candleFoundArr=$this->candlePositionArr($candleFoundArr);
+        $buyLayer = $this->m_mainChart->addScatterLayer(null, $candleFoundArr, "Dark Cloud Cover", ArrowShape(0, 1, 0.4, 0.4), 11, $color);
+        # Shift the symbol lower by 20 pixels
+        $dataSetObj = $buyLayer->getDataSet(0);
+        $dataSetObj->setSymbolOffset(0, 20);
+    }
+    function trader_cdldoji($color='0x00ffff') {
+        $candleFoundArr=trader_cdldoji($this->m_openData, $this->m_highData, $this->m_lowData, $this->m_closeData);
+        $candleFoundArr=$this->candlePositionArr($candleFoundArr);
+        $buyLayer = $this->m_mainChart->addScatterLayer(null, $candleFoundArr, "Doji", ArrowShape(0, 1, 0.4, 0.4), 11, $color);
+        # Shift the symbol lower by 20 pixels
+        $dataSetObj = $buyLayer->getDataSet(0);
+        $dataSetObj->setSymbolOffset(0, 20);
+
+    }
+
+    function trader_cdldojistar($color='0x00ffff') {
+        $candleFoundArr=trader_cdldojistar($this->m_openData, $this->m_highData, $this->m_lowData, $this->m_closeData);
+        $candleFoundArr=$this->candlePositionArr($candleFoundArr);
+        $buyLayer = $this->m_mainChart->addScatterLayer(null, $candleFoundArr, "Doji Star", ArrowShape(0, 1, 0.4, 0.4), 11, $color);
+        # Shift the symbol lower by 20 pixels
+        $dataSetObj = $buyLayer->getDataSet(0);
+        $dataSetObj->setSymbolOffset(0, 20);
+    }
+    function trader_cdldragonflydoji($color='0x00ffff') {
+        $candleFoundArr=trader_cdldragonflydoji($this->m_openData, $this->m_highData, $this->m_lowData, $this->m_closeData);
+        $candleFoundArr=$this->candlePositionArr($candleFoundArr);
+        $buyLayer = $this->m_mainChart->addScatterLayer(null, $candleFoundArr, "Dragonfly Doji", ArrowShape(0, 1, 0.4, 0.4), 11, $color);
+        # Shift the symbol lower by 20 pixels
+        $dataSetObj = $buyLayer->getDataSet(0);
+        $dataSetObj->setSymbolOffset(0, 20);
+    }
+    function trader_cdlengulfing($color='0x00ffff') {
+        $candleFoundArr=trader_cdlengulfing($this->m_openData, $this->m_highData, $this->m_lowData, $this->m_closeData);
+        $candleFoundArr=$this->candlePositionArr($candleFoundArr);
+        $buyLayer = $this->m_mainChart->addScatterLayer(null, $candleFoundArr, "Engulfing Pattern", ArrowShape(0, 1, 0.4, 0.4), 11, $color);
+        # Shift the symbol lower by 20 pixels
+        $dataSetObj = $buyLayer->getDataSet(0);
+        $dataSetObj->setSymbolOffset(0, 20);
+    }
+    function trader_cdleveningdojistar($color='0x00ffff') {
+        $candleFoundArr=trader_cdleveningdojistar($this->m_openData, $this->m_highData, $this->m_lowData, $this->m_closeData);
+        $candleFoundArr=$this->candlePositionArr($candleFoundArr);
+        $buyLayer = $this->m_mainChart->addScatterLayer(null, $candleFoundArr, "Evening Doji Star", ArrowShape(0, 1, 0.4, 0.4), 11, $color);
+        # Shift the symbol lower by 20 pixels
+        $dataSetObj = $buyLayer->getDataSet(0);
+        $dataSetObj->setSymbolOffset(0, 20);
+    }
+    function trader_cdleveningstar($color='0x00ffff') {
+        $candleFoundArr=trader_cdleveningstar($this->m_openData, $this->m_highData, $this->m_lowData, $this->m_closeData);
+        $candleFoundArr=$this->candlePositionArr($candleFoundArr);
+        $buyLayer = $this->m_mainChart->addScatterLayer(null, $candleFoundArr, "Evening Star", ArrowShape(0, 1, 0.4, 0.4), 11, $color);
+        # Shift the symbol lower by 20 pixels
+        $dataSetObj = $buyLayer->getDataSet(0);
+        $dataSetObj->setSymbolOffset(0, 20);
+    }
+    function trader_cdlgapsidesidewhite($color='0x00ffff') {
+        $candleFoundArr=trader_cdlgapsidesidewhite($this->m_openData, $this->m_highData, $this->m_lowData, $this->m_closeData);
+        $candleFoundArr=$this->candlePositionArr($candleFoundArr);
+        $buyLayer = $this->m_mainChart->addScatterLayer(null, $candleFoundArr, "Up/Down-gap side-by-side white lines", ArrowShape(0, 1, 0.4, 0.4), 11, $color);
+        # Shift the symbol lower by 20 pixels
+        $dataSetObj = $buyLayer->getDataSet(0);
+        $dataSetObj->setSymbolOffset(0, 20);
+    }
+    function trader_cdlgravestonedoji($color='0x00ffff') {
+        $candleFoundArr=trader_cdlgravestonedoji($this->m_openData, $this->m_highData, $this->m_lowData, $this->m_closeData);
+        $candleFoundArr=$this->candlePositionArr($candleFoundArr);
+        $buyLayer = $this->m_mainChart->addScatterLayer(null, $candleFoundArr, "Gravestone Doji", ArrowShape(0, 1, 0.4, 0.4), 11, $color);
+        # Shift the symbol lower by 20 pixels
+        $dataSetObj = $buyLayer->getDataSet(0);
+        $dataSetObj->setSymbolOffset(0, 20);
+    }
+    function trader_cdlhammer($color='0x00ffff') {
+        $candleFoundArr=trader_cdlhammer($this->m_openData, $this->m_highData, $this->m_lowData, $this->m_closeData);
+        $candleFoundArr=$this->candlePositionArr($candleFoundArr);
+        $buyLayer = $this->m_mainChart->addScatterLayer(null, $candleFoundArr, "Hammer", ArrowShape(0, 1, 0.4, 0.4), 11, $color);
+        # Shift the symbol lower by 20 pixels
+        $dataSetObj = $buyLayer->getDataSet(0);
+        $dataSetObj->setSymbolOffset(0, 20);
+    }
+    function trader_cdlhangingman($color='0x00ffff') {
+        $candleFoundArr=trader_cdlhangingman($this->m_openData, $this->m_highData, $this->m_lowData, $this->m_closeData);
+        $candleFoundArr=$this->candlePositionArr($candleFoundArr);
+        $buyLayer = $this->m_mainChart->addScatterLayer(null, $candleFoundArr, "Hanging Man", ArrowShape(0, 1, 0.4, 0.4), 11, $color);
+        # Shift the symbol lower by 20 pixels
+        $dataSetObj = $buyLayer->getDataSet(0);
+        $dataSetObj->setSymbolOffset(0, 20);
+    }
+    function trader_cdlharami($color='0x00ffff') {
+        $candleFoundArr=trader_cdlharami($this->m_openData, $this->m_highData, $this->m_lowData, $this->m_closeData);
+        $candleFoundArr=$this->candlePositionArr($candleFoundArr);
+        $buyLayer = $this->m_mainChart->addScatterLayer(null, $candleFoundArr, "Harami Pattern", ArrowShape(0, 1, 0.4, 0.4), 11, $color);
+        # Shift the symbol lower by 20 pixels
+        $dataSetObj = $buyLayer->getDataSet(0);
+        $dataSetObj->setSymbolOffset(0, 20);
+    }
+    function trader_cdlharamicross($color='0x00ffff') {
+        $candleFoundArr=trader_cdlharamicross($this->m_openData, $this->m_highData, $this->m_lowData, $this->m_closeData);
+        $candleFoundArr=$this->candlePositionArr($candleFoundArr);
+        $buyLayer = $this->m_mainChart->addScatterLayer(null, $candleFoundArr, "Harami Cross Pattern", ArrowShape(0, 1, 0.4, 0.4), 11, $color);
+        # Shift the symbol lower by 20 pixels
+        $dataSetObj = $buyLayer->getDataSet(0);
+        $dataSetObj->setSymbolOffset(0, 20);
+    }
+    function trader_cdlhighwave($color='0x00ffff') {
+        $candleFoundArr=trader_cdlhighwave($this->m_openData, $this->m_highData, $this->m_lowData, $this->m_closeData);
+        $candleFoundArr=$this->candlePositionArr($candleFoundArr);
+        $buyLayer = $this->m_mainChart->addScatterLayer(null, $candleFoundArr, "High-Wave Candle", ArrowShape(0, 1, 0.4, 0.4), 11, $color);
+        # Shift the symbol lower by 20 pixels
+        $dataSetObj = $buyLayer->getDataSet(0);
+        $dataSetObj->setSymbolOffset(0, 20);
+    }
+    function trader_cdlhikkake($color='0x00ffff') {
+        $candleFoundArr=trader_cdlhikkake($this->m_openData, $this->m_highData, $this->m_lowData, $this->m_closeData);
+        $candleFoundArr=$this->candlePositionArr($candleFoundArr);
+        $buyLayer = $this->m_mainChart->addScatterLayer(null, $candleFoundArr, "Hikkake Pattern", ArrowShape(0, 1, 0.4, 0.4), 11, $color);
+        # Shift the symbol lower by 20 pixels
+        $dataSetObj = $buyLayer->getDataSet(0);
+        $dataSetObj->setSymbolOffset(0, 20);
+    }
+    function trader_cdlhikkakemod($color='0x00ffff') {
+        $candleFoundArr=trader_cdlhikkakemod($this->m_openData, $this->m_highData, $this->m_lowData, $this->m_closeData);
+        $candleFoundArr=$this->candlePositionArr($candleFoundArr);
+        $buyLayer = $this->m_mainChart->addScatterLayer(null, $candleFoundArr, "Modified Hikkake Pattern", ArrowShape(0, 1, 0.4, 0.4), 11, $color);
+        # Shift the symbol lower by 20 pixels
+        $dataSetObj = $buyLayer->getDataSet(0);
+        $dataSetObj->setSymbolOffset(0, 20);
+    }
+    function trader_cdlhomingpigeon($color='0x00ffff') {
+        $candleFoundArr=trader_cdlhomingpigeon($this->m_openData, $this->m_highData, $this->m_lowData, $this->m_closeData);
+        $candleFoundArr=$this->candlePositionArr($candleFoundArr);
+        $buyLayer = $this->m_mainChart->addScatterLayer(null, $candleFoundArr, "Homing Pigeon", ArrowShape(0, 1, 0.4, 0.4), 11, $color);
+        # Shift the symbol lower by 20 pixels
+        $dataSetObj = $buyLayer->getDataSet(0);
+        $dataSetObj->setSymbolOffset(0, 20);
+    }
+    function trader_cdlidentical3crows($color='0x00ffff') {
+        $candleFoundArr=trader_cdlidentical3crows($this->m_openData, $this->m_highData, $this->m_lowData, $this->m_closeData);
+        $candleFoundArr=$this->candlePositionArr($candleFoundArr);
+        $buyLayer = $this->m_mainChart->addScatterLayer(null, $candleFoundArr, "Identical Three Crows", ArrowShape(0, 1, 0.4, 0.4), 11, $color);
+        # Shift the symbol lower by 20 pixels
+        $dataSetObj = $buyLayer->getDataSet(0);
+        $dataSetObj->setSymbolOffset(0, 20);
+    }
+    function trader_cdlinneck($color='0x00ffff') {
+        $candleFoundArr=trader_cdlinneck($this->m_openData, $this->m_highData, $this->m_lowData, $this->m_closeData);
+        $candleFoundArr=$this->candlePositionArr($candleFoundArr);
+        $buyLayer = $this->m_mainChart->addScatterLayer(null, $candleFoundArr, "In-Neck Pattern", ArrowShape(0, 1, 0.4, 0.4), 11, $color);
+        # Shift the symbol lower by 20 pixels
+        $dataSetObj = $buyLayer->getDataSet(0);
+        $dataSetObj->setSymbolOffset(0, 20);
+    }
+    function trader_cdlinvertedhammer($color='0x00ffff') {
+        $candleFoundArr=trader_cdlinvertedhammer($this->m_openData, $this->m_highData, $this->m_lowData, $this->m_closeData);
+        $candleFoundArr=$this->candlePositionArr($candleFoundArr);
+        $buyLayer = $this->m_mainChart->addScatterLayer(null, $candleFoundArr, "Inverted Hammer", ArrowShape(0, 1, 0.4, 0.4), 11, $color);
+        # Shift the symbol lower by 20 pixels
+        $dataSetObj = $buyLayer->getDataSet(0);
+        $dataSetObj->setSymbolOffset(0, 20);
+    }
+
+    function trader_cdlkicking($color='0x00ffff') {
+        $candleFoundArr=trader_cdlkicking($this->m_openData, $this->m_highData, $this->m_lowData, $this->m_closeData);
+        $candleFoundArr=$this->candlePositionArr($candleFoundArr);
+        $buyLayer = $this->m_mainChart->addScatterLayer(null, $candleFoundArr, "Kicking", ArrowShape(0, 1, 0.4, 0.4), 11, $color);
+        # Shift the symbol lower by 20 pixels
+        $dataSetObj = $buyLayer->getDataSet(0);
+        $dataSetObj->setSymbolOffset(0, 20);
+    }
+
+    function trader_cdlkickingbylength($color='0x00ffff') {
+        $candleFoundArr=trader_cdlkickingbylength($this->m_openData, $this->m_highData, $this->m_lowData, $this->m_closeData);
+        $candleFoundArr=$this->candlePositionArr($candleFoundArr);
+        $buyLayer = $this->m_mainChart->addScatterLayer(null, $candleFoundArr, "Kicking - bull/bear determined by the longer marubozu", ArrowShape(0, 1, 0.4, 0.4), 11, $color);
+        # Shift the symbol lower by 20 pixels
+        $dataSetObj = $buyLayer->getDataSet(0);
+        $dataSetObj->setSymbolOffset(0, 20);
+    }
+
+    function trader_cdlladderbottom($color='0x00ffff') {
+        $candleFoundArr=trader_cdlladderbottom($this->m_openData, $this->m_highData, $this->m_lowData, $this->m_closeData);
+        $candleFoundArr=$this->candlePositionArr($candleFoundArr);
+        $buyLayer = $this->m_mainChart->addScatterLayer(null, $candleFoundArr, "Ladder Bottom", ArrowShape(0, 1, 0.4, 0.4), 11, $color);
+        # Shift the symbol lower by 20 pixels
+        $dataSetObj = $buyLayer->getDataSet(0);
+        $dataSetObj->setSymbolOffset(0, 20);
+    }
+
+    function trader_cdllongleggeddoji($color='0x00ffff') {
+        $candleFoundArr=trader_cdllongleggeddoji($this->m_openData, $this->m_highData, $this->m_lowData, $this->m_closeData);
+        $candleFoundArr=$this->candlePositionArr($candleFoundArr);
+        $buyLayer = $this->m_mainChart->addScatterLayer(null, $candleFoundArr, "Long Legged Doji", ArrowShape(0, 1, 0.4, 0.4), 11, $color);
+        # Shift the symbol lower by 20 pixels
+        $dataSetObj = $buyLayer->getDataSet(0);
+        $dataSetObj->setSymbolOffset(0, 20);
+    }
+
+    function trader_cdllongline($color='0x00ffff') {
+        $candleFoundArr=trader_cdllongline($this->m_openData, $this->m_highData, $this->m_lowData, $this->m_closeData);
+        $candleFoundArr=$this->candlePositionArr($candleFoundArr);
+        $buyLayer = $this->m_mainChart->addScatterLayer(null, $candleFoundArr, "Long Line Candle", ArrowShape(0, 1, 0.4, 0.4), 11, $color);
+        # Shift the symbol lower by 20 pixels
+        $dataSetObj = $buyLayer->getDataSet(0);
+        $dataSetObj->setSymbolOffset(0, 20);
+    }
+
+    function trader_cdlmarubozu($color='0x00ffff') {
+        $candleFoundArr=trader_cdlmarubozu($this->m_openData, $this->m_highData, $this->m_lowData, $this->m_closeData);
+        $candleFoundArr=$this->candlePositionArr($candleFoundArr);
+        $buyLayer = $this->m_mainChart->addScatterLayer(null, $candleFoundArr, "Marubozu", ArrowShape(0, 1, 0.4, 0.4), 11, $color);
+        # Shift the symbol lower by 20 pixels
+        $dataSetObj = $buyLayer->getDataSet(0);
+        $dataSetObj->setSymbolOffset(0, 20);
+    }
+
+    function trader_cdlmatchinglow($color='0x00ffff') {
+        $candleFoundArr=trader_cdlmatchinglow($this->m_openData, $this->m_highData, $this->m_lowData, $this->m_closeData);
+        $candleFoundArr=$this->candlePositionArr($candleFoundArr);
+        $buyLayer = $this->m_mainChart->addScatterLayer(null, $candleFoundArr, "Matching Low", ArrowShape(0, 1, 0.4, 0.4), 11, $color);
+        # Shift the symbol lower by 20 pixels
+        $dataSetObj = $buyLayer->getDataSet(0);
+        $dataSetObj->setSymbolOffset(0, 20);
+    }
+
+    function trader_cdlmathold($color='0x00ffff') {
+        $candleFoundArr=trader_cdlmathold($this->m_openData, $this->m_highData, $this->m_lowData, $this->m_closeData);
+        $candleFoundArr=$this->candlePositionArr($candleFoundArr);
+        $buyLayer = $this->m_mainChart->addScatterLayer(null, $candleFoundArr, "Mat Hold", ArrowShape(0, 1, 0.4, 0.4), 11, $color);
+        # Shift the symbol lower by 20 pixels
+        $dataSetObj = $buyLayer->getDataSet(0);
+        $dataSetObj->setSymbolOffset(0, 20);
+    }
+    function trader_cdlmorningdojistar($color='0x00ffff') {
+        $candleFoundArr=trader_cdlmorningdojistar($this->m_openData, $this->m_highData, $this->m_lowData, $this->m_closeData);
+        $candleFoundArr=$this->candlePositionArr($candleFoundArr);
+        $buyLayer = $this->m_mainChart->addScatterLayer(null, $candleFoundArr, "Morning Doji Star", ArrowShape(0, 1, 0.4, 0.4), 11, $color);
+        # Shift the symbol lower by 20 pixels
+        $dataSetObj = $buyLayer->getDataSet(0);
+        $dataSetObj->setSymbolOffset(0, 20);
+    }
+    function trader_cdlmorningstar($color='0x00ffff') {
+        $candleFoundArr=trader_cdlmorningstar($this->m_openData, $this->m_highData, $this->m_lowData, $this->m_closeData);
+        $candleFoundArr=$this->candlePositionArr($candleFoundArr);
+        $buyLayer = $this->m_mainChart->addScatterLayer(null, $candleFoundArr, "Morning Star", ArrowShape(0, 1, 0.4, 0.4), 11, $color);
+        # Shift the symbol lower by 20 pixels
+        $dataSetObj = $buyLayer->getDataSet(0);
+        $dataSetObj->setSymbolOffset(0, 20);
+    }
+    function trader_cdlonneck($color='0x00ffff') {
+        $candleFoundArr=trader_cdlonneck($this->m_openData, $this->m_highData, $this->m_lowData, $this->m_closeData);
+        $candleFoundArr=$this->candlePositionArr($candleFoundArr);
+        $buyLayer = $this->m_mainChart->addScatterLayer(null, $candleFoundArr, "On-Neck Pattern", ArrowShape(0, 1, 0.4, 0.4), 11, $color);
+        # Shift the symbol lower by 20 pixels
+        $dataSetObj = $buyLayer->getDataSet(0);
+        $dataSetObj->setSymbolOffset(0, 20);
+    }
+    function trader_cdlpiercing($color='0x00ffff') {
+        $candleFoundArr=trader_cdlpiercing($this->m_openData, $this->m_highData, $this->m_lowData, $this->m_closeData);
+        $candleFoundArr=$this->candlePositionArr($candleFoundArr);
+        $buyLayer = $this->m_mainChart->addScatterLayer(null, $candleFoundArr, "Piercing Pattern", ArrowShape(0, 1, 0.4, 0.4), 11, $color);
+        # Shift the symbol lower by 20 pixels
+        $dataSetObj = $buyLayer->getDataSet(0);
+        $dataSetObj->setSymbolOffset(0, 20);
+    }
+    function trader_cdlrickshawman($color='0x00ffff') {
+        $candleFoundArr=trader_cdlrickshawman($this->m_openData, $this->m_highData, $this->m_lowData, $this->m_closeData);
+        $candleFoundArr=$this->candlePositionArr($candleFoundArr);
+        $buyLayer = $this->m_mainChart->addScatterLayer(null, $candleFoundArr, "Rickshaw Man", ArrowShape(0, 1, 0.4, 0.4), 11, $color);
+        # Shift the symbol lower by 20 pixels
+        $dataSetObj = $buyLayer->getDataSet(0);
+        $dataSetObj->setSymbolOffset(0, 20);
+    }
+    function trader_cdlrisefall3methods($color='0x00ffff') {
+        $candleFoundArr=trader_cdlrisefall3methods($this->m_openData, $this->m_highData, $this->m_lowData, $this->m_closeData);
+        $candleFoundArr=$this->candlePositionArr($candleFoundArr);
+        $buyLayer = $this->m_mainChart->addScatterLayer(null, $candleFoundArr, "Rising/Falling Three Methods", ArrowShape(0, 1, 0.4, 0.4), 11, $color);
+        # Shift the symbol lower by 20 pixels
+        $dataSetObj = $buyLayer->getDataSet(0);
+        $dataSetObj->setSymbolOffset(0, 20);
+    }
+    function trader_cdlseparatinglines($color='0x00ffff') {
+        $candleFoundArr=trader_cdlseparatinglines($this->m_openData, $this->m_highData, $this->m_lowData, $this->m_closeData);
+        $candleFoundArr=$this->candlePositionArr($candleFoundArr);
+        $buyLayer = $this->m_mainChart->addScatterLayer(null, $candleFoundArr, "Separating Lines", ArrowShape(0, 1, 0.4, 0.4), 11, $color);
+        # Shift the symbol lower by 20 pixels
+        $dataSetObj = $buyLayer->getDataSet(0);
+        $dataSetObj->setSymbolOffset(0, 20);
+    }
+    function trader_cdlshootingstar($color='0x00ffff') {
+        $candleFoundArr=trader_cdlshootingstar($this->m_openData, $this->m_highData, $this->m_lowData, $this->m_closeData);
+        $candleFoundArr=$this->candlePositionArr($candleFoundArr);
+        $buyLayer = $this->m_mainChart->addScatterLayer(null, $candleFoundArr, "Shooting Star", ArrowShape(0, 1, 0.4, 0.4), 11, $color);
+        # Shift the symbol lower by 20 pixels
+        $dataSetObj = $buyLayer->getDataSet(0);
+        $dataSetObj->setSymbolOffset(0, 20);
+    }
+    function trader_cdlshortline($color='0x00ffff') {
+        $candleFoundArr=trader_cdlshortline($this->m_openData, $this->m_highData, $this->m_lowData, $this->m_closeData);
+        $candleFoundArr=$this->candlePositionArr($candleFoundArr);
+        $buyLayer = $this->m_mainChart->addScatterLayer(null, $candleFoundArr, "Short Line Candle", ArrowShape(0, 1, 0.4, 0.4), 11, $color);
+        # Shift the symbol lower by 20 pixels
+        $dataSetObj = $buyLayer->getDataSet(0);
+        $dataSetObj->setSymbolOffset(0, 20);
+    }
+    function trader_cdlspinningtop($color='0x00ffff') {
+        $candleFoundArr=trader_cdlspinningtop($this->m_openData, $this->m_highData, $this->m_lowData, $this->m_closeData);
+        $candleFoundArr=$this->candlePositionArr($candleFoundArr);
+        $buyLayer = $this->m_mainChart->addScatterLayer(null, $candleFoundArr, "Spinning Top", ArrowShape(0, 1, 0.4, 0.4), 11, $color);
+        # Shift the symbol lower by 20 pixels
+        $dataSetObj = $buyLayer->getDataSet(0);
+        $dataSetObj->setSymbolOffset(0, 20);
+    }
+    function trader_cdlstalledpattern($color='0x00ffff') {
+        $candleFoundArr=trader_cdlstalledpattern($this->m_openData, $this->m_highData, $this->m_lowData, $this->m_closeData);
+        $candleFoundArr=$this->candlePositionArr($candleFoundArr);
+        $buyLayer = $this->m_mainChart->addScatterLayer(null, $candleFoundArr, "Stalled Pattern", ArrowShape(0, 1, 0.4, 0.4), 11, $color);
+        # Shift the symbol lower by 20 pixels
+        $dataSetObj = $buyLayer->getDataSet(0);
+        $dataSetObj->setSymbolOffset(0, 20);
+    }
+    function trader_cdlsticksandwich($color='0x00ffff') {
+        $candleFoundArr=trader_cdlsticksandwich($this->m_openData, $this->m_highData, $this->m_lowData, $this->m_closeData);
+        $candleFoundArr=$this->candlePositionArr($candleFoundArr);
+        $buyLayer = $this->m_mainChart->addScatterLayer(null, $candleFoundArr, "Stick Sandwich", ArrowShape(0, 1, 0.4, 0.4), 11, $color);
+        # Shift the symbol lower by 20 pixels
+        $dataSetObj = $buyLayer->getDataSet(0);
+        $dataSetObj->setSymbolOffset(0, 20);
+    }
+    function trader_cdltakuri($color='0x00ffff') {
+        $candleFoundArr=trader_cdltakuri($this->m_openData, $this->m_highData, $this->m_lowData, $this->m_closeData);
+        $candleFoundArr=$this->candlePositionArr($candleFoundArr);
+        $buyLayer = $this->m_mainChart->addScatterLayer(null, $candleFoundArr, "Takuri (Dragonfly Doji with very long lower shadow)", ArrowShape(0, 1, 0.4, 0.4), 11, $color);
+        # Shift the symbol lower by 20 pixels
+        $dataSetObj = $buyLayer->getDataSet(0);
+        $dataSetObj->setSymbolOffset(0, 20);
+    }
+    function trader_cdltasukigap($color='0x00ffff') {
+        $candleFoundArr=trader_cdltasukigap($this->m_openData, $this->m_highData, $this->m_lowData, $this->m_closeData);
+        $candleFoundArr=$this->candlePositionArr($candleFoundArr);
+        $buyLayer = $this->m_mainChart->addScatterLayer(null, $candleFoundArr, "Tasuki Gap", ArrowShape(0, 1, 0.4, 0.4), 11, $color);
+        # Shift the symbol lower by 20 pixels
+        $dataSetObj = $buyLayer->getDataSet(0);
+        $dataSetObj->setSymbolOffset(0, 20);
+    }
+    function trader_cdlthrusting($color='0x00ffff') {
+        $candleFoundArr=trader_cdlthrusting($this->m_openData, $this->m_highData, $this->m_lowData, $this->m_closeData);
+        $candleFoundArr=$this->candlePositionArr($candleFoundArr);
+        $buyLayer = $this->m_mainChart->addScatterLayer(null, $candleFoundArr, "Thrusting Pattern", ArrowShape(0, 1, 0.4, 0.4), 11, $color);
+        # Shift the symbol lower by 20 pixels
+        $dataSetObj = $buyLayer->getDataSet(0);
+        $dataSetObj->setSymbolOffset(0, 20);
+    }
+    function trader_cdltristar($color='0x00ffff') {
+        $candleFoundArr=trader_cdltristar($this->m_openData, $this->m_highData, $this->m_lowData, $this->m_closeData);
+        $candleFoundArr=$this->candlePositionArr($candleFoundArr);
+        $buyLayer = $this->m_mainChart->addScatterLayer(null, $candleFoundArr, "Tristar Pattern", ArrowShape(0, 1, 0.4, 0.4), 11, $color);
+        # Shift the symbol lower by 20 pixels
+        $dataSetObj = $buyLayer->getDataSet(0);
+        $dataSetObj->setSymbolOffset(0, 20);
+    }
+    function trader_cdlunique3river($color='0x00ffff') {
+        $candleFoundArr=trader_cdlunique3river($this->m_openData, $this->m_highData, $this->m_lowData, $this->m_closeData);
+        $candleFoundArr=$this->candlePositionArr($candleFoundArr);
+        $buyLayer = $this->m_mainChart->addScatterLayer(null, $candleFoundArr, "Unique 3 River", ArrowShape(0, 1, 0.4, 0.4), 11, $color);
+        # Shift the symbol lower by 20 pixels
+        $dataSetObj = $buyLayer->getDataSet(0);
+        $dataSetObj->setSymbolOffset(0, 20);
+    }
+    function trader_cdlupsidegap2crows($color='0x00ffff') {
+        $candleFoundArr=trader_cdlupsidegap2crows($this->m_openData, $this->m_highData, $this->m_lowData, $this->m_closeData);
+        $candleFoundArr=$this->candlePositionArr($candleFoundArr);
+        $buyLayer = $this->m_mainChart->addScatterLayer(null, $candleFoundArr, "Upside Gap Two Crows", ArrowShape(0, 1, 0.4, 0.4), 11, $color);
+        # Shift the symbol lower by 20 pixels
+        $dataSetObj = $buyLayer->getDataSet(0);
+        $dataSetObj->setSymbolOffset(0, 20);
+    }
+    function trader_cdlxsidegap3methods($color='0x00ffff') {
+        $candleFoundArr=trader_cdlxsidegap3methods($this->m_openData, $this->m_highData, $this->m_lowData, $this->m_closeData);
+        $candleFoundArr=$this->candlePositionArr($candleFoundArr);
+        $buyLayer = $this->m_mainChart->addScatterLayer(null, $candleFoundArr, "Upside/Downside Gap Three Methods", ArrowShape(0, 1, 0.4, 0.4), 11, $color);
+        # Shift the symbol lower by 20 pixels
+        $dataSetObj = $buyLayer->getDataSet(0);
+        $dataSetObj->setSymbolOffset(0, 20);
+    }*/
+
+    function trader_cdl($trader_function='trader_cdldoji',$color='0x00ffff',$label='test doji') {
+
+        $label=str_replace('trader_cdl','',$trader_function);
+
+        $candleFoundArr=call_user_func($trader_function,$this->m_openData, $this->m_highData, $this->m_lowData, $this->m_closeData);
+        $candleFoundArr=$this->candlePositionArr($candleFoundArr);
+        $buyLayer = $this->m_mainChart->addScatterLayer(null, $candleFoundArr, $label, ArrowShape(0, 1, 0.4, 0.4), 11, $color);
+        # Shift the symbol lower by 20 pixels
+        $dataSetObj = $buyLayer->getDataSet(0);
+        $dataSetObj->setSymbolOffset(0, 20);
+    }
+
+
+    function addSimpleMovingAvgfff($period, $color) {
+        $label = "SMA ($period)";
+        $tmpArrayMath1 = new ArrayMath($this->m_closeData);
+        $tmpArrayMath1->movAvg($period);
+        return $this->addLineIndicator2($this->m_mainChart, $tmpArrayMath1->result(), $color, $label);
+    }
+
+    function trader_dema($period,$color='0x00ffff',$label='DEMA') {
+
+        $data=trader_dema($this->m_closeData,$period);
+        $fill=array_fill(0, count($this->m_closeData)-count($data), 1.7E+308);
+        $data=array_merge($fill, $data);
+        return $this->addLineIndicator2($this->m_mainChart, $data, $color, $label);
+
+    }
+
+    function trader_kama($period,$color='0x00ffff',$label='KAMA') {
+
+        $data=trader_kama($this->m_closeData,$period);
+        $fill=array_fill(0, count($this->m_closeData)-count($data), 1.7E+308);
+        $data=array_merge($fill, $data);
+        return $this->addLineIndicator2($this->m_mainChart, $data, $color, $label);
+
+    }
+
+    function trader_mama($fastLimit=0.2,$slowLimit=0.7,$uper_color='0x00ffff',$lower_color='0x0077ff') {
+
+        $data=trader_mama($this->m_closeData,$fastLimit,$slowLimit);
+        $fill=array_fill(0, count($this->m_closeData)-count($data[0]), 1.7E+308);
+        $data[0]=array_merge($fill, $data[0]);
+
+        $fill=array_fill(0, count($this->m_closeData)-count($data[1]), 1.7E+308);
+        $data[1]=array_merge($fill, $data[1]);
+
+        $this->addLineIndicator2($this->m_mainChart, $data[0], $uper_color, 'Upper');
+        return $this->addLineIndicator2($this->m_mainChart, $data[1], $lower_color, 'Lower');
+
+    }
+
+
+    function trader_ht_trendline($color='0x00ffff',$label='HT Trendline') {
+
+        $data=trader_ht_trendline($this->m_closeData);
+        $fill=array_fill(0, count($this->m_closeData)-count($data), 1.7E+308);
+        $data=array_merge($fill, $data);
+        return $this->addLineIndicator2($this->m_mainChart, $data, $color, $label);
+
+        }
+
+
+    function trader_midpoint($period,$color='0x00ffff',$label='MidPoint') {
+
+        $data=trader_midpoint($this->m_closeData,$period);
+        $fill=array_fill(0, count($this->m_closeData)-count($data), 1.7E+308);
+        $data=array_merge($fill, $data);
+        return $this->addLineIndicator2($this->m_mainChart, $data, $color, $label);
+
+    }
+
+function trader_t3($period,$color='0x00ffff',$label='T3') {
+
+        $data=trader_t3($this->m_closeData,$period);
+        $fill=array_fill(0, count($this->m_closeData)-count($data), 1.7E+308);
+        $data=array_merge($fill, $data);
+        return $this->addLineIndicator2($this->m_mainChart, $data, $color, $label);
+
+    }
+
+function trader_tema($period,$color='0x00ffff',$label='tema') {
+
+        $data=trader_tema($this->m_closeData,$period);
+        $fill=array_fill(0, count($this->m_closeData)-count($data), 1.7E+308);
+        $data=array_merge($fill, $data);
+        return $this->addLineIndicator2($this->m_mainChart, $data, $color, $label);
+
+    }
+function trader_trima($period,$color='0x00ffff',$label='trima') {
+
+        $data=trader_trima($this->m_closeData,$period);
+        $fill=array_fill(0, count($this->m_closeData)-count($data), 1.7E+308);
+        $data=array_merge($fill, $data);
+        return $this->addLineIndicator2($this->m_mainChart, $data, $color, $label);
+
+    }
+
+
+
+
 }

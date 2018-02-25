@@ -15,6 +15,7 @@ use Illuminate\View\View;
 use App\Repositories\FundamentalRepository;
 use Carbon\Carbon;
 
+
 class FundamentalSummary
 {
 

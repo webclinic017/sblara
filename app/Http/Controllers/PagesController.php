@@ -277,11 +277,43 @@ dd($eq_arr);
 
     }
 
+
+    public function addCdl2crows(&$mainChart,$openData, $highData, $lowData, $closeData)
+    {
+        $candleFoundArr=trader_cdldoji($openData, $highData, $lowData, $closeData);
+
+        foreach($lowData as $key=>$val)
+        {
+            if(!isset($candleFoundArr[$key]))
+            {
+                $candleFoundArr[$key]=1.7E+308;
+            }
+            if($candleFoundArr[$key])
+            {
+                $candleFoundArr[$key]=$val;
+            }else
+            {
+                $candleFoundArr[$key]=1.7E+308;
+            }
+        }
+
+
+        $buyLayer = $mainChart->addScatterLayer(null, $candleFoundArr, "Cdl 2 Crows", ArrowShape(0, 1, 0.4, 0.4), 11, 0x00ffff);
+        # Shift the symbol lower by 20 pixels
+        $dataSetObj = $buyLayer->getDataSet(0);
+        $dataSetObj->setSymbolOffset(0, 20);
+
+        return $dataSetObj;
+    }
+
+
+
 public function technicalAnalysisHome()
     {
 
+
 //DataBankEodRepository::getEodDataAdjusted(10001,'2017-02-01','2018-02-28');
-        $chartData = \App\Repositories\ChartRepository::getAdjustedDailyData(10001, '2018-01-01', '2018-02-28');
+        $chartData = \App\Repositories\ChartRepository::getAdjustedDailyData(79, '2017-11-01', '2018-02-10');
 
 
     $chartData['realtimeStamps'] = array_reverse($chartData['realtimeStamps']);
@@ -295,30 +327,68 @@ public function technicalAnalysisHome()
 
     //dd($chartData);
         $bop=trader_bop($openData, $highData, $lowData, $closeData);
+
+
+
     // suppose we have 37 data in $closeData . trader_rsi will return 23 data (37-14) . We are using 10 extra point in
     // setData() . So when we will call addLineIndicator with 23 data it will again remove 10 data. So we are re-filling 14 data with null
         $rsi= trader_rsi($closeData, 14);  //
       //  $rsi=array_values($rsi);
-    $fill=array_fill(0, 14, null);
+    $fill=array_fill(0, 14, 1.7E+308);
 
     $rsi=array_merge($fill, $rsi);
-    $rsi[13]= 39.021;
+    //$rsi[13]= 39.021;
 
 
     //dump($closeData);
     //dd($rsi);
         //dd($bop);
         require_once(app_path() . '/ChartDirector/FinanceChart.php');
-        $m = new \FinanceChart(400);
+        $m = new \FinanceChart(1260);
         $m->setData($timeStamps, $highData, $lowData, $openData, $closeData, $volData, 10);
 
-    $m->addRSI(70, 14, 0x800080, 20, 0xff6666, 0x6666ff);
-        $m->addMainChart(300);
+    $mainChart=$m->addMainChart(300);
+
      $m->addCandleStick(0x33ff33, 0xff3333);
 
      $m->addVolBars(75, 0x99ff99, 0xff9999, 0x808080);
 
-    $m->addLineIndicator(70, $bop, 0x0000ff, "balance of power");
+
+    //$m->addLineIndicator(70, $bop, 0x0000ff, "balance of power");
+
+    $m->addRSI(70, 14, 0x800080, 20, 0xff6666, 0x6666ff);
+
+    //dd($doji);
+
+
+
+
+    if(1)
+    {
+        $period=10;
+
+        $data=trader_mama($closeData,0.1,0.5);
+
+/*
+        $fill=array_fill(0, count($closeData)-count($data), 1.7E+308);
+        $data=array_merge($fill, $data);*/
+
+        $fill=array_fill(0, count($closeData)-count($data[0]), 1.7E+308);
+        $data[0]=array_merge($fill, $data[0]);
+
+        $fill=array_fill(0, count($closeData)-count($data[1]), 1.7E+308);
+        $data[1]=array_merge($fill, $data[1]);
+
+        //dump($closeData);
+       // dd($data);
+
+
+        $m->addLineIndicator2($mainChart, $data[0], 0x6666ff,"u-mama");
+        $m->addLineIndicator2($mainChart, $data[1], 0x6666ff,"l-mama");
+    }
+
+
+/*
     $m->addLineIndicator(70, $rsi, 0x0000ff, "custom rsi");
 
     $tmpArrayMath1 = new \ArrayMath($rsi);
@@ -329,12 +399,10 @@ public function technicalAnalysisHome()
     $label = "RSI (14-sb)";
     $layer = $m->addLineIndicator2($c, $rsi_obj, 0x0000ff, "custom rsi -2");
 
-  /*  #Add range if given
     $range=20;
     if (($range > 0) && ($range < 50)) {
-        $m->addThreshold($c, $layer, 50 + $range, '0xff9999', 50 - $range, '0x99ff99');
+        $m->addThreshold($c, $layer, 50 + $range, '0xff6666', 50 - $range, '0x6666ff');
     }*/
-
 
 
 
