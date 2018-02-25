@@ -62,9 +62,15 @@ class Chart
 		 $this->loadStyles();
 		// Output the chart
 		// $jsmodel = $c->getJsChartModel();
-		 $chart = "<img src='data:image/png;base64, ". base64_encode($c->makeChart2(PNG)) ."'  usemap=\"#chartmap\">";
+		// if($this->isDesktop()){
+		$src = "data:image/png;base64, ". base64_encode($c->makeChart2(PNG));
 	  	 $imageMap = $c->getHTMLImageMap("", "", "title='" . $c->getToolTipDateFormat() . " {value|G}'");
-		 $chart .= "<map name=\"chartmap\">$imageMap</map>";
+		// }
+		 $chart = "<img src='$src'  usemap=\"#chartmap\">";
+	  	 if(isset($imageMap))
+	  	 {
+		 	$chart .= "<map name=\"chartmap\">$imageMap</map>";
+	  	 }
 		 $this->html  = $chart;
 		// a chart with a specific instrument
 	}
@@ -75,6 +81,30 @@ class Chart
 	public function html()
 	{
 		return $this->html;
+	}
+
+	/**
+	 * 	check if the request device is mobile
+	 *
+	 * @return  bol 
+	 */
+	public function isMobile()
+	{
+		if($this->deviceWidth < 991)
+		{
+			return true;
+		}		
+		return false;
+	}
+
+	/**
+	 * 	check if the device is desktop
+	 *
+	 * @param  boolean 
+	 */
+	public function isDesktop()
+	{
+		return !$this->isMobile();
 	}
 
 	/**

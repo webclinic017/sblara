@@ -84,6 +84,7 @@ mix.scripts([
 
 
 mix.js('resources/assets/js/app.js', 'public/js/passport-vue.js');
+mix.js('public/js/se.js', 'public/js/secom.js');
 
 
 /*

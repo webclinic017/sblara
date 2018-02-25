@@ -41,6 +41,7 @@ Route::post('/save_filter', 'FilterController@save_filter');
 // Route to courses
 Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
     Route::resource('/courses', 'CoursesController');//->middleware('admin');
+    Route::get('/plugin-requests', 'PluginController@requests');//->middleware('admin');
     Route::resource('/categories_course', 'CourseCategoriesController');//->middleware('auth');;
     Route::resource('/venues_course', 'CourseVenuesController');//->middleware('admin');
     Route::resource('/participants_course', 'CourseParticipantsController');//->middleware('admin');
