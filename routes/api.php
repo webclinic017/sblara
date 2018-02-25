@@ -154,7 +154,7 @@ Route::get('plugin_user_stats/{username}/{hdd}/{cpu}/', function ($username, $hd
 
     }
 
-    if($user_info[0]->group_id==3)
+    if($user_info[0]->group_id==4)
     {
         // course
 

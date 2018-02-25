@@ -264,8 +264,15 @@ Route::get('/news/details/{id}', 'NewsController@viewNews');
 //Route::get('/resources/amibroker-data-plugin-dse', 'ComingSoonController@index')->name('amibroker-data-plugin-dse');
 
 Route::get('/resources/amibroker-data-plugin-dse', function () {
+    if(request()->has('gid'))
+    {
+        $user = \Auth::user();
+        $user->plugin_apply = request()->gid;
+        $user->save();
+        return "";
+    }    
     return view('amibroker-data-plugin');
-})->name('amibroker-data-plugin-dse');
+})->name('amibroker-data-plugin-dse')->middleware('auth');
 
 
 

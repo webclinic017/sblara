@@ -40,44 +40,46 @@ Amibroker Data plugin for DSE
                                                 <div class="price-table-content">
                                                     <div class="row mobile-padding">
                                                         <div class="col-xs-3 text-right mobile-padding">
-                                                            <i class="fa fa-plus-square-o"></i>
+                                                            <i class="fa fa-check-square-o"></i>
                                                         </div>
                                                         <div class="col-xs-9 text-left mobile-padding">EOD Data feed</div>
                                                     </div>
                                                     <div class="row mobile-padding">
                                                         <div class="col-xs-3 text-right mobile-padding">
-                                                            <i class="fa fa-plus-square-o"></i>
+                                                            <i class="fa fa-check-square-o"></i>
                                                         </div>
                                                         <div class="col-xs-9 text-left mobile-padding">Intraday feed</div>
                                                     </div>
                                                     <div class="row mobile-padding">
                                                         <div class="col-xs-3 text-right mobile-padding">
-                                                            <i class="fa fa-plus-square-o"></i>
+                                                            <i class="fa fa-check-square-o"></i>
                                                         </div>
                                                         <div class="col-xs-9 text-left mobile-padding">2 minute interval</div>
                                                     </div>
                                                     <div class="row mobile-padding">
                                                         <div class="col-xs-3 text-right mobile-padding">
-                                                            <i class="fa fa-minus-square-o"></i>
+                                                            <i class="fa fa-times"></i>
                                                         </div>
                                                         <div class="col-xs-9 text-left mobile-padding">Adjusted data</div>
                                                     </div>
                                                     <div class="row mobile-padding">
                                                         <div class="col-xs-3 text-right mobile-padding">
-                                                            <i class="fa fa-minus-square-o"></i>
+                                                            <i class="fa fa-times"></i>
                                                         </div>
                                                         <div class="col-xs-9 text-left mobile-padding">Fundamental data</div>
                                                     </div>
                                                     <div class="row mobile-padding">
                                                         <div class="col-xs-3 text-right mobile-padding">
-                                                            <i class="fa fa-minus-square-o"></i>
+                                                            <i class="fa fa-times"></i>
                                                         </div>
                                                         <div class="col-xs-9 text-left mobile-padding">Resources</div>
                                                     </div>
                                                 </div>
                                                 <div class="arrow-down arrow-grey"></div>
                                                 <div class="price-table-footer">
-                                                    <button type="button" class="btn grey-salsa btn-outline sbold uppercase price-button">Sign Up</button>
+                                                    <button data-group="1" type="button" class="btn mt-ladda-btn  ladda-button grey-salsa btn-outline sbold uppercase price-button plugin-signup" data-style="slide-down">
+                                                        <span class="ladda-label">Sign Up</span>
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
@@ -95,44 +97,46 @@ Amibroker Data plugin for DSE
                                                 <div class="price-table-content">
                                                                                                     <div class="row mobile-padding">
                                                                                                         <div class="col-xs-3 text-right mobile-padding">
-                                                                                                            <i class="fa fa-plus-square-o"></i>
+                                                                                                            <i class="fa fa-check-square-o"></i>
                                                                                                         </div>
                                                                                                         <div class="col-xs-9 text-left mobile-padding">EOD Data feed</div>
                                                                                                     </div>
                                                                                                     <div class="row mobile-padding">
                                                                                                         <div class="col-xs-3 text-right mobile-padding">
-                                                                                                            <i class="fa fa-plus-square-o"></i>
+                                                                                                            <i class="fa fa-check-square-o"></i>
                                                                                                         </div>
                                                                                                         <div class="col-xs-9 text-left mobile-padding">Intraday feed</div>
                                                                                                     </div>
                                                                                                     <div class="row mobile-padding">
                                                                                                         <div class="col-xs-3 text-right mobile-padding">
-                                                                                                            <i class="fa fa-plus-square-o"></i>
+                                                                                                            <i class="fa fa-check-square-o"></i>
                                                                                                         </div>
                                                                                                         <div class="col-xs-9 text-left mobile-padding">1 minute interval</div>
                                                                                                     </div>
                                                                                                     <div class="row mobile-padding">
                                                                                                         <div class="col-xs-3 text-right mobile-padding">
-                                                                                                            <i class="fa fa-plus-square-o"></i>
+                                                                                                            <i class="fa fa-check-square-o"></i>
                                                                                                         </div>
                                                                                                         <div class="col-xs-9 text-left mobile-padding">Adjusted data</div>
                                                                                                     </div>
                                                                                                     <div class="row mobile-padding">
                                                                                                         <div class="col-xs-3 text-right mobile-padding">
-                                                                                                            <i class="fa fa-minus-square-o"></i>
+                                                                                                            <i class="fa fa-times"></i>
                                                                                                         </div>
                                                                                                         <div class="col-xs-9 text-left mobile-padding">Fundamental data</div>
                                                                                                     </div>
                                                                                                     <div class="row mobile-padding">
                                                                                                         <div class="col-xs-3 text-right mobile-padding">
-                                                                                                            <i class="fa fa-minus-square-o"></i>
+                                                                                                            <i class="fa fa-times"></i>
                                                                                                         </div>
                                                                                                         <div class="col-xs-9 text-left mobile-padding">Resources</div>
                                                                                                     </div>
                                                                                                 </div>
                                                 <div class="arrow-down arrow-grey"></div>
                                                 <div class="price-table-footer">
-                                                    <button type="button" class="btn grey-salsa btn-outline price-button sbold uppercase">Sign Up</button>
+                                                    <button data-group="2" type="button" class="btn mt-ladda-btn  ladda-button grey-salsa btn-outline sbold uppercase price-button plugin-signup" data-style="slide-down">
+                                                        <span class="ladda-label">Sign Up</span>
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
@@ -151,44 +155,46 @@ Amibroker Data plugin for DSE
                                                 <div class="price-table-content">
                                                                                                     <div class="row mobile-padding">
                                                                                                         <div class="col-xs-3 text-right mobile-padding">
-                                                                                                            <i class="fa fa-plus-square-o"></i>
+                                                                                                            <i class="fa fa-check-square-o"></i>
                                                                                                         </div>
                                                                                                         <div class="col-xs-9 text-left mobile-padding">EOD Data feed</div>
                                                                                                     </div>
                                                                                                     <div class="row mobile-padding">
                                                                                                         <div class="col-xs-3 text-right mobile-padding">
-                                                                                                            <i class="fa fa-plus-square-o"></i>
+                                                                                                            <i class="fa fa-check-square-o"></i>
                                                                                                         </div>
                                                                                                         <div class="col-xs-9 text-left mobile-padding">Intraday feed</div>
                                                                                                     </div>
                                                                                                     <div class="row mobile-padding">
                                                                                                         <div class="col-xs-3 text-right mobile-padding">
-                                                                                                            <i class="fa fa-plus-square-o"></i>
+                                                                                                            <i class="fa fa-check-square-o"></i>
                                                                                                         </div>
                                                                                                         <div class="col-xs-9 text-left mobile-padding">1 minute interval</div>
                                                                                                     </div>
                                                                                                     <div class="row mobile-padding">
                                                                                                         <div class="col-xs-3 text-right mobile-padding">
-                                                                                                            <i class="fa fa-plus-square-o"></i>
+                                                                                                            <i class="fa fa-check-square-o"></i>
                                                                                                         </div>
                                                                                                         <div class="col-xs-9 text-left mobile-padding">Adjusted data</div>
                                                                                                     </div>
                                                                                                     <div class="row mobile-padding">
                                                                                                         <div class="col-xs-3 text-right mobile-padding">
-                                                                                                            <i class="fa fa-plus-square-o"></i>
+                                                                                                            <i class="fa fa-check-square-o"></i>
                                                                                                         </div>
                                                                                                         <div class="col-xs-9 text-left mobile-padding">Fundamental data</div>
                                                                                                     </div>
                                                                                                     <div class="row mobile-padding">
                                                                                                         <div class="col-xs-3 text-right mobile-padding">
-                                                                                                            <i class="fa fa-plus-square-o"></i>
+                                                                                                            <i class="fa fa-check-square-o"></i>
                                                                                                         </div>
                                                                                                         <div class="col-xs-9 text-left mobile-padding">Resources</div>
                                                                                                     </div>
                                                                                                 </div>
                                                 <div class="arrow-down arrow-grey"></div>
                                                 <div class="price-table-footer">
-                                                    <button type="button" class="btn green price-button sbold uppercase">Sign Up</button>
+                                                    <button data-group="3" type="button" class="btn mt-ladda-btn  ladda-button green btn-outline sbold uppercase price-button plugin-signup" data-style="slide-down">
+                                                        <span class="ladda-label">Sign Up</span>
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
@@ -201,49 +207,51 @@ Amibroker Data plugin for DSE
                                                 <div class="price-table-pricing">
                                                     <h3>
                                                         <sup class="price-sign">$</sup>00</h3>
-                                                    <p>per month</p>
+                                                    <p>for 3 months</p>
                                                 </div>
                                                 <div class="price-table-content">
                                                                                                     <div class="row mobile-padding">
                                                                                                         <div class="col-xs-3 text-right mobile-padding">
-                                                                                                            <i class="fa fa-plus-square-o"></i>
+                                                                                                            <i class="fa fa-check-square-o"></i>
                                                                                                         </div>
                                                                                                         <div class="col-xs-9 text-left mobile-padding">EOD Data feed</div>
                                                                                                     </div>
                                                                                                     <div class="row mobile-padding">
                                                                                                         <div class="col-xs-3 text-right mobile-padding">
-                                                                                                            <i class="fa fa-plus-square-o"></i>
+                                                                                                            <i class="fa fa-check-square-o"></i>
                                                                                                         </div>
                                                                                                         <div class="col-xs-9 text-left mobile-padding">Intraday feed</div>
                                                                                                     </div>
                                                                                                     <div class="row mobile-padding">
                                                                                                         <div class="col-xs-3 text-right mobile-padding">
-                                                                                                            <i class="fa fa-plus-square-o"></i>
+                                                                                                            <i class="fa fa-check-square-o"></i>
                                                                                                         </div>
                                                                                                         <div class="col-xs-9 text-left mobile-padding">1 minute interval</div>
                                                                                                     </div>
                                                                                                     <div class="row mobile-padding">
                                                                                                         <div class="col-xs-3 text-right mobile-padding">
-                                                                                                            <i class="fa fa-plus-square-o"></i>
+                                                                                                            <i class="fa fa-check-square-o"></i>
                                                                                                         </div>
                                                                                                         <div class="col-xs-9 text-left mobile-padding">Adjusted data</div>
                                                                                                     </div>
                                                                                                     <div class="row mobile-padding">
                                                                                                         <div class="col-xs-3 text-right mobile-padding">
-                                                                                                            <i class="fa fa-plus-square-o"></i>
+                                                                                                            <i class="fa fa-check-square-o"></i>
                                                                                                         </div>
                                                                                                         <div class="col-xs-9 text-left mobile-padding">Fundamental data</div>
                                                                                                     </div>
                                                                                                     <div class="row mobile-padding">
                                                                                                         <div class="col-xs-3 text-right mobile-padding">
-                                                                                                            <i class="fa fa-plus-square-o"></i>
+                                                                                                            <i class="fa fa-check-square-o"></i>
                                                                                                         </div>
                                                                                                         <div class="col-xs-9 text-left mobile-padding">Resources</div>
                                                                                                     </div>
                                                                                                 </div>
                                                 <div class="arrow-down arrow-grey"></div>
                                                 <div class="price-table-footer">
-                                                    <button type="button" class="btn grey-salsa btn-outline price-button sbold uppercase">Sign Up</button>
+                                                    <button data-group="4" type="button" class="btn mt-ladda-btn  ladda-button grey-salsa btn-outline sbold uppercase price-button plugin-signup" data-style="slide-down">
+                                                        <span class="ladda-label">Sign Up</span>
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
@@ -258,5 +266,22 @@ Amibroker Data plugin for DSE
 
 @push('css')
 <link href="{{ URL::asset('metronic/assets/pages/css/pricing.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ URL::asset('metronic/assets/global/plugins/ladda/ladda-themeless.min.css') }}" rel="stylesheet" type="text/css" />
 @endpush
-
+@push('scripts')
+<script src="{{ URL::asset('metronic/assets/global/plugins/ladda/spin.min.js') }}"></script>
+<script src="{{ URL::asset('metronic/assets/global/plugins/ladda/ladda.min.js') }}"></script>
+<script>
+$(document).ready(function () {
+    $('.plugin-signup').click(function () {
+    var l = Ladda.create(this);
+        l.start();        
+        var gid = $(this).data('group');
+        $.get('?gid='+gid, function () {
+            swal('Request submitted', ' Please wait for approval. Once we approve your request you will get a mail with instructions', 'success');
+            l.stop();
+        });
+    });
+});    
+</script>
+@endpush

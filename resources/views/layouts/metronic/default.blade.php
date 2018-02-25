@@ -24,11 +24,16 @@
                         <h1>@yield('title')</h1>
                         @include('html.breadcrumbs')
                      </div>
-                     <div class="alert alert-success alert-dismissable">
+                     <div class="alert alert-info alert-info">
                          <button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>
-                         Dear valued visitors, we have added 59 candlestick patterns in our TA chart
+{{--                          Dear valued visitors, we have added 59 candlestick patterns in our TA chart
                          <a target="_blank" href="{{url('/ta-chart')}}" class="alert-link"> Please check this one as well. </a>
+                         If you have any suggestion, you can drop an email to info@stockbangladesh.com --}}
+                         
+                                                  Dear valued visitors, we have released our new Amibroker Plugin. Please 
+                         <a target="_blank" href="{{url('/resources/amibroker-data-plugin-dse')}}" class="alert-link"> click here  </a> to check this one as well.
                          If you have any suggestion, you can drop an email to info@stockbangladesh.com
+
                      </div>
                         @include('global-ui')
 
