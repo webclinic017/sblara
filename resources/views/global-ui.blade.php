@@ -478,7 +478,7 @@
 
                             <div class="col-md-2">
                                 <div class="margin-bottom-10">
-                                    <div class="btn-group btn-group-solid">
+                                    <div class="btn-group btn-group-solid hidden-sm hidden-xs">
 
                                             <button type="button" class="btn purple prev tooltips" data-container="body" data-placement="left" data-original-title="Press left arrow of keyboard"><i class="fa fa-arrow-left"></i> Prev</button>
                                             <button type="button" class="btn purple next tooltips" data-container="body" data-placement="right" data-original-title="Press right arrow of keyboard">Next <i class="fa fa-arrow-right"></i></button>
@@ -519,6 +519,20 @@
                         <a  class="btn red btn-sm  visible-sm visible-xs loadChart" ><i class="fa fa-refresh"></i> Refresh </a>
                     </div>
                 </div>
+
+        <div class="row margin-bottom-10" >      
+            <div class="col-md-12" style="text-align: center;">
+                
+            <div class="btn-group btn-group-solid hidden-md hidden-lg " >
+
+                    <button type="button" class="btn purple prev btn-sm " data-container="body" data-placement="left" ><i class="fa fa-arrow-left"></i> Prev</button>
+                    <button type="button" class="btn purple next btn-sm " data-container="body" data-placement="right" >Next <i class="fa fa-arrow-right"></i></button>
+
+            </div> 
+
+            </div>
+        </div>
+
             
 {{--  --}}
             <div id="chartContainer" class="chartcontent thumbnail" style="min-height: 200px;">
