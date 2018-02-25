@@ -1,9 +1,6 @@
-@extends('voyager::master')
-@php
-$users = \App\User::where('group_id',  0)->where('plugin_apply', '!=', 0)->get();
-@endphp
-@section('content')
-<table class="table table-responsive">
+@extends('layouts.admin')
+@section('custom')
+<table class="table table-responsive table-hover">
 	<tr>
 		<th>Name</th>
 		<th>Username</th>
@@ -34,7 +31,36 @@ $users = \App\User::where('group_id',  0)->where('plugin_apply', '!=', 0)->get()
 			@break
 			@endswitch
 			<td>
-				<button class="btn btn-success btn-sm approve">Approve</button>
+
+<!-- Modal -->
+<div id="{{$user->id}}" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <form >
+    	
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Confirm Approval</h4>
+      </div>
+      <div class="modal-body">
+		<input type="hidden" name="approve" value="{{$user->id}}">
+		<div class="form-group">	
+			<label for="">Expire Date</label>
+				<input class="form-control" type="date" name="expired_at" @if($user->plugin_apply != '1') required @endif>
+		</div>
+      </div>
+      <div class="modal-footer">
+      	<button class="btn btn-success">Confirm</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+    </form>
+
+  </div>
+</div>		
+				<button data-toggle="modal" data-target="#{{$user->id}}" class="btn btn-success btn-sm approve">Approve</button>
 			</td>
 		</td>
 	</tr>

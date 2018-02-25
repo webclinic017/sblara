@@ -114,6 +114,16 @@ Route::get('/pluginResources', function () {
 });
 
 
+Route::get('/plugin-installer-win7and8', function () {
+    return response()->download(storage_path() . '/app/plugin/StockBangladeshPlugin-Win7-8.zip');
+})->middleware('auth');
+
+
+Route::get('/plugin-installer-win10', function () {
+    return response()->download(storage_path() . '/app/plugin/StockBangladeshPlugin-Win10.zip');
+})->middleware('auth');
+
+
 Route::get('/pluginIntra2', function () {
     return response()->download(storage_path() . '/app/plugin/intra_data_test.txt');
 });
@@ -269,6 +279,14 @@ Route::get('/resources/amibroker-data-plugin-dse', function () {
     {
         $user = \Auth::user();
         $user->plugin_apply = request()->gid;
+
+        if($user->plugin_apply == '1' && $user->group_id == '0')
+        {
+            $user->plugin_approved_at = \Carbon\Carbon::now();        
+            $user->group_id = $user->plugin_apply;
+            \Mail::to($user)->send(new \App\Mail\PluginRequestApproved());
+        }
+
         $user->save();
         return "";
     }    
