@@ -129,4 +129,9 @@ class UserParticipantsController extends Controller
     {
         //
     }
+
+    public function home()
+    {
+        return view('user_courses.home', ['batches' => 1]);
+    }
 }

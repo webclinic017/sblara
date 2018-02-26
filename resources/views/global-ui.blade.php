@@ -174,6 +174,7 @@
                                     <select  id="Indicator2" class="bs-select form-control">
 
 
+                                            <option value="none" >Indicator 2</option>
                                             <option value="AccDist" title="A/D">Accu/Dist</option>
                                             <option value="AroonOsc" title="ArnOsc">Aroon Oscillator</option>
                                             <option value="Aroon" title="Aroon">Aroon Up/Down</option>
@@ -214,46 +215,53 @@
                       </div>
                       <div class="col-md-2 " >
                         <div class="margin-bottom-10">
+                        
+                                    <select  id="Indicator4" class="indicator4 form-control indicator4" multiple="">
+                                        
+                                        <option value="AccDist" title="A/D">Accu/Dist</option>
+                                        <option value="AroonOsc" title="ArnOsc">Aroon Oscillator</option>
+                                        <option value="Aroon" title="Aroon">Aroon Up/Down</option>
+                                        <option value="ADX" title="ADX">Avg Directional Index</option>
+                                        <option value="ATR" title="ATR">Avg True Range</option>
+                                        <option value="BBW" title="BBW">Bollinger Band Width</option>
+                                        <option value="CMF" title="CMF">Chaikin Money Flow</option>
+                                        <option value="COscillator" title="COsc">Chaikin Oscillator</option>
+                                        <option value="CVolatility" title="CVol">Chaikin Volatility</option>
+                                        <option value="CLV" title="CLV">Close Location Value</option>
+                                        <option value="CCI" title="CCI">CCI</option>
+                                        <option value="DPO" title="DPO">Detrended Price Osc</option>
+                                        <option value="DCW" title="DCW">Donchian Channel</option>
+                                        <option value="EMV" title="EMV">Ease of Movement</option>
+                                        <option value="FStoch" title="FStoch">Fast Stochastic</option>
+                                        <option value="MACD" title="MACD" >MACD</option>
+                                        <option value="MDX" title="MDX">Mass Index</option>
+                                        <option value="Momentum" title="Momentum">Momentum</option>
+                                        <option value="MFI" title="MFI">Money Flow Index</option>
+                                        <option value="NVI" title="NVI">Neg Volume Index</option>
+                                        <option value="OBV" title="OBV">On Balance Volume</option>
+                                        <option value="Performance" title="Perfornamce">Performance</option>
+                                        <option value="PPO" title="PPO">% Price Oscillator</option>
+                                        <option value="PVO" title="PVO">% Volume Oscillator</option>
+                                        <option value="PVI" title="PVI">Pos Volume Index</option>
+                                        <option value="PVT" title="PVT">Price Volume Trend</option>
+                                        <option value="ROC" title="ROC">Rate of Change</option>
+                                        <option value="RSI"  title="RSI">RSI</option>
+                                        <option value="SStoch" title="SStoch">Slow Stochastic</option>
+                                        <option value="StochRSI" title="StochRSI">StochRSI</option>
+                                        <option value="TRIX" title="TRIX">TRIX</option>
+                                        <option value="UO" title="UO">Ultimate Oscillator</option>
+                                        <option value="Vol" title="VOL">Volume</option>
+                                        <option value="WilliamR" title="WilliamR">William's %R</option>
+                                    </select>  
+                            </div>                                    
+                      </div>  
+
+                      <div class="col-md-2 " >
+                        <div class="margin-bottom-10">
                      
-                                    <select  id="Indicator3" class="bs-select form-control" title="Indicators + candle patterns" data-style="yellow">
-                                        <optgroup label="Indicators">
-                                            <option value="AccDist" title="A/D">Accu/Dist</option>
-                                            <option value="AroonOsc" title="ArnOsc">Aroon Oscillator</option>
-                                            <option value="Aroon" title="Aroon">Aroon Up/Down</option>
-                                            <option value="ADX" title="ADX">Avg Directional Index</option>
-                                            <option value="ATR" title="ATR">Avg True Range</option>
-                                            <option value="BBW" title="BBW">Bollinger Band Width</option>
-                                            <option value="CMF" title="CMF">Chaikin Money Flow</option>
-                                            <option value="COscillator" title="COsc">Chaikin Oscillator</option>
-                                            <option value="CVolatility" title="CVol">Chaikin Volatility</option>
-                                            <option value="CLV" title="CLV">Close Location Value</option>
-                                            <option value="CCI" title="CCI">CCI</option>
-                                            <option value="DPO" title="DPO">Detrended Price Osc</option>
-                                            <option value="DCW" title="DCW">Donchian Channel</option>
-                                            <option value="EMV" title="EMV">Ease of Movement</option>
-                                            <option value="FStoch" title="FStoch">Fast Stochastic</option>
-                                            <option value="MACD" title="MACD" >MACD</option>
-                                            <option value="MDX" title="MDX">Mass Index</option>
-                                            <option value="Momentum" title="Momentum">Momentum</option>
-                                            <option value="MFI" title="MFI">Money Flow Index</option>
-                                            <option value="NVI" title="NVI">Neg Volume Index</option>
-                                            <option value="OBV" title="OBV">On Balance Volume</option>
-                                            <option value="Performance" title="Perfornamce">Performance</option>
-                                            <option value="PPO" title="PPO">% Price Oscillator</option>
-                                            <option value="PVO" title="PVO">% Volume Oscillator</option>
-                                            <option value="PVI" title="PVI">Pos Volume Index</option>
-                                            <option value="PVT" title="PVT">Price Volume Trend</option>
-                                            <option value="ROC" title="ROC">Rate of Change</option>
-                                            <option value="RSI"  title="RSI">RSI</option>
-                                            <option value="SStoch" title="SStoch">Slow Stochastic</option>
-                                            <option value="StochRSI" title="StochRSI">StochRSI</option>
-                                            <option value="TRIX" title="TRIX">TRIX</option>
-                                            <option value="UO" title="UO">Ultimate Oscillator</option>
-                                            <option value="Vol" title="VOL">Volume</option>
-                                            <option value="WilliamR" title="WilliamR">William's %R</option>
-                                        </optgroup>
-                                       <optgroup label="Candle Pattern">
-                                           <option value="trader_cdl2crows" >Two Crows</option>
+                                    <select  id="Indicator3" class="bs-select form-control" title="Candle patterns" data-style="yellow">
+                                             <option value="none" selected="" >Candle pattern</option>
+                                             <option value="trader_cdl2crows" >Two Crows</option>
                                            <option value="trader_cdl3blackcrows">Three Black Crows</option>
                                            <option value="trader_cdl3inside">Three Inside Up/Down</option>
                                            <option value="trader_cdl3linestrike">Three-Line Strike</option>
@@ -313,52 +321,9 @@
                                            <option value="trader_cdlunique3river" >Unique 3 River</option>
                                            <option value="trader_cdlupsidegap2crows" >Upside Gap Two Crows</option>
                                            <option value="trader_cdlxsidegap3methods" >Upside/Downside Gap Three Methods</option>
-                                       </optgroup>
                                     </select>  
                         </div>                                    
-                      </div>
-                      <div class="col-md-2 " >
-                        <div class="margin-bottom-10">
-                        
-                                    <select  id="Indicator4" class="indicator4 form-control indicator4" multiple="">
-                                        
-                                        <option value="AccDist" title="A/D">Accu/Dist</option>
-                                        <option value="AroonOsc" title="ArnOsc">Aroon Oscillator</option>
-                                        <option value="Aroon" title="Aroon">Aroon Up/Down</option>
-                                        <option value="ADX" title="ADX">Avg Directional Index</option>
-                                        <option value="ATR" title="ATR">Avg True Range</option>
-                                        <option value="BBW" title="BBW">Bollinger Band Width</option>
-                                        <option value="CMF" title="CMF">Chaikin Money Flow</option>
-                                        <option value="COscillator" title="COsc">Chaikin Oscillator</option>
-                                        <option value="CVolatility" title="CVol">Chaikin Volatility</option>
-                                        <option value="CLV" title="CLV">Close Location Value</option>
-                                        <option value="CCI" title="CCI">CCI</option>
-                                        <option value="DPO" title="DPO">Detrended Price Osc</option>
-                                        <option value="DCW" title="DCW">Donchian Channel</option>
-                                        <option value="EMV" title="EMV">Ease of Movement</option>
-                                        <option value="FStoch" title="FStoch">Fast Stochastic</option>
-                                        <option value="MACD" title="MACD" >MACD</option>
-                                        <option value="MDX" title="MDX">Mass Index</option>
-                                        <option value="Momentum" title="Momentum">Momentum</option>
-                                        <option value="MFI" title="MFI">Money Flow Index</option>
-                                        <option value="NVI" title="NVI">Neg Volume Index</option>
-                                        <option value="OBV" title="OBV">On Balance Volume</option>
-                                        <option value="Performance" title="Perfornamce">Performance</option>
-                                        <option value="PPO" title="PPO">% Price Oscillator</option>
-                                        <option value="PVO" title="PVO">% Volume Oscillator</option>
-                                        <option value="PVI" title="PVI">Pos Volume Index</option>
-                                        <option value="PVT" title="PVT">Price Volume Trend</option>
-                                        <option value="ROC" title="ROC">Rate of Change</option>
-                                        <option value="RSI"  title="RSI">RSI</option>
-                                        <option value="SStoch" title="SStoch">Slow Stochastic</option>
-                                        <option value="StochRSI" title="StochRSI">StochRSI</option>
-                                        <option value="TRIX" title="TRIX">TRIX</option>
-                                        <option value="UO" title="UO">Ultimate Oscillator</option>
-                                        <option value="Vol" title="VOL">Volume</option>
-                                        <option value="WilliamR" title="WilliamR">William's %R</option>
-                                    </select>  
-                            </div>                                    
-                      </div>          
+                      </div>                              
                             <div class="col-md-2 ">
                                 <div class="margin-bottom-10">
                                     <select id="charttype" class="bs-select form-control">
@@ -375,7 +340,8 @@
                             <div class="col-md-2  ">
                                 <div class="margin-bottom-10">
                                     <select id="overlay" class="bs-select form-control ">
-                                        <option value="BB" selected="">Bollinger Band</option>
+                                        <option value="" selected="">None</option>
+                                        <option value="BB" >Bollinger Band</option>
                                         <option value="DC">Donchian Channel</option>
                                         <option value="Envelop">Envelop (SMA 20 +/- 10%)</option>
                                     </select>
@@ -387,7 +353,8 @@
                                 <div class="margin-bottom-10">
 
                                         <select id="mov1" class="bs-select form-control">
-                                            <option value="SMA" selected="">Simple</option>
+                                            <option value="" selected="">None</option>
+                                            <option value="SMA" >Simple</option>
                                             <option value="EMA">Exponential</option>
                                             <option value="TMA">Triangular</option>
                                             <option value="WMA">Weighted</option>
@@ -416,7 +383,8 @@
                             <div class="col-md-2  ">
                                 <div class="margin-bottom-10">
                                     <select id="mov2" class="bs-select form-control">
-                                        <option value="SMA" selected="">Simple</option>
+                                        <option value="" selected="">None</option>
+                                        <option value="SMA" >Simple</option>
                                         <option value="EMA">Exponential</option>
                                         <option value="TMA">Triangular</option>
                                         <option value="WMA">Weighted</option>

@@ -111,7 +111,8 @@ class EodIntraFinalizeCommand extends Command
                 $dataToSaveInTradesTable = array();
 
                 // Check if it is same row of previous minute
-                if ($batch_total_trades != $batch_total_trades_from_dse) {
+                if (1) {
+                //if ($batch_total_trades != $batch_total_trades_from_dse) {
 
 
                     // saving trade data in TRD table.  -- STARTS
@@ -178,42 +179,7 @@ class EodIntraFinalizeCommand extends Command
                                 );
 
 
-                                /////////////////// WE WILL PROCESS INTRADAY DATA NOW \\\\\\\\\\\\\\\\\\\\\\\
 
-
-                                $temp = array();
-                                $temp['market_id'] = $market_id;
-                                $temp['instrument_id'] = $instrument_id;
-                                $temp['quote_bases'] = $data->MKISTAT_QUOTE_BASES;
-                                $temp['open_price'] = $data->MKISTAT_OPEN_PRICE;
-                                $temp['pub_last_traded_price'] = $data->MKISTAT_PUB_LAST_TRADED_PRICE;
-                                $temp['spot_last_traded_price'] = $data->MKISTAT_SPOT_LAST_TRADED_PRICE;
-                                $temp['high_price'] = $data->MKISTAT_HIGH_PRICE;
-                                $temp['low_price'] = $data->MKISTAT_LOW_PRICE;
-                                //$temp['close_price'] = $data->MKISTAT_CLOSE_PRICE;
-                                $temp['close_price'] = $ltp;
-                                $temp['yday_close_price'] = $data->MKISTAT_YDAY_CLOSE_PRICE;
-                                $temp['total_trades'] = $data->MKISTAT_TOTAL_TRADES;
-                                $temp['total_volume'] = $data->MKISTAT_TOTAL_VOLUME;
-                                $temp['total_value'] = $data->MKISTAT_TOTAL_VALUE;
-                                $temp['public_total_trades'] = $data->MKISTAT_PUBLIC_TOTAL_TRADES;
-                                $temp['public_total_volume'] = $data->MKISTAT_PUBLIC_TOTAL_VOLUME;
-                                $temp['public_total_value'] = $data->MKISTAT_PUBLIC_TOTAL_VALUE;
-                                $temp['spot_total_trades'] = $data->MKISTAT_SPOT_TOTAL_TRADES;
-                                $temp['spot_total_volume'] = $data->MKISTAT_SPOT_TOTAL_VOLUME;
-                                $temp['spot_total_value'] = $data->MKISTAT_SPOT_TOTAL_VALUE;
-                                $temp['lm_date_time'] = date('Y-m-d H:i:s', strtotime($data->MKISTAT_LM_DATE_TIME));
-                                $temp['trade_time'] = date('H:i', strtotime($data->MKISTAT_LM_DATE_TIME));
-                                $temp['trade_date'] = date('Y-m-d', strtotime($data->MKISTAT_LM_DATE_TIME));
-                                $temp['batch'] = $data_bank_intraday_batch;
-
-                                //dd($temp);
-                                if ($data->MKISTAT_PUBLIC_TOTAL_VOLUME + $data->MKISTAT_SPOT_TOTAL_VOLUME > 0) {
-                                    $instrument_ids[] = $instrument_id;
-                                }
-
-
-                                $dataToSave[] = $temp;
                             }
 
 
@@ -231,44 +197,17 @@ class EodIntraFinalizeCommand extends Command
                     }
 
 
-                    if (!empty($dataToSave)) {
-                        /*set last updated batch_id in instruments table start*/
-                        DB::table('instruments')->whereIn('id', $instrument_ids)->update(['batch_id' => $data_bank_intraday_batch]);
-                        /*set last updated batch_id in instruments table end*/
-
-                        DB::table('data_banks_intradays')->insert($dataToSave);
-
-
-                        //recording new value of data_bank_intraday_batch and batch_total_trades of markets table
-
-                        DB::table('markets')
-                            ->where('id', $market_id)
-                            ->update(['data_bank_intraday_batch' => $data_bank_intraday_batch, 'batch_total_trades' => $batch_total_trades_from_dse]);
-
-                        $this->info(count($dataToSave) . ' row inserted into data_banks_intradays');
-                        $this->info("Batch  ===" . $data_bank_intraday_batch);
-                        $this->info("Batch Total trades===" . $batch_total_trades_from_dse);
-
-
-                    }
-
+                    $this->info('Eod table updated');
 
                 }
+                
+
 
 
             } else {
                 // Its not returning today data. We will just send a message in console
                 $this->info('Dse returning previous data');
             }
-
-
-        // this is alert of current mobile sms balance
-        $mobile_no = "8801929912870"; //Hosting Bangladesh
-        $smsbalance = file_get_contents("http://api.mimsms.com/api/command?user=hostingbd&password=UmThGy69&cmd=Credits");
-        $smsbalance = $smsbalance / 100;
-        $smsText = "Market Started. Remaining SMS Balance= $smsbalance Tk. - StockBangladesh";
-        $text_encoded = urlencode($smsText);
-        file_get_contents("http://api.mimsms.com/api/sendsms/plain?user=hostingbd&password=UmThGy69&sender=StockBD&SMSText=$text_encoded&GSM=$mobile_no");
 
 
     }

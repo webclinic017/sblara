@@ -56,6 +56,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
 });
 
 Route::get('/courses-avaliable', 'UserParticipantsController@index')->name('courses-avaliable');
+Route::get('/courses/home', 'UserParticipantsController@home')->name('courses-home');
 Route::resource('/batches', 'CourseManageController');//->middleware('admin');
 Route::get('/registration/{id}', 'UserParticipantsController@create')->name('registration.create');
 Route::post('/registration', 'UserParticipantsController@store')->name('registration.store');
@@ -278,7 +279,13 @@ Route::get('/resources/amibroker-data-plugin-dse', function () {
     if(request()->has('gid'))
     {
         $user = \Auth::user();
+        if($user->plugin_apply == request()->gid)
+        {
+            return "";
+        }
         $user->plugin_apply = request()->gid;
+        $user->name = request()->name;
+        $user->contact_no = request()->mobile;
 
         if($user->plugin_apply == '1' && $user->group_id == '0')
         {
@@ -287,10 +294,16 @@ Route::get('/resources/amibroker-data-plugin-dse', function () {
             \Mail::to($user)->send(new \App\Mail\PluginRequestApproved());
         }
 
+        if($user->plugin_apply != '1')
+        {
+            \Mail::to($user)->send(new \App\Mail\PluginRequestReceived($user));
+        }
+
         $user->save();
         return "";
     }    
-    return view('amibroker-data-plugin');
+    $user = Auth::user();
+    return view('amibroker-data-plugin')->with(compact(['user']));
 })->name('amibroker-data-plugin-dse')->middleware('auth');
 
 

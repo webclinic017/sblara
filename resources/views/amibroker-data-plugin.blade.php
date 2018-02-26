@@ -78,7 +78,7 @@ Amibroker Data plugin for DSE
                                                 <div class="arrow-down arrow-grey"></div>
                                                 <div class="price-table-footer">
                                                     <button data-group="1" type="button" class="btn mt-ladda-btn  ladda-button grey-salsa btn-outline sbold uppercase price-button plugin-signup" data-style="slide-down">
-                                                        <span class="ladda-label">Sign Up</span>
+                                                        <span class="ladda-label">Apply</span>
                                                     </button>
                                                 </div>
                                             </div>
@@ -135,7 +135,7 @@ Amibroker Data plugin for DSE
                                                 <div class="arrow-down arrow-grey"></div>
                                                 <div class="price-table-footer">
                                                     <button data-group="2" type="button" class="btn mt-ladda-btn  ladda-button grey-salsa btn-outline sbold uppercase price-button plugin-signup" data-style="slide-down">
-                                                        <span class="ladda-label">Sign Up</span>
+                                                        <span class="ladda-label">Apply</span>
                                                     </button>
                                                 </div>
                                             </div>
@@ -193,7 +193,7 @@ Amibroker Data plugin for DSE
                                                 <div class="arrow-down arrow-grey"></div>
                                                 <div class="price-table-footer">
                                                     <button data-group="3" type="button" class="btn mt-ladda-btn  ladda-button green btn-outline sbold uppercase price-button plugin-signup" data-style="slide-down">
-                                                        <span class="ladda-label">Sign Up</span>
+                                                        <span class="ladda-label">Apply</span>
                                                     </button>
                                                 </div>
                                             </div>
@@ -250,7 +250,7 @@ Amibroker Data plugin for DSE
                                                 <div class="arrow-down arrow-grey"></div>
                                                 <div class="price-table-footer">
                                                     <button data-group="4" type="button" class="btn mt-ladda-btn  ladda-button grey-salsa btn-outline sbold uppercase price-button plugin-signup" data-style="slide-down">
-                                                        <span class="ladda-label">Sign Up</span>
+                                                        <span class="ladda-label">Apply</span>
                                                     </button>
                                                 </div>
                                             </div>
@@ -273,14 +273,39 @@ Amibroker Data plugin for DSE
 <script src="{{ URL::asset('metronic/assets/global/plugins/ladda/ladda.min.js') }}"></script>
 <script>
 $(document).ready(function () {
+        var name = "{{$user->name}}";
+        var mobile = "{{$user->contact_no}}";
+        var pending = "{{$user->plugin_apply != $user->group_id?$user->plugin_apply:""}}";
+        
     $('.plugin-signup').click(function () {
-    var l = Ladda.create(this);
-        l.start();        
+
+    var l = Ladda.create(this);     
         var gid = $(this).data('group');
-        $.get('?gid='+gid, function () {
+
+        const {value: formValues} =  swal({
+          title: 'Contact Information',
+          html:
+            '<div class="form-group" style="text-align:left"><label>Name</label><input id="name" class="form-control" placeholder="Name" value="'+name+'"></div>'+
+            '<div class="form-group" style="text-align:left"><label>Mobile</label><input id="mobile" class="form-control" placeholder="Mobile" value="'+mobile+'"></div>',
+          focusConfirm: false,
+          preConfirm: () => {
+            l.start();
+                name = $("#name").val();
+                mobile = $("#mobile").val();
+                pending = gid;
+            $.get('?gid='+gid, {name: name, mobile: mobile }, function () {
             swal('Request submitted', ' Please wait for approval. Once we approve your request you will get a mail with instructions', 'success');
-            l.stop();
-        });
+            l.stop();        
+                })
+       
+
+          }
+        })
+        //
+        if (formValues) {
+          swal(JSON.stringify(formValues))
+        }        
+        return ; 
     });
 });    
 </script>

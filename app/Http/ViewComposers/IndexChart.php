@@ -46,58 +46,71 @@ class IndexChart
 
 
         $c=0;
-        foreach($indexData['index'] as $indexId=>$alldata)
+        if(isset($indexData['index']))
         {
 
-            $xdata=$alldata['data']->pluck('capital_value')->toArray();
-            $x_time=$alldata['data']->pluck('date_time')->toArray();
+            foreach ($indexData['index'] as $indexId => $alldata) {
 
-            for($i=0;$i<count($xdata);++$i)
-            {
-                $temp=array();
-                $temp[]=$x_time[$i]->timestamp*1000;
-                $temp[]=$xdata[$i];
-                $xArr[$indexId][]=$temp;
+                $xdata = $alldata['data']->pluck('capital_value')->toArray();
+                $x_time = $alldata['data']->pluck('date_time')->toArray();
+
+                for ($i = 0; $i < count($xdata); ++$i) {
+                    $temp = array();
+                    $temp[] = $x_time[$i]->timestamp * 1000;
+                    $temp[] = $xdata[$i];
+                    $xArr[$indexId][] = $temp;
+                }
+                // isset condition. at 10:30 am
+                $indexData['index'][$indexId]['last'] = isset($indexData['index'][$indexId]['data'][0]) ? $indexData['index'][$indexId]['data'][0] : 0;
+                $indexData['index'][$indexId]['data'] = collect(isset($xArr[$indexId]) ? ($xArr[$indexId]) : [])->toJson();
+                $indexData['index'][$indexId]['details']['height'] = 272;
+
+
+                // setting active tab. 1st tab is active
+                if ($c == 2)
+                    $indexData['index'][$indexId]['details']['active'] = 'active';
+                else
+                    $indexData['index'][$indexId]['details']['active'] = '';
+
+                $c++;
             }
-            // isset condition. at 10:30 am 
-            $indexData['index'][$indexId]['last']=isset($indexData['index'][$indexId]['data'][0])?$indexData['index'][$indexId]['data'][0]:0;
-            $indexData['index'][$indexId]['data']=collect(isset($xArr[$indexId])?($xArr[$indexId]):[])->toJson();
-            $indexData['index'][$indexId]['details']['height']=272;
 
 
-            // setting active tab. 1st tab is active
-            if($c==2)
-                 $indexData['index'][$indexId]['details']['active']='active';
-            else
-                $indexData['index'][$indexId]['details']['active']='';
+            $xVolArr = array();
 
-            $c++;
-        }
+            if (isset($indexData['trade']))
+            {
+                $trade_data = $indexData['trade'][0];
+                $xdata = $indexData['trade']->get('trade_value_diff');
+                $x_time = $indexData['trade']->pluck('TRD_LM_DATE_TIME')->toArray();
+
+                for ($i = 0; $i < count($xdata); ++$i) {
+                    //skipping 0 vol
+                    if (!$xdata[$i])
+                        continue;
+
+                    $temp = array();
+                    $temp[] = $x_time[$i]->timestamp * 1000;
+                    $temp[] = $xdata[$i];
+
+                    $xVolArr[] = $temp;
+                }
+
+                //dd($x_time);
+
+            }
 
 
 
-        $trade_data=$indexData['trade'][0];
-        $xVolArr=array();
-        $xdata=$indexData['trade']->get('trade_value_diff');
-        $x_time=$indexData['trade']->pluck('TRD_LM_DATE_TIME')->toArray();
+            $xVolArr = collect($xVolArr)->toJson();
+            $indexData['trade'] = $xVolArr;
 
-        for($i=0;$i<count($xdata);++$i)
+
+        }else
         {
-            //skipping 0 vol
-            if(!$xdata[$i])
-                continue;
-
-            $temp=array();
-            $temp[]=$x_time[$i]->timestamp*1000;
-            $temp[]=$xdata[$i];
-
-            $xVolArr[]=$temp;
+            // setting empty array for view
+            $indexData['index']=array();
         }
-
-        //dd($x_time);
-
-        $xVolArr=collect($xVolArr)->toJson();
-        $indexData['trade']=$xVolArr;
 
 
         // reverse to the default timezone so that it dont cause any problem later
