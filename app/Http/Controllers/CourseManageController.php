@@ -112,12 +112,18 @@ class CourseManageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function batch_details($id)
     {
         //
         //  dd("sdf2");
         $batch = CourseBatches::find($id);
 
+        return view('admin_courses.batches.show', ['batch' => $batch]);
+    }
+
+  public function show($id)
+    {
+        $batch = CourseBatches::find($id);
         return view('admin_courses.batches.show', ['batch' => $batch]);
     }
 

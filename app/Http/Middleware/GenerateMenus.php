@@ -33,6 +33,7 @@ class GenerateMenus
             $menu->matrix->link->href('javascript:;');
 
             $menu->matrix->add('Data Matrix', ['route' => 'data-matrix'])->prepend('<i class="fa fa-paperclip" ></i > ');
+            $menu->matrix->add('Watch Matrix', ['route' => 'watch-matrix'])->prepend('<i class="fa fa-paperclip" ></i > ');
             $menu->matrix->add('Price Matrix', ['route' => 'price-matrix'])->prepend('<i class="fa fa-paperclip" ></i > ');
             $menu->matrix->add('Price List', ['route' => 'dse-price-list'])->prepend('<i class="fa fa-search" ></i > ');
 
@@ -86,14 +87,40 @@ class GenerateMenus
             $menu->portfolio->add('Portfolio home', ['route' => 'portfolio.index'])->prepend('<i class="icon-bar-chart" ></i > ')->active('portfolio/*');
             $menu->portfolio->add('Create new portfolio', ['route' => 'portfolio.create'])->prepend('<i class="icon-bar-chart" ></i > ');
 
+
+            $menu->add('Courses', ['class' => 'dropdown dropdown-fw  ']);
+            $menu->courses->link->href('javascript:;')->attr(['class' => 'text-uppercase']);
+            $menu->courses->attr(['class' => 'dropdown dropdown-fw  '])->prepend('<i class="fa fa-graduation-cap" ></i > ');
+
+
+            $menu->courses->add('Technical analysis', ['class' => 'dropdown more-dropdown-sub closed'])->prepend('<i class="icon-bar-chart" ></i > '); //should remove open class
+            $menu->technicalAnalysis->link->href('javascript:;');
+
+            $menu->technicalAnalysis->add('TA Course Home ', ['route' => '/courses/technical-analysis'])->prepend('<i class="icon-bar-chart" ></i > ');
+            $menu->technicalAnalysis->add('Basic TA', ['route' => '/courses/technical-analysis/basic-technical-analysis'])->prepend('<i class="icon-bar-chart" ></i > ');
+            $menu->technicalAnalysis->add('Executive TA', ['route' => '/courses/technical-analysis/executive-technical-analysis'])->prepend('<i class="icon-bar-chart" ></i > ');
+            $menu->technicalAnalysis->add('Advance TA', ['route' => '/courses/technical-analysis/advance-technical-analysis-course'])->prepend('<i class="icon-bar-chart" ></i > ');
+            $menu->technicalAnalysis->add('Advance Usage of Amibroker', ['route' => '/courses/technical-analysis/advance-usage-of-amibroker'])->prepend('<i class="icon-bar-chart" ></i > ');
+            $menu->technicalAnalysis->add('Free TA Course', ['route' => '/courses/technical-analysis/free-technical-analysis-course'])->prepend('<i class="icon-bar-chart" ></i > ');
+
+
+            $menu->courses->add('Fundamental analysis', ['class' => 'dropdown more-dropdown-sub closed'])->prepend('<i class="icon-bar-chart" ></i > '); //should remove open class
+            $menu->fundamentalAnalysis->link->href('javascript:;');
+
+            $menu->fundamentalAnalysis->add('Basic Fundamental ', ['route' => '/courses/fundamental-analysis/basic-fundamental-analysis'])->prepend('<i class="icon-bar-chart" ></i > ');
+            $menu->fundamentalAnalysis->add('Financial modeling', ['route' => '/courses/fundamental-analysis/business-and-financial-modeling'])->prepend('<i class="icon-bar-chart" ></i > ');
+            $menu->fundamentalAnalysis->add('Risk Management', ['route' => '/courses/fundamental-analysis/risk-management'])->prepend('<i class="icon-bar-chart" ></i > ');
+            $menu->fundamentalAnalysis->add('Financial reporting', ['route' => '/courses/fundamental-analysis/standard-financial-reporting-with-useful-tips'])->prepend('<i class="icon-bar-chart" ></i > ');
+
+
+            $menu->courses->add('Upcoming Courses', ['route' => '/courses/upcoming-courses'])->prepend('<i class="fa fa-graduation-cap" ></i > ')->active('/courses/upcoming-courses/*');
+
+
             /*Resources*/
 
             $menu->add('Resources', ['class' => 'dropdown dropdown-fw  ']);
             $menu->resources->link->href('javascript:;')->attr(['class' => 'text-uppercase']);
             $menu->resources->attr(['class' => 'dropdown dropdown-fw  '])->prepend('<i class="fa fa-database" ></i > ');
-
-            $menu->resources->add('Upcoming courses', ['route' => 'courses-avaliable'])->prepend('<i class="fa fa-graduation-cap" ></i > ');
-
 
 
             $menu->resources->add('Ipo', ['class' => 'dropdown more-dropdown-sub closed'])->prepend('<i class="fa fa-newspaper-o" ></i > '); //should remove open class

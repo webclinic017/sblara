@@ -1,5 +1,5 @@
 <div id="binding-example"></div>
-<div id="gridpanel"></div>
+<div id="gridpanel" style="overflow:scroll;"></div>
 
 
 
@@ -89,7 +89,7 @@ Ext.onReady(function () {
 
     h(c);
     var g = Ext.create("Ext.grid.feature.Grouping", {groupHeaderTpl: '{name} ({rows.length} Item{[values.rows.length > 1 ? "s" : ""]})'});
-    var d = Ext.create("Ext.grid.Panel", {height: 600, title: "Data Matrix", renderTo: "gridpanel", id: "datamatrix", tbar: ["Filter on change %:", " ", c], store: b, viewConfig: {stripeRows: false}, features: [g, {ftype: "filters", local: true}], columns: [
+    var d = Ext.create("Ext.grid.Panel", {height: 1000, /*width:1500,*/ title: "Data Matrix", renderTo: "gridpanel", id: "datamatrix", tbar: ["Filter on change %:", " ", c], store: b, viewConfig: {stripeRows: false}, features: [g, {ftype: "filters", local: true}], columns: [
         {header: "id", readOnly: true, dataIndex: "id", width: 70, hidden: true},
         {text: "Scrips", flex: 1, tdCls: "task", sortable: true, dataIndex: "code", hideable: false, summaryType: "count", width: 100, items: {xtype: "textfield", flex: 1, margin: 2, enableKeyEvents: true, listeners: {keyup: function () {
             var j = this.up("tablepanel").store;
@@ -126,6 +126,14 @@ Ext.onReady(function () {
 */
         {header: "NAV", dataIndex: "nav", width: 60, readOnly: true, filter: {}}
     ], dockedItems: [Ext.create("Ext.toolbar.Paging", {dock: "bottom", store: b})]})
+
+function reload()
+{
+b.load()
+}
+    setInterval(reload, 60000);
+
+
 });
 
 

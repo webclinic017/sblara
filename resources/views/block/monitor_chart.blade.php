@@ -123,15 +123,6 @@ $(document).ready(function(){
             document.getElementById('chart_placeholder{{ $id }}').style.display = 'block';
             var returnData = result;
 
-            if(window.se_chart{{$id}} )
-            {
-                window.se_chart{{$id}} ++;
-            }else{
-                window.se_chart{{$id}} = 1;
-            }
-            if(window.se_chart{{$id}} == 15){
-                location.reload();
-            }
             $("#monitor_chart{{ $id }}").highcharts({
                                                      chart: {
                                                          zoomType: 'xy',
@@ -404,7 +395,7 @@ $(document).ready(function(){
 
         period = document.getElementById('period{{ $id }}').value;
         get_url = "{{ url('/ajax/monitor/') }}/" + inst + "/" + period;
-        
+
         drawChart{{ $id }}(get_url);
         @if (Auth::guest())
             setCookie('symbol{{ $id }}', inst, 30);
@@ -445,12 +436,25 @@ $(document).ready(function(){
         $("#symbol{{ $id }}").trigger('change');
     
     function ref{{ $id }}() {
+
+
+    var chart = $("#monitor_chart{{ $id }}").highcharts();
+                       // console.log("#monitor_chart{{ $id }}");
+                        if (chart == null){
+                            // your code here.
+                        }else
+                        {
+                        //console.log('destroyed');
+                        chart.destroy();
+                        }
+
+
         if(document.getElementById('symbol{{ $id }}').value != -1) 
             $("#symbol{{ $id }}").trigger('change');
     }
 
      setInterval(ref{{ $id }}, 60000);
-    
+
 });
 
 

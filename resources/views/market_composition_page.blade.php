@@ -1,5 +1,11 @@
-@extends('layouts.metronic.default')
+@section('meta-title','Market Composition of DSE')
+@section('meta-description', "Another tool of market overview for DSE ")
+@section('page_heading')
+Market Composition
+@endsection
 
+
+@extends('layouts.metronic.default')
 @section('content')
 <!-- following style is to solve highchart problem in hidden tab-->
 <style>

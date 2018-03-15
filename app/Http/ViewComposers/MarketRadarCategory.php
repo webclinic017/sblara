@@ -52,7 +52,8 @@ class MarketRadarCategory
  data_banks_intradays
  WHERE
  data_banks_intradays.batch=$batch_id and
- data_banks_intradays.quote_bases NOT LIKE '%A-CB%'
+ data_banks_intradays.quote_bases NOT LIKE '%A-CB%' and
+ data_banks_intradays.quote_bases NOT LIKE '%N-EQ%'
  GROUP BY data_banks_intradays.quote_bases";
 
         $category_data_total = DB::select($sql);
@@ -68,9 +69,9 @@ class MarketRadarCategory
         {
             $category[] = 'Cat: ' . $row->PriceRange;
             $total[] = $row->TotalWithinRange;
-            $up[] = $category_data_up[$i]->TotalWithinRange;
+            $up[] = isset($category_data_up[$i])?$category_data_up[$i]->TotalWithinRange:0;
 
-            $per = round($category_data_up[$i]->TotalWithinRange / $row->TotalWithinRange * 100, 2);
+            $per = isset($category_data_up[$i])?round($category_data_up[$i]->TotalWithinRange / $row->TotalWithinRange * 100, 2):0;
             $sort[$row->PriceRange] = $per;
             $i++;
         }

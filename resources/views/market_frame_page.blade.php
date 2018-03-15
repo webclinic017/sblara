@@ -1,5 +1,11 @@
-@extends('layouts.metronic.default')
+@section('meta-title','Market Frame : Window of Dhaka Stock Exchange')
+@section('meta-description', "Its a quick view of today's market. It will help you to get the idea about which sector of the DSE performing best")
+@section('page_heading')
+Market Frame of DSE
+@endsection
 
+
+@extends('layouts.metronic.default')
 @section('content')
 
     <div class="row">

@@ -1,4 +1,15 @@
 <?php
+
+Route::get('/DSE/ACI/ta-chart', 'controller@action')->name('/DSE/ACI/ta-chart');
+Route::get('/DSE/ACI/advance-ta', 'controller@action')->name('/DSE/ACI/advance-ta');
+Route::get('/DSE/ACI/company-details', 'controller@action')->name('/DSE/ACI/company-details');
+Route::get('/DSE/ACI/fundamental-details', 'controller@action')->name('/DSE/ACI/fundamental-details');
+Route::get('/DSE/ACI/minute-chart', 'controller@action')->name('/DSE/ACI/minute-chart');
+Route::get('/DSE/ACI/news-chart', 'controller@action')->name('/DSE/ACI/news-chart');
+Route::get('/DSE/ACI/news', 'controller@action')->name('/DSE/ACI/news');
+
+
+
 //========================  Contest Start  ======================== 
 // Contest Portfolio Shares routes..
 Route::post('/portfolios/{portfolio}/shares/create', 'PortfolioSharesController@store')->name('portfolios.shares.store');
@@ -37,6 +48,12 @@ Route::get('/passport', 'Passport\PassportController@show');
 Route::get('/filter', 'FilterController@index');
 Route::post('/filter', 'FilterController@filter');
 Route::post('/save_filter', 'FilterController@save_filter');
+Route::post('/screeners/new', 'ScreenerController@save')->name('save-screeners')->middleware('auth');
+Route::get('/screeners/new', 'ScreenerController@create')->name('new-screener');
+Route::get('/screeners/result', 'ScreenerController@result')->name('new-screener');
+Route::get('/screeners/{slug?}', 'ScreenerController@show')->name('screeners');
+
+
 //
 // Route to courses
 Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
@@ -56,8 +73,37 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
 });
 
 Route::get('/courses-avaliable', 'UserParticipantsController@index')->name('courses-avaliable');
-Route::get('/courses/home', 'UserParticipantsController@home')->name('courses-home');
-Route::resource('/batches', 'CourseManageController');//->middleware('admin');
+Route::get('/courses/upcoming-courses', 'UserParticipantsController@index')->name('/courses/upcoming-courses');
+Route::get('courses-avaliable', function () {
+    return Redirect::to('/courses/upcoming-courses', 301);
+});
+
+
+Route::get('/courses/technical-analysis', 'UserParticipantsController@home')->name('/courses/technical-analysis');
+Route::get('/courses/technical-analysis/basic-technical-analysis', 'UserParticipantsController@basic_technical_analysis')->name('/courses/technical-analysis/basic-technical-analysis');
+Route::get('/courses/technical-analysis/executive-technical-analysis', 'UserParticipantsController@executive_technical_analysis')->name('/courses/technical-analysis/executive-technical-analysis');
+Route::get('/courses/technical-analysis/free-technical-analysis-course', 'UserParticipantsController@free_technical_analysis')->name('/courses/technical-analysis/free-technical-analysis-course');
+Route::get('/courses/technical-analysis/advance-technical-analysis-course', 'UserParticipantsController@advance_technical_analysis')->name('/courses/technical-analysis/advance-technical-analysis-course');
+Route::get('/courses/technical-analysis/advance-usage-of-amibroker', 'UserParticipantsController@advance_usage_of_amibroker')->name('/courses/technical-analysis/advance-usage-of-amibroker');
+Route::get('/courses/technical-analysis/mechanical-trading-method', 'UserParticipantsController@mechanical_trading_method')->name('/courses/technical-analysis/mechanical-trading-method');
+
+Route::get('/courses/fundamental-analysis/basic-fundamental-analysis', 'UserParticipantsController@basic_fundamental_analysis')->name('/courses/fundamental-analysis/basic-fundamental-analysis');
+Route::get('/courses/fundamental-analysis/business-and-financial-modeling', 'UserParticipantsController@business_and_financial_modeling')->name('/courses/fundamental-analysis/business-and-financial-modeling');
+Route::get('/courses/fundamental-analysis/risk-management', 'UserParticipantsController@risk_management')->name('/courses/fundamental-analysis/risk-management');
+Route::get('/courses/fundamental-analysis/standard-financial-reporting-with-useful-tips', 'UserParticipantsController@standard_financial_reporting_with_useful_tips')->name('/courses/fundamental-analysis/standard-financial-reporting-with-useful-tips');
+
+Route::resource('/batches', 'CourseManageController')->middleware('admin');
+
+
+Route::get('/courses/upcoming-courses/batches/{id}', 'CourseManageController@batch_details');
+/*Route::get('/courses/upcoming-courses/batches/{id}', 'CourseManageController@batch_details');*/
+//Route::get('/courses/upcoming-courses/batches/{id}', 'CourseManageController@show');
+/*
+Route::get('batches/{id}', function () {
+    return Redirect::to('/courses/upcoming-courses/batches/{id}', 301);
+});*/
+
+
 Route::get('/registration/{id}', 'UserParticipantsController@create')->name('registration.create');
 Route::post('/registration', 'UserParticipantsController@store')->name('registration.store');
 
@@ -95,6 +141,7 @@ Route::get('/dashboardnew', function () {
 
 
 Route::get('/se', 'seController@index');
+Route::get('/setest', 'seController@test');
 Route::get('/download', 'DownloadController@index')->name('download');
 Route::post('/download', 'DownloadController@download');
 Route::get('/pluginEod', function () {
@@ -117,12 +164,12 @@ Route::get('/pluginResources', function () {
 
 Route::get('/plugin-installer-win7and8', function () {
     return response()->download(storage_path() . '/app/plugin/StockBangladeshPlugin-Win7-8.zip');
-})->middleware('auth');
+});
 
 
 Route::get('/plugin-installer-win10', function () {
     return response()->download(storage_path() . '/app/plugin/StockBangladeshPlugin-Win10.zip');
-})->middleware('auth');
+});
 
 
 Route::get('/pluginIntra2', function () {
@@ -147,6 +194,11 @@ Route::get('/market-depth', function () {
 Route::get('/data-matrix', function () {
         return view('data_matrix_page');
     })->name('data-matrix');
+
+Route::get('/watch-matrix', function () {
+        return view('watch_matrix');
+    })->name('watch-matrix');
+
 Route::get('/price-matrix', function () {
         return view('price_matrix_page');
     })->name('price-matrix');
@@ -170,6 +222,10 @@ Route::get('/dividend-yield-payout-ratio', function () {
         return view('dividend-yield-payout-ratio-page');
     })->name('dividend-yield-payout-ratio');
 
+Route::get('/share-market-in-islam', function () {
+        return view('share-market-in-islam');
+    })->name('share-market-in-islam');
+
 Route::get('/cockpit', function () {
         return view('cockpit_page');
     })->name('cockpit');
@@ -177,6 +233,13 @@ Route::get('/cockpit', function () {
 Route::get('news-chart/{instrument_id?}', 'PagesController@newsChart')->name('news-chart');
 Route::get('minute-chart/{instrument_id?}', 'PagesController@minuteChart')->name('minute-chart')->middleware('httpcache'); //httpcache implemented in PagesController@minuteChart
 Route::get('company-details/{instrument_id?}', 'PagesController@companyDetails')->name('company-details')->middleware('httpcache');
+
+//https://stockbangladesh.com/company-details/displayCompany.php?name=FIRSTFIN
+Route::get('/company-details/displayCompany.php', function () {
+    return Redirect::to('/company-details', 301);
+});
+
+
 Route::get('fundamental-details/{instrument_id?}', 'PagesController@fundamentalDetails')->name('fundamental-details')/*->middleware('httpcache')*/;
 Route::get('technical-analysis-home', 'PagesController@technicalAnalysisHome')->name('technical-analysis-home')/*->middleware('httpcache')*/;
 
@@ -203,6 +266,8 @@ Route::get('/ajax/marketDepthData/{inst_id}', 'AjaxController@marketDepthData')-
 Route::any('/monitor/save_data', 'AjaxController@saveData')->name('Ajax.saveData')->middleware('auth');
 
 Route::get('/ajax/data_matrix', 'AjaxController@data_matrix')->name('Ajax.data_matrix');
+Route::get('/ajax/watch_matrix', 'AjaxController@watch_matrix')->name('Ajax.watch_matrix');
+
 Route::get('/ajax/price_matrix_data', 'AjaxController@price_matrix_data')->name('Ajax.price_matrix_data');
 Route::get('/ajax/load_block/{param}', 'AjaxController@load_block')->name('Ajax.load_block')->middleware('httpcache'); //example: /ajax/load_block/bock_name=block.minute_chart:instrument_id=13
 
@@ -245,6 +310,10 @@ Route::get('/portfolio_fundamental/{portfolio_id}', 'PortfolioController@portfol
 Route::get('/diversity_model/{portfolio_id}', 'PortfolioController@diversity_model');
 Route::get('/portfolio_gain_loss/{portfolio_id}', 'PortfolioController@gainLoss');
 Route::get('/portfolio_performance/{portfolio_id}', 'PortfolioController@performance');
+
+Route::get('/upload', 'PortfolioController@uploadForm');
+Route::post('/upload', 'PortfolioController@uploadSubmit');
+
 Route::post('search_json', 'SearchController@search');
 
 /* Se Routes */
@@ -278,6 +347,10 @@ Route::get('/news/details/{id}', 'NewsController@viewNews');
 Route::get('/resources/amibroker-data-plugin-dse', function () {
     if(request()->has('gid'))
     {
+        if(\Auth::guest())
+            {
+                abort(403);
+            }
         $user = \Auth::user();
         if($user->plugin_apply == request()->gid)
         {
@@ -304,9 +377,11 @@ Route::get('/resources/amibroker-data-plugin-dse', function () {
     }    
     $user = Auth::user();
     return view('amibroker-data-plugin')->with(compact(['user']));
-})->name('amibroker-data-plugin-dse')->middleware('auth');
+})->name('amibroker-data-plugin-dse');
 
-
+Route::get('/resources/amibrokerplugin', function () {
+    return Redirect::to('/resources/amibroker-data-plugin-dse', 301);
+});
 
 
 //Route::get('/test/ak', 'TestController@testAK');

@@ -38,8 +38,8 @@
                     <td>{{$data['today']}}</td>
                     <td>{{$data['changes']}}</td>
                     <td>{{$data['changes_per']}}%</td>
-                    <td>{{$data['contribution_today']}}</td>
                     <td>{{$data['contribution_prev_day']}}</td>
+                    <td>{{$data['contribution_today']}}</td>
                     <td>{{$data['contribution_change']}}%</td>
                </tr>
 

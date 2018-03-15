@@ -1,5 +1,11 @@
-@extends('layouts.metronic.default')
+@section('meta-title','Most Popular Share Price List of Dhaka Stock Exchange')
+@section('meta-description', "This is highly configurable price list of DSE. You can easily sort, filter and group by sector, category etc ")
+@section('page_heading')
+Data Matrix : DSE Share Price List
+@endsection
 
+
+@extends('layouts.metronic.default')
 @section('content')
 
     <div class="row">
@@ -11,7 +17,7 @@
                     <div class="caption">
                         <i class="icon-graph font-yellow-casablanca"></i>
 								<span class="caption-subject bold font-yellow-casablanca uppercase">
-								Data Matrix </span>
+								Data Matrix - Auto Update</span>
                         <span class="caption-helper">Easy sorting and searching of DSE data</span>
                     </div>
                     <div class="tools">

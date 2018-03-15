@@ -41,14 +41,17 @@ class FundamentalSummary
         $sector_name=SectorListRepository::getSectorDetailsByInstrumentId($instrument_id)->first()->name;
 
         $epsData=$epsData[$instrument_id];
+
+
+
         $fundaData=r_collect($fundaData);
 
         $cp=cpOrLtp($last_trade_info[0]);
-        $reserve_and_surp=floatval($fundaData['reserve_and_surp'][$instrument_id]->meta_value);
-        $audited_pe=round($cp/floatval($fundaData['earning_per_share'][$instrument_id]->meta_value),2);
-        $unaudited_pe=round($cp/$epsData['annualized_eps'],2);
-        $total_no_securities=floatval($fundaData['total_no_securities'][$instrument_id]->meta_value);
-        $share_percentage_public=floatval($fundaData['share_percentage_public'][$instrument_id]->meta_value);
+        $reserve_and_surp=isset($fundaData['reserve_and_surp'][$instrument_id])?floatval($fundaData['reserve_and_surp'][$instrument_id]->meta_value):0;
+        $audited_pe=isset($fundaData['earning_per_share'][$instrument_id])?round($cp/floatval($fundaData['earning_per_share'][$instrument_id]->meta_value),2):0;
+        $unaudited_pe= $epsData['annualized_eps']?round($cp/$epsData['annualized_eps'],2):0;
+        $total_no_securities=isset($fundaData['total_no_securities'][$instrument_id])?floatval($fundaData['total_no_securities'][$instrument_id]->meta_value):0;
+        $share_percentage_public=isset($fundaData['share_percentage_public'][$instrument_id])?floatval($fundaData['share_percentage_public'][$instrument_id]->meta_value):0;
         $public_securities=(int)(($share_percentage_public/100)*$total_no_securities);
         $market_cap=round(($total_no_securities*$cp)/1000000,2);
         $public_cap=round(($public_securities*$cp)/1000000,2);
@@ -65,7 +68,12 @@ ORDER BY fundamentals.meta_date DESC";
         $quater_eps_data=\DB::select($sql);
 
 
-        $fundaData['last_agm_held']->first()->meta_value=Carbon::parse($fundaData['last_agm_held']->first()->meta_value);
+        //dd($fundaData);
+        if(isset($fundaData['last_agm_held']))
+        {
+            $fundaData['last_agm_held']->first()->meta_value = Carbon::parse($fundaData['last_agm_held']->first()->meta_value);
+        }
+
         $year_end=date('d-M',strtotime($fundaData['year_end']->first()->meta_value));
         $year_end=Carbon::parse($year_end);
         //$year_end=Carbon::parse("3-Feb");
@@ -80,7 +88,7 @@ ORDER BY fundamentals.meta_date DESC";
             ->with('category',$category)
             ->with('sector_name',$sector_name)
             ->with('reserve_and_surp',$reserve_and_surp)
-            ->with('quater_eps_data',$quater_eps_data[0])
+            ->with('quater_eps_data',isset($quater_eps_data[0])? $quater_eps_data[0]:0)
             ->with('market_cap',$market_cap)
             ->with('public_cap',$public_cap)
             ->with('fundaData',$fundaData);

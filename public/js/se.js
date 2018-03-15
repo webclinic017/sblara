@@ -1,6 +1,21 @@
+
+var token = $('meta[name="csrf-token"]').attr('content');
+var url = window.location;
+var loadingDiv = '\n            <div style="text-align: center; width: 100%; margin-top: 10px;">\n                   <img src="/img/se_loading.gif" width="70" class="" alt="" />\n               </div>\n';
+var loadingHtml = '\n\t<img src="/img/se_loading.gif" class=\'loading\' alt="" />\n';
+function getValue(name) {
+  return $('input[name="' + name + '"]').val();
+}
 function depthLoading() {
   return '\n<table style="font-family:Arial, Helvetica, sans-serif; font-size: 13px;" width="100%" border="0" cellspacing="0" cellpadding="0">\n  <tbody><tr>\n    <td><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">\n      <tbody><tr>\n        <td width="15%" valign="top">&nbsp;</td>\n        <td width="75%" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">\n          <tbody><tr>\n            <td width="100%" valign="top"><table width="100%" border="0" cellpadding="1" cellspacing="1" bgcolor="#E8FFFB">\n                <tbody><tr bgcolor="#339966">\n                  <td height="34%" colspan="2"><div align="center"><strong><font color="#FFFFFF">Buy</font></strong></div></td>\n                </tr>\n                <tr>\n                  <td width="50%" bgcolor="#D2F0E1"><div align="center">Buy Price </div></td>\n                  <td height="34%" bgcolor="#D2F0E1"><div align="center">Buy Volume </div></td>\n                  </tr>\n                                <tr>\n                  <td colspan="2" ><div class="animated-background" style="margin:2px; min-height:15px"></div></td>\n                  </tr>\n                                <tr>\n                  <td colspan="2" ><div class="animated-background" style="margin:2px; min-height:15px"></div></td>\n                  </tr>\n                                <tr>\n                  <td colspan="2" ><div class="animated-background" style="margin:2px; min-height:15px"></div></td>\n                  </tr>\n                                <tr>\n                  <td colspan="2" ><div class="animated-background" style="margin:2px; min-height:15px"></div></td>\n                  </tr>\n                                <tr>\n                  <td colspan="2" ><div class="animated-background" style="margin:2px; min-height:15px"></div></td>\n                  </tr>\n                                <tr>\n                  <td colspan="2" ><div class="animated-background" style="margin:2px; min-height:15px"></div></td>\n                  </tr>\n                                <tr>\n                  <td colspan="2" ><div class="animated-background" style="margin:2px; min-height:15px"></div></td>\n                  </tr>\n                                <tr>\n                  <td colspan="2" ><div class="animated-background" style="margin:2px; min-height:15px"></div></td>\n                  </tr>\n                                <tr>\n                  <td colspan="2" ><div class="animated-background" style="margin:2px; min-height:15px"></div></td>\n                  </tr>\n                              \n                            </tbody></table></td>\n\n          </tr>\n        </tbody></table></td>\n        <td width="15%" valign="top">&nbsp;</td>\n      </tr>\n      <tr>\n        <td valign="top">&nbsp;</td>\n        <td valign="top">&nbsp;</td>\n        <td valign="top">&nbsp;</td>\n      </tr>\n      <tr>\n        <td valign="top">&nbsp;</td>\n        <td valign="top">&nbsp;</td>\n        <td valign="top">&nbsp;</td>\n      </tr>\n      <tr>\n        <td valign="top">&nbsp;</td>\n        <td valign="top"><table width="100%" border="0" align="center" cellpadding="2" cellspacing="2" bgcolor="#FFF7EA">\n          <tbody><tr bgcolor="#339966">\n            <td colspan="4"><font color="#FFFFFF"><strong>Price Statistics </strong></font> </td>\n          </tr>\n\n          <tr>\n            <td colspan="4" >\n\t\t\t\t<div class="animated-background" style="margin:2px; min-height:15px"></div>\n            </td>\n          </tr>\n       \n          <tr>\n            <td colspan="4" >\n\t\t\t\t<div class="animated-background" style="margin:2px; min-height:15px"></div>\n            </td>\n          </tr>\n       \n          <tr>\n            <td colspan="4" >\n\t\t\t\t<div class="animated-background" style="margin:2px; min-height:15px"></div>\n            </td>\n          </tr>\n       \n          <tr>\n            <td colspan="4" >\n\t\t\t\t<div class="animated-background" style="margin:2px; min-height:15px"></div>\n            </td>\n          </tr>\n       \n          <tr>\n            <td colspan="4" >\n\t\t\t\t<div class="animated-background" style="margin:2px; min-height:15px"></div>\n            </td>\n          </tr>\n       \n          <tr>\n            <td colspan="4" >\n\t\t\t\t<div class="animated-background" style="margin:2px; min-height:15px"></div>\n            </td>\n          </tr>\n       \n        </tbody></table></td>\n        <td valign="top">&nbsp;</td>\n      </tr>\n      <tr>\n        <td valign="top">&nbsp;</td>\n        <td valign="top">&nbsp;</td>\n        <td valign="top">&nbsp;</td>\n      </tr>\n\n    </tbody></table></td>\n  </tr>\n</tbody></table>\t\t\n\t';
 }
+function startLoading(e) {
+  e.after(loadingHtml);
+}
+function endLoading() {
+  $('.loading').remove();
+}
+
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -78,13 +93,6 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var token = $('meta[name="csrf-token"]').attr('content');
-var url = window.location;
-var loadingDiv = '\n            <div style="text-align: center; width: 100%; margin-top: 10px;">\n                   <img src="/img/se_loading.gif" width="70" class="" alt="" />\n               </div>\n';
-var loadingHtml = '\n\t<img src="/img/se_loading.gif" class=\'loading\' alt="" />\n';
-function getValue(name) {
-  return $('input[name="' + name + '"]').val();
-}
 
 function startEditing() {
   $('#editing').removeClass('hidden');
@@ -94,12 +102,7 @@ function endEditing() {
   $('#editing').addClass('hidden');
   $('#showing').removeClass('hidden');
 }
-function startLoading(e) {
-  e.after(loadingHtml);
-}
-function endLoading() {
-  $('.loading').remove();
-}
+
 
 var Form = function () {
   function Form(data) {
@@ -568,7 +571,7 @@ function loadChart() {
     }
   });
 
-  url = "/ta-chart?Adjusted=" + $('#adj').val() + "&TickerSymbol=" + sharelist + "&CompareWith=&TimeRange=" + chartRange + "&ChartSize=" + $('#ChartSize').val() + "&Volume=" + Volume + "&ParabolicSAR=" + ParabolicSAR + "&LogScale=" + LogScale + "&PercentageScale=" + PercentageScale + "&ChartType=" + $('#charttype').val() + "&Band=" + $('#overlay').val() + "&avgType1=" + $('#mov1').val() + "&movAvg1=" + $('#touchspin_demo1').val() + "&avgType2=" + $('#mov2').val() + "&movAvg2=" + $('#touchspin_demo2').val() + "&Indicator1=" + $('#Indicator1').val() + "&Indicator2=" + $('#Indicator2').val() + "&Indicator3=" + $('#Indicator3').val() + "&Indicator4=" + $('#Indicator4').val() + "&interval=" + $('#interval').val() + "&deviceWidth=" + $(window).width();
+  url = "/ta-chart?Adjusted=" + $('#adj').val() + "&TickerSymbol=" + sharelist + "&CompareWith=&TimeRange=" + chartRange + "&ChartSize=" + $('#ChartSize').val() + "&Volume=" + Volume + "&ParabolicSAR=" + ParabolicSAR + "&LogScale=" + LogScale + "&PercentageScale=" + PercentageScale + "&ChartType=" + $('#charttype').val() + "&Band=" + $('#overlay').val() + "&avgType1=" + $('#mov1').val() + "&movAvg1=" + $('#touchspin_demo1').val() + "&avgType2=" + $('#mov2').val() + "&movAvg2=" + $('#touchspin_demo2').val() + "&Indicator1=" + $('#Indicator1').val() + "&Indicator2=" + $('#Indicator2').val() + "&Indicator3=" + $('#Indicator3').val() + "&Indicator4=" + $('#Indicator4').val() + "&interval=" + $('#interval').val() + "&deviceWidth=" + $(".tab-content").width();
 
   var companyDetailsUrl = 'http://www.new.stockbangladesh.com/TechnicalAnalysis/company_details/' + sharelist;
   var marketDepthUrl = 'http://www.new.stockbangladesh.com/TechnicalAnalysis/market_depth/' + sharelist;

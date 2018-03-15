@@ -11,6 +11,7 @@ use App\Repositories\DataBanksIntradayRepository;
 use App\Repositories\SectorListRepository;
 use App\Market;
 use DB;
+use Illuminate\Support\Facades\Storage;
 
 class PagesController extends Controller
 {
@@ -214,9 +215,19 @@ dd($eq_arr);
     public function companyDetails($instrument_id=13)
     {
 
+        if(request()->has('name'))
+        {
+            $id = request()->name?:'ACI';
+            $instrumentInfo = \App\Instrument::where('instrument_code', $id)->first();
+            $instrument_id=$instrumentInfo->id;
+        }else
+        {
+            $instrument_id=(int)$instrument_id;
+            $instrumentInfo=InstrumentRepository::getInstrumentsById(array($instrument_id))->first();
+        }
+
         $lastTradeInfo=null;
-        $instrument_id=(int)$instrument_id;
-        $instrumentInfo=InstrumentRepository::getInstrumentsById(array($instrument_id))->first();
+
 
         $lastTradeInfo=DataBanksIntradayRepository::getMinuteData(array($instrument_id),1);
 
@@ -306,14 +317,123 @@ dd($eq_arr);
         return $dataSetObj;
     }
 
+    public function rutime($ru, $rus, $index) {
+        return ($ru["ru_$index.tv_sec"]*1000 + intval($ru["ru_$index.tv_usec"]/1000))
+        -  ($rus["ru_$index.tv_sec"]*1000 + intval($rus["ru_$index.tv_usec"]/1000));
+    }
 
 
 public function technicalAnalysisHome()
     {
 
 
+        $rustart = getrusage();
+
+$sql="select instrument_id,open,high,low,close,volume,date
+from data_banks_eods
+where date >= DATE_SUB(NOW(),INTERVAL 1 YEAR) ORDER BY DATE asc";
+
+        $data=\DB::select($sql);
+
+        $data=collect($data)->groupBy('instrument_id');
+
+        foreach($data as $instrument_id=>$ohlc)
+        {
+            $o=$ohlc->pluck('open');
+            $h=$ohlc->pluck('high');
+            $l=$ohlc->pluck('low');
+            $c=$ohlc->pluck('close');
+            $v=$ohlc->pluck('volume');
+            $d=$ohlc->pluck('date');
+
+            //$file = "data/filter/eod/unadjusted/o/$instrument_id.txt";
+            $file = "data/filter/eod/unadjusted/$instrument_id/o.txt";
+            $csv=$o->implode(',');
+            Storage::disk('local')->put($file, $csv);
+
+            $file = "data/filter/eod/unadjusted/$instrument_id/h.txt";
+            $csv=$h->implode(',');
+            Storage::disk('local')->put($file, $csv);
+
+
+            $file = "data/filter/eod/unadjusted/$instrument_id/l.txt";
+            $csv=$l->implode(',');
+            Storage::disk('local')->put($file, $csv);
+
+
+            $file = "data/filter/eod/unadjusted/$instrument_id/c.txt";
+            $csv=$c->implode(',');
+            Storage::disk('local')->put($file, $csv);
+
+            $file = "data/filter/eod/unadjusted/$instrument_id/v.txt";
+            $csv=$v->implode(',');
+            Storage::disk('local')->put($file, $csv);
+
+            $file = "data/filter/eod/unadjusted/$instrument_id/d.txt";
+            $csv=$d->implode(',');
+            Storage::disk('local')->put($file, $csv);
+            //Storage::append($file, $csv);
+
+            
+           // $rsi= trader_rsi($c->toArray(), 14);
+            
+
+        }
+
+     
+        // $instrument_list=InstrumentRepository::getInstrumentsScripWithIndex();
+        $instrument_list=collect(['id'=> 88]);
+        foreach($instrument_list as $ins)
+        {
+            $instrument_id=88;
+
+            $file = "data/filter/eod/unadjusted/$instrument_id/o.txt";
+
+            $exists = Storage::disk('local')->exists($file);
+            if($exists)
+            {
+                $contents = Storage::get($file);
+                $o=explode(',',$contents);
+
+                $file = "data/filter/eod/unadjusted/$instrument_id/h.txt";
+                $contents = Storage::get($file);
+                $h=explode(',',$contents);
+
+                $file = "data/filter/eod/unadjusted/$instrument_id/l.txt";
+                $contents = Storage::get($file);
+                $l=explode(',',$contents);
+
+                $file = "data/filter/eod/unadjusted/$instrument_id/c.txt";
+                $contents = Storage::get($file);
+                $c=explode(',',$contents);
+
+                $file = "data/filter/eod/unadjusted/$instrument_id/v.txt";
+                $contents = Storage::get($file);
+                $v=explode(',',$contents);
+
+                $rsi= trader_rsi($c, 14);
+                dd($rsi);
+
+            }
+
+
+
+        }
+
+        $ru = getrusage();
+        echo "This process used " . $this->rutime($ru, $rustart, "utime") .
+            " ms for its computations\n";
+        echo "It spent " . $this->rutime($ru, $rustart, "stime") .
+            " ms in system calls\n";
+exit();
+        // dd($rsi);
+
+        $rsi= trader_rsi($closeData, 14);  //
+
 //DataBankEodRepository::getEodDataAdjusted(10001,'2017-02-01','2018-02-28');
-        $chartData = \App\Repositories\ChartRepository::getAdjustedDailyData(79, '2017-11-01', '2018-02-10');
+        $chartData = \App\Repositories\ChartRepository::getAdjustedDailyData(79, '2016-12-01', '2018-02-28');
+
+
 
 
     $chartData['realtimeStamps'] = array_reverse($chartData['realtimeStamps']);
@@ -388,7 +508,7 @@ public function technicalAnalysisHome()
     }
 
 
-/*
+
     $m->addLineIndicator(70, $rsi, 0x0000ff, "custom rsi");
 
     $tmpArrayMath1 = new \ArrayMath($rsi);
@@ -402,7 +522,7 @@ public function technicalAnalysisHome()
     $range=20;
     if (($range > 0) && ($range < 50)) {
         $m->addThreshold($c, $layer, 50 + $range, '0xff6666', 50 - $range, '0x6666ff');
-    }*/
+    }
 
 
 

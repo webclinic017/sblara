@@ -1,9 +1,9 @@
-@section('meta-title','Price Of All Companies Listed At Dhaka Stock Exchange')
-@section('meta-description', 'A goto page for DSE listed companies. You can see price in a simple table with search and sorting features ')
+@section('meta-title','Latest Price List of Dhaka Stock Exchange')
+@section('meta-description', 'A goto page for DSE listed companies. You can see latest price in a simple table with updated every minute')
 
 @extends('layouts.metronic.default')
 @section('page_heading')
-All Companies
+Latest Share Price of Dhaka Stock Exchange
 @endsection
 
 @section('content')
@@ -17,8 +17,8 @@ All Companies
                     <div class="caption">
                         <i class="icon-graph font-yellow-casablanca"></i>
 								<span class="caption-subject bold font-yellow-casablanca uppercase">
-								Listed Company </span>
-                        <span class="caption-helper">List</span>
+								Listed Company of DSE</span>
+                        <span class="caption-helper">Easy search and sortable list</span>
                     </div>
                     <div class="tools">
     <a href="#" data-load="false" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.company_list_table" class="reload"></a>

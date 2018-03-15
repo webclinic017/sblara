@@ -24,25 +24,38 @@
                         <h1>@yield('title')</h1>
                         @include('html.breadcrumbs')
                      </div>
-                     <div class="alert alert-info alert-info">
+
+                   <!-- BEGIN ads beneath the main menu -->
+                      @include('ads.under_the_menu_1')
+                   <!-- END ads beneath the main menu -->
+
+
+
+
+{{--                     <div class="alert alert-info alert-info">
                          <button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>
-{{--                          Dear valued visitors, we have added 59 candlestick patterns in our TA chart
-                         <a target="_blank" href="{{url('/ta-chart')}}" class="alert-link"> Please check this one as well. </a>
-                         If you have any suggestion, you can drop an email to info@stockbangladesh.com --}}
-                         
+
                                                   Dear valued visitors, we have released our new Amibroker Plugin. Please 
                          <a target="_blank" href="{{url('/resources/amibroker-data-plugin-dse')}}" class="alert-link"> click here  </a> to check this one as well.
                          If you have any suggestion, you can drop an email to info@stockbangladesh.com
 
+                     </div>--}}
+                        @if(session()->has('success'))
+                     <div class="alert alert-success">
+                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>
+                            {{session()->get('success')}}
                      </div>
+                        @endif
+
+                        @if(session()->has('error'))
+                         <div class="alert alert-danger">
+                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>
+                                {{session()->get('error')}}
+                         </div>
+                        @endif
                         @include('global-ui')
 
                     <!-- END BREADCRUMBS -->
-
-
-                    <!-- BEGIN ads beneath the main menu -->
-                     @include('ads.under_the_menu_1')
-                     <!-- END ads beneath the main menu -->
 
 
                     <!-- BEGIN SIDEBAR CONTENT LAYOUT -->
@@ -55,11 +68,13 @@
         {{-- full width content --}}
                          @yield('full-width-content')
                                              <!-- resposive_new_site -->
+{{--
 <div class="row">
     <div class="col-md-12">
         @include('ads.google_responsive')
     </div>
 </div>
+--}}
                          </div>
         {{-- full width content --}}
 {{-- custom mod for ad --}}
@@ -69,6 +84,8 @@
                     <!-- END SIDEBAR CONTENT LAYOUT -->
 
                 </div>
+
+
                 <!-- BEGIN FOOTER -->
                 @include('includes.metronic.footer')
                 <!-- END FOOTER -->
@@ -86,6 +103,8 @@
             @include('includes.metronic.js')
             @yield('js')
         <!-- END ALL JS SCRIPTS -->
+
+
 
         <script>
             $(document).ready(function()

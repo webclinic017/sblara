@@ -1,5 +1,5 @@
 @section('meta-title','Share Market Analysis Portal For Dhaka Stock Exchange (DSE)')
-@section('meta-description', "First and oldest financial portal based on share markets of Bangladesh. Pioneer in technical analysis of Bangladesh. Our mission is simple - to make you a better investor so that you can invest conveniently at Bangladesh stock exchange. Our Stock Bangladesh tool lets you create the web's best looking financial charts for technical analysis. Our Scan Engine shows you the Bangladesh share market's best investing opportunities")
+@section('meta-description', "First and oldest financial portal based on share markets of Bangladesh. Pioneer in technical analysis of Bangladesh. Our mission is simple - to make you a better investor so that you can invest conveniently at Dhaka stock exchange. Our Stock Bangladesh tool lets you create the web's best looking financial charts for technical analysis. Our Scan Engine shows you the Bangladesh share market's best investing opportunities")
 
 @extends('layouts.metronic.default')
 
@@ -531,7 +531,7 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
                 <div class="caption">
                     <i class="icon-graph font-yellow-casablanca"></i>
                     <span class="caption-subject bold font-yellow-casablanca uppercase">
-                        Market Announcement </span>
+                        Market Announcement of Dhaka Stock Exchange </span>
                         <span class="caption-helper"></span>
                     </div>
                     <div class="tools">
@@ -546,6 +546,41 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
             </div>
             <div class="portlet-body">
                 @include('block.news_box_today')
+            </div>
+        </div>
+        <!-- END Portlet PORTLET-->
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-6 col-xs-12">
+        <!-- BEGIN Portlet PORTLET-->
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="icon-graph font-yellow-casablanca"></i>
+                    <span class="caption-subject bold font-yellow-casablanca uppercase">
+                       Welcome to StockBangladesh.com </span>
+                        <span class="caption-helper"></span>
+                    </div>
+                    <div class="tools">
+                        <a href="" class="collapse">
+                        </a>
+
+                    </a>
+                    <a href="" class="remove">
+                    </a>
+                </div>
+
+            </div>
+            <div class="portlet-body">
+                <div style="padding:15px;">
+                                <p><span class="label label-primary">Our mission</span> is simple - to make you a better investor so that you can invest conveniently at Bangladesh stock exchange. Our Stock Bangladesh tool lets you create the web's best looking financial charts for technical analysis. Our Scan Engine shows you the Bangladesh share market's best investing opportunities.              </p>
+                              <p>In today's world, if you rely on fundamental analysis, brokers advise, share price information, newspaper articles or business channels for your investing or trading decisions, you are asking for a painful experience in the markets.              </p>
+                                <p>Whether you are a first time investor, a seasoned pro, an "in and out" day trader or a long term investor at Dhaka stock exchange, StockBangladesh.com will provide you with the necessary information you need for maximum profits and success in today's dynamic markets.Initially we are covering Dhaka share market.              </p>
+                                <p><span class="label label-primary">Our goal</span> is to help traders and investors of Bangladesh share market to achieve above-average returns from the markets by providing them with profitable trading signals and at the same time protect their trading capital from large drawdowns with our sound money management principles.              </p>
+                              <p>The methods used to analyze securities and make investment decisions fall into two very broad categories: fundamental analysis and technical analysis. Fundamental analysis involves analyzing the characteristics of a company in order to estimate its value. Technical analysis takes a completely different approach; it doesn't care one bit about the "value" of a company or a commodity. Technicians (sometimes called chartists) are only interested in the price movements in the market.            </p>
+                            <p>Despite all the fancy and exotic tools it employs, technical analysis really just studies supply and demand in a market in an attempt to determine what direction, or trend, will continue in the future. In other words, technical analysis attempts to understand the emotions in the market by studying the market itself, as opposed to its components. If you understand the benefits and limitations of technical analysis, it can give you a new set of tools or skills that will enable you to be a better trader or investor. </p>
+                        </div>
             </div>
         </div>
         <!-- END Portlet PORTLET-->

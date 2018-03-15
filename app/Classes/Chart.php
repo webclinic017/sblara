@@ -30,8 +30,8 @@ class Chart
 	protected $CompareWith = "";
 	protected $startDate = "";
 	protected $endDate = "";
-	protected $width = 1260;
-	protected $maxWidth = 1260;
+	protected $width = 1160;
+	protected $maxWidth = 1160;
 	protected $ohlcData = [];
 	protected $waterMark = "";
 	protected $intradayTable = false;
@@ -49,7 +49,7 @@ class Chart
 	{
 		// Require Chart Library By chartDirector
 		require_once(app_path() . '/ChartDirector/FinanceChart.php');
-		
+
 		//set values from request;
 		 $this->setValues();
 		 $this->loadChartData();
@@ -57,6 +57,13 @@ class Chart
 		# create the finance chart
 		//need to fix then  without calling getBottomLeftTitle pe is not generating
 		 $this->getBottomLeftTitle();
+
+		 
+		if($this->isDesktop())
+		{
+			$this->maxWidth = $this->deviceWidth;
+		}		
+
 		$c = $this->drawChart();
 
 		 $this->loadStyles();
@@ -501,7 +508,7 @@ class Chart
 	public function getMiddleLeftTitle()
 	{
 		$data = sprintf("<*font=arial.ttf,size=8*>%s ",
-	        $this->chart->formatValue(chartTime2(time()), "mmm dd, yyyy"));
+	        $this->chart->formatValue($this->ohlcData['date'][0], "mmm dd, yyyy"));
 		$data .= " Open: ".number_format($this->ohlcData['open'][0], 2).", High: ".number_format($this->ohlcData['high'][0], 2).", Low: ".number_format($this->ohlcData['low'][0], 2).", Close: ".number_format($this->ohlcData['close'][0], 2).", Volume: ".(int)$this->ohlcData['volume'][0];
 		return $data;
 	}

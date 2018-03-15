@@ -1,3 +1,9 @@
+@section('meta-title','Price Changes Matrix')
+@section('meta-description', "See daily, weekly, monthly price changes and group by sector, category - as you need")
+@section('page_heading')
+Data Price Matrix
+@endsection
+
 @extends('layouts.metronic.default')
 
 @section('content')

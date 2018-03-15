@@ -14,7 +14,7 @@ class CourseParticipants extends Model
     static public function getActiveCourse()
     {
         $course_batches =  DB::select(
-          "SELECT b.id, b.batch_name, b.c_start_date, b.c_start_time, b.c_end_time, b.course_fees, b.course_duration, c.id as c_id, c.course_name, d.venue_id, d.venue_name
+          "SELECT b.id, b.batch_name, b.c_start_date, b.c_start_time,b.c_end_date, b.c_end_time, b.course_fees, b.course_duration, c.id as c_id, c.course_name, d.venue_id, d.venue_name
            FROM course_batches AS b, courses AS c, course_venues AS d
            WHERE b.course_id = c.id AND b.course_venue_id = d.venue_id AND (b.batch_status = 'upcoming' OR b.batch_status='running') ORDER BY b.c_start_date asc"
         );

@@ -6,12 +6,10 @@
 								{{$portfolio->portfolio_name}} </span>
                         <span class="caption-helper"></span>
                     </div>
-                    <div class="tools">
-                        <a href="" class="collapse">
-                        </a>
-
-                        </a>
-                    </div>
+                    <div class="actions">
+                        Email report
+                       <input itemId='{{$portfolio->id}}'  type="checkbox" @if($portfolio->email_alert)checked @endif class="make-switch email-switch" id="email_report_{{$portfolio->id}}" data-size="mini">
+                     </div>
 
                 </div>
                 <div class="portlet-body">

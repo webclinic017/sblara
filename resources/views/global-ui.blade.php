@@ -129,7 +129,7 @@
                       <div class="col-md-2 " >
                         <div class="margin-bottom-10">
                                     <select  id="Indicator1" class="bs-select form-control" >
-                                        <option value="None">Indicator 1</option>
+                                        <option value="None">No indicator</option>
                                         <option value="AccDist" title="A/D">Accu/Dist</option>
                                         <option value="AroonOsc" title="ArnOsc">Aroon Oscillator</option>
                                         <option value="Aroon" title="Aroon">Aroon Up/Down</option>
@@ -174,7 +174,7 @@
                                     <select  id="Indicator2" class="bs-select form-control">
 
 
-                                            <option value="none" >Indicator 2</option>
+                                            <option value="none" >No indicator</option>
                                             <option value="AccDist" title="A/D">Accu/Dist</option>
                                             <option value="AroonOsc" title="ArnOsc">Aroon Oscillator</option>
                                             <option value="Aroon" title="Aroon">Aroon Up/Down</option>
@@ -503,7 +503,7 @@
 
             
 {{--  --}}
-            <div id="chartContainer" class="chartcontent thumbnail" style="min-height: 200px;">
+            <div id="chartContainer" class="chartcontent " style="min-height: 200px; min-width: 100% !important; overflow: auto;">
                 <input type="hidden" id="chart_id" value="">
                 </div>
 

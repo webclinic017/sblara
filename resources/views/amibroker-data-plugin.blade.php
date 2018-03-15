@@ -273,12 +273,21 @@ Amibroker Data plugin for DSE
 <script src="{{ URL::asset('metronic/assets/global/plugins/ladda/ladda.min.js') }}"></script>
 <script>
 $(document).ready(function () {
+    @if(!\Auth::guest())
         var name = "{{$user->name}}";
         var mobile = "{{$user->contact_no}}";
         var pending = "{{$user->plugin_apply != $user->group_id?$user->plugin_apply:""}}";
-        
-    $('.plugin-signup').click(function () {
+    @else
 
+        var name = "";
+        var mobile = "";
+        var pending = "";
+    @endif
+    $('.plugin-signup').click(function () {
+    if(!loggedIn){
+        window.location = '/login';
+        return;
+    }
     var l = Ladda.create(this);     
         var gid = $(this).data('group');
 

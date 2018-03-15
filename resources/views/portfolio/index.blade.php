@@ -61,8 +61,41 @@ var id = $(this).attr('itemId');
         return false;
     })
 
+
+$(".email-switch").bootstrapSwitch({
+  onSwitchChange: function(e, state) {
+    var id = $(this).attr('itemId');
+
+
+                        $.ajax({
+                              url: '/portfolio-setting',  /* if we use url()  it does not work*/
+                              type: 'POST',
+                              async: false,
+                              // dataType: 'default: Intelligent Guess (Other values: xml, json, script, or html)',
+                              data: {
+                                portfolio_id : id,
+                                setting_name : 'email_alert',
+                                setting_value : state,
+                                _token:     '{{ csrf_token() }}'
+                              },
+                              success: function (msg) {
+                                                      toastr.success(msg, 'Portfolio Settings');
+
+                                                      }
+                            })
+
+
+  }
+});
+
+
+
+
 </script>
 @endsection
 
+@push('css')
+<link href="{{ URL::asset('metronic/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css') }}" rel="stylesheet" type="text/css" />
+@endpush
 
 

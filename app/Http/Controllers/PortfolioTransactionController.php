@@ -73,6 +73,8 @@ class PortfolioTransactionController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function destroy(PortfolioTransaction $portfolioTransaction) {
+
+        dd($portfolioTransaction);
         if ($portfolioTransaction->type == 2) {
             if ($parent = $portfolioTransaction->parent_portfolio_transaction) {
                 $parent->shares +=$portfolioTransaction->shares;

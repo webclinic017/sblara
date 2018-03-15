@@ -51,7 +51,7 @@ DATE_FORMAT(data_banks_intradays.lm_date_time,'%h:%i- %D %b') as last_traded
 from
 data_banks_intradays,instruments,sector_lists
 WHERE
-(instruments.instrument_code like '%$search%' or instruments.name like '%$search%')  and
+(instruments.instrument_code like '%$search%')  and
 data_banks_intradays.batch=instruments.batch_id AND
 data_banks_intradays.instrument_id=instruments.id AND
 instruments.sector_list_id=sector_lists.id

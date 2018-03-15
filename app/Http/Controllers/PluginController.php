@@ -33,7 +33,7 @@ class PluginController extends Controller
          \Mail::to($user)->send(new \App\Mail\PluginRequestApproved());
    			return redirect()->back()->with(['success' => 'Request successfully approved']);
     	}
-    	$users = User::where('group_id',  0)->where('plugin_apply', '!=', 0)->get();
+    	$users = User::whereRaw('plugin_apply != group_id and plugin_apply != 0')->get();
     	return view('admin.plugin-requests')->with(compact('users'));
     }
 }

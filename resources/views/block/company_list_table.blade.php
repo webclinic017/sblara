@@ -72,8 +72,8 @@
                 <td> {{$data->low_price}} </td>
                 <td> {{$data->close_price}} </td>
                 <td> {{$data->yday_close_price}} </td>
-                <td class="{{fontCss($data->pub_last_traded_price-$data->yday_close_price)}}"> {{round($data->pub_last_traded_price-$data->yday_close_price,2)}} </td>
-                <td class="{{fontCss($data->pub_last_traded_price-$data->yday_close_price)}}"> {{round(($data->pub_last_traded_price-$data->yday_close_price)/$data->yday_close_price*100,2)}}% </td>
+                <td class="{{fontCss($data->close_price-$data->yday_close_price)}}"> {{round($data->close_price-$data->yday_close_price,2)}} </td>
+                <td class="{{fontCss($data->close_price-$data->yday_close_price)}}"> {{$data->yday_close_price?round(($data->close_price-$data->yday_close_price)/$data->yday_close_price*100,2):0}}% </td>
                 <td> {{$data->total_trades}} </td>
                 <td> {{$data->total_value}} </td>
                 <td> {{$data->total_volume}} </td>

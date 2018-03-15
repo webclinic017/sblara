@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\PortfolioScrip;
 
 class PortfolioScripsController extends Controller
 {
@@ -77,9 +78,27 @@ class PortfolioScripsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    /*public function destroy($id)
     {
         \App\PortfolioScrip::destroy(1);
         //
+    }*/
+
+
+    public function destroy(PortfolioScrip $portfolioTransaction)
+    {
+
+        if ($portfolioTransaction->share_status == 'sell') {
+
+/*
+            $total_sell_value = $portfolioTransaction->no_of_shares * $portfolioTransaction->sell_price;
+            $cash_amount_to_be_adjusted = $total_sell_value;  // returning that amount to cash_amount
+
+            \DB::select("update portfolios set cash_amount=cash_amount+$cash_amount_to_be_adjusted where id=". $portfolioTransaction->portfolio_id);
+            */
+            $portfolioTransaction->delete();
+
+        }
+
     }
 }

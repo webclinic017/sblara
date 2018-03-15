@@ -74,14 +74,19 @@ class IndexRepository {
 
         $returnData = array();
         foreach ($instrumentInfoOfIndex as $index_id => $index_details) {
-            // taking 1st element of the array.
-            $index_details = $index_details[0];
 
-            // delivering index name
-            $returnData['index'][$index_id]['details'] = $index_details;
+            if(isset($indexValues[$index_id]))
+            {
+                // taking 1st element of the array.
+                $index_details = $index_details[0];
 
-            // delivering index data as object
-            $returnData['index'][$index_id]['data'] = $indexValues[$index_id];
+                // delivering index name
+                $returnData['index'][$index_id]['details'] = $index_details;
+
+                // delivering index data as object
+                $returnData['index'][$index_id]['data'] = $indexValues[$index_id];
+            }
+
 
         }
         ksort($returnData);

@@ -2,9 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\PortfolioReportMarkdown;
 use App\Portfolio;
+use App\Repositories\InstrumentRepository;
 use Illuminate\Http\Request;
 use DB;
+use Excel;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\PortfolioReport;
+
 
 class PortfolioController extends Controller {
 
@@ -433,20 +440,24 @@ WHERE rn <= 3";
             $temp['instrument_code'] = $instrument_info[$transaction->instrument_id]->instrument_code;
             $temp['exchange'] = $exchange_info[$instrument_info[$transaction->instrument_id]->exchange_id]->name;
             $temp['no_of_shares']= $transaction->no_of_shares;
+            $temp['buying_price']= $transaction->buying_price;
             $temp['total_buy_commission_of_this_instrument'] = $transaction->commission ? ($transaction->commission / 100) * ($transaction->buying_price * $transaction->no_of_shares) : 0;
             $temp['total_buy_cost_with_commission_of_this_instrument'] = $transaction->buying_price * $transaction->no_of_shares+ $temp['total_buy_commission_of_this_instrument'];
-            $temp['buying_date']= $transaction->buying_date->format('d M, Y');
+            $temp['buying_date']= $transaction->buying_date->format('M d, y');
             $temp['sell_price']= $transaction->sell_price;
             $temp['total_sell_commission_of_this_instrument'] = $transaction->commission ? ($transaction->commission / 100) * ($transaction->sell_price * $transaction->no_of_shares) : 0;
             $temp['total_sell_cost_deducting_commission_of_this_instrument']= ($transaction->sell_price* $transaction->no_of_shares)- $temp['total_sell_commission_of_this_instrument'];
-            $temp['sell_date']= $transaction->sell_date->format('d M, Y');
+            $temp['sell_date']= $transaction->sell_date->format('M d, y');
             $temp['profit']= $temp['total_sell_cost_deducting_commission_of_this_instrument']- $temp['total_buy_cost_with_commission_of_this_instrument'];
-            $temp['profit_per'] = $temp['total_buy_cost_with_commission_of_this_instrument']?$temp['profit'] / $temp['total_buy_cost_with_commission_of_this_instrument']:0;
+            $temp['profit']=round($temp['profit'],2);
+            $temp['profit_per'] = $temp['total_buy_cost_with_commission_of_this_instrument']?($temp['profit'] / $temp['total_buy_cost_with_commission_of_this_instrument']*100):0;
+            $temp['profit_per']=round($temp['profit_per'],2);
             $temp['id']= $transaction->id;
             $total_profit+= $temp['profit'];
             $all_transaction[]=$temp;
 
         }
+
         return view('portfolio.gain_loss', ['all_transaction' => $all_transaction,'total_profit' => $total_profit]);
     }
 
@@ -492,5 +503,243 @@ WHERE rn <= 3";
         \App\PortfolioScrip::where('portfolio_id', $portfolio->id)->delete();
         $portfolio->delete();
     }
+
+    public function uploadForm()
+    {
+        return view('upload_form');
+    }
+
+    public function uploadSubmit(Request $request)
+    {
+
+        $portfolio_id= $request->input('portfolio_id');
+        $user_id= $request->input('user_id');
+        $commission= $request->input('commission');
+        $cash_amount= $request->input('cash_amount');
+        $portfolio_action= $request->input('portfolio_action');
+        $adjust_with_cash= $request->input('adjust_with_cash');
+
+
+        if (\Auth::user()->id != $user_id)
+        {
+            session()->flash('portfolio_error', 'You are not authorized to do that');
+            return redirect()->back();
+        }
+
+
+
+        if($request->hasFile('import_file') && $portfolio_id && $user_id){
+
+            $allowed_ext=array('xlsx','csv','xlt');
+
+
+            $path = $request->import_file->path();
+            //$extension = $request->import_file->extension();
+
+            $instrument_list=InstrumentRepository::getInstrumentsScripOnly();
+            $instrument_list= $instrument_list->keyBy('instrument_code');
+
+//            Excel::selectSheetsByIndex(0)->load();
+            $data = Excel::selectSheetsByIndex(0)->load($path, function($reader) {
+            })->get();
+
+
+            if(!empty($data) && $data->count()){
+
+
+                if($portfolio_action=='keep_realized_gain_loss')
+                {
+                    \DB::select("DELETE FROM portfolio_scrips WHERE portfolio_id=$portfolio_id and share_status='buy'" );
+                }
+
+                if($portfolio_action=='empty_whole_portfolio')
+                {
+                    \DB::select("DELETE FROM portfolio_scrips WHERE portfolio_id=". $portfolio_id);
+                }
+
+
+
+
+                foreach ($data as $key => $value) {
+                    $instrument_code=isset($value['share'])? $value['share']:'';
+                    $no_of_shares= isset($value['quantity']) ? $value['quantity'] : 0;
+                    $no_of_shares=(int)$no_of_shares;
+                    $buying_price= isset($value['price']) ? $value['price'] : 0;
+                    $buying_price=floatval($buying_price);
+
+                    if(is_object($value['date']))
+                    {
+                        $buying_date=  $value['date'];
+                    }
+                    else{
+                        $buying_date=Carbon::parse($value['date']);
+                    }
+
+                    $buying_date=$buying_date->format('Y-m-d');
+
+                    if(isset($instrument_list[$instrument_code]))
+                    {
+
+                        if($no_of_shares==0)
+                            continue;
+                        if($buying_price==0)
+                            continue;
+
+
+
+                        $instrument_id= $instrument_list[$instrument_code]->id;
+/*
+                        $portfolioTransaction = new \App\PortfolioScrip;
+                        $portfolioTransaction->portfolio_id = (int)$portfolio_id;
+                        $portfolioTransaction->instrument_id = $instrument_id;
+                        $portfolioTransaction->exchange_id = 1; // DSE hardcoded . it should be dynamic later
+                        $portfolioTransaction->share_status = 'buy';
+                        $portfolioTransaction->no_of_shares = (int)$no_of_shares;
+                        $portfolioTransaction->buying_price = floatval($buying_price);
+                        $portfolioTransaction->commission = is_null($commission)?0:$commission;
+                        dump($buying_date);
+                        continue;
+                        $portfolioTransaction->buying_date = $buying_date;
+$portfolioTransaction->save();
+*/
+
+
+                        \DB::select("INSERT INTO portfolio_scrips (portfolio_id, instrument_id, no_of_shares, buying_price, buying_date,commission)
+ VALUES ($portfolio_id,$instrument_id,$no_of_shares,$buying_price,'$buying_date',$commission);");
+
+
+
+
+
+
+
+
+
+                        $total_buy_value = $no_of_shares * $buying_price;
+                        $buy_commission = ($commission / 100) * $total_buy_value;
+                        $total_buy_value_with_commission = $total_buy_value + $buy_commission;
+                        $adjusted_cash_amount = $cash_amount - $total_buy_value_with_commission;  // deducting  amount from portfolio
+
+                        if($adjust_with_cash=='on')
+                        \DB::select("update portfolios set cash_amount=$adjusted_cash_amount where id=". $portfolio_id);
+
+                    }
+
+
+
+                }
+
+
+                session()->flash('portfolio_error', 'Your portfolio import is successful');
+                return redirect()->back();
+
+            }
+        }else
+        {
+            session()->flash('portfolio_error', 'Please attach the portfolio');
+            return redirect()->back();
+        }
+    }
+
+    public function portfolio_export($portfolio_id)
+    {
+
+        $data=\DB::select("select instrument_id,no_of_shares,buying_price,DATE_FORMAT(buying_date,'%c/%e/%Y') as buying_date from portfolio_scrips where share_status like 'buy' and portfolio_id=$portfolio_id ORDER BY instrument_id ");
+        $instrument_list=InstrumentRepository::getInstrumentsScripOnly();
+        $instrument_list=$instrument_list->keyBy('id');
+
+        $portfolio_info=\DB::select("select portfolio_name,user_id from portfolios where id=$portfolio_id");
+        $portfolio_name=$portfolio_info[0]->portfolio_name;
+        $user_id=$portfolio_info[0]->user_id;
+
+
+        if (\Auth::user()->id != $user_id)
+        {
+            session()->flash('portfolio_error', 'You are not authorized to do that');
+            return redirect()->back();
+        }
+
+
+
+        $csvdata=array();
+        foreach($data as $row)
+        {
+            $temp=array();
+            $temp['share']=$instrument_list[$row->instrument_id]->instrument_code;
+            $temp['quantity']=$row->no_of_shares;
+            $temp['price']=$row->buying_price;
+            $temp['date']=$row->buying_date;
+            $temp['exchange']='DSE';
+
+            $csvdata[]=$temp;
+
+        }
+
+     //  dd($csvdata);
+
+        $data=\DB::select("select instrument_id,no_of_shares,buying_price,DATE_FORMAT(buying_date,'%m/%d/%Y') as buying_date ,sell_price,DATE_FORMAT(sell_date,'%m/%d/%Y') as sell_date from portfolio_scrips where share_status like 'sell' and portfolio_id=$portfolio_id ORDER  BY sell_date asc,instrument_id asc");
+        $instrument_list=InstrumentRepository::getInstrumentsScripOnly();
+        $instrument_list=$instrument_list->keyBy('id');
+
+
+        $csvdata_sold=array();
+        foreach($data as $row)
+        {
+            $temp=array();
+            $temp['share']=$instrument_list[$row->instrument_id]->instrument_code;
+            $temp['quantity']=$row->no_of_shares;
+            $temp['buy price']=$row->buying_price;
+            $temp['buy date']=$row->buying_date;
+            $temp['exchange']='DSE';
+            $temp['sell price']=$row->sell_price;
+            $temp['sell date']=$row->sell_date;
+
+
+            $csvdata_sold[]=$temp;
+
+        }
+
+
+
+        return Excel::create($portfolio_name, function($excel) use ($csvdata,$csvdata_sold) {
+            $excel->sheet('holdings', function($sheet) use ($csvdata)
+            {
+                $sheet->fromArray($csvdata);
+            });
+
+            // Our first sheet
+            $excel->sheet('Realized GainLoss', function($sheet) use ($csvdata_sold) {
+                $sheet->fromArray($csvdata_sold);
+            });
+
+
+
+        })->download('xls');
+    }
+
+    public function portfolio_setting(Request $request)
+    {
+        $portfolio_id= $request->input('portfolio_id');
+        $setting_name= $request->input('setting_name');
+        $setting_value= $request->input('setting_value');
+
+        $portfolio_info=\DB::select("select portfolio_name,user_id from portfolios where id=$portfolio_id");
+        $user_id=$portfolio_info[0]->user_id;
+        $portfolio_name=$portfolio_info[0]->portfolio_name;
+
+        if (\Auth::user()->id != $user_id)
+        {
+            return response()->json("You are not authorize to do that. Check your login") ;
+        }else
+        {
+            \DB::select("update portfolios set $setting_name=$setting_value where id=$portfolio_id");
+            return response()->json("Email alert has been set as $setting_value for $portfolio_name") ;
+        }
+        $msg = "This is a simple message.";
+
+        return json_encode($portfolio_id);
+
+    }
+
 
 }

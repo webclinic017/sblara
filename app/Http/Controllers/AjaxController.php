@@ -164,157 +164,168 @@ class AjaxController extends Controller
     }
     public function data_matrix()
     {
-        $latestData=DataBanksIntradayRepository::getLatestTradeDataAll();
-        $instrument_arr= $latestData->pluck('instrument_id');
 
-        $metaKey=array("paid_up_capital","earning_per_share","net_asset_val_per_share","share_percentage_director","share_percentage_public","share_percentage_institute","share_percentage_foreign","share_percentage_govt");
-        //Cache::forget('data_matrix_fundamental');
-        $fundamentaInfo = Cache::remember("data_matrix_fundamental", 300 , function () use ($metaKey,$instrument_arr) {
-            $fundamentaInfo = FundamentalRepository::getFundamentalData($metaKey, $instrument_arr);
-            return $fundamentaInfo;
+        $jsonresult = Cache::remember("data_matrix_data", 1, function () {
+
+            $latestData=DataBanksIntradayRepository::getLatestTradeDataAll();
+            $instrument_arr= $latestData->pluck('instrument_id');
+
+            $metaKey=array("paid_up_capital","earning_per_share","net_asset_val_per_share","share_percentage_director","share_percentage_public","share_percentage_institute","share_percentage_foreign","share_percentage_govt");
+            //Cache::forget('data_matrix_fundamental');
+            $fundamentaInfo = Cache::remember("data_matrix_fundamental", 300 , function () use ($metaKey,$instrument_arr) {
+                $fundamentaInfo = FundamentalRepository::getFundamentalData($metaKey, $instrument_arr);
+                return $fundamentaInfo;
+            });
+
+            //cache for 1 day=1440 minutes
+            //Cache::forget('annualized_eps_all_instruments');
+            $epsData = Cache::remember("annualized_eps_all_instruments", 300 , function () use ($instrument_arr) {
+                $epsData = FundamentalRepository::getAnnualizedEPS($instrument_arr);
+                return $epsData;
+            });
+
+
+
+
+            $instrumentList=InstrumentRepository::getInstrumentsScripOnly();
+            $sectorList=SectorListRepository::getSectorList();
+
+            $maingrid=array();
+            foreach($latestData as $arr)
+            {
+                $temp=array();
+                $instrument_id=$arr->instrument_id;
+                $quote_bases=explode('-',$arr->quote_bases);
+                $category=$quote_bases[0];
+
+                $sector_list_id=$instrumentList->where('id',$instrument_id)->first()->sector_list_id;
+                $temp['id']=$arr->instrument_id;
+                $temp['code']=$instrumentList->where('id',$instrument_id)->first()->instrument_code;
+                $temp['sector']=$sectorList->where('id',$sector_list_id)->first()->name;
+
+                $temp['category']=$category;
+                if(isset($fundamentaInfo['net_asset_val_per_share'][$instrument_id]))
+                {
+                    $temp['nav'] = $fundamentaInfo['net_asset_val_per_share'][$instrument_id]['meta_value'];
+                }
+                else
+                {
+                    $temp['nav']=0;
+                }
+
+
+                $temp['lastprice']=$arr->close_price;
+                $temp['open']=$arr->open_price;
+                $temp['high']=$arr->high_price;
+                $temp['low']=$arr->low_price;
+                $temp['volume']=$arr->total_volume;
+                $temp['value']=$arr->total_value;
+                $temp['trade']=$arr->total_trades;
+                $temp['ycp']=$arr->yday_close_price;
+                $temp['pchange']=$arr->price_change_per;
+                $temp['change']=$arr->price_change;
+
+                if(isset($epsData[$instrument_id]))
+                {
+                    $temp['eps'] = $epsData[$instrument_id]['annualized_eps'];
+                }else
+                {
+                    $temp['eps'] = 0;
+                }
+                if(isset($epsData[$instrument_id]))
+                {
+                    $temp['pe'] = $epsData[$instrument_id]['annualized_eps']?round($arr->close_price/$epsData[$instrument_id]['annualized_eps'],2):0;
+                }else
+                {
+                    $temp['pe'] = 0;
+                }
+
+                if(isset($fundamentaInfo['earning_per_share'][$instrument_id]))
+                {
+                    $temp['aud_eps'] = floatval($fundamentaInfo['earning_per_share'][$instrument_id]['meta_value']);
+                }else
+                {
+                    $temp['aud_eps'] = 0;
+                }
+                if(isset($fundamentaInfo['earning_per_share'][$instrument_id]))
+                {
+                    $temp['aud_pe'] = floatval($fundamentaInfo['earning_per_share'][$instrument_id]['meta_value'])?round($arr->close_price/floatval($fundamentaInfo['earning_per_share'][$instrument_id]['meta_value']),2):0;
+                }else
+                {
+                    $temp['aud_pe'] = 0;
+                }
+
+                if(isset($fundamentaInfo['share_percentage_director'][$instrument_id]))
+                {
+                    $temp['dir'] = floatval($fundamentaInfo['share_percentage_director'][$instrument_id]['meta_value']);
+                }else
+                {
+                    $temp['dir'] = 0;
+                }
+
+                if(isset($fundamentaInfo['share_percentage_public'][$instrument_id]))
+                {
+                    $temp['pub'] = floatval($fundamentaInfo['share_percentage_public'][$instrument_id]['meta_value']);
+                }else
+                {
+                    $temp['pub'] = 0;
+                }
+
+                if(isset($fundamentaInfo['share_percentage_institute'][$instrument_id]))
+                {
+                    $temp['inst'] = floatval($fundamentaInfo['share_percentage_institute'][$instrument_id]['meta_value']);
+                }else
+                {
+                    $temp['inst'] = 0;
+                }
+
+                if(isset($fundamentaInfo['share_percentage_foreign'][$instrument_id]))
+                {
+                    $temp['for'] = floatval($fundamentaInfo['share_percentage_foreign'][$instrument_id]['meta_value']);
+                }else
+                {
+                    $temp['for'] = 0;
+                }
+
+                if(isset($fundamentaInfo['share_percentage_govt'][$instrument_id]))
+                {
+                    $temp['gov'] = floatval($fundamentaInfo['share_percentage_govt'][$instrument_id]['meta_value']);
+                }else
+                {
+                    $temp['gov'] = 0;
+                }
+
+                if(isset($fundamentaInfo['paid_up_capital'][$instrument_id]))
+                {
+                    $temp['paid_up'] = floatval($fundamentaInfo['paid_up_capital'][$instrument_id]['meta_value']);
+                }else
+                {
+                    $temp['paid_up'] = 0;
+                }
+
+                $maingrid[]=$temp;
+            }
+
+
+            $jsonArr=array();
+            $firstgrid=array();
+            $secondgrid=array();
+            $thirdgrid=array();
+
+            $jsonArr['maingrid'] = $maingrid;
+            $jsonArr['firstgrid'] = $firstgrid;
+            $jsonArr['secondgrid'] = $secondgrid;
+            $jsonArr['thirdgrid'] = $thirdgrid;
+
+            $jsonresult = json_encode($jsonArr,JSON_NUMERIC_CHECK);
+
+            return $jsonresult;
+
         });
 
-        //cache for 1 day=1440 minutes
-        //Cache::forget('annualized_eps_all_instruments');
-        $epsData = Cache::remember("annualized_eps_all_instruments", 300 , function () use ($instrument_arr) {
-            $epsData = FundamentalRepository::getAnnualizedEPS($instrument_arr);
-            return $epsData;
-        });
 
 
 
-
-        $instrumentList=InstrumentRepository::getInstrumentsScripOnly();
-        $sectorList=SectorListRepository::getSectorList();
-
-        $maingrid=array();
-        foreach($latestData as $arr)
-        {
-            $temp=array();
-            $instrument_id=$arr->instrument_id;
-            $quote_bases=explode('-',$arr->quote_bases);
-            $category=$quote_bases[0];
-
-            $sector_list_id=$instrumentList->where('id',$instrument_id)->first()->sector_list_id;
-            $temp['id']=$arr->instrument_id;
-            $temp['code']=$instrumentList->where('id',$instrument_id)->first()->instrument_code;
-            $temp['sector']=$sectorList->where('id',$sector_list_id)->first()->name;
-
-            $temp['category']=$category;
-            if(isset($fundamentaInfo['net_asset_val_per_share'][$instrument_id]))
-            {
-                $temp['nav'] = $fundamentaInfo['net_asset_val_per_share'][$instrument_id]['meta_value'];
-            }
-            else
-            {
-                $temp['nav']=0;
-            }
-
-
-            $temp['lastprice']=$arr->close_price;
-            $temp['open']=$arr->open_price;
-            $temp['high']=$arr->high_price;
-            $temp['low']=$arr->low_price;
-            $temp['volume']=$arr->total_volume;
-            $temp['value']=$arr->total_value;
-            $temp['trade']=$arr->total_trades;
-            $temp['ycp']=$arr->yday_close_price;
-            $temp['pchange']=$arr->price_change_per;
-            $temp['change']=$arr->price_change;
-
-            if(isset($epsData[$instrument_id]))
-            {
-                $temp['eps'] = $epsData[$instrument_id]['annualized_eps'];
-            }else
-            {
-                $temp['eps'] = 0;
-            }
-            if(isset($epsData[$instrument_id]))
-            {
-                $temp['pe'] = $epsData[$instrument_id]['annualized_eps']?round($arr->close_price/$epsData[$instrument_id]['annualized_eps'],2):0;
-            }else
-            {
-                $temp['pe'] = 0;
-            }
-
-            if(isset($fundamentaInfo['earning_per_share'][$instrument_id]))
-            {
-                $temp['aud_eps'] = floatval($fundamentaInfo['earning_per_share'][$instrument_id]['meta_value']);
-            }else
-            {
-                $temp['aud_eps'] = 0;
-            }
-            if(isset($fundamentaInfo['earning_per_share'][$instrument_id]))
-            {
-                $temp['aud_pe'] = floatval($fundamentaInfo['earning_per_share'][$instrument_id]['meta_value'])?round($arr->close_price/floatval($fundamentaInfo['earning_per_share'][$instrument_id]['meta_value']),2):0;
-            }else
-            {
-                $temp['aud_pe'] = 0;
-            }
-
-            if(isset($fundamentaInfo['share_percentage_director'][$instrument_id]))
-            {
-                $temp['dir'] = floatval($fundamentaInfo['share_percentage_director'][$instrument_id]['meta_value']);
-            }else
-            {
-                $temp['dir'] = 0;
-            }
-
-            if(isset($fundamentaInfo['share_percentage_public'][$instrument_id]))
-            {
-                $temp['pub'] = floatval($fundamentaInfo['share_percentage_public'][$instrument_id]['meta_value']);
-            }else
-            {
-                $temp['pub'] = 0;
-            }
-
-            if(isset($fundamentaInfo['share_percentage_institute'][$instrument_id]))
-            {
-                $temp['inst'] = floatval($fundamentaInfo['share_percentage_institute'][$instrument_id]['meta_value']);
-            }else
-            {
-                $temp['inst'] = 0;
-            }
-
-            if(isset($fundamentaInfo['share_percentage_foreign'][$instrument_id]))
-            {
-                $temp['for'] = floatval($fundamentaInfo['share_percentage_foreign'][$instrument_id]['meta_value']);
-            }else
-            {
-                $temp['for'] = 0;
-            }
-
-            if(isset($fundamentaInfo['share_percentage_govt'][$instrument_id]))
-            {
-                $temp['gov'] = floatval($fundamentaInfo['share_percentage_govt'][$instrument_id]['meta_value']);
-            }else
-            {
-                $temp['gov'] = 0;
-            }
-
-            if(isset($fundamentaInfo['paid_up_capital'][$instrument_id]))
-            {
-                $temp['paid_up'] = floatval($fundamentaInfo['paid_up_capital'][$instrument_id]['meta_value']);
-            }else
-            {
-                $temp['paid_up'] = 0;
-            }
-
-            $maingrid[]=$temp;
-        }
-
-
-        $jsonArr=array();
-        $firstgrid=array();
-        $secondgrid=array();
-        $thirdgrid=array();
-
-        $jsonArr['maingrid'] = $maingrid;
-        $jsonArr['firstgrid'] = $firstgrid;
-        $jsonArr['secondgrid'] = $secondgrid;
-        $jsonArr['thirdgrid'] = $thirdgrid;
-
-        $jsonresult = json_encode($jsonArr,JSON_NUMERIC_CHECK);
 
         return  $jsonresult;
     }
@@ -364,6 +375,156 @@ class AjaxController extends Controller
         return json_encode($returnData,JSON_NUMERIC_CHECK);
 
     }
+
+    public function watch_matrix()
+    {
+        $firstGridCodeArr = array();
+        if(isset($_REQUEST['firstgrid']))
+        {
+            $firstGridParam = $_REQUEST['firstgrid'];
+            $firstGridParamArr = json_decode(stripslashes($firstGridParam));
+            foreach ($firstGridParamArr as $row) {
+                $code = trim(stripslashes($row[0]));
+                $firstGridCodeArr[$code] = $code;
+            }
+
+        }
+
+
+
+        $secondGridCodeArr = array();
+        if(isset($_REQUEST['secondgrid']))
+        {
+            $secondGridParam = $_REQUEST['secondgrid'];
+            $secondGridParamArr = json_decode(stripslashes($secondGridParam));
+            foreach ($secondGridParamArr as $row) {
+                $code = trim(stripslashes($row[0]));
+                $secondGridCodeArr[$code] = $code;
+            }
+        }
+
+        $thirdGridCodeArr = array();
+        if(isset($_REQUEST['thirdgrid']))
+        {
+            $thirdGridParam = $_REQUEST['thirdgrid'];
+            $thirdGridParamArr = json_decode(stripslashes($thirdGridParam));
+            foreach ($thirdGridParamArr as $row) {
+                $code = trim(stripslashes($row[0]));
+                $thirdGridCodeArr[$code] = $code;
+            }
+
+        }
+
+
+        $instrumentList=InstrumentRepository::getInstrumentsScripOnly();
+        $instrumentList=$instrumentList->keyBy('id');
+        $sectorList=SectorListRepository::getSectorList();
+        $sectorList=$sectorList->keyBy('id');
+
+        //$last_traded_price_all=DataBanksIntradayRepository::getAvailableLTP();
+
+        $last_traded_price_all=DataBanksIntradayRepository::getLatestTradeDataAll();
+        $instrument_arr= $last_traded_price_all->pluck('instrument_id');
+
+
+        //$instrument_arr=collect($last_traded_price_all)->pluck('instrument_id');
+
+        $metaKey=array("net_asset_val_per_share");
+        $fundamentaInfo = FundamentalRepository::getFundamentalData($metaKey, $instrument_arr);
+
+        $epsData = Cache::remember("annualized_eps_all_instruments", 300 , function () use ($instrument_arr) {
+            $epsData = FundamentalRepository::getAnnualizedEPS($instrument_arr);
+            return $epsData;
+        });
+
+        $arrall=array();
+        $firstgrid=array();
+        $secondgrid=array();
+        $thirdgrid=array();
+
+        foreach($last_traded_price_all as $instrument)
+        {
+
+     /*       if($instrument->sector_list_id==4 || $instrument->sector_list_id==5 || $instrument->sector_list_id==22 || $instrument->sector_list_id==23 || $instrument->sector_list_id==24)
+                continue;*/
+
+            $sector=$sectorList[$instrumentList[$instrument->instrument_id]->sector_list_id]->name;
+            $category=category($instrument);
+            $net_asset_val_per_share=isset($fundamentaInfo['net_asset_val_per_share'][$instrument->instrument_id])?floatval($fundamentaInfo['net_asset_val_per_share'][$instrument->instrument_id]['meta_value']):0;
+
+
+            $instrument_code=$instrumentList[$instrument->instrument_id]->instrument_code;
+            $temp=array();
+            $temp['id']=$instrument->instrument_id;
+            $temp['code']=$instrument_code;
+            $temp['sector']=$sector;
+            $temp['category']=$category;
+            $temp['market_lot']=1;
+            $temp['face_value']=10;
+            $temp['nav']=$net_asset_val_per_share;
+            $temp['lastprice']=$instrument->close_price;
+            $temp['open']=$instrument->open_price;
+            $temp['high']=$instrument->high_price;
+            $temp['low']=$instrument->low_price;
+            $temp['volume']=$instrument->total_volume;
+            $temp['value']=$instrument->total_value;
+            $temp['trade']=$instrument->total_trades;
+            $temp['ycp']=$instrument->yday_close_price;
+            $temp['pchange']=$instrument->yday_close_price?($instrument->close_price-$instrument->yday_close_price)/$instrument->yday_close_price*100:0;
+            $temp['pchange']=round($temp['pchange'],2);
+            $temp['change']=$instrument->close_price-$instrument->yday_close_price;
+            $temp['change']=round($temp['change'],2);
+
+
+            if(isset($epsData[$instrument->instrument_id]))
+            {
+                $temp['eps'] = $epsData[$instrument->instrument_id]['annualized_eps'];
+            }else
+            {
+                $temp['eps'] = 0;
+            }
+            if(isset($epsData[$instrument->instrument_id]))
+            {
+                $temp['pe'] = $epsData[$instrument->instrument_id]['annualized_eps']?round($instrument->close_price/$epsData[$instrument->instrument_id]['annualized_eps'],2):0;
+            }else
+            {
+                $temp['pe'] = 0;
+            }
+
+            $arrall [] = $temp;
+
+            if (isset($firstGridCodeArr[$instrument_code])) {
+                $firstgrid[] = $temp;
+            }
+            if (isset($secondGridCodeArr[$instrument_code])) {
+                $secondgrid[] = $temp;
+            }
+            if (isset($thirdGridCodeArr[$instrument_code])) {
+                $thirdgrid[] = $temp;
+            }
+
+
+
+        }
+
+
+
+        $arr['maingrid'] = $arrall;
+        $arr['firstgrid'] = $firstgrid;
+        $arr['secondgrid'] = $secondgrid;
+        $arr['thirdgrid'] = $thirdgrid;
+
+
+        $jsonresult = json_encode($arr);
+
+        // echo '({"total":"' . count ( $result ) . '","results":' . $jsonresult . '})';
+        echo $jsonresult;
+
+exit;
+
+    }
+
+
 
 
 }

@@ -103,9 +103,9 @@ LEFT JOIN (
         {
             $category[]= ''.$row->PriceRange;
             $total[]=$row->TotalWithinRange;
-            $up[] = $pe_data_up[$i]->TotalWithinRange;
+            $up[] = isset($pe_data_up[$i]) ?$pe_data_up[$i]->TotalWithinRange:0;
 
-            $per= round($pe_data_up[$i]->TotalWithinRange / $row->TotalWithinRange * 100, 2);
+            $per= isset($pe_data_up[$i]) ? round($pe_data_up[$i]->TotalWithinRange / $row->TotalWithinRange * 100, 2):0;
             $sort[$row->PriceRange]= $per;
             $i++;
         }

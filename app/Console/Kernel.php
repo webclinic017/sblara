@@ -28,6 +28,7 @@ class Kernel extends ConsoleKernel
         Commands\UpdateDseIndexCommand::class,
         Commands\ParseMstCommand::class,
 
+        Commands\PortfolioEmailReportCommand::class,
 
         Commands\GenerateCustomIndexCommand::class,
         Commands\CalculateSectorIntradayCommand::class,
@@ -62,6 +63,7 @@ class Kernel extends ConsoleKernel
 
         $schedule->command('dse:CalculateSectorIntraday')->cron('* 10,11,12,13,14 * * 0,1,2,3,4')->emailOutputTo('fazalmohammad19@gmail.com');
 
+        $schedule->command('mail:PortfolioEmailReport')->cron('30 15 * * 0,1,2,3,4')->emailOutputTo('fazalmohammad19@gmail.com');
     }
 
     /**

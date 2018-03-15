@@ -1,4 +1,4 @@
-@section('meta-title', 'Available Technical Analysis and Fundamental Analysis Courses')
+@section('meta-title', 'Upcoming Technical Analysis and Fundamental Analysis Courses')
 @section('meta-description', 'Profitable Technical Analysis Masterclass - Your Critical Foundation to Trading Stocks In Bangladesh')
 
 @extends('layouts.metronic.default')
@@ -21,7 +21,7 @@ List of Upcoming Courses:
                         <div class="portlet box green">
                             <div class="portlet-title">
                                 <div class="caption">
-                                    <i class="fa fa-cogs"></i><a href="{{ route('batches.show', $batch->id) }}">{{isset($batch->course_name)?$batch->course_name:$batch->course_id}} - {{$batch->batch_name}}</a></div>
+                                    <i class="fa fa-cogs"></i><a href="{{url('/courses/upcoming-courses/batches/'.$batch->id)}}">{{isset($batch->course_name)?$batch->course_name:$batch->course_id}} - {{$batch->batch_name}}</a></div>
                                 <div class="tools">
                                     <a href="javascript:;" class="collapse" data-original-title="" title=""> </a>
 <!--                                <a href="#portlet-config" data-toggle="modal" class="config" data-original-title="" title=""> </a>
@@ -69,7 +69,7 @@ List of Upcoming Courses:
                                             <a href="" class="btn btn-default">Certificate will be awarded</a>
                                         </div>
                                         <div class="col-md-2 col-md-offset-3">
-                                            <a href="{{ route('batches.show', $batch->id) }}" class="btn btn-default">More detail</a>
+                                            <a href="{{url('/courses/upcoming-courses/batches/'.$batch->id)}}" class="btn btn-default">More detail</a>
                                         </div>
                                     </div>
                                 </div>

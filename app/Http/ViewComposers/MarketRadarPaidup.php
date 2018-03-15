@@ -21,7 +21,7 @@ class MarketRadarPaidup
 {
 
     /**
-     * Bind data to the view.
+     * Bind data-the view.
      *
      * @param  View  $view
      * @return void
@@ -35,20 +35,20 @@ class MarketRadarPaidup
 
         $sql="SELECT x.PriceRange, COALESCE(TotalWithinRange, 0) AS TotalWithinRange
 FROM (
-  SELECT '0 to 100' AS PriceRange
-  UNION SELECT '100 to 300'
-  UNION SELECT '300 to 500'
-  UNION SELECT '500 to 1000'
-  UNION SELECT '1000 to 2000'
-  UNION SELECT 'over 2000' ) x
+  SELECT '0-10' AS PriceRange
+  UNION SELECT '10-30'
+  UNION SELECT '30-50'
+  UNION SELECT '50-100'
+  UNION SELECT '100-200'
+  UNION SELECT 'over 200' ) x
 LEFT JOIN (
    SELECT
-      CASE when cast(fundamentals.meta_value AS DECIMAL(10,2)) > 0 and cast(fundamentals.meta_value AS DECIMAL(10,2)) <= 100 then '0 to 100'
-           when cast(fundamentals.meta_value AS DECIMAL(10,2)) > 100 and cast(fundamentals.meta_value AS DECIMAL(10,2)) <= 300 then '100 to 300'
-           when cast(fundamentals.meta_value AS DECIMAL(10,2)) >300  and cast(fundamentals.meta_value AS DECIMAL(10,2)) <= 500 then '300 to 500'
-           when cast(fundamentals.meta_value AS DECIMAL(10,2)) > 500 and cast(fundamentals.meta_value AS DECIMAL(10,2)) <= 1000 then '500 to 1000'
-           when cast(fundamentals.meta_value AS DECIMAL(10,2)) > 1000 and cast(fundamentals.meta_value AS DECIMAL(10,2)) <= 2000 then '1000 to 2000'
-           else 'over 2000'
+      CASE when cast(fundamentals.meta_value AS DECIMAL(10,2)) > 0 and cast(fundamentals.meta_value AS DECIMAL(10,2)) <= 100 then '0-10'
+           when cast(fundamentals.meta_value AS DECIMAL(10,2)) > 100 and cast(fundamentals.meta_value AS DECIMAL(10,2)) <= 300 then '10-30'
+           when cast(fundamentals.meta_value AS DECIMAL(10,2)) >300  and cast(fundamentals.meta_value AS DECIMAL(10,2)) <= 500 then '30-50'
+           when cast(fundamentals.meta_value AS DECIMAL(10,2)) > 500 and cast(fundamentals.meta_value AS DECIMAL(10,2)) <= 1000 then '50-100'
+           when cast(fundamentals.meta_value AS DECIMAL(10,2)) > 1000 and cast(fundamentals.meta_value AS DECIMAL(10,2)) <= 2000 then '100-200'
+           else 'over 200'
       END AS PriceRange,
       COUNT(*) as TotalWithinRange
 
@@ -69,20 +69,20 @@ LEFT JOIN (
 
         $sql="SELECT x.PriceRange, COALESCE(TotalWithinRange, 0) AS TotalWithinRange
 FROM (
-  SELECT '0 to 100' AS PriceRange
-  UNION SELECT '100 to 300'
-  UNION SELECT '300 to 500'
-  UNION SELECT '500 to 1000'
-  UNION SELECT '1000 to 2000'
-  UNION SELECT 'over 2000' ) x
+  SELECT '0-10' AS PriceRange
+  UNION SELECT '10-30'
+  UNION SELECT '30-50'
+  UNION SELECT '50-100'
+  UNION SELECT '100-200'
+  UNION SELECT 'over 200' ) x
 LEFT JOIN (
    SELECT
-      CASE when cast(fundamentals.meta_value AS DECIMAL(10,2)) > 0 and cast(fundamentals.meta_value AS DECIMAL(10,2)) <= 100 then '0 to 100'
-           when cast(fundamentals.meta_value AS DECIMAL(10,2)) > 100 and cast(fundamentals.meta_value AS DECIMAL(10,2)) <= 300 then '100 to 300'
-           when cast(fundamentals.meta_value AS DECIMAL(10,2)) >300  and cast(fundamentals.meta_value AS DECIMAL(10,2)) <= 500 then '300 to 500'
-           when cast(fundamentals.meta_value AS DECIMAL(10,2)) > 500 and cast(fundamentals.meta_value AS DECIMAL(10,2)) <= 1000 then '500 to 1000'
-           when cast(fundamentals.meta_value AS DECIMAL(10,2)) > 1000 and cast(fundamentals.meta_value AS DECIMAL(10,2)) <= 2000 then '1000 to 2000'
-           else 'over 2000'
+      CASE when cast(fundamentals.meta_value AS DECIMAL(10,2)) > 0 and cast(fundamentals.meta_value AS DECIMAL(10,2)) <= 100 then '0-10'
+           when cast(fundamentals.meta_value AS DECIMAL(10,2)) > 100 and cast(fundamentals.meta_value AS DECIMAL(10,2)) <= 300 then '10-30'
+           when cast(fundamentals.meta_value AS DECIMAL(10,2)) >300  and cast(fundamentals.meta_value AS DECIMAL(10,2)) <= 500 then '30-50'
+           when cast(fundamentals.meta_value AS DECIMAL(10,2)) > 500 and cast(fundamentals.meta_value AS DECIMAL(10,2)) <= 1000 then '50-100'
+           when cast(fundamentals.meta_value AS DECIMAL(10,2)) > 1000 and cast(fundamentals.meta_value AS DECIMAL(10,2)) <= 2000 then '100-200'
+           else 'over 200'
       END AS PriceRange,
       COUNT(*) as TotalWithinRange
 
@@ -101,11 +101,11 @@ LEFT JOIN (
         $i=0;
         foreach($paidup_data_total as $row)
         {
-            $category[]= $row->PriceRange.'M';
+            $category[]= $row->PriceRange.'';
             $total[]=$row->TotalWithinRange;
-            $up[] = $paidup_data_up[$i]->TotalWithinRange;
+            $up[] = isset($paidup_data_up[$i])?$paidup_data_up[$i]->TotalWithinRange:0;
 
-            $per= round($paidup_data_up[$i]->TotalWithinRange / $row->TotalWithinRange * 100, 2);
+            $per= isset($paidup_data_up[$i]) ?round($paidup_data_up[$i]->TotalWithinRange / $row->TotalWithinRange * 100, 2):0;
             $sort[$row->PriceRange]= $per;
             $i++;
         }
