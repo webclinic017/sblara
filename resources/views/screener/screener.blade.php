@@ -21,6 +21,12 @@ Advance Screeners of DSE
     z-index: 999;
     top: 40%;
   }
+  .filter-row .set-time{
+    position: absolute;
+    right: 40px;
+    z-index: 999;
+    top: 39%;
+  }
   .filter-row .alert{
     background-color: #fff;
     margin-bottom: 0;
@@ -54,13 +60,13 @@ Advance Screeners of DSE
           {{csrf_field()}}
             <div class="form-group form-md-line-input">
                 <label for="" class="label-control">Screener Name</label>
-                <input class="form-control value" data-rel="percent" type="text" value="" placeholder="Enter name here" name="title" required="">
+                <input class="form-control"  type="text" value="" placeholder="Enter name here" name="title" required="">
                 <div class="form-control-focus"> </div> 
             </div>
 
             <div class="form-group form-md-line-input">
                 <label for="" class="label-control">Description</label>
-                <textarea placeholder="Enter descripton here" class="form-control value" name="description"></textarea>
+                <textarea placeholder="Enter descripton here" class="form-control" name="description"></textarea>
                 <div class="form-control-focus"> </div> 
             </div>
 
@@ -91,6 +97,14 @@ Advance Screeners of DSE
       </div>
       <div class="modal-body">
         <div class="row">
+          <div class="col-md-12">
+              <h5><strong>Value</strong></h5>
+              <ul style="display: inline-block;">
+                <li><a data-value = "VALUE">Value</a></li>
+                <li><a data-value = "PRICEPERCENT">Price percentage</a></li>
+              </ul>
+          </div>
+
             <div class=" col-md-4 col-sm-6">
               <h5><strong>Moving Average</strong></h5>
               <ul >
@@ -291,24 +305,42 @@ function generateHtml(query) {
     var v1 = matches[0][1];
     var op = matches[0][2];
     var v2 = matches[0][3];
+    var v2matched = preg_match_all(/(.*) (WITHIN|BEFORE) ([0-9].+)/g, v2);
+      var  targetType ;
+      var  targetN ;          
+    if(v2matched.length != 0)
+    {
+      v2 = v2matched[0][1];
+        targetType = v2matched[0][2];
+        targetN = v2matched[0][3];      
+    }
+
     var row = $('#filter-row');
     //left side
-    var lmatches = preg_match_all(/([A-Z]+)\s*?\(([A-Z0-9,. ]+)\)/g, v1);
+    var lmatches = preg_match_all(/([A-Z0-9]+)\s*?\(([A-Z0-9,. ]+)\)/g, v1);
     $('.filter-left', row).html($('#'+lmatches[0][1]).html()); //generated html will replace here
 
-    var rmatches = preg_match_all(/([A-Z]+)\s*?\(([A-Z0-9,. ]+)\)/g, v2);
+    var rmatches = preg_match_all(/([A-Z0-9]+)\s*?\(([A-Z0-9,. ]+)\)/g, v2);
     if(rmatches.length == 0)
     {
       // not function
-    var rematches = preg_match_all(/([A-Z]+)/g, v2);
-    var col = rematches[0][1];
+      if(preg_match_all(/([A-Z]+)/g, v2).length != 0)
+      {
+        var rematches = preg_match_all(/([A-Z]+)/g, v2);
+        var col = rematches[0][1];
+      }
     if(preg_match_all(/\/100/g, v2).length !=0)
     {
       // col += "%";
       val = preg_match_all(/([1-9].)?\/100/g, v2)[0][1];
+    $('.filter-right', row).html($('#default-right-content').html()); //generated html will replace here
+    }else if(preg_match_all(/[A-Z]/g, v2).length == 0)
+    {
+      val = v2;
+    $('.filter-right', row).html($('#filter-right-nav').html()+$('#VALUE').html()); //generated html will replace here
+
     }
     // aditional constant or value condition/statements here
-    $('.filter-right', row).html($('#default-right-content').html()); //generated html will replace here
     }else{
       //function
      $('.filter-right', row).html($('#filter-right-nav').html()+$('#'+rmatches[0][1]).html()); 
@@ -333,13 +365,27 @@ function generateHtml(query) {
       })
     }else{
       // parse calculation or value
+      if(preg_match_all(/([1-9].)?\/100/g, v2).length == 0)
+      {
+        $('.filters [data-row-id='+rowid+'] .filter-right .value').val(val);
+
+      }else{
+        
         $('.filters [data-row-id='+rowid+'] .filter-right .value').val(val);
         $('.filters [data-row-id='+rowid+'] .filter-right .compare').val(col);
+      }
     }
 
     //set operator
         $('.filters [data-row-id='+rowid+'] .operator').val(op);
-    
+
+      //set time target
+      if(v2matched.length != 0)
+      {
+        $('.filters [data-row-id='+rowid+'] .targetType').val(targetType);
+        $('.filters [data-row-id='+rowid+'] .targetN').val(targetN);
+        
+      }
   });
 }
 
@@ -347,7 +393,8 @@ function generateHtml(query) {
 ///
     function generateQuery() {
         var syntax = "";
-      $('.filters .filter-row').each(function (k, v) {
+      $('.filters .filter-row').each(function (k, element) {
+        var v = element;
         syntax += "[ ";
         syntax += $(this).find('.filter-left .alert-warningdf').data('func') + "(";
         var params = [];
@@ -380,6 +427,7 @@ function generateHtml(query) {
         if($(this).find(".filter-right [data-param]").length == 0)
         {
           var val = $(this).find('.value').val();
+
           if($(this).find('.value').attr('data-rel') == "percent")
           {
             var keyword = $(this).find('.compare').val();
@@ -402,6 +450,7 @@ function generateHtml(query) {
               operator = "+";
               break;
             }
+
             val = keyword + " "+operator+" ("+ keyword+  " * (" +val+ "/100" +"))" ;
           }
               syntax +=  val;
@@ -428,6 +477,13 @@ function generateHtml(query) {
 
             syntax +=  ")";
         }
+        //check if time target is given
+        var targetType = $(this).find('.targetType').val();
+        var targetN = $(this).find('.targetN').val();
+        if(targetN != 0)
+        {
+          syntax += " "+targetType+" "+targetN;
+        }
         syntax += " ] ";
       });
       return syntax;
@@ -437,6 +493,10 @@ function generateHtml(query) {
   $('.add-filter').click(function () {
     $('#criteriaModal').attr('data-action', 'add-filter');  
     $('#criteriaModal').modal();  
+  });
+
+  $('.filters').on('click', '.filter-row .set-time', function () {
+      $(this).prev().modal();
   });
 
     // change criteria

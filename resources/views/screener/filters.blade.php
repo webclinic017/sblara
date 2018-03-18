@@ -1,3 +1,6 @@
+@include('screener.forms.value')
+@include('screener.forms.pricepercent')
+
 @include('screener.forms.sma')
 @include('screener.forms.ema')
 @include('screener.forms.wma')
@@ -31,7 +34,45 @@
 
 <div id="filter-row">
     <div class="row filter-row">
-    	<a class="remove-row"><i class="fa fa-close"></i></a>
+
+      <a class="remove-row"><i class="fa fa-close"></i></a>
+
+
+<!-- Modal -->
+<div class="time-modal modal fade " role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content modal-sm">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Before/Within (n) Candles ago</h4>
+      </div>
+      <div class="modal-body">
+
+  <div class="form-group form-md-line-input"  >
+                <label for="" class="label-control">Before/Within</label>
+   <select class="form-control targetType" >
+       <option value="BEFORE"> Before </option>
+       <option value="WITHIN"> Within </option>
+   </select>
+  </div>  
+          
+            <div class="form-group form-md-line-input">
+                <label for="" class="label-control">Candles</label>
+              <input class="form-control targetN"  type="text" value="0"  > 
+              <div class="form-control-focus"> </div> 
+            </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Set</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+    	<a class="set-time"><i class="fa fa-clock-o"></i></a>
         <div class="col-md-5 filter-left">
           
         </div>
@@ -58,20 +99,7 @@
                                            </select>
                                           </div>
 
-                                          <div class="form-group form-md-line-input" style="display: none;">
-                                           <select class="form-control " id="form_control_1">
-                                               <option value="BEFORE"> Before </option>
-                                               <option value="WITHIN"> Within </option>
-                                           </select>
-                                           
 
-                                        <div class="form-group form-md-line-input">
-                                            <input class="form-control value" data-rel="percent" type="text" value="0" style="width: 20px" > <small>Candles</small> {{-- validation 2 to 100--}}
-                                            <div class="form-control-focus"> </div> 
-                                        </div>
-
-                                            
-                                          </div>
                                     </form>
                             </div>
                         </div>
@@ -93,6 +121,10 @@
           <i class="fa fa-exchange"></i> </a>	
 </div>
 {{-- nav --}}
+
+
+
+{{-- time setup --}}
 
 {{-- default right html --}}
 <div id="default-right-content">

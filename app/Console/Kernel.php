@@ -38,9 +38,13 @@ class Kernel extends ConsoleKernel
         Commands\EodAdjDataCommand::class,
         Commands\WeeklyAdjDataCommand::class,
         Commands\MonthlyAdjDataCommand::class,
-        Commands\FileDataUpdaterCommand::class,
         Commands\IntradayData5MinutesCommand::class,
         Commands\IntradayData15MinutesCommand::class,
+        Commands\IntradayData30MinutesCommand::class,
+        Commands\IntradayData60MinutesCommand::class,
+
+        Commands\FileDataUpdaterCommand::class,
+        Commands\FileDataUpdaterIntradayCommand::class,
 
 
         Commands\RemoveDuplicateEodCommand::class,
@@ -76,6 +80,19 @@ class Kernel extends ConsoleKernel
         $schedule->command('dse:CalculateSectorIntraday')->cron('* 10,11,12,13,14 * * 0,1,2,3,4')->emailOutputTo('fazalmohammad19@gmail.com');
 
         $schedule->command('mail:PortfolioEmailReport')->cron('30 15 * * 0,1,2,3,4')->emailOutputTo('fazalmohammad19@gmail.com');
+
+        //filter related
+        $schedule->command('dse:FileDataUpdater')->cron('* 10,11,12,13,14 * * 0,1,2,3,4')->emailOutputTo('fazalmohammad19@gmail.com');
+        $schedule->command('dse:FileDataUpdaterIntraday')->cron('* 10,11,12,13,14 * * 0,1,2,3,4')->emailOutputTo('fazalmohammad19@gmail.com');
+        $schedule->command('filter:EodUnAdjData')->cron('40 16 * * 0,1,2,3,4')->emailOutputTo('fazalmohammad19@gmail.com');
+        $schedule->command('filter:EodAdjData')->cron('43 16 * * 0,1,2,3,4')->emailOutputTo('fazalmohammad19@gmail.com');
+        $schedule->command('filter:WeeklyAdjData')->cron('50 16 * * 0,1,2,3,4')->emailOutputTo('fazalmohammad19@gmail.com');
+        $schedule->command('filter:MonthlyAdjData')->cron('58 16 * * 0,1,2,3,4')->emailOutputTo('fazalmohammad19@gmail.com');
+        $schedule->command('filter:IntradayData5Minutes')->cron('15 17 * * 0,1,2,3,4')->emailOutputTo('fazalmohammad19@gmail.com');
+        $schedule->command('filter:IntradayData15Minutes')->cron('25 17 * * 0,1,2,3,4')->emailOutputTo('fazalmohammad19@gmail.com');
+        $schedule->command('filter:IntradayData30Minutes')->cron('35 17 * * 0,1,2,3,4')->emailOutputTo('fazalmohammad19@gmail.com');
+        $schedule->command('filter:IntradayData60Minutes')->cron('45 17 * * 0,1,2,3,4')->emailOutputTo('fazalmohammad19@gmail.com');
+
     }
 
     /**

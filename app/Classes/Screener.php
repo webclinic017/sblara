@@ -21,10 +21,12 @@ class Screener{
 	protected $ldata = [];
 	protected $targetN = 0;
 	protected $targetType = "BEFORE";
+	protected $dataTarget = "D";
+	protected $real = 0;
 	
 	function __construct($query = null)
 	{
-		$query = "[ MACD(26, 12, 9, CLOSE, SIGNAL) X< MACD(26, 12, 9, CLOSE, MACD) WITHIN 10 ]";
+		// $query = "[ MACD(26, 12, 9, CLOSE, SIGNAL) X< MACD(26, 12, 9, CLOSE, MACD) WITHIN 2 ]";
 		require_once __DIR__."/trader.php";
 		$this->query = strtoupper($query);
 		$this->parse($this->query);
@@ -50,6 +52,8 @@ class Screener{
 		//sql query here 
 		$this->instruments = \App\Instrument::whereNotIn('sector_list_id', ['22', '24', '4', '5'])->where('active', 1)->pluck('id')->toArray(); // addition filter will be apply here with the same query.. pe, fundamental info, category etc.
 		foreach ($this->conditions as  $value) {
+			//reset the data target to adjusted eod
+			$this->dataTarget = "D";
 			preg_match_all("((.*[^".join(self::OPERATORS, '')."])(".join(self::OPERATORS, '|').")(.*))", $value, $matches);
 			$v1 = $matches[1][0];
 			$v2 = $matches[3][0];
@@ -94,6 +98,7 @@ class Screener{
 	 */
 	public function compileParams($params)
 	{
+		$this->dataTarget = trim($params[count($params) - 1]);
 		foreach ($params as $key => $value) {
 			if(preg_match_all("/".join(self::KEYWORDS, '|')."/", $value, $matches))
 			{
@@ -102,6 +107,7 @@ class Screener{
 				$params[$key] = $this->{strtolower($matches[0][0]).'Array'};
 			}
 		}
+
 		return $params;
 	}
 
@@ -126,6 +132,10 @@ class Screener{
 	 */
 	public function compare($val1, $operator, $val2)
 	{
+		if(!isset($val2[0]))
+		{
+			return false;
+		}
 		// dump($this->instrument_id);
 		$i = $this->targetN;
 		if($this->targetType == 'WITHIN')
@@ -217,12 +227,36 @@ class Screener{
 		throw new \Exception("Invalid operator used", 1);
 	}
 
+	public function getFileData($instrument_id, $prop, $type = 'D')
+	{
+		switch ($type) {
+			case '5M':
+			return \App\Repositories\FileDataRepository::get5MinutesUnadjustedData($instrument_id, $prop[0], $this->real);
+				break;
+			
+			case '15M':
+			return \App\Repositories\FileDataRepository::get15MinutesUnadjustedData($instrument_id, $prop[0], $this->real);
+				break;
+			
+			case 'ND':
+			return \App\Repositories\FileDataRepository::getUnAdjustedEod($instrument_id, $prop[0], $this->real);
+				break;
+			
+			default:
+			return \App\Repositories\FileDataRepository::getAdjustedEod($instrument_id, $prop[0], $this->real);
+				break;
+		}
+
+	}
+
 	/**
 	 * getter for getting props value
 	 */
 	public function __get($prop)
 	{
-			 $data = (array) json_decode(file_get_contents(storage_path("app/data/{$this->instrument_id}/eod/adjusted/{$prop[0]}.txt")));
+		$data = $this->getFileData($this->instrument_id, $prop[0], $this->dataTarget);
+		//always return morning data
+			 // $data = (array) json_decode(file_get_contents(storage_path("app/data/{$this->instrument_id}/eod/adjusted/{$prop[0]}.txt")));
 			 // dd($data);
 		if(preg_match("/[A|a]rray/", $prop))
 		{		
@@ -307,6 +341,15 @@ class Screener{
 	{
 		$index = trim($value);
 
+		// fill all array pocket for complare n days ago
+		if(is_numeric($index))
+		{
+			$dataArray = [];
+			for ($i=0; $i <= $this->targetN; $i++) { 
+				$dataArray[] = $index;
+			}
+			return 	$this->data[$this->instrument_id][$index]['values'] = $dataArray;
+		}
 		//if function
 			preg_match_all("/(".join(self::KEYWORDS, '|').")/", $value, $matches);
 			$keywords = $matches[1];
@@ -332,9 +375,9 @@ class Screener{
 
 			if(!isset($this->data[$this->instrument_id][$index]))
 			{
-						$this->data[$this->instrument_id][$index] = $output;
+						$this->data[$this->instrument_id][$index]['values'] = $output;
 			}		 
-			return $this->data[$this->instrument_id][$index];		
+			return $this->data[$this->instrument_id][$index]['values'];		
 
 		
 			if(!isset($this->data[$this->instrument_id][$index]))
@@ -428,6 +471,10 @@ class Screener{
 
 	public function callFunction($function, $params = [])
 	{
+		// if($this->instrument_id == 20){
+		// 	dump($this->compileParams($params));
+		// 	dd(call_user_func_array("sb_".strtolower($function), $this->compileParams($params)));
+		// }
 		return call_user_func_array("sb_".strtolower($function), $this->compileParams($params));		
 	}
 
@@ -443,7 +490,7 @@ class Screener{
 
 	public function getDate($instrument_id, $nCandleAgo)
 	{
-			 $data = (array) json_decode(file_get_contents(storage_path("app/data/{$instrument_id}/eod/adjusted/d.txt")));
+		$data = \App\Repositories\FIleDataRepository::getAdjustedEod($instrument_id, 'd');
 		        return date('d M Y', strtotime($data[$nCandleAgo]));	
 	}
 

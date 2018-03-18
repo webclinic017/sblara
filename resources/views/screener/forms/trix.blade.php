@@ -26,11 +26,12 @@
                        <select class="form-control " data-param="3" id="form_control_1">
                            <option value="D">EOD (Adj)</option>
                            <option value="ND">EOD (Un adj)</option>
-                           <option value="1M">1 Minute</option>
                            <option value="5M">5 Minutes</option>
                            <option value="15M">15 Minutes</option>
                            <option value="30M">30 Minutes</option>
-                           <option value="1H">1 Hours</option>
+                           <option value="1H">1 Hour</option>
+                           <option value="W">Weekly (Adj)</option>
+                           <option value="M">Monthly (Adj)</option>
                        </select>
 
                     </div>
