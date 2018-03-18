@@ -163,6 +163,14 @@ function growthCalculatePer($lastMinuteData, $prevMinuteData, $field = 'price_ch
     return $collection;
 }
 
+function mailCss($val)
+{
+
+    /*<span style="color:red">Today's Gain **1.25%**</span>*/
+    $css = ($val < 0) ? 'style="color:red"' : 'style="color:green"';
+
+    return $css;
+}
 function fontCss($val)
 {
 
@@ -175,6 +183,24 @@ function barCss($val)
     $css = ($val < 0) ? "red-haze" : "green-jungle";
     return $css;
 }
+
+function sparkLineBarColor($val)
+{
+    $css = ($val < 0) ? "#EF4836" : "#26C281";
+    return $css;
+}
+function sparkLineLineColor($val)
+{
+    $css = ($val < 0) ? "#ff5656" : "#96ea96";
+    return $css;
+}
+
+function sparkLineFillColor($val)
+{
+    $css = ($val < 0) ? "#ffaaaa" : "#00bf00";
+    return $css;
+}
+
 
 function r_collect($array)
 {
@@ -234,3 +260,9 @@ function imageUploader($name = 'image')
     return Auth::user();
 }
 /*se functions*/
+
+function rutime($ru, $rus, $index)
+{
+    return ($ru["ru_$index.tv_sec"] * 1000 + intval($ru["ru_$index.tv_usec"] / 1000))
+    - ($rus["ru_$index.tv_sec"] * 1000 + intval($rus["ru_$index.tv_usec"] / 1000));
+}

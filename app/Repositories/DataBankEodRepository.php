@@ -293,10 +293,19 @@ ORDER BY lm_date_time DESC) data
 
                     if ($data['date_timestamp'] < $daystamp) {
                         $data['date'] = $data['date'];
+
                         $data['open'] = $data['open'] / $adjustmentFactor;
+                        $data['open']=round($data['open'],2);
+
                         $data['high'] = $data['high'] / $adjustmentFactor;
+                        $data['high'] = round($data['high'], 2);
+
                         $data['low'] =  $data['low'] / $adjustmentFactor;
+                        $data['low'] = round($data['low'], 2);
+
                         $data['close'] = $data['close'] / $adjustmentFactor;
+                        $data['close'] = round($data['close'], 2);
+
                         // Notes: In previous version volume is not adjustd
                         $data['volume'] = $data['volume'] * $adjustmentFactor;
                     }
@@ -322,9 +331,16 @@ ORDER BY lm_date_time DESC) data
                     if ($data['date_timestamp'] < $daystamp) {
                         $data['date'] = $data['date'];
                         $data['open'] = $data['open'] - $adjustmentFactor;
+                        $data['open'] = round($data['open'], 2);
+
                         $data['high'] = $data['high'] - $adjustmentFactor;
+                        $data['high'] = round($data['high'], 2);
+
                         $data['low'] = $data['low'] - $adjustmentFactor;
+                        $data['low'] = round($data['low'], 2);
+
                         $data['close'] = $data['close'] - $adjustmentFactor;
+                        $data['close'] = round($data['close'], 2);
                     }
 
                     $adjustedArr[] = $data;
@@ -349,9 +365,17 @@ ORDER BY lm_date_time DESC) data
                     if ($data['date_timestamp'] < $daystamp) {
                         $data['date'] = $data['date'];
                         $data['open'] = (($data['open'] * 100) + (($premium + $facevalue) * $row->value)) / (100 + $row->value);
+                        $data['open'] = round($data['open'], 2);
+
                         $data['high'] = (($data['high'] * 100) + (($premium + $facevalue) * $row->value)) / (100 + $row->value);
+                        $data['high'] = round($data['high'], 2);
+
                         $data['low'] = (($data['low'] * 100) + (($premium + $facevalue) * $row->value)) / (100 + $row->value);
+                        $data['low'] = round($data['low'], 2);
+
                         $data['close'] = (($data['close'] * 100) + (($premium + $facevalue) * $row->value)) / (100 + $row->value);
+                        $data['close'] = round($data['close'], 2);
+
                         // Notes: In previous version volume is not adjustd
                         $data['volume'] = $data['volume'] * $adjustmentFactor;
 
@@ -372,9 +396,17 @@ ORDER BY lm_date_time DESC) data
                     if ($data['date_timestamp'] < $daystamp) {
                         $data['date'] = $data['date'];
                         $data['open'] = $data['open'] / $adjustmentFactor;
+                        $data['open'] = round($data['open'], 2);
+
                         $data['high'] = $data['high'] / $adjustmentFactor;
+                        $data['high'] = round($data['high'], 2);
+
                         $data['low'] = $data['low'] / $adjustmentFactor;
+                        $data['low'] = round($data['low'], 2);
+
                         $data['close'] = $data['close'] / $adjustmentFactor;
+                        $data['close'] = round($data['close'], 2);
+
                         $data['volume'] = $data['volume'] * $adjustmentFactor;
                     }
 

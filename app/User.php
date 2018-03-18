@@ -117,4 +117,9 @@ class User extends \TCG\Voyager\Models\User implements Ath{
 
     }
 
+    public function screeners()
+    {
+        return $this->hasMany(\App\Screener::class);
+    }
+
 }

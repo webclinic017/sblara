@@ -33,9 +33,21 @@ class Kernel extends ConsoleKernel
         Commands\GenerateCustomIndexCommand::class,
         Commands\CalculateSectorIntradayCommand::class,
 
+        // filter data
+        Commands\EodUnAdjDataCommand::class,
+        Commands\EodAdjDataCommand::class,
+        Commands\WeeklyAdjDataCommand::class,
+        Commands\MonthlyAdjDataCommand::class,
+        Commands\FileDataUpdaterCommand::class,
+        Commands\IntradayData5MinutesCommand::class,
+        Commands\IntradayData15MinutesCommand::class,
+
+
         Commands\RemoveDuplicateEodCommand::class,
         Commands\FundamentalLatestIdCommand::class,
         Commands\Import::class,
+
+
     ];
 
     /**

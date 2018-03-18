@@ -9,6 +9,7 @@ use App\Repositories\InstrumentRepository;
 use App\Repositories\FundamentalRepository;
 use App\Repositories\DataBanksIntradayRepository;
 use App\Repositories\SectorListRepository;
+use App\Repositories\FileDataRepository;
 use App\Market;
 use DB;
 use Illuminate\Support\Facades\Storage;
@@ -325,9 +326,43 @@ dd($eq_arr);
 
 public function technicalAnalysisHome()
     {
-
-
+        $instrument_list=InstrumentRepository::getInstrumentsScripWithIndex();
         $rustart = getrusage();
+
+        $c = FileDataRepository::get5MinutesUnadjustedData(13, 'o', 0);
+        dump($c);
+        $c = FileDataRepository::get5MinutesUnadjustedData(13, 'h', 0);
+        dump($c);
+        $c = FileDataRepository::get5MinutesUnadjustedData(13, 'l', 0);
+        dump($c);
+        $c = FileDataRepository::get5MinutesUnadjustedData(13, 'c', 0);
+        dump($c);
+        $c = FileDataRepository::get5MinutesUnadjustedData(13, 'v', 0);
+        dump($c);
+        $c = FileDataRepository::get5MinutesUnadjustedData(13, 'd', 0);
+        dd($c);
+
+        $t=0;
+
+        foreach($instrument_list as $ins) {
+
+            $instrument_id=$ins->id;
+            $o = FileDataRepository::get15MinutesUnadjustedData($instrument_id, 'o', $t);
+            $c = FileDataRepository::get15MinutesUnadjustedData($instrument_id, 'h', $t);
+            $c = FileDataRepository::get15MinutesUnadjustedData($instrument_id, 'l', $t);
+            $c = FileDataRepository::get15MinutesUnadjustedData($instrument_id, 'c', $t);
+            $c = FileDataRepository::get15MinutesUnadjustedData($instrument_id, 'v', $t);
+            $d = FileDataRepository::get15MinutesUnadjustedData($instrument_id, 'd', $t);
+
+        }
+        $ru = getrusage();
+        echo "This process used " . $this->rutime($ru, $rustart, "utime") .
+            " ms for its computations\n";
+        echo "It spent " . $this->rutime($ru, $rustart, "stime") .
+            " ms in system calls\n";
+        dd($d);
+
+
 
 $sql="select instrument_id,open,high,low,close,volume,date
 from data_banks_eods
