@@ -264,6 +264,8 @@ function runQuery() {
   store('screeners_query', syntax);
      $.get('/screeners/result?q='+ encodeURI(btoa(syntax)), function (data) {
         $('.result').html(data);
+      }).error(function () {
+        $('.result').html("<div style='padding:10px; color:red'>Internal error. Please make sure that you have submitted correct combanations of filter.</div>");
       });  
 }
 

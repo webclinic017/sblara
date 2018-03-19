@@ -75,12 +75,13 @@ class UserParticipantsController extends Controller
         $participant->save();
 
 
-        Mail::to($request->input('p_email'))->send(new OrderShipped($participant->id));
+        //Mail::to($request->input('p_email'))->send(new OrderShipped($participant->id,$participant->course_batch_id));
+        Mail::to('afmsohail@gmail.com')->send(new OrderShipped($participant->id,$participant->course_batch_id));
 
         $batches = CourseParticipants::getActiveCourse();
 
 
-        return view('user_courses.list', ['batches' => $batches, 'message_success' => 'You successfull registred!']);
+        return view('user_courses.list', ['batches' => $batches, 'message_success' => 'You have successfully registered for the course!']);
     }
 
     /**

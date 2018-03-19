@@ -66,6 +66,7 @@ ORDER BY data_banks_intradays.batch ASC";
         $trade_data_prev=DB::select($sql);
 
         $last_trade_time=Carbon::parse($trade_data_today[0]->TRD_LM_DATE_TIME);
+
         $market_started=$market_info[0]->trade_date->format('Y-m-d').' '.$market_info[0]->market_started->format('H:i:s');
         $market_closed=$market_info[0]->trade_date->format('Y-m-d').' '.$market_info[0]->market_closed->format('H:i:s');
 
@@ -74,7 +75,7 @@ ORDER BY data_banks_intradays.batch ASC";
 
         $total_market_time=$market_closed-$market_started;
 
-        $total_traded_time_so_far = $last_trade_time->timestamp-$market_started;
+        $total_traded_time_so_far = $market_closed<$last_trade_time->timestamp?$market_closed-$market_started:$last_trade_time->timestamp-$market_started;
 
         $avg_trade_value_per_second = $trade_data_today[0]->TRD_TOTAL_VALUE / $total_traded_time_so_far;
         $projected_trade_value=round($avg_trade_value_per_second*$total_market_time,2);

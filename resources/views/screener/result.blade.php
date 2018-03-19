@@ -1,4 +1,4 @@
-<h1>{{count($screener->getInstruments())}} </h1>
+ <h1><small style="margin-left:10px"></small> {{count($screener->getInstruments())}} <small>matches</small> </h1>
 <table class="table table-border table-hover table-responsive">
 	<thead>	
 		<tr>

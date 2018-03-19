@@ -13,9 +13,10 @@
 
   Only a limited number of seats are available for the training program and will be allocated on a first-come-first-serve basis.<p>
 
-  Please confirm your seat by paying your fees(Tk) through Cash, Online Bank Deposit or A/C pay cheque in favour of StockBangladesh Ltd.<p>
+  Please confirm your seat by paying your fees( {{$batch->course_fees}} Tk) through Cash, Online Bank Deposit or A/C pay cheque in favour of StockBangladesh Ltd.<p>
+<p>Meanwhile you can visit our <a href="https://stockbangladesh.com/courses/technical-analysis">Technical Analysis (TA) course dashboard</a> </p>
 
-  Please visit our office at<p>
+  You can visit our office at<p>
 
   StockBangladesh.com<br>
   Dhaka Trade Center(14th Floor),<br>

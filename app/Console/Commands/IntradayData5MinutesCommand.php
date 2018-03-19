@@ -68,7 +68,7 @@ class IntradayData5MinutesCommand extends Command
 
                 $sql = "select DISTINCT(total_volume),instrument_id,close_price,UNIX_TIMESTAMP(lm_date_time) as date_timestamp
 from data_banks_intradays
-where lm_date_time >= DATE_SUB(NOW(),INTERVAL 30 DAY) and instrument_id=$instrument_id ORDER BY lm_date_time asc ,total_volume asc";
+where lm_date_time >= DATE_SUB(NOW(),INTERVAL 10 DAY) and instrument_id=$instrument_id ORDER BY lm_date_time asc ,total_volume asc";
 
                 $all_data = \DB::select($sql);
 
