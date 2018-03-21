@@ -1,5 +1,5 @@
 <div id="PRICEPERCENT">
-                         <div class="alert alert-warningdf alert-dismissable" data-func="PRICEPERCENT">
+                         <div class="alert alert-warningdf alert-dismissable" >
                             <form action="" class="form-inline">
                                             <div style="/*background: rgba(0,0,75, .1);*/ display: inline-block;">
                                               

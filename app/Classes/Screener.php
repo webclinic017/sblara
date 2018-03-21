@@ -10,7 +10,8 @@ class Screener{
 	(\[([a-zA-Z]+)\((.*?)\)?.? (=|>|<|!=|is)?.+?([0-9].+?[.]?)\])
 	 */
 	const KEYWORDS = ['OPEN', 'HIGH', 'LOW', 'CLOSE', 'VOLUME'];
-	const OPERATORS = [ 'is', "<=",  ">=",  '=', '>',  "<", "X>", "X<" ];
+	const OPERATORS = [ 'IS', "NOT", "<=",  ">=",  '=', '!=', '>',  "<", "X>", "X<" ];
+	const BOOLEANS = [ "CANDLEPATTERN" ];
 	
 	protected $query;
 	protected $conditions = [];
@@ -54,7 +55,10 @@ class Screener{
 		foreach ($this->conditions as  $value) {
 			//reset the data target to adjusted eod
 			$this->dataTarget = "D";
-			preg_match_all("((.*[^".join(self::OPERATORS, '')."])(".join(self::OPERATORS, '|').")(.*))", $value, $matches);
+
+			preg_match_all("((.*[^".join(self::OPERATORS, '')."])( ".join(self::OPERATORS, '|')." )(.*))", $value, $matches);
+				// dump($this->conditions);
+				// continue;
 			$v1 = $matches[1][0];
 			$v2 = $matches[3][0];
 			// pluck the target candle
@@ -122,6 +126,8 @@ class Screener{
 			return $this->compileFunction($value);
 				break;
 			case 'math':
+			//if bollean match return true
+			if(in_array(trim($value), self::BOOLEANS)){ return $this->generateGreedyArray(true); }
 			return $this->compileMath($value);
 				break;
 		}
@@ -144,20 +150,7 @@ class Screener{
 		}
 		$matched = false;
 		while(true)
-		{
-			// $i++;
-			// if($i == 5 ){ continue ;}
-
-			// switch ($i) {
-			// 	case '6':
-			// 	dump('--6--');
-			// 	continue 2;
-			// 		break;
-			// }
-			// dump("-----> $i");
-
-			// if($i == 10){break;}
-			
+		{	
 			if(!isset($val1[$i])){ return false;}
 			$v1 = $val1[$i];
 			$v2 = $val2[$i];
@@ -223,6 +216,7 @@ class Screener{
 		{
 			$this->ldata[$this->instrument_id][trim($this->condition)] = $i;
 		}
+
 		 return $matched;
 		throw new \Exception("Invalid operator used", 1);
 	}
@@ -255,9 +249,7 @@ class Screener{
 	public function __get($prop)
 	{
 		$data = $this->getFileData($this->instrument_id, $prop[0], $this->dataTarget);
-		//always return morning data
-			 // $data = (array) json_decode(file_get_contents(storage_path("app/data/{$this->instrument_id}/eod/adjusted/{$prop[0]}.txt")));
-			 // dd($data);
+
 		if(preg_match("/[A|a]rray/", $prop))
 		{		
 			return array_reverse($data);
@@ -305,7 +297,6 @@ class Screener{
 					}
 
 				}
-
 					//loop end for within n days
 			}
 
@@ -340,14 +331,10 @@ class Screener{
 	public function compileMath($value)
 	{
 		$index = trim($value);
-
 		// fill all array pocket for complare n days ago
 		if(is_numeric($index))
 		{
-			$dataArray = [];
-			for ($i=0; $i <= $this->targetN; $i++) { 
-				$dataArray[] = $index;
-			}
+			$dataArray = $this->generateGreedyArray($index);
 			return 	$this->data[$this->instrument_id][$index]['values'] = $dataArray;
 		}
 		//if function
@@ -384,29 +371,6 @@ class Screener{
 			{
 				$value = $this->callFunction($function, $params);
 					$i = 0;
-				// if(is_array($value)){ 
-				// 	$data = $value;
-				// 	reset($data);
-				// 	end($data);
-
-					//loop start for within n days
-					// for ($i; $i <= $this->targetN; $i++) { 
-						// if cross is neccessasry for %value or constant value
-						// if($this->getOperator()[0] == 'X')
-						// {
-						// 	if(!isset($this->{$this->instrument_id.$index.'_prev'}))
-						// 	{
-						// 		$this->{$this->instrument_id.$index.'_prev'} = [];
-						// 	}
-						// 	$this->{$this->instrument_id.$index.'_prev'}[$i] = prev($data);
-						// }else{
-						// 	prev($data);
-						// }					
-					// }
-
-				// }
-
-					//loop end for within n days
 			}
 
 	}
@@ -444,18 +408,23 @@ class Screener{
 
 		reset($this->ldata[$instrument_id]);
 		$key = key($this->ldata[$instrument_id]);
-		$matchedCandle = $this->ldata[$instrument_id][$key];
+		$matchedCandle = @$this->ldata[$instrument_id][$key];
+		// dump('-key-'.$key);
+		// dump($matchedCandle);
+		// dump('colspan-'.$this->colspan);
+		$this->colspan++;
 		if($this->colspan == 2)
 		{
 			unset($this->ldata[$instrument_id][$key]);
 			$this->colspan = 0;
 		}
-		$data =$this->data[$instrument_id][$column]['values'][$matchedCandle];
 
+		$data = @$this->data[$instrument_id][$column]['values'][$matchedCandle];
+		$data = "<strong>$data</strong>";
 		if (strpos($key, 'WITHIN') !== false ) {
 			// $data .= " ($matchedCandle candle ago)";
 			$data .= " (".$this->getDate($instrument_id, $matchedCandle).")";
-		}		
+		}
 		return $data;
 	}
 
@@ -492,6 +461,13 @@ class Screener{
 	{
 		$data = \App\Repositories\FIleDataRepository::getAdjustedEod($instrument_id, 'd');
 		        return date('d M Y', strtotime($data[$nCandleAgo]));	
+	}
+	public function generateGreedyArray($value)
+	{
+			for ($i=0; $i <= $this->targetN; $i++) { 
+				$dataArray[] = $value;
+			}		
+			return $dataArray;
 	}
 
 }

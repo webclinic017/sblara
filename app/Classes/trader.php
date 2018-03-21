@@ -169,3 +169,17 @@ function sb_willr($t1, $high, $low, $close)
 {
 	return trader_willr($high, $low, $close, $t1);
 }
+ function sb_candlepatternlist($candle, $open, $high, $low, $close)
+{
+	$candle = "trader_".$candle;
+	$ar = $candle($open, $high, $low, $close);
+	if($ar)
+	{
+		foreach ($ar as $key => $value) {
+		$ar[$key] = str_replace("100", "Yes", $value);
+	}
+	return $ar;
+	}
+	return $ar;
+	return $candle($open, $high, $low, $close);
+}

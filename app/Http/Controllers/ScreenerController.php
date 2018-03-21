@@ -6,6 +6,13 @@ use Illuminate\Http\Request;
 use \App\Screener;
 class ScreenerController extends Controller
 {
+	function __construct()
+	{
+		if(request()->has('login') )
+		{
+			$this->middleware('auth');
+		}
+	}
 	public function index()
 	{
 		return view('screener.index');
@@ -13,13 +20,18 @@ class ScreenerController extends Controller
 
 	public function show($slug = null)
 	{
+		if(request()->has('login') )
+		{
+			return redirect('/screeners');
+		}			
+
 		if(!$slug){return $this->index();}
 	    $screener = \App\Screener::where('slug', $slug)->first();
 	    return view('screener.screener')->with(compact('screener'));		
 	}
 
 	public function save()
-	{
+	{	
 		if(request()->has('id'))
 		{
 			//update
@@ -31,7 +43,7 @@ class ScreenerController extends Controller
 	    $data = request()->except('_token');
 	    $slug = str_slug($data['title']);
 	    $data['user_id'] = request()->user()->id;
-	    $c = \App\Screener::where('slug', $slug)->count();
+	    $c = \App\Screener::where('title', $data['title'])->count();
 	    if($c != 0)
 	    {
 	        $slug .= "-".$c;

@@ -30,6 +30,13 @@
 @include('screener.forms.roc')
 @include('screener.forms.ultosc')
 @include('screener.forms.willr')
+@include('screener.forms.candlepattern')
+
+{{-- non listed --}}
+@include('screener.forms.candlepatternlist')
+{{-- non listed --}}
+
+
 {{-- filter row --}}
 
 <div id="filter-row">
@@ -78,7 +85,7 @@
         </div>
         <div class="col-md-2 filter-operent text-center">
 
-                        <div class="alert alert-warningdf alert-dismissable" data-func="SMA">
+                        <div  class="alert alert-warningdf alert-dismissable" data-func="SMA">
                             <div class="row">
                             <div class="col-md-12 ">
 
@@ -90,6 +97,8 @@
                                                <option value=">"> Above </option>
                                                <option value="="> Equal </option>
                                                <option value="<"> Below </option>
+                                               <option value="IS"> is </option>
+                                               <option value="!="> is not </option>
                                                <option value=">="> Above or equal </option>
                                                <option value="<="> Below or equal </option>
                                                <option value="X>"> Crossed From Below </option>  {{-- when crossed select it should take input of n days ago --}}
@@ -101,9 +110,12 @@
 
 
                                     </form>
+
                             </div>
                         </div>
+
                         </div>
+                                           <small class="ncandle"  style="color:green; margin-top: -15px; display: none;  "> <span class="type-text">Before</span> <strong><span class="n-text">0</span></strong> candle <span class="n-s" style="display: none;">s</span> </small>
         </div>
         <div class="col-md-5 filter-right">
 
@@ -121,8 +133,6 @@
           <i class="fa fa-exchange"></i> </a>	
 </div>
 {{-- nav --}}
-
-
 
 {{-- time setup --}}
 

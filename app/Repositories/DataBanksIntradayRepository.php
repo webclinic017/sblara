@@ -83,14 +83,14 @@ class DataBanksIntradayRepository {
 
         $sql="SELECT data_banks_intradays.*,instruments.instrument_code,instruments.sector_list_id
 FROM data_banks_intradays,instruments
-where (data_banks_intradays.batch=instruments.batch_id) and (data_banks_intradays.instrument_id=instruments.id)";
+where (data_banks_intradays.batch=instruments.batch_id) and (data_banks_intradays.instrument_id=instruments.id) ";
 
         if(count($instrumentsIdArr))
         {
             $str = implode (", ", $instrumentsIdArr);
             $sql.=" and (instruments.id in ($str))";
         }
-
+        $sql.= " order by instruments.instrument_code asc";
         $data=DB::select(DB::raw($sql));
 
         return $data;

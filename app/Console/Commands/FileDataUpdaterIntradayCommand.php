@@ -96,12 +96,22 @@ class FileDataUpdaterIntradayCommand extends Command
 
                     $array=array();
                     if (count($instrument_info)) {
+
+
+                        $date_time = $data->MKISTAT_LM_DATE_TIME;
+                        $convertedTimestamp = strtotime($date_time);
+                        $trade_date = date('Y-m-d', $convertedTimestamp);
+
+                      //  if($trade_date != $activeTradeDates->trade_date)
+                       //     continue;
+
                         $instrument_id = $instrument_info->id;
                         $ltp = $data->MKISTAT_CLOSE_PRICE != 0 ? $data->MKISTAT_CLOSE_PRICE : ($data->MKISTAT_PUB_LAST_TRADED_PRICE != 0 ? $data->MKISTAT_PUB_LAST_TRADED_PRICE : $data->MKISTAT_SPOT_LAST_TRADED_PRICE);
 
                         $c=$ltp;
                         $v=$data->MKISTAT_TOTAL_VOLUME;
                         $d=$trade_date;
+
 
 
                         ////////////////    Intraday data 5 minutes   \\\\\\\\\\\\\\\\\\\
@@ -121,6 +131,7 @@ class FileDataUpdaterIntradayCommand extends Command
                             //dump("last_updated_time_frame=$last_updated_time_frame");
 
                             $volume_data_on_file = $today_data;
+                            //dump($volume_data_on_file);
 
                             if (isset($volume_data_on_file[0])) {
                                 unset($volume_data_on_file[0]); // removing last update note
@@ -132,6 +143,7 @@ class FileDataUpdaterIntradayCommand extends Command
                                 $new_volume = $v - $total_volume_recorded;
                             }
 
+
                             if ($today_data[0] == $base_time_key) {
                                 // if it is same within time-frame, we will just update the last value
                                 //dump("same timeframe");
@@ -141,7 +153,7 @@ class FileDataUpdaterIntradayCommand extends Command
                                 // dd($total_volume_recorded);
 
 
-                                if ($new_volume) {
+                                if ($new_volume>0) {
                                     // if new volume found
                                     $this_frame_volume = $today_data[count($today_data) - 1];
                                     $today_data[count($today_data) - 1] = $this_frame_volume + $new_volume;
@@ -157,32 +169,45 @@ class FileDataUpdaterIntradayCommand extends Command
 
                                 if ($trade_date == $last_updated_trade_date) {
                                     // if it is new time-frame of same day, we will add new close value and update the reported time frame at the top of array
-                                    $today_data[0] = $base_time_key;
-                                    $today_data[] = $new_volume;
-                                    $csv = collect($today_data)->implode(',');
-                                    Storage::disk('local')->put($file_path, $csv);
+
+                                    if($new_volume>0)
+                                    {
+                                        $today_data[0] = $base_time_key;
+                                        $today_data[] = $new_volume;
+                                        $csv = collect($today_data)->implode(',');
+                                        Storage::disk('local')->put($file_path, $csv);
+
+                                    }
 
                                 } else {
                                     // normally a new trade date started. so we have to reset file for new day
-                                    $csv = "$base_time_key,$new_volume";
-                                    Storage::disk('local')->put($file_path, $csv);
+                                    $new_volume=0;
+                                        $csv = "$base_time_key,$new_volume";
+                                        Storage::disk('local')->put($file_path, $csv);
+
+
                                 }
 
                             }
 
                         } else {
                             $new_volume= $v;
-                            $csv = "$base_time_key,$new_volume";
-                            Storage::disk('local')->put($file_path, $csv);
+
+                            if ($new_volume > 0)
+                            {
+                                $csv = "$base_time_key,$new_volume";
+                                Storage::disk('local')->put($file_path, $csv);
+
+                            }
                         }
 
 
                         ///// IF NEW VOLUME=0 IT MEANS DUPLICATE DATA FROM DSE. SO WE WILL SKIP FOLLOWING CODE FROM HERE
-                        if($new_volume==0)
+                        if($new_volume<=0)
                             continue;
 
 
-                        
+
 
                         // ****************** O *****************\\\
 

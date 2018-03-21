@@ -1,9 +1,28 @@
-@section('meta-title', 'Advance Screeners of DSE')
-@section('meta-description', 'DSE stock Screeners ')
 @extends('layouts.metronic.default')
-@section('page_heading')
-Advance Screeners of DSE
-@endsection
+@php
+$screenerImageUrl = "";
+$title = "Build new screener";
+$description = "Build your own screener with our powerful filters";
+$slug = "new";
+
+if($screener){
+  $title = $screener->title;
+  $description = $screener->description;
+  $slug = $screener->slug;
+}
+
+@endphp
+@section('title', $title)
+@section('meta-title', "Advance screeners of DSE- 
+".$title)
+@section('meta-description', $description)
+
+@section('og:image', $screenerImageUrl)
+@section('og:url', url('/screener/'.$slug))
+
+@section('og:title', $title)
+@section('og:description', $description)
+
 @section('content')
 <div style="display: none;">
 @include('screener.filters')
@@ -101,15 +120,16 @@ Advance Screeners of DSE
               <h5><strong>Value</strong></h5>
               <ul style="display: inline-block;">
                 <li><a data-value = "VALUE">Value</a></li>
-                <li><a data-value = "PRICEPERCENT">Price percentage</a></li>
+                <li><a data-value = "PRICEPERCENT">Percentage</a></li>
+                <li><a data-value = "CANDLEPATTERN" data-rel="CANDLEPATTERNLIST" data-operator="IS">Candle Pattern</a></li>
               </ul>
           </div>
 
             <div class=" col-md-4 col-sm-6">
               <h5><strong>Moving Average</strong></h5>
               <ul >
-                <li><a data-value = "SMA">SMA</a></li>
-                <li><a data-value = "EMA">EMA</a></li>
+                <li><a data-value = "SMA" data-rel="PRICEPERCENT">SMA</a></li>
+                <li><a data-value = "EMA" data-rel="SMA" data-operator="X>">EMA</a></li>
                 <li><a data-value = "WMA">WMA</a></li>
                 <li><a data-value = "DEMA">DEMA</a></li>
                 <li><a data-value = "KAMA">KAMA</a></li>
@@ -125,8 +145,8 @@ Advance Screeners of DSE
             <div class=" col-md-4 col-sm-6">
               <h5><strong>Technical Indicators</strong></h5>
               <ul >
-                <li><a data-value = "RSI">RSI</a></li>
-                <li><a data-value = "MACD">MACD</a></li>
+                <li><a data-value = "RSI" data-rel="VALUE" data-operator="<">RSI</a></li>
+                <li><a data-value = "MACD" data-rel="MACD" data-operator="X>">MACD</a></li>
                 <li><a data-value = "STOCHRSI">Stochastic RSI</a></li>
                 <li><a data-value = "TRIX">TRIX</a></li>
                 <li><a data-value = "AD">A/D</a></li>
@@ -157,7 +177,14 @@ Advance Screeners of DSE
 <!--- / Modal -->
 
 <div class="row">
+  <div class="alert alert-info col-md-12 text-center">
+    This is beta version of our screener and its developement is still ongoing. If you have any suggestion or see any bug please let us know at <strong>info@stockbangladesh.com</strong>
+
+   Or leave <strong>comment</strong> below. 
+  </div>
+
   <div class="col-md-12 text-right margin-bottom-10">
+
   <a href="/screeners/new" class="btn blue"><i class="fa fa-plus"></i> New Screener</a>
   <a href="/screeners" class="btn btn-success"><i class="fa fa-list"></i> All Screeners</a>
   </div>
@@ -186,8 +213,7 @@ Advance Screeners of DSE
 
 <div class="row margin-top-10 margin-bottom-10">
     <div class="col-md-12 text-center">
-
-@if($screener && $screener->user_id == Auth::user()->id)
+@if($screener && !Auth::guest() && $screener->user_id == Auth::user()->id)
 <form action="/screeners/new" method="post" class="updateScreener">
   {{csrf_field()}}
   <input type="hidden" name="id" value="{{$screener->id}}">
@@ -299,11 +325,11 @@ function preg_match_all(re, s) {
 
 function generateHtml(query) { 
   // result = regex.exec(query);
-  // console.log(result);
+  console.log(query);
   $('.filters').html("");
   $.each(getConditions(/\[(.*?)\]/g, query), function (k, v) {
     rowid = k;
-    var matches = preg_match_all(/(.*[^<|>|=|<=|>=|X>|X<])(<|>|=|<=|>=|X>|X<)([^<|>|=|<=|>=|X>|X<].*)/g, v);
+    var matches = preg_match_all(/(.*[^IS|NOT|<|>|=|<=|>=|X>|X<])(IS|NOT|<|>|=|<=|>=|X>|X<)([^IS|NOT|<|>|=|<=|>=|X>|X<].*)/g, v);
     var v1 = matches[0][1];
     var op = matches[0][2];
     var v2 = matches[0][3];
@@ -320,7 +346,13 @@ function generateHtml(query) {
     var row = $('#filter-row');
     //left side
     var lmatches = preg_match_all(/([A-Z0-9]+)\s*?\(([A-Z0-9,. ]+)\)/g, v1);
-    $('.filter-left', row).html($('#'+lmatches[0][1]).html()); //generated html will replace here
+    if(lmatches.length == 0)
+    {
+      // not func
+      $('.filter-left', row).html($('#'+v1.trim()).html()); 
+    }else{
+      $('.filter-left', row).html($('#'+lmatches[0][1]).html()); //generated html will replace here
+    }
 
     var rmatches = preg_match_all(/([A-Z0-9]+)\s*?\(([A-Z0-9,. ]+)\)/g, v2);
     if(rmatches.length == 0)
@@ -353,12 +385,17 @@ function generateHtml(query) {
 
     // set left params values
     var param;
+    if(lmatches.length != 0)
+    {
+
     $.each(lmatches[0][2].split(', '), function (k, v) {
       param  = k+1;
       $('.filters [data-row-id='+rowid+'] .filter-left [data-param='+ param +']').val(v);
     })
     
+    } 
     // set right params values
+    console.log(rmatches);
     if(rmatches.length != 0)
     {
       $.each(rmatches[0][2].split(', '), function (k, v) {
@@ -372,6 +409,7 @@ function generateHtml(query) {
         $('.filters [data-row-id='+rowid+'] .filter-right .value').val(val);
 
       }else{
+
         
         $('.filters [data-row-id='+rowid+'] .filter-right .value').val(val);
         $('.filters [data-row-id='+rowid+'] .filter-right .compare').val(col);
@@ -394,12 +432,15 @@ function generateHtml(query) {
 
 ///
     function generateQuery() {
+              var params = [];
         var syntax = "";
       $('.filters .filter-row').each(function (k, element) {
         var v = element;
         syntax += "[ ";
-        syntax += $(this).find('.filter-left .alert-warningdf').data('func') + "(";
-        var params = [];
+        if($(this).find('.filter-left .alert-warningdf').data('func'))
+        {
+          syntax += $(this).find('.filter-left .alert-warningdf').data('func') + "(";
+
         $(this).find(".filter-left [data-param]").each(function (k, v) {
           if($(this).val() == "D")
           {
@@ -418,6 +459,38 @@ function generateHtml(query) {
         })
         //load all params
         syntax +=  ")";
+
+        }else{
+          if($(this).find('.value').attr('data-rel') == "percent")
+          {
+            var keyword = $(this).find('.compare').val();
+            var operator = $(this).find('.operator').val();
+            switch(operator){
+              case ">":
+              operator = "+";
+              break;
+              case "<":
+              operator = "-";
+              break;
+              case "X<":
+              operator = "+";
+              break;
+              case "X>":
+              operator = "-";
+              break;
+
+              default:
+              operator = "+";
+              break;
+            }
+           var val = $(this).find('.value').val();
+            val = keyword + " "+operator+" ("+ keyword+  " * (" +val+ "/100" +"))" ;
+             syntax += val;
+          }else{
+          syntax += $(this).find('.filter-left .alert-warningdf').data('value');
+            
+          }          
+        }
 
         //load operator
         syntax +=  " ";
@@ -466,7 +539,6 @@ function generateHtml(query) {
             return;
           }
           params[$(this).attr('data-param')] = $(this).val();
-
         });
         $.each(params, function (k, v) {
           if(k == 0){return;}
@@ -531,10 +603,24 @@ function generateHtml(query) {
       $('#criteriaModal').modal('hide'); 
         //prepare html
         $('#filter-row .filter-left').html($("#"+$(this).data('value')).html());
-        $('#filter-row .filter-right').html($("#default-right-content").html());
+        //generate right form based on pre relation
+        if($(this).data('rel')){
+          // generate relational fields
+         $('#filter-row .filter-right').html($('#filter-right-nav').html() + $("#"+$(this).data('rel')).html());
+         if($(this).data('operator'))
+         {
+            $('#filter-row .operator option[value="'+$(this).data('operator')+'"]').attr("selected", true);
+         }
+          // $('#filter-row .filter-right').html($("#default-right-content").html()); //
+        }else{
+          //load default fields
+          $('#filter-row .filter-right').html($("#default-right-content").html());
+          
+        }
         var  row = $('#filter-row').html();
         $('.filters').append(row);
     }
+
   });
     // change criteria
     $(document).ready(function () {
@@ -547,7 +633,26 @@ function generateHtml(query) {
           saveQuery();
         @endif
       @endif
+
+$('.filters').on('change', '.targetType, .targetN', function () {
+     $(this).parents('.filter-row').find('.ncandle').css('display', 'block');
+     if($(this).hasClass('targetN'))
+     {
+      $(this).parents('.filter-row').find('.ncandle .n-text').html($(this).val());;
+
+     }else{
+      $(this).parents('.filter-row').find('.ncandle .type-text').html($(this).val());;
+     }
+      if($(this).parents('.filter-row').find('.ncandle .n-text').html() == '0'){$(this).parents('.filter-row').find('.ncandle').css('display', 'none');}
+
+});
+
+
     });
+
+
   </script>
 
+
+@include('html.fb_comment', ['url' => url('/')])
 @endsection

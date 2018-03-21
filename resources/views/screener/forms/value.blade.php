@@ -7,7 +7,7 @@
                 <form class="form-inline" role="form">
 
                     <div class="form-group form-md-line-input">
-                        <input class="form-control value"  placeholder="Value" type="text" value="14" > {{-- validation 2 to 100--}}
+                        <input class="form-control value"  placeholder="Value" type="text" value="50" > {{-- validation 2 to 100--}}
                         <div class="form-control-focus"> </div>
                     </div>
 

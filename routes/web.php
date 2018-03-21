@@ -1,12 +1,28 @@
 <?php
 
-Route::get('/DSE/ACI/ta-chart', 'controller@action')->name('/DSE/ACI/ta-chart');
-Route::get('/DSE/ACI/advance-ta', 'controller@action')->name('/DSE/ACI/advance-ta');
-Route::get('/DSE/ACI/company-details', 'controller@action')->name('/DSE/ACI/company-details');
-Route::get('/DSE/ACI/fundamental-details', 'controller@action')->name('/DSE/ACI/fundamental-details');
-Route::get('/DSE/ACI/minute-chart', 'controller@action')->name('/DSE/ACI/minute-chart');
-Route::get('/DSE/ACI/news-chart', 'controller@action')->name('/DSE/ACI/news-chart');
-Route::get('/DSE/ACI/news', 'controller@action')->name('/DSE/ACI/news');
+Route::get('/dse/stock/ACI/advance-chemical-industries/price/history', 'controller@action')->name('/DSE/ACI/ta-chart');
+Route::get('/dse/stock/ACI/advance-chemical-industries/price/change', 'controller@action')->name('/DSE/ACI/ta-chart');
+
+Route::get('/dse/stock/ACI/advance-chemical-industries/chart/technical-analysis', 'controller@action')->name('/DSE/ACI/ta-chart');
+Route::get('/dse/stock/ACI/advance-chemical-industries/chart/advance-technical-analysis', 'controller@action')->name('/DSE/ACI/advance-ta');
+Route::get('/dse/stock/ACI/advance-chemical-industries/chart/minute-chart', 'controller@action')->name('/DSE/ACI/advance-ta');
+Route::get('/dse/stock/ACI/advance-chemical-industries/chart/news-chart', 'controller@action')->name('/DSE/ACI/advance-ta');
+
+Route::get('/dse/stock/ACI/advance-chemical-industries/company/details', 'controller@action')->name('/DSE/ACI/company-details');
+Route::get('/dse/stock/ACI/advance-chemical-industries/fundamental/details', 'controller@action')->name('/DSE/ACI/company-details');
+Route::get('/dse/stock/ACI/advance-chemical-industries/technical/details', 'controller@action')->name('/DSE/ACI/company-details');
+
+Route::get('/dse/stock/ACI/advance-chemical-industries/news/market-announcement', 'controller@action')->name('/DSE/ACI/company-details');
+Route::get('/dse/stock/ACI/advance-chemical-industries/news/search', 'controller@action')->name('/DSE/ACI/company-details');
+
+Route::get('/dse/sector/textile/news', 'controller@action')->name('/DSE/ACI/news');
+Route::get('/dse/sector/textile/chart/technical-analysis/', 'controller@action')->name('/DSE/ACI/news');
+Route::get('/dse/sector/textile/chart/minute-chart/', 'controller@action')->name('/DSE/ACI/news');
+
+Route::get('/dse/market/monitor', 'controller@action')->name('/DSE/ACI/news');
+Route::get('/dse/market/share/price/list', 'controller@action')->name('/DSE/ACI/news');
+Route::get('/dse/market/share/price/table', 'controller@action')->name('/DSE/ACI/news');
+Route::get('/dse/market/share/price/data-matrix', 'controller@action')->name('/DSE/ACI/news');
 
 
 

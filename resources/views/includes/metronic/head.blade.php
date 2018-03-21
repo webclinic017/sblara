@@ -6,8 +6,18 @@
             <title>@yield('meta-title','Share Market Analysis Portal For Dhaka Stock Exchange-Bangladesh')</title>
             <meta content="@yield('meta-description','First and oldest financial portal based on share markets of Bangladesh. Pioneer in technical analysis of Bangladesh')" name="description" />
             <meta content="" name="author" />
-            
-            <meta property="og:image" content="{{url('img/sbThumb.jpg')}}">
+
+            <meta property="fb:app_id"          content="@yield('fb:app_id','184429869012471')" />
+            <meta property="og:type"            content="@yield('og:type','website')" />
+            <meta property="og:url"             content="@yield('og:url',url()->full())" />
+            <meta property="og:title"           content="@yield('og:title','Share Market Analysis Portal For Dhaka Stock Exchange-Bangladesh')" />
+            <meta property="og:image"           content="@yield('og:image',url('img/sbThumb.jpg'))" />
+            <meta property="og:description"    content="@yield('og:description','First and oldest financial portal based on share markets of Bangladesh. Pioneer in technical analysis of Bangladesh')" />
+
+
+            {{--<meta property="fb:app_id" content="184429869012471" />--}}
+
+            {{--<meta property="og:image" content="{{url('img/sbThumb.jpg')}}">--}}
             <!-- BEGIN LAYOUT FIRST STYLES -->
             <link href="//fonts.googleapis.com/css?family=Oswald:400,300,700" rel="stylesheet" type="text/css" />
             <link rel="stylesheet" href="/css/animate.css">
