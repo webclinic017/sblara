@@ -1,13 +1,13 @@
 @extends('layouts.metronic.default')
 @php
-$screenerImageUrl = "";
+$screenerImageUrl = url('/img/stockbangladesh-dse-screeners.jpg');
 $title = "Build new screener";
 $description = "Build your own screener with our powerful filters";
 $slug = "new";
 
 if($screener){
-  $title = $screener->title;
-  $description = $screener->description;
+  $title = $screener->title
+;  $description = $screener->description;
   $slug = $screener->slug;
 }
 
@@ -116,16 +116,14 @@ if($screener){
       </div>
       <div class="modal-body">
         <div class="row">
-          <div class="col-md-12">
+          <div class="col-md-4">
               <h5><strong>Value</strong></h5>
               <ul style="display: inline-block;">
                 <li><a data-value = "VALUE">Value</a></li>
                 <li><a data-value = "PRICEPERCENT">Percentage</a></li>
                 <li><a data-value = "CANDLEPATTERN" data-rel="CANDLEPATTERNLIST" data-operator="IS">Candle Pattern</a></li>
               </ul>
-          </div>
 
-            <div class=" col-md-4 col-sm-6">
               <h5><strong>Moving Average</strong></h5>
               <ul >
                 <li><a data-value = "SMA" data-rel="PRICEPERCENT">SMA</a></li>
@@ -139,8 +137,9 @@ if($screener){
                 <li><a data-value = "TEMA">TEMA</a></li>
                 <li><a data-value = "TRIMA">TRIMA</a></li>
                 <li><a data-value = "HTTRENDLINE">Hilbert Transform</a></li>
-              </ul>            
-            </div>
+              </ul>                    
+          </div>
+
 
             <div class=" col-md-4 col-sm-6">
               <h5><strong>Technical Indicators</strong></h5>
@@ -180,7 +179,7 @@ if($screener){
   <div class="alert alert-info col-md-12 text-center">
     This is beta version of our screener and its developement is still ongoing. If you have any suggestion or see any bug please let us know at <strong>info@stockbangladesh.com</strong>
 
-   Or leave <strong>comment</strong> below. 
+   Or leave a <strong>comment</strong> below. 
   </div>
 
   <div class="col-md-12 text-right margin-bottom-10">
@@ -653,5 +652,5 @@ $('.filters').on('change', '.targetType, .targetN', function () {
   </script>
 
 
-@include('html.fb_comment', ['url' => url('/')])
+@include('html.fb_comment', ['url' => url('/screeners/'.$slug)])
 @endsection

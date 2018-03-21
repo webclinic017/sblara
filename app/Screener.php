@@ -8,7 +8,10 @@ class Screener extends Model
 {
     public function resultCount()
     {
-    	$screener = new Scanner($this->query);
-    	return $screener->count();
+		$value = \Cache::remember('screener_count_'.$this->id, 1, function () {
+    		$screener = new Scanner($this->query);
+    		return $screener->count();
+		});    	
+    	return $value;
     }
 }

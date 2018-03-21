@@ -16,7 +16,7 @@
 	<tbody>	
 		@foreach($screener->getInstruments() as $instrument)
 		<tr>
-			<td><a target="_blank" href="/company-details/{{$instrument->instrument_id}}">{{$instrument->instrument_code}}</a></td>
+			<td><a target="_blank" href="/ta-chart?instrumentCode={{$instrument->instrument_code}}">{{$instrument->instrument_code}}</a></td>
 			<td>{{$instrument->close_price}}</td>
 			<td>{{$instrument->high_price}}</td>
 			<td>{{$instrument->low_price}}</td>

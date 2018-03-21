@@ -158,6 +158,9 @@ class Screener{
 				case '=':
 					$matched = $v1 == $v2;
 					break;
+				case 'IS':
+					$matched = $v1 == $v2;
+					break;
 				case '>':
 					$matched = $v1 > $v2;
 					break;

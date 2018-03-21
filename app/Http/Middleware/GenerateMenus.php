@@ -25,7 +25,7 @@ class GenerateMenus
             $menu->market->attr(['class' => 'dropdown dropdown-fw  '])->prepend('<i class="icon-home" ></i > ');
 
             $menu->market->add('Home', ['route' => 'home'])->prepend('<i class="fa fa-dashboard" ></i > ');
-            $menu->market->add('Screeners', ['route' => 'screeners'])->prepend('<i class="fa fa-binoculars" ></i > ');
+            $menu->market->add('Advanced Screeners', ['route' => 'screeners'])->prepend('<i class="fa fa-binoculars" ></i > ')->active('screeners/*');
             $menu->market->add('Market Composition', ['route' => 'market-composition'])->prepend('<i class="fa fa-pie-chart" ></i > ');
             $menu->market->add('Market Frame', ['route' => 'market-frame'])->prepend('<i class="fa fa-tv" ></i > ');
             $menu->market->add('Market Monitor', ['route' => 'monitor'])->prepend('<i class="fa fa-dashboard" ></i > ');

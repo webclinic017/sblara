@@ -1,5 +1,25 @@
 @extends('layouts.metronic.default')
 
+@php
+$screenerImageUrl = url('/img/stockbangladesh-dse-screeners.jpg');
+$title = "Advanced Screener for DSE";
+$description = "Advanced screener for Dhaka stock exchange. Build your own screeners with our powerful filters";
+$slug = "";
+
+
+@endphp
+@section('title', $title)
+@section('meta-title', "Advance screeners of DSE- 
+".$title)
+@section('meta-description', $description)
+
+@section('og:image', $screenerImageUrl)
+@section('og:url', url('/screener/'.$slug))
+
+@section('og:title', $title)
+@section('og:description', $description)
+
+
 @section('content')
 
 
