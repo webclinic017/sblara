@@ -58,9 +58,6 @@ function sb_httrendline($real)
 	return trader_ht_trendline($real);
 }
 
-
-
-
 function sb_rsi($time, $real)
 {
 	return trader_rsi($real, $time);

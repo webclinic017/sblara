@@ -286,7 +286,6 @@ function saveQuery() {
 
 function runQuery() {
   var syntax = generateQuery();
-  console.log(syntax);
   store('screeners_query', syntax);
      $.get('/screeners/result?q='+ encodeURI(btoa(syntax)), function (data) {
         $('.result').html(data);

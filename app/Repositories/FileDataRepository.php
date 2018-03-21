@@ -68,11 +68,15 @@ class FileDataRepository {
                             $latest_index=3;
                     }
 
-
                     $latest_data_file = "data/$instrument_id/eod/latest.txt";
-                    $today_data = Storage::get($latest_data_file);
+                    if(Storage::disk('local')->exists($latest_data_file)){
+                        $today_data = Storage::get($latest_data_file);
 
-                    $today_data=explode(',',$today_data);
+                        $today_data=explode(',',$today_data);     
+                    }else{
+                        $today_data=[];  
+                    }
+
 
                     if(isset($today_data[5]) and $today_data[5]!=$last_update_date)
                     {
@@ -154,8 +158,13 @@ class FileDataRepository {
                     }
 
                     $latest_data_file = "data/$instrument_id/eod/latest.txt";
-                    $today_data = Storage::get($latest_data_file);
-                    $today_data=explode(',',$today_data);
+                    if(Storage::disk('local')->exists($latest_data_file)){
+                        $today_data = Storage::get($latest_data_file);
+
+                        $today_data=explode(',',$today_data);     
+                    }else{
+                        $today_data=[];  
+                    }
 
                     if(isset($today_data[5]) and $today_data[5]!=$last_update_date)
                     {
@@ -237,8 +246,13 @@ class FileDataRepository {
 
 
                     $latest_data_file = "data/$instrument_id/eod/latest.txt";
-                    $today_data = Storage::get($latest_data_file);
-                    $today_data=explode(',',$today_data);
+                    if(Storage::disk('local')->exists($latest_data_file)){
+                        $today_data = Storage::get($latest_data_file);
+
+                        $today_data=explode(',',$today_data);     
+                    }else{
+                        $today_data=[];  
+                    }
 
                     if(isset($today_data[5]) and $today_data[5]!=$last_update_date)
                     {
@@ -362,8 +376,13 @@ class FileDataRepository {
 
 
                     $latest_data_file = "data/$instrument_id/eod/latest.txt";
-                    $today_data = Storage::get($latest_data_file);
-                    $today_data=explode(',',$today_data);
+                    if(Storage::disk('local')->exists($latest_data_file)){
+                        $today_data = Storage::get($latest_data_file);
+
+                        $today_data=explode(',',$today_data);     
+                    }else{
+                        $today_data=[];  
+                    }
 
                     if(isset($today_data[5]) and $today_data[5]!=$last_update_date)
                     {
@@ -455,8 +474,14 @@ class FileDataRepository {
                     $file_path = "data/$instrument_id/intraday/5_minutes/latest";
 
                     $latest_data_file="$file_path/$field.txt";
-                    $today_data = Storage::get($latest_data_file);
-                    $today_data=explode(',',$today_data);
+                    if(Storage::disk('local')->exists($latest_data_file)){
+                        $today_data = Storage::get($latest_data_file);
+
+                        $today_data=explode(',',$today_data);     
+                    }else{
+                        $today_data=[];  
+                    }    
+        
 
 
                     if (isset($today_data[0]))
@@ -548,8 +573,13 @@ class FileDataRepository {
 
 
                     $latest_data_file = "data/$instrument_id/eod/latest.txt";
-                    $today_data = Storage::get($latest_data_file);
-                    $today_data=explode(',',$today_data);
+                    if(Storage::disk('local')->exists($latest_data_file)){
+                        $today_data = Storage::get($latest_data_file);
+
+                        $today_data=explode(',',$today_data);     
+                    }else{
+                        $today_data=[];  
+                    }    
 
                     if(isset($today_data[5]) and $today_data[5]!=$last_update_date)
                     {
@@ -674,8 +704,13 @@ class FileDataRepository {
 
 
                     $latest_data_file = "data/$instrument_id/eod/latest.txt";
-                    $today_data = Storage::get($latest_data_file);
-                    $today_data=explode(',',$today_data);
+                    if(Storage::disk('local')->exists($latest_data_file)){
+                        $today_data = Storage::get($latest_data_file);
+
+                        $today_data=explode(',',$today_data);     
+                    }else{
+                        $today_data=[];  
+                    }    
 
                     if(isset($today_data[5]) and $today_data[5]!=$last_update_date)
                     {
@@ -800,8 +835,13 @@ class FileDataRepository {
 
 
                     $latest_data_file = "data/$instrument_id/eod/latest.txt";
-                    $today_data = Storage::get($latest_data_file);
-                    $today_data=explode(',',$today_data);
+                    if(Storage::disk('local')->exists($latest_data_file)){
+                        $today_data = Storage::get($latest_data_file);
+
+                        $today_data=explode(',',$today_data);     
+                    }else{
+                        $today_data=[];  
+                    }    
 
                     if(isset($today_data[5]) and $today_data[5]!=$last_update_date)
                     {

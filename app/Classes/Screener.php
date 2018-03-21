@@ -23,7 +23,7 @@ class Screener{
 	protected $targetN = 0;
 	protected $targetType = "BEFORE";
 	protected $dataTarget = "D";
-	protected $real = 0;
+	protected $real = 1;
 	
 	function __construct($query = null)
 	{

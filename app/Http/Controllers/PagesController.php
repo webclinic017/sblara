@@ -337,8 +337,8 @@ public function technicalAnalysisHome()
         //dump($c);
         $c = FileDataRepository::get5MinutesUnadjustedData(13, 'c', 1);
         //dump($c);
-        $c = FileDataRepository::get5MinutesUnadjustedData(13, 'v', 1);
-        dump($c);
+        $c = FileDataRepository::getAdjustedEod(538, 'c', 1);
+        dd($c);
         $c = FileDataRepository::get5MinutesUnadjustedData(13, 'd', 1);
         dd($c);
 
