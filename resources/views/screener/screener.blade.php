@@ -184,6 +184,7 @@ if($screener){
 
   <div class="col-md-12 text-right margin-bottom-10">
 
+  <a target="_blank" href="/files/screener-manual.pdf" class="btn red"><i class="fa fa-info-circle"></i> How to use</a>
   <a href="/screeners/new" class="btn blue"><i class="fa fa-plus"></i> New Screener</a>
   <a href="/screeners" class="btn btn-success"><i class="fa fa-list"></i> All Screeners</a>
   </div>

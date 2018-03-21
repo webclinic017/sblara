@@ -65,6 +65,7 @@ Route::get('/filter', 'FilterController@index');
 Route::post('/filter', 'FilterController@filter');
 Route::post('/save_filter', 'FilterController@save_filter');
 Route::post('/screeners/new', 'ScreenerController@save')->name('save-screeners')->middleware('auth');
+Route::post('/screeners/{id}/update', 'ScreenerController@update')->name('update-screeners')->middleware('auth');
 Route::get('/screeners/new', 'ScreenerController@create')->name('new-screener');
 Route::get('/screeners/result', 'ScreenerController@result')->name('new-screener');
 Route::get('/screeners/{slug?}', 'ScreenerController@show')->name('screeners');

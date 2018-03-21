@@ -52,6 +52,76 @@ $slug = "";
 									<a style="text-decoration: none" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{url('/screeners/'.$screener->slug)}}" class="socicon-btn socicon-btn-circle socicon-solid bg-blue font-white bg-hover-grey-salsa socicon-facebook tooltips" data-original-title="Share on Facebook"></a>
 							
 						</td>
+						<td>
+							<i class="btn btn-xs blue fa fa-pencil" data-toggle="modal" data-target="#editModal_{{$screener->id}}"></i>
+							<i class="btn btn-xs red fa fa-trash" data-toggle="modal" data-target="#deleteModal_{{$screener->id}}"></i>
+
+<!-- Modal -->
+<div id="editModal_{{$screener->id}}" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+        <form action="/screeners/{{$screener->id}}/update" method="POST">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Edit Screener</h4>
+      </div>
+      <div class="modal-body">
+          <input type="hidden" id="query" name="query">
+          {{csrf_field()}}
+            <div class="form-group form-md-line-input">
+                <label for="" class="label-control">Screener Name</label>
+                <input class="form-control"  type="text" value="{{$screener->title}}" placeholder="Enter name here" name="title" required="">
+                <div class="form-control-focus"> </div> 
+            </div>
+
+            <div class="form-group form-md-line-input">
+                <label for="" class="label-control">Description</label>
+                <textarea placeholder="Enter descripton here" class="form-control" name="description">{!!$screener->description!!}</textarea>
+                <div class="form-control-focus"> </div> 
+            </div>
+
+          
+      </div>
+      <div class="modal-footer">
+              <input class="btn btn-success" value="Update" type="submit">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+        </form>
+    </div>
+
+  </div>
+</div>
+<!-- Modal -->
+<div id="deleteModal_{{$screener->id}}" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+        <form action="/screeners/{{$screener->id}}/update" method="POST">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Delete Screener</h4>
+      </div>
+      <div class="modal-body">
+          {{csrf_field()}}
+          <input type="hidden" value="yes" name="delete">
+			<h3>Are you sure?</h3>
+          
+      </div>
+      <div class="modal-footer">
+              <input class="btn btn-success" value="Yes" type="submit">
+        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+      </div>
+        </form>
+    </div>
+
+  </div>
+</div>
+
+
+						</td>
 					</tr>
 					@endforeach
 				</table>

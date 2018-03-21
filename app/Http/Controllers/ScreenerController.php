@@ -18,6 +18,26 @@ class ScreenerController extends Controller
 		return view('screener.index');
 	}
 
+	public function update($id)
+	{
+		$screener = Screener::find($id);
+		$request =  request();
+		if($request->has('delete'))
+		{
+			$screener->delete();
+			return redirect()->back()->with(['success' => 'Screener successfully deleted.']);
+			
+		}
+		if($screener->user_id == \Auth::user()->id)
+			{
+				$screener->title = $request->title;
+				$screener->description = $request->description;
+				$screener->save();
+			return redirect()->back()->with(['success' => 'Screener successfully updated.']);
+		}
+		return redirect()->back();
+	}
+
 	public function show($slug = null)
 	{
 		if(request()->has('login') )
