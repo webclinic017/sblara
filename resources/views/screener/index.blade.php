@@ -10,7 +10,7 @@
 				
 			<a href="?login">Sign In </a>to view your saved screeners <br>
 			OR <br>
-			<a href="/screeners/new" class="btn green"><i class="fa fa-plus"></i> Create New Screener</a>
+			<a href="/screeners/new" class="btn green"><i class="fa fa-plus"></i> Build New Screener</a>
 		</div>
 	</div>
 </div>
@@ -20,7 +20,7 @@
 	<div class="col-md-12 ">
 		<div class="m-heading-1 border-green m-bordered">
 					
-				<h2 style="float: left;">My Screeners</h2>  <a href="/screeners/new" style="float: right;" class="btn btn-success"><i class="fa fa-plus"></i> Create New Screener</a>
+				<h2 style="float: left;">My Screeners</h2>  <a href="/screeners/new" style="float: right;" class="btn btn-success"><i class="fa fa-plus"></i> Build New Screener</a>
 				<table class="table table-responsive table-hover">
 					@foreach(\Auth::user()->screeners as $screener)
 					<tr >

@@ -235,6 +235,18 @@ class Screener{
 			case 'ND':
 			return \App\Repositories\FileDataRepository::getUnAdjustedEod($instrument_id, $prop[0], $this->real);
 				break;
+			case '30M':
+			return \App\Repositories\FileDataRepository::get30MinutesUnadjustedData($instrument_id, $prop[0], $this->real);
+				break;
+			case '1H':
+			return \App\Repositories\FileDataRepository::get60MinutesUnadjustedData($instrument_id, $prop[0], $this->real);
+				break;
+			case 'W':
+			return \App\Repositories\FileDataRepository::getAdjustedWeeklyData($instrument_id, $prop[0], $this->real);
+				break;
+			case 'M':
+			return \App\Repositories\FileDataRepository::getAdjustedMonthlyData($instrument_id, $prop[0], $this->real);
+				break;
 			
 			default:
 			return \App\Repositories\FileDataRepository::getAdjustedEod($instrument_id, $prop[0], $this->real);
