@@ -186,7 +186,7 @@ function sb_rocp($time, $real)
 	if($ar)
 	{
 		foreach ($ar as $key => $value) {
-			$ar[$key] = $value * 100;
+			// $ar[$key] = $value * 100;
 		}	
 	}
 	return  $ar;
