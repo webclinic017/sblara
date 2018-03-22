@@ -329,16 +329,16 @@ public function technicalAnalysisHome()
         $instrument_list=InstrumentRepository::getInstrumentsScripWithIndex();
         $rustart = getrusage();
 
-        $c = FileDataRepository::get5MinutesUnadjustedData(13, 'o', 1);
+        //$c = FileDataRepository::get5MinutesUnadjustedData(13, 'o', 1);
         //dump($c);
-        $c = FileDataRepository::get5MinutesUnadjustedData(13, 'h', 1);
+        //$c = FileDataRepository::get5MinutesUnadjustedData(13, 'h', 1);
         //dump($c);
-        $c = FileDataRepository::get5MinutesUnadjustedData(13, 'l', 1);
+        //$c = FileDataRepository::get5MinutesUnadjustedData(13, 'l', 1);
+        //dump($c);
+        //$c = FileDataRepository::get5MinutesUnadjustedData(13, 'c', 1);
         //dump($c);
         $c = FileDataRepository::get5MinutesUnadjustedData(13, 'c', 1);
-        //dump($c);
-        $c = FileDataRepository::getAdjustedEod(538, 'c', 1);
-        dd($c);
+        dump($c);
         $c = FileDataRepository::get5MinutesUnadjustedData(13, 'd', 1);
         dd($c);
 

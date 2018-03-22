@@ -1,5 +1,10 @@
  <h1><small style="margin-left:10px"></small> {{count($screener->getInstruments())}} <small>matches</small> </h1>
-<table class="table table-border table-hover table-responsive">
+ @php
+ // dd($screener->getColumns());
+ @endphp
+ <div class="table-responsive">
+
+<table class="table table-border table-hover">
 	<thead>	
 		<tr>
 			<th>Instrument</th>
@@ -28,4 +33,5 @@
 		</tr>
 		@endforeach
 	</tbody>
-</table>
+</table> 	
+ </div>

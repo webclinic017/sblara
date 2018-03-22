@@ -31,8 +31,10 @@
 @include('screener.forms.ultosc')
 @include('screener.forms.willr')
 @include('screener.forms.candlepattern')
+@include('screener.forms.change')
 
 {{-- non listed --}}
+@include('screener.forms.valuepercent')
 @include('screener.forms.candlepatternlist')
 {{-- non listed --}}
 

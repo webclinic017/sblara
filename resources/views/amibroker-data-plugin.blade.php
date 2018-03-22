@@ -259,6 +259,18 @@ Amibroker Data plugin for DSE
                                 </div>
                             </div>
                         </div>
+<div class="portlet light portlet-fit bordered">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    <i class="icon-share font-green"></i>
+                                    <span class="caption-subject font-green bold uppercase">Amibroker Plugin Vedio</span>
+                                </div>
+
+                            </div>
+                            <div class="portlet-body">
+@include("html.youtube",array("embed"=>"QunObug2U28","height"=>200))
+                            </div>
+                        </div>
 
 
 

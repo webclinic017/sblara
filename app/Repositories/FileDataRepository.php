@@ -525,123 +525,58 @@ class FileDataRepository {
             $contents = Storage::get($file);
             $contents=explode(',',$contents);
             $last_update_date=$contents[0];
+            $update_date=date("Y-m-d",strtotime($last_update_date));
             array_shift($contents); //removing 1st row as it contain update date information which is not expected data
 
 
             if($latest)
             {
+
                 if($last_update_date!=date('Y-m-d')) {
                     // after running corn (updating after trade hour), its useless to look for latest.txt. it will save us from unnecessary look for latest.txt at same date
                     // we could use last trade_date but it needs db access. So to save resource we are using date()
 
 
-                    switch ($field) {
-                        case 'o':
-                            $db_field = 'open_price';
-                            $latest_index = 0;
-                            break;
+                    $file_path = "data/$instrument_id/intraday/15_minutes/latest";
 
-                        case 'h':
-                            $db_field = 'high_price';
-                            $latest_index = 1;
-                            break;
-
-                        case 'l':
-                            $db_field = 'low_price';
-                            $latest_index = 2;
-                            break;
-
-                        case 'c':
-                            $db_field = 'close_price';
-                            $latest_index = 3;
-                            break;
-
-                        case 'v':
-                            $db_field = 'total_volume';
-                            $latest_index = 4;
-                            break;
-
-                        case 'd':
-                            $db_field = 'lm_date_time';
-                            $latest_index = 5;
-
-                            break;
-                        default:
-                            $db_field = 'close_price';
-                            $latest_index = 3;
-                    }
-
-
-                    $latest_data_file = "data/$instrument_id/eod/latest.txt";
+                    $latest_data_file="$file_path/$field.txt";
                     if(Storage::disk('local')->exists($latest_data_file)){
                         $today_data = Storage::get($latest_data_file);
 
-                        $today_data=explode(',',$today_data);     
+                        $today_data=explode(',',$today_data);
                     }else{
-                        $today_data=[];  
-                    }    
+                        $today_data=[];
+                    }
 
-                    if(isset($today_data[5]) and $today_data[5]!=$last_update_date)
+
+
+                    if (isset($today_data[0]))
                     {
-                        //if it is new month , we have to add new element
 
-                        $last_trade_date_month_number = date('M', strtotime($last_update_date) + 24 * 60 * 60);
-                        $today_month_number = date('W', strtotime($today_data[5]) + 24 * 60 * 60);
-
-                        if ($last_trade_date_month_number == $today_month_number)
-                            $new_month = 0;
-                        else
-                            $new_month = 1;
-
-                        if ($new_month) {
-                            $latest_data = $today_data[$latest_index];
-                            array_unshift($contents, $latest_data);
+                        if($today_data[0] != $last_update_date)
+                        {
+                            // here we are checking again so that it does not add duplicate data from latest.txt - specially friday and saterday
 
 
-                        } else {
+                            array_shift($today_data); // removing update time note
 
-                            // open remain unchanged
+                            $today_data=array_reverse($today_data);
 
-                            if ($field == 'h') {
-                                $latest_data = $today_data[$latest_index];
-                                //if new high
-                                if ($latest_data > $contents[0])
-                                    $contents[0] = $latest_data;
+                            $result = array_merge($today_data, $contents);
 
-                            }
-
-                            if ($field == 'l') {
-                                $latest_data = $today_data[$latest_index];
-                                //if new low
-                                if ($latest_data < $contents[0])
-                                    $contents[0] = $latest_data;
-
-                            }
-                            if ($field == 'c') {
-                                $latest_data = $today_data[$latest_index];
-                                //latest weekly close
-                                $contents[0] = $latest_data;
-
-                            }
-
-                            if ($field == 'v') {
-                                $latest_data = $today_data[$latest_index];
-                                //add today's additional volume
-                                $contents[0] += $latest_data;
-
-                            }
-
-                            // date remain unchanged
+                            $contents= $result;
                         }
 
-
                     }
+
 
                 }
             }
 
         }
-        return array_slice($contents, 0, 248);
+
+
+        return $contents;
 
     }
     public static function get30MinutesUnadjustedData($instrument_id,$field='c',$latest=1)
@@ -656,130 +591,65 @@ class FileDataRepository {
             $contents = Storage::get($file);
             $contents=explode(',',$contents);
             $last_update_date=$contents[0];
+            $update_date=date("Y-m-d",strtotime($last_update_date));
             array_shift($contents); //removing 1st row as it contain update date information which is not expected data
 
 
             if($latest)
             {
+
                 if($last_update_date!=date('Y-m-d')) {
                     // after running corn (updating after trade hour), its useless to look for latest.txt. it will save us from unnecessary look for latest.txt at same date
                     // we could use last trade_date but it needs db access. So to save resource we are using date()
 
 
-                    switch ($field) {
-                        case 'o':
-                            $db_field = 'open_price';
-                            $latest_index = 0;
-                            break;
+                    $file_path = "data/$instrument_id/intraday/30_minutes/latest";
 
-                        case 'h':
-                            $db_field = 'high_price';
-                            $latest_index = 1;
-                            break;
-
-                        case 'l':
-                            $db_field = 'low_price';
-                            $latest_index = 2;
-                            break;
-
-                        case 'c':
-                            $db_field = 'close_price';
-                            $latest_index = 3;
-                            break;
-
-                        case 'v':
-                            $db_field = 'total_volume';
-                            $latest_index = 4;
-                            break;
-
-                        case 'd':
-                            $db_field = 'lm_date_time';
-                            $latest_index = 5;
-
-                            break;
-                        default:
-                            $db_field = 'close_price';
-                            $latest_index = 3;
-                    }
-
-
-                    $latest_data_file = "data/$instrument_id/eod/latest.txt";
+                    $latest_data_file="$file_path/$field.txt";
                     if(Storage::disk('local')->exists($latest_data_file)){
                         $today_data = Storage::get($latest_data_file);
 
-                        $today_data=explode(',',$today_data);     
+                        $today_data=explode(',',$today_data);
                     }else{
-                        $today_data=[];  
-                    }    
+                        $today_data=[];
+                    }
 
-                    if(isset($today_data[5]) and $today_data[5]!=$last_update_date)
+
+
+                    if (isset($today_data[0]))
                     {
-                        //if it is new month , we have to add new element
 
-                        $last_trade_date_month_number = date('M', strtotime($last_update_date) + 24 * 60 * 60);
-                        $today_month_number = date('W', strtotime($today_data[5]) + 24 * 60 * 60);
-
-                        if ($last_trade_date_month_number == $today_month_number)
-                            $new_month = 0;
-                        else
-                            $new_month = 1;
-
-                        if ($new_month) {
-                            $latest_data = $today_data[$latest_index];
-                            array_unshift($contents, $latest_data);
+                        if($today_data[0] != $last_update_date)
+                        {
+                            // here we are checking again so that it does not add duplicate data from latest.txt - specially friday and saterday
 
 
-                        } else {
+                            array_shift($today_data); // removing update time note
 
-                            // open remain unchanged
+                            $today_data=array_reverse($today_data);
 
-                            if ($field == 'h') {
-                                $latest_data = $today_data[$latest_index];
-                                //if new high
-                                if ($latest_data > $contents[0])
-                                    $contents[0] = $latest_data;
+                            $result = array_merge($today_data, $contents);
 
-                            }
-
-                            if ($field == 'l') {
-                                $latest_data = $today_data[$latest_index];
-                                //if new low
-                                if ($latest_data < $contents[0])
-                                    $contents[0] = $latest_data;
-
-                            }
-                            if ($field == 'c') {
-                                $latest_data = $today_data[$latest_index];
-                                //latest weekly close
-                                $contents[0] = $latest_data;
-
-                            }
-
-                            if ($field == 'v') {
-                                $latest_data = $today_data[$latest_index];
-                                //add today's additional volume
-                                $contents[0] += $latest_data;
-
-                            }
-
-                            // date remain unchanged
+                            $contents= $result;
                         }
 
-
                     }
+
 
                 }
             }
 
         }
-        return array_slice($contents, 0, 248);
+
+
+        return $contents;
 
     }
     public static function get60MinutesUnadjustedData($instrument_id,$field='c',$latest=1)
     {
 
         $contents=array();
-         $file = "data/$instrument_id/intraday/30_minutes/unadjusted/$field.txt";
+         $file = "data/$instrument_id/intraday/60_minutes/unadjusted/$field.txt";
 
         if(Storage::disk('local')->exists($file))
         {
@@ -787,123 +657,58 @@ class FileDataRepository {
             $contents = Storage::get($file);
             $contents=explode(',',$contents);
             $last_update_date=$contents[0];
+            $update_date=date("Y-m-d",strtotime($last_update_date));
             array_shift($contents); //removing 1st row as it contain update date information which is not expected data
 
 
             if($latest)
             {
+
                 if($last_update_date!=date('Y-m-d')) {
                     // after running corn (updating after trade hour), its useless to look for latest.txt. it will save us from unnecessary look for latest.txt at same date
                     // we could use last trade_date but it needs db access. So to save resource we are using date()
 
 
-                    switch ($field) {
-                        case 'o':
-                            $db_field = 'open_price';
-                            $latest_index = 0;
-                            break;
+                    $file_path = "data/$instrument_id/intraday/60_minutes/latest";
 
-                        case 'h':
-                            $db_field = 'high_price';
-                            $latest_index = 1;
-                            break;
-
-                        case 'l':
-                            $db_field = 'low_price';
-                            $latest_index = 2;
-                            break;
-
-                        case 'c':
-                            $db_field = 'close_price';
-                            $latest_index = 3;
-                            break;
-
-                        case 'v':
-                            $db_field = 'total_volume';
-                            $latest_index = 4;
-                            break;
-
-                        case 'd':
-                            $db_field = 'lm_date_time';
-                            $latest_index = 5;
-
-                            break;
-                        default:
-                            $db_field = 'close_price';
-                            $latest_index = 3;
-                    }
-
-
-                    $latest_data_file = "data/$instrument_id/eod/latest.txt";
+                    $latest_data_file="$file_path/$field.txt";
                     if(Storage::disk('local')->exists($latest_data_file)){
                         $today_data = Storage::get($latest_data_file);
 
-                        $today_data=explode(',',$today_data);     
+                        $today_data=explode(',',$today_data);
                     }else{
-                        $today_data=[];  
-                    }    
+                        $today_data=[];
+                    }
 
-                    if(isset($today_data[5]) and $today_data[5]!=$last_update_date)
+
+
+                    if (isset($today_data[0]))
                     {
-                        //if it is new month , we have to add new element
 
-                        $last_trade_date_month_number = date('M', strtotime($last_update_date) + 24 * 60 * 60);
-                        $today_month_number = date('W', strtotime($today_data[5]) + 24 * 60 * 60);
-
-                        if ($last_trade_date_month_number == $today_month_number)
-                            $new_month = 0;
-                        else
-                            $new_month = 1;
-
-                        if ($new_month) {
-                            $latest_data = $today_data[$latest_index];
-                            array_unshift($contents, $latest_data);
+                        if($today_data[0] != $last_update_date)
+                        {
+                            // here we are checking again so that it does not add duplicate data from latest.txt - specially friday and saterday
 
 
-                        } else {
+                            array_shift($today_data); // removing update time note
 
-                            // open remain unchanged
+                            $today_data=array_reverse($today_data);
 
-                            if ($field == 'h') {
-                                $latest_data = $today_data[$latest_index];
-                                //if new high
-                                if ($latest_data > $contents[0])
-                                    $contents[0] = $latest_data;
+                            $result = array_merge($today_data, $contents);
 
-                            }
-
-                            if ($field == 'l') {
-                                $latest_data = $today_data[$latest_index];
-                                //if new low
-                                if ($latest_data < $contents[0])
-                                    $contents[0] = $latest_data;
-
-                            }
-                            if ($field == 'c') {
-                                $latest_data = $today_data[$latest_index];
-                                //latest weekly close
-                                $contents[0] = $latest_data;
-
-                            }
-
-                            if ($field == 'v') {
-                                $latest_data = $today_data[$latest_index];
-                                //add today's additional volume
-                                $contents[0] += $latest_data;
-
-                            }
-
-                            // date remain unchanged
+                            $contents= $result;
                         }
 
-
                     }
+
 
                 }
             }
 
         }
-        return array_slice($contents, 0, 248);
+
+
+        return $contents;
 
     }
 

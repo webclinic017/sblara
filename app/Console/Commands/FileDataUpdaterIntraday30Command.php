@@ -20,21 +20,21 @@ use App\Repositories\IndexRepository;
 
 
 
-class FileDataUpdaterIntradayCommand extends Command
+class FileDataUpdaterIntraday30Command extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'dse:FileDataUpdaterIntraday';
+    protected $signature = 'dse:FileDataUpdaterIntraday30';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Updating intraday 5 minute file data';
+    protected $description = 'Updating intraday 30 minutes file data';
 
     /**
      * Create a new command instance.
@@ -54,7 +54,7 @@ class FileDataUpdaterIntradayCommand extends Command
 
 
 
-// live server command   /opt/cpanel/ea-php70/root/usr/bin/php /home/hostingmonitors/artisan dse:FileDataUpdaterIntraday
+// live server command   /opt/cpanel/ea-php70/root/usr/bin/php /home/hostingmonitors/artisan dse:FileDataUpdaterIntraday30
 // source update_eods_and_intraday_data cron of old site
     public function handle()
     {
@@ -116,13 +116,13 @@ class FileDataUpdaterIntradayCommand extends Command
 
                         ////////////////    Intraday data 5 minutes   \\\\\\\\\\\\\\\\\\\
 
-                        $q = $convertedTimestamp % 300;
+                        $q = $convertedTimestamp % 1800;
                         $base_time_key = date('Y-m-d H:i', $convertedTimestamp - $q);
 
 
                         // ****************** V ***************** \\\
 
-                        $file_path = "data/$instrument_id/intraday/5_minutes/latest/v.txt";
+                        $file_path = "data/$instrument_id/intraday/30_minutes/latest/v.txt";
                         if (Storage::disk('local')->exists($file_path)) {
 
                             $today_data = Storage::get($file_path);
@@ -211,7 +211,7 @@ class FileDataUpdaterIntradayCommand extends Command
 
                         // ****************** O *****************\\\
 
-                        $file_path = "data/$instrument_id/intraday/5_minutes/latest/o.txt";
+                        $file_path = "data/$instrument_id/intraday/30_minutes/latest/o.txt";
                         if (Storage::disk('local')->exists($file_path))
                         {
 
@@ -257,7 +257,7 @@ class FileDataUpdaterIntradayCommand extends Command
 
                         // ****************** H *****************\\\
 
-                        $file_path = "data/$instrument_id/intraday/5_minutes/latest/h.txt";
+                        $file_path = "data/$instrument_id/intraday/30_minutes/latest/h.txt";
                         if (Storage::disk('local')->exists($file_path))
                         {
 
@@ -313,7 +313,7 @@ class FileDataUpdaterIntradayCommand extends Command
 
                         // ****************** L *****************\\\
 
-                        $file_path = "data/$instrument_id/intraday/5_minutes/latest/l.txt";
+                        $file_path = "data/$instrument_id/intraday/30_minutes/latest/l.txt";
                         if (Storage::disk('local')->exists($file_path))
                         {
 
@@ -366,7 +366,7 @@ class FileDataUpdaterIntradayCommand extends Command
 
                         // ****************** C *****************\\\
 
-                        $file_path = "data/$instrument_id/intraday/5_minutes/latest/c.txt";
+                        $file_path = "data/$instrument_id/intraday/30_minutes/latest/c.txt";
                         if (Storage::disk('local')->exists($file_path))
                         {
 
@@ -421,7 +421,7 @@ class FileDataUpdaterIntradayCommand extends Command
 
                         // ****************** C *****************\\\
 
-                        $file_path = "data/$instrument_id/intraday/5_minutes/latest/c.txt";
+                        $file_path = "data/$instrument_id/intraday/30_minutes/latest/c.txt";
                         if (Storage::disk('local')->exists($file_path)) {
 
                             $today_data = Storage::get($file_path);
@@ -466,7 +466,7 @@ class FileDataUpdaterIntradayCommand extends Command
 
                         // ****************** D *****************\\\
 
-                        $file_path = "data/$instrument_id/intraday/5_minutes/latest/d.txt";
+                        $file_path = "data/$instrument_id/intraday/30_minutes/latest/d.txt";
                         if (Storage::disk('local')->exists($file_path))
                         {
 

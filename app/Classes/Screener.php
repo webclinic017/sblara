@@ -56,7 +56,8 @@ class Screener{
 			//reset the data target to adjusted eod
 			$this->dataTarget = "D";
 
-			preg_match_all("((.*[^".join(self::OPERATORS, '')."])( ".join(self::OPERATORS, '|')." )(.*))", $value, $matches);
+			// preg_match_all("((.*[^".join(self::OPERATORS, '|')."])( ".join(self::OPERATORS, '|')." )(.*))", $value, $matches);
+			preg_match_all("((.*) (".join(self::OPERATORS, '|').") (.*))", $value, $matches);
 				// dump($this->conditions);
 				// continue;
 			$v1 = $matches[1][0];
@@ -102,6 +103,7 @@ class Screener{
 	 */
 	public function compileParams($params)
 	{
+
 		$this->dataTarget = trim($params[count($params) - 1]);
 		foreach ($params as $key => $value) {
 			if(preg_match_all("/".join(self::KEYWORDS, '|')."/", $value, $matches))
@@ -333,7 +335,7 @@ class Screener{
 	 */
 	public function getCompareValueType($value)
 	{
-		if(preg_match("/[a-zA-Z3] *?\(/", $value))
+		if(preg_match("/[a-zA-Z310] *?\(/", $value))
 		{
 			return 'function';
 		}
@@ -374,6 +376,9 @@ class Screener{
 				}
 					$output[] =  (eval("return ".$value.";"));
 			}	
+			if(!isset($output) ){
+				$output = $this->generateGreedyArray(false);
+			}
 
 			if(!isset($this->data[$this->instrument_id][$index]))
 			{

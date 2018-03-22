@@ -108,16 +108,22 @@ class FileDataUpdaterCommand extends Command
                         $tv=$data->MKISTAT_TOTAL_VALUE;
                         $d=$trade_date;
 
-                        $array[]=$o;
-                        $array[]=$h;
-                        $array[]=$l;
-                        $array[]=$c;
-                        $array[]=$v;
-                        $array[]=$d;
+                        $array = array();
+                        if($v>0)
+                        {
+                            $array[] = $o;
+                            $array[] = $h;
+                            $array[] = $l;
+                            $array[] = $c;
+                            $array[] = $v;
+                            $array[] = $d;
 
+
+                            $count++;
+
+                        }
                         $csv = collect($array)->implode(',');
                         Storage::disk('local')->put("data/$instrument_id/eod/latest.txt", $csv);
-                        $count++;
 
                         }
                     else

@@ -45,6 +45,9 @@ class Kernel extends ConsoleKernel
 
         Commands\FileDataUpdaterCommand::class,
         Commands\FileDataUpdaterIntradayCommand::class,
+        Commands\FileDataUpdaterIntraday15Command::class,
+        Commands\FileDataUpdaterIntraday30Command::class,
+        Commands\FileDataUpdaterIntraday60Command::class,
 
 
         Commands\RemoveDuplicateEodCommand::class,
@@ -81,9 +84,14 @@ class Kernel extends ConsoleKernel
 
         $schedule->command('mail:PortfolioEmailReport')->cron('30 15 * * 0,1,2,3,4')->emailOutputTo('fazalmohammad19@gmail.com');
 
-        //filter related
+        //filter data update every minutes
         $schedule->command('dse:FileDataUpdater')->cron('* 10,11,12,13,14 * * 0,1,2,3,4')->emailOutputTo('fazalmohammad19@gmail.com');
         $schedule->command('dse:FileDataUpdaterIntraday')->cron('* 10,11,12,13,14 * * 0,1,2,3,4')->emailOutputTo('fazalmohammad19@gmail.com');
+        $schedule->command('dse:FileDataUpdaterIntraday15')->cron('* 10,11,12,13,14 * * 0,1,2,3,4')->emailOutputTo('fazalmohammad19@gmail.com');
+        $schedule->command('dse:FileDataUpdaterIntraday30')->cron('* 10,11,12,13,14 * * 0,1,2,3,4')->emailOutputTo('fazalmohammad19@gmail.com');
+        $schedule->command('dse:FileDataUpdaterIntraday60')->cron('* 10,11,12,13,14 * * 0,1,2,3,4')->emailOutputTo('fazalmohammad19@gmail.com');
+
+        //filter data reset daily
         $schedule->command('filter:EodUnAdjData')->cron('40 16 * * 0,1,2,3,4')->emailOutputTo('fazalmohammad19@gmail.com');
         $schedule->command('filter:EodAdjData')->cron('43 16 * * 0,1,2,3,4')->emailOutputTo('fazalmohammad19@gmail.com');
         $schedule->command('filter:WeeklyAdjData')->cron('50 16 * * 0,1,2,3,4')->emailOutputTo('fazalmohammad19@gmail.com');

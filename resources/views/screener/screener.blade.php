@@ -122,6 +122,7 @@ if($screener){
                 <li><a data-value = "VALUE">Value</a></li>
                 <li><a data-value = "PRICEPERCENT">Percentage</a></li>
                 <li><a data-value = "CANDLEPATTERN" data-rel="CANDLEPATTERNLIST" data-operator="IS">Candle Pattern</a></li>
+                <li><a data-value = "CHANGE" data-rel="VALUEPERCENT" >Change(%)</a></li>
               </ul>
 
               <h5><strong>Moving Average</strong></h5>
@@ -324,7 +325,6 @@ function preg_match_all(re, s) {
 
 function generateHtml(query) { 
   // result = regex.exec(query);
-  console.log(query);
   $('.filters').html("");
   $.each(getConditions(/\[(.*?)\]/g, query), function (k, v) {
     rowid = k;
@@ -394,7 +394,6 @@ function generateHtml(query) {
     
     } 
     // set right params values
-    console.log(rmatches);
     if(rmatches.length != 0)
     {
       $.each(rmatches[0][2].split(', '), function (k, v) {
@@ -531,12 +530,12 @@ function generateHtml(query) {
         }else{
 
                syntax += $(this).find('.filter-right .alert-warningdf').data('func') + "(";
-
+               params = [];
         $(this).find(".filter-right [data-param]").each(function (k, v) {
           if($(this).val() == "D")
           {
             return;
-          }
+          }          
           params[$(this).attr('data-param')] = $(this).val();
         });
         $.each(params, function (k, v) {

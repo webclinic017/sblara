@@ -15,11 +15,15 @@ class Screener extends Model
      * @var array
      */
     protected $dates = ['deleted_at'];
-    	
+
     public function resultCount()
     {
 		$value = \Cache::remember('screener_count_'.$this->id, 1, function () {
-    		$screener = new Scanner($this->query);
+			try {
+    			$screener = new Scanner($this->query);
+			} catch (\Exception $e) {
+				return 0;
+			}
     		return $screener->count();
 		});    	
     	return $value;
