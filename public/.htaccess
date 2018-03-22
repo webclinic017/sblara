@@ -52,9 +52,3 @@
 # php -- END cPanel-generated handler, do not edit
 
         
-order deny,allow
-deny from all
-allow from 202.125.72.110
-allow from 202.53.175.238
-allow from 103.230.6.66
-allow from 103.231.160.190
