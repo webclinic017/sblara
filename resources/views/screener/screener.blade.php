@@ -651,6 +651,59 @@ $('.filters').on('change', '.targetType, .targetN', function () {
 
   </script>
 
+<div class="row margin-top-20">
+  <div class="col-md-6">
+                  <div class="portlet light bordered">
+                  <div class="portlet-title tabbable-line">
+                        <div class="caption">
+                            <i class="icon-graph font-yellow-casablanca"></i>
+                            <span class="caption-subject bold font-yellow-casablanca uppercase">
+                              Video tutorial 1 </span>
 
+                          </div>
+                            <div class="tools">
+                                {{--<a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.sector_gainer_loser:render_to=gainer_loser_whole_day_up_down_bar" class="reload"></a>--}}
+
+                                <a href="" class="collapse">
+                                </a>
+
+                            </a>
+                            <a href="" class="remove">
+                            </a>
+                        </div>
+                    </div>
+
+                <div class="portlet-body">
+                @include("html.youtube",array("embed"=>"2y0CmigMv_I","height"=>200))
+                </div>
+            </div>
+</div>
+<div class="col-md-6">
+                  <div class="portlet light bordered">
+                  <div class="portlet-title tabbable-line">
+                        <div class="caption">
+                            <i class="icon-graph font-yellow-casablanca"></i>
+                            <span class="caption-subject bold font-yellow-casablanca uppercase">
+                              Video tutorial 2 </span>
+
+                          </div>
+                            <div class="tools">
+                                {{--<a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.sector_gainer_loser:render_to=gainer_loser_whole_day_up_down_bar" class="reload"></a>--}}
+
+                                <a href="" class="collapse">
+                                </a>
+
+                            </a>
+                            <a href="" class="remove">
+                            </a>
+                        </div>
+                    </div>
+
+                <div class="portlet-body">
+                @include("html.youtube",array("embed"=>"5hbM3NEdwK0","height"=>200))
+                </div>
+            </div>
+</div>
+</div>
 @include('html.fb_comment', ['url' => url('/screeners/'.$slug)])
 @endsection
