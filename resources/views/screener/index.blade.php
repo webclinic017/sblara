@@ -41,7 +41,8 @@ $slug = "";
 					
 				<h2 style="float: left;">My Screeners</h2>  <a href="/screeners/new" style="float: right;" class="btn btn-success"><i class="fa fa-plus"></i> Build New Screener</a>
 				<table class="table table-responsive table-hover">
-					@foreach(\Auth::user()->screeners as $screener)
+					@php $screeners  = \Auth::user()->screeners()->paginate(5); @endphp
+					@foreach($screeners as $screener)
 					<tr >
 						<td style="vertical-align: middle; min-width: 150px"> <a href="{{url('screeners/'.$screener->slug)}}"><strong>{{$screener->title}}</strong></a> </td>
 						<td style="vertical-align: middle;">{{$screener->description}}</td>
@@ -124,7 +125,12 @@ $slug = "";
 					</tr>
 					@endforeach
 				</table>
+				<div style="text-align: center;">
+						{{$screeners->links()}}
+				</div>
 		</div>
+		
+
 	</div>
 </div>
 

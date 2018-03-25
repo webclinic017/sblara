@@ -251,7 +251,9 @@ class FileDataUpdaterIntraday15Command extends Command
 
                         }else
                         {
-                            $csv="$base_time_key,$c";
+                            // we will use day open price here for the very 1st candle
+                            $o = $data->MKISTAT_OPEN_PRICE;
+                            $csv = "$base_time_key,$o";
                             Storage::disk('local')->put($file_path,$csv);
                         }
 

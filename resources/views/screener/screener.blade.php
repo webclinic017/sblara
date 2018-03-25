@@ -1,6 +1,6 @@
 @extends('layouts.metronic.default')
 @php
-$screenerImageUrl = url('/img/stockbangladesh-dse-screeners.jpg');
+// $screenerImageUrl = url('/img/stockbangladesh-dse-screeners.jpg');
 $title = "Build new screener";
 $description = "Build your own screener with our powerful filters";
 $slug = "new";
@@ -16,7 +16,7 @@ if($screener){
 @section('meta-title', ucwords(strtolower($title))." : Advance Stock Scanner of DSE")
 @section('meta-description', str_limit($description,160,'...'))
 
-@section('og:image', $screenerImageUrl)
+{{-- @section('og:image', $screenerImageUrl) --}}
 @section('og:url', url('/screener/'.$slug))
 
 @section('og:title', $title)
@@ -370,7 +370,13 @@ function generateHtml(query) {
     }else if(preg_match_all(/[A-Z]/g, v2).length == 0)
     {
       val = v2;
+    if($('[data-value='+$('.filter-left [data-func]', row).data('func')+']').data("rel")){
+    $('.filter-right', row).html($('#filter-right-nav').html()+$('#'+$('[data-value='+$('.filter-left [data-func]', row).data('func')+']').data("rel")+'').html()); 
+
+    }else{
     $('.filter-right', row).html($('#filter-right-nav').html()+$('#VALUE').html()); //generated html will replace here
+      
+    }
 
     }
     // aditional constant or value condition/statements here
@@ -402,7 +408,7 @@ function generateHtml(query) {
       })
     }else{
       // parse calculation or value
-      if(preg_match_all(/([1-9].)?\/100/g, v2).length == 0)
+      if(preg_match_all(/([0-9].)?\/100/g, v2).length == 0)
       {
         $('.filters [data-row-id='+rowid+'] .filter-right .value').val(val);
 
@@ -425,6 +431,9 @@ function generateHtml(query) {
         
       }
   });
+  setTimeout(function() {
+    $('.targetType, .targetN').trigger('change');
+  }, 700);
 }
 
 

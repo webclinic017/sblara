@@ -1,5 +1,6 @@
   @php
  // dd($screener->getColumns());
+ $i = 0;
  @endphp
 
      <div class="row">
@@ -58,6 +59,7 @@
 				@endforeach
 			@endforeach			
 		</tr>
+		@php $i++; @endphp
 		@endforeach
 	</tbody>
 </table>
@@ -72,6 +74,7 @@
 
 
 <script>
+	@if($i != 0)
     $(document).ready(function () {
 
 
@@ -157,5 +160,6 @@
        initTable1("sample_1");
 
     });
+    @endif
 </script>
 

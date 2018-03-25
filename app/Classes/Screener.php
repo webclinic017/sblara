@@ -10,6 +10,7 @@ class Screener{
 	(\[([a-zA-Z]+)\((.*?)\)?.? (=|>|<|!=|is)?.+?([0-9].+?[.]?)\])
 	 */
 	const KEYWORDS = ['OPEN', 'HIGH', 'LOW', 'CLOSE', 'VOLUME'];
+	const FUNDAMENTAL = ['PE'/*, 'SHAREHOLDING', 'CATEGORY', 'SECTOR'*/];
 	const OPERATORS = [ 'IS', "NOT", "<=",  ">=",  '=', '!=', '>',  "<", "X>", "X<" ];
 	const BOOLEANS = [ "CANDLEPATTERN" ];
 	
@@ -54,7 +55,8 @@ class Screener{
 		$this->instruments = \App\Instrument::whereNotIn('sector_list_id', ['22', '24', '4', '5'])->where('active', 1)->pluck('id')->toArray(); // addition filter will be apply here with the same query.. pe, fundamental info, category etc.
 		foreach ($this->conditions as  $value) {
 			//reset the data target to adjusted eod
-			$this->dataTarget = "D";
+			// reset default properties
+			$this->resetDefaultProperties();
 
 			// preg_match_all("((.*[^".join(self::OPERATORS, '|')."])( ".join(self::OPERATORS, '|')." )(.*))", $value, $matches);
 			preg_match_all("((.*) (".join(self::OPERATORS, '|').") (.*))", $value, $matches);
@@ -497,4 +499,9 @@ class Screener{
 			return $dataArray;
 	}
 
+	public function resetDefaultProperties()
+	{
+			$this->dataTarget = "D";
+			$this->targetN = 0;
+	}
 }

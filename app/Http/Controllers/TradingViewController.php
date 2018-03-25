@@ -49,6 +49,7 @@ class TradingViewController extends Controller
         $returnData['session']='24x7';  //24x 7 should be given otherwise it will remove sunday treating it weekend
         //$returnData['session']='1030-1430;1'; //https://github.com/tradingview/charting_library/wiki/Trading-Sessions
         $returnData['has_daily']=true;
+        $returnData['has_weekly_and_monthly'] = true;
         $returnData['has_intraday']=true;
         $returnData['has_no_volume']=false;
         $returnData['ticker']="$instrumentCode";
