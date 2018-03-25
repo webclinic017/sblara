@@ -3,14 +3,13 @@
 @php
 $screenerImageUrl = url('/img/stockbangladesh-dse-screeners.jpg');
 $title = "Advanced Screener for DSE";
-$description = "Advanced screener for Dhaka stock exchange. Build your own screeners with our powerful filters";
+$description = "Scan buy and sell signal using our advanced screener of Dhaka Stock Exchange. Build your own screeners with our powerful filters";
 $slug = "";
 
 
 @endphp
 @section('title', $title)
-@section('meta-title', "Advance screeners of DSE- 
-".$title)
+@section('meta-title', "Advance Screeners Of DSE ")
 @section('meta-description', $description)
 
 @section('og:image', $screenerImageUrl)
@@ -46,13 +45,13 @@ $slug = "";
 					<tr >
 						<td style="vertical-align: middle; min-width: 150px"> <a href="{{url('screeners/'.$screener->slug)}}"><strong>{{$screener->title}}</strong></a> </td>
 						<td style="vertical-align: middle;">{{$screener->description}}</td>
-						<td  style="text-align: center;"> <a href="/screeners/{{$screener->slug}}"> <strong> {{$screener->resultCount()}}</strong> <br> <small>Matches</small> </a></td>
+						<td  style="text-align: center; vertical-align: middle;"> <a href="/screeners/{{$screener->slug}}"> <strong> {{$screener->resultCount()}}</strong> <br> <small>Matches</small> </a></td>
 						<td style="vertical-align: middle;">
 							
 									<a style="text-decoration: none" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{url('/screeners/'.$screener->slug)}}" class="socicon-btn socicon-btn-circle socicon-solid bg-blue font-white bg-hover-grey-salsa socicon-facebook tooltips" data-original-title="Share on Facebook"></a>
 							
 						</td>
-						<td>
+						<td style="text-align: center; vertical-align: middle;">
 							<i class="btn btn-xs blue fa fa-pencil" data-toggle="modal" data-target="#editModal_{{$screener->id}}"></i>
 							<i class="btn btn-xs red fa fa-trash" data-toggle="modal" data-target="#deleteModal_{{$screener->id}}"></i>
 
@@ -142,7 +141,7 @@ $slug = "";
 					<tr >
 						<td style="vertical-align: middle; min-width: 150px"> <a href="{{url('screeners/'.$screener->slug)}}"><strong>{{$screener->title}}</strong></a> </td>
 						<td style="vertical-align: middle;">{{$screener->description}}</td>
-						<td  style="text-align: center;"> <a href="/screeners/{{$screener->slug}}"> <strong> {{$screener->resultCount()}}</strong> <br> <small>Matches</small> </a></td>
+						<td  style="text-align: center; vertical-align: middle;"> <a href="/screeners/{{$screener->slug}}"> <strong> {{$screener->resultCount()}}</strong> <br> <small>Matches</small> </a></td>
 						<td style="vertical-align: middle;">
 							
 									<a style="text-decoration: none" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u={{url('/screeners/'.$screener->slug)}}" class="socicon-btn socicon-btn-circle socicon-solid bg-blue font-white bg-hover-grey-salsa socicon-facebook tooltips" data-original-title="Share on Facebook"></a>

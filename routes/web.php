@@ -243,6 +243,10 @@ Route::get('/share-market-in-islam', function () {
         return view('share-market-in-islam');
     })->name('share-market-in-islam');
 
+Route::get('/dse/stock/candlestick-pattern', function () {
+        return view('candlestick-pattern');
+    })->name('/dse/stock/candlestick-pattern');
+
 Route::get('/cockpit', function () {
         return view('cockpit_page');
     })->name('cockpit');

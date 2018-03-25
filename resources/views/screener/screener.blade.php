@@ -12,10 +12,9 @@ if($screener){
 }
 
 @endphp
-@section('title', $title)
-@section('meta-title', "Advance screeners of DSE- 
-".$title)
-@section('meta-description', $description)
+@section('title', ucwords(strtolower($title)))
+@section('meta-title', ucwords(strtolower($title))." : Advance Stock Scanner of DSE")
+@section('meta-description', str_limit($description,160,'...'))
 
 @section('og:image', $screenerImageUrl)
 @section('og:url', url('/screener/'.$slug))
@@ -177,7 +176,7 @@ if($screener){
 <!--- / Modal -->
 
 <div class="row">
-  <div class="alert alert-info col-md-12 text-center">
+  <div class="alert alert-warning col-md-12 text-center">
     This is beta version of our screener and its developement is still ongoing. If you have any suggestion or see any bug please let us know at <strong>info@stockbangladesh.com</strong>
 
    Or leave a <strong>comment</strong> below. 
@@ -190,6 +189,7 @@ if($screener){
   <a href="/screeners" class="btn btn-success"><i class="fa fa-list"></i> All Screeners</a>
   </div>
 </div>
+
 <!-- BEGIN Portlet PORTLET-->
 <div class="portlet box green">
     <div class="portlet-title">
@@ -651,7 +651,42 @@ $('.filters').on('change', '.targetType, .targetN', function () {
 
   </script>
 
+@if($screener)
 <div class="row margin-top-20">
+<div class="col-md-12">
+                  <div class="portlet light bordered">
+                  <div class="portlet-title tabbable-line">
+                        <div class="caption">
+                            <i class="icon-graph font-yellow-casablanca"></i>
+                            <span class="caption-subject bold font-yellow-casablanca uppercase">
+                              Screener description </span>
+
+                          </div>
+                            <div class="tools">
+                                {{--<a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.sector_gainer_loser:render_to=gainer_loser_whole_day_up_down_bar" class="reload"></a>--}}
+
+                                <a href="" class="collapse">
+                                </a>
+
+                            </a>
+                            <a href="" class="remove">
+                            </a>
+                        </div>
+                    </div>
+
+                <div class="portlet-body">
+                <div class="row">
+                  <div class="col-md-12">
+                    {{$screener->description}}
+                  </div>
+
+                </div>
+                </div>
+            </div>
+</div>
+</div>
+ @endif
+<div class="row">
   <div class="col-md-6">
                   <div class="portlet light bordered">
                   <div class="portlet-title tabbable-line">
@@ -707,3 +742,16 @@ $('.filters').on('change', '.targetType, .targetN', function () {
 </div>
 @include('html.fb_comment', ['url' => url('/screeners/'.$slug)])
 @endsection
+
+@push('scripts')
+
+<script src="{{ asset('metronic/assets/global/plugins/datatables/datatables.min.js') }}"></script>
+<script src="{{ asset('metronic/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}"></script>
+@endpush
+
+
+@push('css')
+
+<link href="{{ URL::asset('metronic/assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ URL::asset('metronic/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css') }}" rel="stylesheet" type="text/css" />
+@endpush

@@ -7,7 +7,7 @@ use App\Repositories\DataBankEodRepository;
 use App\Repositories\DataBanksIntradayRepository;
 use App\Repositories\ExchangeRepository;
 use App\Repositories\InstrumentRepository;
-
+use Carbon\Carbon;
 
 class TradingViewController extends Controller
 {
@@ -62,6 +62,105 @@ class TradingViewController extends Controller
 
     }
 
+    public function intraData($instrument_id, $from, $to, $resolution)
+    {
+        $candle_time=$resolution*60;
+
+        $from=Carbon::createFromTimestamp($from);
+        $from_date=$from->format('Y-m-d H:i:s');
+
+        $to=Carbon::createFromTimestamp($to);
+        $to_date=  $to->format('Y-m-d H:i:s');
+
+
+        $sql = "select DISTINCT(total_volume),instrument_id,close_price,UNIX_TIMESTAMP(lm_date_time) as date_timestamp
+from data_banks_intradays
+where lm_date_time >= '$from_date' and lm_date_time < '$to_date' and instrument_id=$instrument_id ORDER BY lm_date_time asc ,total_volume asc";
+
+        $all_data = \DB::select($sql);
+
+        $returnData=array();
+        if (count($all_data)) {
+
+            $grouped=array();
+            foreach($all_data as $data)
+            {
+                $day_key=date('Y-m-d', $data->date_timestamp);
+
+                $q=$data->date_timestamp%$candle_time;
+                //$base_time_key=date('Y-m-d H:i', $data->date_timestamp-$q);
+                $base_time_key=$data->date_timestamp-$q;
+
+                $time=date('H:i:s', $data->date_timestamp);
+                $data->time=$time;
+                $grouped[$day_key][$base_time_key][]= $data;
+            }
+
+
+
+
+
+            foreach($grouped as $trade_date=>$all_day_data)
+            {
+                $last_total_volume=0;
+                $count=0;
+                foreach($all_day_data as $base_time=>$grouped_by_time_frame_data)
+                {
+                    //if($count>5)  break;
+
+
+                    $first_data= $grouped_by_time_frame_data[0];
+                    $last_data= $grouped_by_time_frame_data[count($grouped_by_time_frame_data) - 1];
+
+
+                    $date = $base_time;
+                    $open= $first_data->close_price;
+                    $close= $last_data->close_price;
+                    $high=collect($grouped_by_time_frame_data)->max('close_price');
+                    $low=collect($grouped_by_time_frame_data)->min('close_price');
+                    // $volume = collect($grouped_by_time_frame_data)->sum('total_volume');
+
+                    $volume=$last_data->total_volume-$last_total_volume;
+
+                    //dump($grouped_by_time_frame_data);
+                    // dump("o=$open h=$high l= $low c=$close v=$volume d=$date");
+                    //    dump($last_data->total_volume."-".$last_total_volume."= $volume");
+
+                    $last_total_volume=$last_data->total_volume;
+
+                    $returnData['t'][] = $date;
+                    $returnData['c'][] = $close;
+                    $returnData['o'][] = $open;
+                    $returnData['h'][] = $high;
+                    $returnData['l'][] = $low;
+                    $returnData['v'][] = $volume;
+
+
+                    //$count++;
+                }
+
+
+
+            }
+
+
+
+
+
+        }
+
+        if(count($returnData)) {
+            $returnData['s'] = "ok";
+        }else
+        {
+            // $returnData['s'] = "no_data";
+            //  $returnData['nextTime'] = strtotime('1999-01-01');
+        }
+
+        return collect($returnData)->toJson();
+
+    }
+
 
     public function history(Request $request)
     {
@@ -82,7 +181,8 @@ class TradingViewController extends Controller
             //$data = DataBankEodRepository::getEodDataAdjusted($instrumentInfo->id, $from, $to);
         }else
         {
-            $data = DataBanksIntradayRepository::getDataForTradingView($instrumentInfo->id, $from, $to, $resolution);
+            //$data = DataBanksIntradayRepository::getDataForTradingView($instrumentInfo->id, $from, $to, $resolution);
+            $data = self::intraData($instrumentInfo->id, $from, $to, $resolution);
         }
        // return response()->view('dashboard', ['trade_date_Info' => $trade_date_Info])->setTtl(1);
         return response()->json($data)->setTtl(60);

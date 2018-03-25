@@ -21,7 +21,7 @@
                         </a>
 
                         </a>
-                        <a href="" class="remove">
+                        <a href="" class="fullscreen">
                         </a>
                     </div>
 

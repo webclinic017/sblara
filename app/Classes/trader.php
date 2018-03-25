@@ -180,14 +180,10 @@ function sb_willr($t1, $high, $low, $close)
 	return $ar;
 	return $candle($open, $high, $low, $close);
 }
-function sb_rocp($time, $real)
+function sb_rocp($time, $real, $a='test')
 {
+	dump($real);
 	$ar = trader_rocp($real, $time);
-	if($ar)
-	{
-		foreach ($ar as $key => $value) {
-			// $ar[$key] = $value * 100;
-		}	
-	}
+	dd($ar);
 	return  $ar;
 }
