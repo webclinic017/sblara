@@ -35,8 +35,10 @@
 			<th>High</th>
 			<th>Low</th>
 			<th>Volume</th>
-			@foreach($screener->getColumns() as $col)
-			<th>{{$col}}</th>
+			@foreach($screener->getConditions() as $condition)
+				@foreach($condition as $col => $v)
+					<th>{{$col}}</th>
+				@endforeach
 			@endforeach
 		</tr>
 	</thead>
@@ -50,9 +52,11 @@
 			<td>{{$instrument->low_price}}</td>
 			<td>{{$instrument->total_volume}}</td>
 
-			@foreach($screener->getColumns() as $col)
-			<td>{!!$screener->getData($instrument->instrument_id, $col)!!}</td>
-			@endforeach
+			@foreach($screener->getConditions() as $condition=>$cols)
+				@foreach($cols as $col=>$v)
+					<td>{!!$screener->getData($instrument->instrument_id, $condition, $col)!!}</td>
+				@endforeach
+			@endforeach			
 		</tr>
 		@endforeach
 	</tbody>

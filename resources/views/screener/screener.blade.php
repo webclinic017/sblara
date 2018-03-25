@@ -121,7 +121,7 @@ if($screener){
                 <li><a data-value = "VALUE">Value</a></li>
                 <li><a data-value = "PRICEPERCENT">Percentage</a></li>
                 <li><a data-value = "CANDLEPATTERN" data-rel="CANDLEPATTERNLIST" data-operator="IS">Candle Pattern</a></li>
-                <li><a data-value = "CHANGE" data-rel="VALUEPERCENT" >Change(%)</a></li>
+                <li><a data-value = "PERCENTCHANGE" data-rel="VALUEPERCENT" >Change(%)</a></li>
               </ul>
 
               <h5><strong>Moving Average</strong></h5>
@@ -365,7 +365,7 @@ function generateHtml(query) {
     if(preg_match_all(/\/100/g, v2).length !=0)
     {
       // col += "%";
-      val = preg_match_all(/([1-9].)?\/100/g, v2)[0][1];
+      val = preg_match_all(/([0-9].?)\/100/g, v2)[0][1];
     $('.filter-right', row).html($('#default-right-content').html()); //generated html will replace here
     }else if(preg_match_all(/[A-Z]/g, v2).length == 0)
     {

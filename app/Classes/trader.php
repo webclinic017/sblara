@@ -180,10 +180,15 @@ function sb_willr($t1, $high, $low, $close)
 	return $ar;
 	return $candle($open, $high, $low, $close);
 }
-function sb_rocp($time, $real, $a='test')
+function sb_percentchange($time, $real)
 {
-	dump($real);
-	$ar = trader_rocp($real, $time);
-	dd($ar);
-	return  $ar;
+	$result = [];
+	$prev = 0;
+	$current = $prev+$time;
+	while (isset($real[$current])) {
+		@$result[$current] = round((($real[$current] - $real[$prev])/$real[$prev])*100, 2);
+		$prev++;
+		$current++;
+	}
+	return  $result;
 }

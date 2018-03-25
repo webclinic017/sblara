@@ -1,5 +1,5 @@
-<div id="CHANGE">
-    <div class="alert alert-warningdf alert-dismissable" data-func="ROCP" >
+<div id="PERCENTCHANGE">
+    <div class="alert alert-warningdf alert-dismissable" data-func="PERCENTCHANGE" >
         <div class="row">
         <div class="col-md-12">
 

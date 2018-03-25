@@ -80,7 +80,6 @@ class Screener{
 		// dump(count($this->instruments));
 		// dump(join($this->instruments, ','));
 		}
-		// dump($this->data);
 	}
 
 	/**
@@ -279,6 +278,7 @@ class Screener{
 	 */
 	public function compileFunction($value)
 	{
+
 		//if function
 			preg_match_all("/([A-Za-z].*)\((.*)\)/", $value, $matches);
 			$function = $matches[1][0];
@@ -286,8 +286,7 @@ class Screener{
 			//CHECK IF ALREADY CALCULATED
 			$index = trim($value);
 			$this->currentColumn = $index;
-		
-			if(!isset($this->data[$this->instrument_id][$index]))
+			if(!isset($this->data[$this->instrument_id][$this->condition][$index]))
 			{
 				$value = $this->callFunction($function, $params);
 
@@ -300,7 +299,9 @@ class Screener{
 					//loop start for within n days
 					for ($i; $i <= $this->targetN; $i++) { 
 						$value = current($data);
-						$this->data[$this->instrument_id][$index]['values'][$i] = $value;
+						$this->data[$this->instrument_id][$this->condition][$index]['values'][$i] = $value;
+						
+
 						if($this->getOperator()[0] == 'X')
 						{
 							if(!isset($this->{$this->instrument_id.$index.'_prev'}))
@@ -312,12 +313,11 @@ class Screener{
 							prev($data);
 						}					
 					}
-
 				}
 					//loop end for within n days
 			}
 
-			return isset($this->data[$this->instrument_id][$index]['values'])?$this->data[$this->instrument_id][$index]['values']:[];
+			return isset($this->data[$this->instrument_id][$this->condition][$index]['values'])?$this->data[$this->instrument_id][$this->condition][$index]['values']:[];
 			// if function				
 	}
 
@@ -352,7 +352,7 @@ class Screener{
 		if(is_numeric($index))
 		{
 			$dataArray = $this->generateGreedyArray($index);
-			return 	$this->data[$this->instrument_id][$index]['values'] = $dataArray;
+			return 	$this->data[$this->instrument_id][$this->condition][$index]['values'] = $dataArray;
 		}
 		//if function
 			preg_match_all("/(".join(self::KEYWORDS, '|').")/", $value, $matches);
@@ -380,14 +380,14 @@ class Screener{
 				$output = $this->generateGreedyArray(false);
 			}
 
-			if(!isset($this->data[$this->instrument_id][$index]))
+			if(!isset($this->data[$this->instrument_id][$this->condition][$index]))
 			{
-						$this->data[$this->instrument_id][$index]['values'] = $output;
+						$this->data[$this->instrument_id][$this->condition][$index]['values'] = $output;
 			}		 
-			return $this->data[$this->instrument_id][$index]['values'];		
+			return $this->data[$this->instrument_id][$this->condition][$index]['values'];		
 
 		
-			if(!isset($this->data[$this->instrument_id][$index]))
+			if(!isset($this->data[$this->instrument_id][$this->condition][$index]))
 			{
 				$value = $this->callFunction($function, $params);
 					$i = 0;
@@ -418,7 +418,7 @@ class Screener{
 		return array_keys($data);
 	}
 	
-	public function getData($instrument_id, $column)
+	public function getData($instrument_id, $condition, $column)
 	{
 		//get matched candleNo
 		if(!isset($this->colspan))
@@ -439,7 +439,7 @@ class Screener{
 			$this->colspan = 0;
 		}
 
-		$data = @$this->data[$instrument_id][$column]['values'][$matchedCandle];
+		$data = @$this->data[$instrument_id][$condition][$column]['values'][$matchedCandle];
 		$data = "<strong>$data</strong>";
 		if (strpos($key, 'WITHIN') !== false ) {
 			// $data .= " ($matchedCandle candle ago)";
@@ -475,6 +475,13 @@ class Screener{
 	public function getCondition()
 	{
 		return $this->condition;
+	}
+
+	public function getConditions()
+	{
+		$data = current($this->data);
+		if(!$data){return [];}
+		return $data;
 	}
 
 	public function getDate($instrument_id, $nCandleAgo)
