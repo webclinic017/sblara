@@ -33,6 +33,11 @@ class FundamentalSummary
         {
             $instrument_id=(int)$viewdata['instrument_id'];
         }
+        $show_ads=0;
+        if(isset($viewdata['show_ads']))
+        {
+            $show_ads=(int)$viewdata['show_ads'];
+        }
 
         $metaKey=array("net_asset_val_per_share","paid_up_capital","last_agm_held","authorized_capital","year_end","reserve_and_surp","total_no_securities","earning_per_share","share_percentage_public");
         $last_trade_info=DataBanksIntradayRepository::getAvailableLTP([$instrument_id]);
@@ -86,6 +91,7 @@ ORDER BY fundamentals.meta_date DESC";
             ->with('unaudited_pe',$unaudited_pe)
             ->with('public_securities',$public_securities)
             ->with('category',$category)
+            ->with('show_ads',$show_ads)
             ->with('sector_name',$sector_name)
             ->with('reserve_and_surp',$reserve_and_surp)
             ->with('quater_eps_data',isset($quater_eps_data[0])? $quater_eps_data[0]:0)

@@ -19,7 +19,7 @@ Fundamental Insight of {{$instrumentInfo->name}} - Cat: {{$category}}
 
 <div class="clearfix"></div>
 
-@include('block.fundamental_summary', array('instrument_id' => $instrumentInfo->id))
+@include('block.fundamental_summary', array('instrument_id' => $instrumentInfo->id,'show_ads' => 1))
 
 
     <div class="clearfix"></div>

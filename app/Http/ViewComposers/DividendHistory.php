@@ -36,6 +36,13 @@ class DividendHistory
             $render_to=$viewdata['render_to'];
         }
 
+        $show_ads=0;
+        if(isset($viewdata['show_ads']))
+        {
+            $show_ads=(int)$viewdata['show_ads'];
+        }
+
+
         $metaKey=array("stock_dividend","cash_dividend");
         $fundaData=FundamentalRepository::getFundamentalDataHistory($metaKey,array($instrument_id));
 
@@ -85,6 +92,7 @@ class DividendHistory
 
         $view->with('category', collect($category)->toJson())
             ->with('render_to', $render_to)
+            ->with('show_ads', $show_ads)
             ->with('stock',collect($stock)->toJson(JSON_NUMERIC_CHECK))
             ->with('cash',collect($cash)->toJson(JSON_NUMERIC_CHECK));
 

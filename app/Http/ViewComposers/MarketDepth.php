@@ -30,11 +30,17 @@ class MarketDepth
     {
         $viewdata= $view->getData();
 
+        $show_ads=0;
+        if(isset($viewdata['show_ads']))
+        {
+            $show_ads=(int)$viewdata['show_ads'];
+        }
+
         $instrument_id=13;
         if(isset($viewdata['instrument_id']))
             $instrument_id= (int) $viewdata['instrument_id'];
 
-        $view->with('instrument_code', $instrument_id);
+        $view->with('instrument_code', $instrument_id)->with('show_ads', $show_ads);
 
     }
 

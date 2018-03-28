@@ -66,19 +66,31 @@ class IntradayData60MinutesCommand extends Command
 
                 $instrument_id= $instrument->id;
 
-                $sql = "select DISTINCT(total_volume),instrument_id,close_price,UNIX_TIMESTAMP(lm_date_time) as date_timestamp
-from data_banks_intradays
-where lm_date_time >= DATE_SUB(NOW(),INTERVAL 60 DAY) and instrument_id=$instrument_id ORDER BY lm_date_time asc ,total_volume asc";
+                $sql = "select DISTINCT(total_volume),instrument_id,markets.market_closed,open_price,close_price,pub_last_traded_price,spot_last_traded_price,UNIX_TIMESTAMP(lm_date_time) as date_timestamp
+from data_banks_intradays,markets
+where lm_date_time >= DATE_SUB(NOW(),INTERVAL 60 DAY) and instrument_id=$instrument_id and markets.id = data_banks_intradays.market_id
+ORDER BY lm_date_time asc ,total_volume asc";
 
                 $all_data = \DB::select($sql);
 
+                $update_date='';
 
                 if (count($all_data)) {
 
                     $grouped=array();
                     foreach($all_data as $data)
                     {
+                        $ltp=$data->spot_last_traded_price?$data->spot_last_traded_price:$data->pub_last_traded_price;
+                        $data->ltp=$ltp;
+
+
                         $day_key=date('Y-m-d', $data->date_timestamp);
+
+                        // deducting 60 seconds so that 2.30 PM data includes in previous base_time_key (here 2.15 PM)
+                        $data->date_timestamp_original = $data->date_timestamp;
+                        $market_closed = strtotime("$day_key " . $data->market_closed);
+                        if ($data->date_timestamp >= $market_closed)
+                            $data->date_timestamp = $market_closed - 60;  // forcing to be included into last candle of the day
 
                         $q=$data->date_timestamp%3600;
                         $base_time_key=date('Y-m-d H:i', $data->date_timestamp-$q);
@@ -86,6 +98,7 @@ where lm_date_time >= DATE_SUB(NOW(),INTERVAL 60 DAY) and instrument_id=$instrum
                         $time=date('H:i:s', $data->date_timestamp);
                         $data->time=$time;
                         $grouped[$day_key][$base_time_key][]= $data;
+                        $update_date = $base_time_key;
                     }
 
 
@@ -106,8 +119,6 @@ where lm_date_time >= DATE_SUB(NOW(),INTERVAL 60 DAY) and instrument_id=$instrum
                         $count=0;
                         foreach($all_day_data as $base_time=>$grouped_by_time_frame_data)
                         {
-                            //if($count>5)  break;
-
 
                             $first_data= $grouped_by_time_frame_data[0];
                             $last_data= $grouped_by_time_frame_data[count($grouped_by_time_frame_data) - 1];
@@ -116,10 +127,19 @@ where lm_date_time >= DATE_SUB(NOW(),INTERVAL 60 DAY) and instrument_id=$instrum
                             //$date = date('Y-m-d H:i', $first_data->date_timestamp);
                             //$date = date('Y-m-d', $first_data->date_timestamp)." $base_time";
                             $date = $base_time;
-                            $open= $first_data->close_price;
-                            $close= $last_data->close_price;
-                            $high=collect($grouped_by_time_frame_data)->max('close_price');
-                            $low=collect($grouped_by_time_frame_data)->min('close_price');
+                            if($count==0)
+                            {
+                                // its first data of the day. day open will be counted for very first data
+                                $open= $first_data->open_price;
+
+                            }else
+                            {
+                                $open= $first_data->ltp;
+                            }
+
+                            $close= $last_data->ltp;  // ltp will be used in intraday . close_price will be used in EOD
+                            $high=collect($grouped_by_time_frame_data)->max('ltp');
+                            $low=collect($grouped_by_time_frame_data)->min('ltp');
                            // $volume = collect($grouped_by_time_frame_data)->sum('total_volume');
 
                             $volume=$last_data->total_volume-$last_total_volume;
@@ -136,7 +156,7 @@ where lm_date_time >= DATE_SUB(NOW(),INTERVAL 60 DAY) and instrument_id=$instrum
                             $c[]= $close;
                             $v[]= $volume;
 
-                            //$count++;
+                            $count++;
                         }
 
 
@@ -153,8 +173,6 @@ where lm_date_time >= DATE_SUB(NOW(),INTERVAL 60 DAY) and instrument_id=$instrum
 
                     $file_path = "data/$instrument_id/intraday/60_minutes/unadjusted";
 
-
-                    $update_date=date('Y-m-d H:i', $all_data[count($all_data)-1]->date_timestamp);
                     $file = "$file_path/d.txt";
                     $csv = $d->implode(',');
                     $csv="$update_date,$csv";

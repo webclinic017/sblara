@@ -43,6 +43,13 @@ class SectorMinuteChart
         if(isset($viewdata['instrument_id']))
             $instrument_id=(int)$viewdata['instrument_id'];
 
+        $show_ads=0;
+        if(isset($viewdata['show_ads']))
+        {
+            $show_ads=(int)$viewdata['show_ads'];
+        }
+
+
         $height=400;
         if(isset($viewdata['height']))
             $height=$viewdata['height'];
@@ -83,6 +90,7 @@ class SectorMinuteChart
             ->with('volumeData', collect($volumeData)->toJson(JSON_NUMERIC_CHECK))
             ->with('category', collect($category)->toJson())
             ->with('height', $height)
+            ->with('show_ads', $show_ads)
             ->with('sector_name', $sector_name)
             ->with('renderTo', $render);
     }

@@ -1,14 +1,14 @@
-<div id="PERCENTCHANGE">
-    <div class="alert alert-warningdf alert-dismissable" data-func="PERCENTCHANGE" >
+<div id="MAX">
+    <div class="alert alert-warningdf alert-dismissable" data-func="MAX" >
         <div class="row">
         <div class="col-md-12">
 
-         <label class="col-md-3 control-label" for="form_control_1">CHANGE(%) </label>
+         <label class="col-md-3 control-label" for="form_control_1">MAX </label>
 
                 <form class="form-inline" role="form">
 
                     <div class="form-group form-md-line-input">
-                        <input class="form-control setest" data-param="1" placeholder="Candle" type="text" value="1" style="width: 55px"> {{-- validation 2 to 100--}}
+                        <input class="form-control setest" data-param="1" placeholder="Candle" type="text" min="2" value="2" style="width: 55px"> {{-- validation 2 to 100--}}
                         <div class="form-control-focus"> </div>
                     </div>
 

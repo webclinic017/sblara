@@ -122,6 +122,8 @@ if($screener){
                 <li><a data-value = "PRICEPERCENT">Percentage</a></li>
                 <li><a data-value = "CANDLEPATTERN" data-rel="CANDLEPATTERNLIST" data-operator="IS">Candle Pattern</a></li>
                 <li><a data-value = "PERCENTCHANGE" data-rel="VALUEPERCENT" >Change(%)</a></li>
+                <li><a data-value = "MIN" data-rel="PRICEPERCENT" >Min</a></li>
+                <li><a data-value = "MAX" data-rel="PRICEPERCENT" >Max</a></li>
               </ul>
 
               <h5><strong>Moving Average</strong></h5>
@@ -161,6 +163,16 @@ if($screener){
                 <li><a data-value = "ROC">Rate Of Change</a></li>
                 <li><a data-value = "ULTOSC">Ultimate Oscillator</a></li>
                 <li><a data-value = "WILLR">Williams' %R</a></li>
+              </ul>            
+            </div>
+
+            <div class=" col-md-4 col-sm-6">
+              <h5><strong>Fundamental</strong></h5>
+              <ul >
+                <li><a data-value = "PE" data-rel="VALUE">P/E</a></li>
+                <li><a data-value = "CATEGORY" data-rel="CATEGORYLIST" data-operator="IS">Category</a></li>
+                <li><a data-value = "SECTOR" data-rel="SECTORLIST" data-operator="IS">Sector</a></li>
+                <li><a data-value = "SHAREHOLDING" data-rel="VALUEPERCENT" >Share Holding</a></li>
               </ul>            
             </div>
 
@@ -341,7 +353,6 @@ function generateHtml(query) {
         targetType = v2matched[0][2];
         targetN = v2matched[0][3];      
     }
-
     var row = $('#filter-row');
     //left side
     var lmatches = preg_match_all(/([A-Z0-9]+)\s*?\(([A-Z0-9,. ]+)\)/g, v1);
@@ -378,7 +389,16 @@ function generateHtml(query) {
       
     }
 
+
+    }else {
+      val = v2;
+    if($('a[data-value='+$('.filter-left [data-value]', row).data('value')+']').data('rel')){
+      var html = $('#'+$('a[data-value='+$('.filter-left [data-value]', row).data('value')+']').data("rel")+'').html();
+    $('.filter-right', row).html($('#filter-right-nav').html()+html); 
+
+    }   
     }
+
     // aditional constant or value condition/statements here
     }else{
       //function
@@ -410,7 +430,8 @@ function generateHtml(query) {
       // parse calculation or value
       if(preg_match_all(/([0-9].)?\/100/g, v2).length == 0)
       {
-        $('.filters [data-row-id='+rowid+'] .filter-right .value').val(val);
+        //changed to from val  v2
+        $('.filters [data-row-id='+rowid+'] .filter-right .value').val(val.trim());
 
       }else{
 

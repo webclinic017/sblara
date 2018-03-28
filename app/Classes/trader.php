@@ -178,7 +178,6 @@ function sb_willr($t1, $high, $low, $close)
 	return $ar;
 	}
 	return $ar;
-	return $candle($open, $high, $low, $close);
 }
 function sb_percentchange($time, $real)
 {
@@ -191,4 +190,30 @@ function sb_percentchange($time, $real)
 		$current++;
 	}
 	return  $result;
+}
+function sb_min($time, $real)
+{
+	// unset($real[count($real)-1]);
+	return trader_min($real, $time);
+}
+function sb_max($time, $real)
+{
+	// unset($real[count($real)-1]);
+	return trader_max($real, $time);
+}
+function sb_pe($id)
+{
+	return  (float) @\App\Fundamental::allTogetherPE()[$id];
+}
+function sb_category($id)
+{
+	return  @\App\Fundamental::allTogetherCategory()[$id];
+}
+function sb_sector($id)
+{
+	return  @strtoupper(\App\Fundamental::allTogetherSector()[$id]);
+}
+function sb_shareholding($type, $year,  $month, $id)
+{
+	return  @ (float) \App\Fundamental::allTogetherShareHolding($type, trim($year), trim($month))[$id];
 }

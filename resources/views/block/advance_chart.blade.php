@@ -471,6 +471,7 @@ SymbolisNullOrEmpty(symbol) ? savedWidgetContent ? widget.load(savedWidgetConten
                         widget.createButton().attr("title", "previously saved last layouts and drawings will be loaded").on("click", function () {
                             savedWidgetContent && widget.load(savedWidgetContent)
                         }).append($("<span>Load Settings<\/span>"));
+                         widget.chart().createStudy('macd-4c', false, true);
 
                     })
 			});

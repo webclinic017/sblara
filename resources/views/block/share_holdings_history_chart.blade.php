@@ -1,3 +1,17 @@
+@if($show_ads)
+  <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="portlet light bordered">
+                <div class="portlet-body">
+                   @include('ads.google_responsive_custom')
+                </div>
+            </div>
+        </div>
+    </div>
+@endif
+
+
+
 <div id="{{$render_to}}"></div>
 <div class="btn-group btn-group-xs btn-group-justified">
     <a href="javascript:;" class="btn red" onclick="chartfunc('column')" id="column"> Column </a>

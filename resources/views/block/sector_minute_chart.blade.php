@@ -1,3 +1,11 @@
+@if($show_ads)
+<div class="portlet light bordered">
+    <div class="portlet-body">
+       @include('ads.google_responsive')
+    </div>
+</div>
+@endif
+
 <div id="{{$renderTo}}"></div>
 
 <script>

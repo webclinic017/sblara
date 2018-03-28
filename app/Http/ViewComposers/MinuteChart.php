@@ -93,6 +93,13 @@ class MinuteChart
 
         $inst_id=(int)$viewdata['instrument_id'];
 
+        $show_ads=0;
+        if(isset($viewdata['show_ads']))
+        {
+            $show_ads=(int)$viewdata['show_ads'];
+        }
+
+
         $minuteChartData = DataBanksIntradayRepository::getDataForMinuteChart($inst_id,5);
         $instrumentInfo=InstrumentRepository::getInstrumentsById(array($inst_id))->first();
 
@@ -116,7 +123,8 @@ class MinuteChart
         $chartData['trade_date'] = '10-12-8656';
         $chartData['bullBear'] = array_reverse($minuteChartData['bullBear']);
         $chartData['day_total_volume'] = $minuteChartData['day_total_volume'];
-        $view->with('chartData', $chartData);
+
+        $view->with('chartData', $chartData)->with('show_ads', $show_ads);
     }
 
 
