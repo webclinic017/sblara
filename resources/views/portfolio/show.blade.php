@@ -19,18 +19,9 @@
 
 <div class="portlet light bordered ">
     <div class="portlet-title">
-
-<div class="row">
- <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-               <div class="caption font-green">
-                          <span class="caption-subject bold uppercase">{{$portfolio->portfolio_name}}</span>
-               </div>
+         <div class="caption font-green">
+                                  <span class="caption-subject bold uppercase">{{$portfolio->portfolio_name}}</span>
         </div>
-      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 visible-lg visible-md">
-           @include('ads.google_responsive')
-        </div>
-</div>
-
 
     {{--
         <div class="caption font-green">

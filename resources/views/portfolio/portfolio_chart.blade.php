@@ -1,3 +1,14 @@
+  <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="portlet light bordered">
+                <div class="portlet-body">
+                   @include('ads.google_responsive_custom')
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 
 @foreach($portfolio_holdings as $transaction)
 <div class="row">
@@ -103,7 +114,8 @@
                 <div class="portlet-body">
                                                         <div class="mt-element-overlay">
                                                             <div class="row">
-                                                                <div class="col-md-12">
+
+                                                                </div>
                                                                     <div class="mt-overlay-1 mt-scroll-down">
                                                                         <img src="{{url("/tooltip_chart")}}/{{$transaction->instrument_id}}">
                                                                         <div class="mt-overlay">

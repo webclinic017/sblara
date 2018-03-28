@@ -10,9 +10,9 @@ class Screener{
 	(\[([a-zA-Z]+)\((.*?)\)?.? (=|>|<|!=|is)?.+?([0-9].+?[.]?)\])
 	 */
 	const KEYWORDS = ['OPEN', 'HIGH', 'LOW', 'CLOSE', 'VOLUME'];
-	const FUNDAMENTAL = ['PE'/*, 'SHAREHOLDING', 'CATEGORY', 'SECTOR'*/];
 	const OPERATORS = [ 'IS', "NOT", "<=",  ">=",  '=', '!=', '>',  "<", "X>", "X<" ];
 	const BOOLEANS = [ "CANDLEPATTERN" ];
+	const FUNDAMENTAL = ['PE', 'CATEGORY', 'SECTOR', 'SHAREHOLDING'];
 	
 	protected $query;
 	protected $conditions = [];
@@ -280,11 +280,14 @@ class Screener{
 	 */
 	public function compileFunction($value)
 	{
-
 		//if function
 			preg_match_all("/([A-Za-z].*)\((.*)\)/", $value, $matches);
 			$function = $matches[1][0];
 			$params = explode(',', $matches[2][0]);
+				if(in_array($function, self::FUNDAMENTAL)){
+					// add instrument id end to the params
+					$params[] = $this->instrument_id;
+				}					
 			//CHECK IF ALREADY CALCULATED
 			$index = trim($value);
 			$this->currentColumn = $index;
@@ -349,13 +352,24 @@ class Screener{
 	 */
 	public function compileMath($value)
 	{
-		$index = trim($value);
+		$value = trim($value);
+		if(in_array($value, self::FUNDAMENTAL)){
+			$function = "sb_".strtolower($value);
+			$data =$function($this->instrument_id);
+			if(!is_array($data))
+			{
+				$data = $this->generateGreedyArray($data);
+			}
+			return $this->data[$this->instrument_id][$this->condition][$value]['values'] = $data;
+		}		
+		$index = $value;
 		// fill all array pocket for complare n days ago
-		if(is_numeric($index))
+		if(is_numeric($index) || preg_match("/(".join(self::FUNDAMENTAL, '|').")/", $this->condition))
 		{
 			$dataArray = $this->generateGreedyArray($index);
 			return 	$this->data[$this->instrument_id][$this->condition][$index]['values'] = $dataArray;
 		}
+
 		//if function
 			preg_match_all("/(".join(self::KEYWORDS, '|').")/", $value, $matches);
 			$keywords = $matches[1];
@@ -379,7 +393,11 @@ class Screener{
 					$output[] =  (eval("return ".$value.";"));
 			}	
 			if(!isset($output) ){
-				$output = $this->generateGreedyArray(false);
+				if(strlen($index) == 1){
+					$output = $this->generateGreedyArray($index);
+				}else{
+					$output = $this->generateGreedyArray(false);
+				}		
 			}
 
 			if(!isset($this->data[$this->instrument_id][$this->condition][$index]))
@@ -462,11 +480,12 @@ class Screener{
 
 	public function callFunction($function, $params = [])
 	{
-		// if($this->instrument_id == 20){
-		// 	dump($this->compileParams($params));
-		// 	dd(call_user_func_array("sb_".strtolower($function), $this->compileParams($params)));
-		// }
-		return call_user_func_array("sb_".strtolower($function), $this->compileParams($params));		
+		$data =  call_user_func_array("sb_".strtolower($function), $this->compileParams($params));		
+		if(!is_array($data))
+		{
+			$data = $this->generateGreedyArray($data);
+		}
+		return $data;
 	}
 
 	public function count()

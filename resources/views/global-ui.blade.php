@@ -41,34 +41,34 @@
                 <a href="#taChartTab" data-url ="#" data-toggle="tab">TA Chart </a>
             </li>
             <li>
-                <a href="#share_holdings" data-url="/ajax/load_block/block_name=block.minute_chart:instrument_id=" data-toggle="tab"> Minute Chart </a>
+                <a href="#share_holdings" data-url="/ajax/load_block/block_name=block.minute_chart:show_ads=1:instrument_id=" data-toggle="tab"> Minute Chart </a>
             </li>      
             <li>
-                <a href="#share_holdings" data-url="/ajax/load_block/block_name=block.sector_minute_chart:instrument_id=" data-toggle="tab"> Sector Chart </a>
+                <a href="#share_holdings" data-url="/ajax/load_block/block_name=block.sector_minute_chart:show_ads=1:instrument_id=" data-toggle="tab"> Sector Chart </a>
             </li>                  
 
             <li>
-                <a href="#share_holdings" data-url="/ajax/load_block/block_name=block.market_depth_single:instrument_id=" data-toggle="tab"> MARKET DEPTH </a>
+                <a href="#share_holdings" data-url="/ajax/load_block/block_name=block.market_depth_single:show_ads=1:instrument_id=" data-toggle="tab"> MARKET DEPTH </a>
             </li>      
 
 
             <li>
-                <a href="#share_holdings" data-url="/ajax/load_block/block_name=block.fundamental_summary:instrument_id=" data-toggle="tab"> Fundamental </a>
+                <a href="#share_holdings" data-url="/ajax/load_block/block_name=block.fundamental_summary:show_ads=1:instrument_id=" data-toggle="tab"> Fundamental </a>
             </li>
 
             <li>
-                <a href="#share_holdings" data-url="/ajax/load_block/block_name=block.news_box:instrument_id=" data-toggle="tab"> News </a>
+                <a href="#share_holdings" data-url="/ajax/load_block/block_name=block.news_box:show_ads=1:instrument_id=" data-toggle="tab"> News </a>
             </li>
 
             <li>
-                <a href="#share_holdings" data-url="/ajax/load_block/block_name=block.dividend_history:instrument_id=" data-toggle="tab"> Dividend History </a>
+                <a href="#share_holdings" data-url="/ajax/load_block/block_name=block.dividend_history:show_ads=1:instrument_id=" data-toggle="tab"> Dividend History </a>
             </li>
       
             <li>
-                <a href="#share_holdings" data-url="/ajax/load_block/block_name=block.news_chart:instrument_id=" data-toggle="tab"> News Chart </a>
+                <a href="#share_holdings" data-url="/ajax/load_block/block_name=block.news_chart:show_ads=1:instrument_id=" data-toggle="tab"> News Chart </a>
             </li>   
             <li>
-                <a href="#share_holdings" data-url="/ajax/load_block/block_name=block.share_holdings_history_chart:instrument_id=" data-toggle="tab"> Share Holding History </a>
+                <a href="#share_holdings" data-url="/ajax/load_block/block_name=block.share_holdings_history_chart:show_ads=1:instrument_id=" data-toggle="tab"> Share Holding History </a>
             </li>              
         </ul>
         <div class="tab-content" >

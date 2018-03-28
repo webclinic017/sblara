@@ -49,6 +49,11 @@ class NewsBox
         if(isset($viewdata['limit']))
             $limit=$viewdata['limit'];
 
+        $show_ads=0;
+        if(isset($viewdata['show_ads']))
+        {
+            $show_ads=(int)$viewdata['show_ads'];
+        }
 
 
        $allNews=NewsRepository::getAllNewsByInstrumentId($instrument_id)->groupBy('instrument_id');
@@ -138,6 +143,7 @@ class NewsBox
 
         $view->with('allNews', $allNewsResult)
             ->with('instrument_id', $instrument_id)
+            ->with('show_ads', $show_ads)
             ->with('searchKeyArr', $foundSearchKey);
 
     }

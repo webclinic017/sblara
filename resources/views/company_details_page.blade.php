@@ -290,7 +290,7 @@
                         <span class="caption-helper">Watch every minute's price movement</span>
                     </div>
                     <div class="tools">
-                                                <a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.minute_chart:instrument_id={{$instrumentInfo->id}}" class="reload"></a>
+                                                <a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.minute_chart:instrument_id={{$instrumentInfo->id}}:show_ads=1" class="reload"></a>
 
                         <a href="" class="collapse">
                         </a>
@@ -319,7 +319,7 @@
                         <span class="caption-helper">Watch every minute's sector movement</span>
                     </div>
                     <div class="tools">
-                                                <a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.sector_minute_chart:instrument_id={{$instrumentInfo->id}}" class="reload"></a>
+                                                <a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.sector_minute_chart:show_ads=1:instrument_id={{$instrumentInfo->id}}" class="reload"></a>
 
                         <a href="" class="collapse">
                         </a>

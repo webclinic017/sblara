@@ -32,6 +32,14 @@
 @include('screener.forms.willr')
 @include('screener.forms.candlepattern')
 @include('screener.forms.change')
+@include('screener.forms.max')
+@include('screener.forms.min')
+@include('screener.forms.pe')
+@include('screener.forms.category')
+@include('screener.forms.categorylist')
+@include('screener.forms.sectorlist')
+@include('screener.forms.sector')
+@include('screener.forms.shareholding')
 
 {{-- non listed --}}
 @include('screener.forms.valuepercent')

@@ -47,9 +47,10 @@ class TradingViewController extends Controller
         $returnData['pricescale']=10;
         $returnData['pointvalue']=1;
         $returnData['session']='24x7';  //24x 7 should be given otherwise it will remove sunday treating it weekend
-        //$returnData['session']='1030-1430;1'; //https://github.com/tradingview/charting_library/wiki/Trading-Sessions
+        //$returnData['session']='1030-1430;1'; //https://github.com/tradingview/charting_library/wiki/Trading-Sessions   github user: afmsohail@gmail.com
+        $returnData['session'] = '1;1000-1600:12345';
         $returnData['has_daily']=true;
-        $returnData['has_weekly_and_monthly'] = true;
+        $returnData['has_weekly_and_monthly'] = false;
         $returnData['has_intraday']=true;
         $returnData['has_no_volume']=false;
         $returnData['ticker']="$instrumentCode";
@@ -74,9 +75,10 @@ class TradingViewController extends Controller
         $to_date=  $to->format('Y-m-d H:i:s');
 
 
-        $sql = "select DISTINCT(total_volume),instrument_id,close_price,UNIX_TIMESTAMP(lm_date_time) as date_timestamp
-from data_banks_intradays
-where lm_date_time >= '$from_date' and lm_date_time < '$to_date' and instrument_id=$instrument_id ORDER BY lm_date_time asc ,total_volume asc";
+        $sql = "select DISTINCT(total_volume),instrument_id,markets.market_closed,open_price,close_price,pub_last_traded_price,spot_last_traded_price,UNIX_TIMESTAMP(lm_date_time) as date_timestamp
+from data_banks_intradays,markets
+where lm_date_time >= '$from_date' and lm_date_time < '$to_date' and instrument_id=$instrument_id and markets.id = data_banks_intradays.market_id
+ORDER BY lm_date_time asc ,total_volume asc";
 
         $all_data = \DB::select($sql);
 
@@ -86,7 +88,13 @@ where lm_date_time >= '$from_date' and lm_date_time < '$to_date' and instrument_
             $grouped=array();
             foreach($all_data as $data)
             {
+                $ltp=$data->spot_last_traded_price?$data->spot_last_traded_price:$data->pub_last_traded_price;
                 $day_key=date('Y-m-d', $data->date_timestamp);
+
+                // deducting 60 seconds so that 2.30 PM data includes in previous base_time_key (here 2.15 PM)
+                $market_closed=strtotime("$day_key ".$data->market_closed);
+                if($data->date_timestamp>=$market_closed)
+                $data->date_timestamp= $data->date_timestamp-60;
 
                 $q=$data->date_timestamp%$candle_time;
                 //$base_time_key=date('Y-m-d H:i', $data->date_timestamp-$q);
@@ -94,6 +102,7 @@ where lm_date_time >= '$from_date' and lm_date_time < '$to_date' and instrument_
 
                 $time=date('H:i:s', $data->date_timestamp);
                 $data->time=$time;
+                $data->ltp=$ltp;
                 $grouped[$day_key][$base_time_key][]= $data;
             }
 
@@ -115,13 +124,25 @@ where lm_date_time >= '$from_date' and lm_date_time < '$to_date' and instrument_
 
 
                     $date = $base_time;
-                    $open= $first_data->close_price;
-                    $close= $last_data->close_price;
-                    $high=collect($grouped_by_time_frame_data)->max('close_price');
-                    $low=collect($grouped_by_time_frame_data)->min('close_price');
+                    if($count==0)
+                    {
+                        // its first data of the day. day open will be counted for very first data
+                        $open= $first_data->open_price;
+
+                    }else
+                    {
+                        $open= $first_data->ltp;
+                    }
+
+                    $close= $last_data->ltp;
+                    $high=collect($grouped_by_time_frame_data)->max('ltp');
+                    $low=collect($grouped_by_time_frame_data)->min('ltp');
                     // $volume = collect($grouped_by_time_frame_data)->sum('total_volume');
 
                     $volume=$last_data->total_volume-$last_total_volume;
+                    if($volume<1)
+                        continue;
+
 
                     //dump($grouped_by_time_frame_data);
                     // dump("o=$open h=$high l= $low c=$close v=$volume d=$date");
@@ -137,7 +158,7 @@ where lm_date_time >= '$from_date' and lm_date_time < '$to_date' and instrument_
                     $returnData['v'][] = $volume;
 
 
-                    //$count++;
+                    $count++;
                 }
 
 
@@ -163,10 +184,70 @@ where lm_date_time >= '$from_date' and lm_date_time < '$to_date' and instrument_
     }
 
 
+    public function weeklyData($instrument_id, $from, $to, $resolution)
+    {
+
+        $eodData = DataBankEodRepository::getEodDataAdjusted($instrument_id, $from, $to, 0);
+        $eodData = $eodData->reverse();
+        //$eodData = DataBankEodRepository::getAdjustedDataForTradingView($instrument_id, $from, $to, 0);
+
+        $returnData = array();
+
+        if (count($eodData)) {
+
+            $weekly_grouped = array();
+            foreach ($eodData as $data) {
+                $key = date('W-y', $data['date_timestamp'] + 24 * 60 * 60);  // adding 1 day to start week from sunday. other wise it will start from monday
+                $weekly_grouped[$key][] = $data;
+            }
+
+
+            //$weekly_grouped = array_reverse($weekly_grouped, true);
+
+
+            foreach ($weekly_grouped as $week => $data) {
+                $first_day_of_week = $data[0];
+                $last_day_of_week = $data[count($data) - 1];
+
+
+                //$date = date('Y-m-d', $first_day_of_week['date_timestamp']);
+                $date = $first_day_of_week['date_timestamp'];
+                $open = $first_day_of_week['open'];
+                $close = $last_day_of_week['close'];
+                $high = collect($data)->max('high');
+                $low = collect($data)->min('low');
+                $volume = collect($data)->sum('volume');
+
+                $returnData['t'][] = $date;
+                $returnData['c'][] = $close;
+                $returnData['o'][] = $open;
+                $returnData['h'][] = $high;
+                $returnData['l'][] = $low;
+                $returnData['v'][] = $volume;
+
+
+            }
+
+
+        }
+
+
+        if (count($returnData)) {
+            $returnData['s'] = "ok";
+        } else {
+            // $returnData['s'] = "no_data";
+            //  $returnData['nextTime'] = strtotime('1999-01-01');
+        }
+
+        return collect($returnData)->toJson();
+
+    }
+
     public function history(Request $request)
     {
         $instrumentCode = $request->input('symbol','DSEX');
         $resolution = $request->input('resolution');
+
         $exchangeName="DSE";
         $exchangeDetails=ExchangeRepository::getExchangeInfo($exchangeName);
         $instrumentList=InstrumentRepository::getInstrumentsScripWithIndex($exchangeDetails->id);
@@ -180,10 +261,16 @@ where lm_date_time >= '$from_date' and lm_date_time < '$to_date' and instrument_
         if($resolution=='D') {
            $data = DataBankEodRepository::getAdjustedDataForTradingView($instrumentInfo->id, $from, $to, $resolution);
             //$data = DataBankEodRepository::getEodDataAdjusted($instrumentInfo->id, $from, $to);
+        }
+        elseif($resolution=='W') {
+            // if  $returnData['has_weekly_and_monthly']=true at symbols() then enable following line
+           // $data = self::weeklyData($instrumentInfo->id, $from, $to, $resolution);
+
         }else
         {
             //$data = DataBanksIntradayRepository::getDataForTradingView($instrumentInfo->id, $from, $to, $resolution);
             $data = self::intraData($instrumentInfo->id, $from, $to, $resolution);
+
         }
        // return response()->view('dashboard', ['trade_date_Info' => $trade_date_Info])->setTtl(1);
         return response()->json($data)->setTtl(60);

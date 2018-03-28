@@ -45,6 +45,12 @@ class NewsChart
         if(isset($viewdata['instrument_id']))
         $instrument_id=(int)$viewdata['instrument_id'];
 
+        $show_ads=0;
+        if(isset($viewdata['show_ads']))
+        {
+            $show_ads=(int)$viewdata['show_ads'];
+        }
+
         $instrumentInfo=InstrumentRepository::getInstrumentsById(array($instrument_id))->first();
         $instrument_code=$instrumentInfo->instrument_code;
 
@@ -167,6 +173,7 @@ class NewsChart
             ->with('news_flags', json_encode($news_flags))
             ->with('news_flags2', json_encode($news_flags2))
             ->with('height', $height)
+            ->with('show_ads', $show_ads)
             ->with('renderTo', 'news_chart_div');
 
 

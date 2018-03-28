@@ -234,7 +234,7 @@ function yearsAsOption($start = 1994)
     $html = "";
     $startYear = $start;
     $endYear = date('Y');
-    while ($endYear > $startYear) {
+    while ($endYear >= $startYear) {
         $html .= "<option value=".$endYear.">".$endYear."</option>";
         $endYear--;
     }

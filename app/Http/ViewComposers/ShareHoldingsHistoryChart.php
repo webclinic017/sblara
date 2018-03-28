@@ -35,6 +35,12 @@ class ShareHoldingsHistoryChart
         {
             $render_to=$viewdata['render_to'];
         }
+        $show_ads=0;
+        if(isset($viewdata['show_ads']))
+        {
+            $show_ads=(int)$viewdata['show_ads'];
+        }
+
 
         $metaKey=array("share_percentage_director","share_percentage_govt","share_percentage_institute","share_percentage_foreign","share_percentage_public");
 
@@ -107,6 +113,7 @@ class ShareHoldingsHistoryChart
        // dd($fundaData['share_percentage_director']->first()->pluck('meta_value')->toArray());
 
         $view->with('render_to', $render_to)
+            ->with('show_ads', $show_ads)
             ->with('category', collect($category)->toJson())
             ->with('director',collect($director)->toJson(JSON_NUMERIC_CHECK))
             ->with('govt',collect($govt)->toJson(JSON_NUMERIC_CHECK))

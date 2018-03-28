@@ -106,7 +106,8 @@ class FileDataUpdaterIntraday15Command extends Command
                        //     continue;
 
                         $instrument_id = $instrument_info->id;
-                        $ltp = $data->MKISTAT_CLOSE_PRICE != 0 ? $data->MKISTAT_CLOSE_PRICE : ($data->MKISTAT_PUB_LAST_TRADED_PRICE != 0 ? $data->MKISTAT_PUB_LAST_TRADED_PRICE : $data->MKISTAT_SPOT_LAST_TRADED_PRICE);
+                        //$ltp = $data->MKISTAT_CLOSE_PRICE != 0 ? $data->MKISTAT_CLOSE_PRICE : ($data->MKISTAT_PUB_LAST_TRADED_PRICE != 0 ? $data->MKISTAT_PUB_LAST_TRADED_PRICE : $data->MKISTAT_SPOT_LAST_TRADED_PRICE);
+                        $ltp = $data->MKISTAT_SPOT_LAST_TRADED_PRICE != 0 ? $data->MKISTAT_SPOT_LAST_TRADED_PRICE : $data->MKISTAT_PUB_LAST_TRADED_PRICE;
 
                         $c=$ltp;
                         $v=$data->MKISTAT_TOTAL_VOLUME;
@@ -114,10 +115,17 @@ class FileDataUpdaterIntraday15Command extends Command
 
 
 
-                        ////////////////    Intraday data 5 minutes   \\\\\\\\\\\\\\\\\\\
+                        ////////////////    Intraday data 15 minutes   \\\\\\\\\\\\\\\\\\\
+
+                        // deducting 60 seconds so that 2.30 PM data includes in previous base_time_key (here 2.15 PM)
+                        $market_closed = strtotime("$trade_date " . $activeTradeDates->market_closed->format('H:i:s'));
+                        if ($convertedTimestamp >= $market_closed)
+                            $convertedTimestamp = $market_closed - 60;  // forcing to be included into last candle of the day
+
 
                         $q = $convertedTimestamp % 900;
                         $base_time_key = date('Y-m-d H:i', $convertedTimestamp - $q);
+
 
 
                         // ****************** V ***************** \\\
@@ -181,8 +189,9 @@ class FileDataUpdaterIntraday15Command extends Command
 
                                 } else {
                                     // normally a new trade date started. so we have to reset file for new day
+                                    $starting_base_time_frame="$trade_date " . $activeTradeDates->market_started->format('H:i');
                                     $new_volume=0;
-                                        $csv = "$base_time_key,$new_volume";
+                                        $csv = "$starting_base_time_frame,$new_volume";
                                         Storage::disk('local')->put($file_path, $csv);
 
 
@@ -243,7 +252,11 @@ class FileDataUpdaterIntraday15Command extends Command
                                 }else
                                 {
                                     // normally a new trade date started. so we have to reset file for new day
-                                    $csv = "$base_time_key,$c";
+                                    $starting_base_time_frame = "$trade_date " . $activeTradeDates->market_started->format('H:i');
+                                    // we will use day open price here for the very 1st candle
+                                    $o = $data->MKISTAT_OPEN_PRICE;
+                                    $csv = "$starting_base_time_frame,$o";
+
                                     Storage::disk('local')->put($file_path, $csv);
                                 }
 
@@ -301,7 +314,8 @@ class FileDataUpdaterIntraday15Command extends Command
                                 }else
                                 {
                                     // normally a new trade date started. so we have to reset file for new day
-                                    $csv = "$base_time_key,$c";
+                                    $starting_base_time_frame = "$trade_date " . $activeTradeDates->market_started->format('H:i');
+                                    $csv = "$starting_base_time_frame,$c";
                                     Storage::disk('local')->put($file_path, $csv);
                                 }
 
@@ -354,7 +368,8 @@ class FileDataUpdaterIntraday15Command extends Command
                                 }else
                                 {
                                     // normally a new trade date started. so we have to reset file for new day
-                                    $csv = "$base_time_key,$c";
+                                    $starting_base_time_frame = "$trade_date " . $activeTradeDates->market_started->format('H:i');
+                                    $csv = "$starting_base_time_frame,$c";
                                     Storage::disk('local')->put($file_path, $csv);
                                 }
 
@@ -408,7 +423,8 @@ class FileDataUpdaterIntraday15Command extends Command
                                 }else
                                 {
                                     // normally a new trade date started. so we have to reset file for new day
-                                    $csv = "$base_time_key,$c";
+                                    $starting_base_time_frame = "$trade_date " . $activeTradeDates->market_started->format('H:i');
+                                    $csv = "$starting_base_time_frame,$c";
                                     Storage::disk('local')->put($file_path, $csv);
                                 }
 
@@ -420,48 +436,6 @@ class FileDataUpdaterIntraday15Command extends Command
                             Storage::disk('local')->put($file_path,$csv);
                         }
 
-
-                        // ****************** C *****************\\\
-
-                        $file_path = "data/$instrument_id/intraday/15_minutes/latest/c.txt";
-                        if (Storage::disk('local')->exists($file_path)) {
-
-                            $today_data = Storage::get($file_path);
-                            $today_data = explode(',', $today_data);
-                            $last_updated_time_frame = $today_data[0];
-                            //dump("last_updated_time_frame=$last_updated_time_frame");
-
-                            if ($today_data[0] == $base_time_key) {
-                                // if it is same within time-frame, we will just update the last value
-                                //dump("same timeframe");
-                                $today_data[count($today_data) - 1] = $c;
-                                $csv = collect($today_data)->implode(',');
-                                Storage::disk('local')->put($file_path, $csv);
-                            } else {
-                                // if it is not same time-frame, 2 things can happen: 1. new time frame of same day or 2. old time frame of previous day
-                                //dump("not same day");
-
-                                $last_updated_trade_date = date('Y-m-d', strtotime($last_updated_time_frame));
-
-                                if ($trade_date == $last_updated_trade_date) {
-                                    // if it is new time-frame of same day, we will add new close value and update the reported time frame at the top of array
-                                    $today_data[0] = $base_time_key;
-                                    $today_data[] = $c;
-                                    $csv = collect($today_data)->implode(',');
-                                    Storage::disk('local')->put($file_path, $csv);
-
-                                } else {
-                                    // normally a new trade date started. so we have to reset file for new day
-                                    $csv = "$base_time_key,$c";
-                                    Storage::disk('local')->put($file_path, $csv);
-                                }
-
-                            }
-
-                        } else {
-                            $csv = "$base_time_key,$c";
-                            Storage::disk('local')->put($file_path, $csv);
-                        }
 
 
 
@@ -500,7 +474,8 @@ class FileDataUpdaterIntraday15Command extends Command
                                 }else
                                 {
                                     // normally a new trade date started. so we have to reset file for new day
-                                    $csv = "$base_time_key,$base_time_key";
+                                    $starting_base_time_frame = "$trade_date " . $activeTradeDates->market_started->format('H:i');
+                                    $csv = "$starting_base_time_frame,$base_time_key";
                                     Storage::disk('local')->put($file_path, $csv);
                                 }
 
