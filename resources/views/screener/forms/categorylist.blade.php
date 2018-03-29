@@ -8,6 +8,7 @@
                     <div class="form-group form-md-line-input">
                        <select class="form-control value"  id="form_control_1">
                            <option value="A">A</option>
+                           <option value="N">B</option>
                            <option value="N">N</option>
                            <option value="Z">Z</option>
                        </select>

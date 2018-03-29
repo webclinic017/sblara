@@ -1,6 +1,6 @@
 @extends('layouts.metronic.default')
 @php
-// $screenerImageUrl = url('/img/stockbangladesh-dse-screeners.jpg');
+$screenerImageUrl = url('/img/stockbangladesh-dse-screeners.jpg');
 $title = "Build new screener";
 $description = "Build your own screener with our powerful filters";
 $slug = "new";
@@ -16,7 +16,7 @@ if($screener){
 @section('meta-title', ucwords(strtolower($title))." : Advance Stock Scanner of DSE")
 @section('meta-description', str_limit($description,160,'...'))
 
-{{-- @section('og:image', $screenerImageUrl) --}}
+@section('og:image', $screenerImageUrl)
 @section('og:url', url('/screener/'.$slug))
 
 @section('og:title', $title)
@@ -173,6 +173,11 @@ if($screener){
                 <li><a data-value = "CATEGORY" data-rel="CATEGORYLIST" data-operator="IS">Category</a></li>
                 <li><a data-value = "SECTOR" data-rel="SECTORLIST" data-operator="IS">Sector</a></li>
                 <li><a data-value = "SHAREHOLDING" data-rel="VALUEPERCENT" >Share Holding</a></li>
+                <li><a data-value = "NAV" data-rel="VALUE" >Net Asset Value</a></li>
+                <li><a data-value = "PAIDUP" data-rel="VALUE" >Paid Up Capital</a></li>
+                <li><a data-value = "EPS" data-rel="VALUE" >EPS</a></li>
+                {{-- <li><a data-value = "DIVIDEND" data-rel="VALUE" >Dividend</a></li> --}}
+                <li><a data-value = "YEAREND" data-rel="YEARENDLIST" data-operator="IS" >Year End</a></li>
               </ul>            
             </div>
 

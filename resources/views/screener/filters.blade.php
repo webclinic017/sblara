@@ -40,6 +40,12 @@
 @include('screener.forms.sectorlist')
 @include('screener.forms.sector')
 @include('screener.forms.shareholding')
+@include('screener.forms.nav')
+@include('screener.forms.paidup')
+@include('screener.forms.dividend')
+@include('screener.forms.yearend')
+@include('screener.forms.eps')
+@include('screener.forms.yearendlist')
 
 {{-- non listed --}}
 @include('screener.forms.valuepercent')

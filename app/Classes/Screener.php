@@ -11,8 +11,8 @@ class Screener{
 	 */
 	const KEYWORDS = ['OPEN', 'HIGH', 'LOW', 'CLOSE', 'VOLUME'];
 	const OPERATORS = [ 'IS', "NOT", "<=",  ">=",  '=', '!=', '>',  "<", "X>", "X<" ];
-	const BOOLEANS = [ "CANDLEPATTERN" ];
-	const FUNDAMENTAL = ['PE', 'CATEGORY', 'SECTOR', 'SHAREHOLDING'];
+	const BOOLEANS = [ "CANDLEPATTERN", 'YEAREND' ];
+	const FUNDAMENTAL = ['PE', 'CATEGORY', 'SECTOR', 'SHAREHOLDING', 'NAV', 'PAIDUP', 'DIVIDEND', 'YEAREND', 'EPS'];
 	
 	protected $query;
 	protected $conditions = [];
@@ -28,7 +28,9 @@ class Screener{
 	
 	function __construct($query = null)
 	{
+		// dd($query);
 		// $query = "[ MACD(26, 12, 9, CLOSE, SIGNAL) X< MACD(26, 12, 9, CLOSE, MACD) WITHIN 2 ]";
+		// dd($query);
 		require_once __DIR__."/trader.php";
 		$this->query = strtoupper($query);
 		$this->parse($this->query);
@@ -141,6 +143,7 @@ class Screener{
 	 */
 	public function compare($val1, $operator, $val2)
 	{
+
 		if(!isset($val2[0]))
 		{
 			return false;
@@ -218,11 +221,11 @@ class Screener{
 			$i++;
 		}
 		//store the n for nth candle
+
 		if($matched)
 		{
 			$this->ldata[$this->instrument_id][trim($this->condition)] = $i;
 		}
-
 		 return $matched;
 		throw new \Exception("Invalid operator used", 1);
 	}
@@ -424,7 +427,12 @@ class Screener{
 	{
 		if(count($this->results()))
 		{
-			return \App\Repositories\DataBanksIntradayRepository::getAvailableLTP($this->results());
+			 $data = \App\Instrument::select('instruments.id as instrument_id', 'instrument_code', 'close_price', 'high_price', 'low_price', 'total_volume')->whereIn('instruments.id', $this->results())->leftJoin('data_banks_intradays', function ($join)
+			{
+				$join->on('instruments.id', 'data_banks_intradays.instrument_id');
+				$join->on('instruments.batch_id', 'data_banks_intradays.batch');
+			})->get();
+			return $data;
 			
 		}
 		return [];
@@ -524,3 +532,7 @@ class Screener{
 			$this->targetN = 0;
 	}
 }
+//  add filter name to popup
+//  create new blade for filter
+//  include the filter in filter forms view.
+//  for fundamental add the keyword to FUNDAMENTAL constant
