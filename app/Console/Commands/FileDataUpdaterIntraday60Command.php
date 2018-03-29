@@ -188,7 +188,10 @@ class FileDataUpdaterIntraday60Command extends Command
 
                                 } else {
                                     // normally a new trade date started. so we have to reset file for new day
-                                    $starting_base_time_frame = "$trade_date " . $activeTradeDates->market_started->format('H:i');
+                                    $convertedTimestamp = strtotime("$trade_date " . $activeTradeDates->market_started->format('H:i'));
+                                    $q = $convertedTimestamp % 3600;
+                                    $starting_base_time_frame = date('Y-m-d H:i', $convertedTimestamp - $q);
+
                                     $new_volume=0;
                                         $csv = "$starting_base_time_frame,$new_volume";
                                         Storage::disk('local')->put($file_path, $csv);
@@ -251,7 +254,10 @@ class FileDataUpdaterIntraday60Command extends Command
                                 }else
                                 {
                                     // normally a new trade date started. so we have to reset file for new day
-                                    $starting_base_time_frame = "$trade_date " . $activeTradeDates->market_started->format('H:i');
+                                    $convertedTimestamp = strtotime("$trade_date " . $activeTradeDates->market_started->format('H:i'));
+                                    $q = $convertedTimestamp % 3600;
+                                    $starting_base_time_frame = date('Y-m-d H:i', $convertedTimestamp - $q);
+
                                     // we will use day open price here for the very 1st candle
                                     $o = $data->MKISTAT_OPEN_PRICE;
                                     $csv = "$starting_base_time_frame,$o";
@@ -310,7 +316,10 @@ class FileDataUpdaterIntraday60Command extends Command
                                 }else
                                 {
                                     // normally a new trade date started. so we have to reset file for new day
-                                    $starting_base_time_frame = "$trade_date " . $activeTradeDates->market_started->format('H:i');
+                                    $convertedTimestamp = strtotime("$trade_date " . $activeTradeDates->market_started->format('H:i'));
+                                    $q = $convertedTimestamp % 3600;
+                                    $starting_base_time_frame = date('Y-m-d H:i', $convertedTimestamp - $q);
+
                                     $csv = "$starting_base_time_frame,$c";
                                     Storage::disk('local')->put($file_path, $csv);
                                 }
@@ -364,7 +373,10 @@ class FileDataUpdaterIntraday60Command extends Command
                                 }else
                                 {
                                     // normally a new trade date started. so we have to reset file for new day
-                                    $starting_base_time_frame = "$trade_date " . $activeTradeDates->market_started->format('H:i');
+                                    $convertedTimestamp = strtotime("$trade_date " . $activeTradeDates->market_started->format('H:i'));
+                                    $q = $convertedTimestamp % 3600;
+                                    $starting_base_time_frame = date('Y-m-d H:i', $convertedTimestamp - $q);
+
                                     $csv = "$starting_base_time_frame,$c";
                                     Storage::disk('local')->put($file_path, $csv);
                                 }
@@ -419,7 +431,10 @@ class FileDataUpdaterIntraday60Command extends Command
                                 }else
                                 {
                                     // normally a new trade date started. so we have to reset file for new day
-                                    $starting_base_time_frame = "$trade_date " . $activeTradeDates->market_started->format('H:i');
+                                    $convertedTimestamp = strtotime("$trade_date " . $activeTradeDates->market_started->format('H:i'));
+                                    $q = $convertedTimestamp % 3600;
+                                    $starting_base_time_frame = date('Y-m-d H:i', $convertedTimestamp - $q);
+
                                     $csv = "$starting_base_time_frame,$c";
                                     Storage::disk('local')->put($file_path, $csv);
                                 }
@@ -469,7 +484,10 @@ class FileDataUpdaterIntraday60Command extends Command
                                 }else
                                 {
                                     // normally a new trade date started. so we have to reset file for new day
-                                    $starting_base_time_frame = "$trade_date " . $activeTradeDates->market_started->format('H:i');
+                                    $convertedTimestamp = strtotime("$trade_date " . $activeTradeDates->market_started->format('H:i'));
+                                    $q = $convertedTimestamp % 3600;
+                                    $starting_base_time_frame = date('Y-m-d H:i', $convertedTimestamp - $q);
+
                                     $csv = "$starting_base_time_frame,$base_time_key";
                                     Storage::disk('local')->put($file_path, $csv);
                                 }

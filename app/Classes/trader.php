@@ -205,6 +205,10 @@ function sb_pe($id)
 {
 	return  (float) @\App\Fundamental::allTogetherPE()[$id];
 }
+function sb_eps($year, $month, $id)
+{
+	return  (float) @\App\Fundamental::allTogetherEps(trim($year), trim($month))[$id];
+}
 function sb_category($id)
 {
 	return  @\App\Fundamental::allTogetherCategory()[$id];
@@ -216,4 +220,39 @@ function sb_sector($id)
 function sb_shareholding($type, $year,  $month, $id)
 {
 	return  @ (float) \App\Fundamental::allTogetherShareHolding($type, trim($year), trim($month))[$id];
+}
+function sb_nav($year, $id)
+{
+	return  @(float) \App\Fundamental::allTogetherNav(trim($year))[$id];
+}
+
+function sb_paidup($year, $id)
+{
+	return  @(float) \App\Fundamental::allTogetherPaidUp(trim($year))[$id];
+}
+
+function sb_yearend($month, $id)
+{
+	switch ($month) {
+		case 'JAN':
+		$month = "01";
+			break;
+		case 'DEC':
+		$month = "12";
+			break;
+		case 'SEP':
+		$month = "09";
+			break;
+		case 'JUN':
+		$month = "06";
+			break;
+	}
+	// dd(\App\Fundamental::allTogetherYearEnd());
+	@$yearend =  \App\Fundamental::allTogetherYearEnd()[$id];
+	$m = $yearend[5].$yearend[6];
+	if( (int) $m == (int) $month)
+	{
+		return true;
+	}
+	return false;
 }

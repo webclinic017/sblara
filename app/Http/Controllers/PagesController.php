@@ -331,16 +331,30 @@ public function technicalAnalysisHome()
 
         //$c = FileDataRepository::get5MinutesUnadjustedData(13, 'o', 1);
         //dump($c);
-        //$c = FileDataRepository::get5MinutesUnadjustedData(13, 'h', 1);
-        //dump($c);
-        //$c = FileDataRepository::get5MinutesUnadjustedData(13, 'l', 1);
-        //dump($c);
-        //$c = FileDataRepository::get5MinutesUnadjustedData(13, 'c', 1);
-        //dump($c);
-        $c = FileDataRepository::get15MinutesUnadjustedData(250, 'c', 1);
-        dump($c);
-        $c = FileDataRepository::get15MinutesUnadjustedData(250, 'd', 1);
-        dd($c);
+       // $c = FileDataRepository::get5MinutesUnadjustedData(13, 'h', 1);
+       // dump($c);
+       // $c = FileDataRepository::get5MinutesUnadjustedData(13, 'l', 1);
+       // dump($c);
+
+
+        $ins_id=250;
+        $latest=1;
+        $o = FileDataRepository::get15MinutesUnadjustedData($ins_id, 'o', $latest);
+        $h = FileDataRepository::get15MinutesUnadjustedData($ins_id, 'h', $latest);
+        $l = FileDataRepository::get15MinutesUnadjustedData($ins_id, 'l', $latest);
+        $c = FileDataRepository::get15MinutesUnadjustedData($ins_id, 'c', $latest);
+        $v = FileDataRepository::get15MinutesUnadjustedData($ins_id, 'v', $latest);
+        $d = FileDataRepository::get15MinutesUnadjustedData($ins_id, 'd', $latest);
+
+
+        dump("Total :  "." O =".count($o)." H =".count($h)." L =".count($l)." C =".count($c)." V =".count($v)." D =".count($d));
+        for($i=0;$i<count($c);$i++)
+        {
+            dump(" O =".$o[$i]." H =".$h[$i]." L =".$l[$i]." C =".$c[$i]." V =".$v[$i]." D =".$d[$i]);
+
+
+        }
+        dd("-----------");
 
         $t=0;
 

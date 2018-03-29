@@ -68,13 +68,15 @@ class Fundamental extends Model
         // 434 => half_year_eps_cont_op
         // 308 => q3_nine_months_eps
         // 201 => earning_per_share
-      return   $array = \Cache::remember('all_together_pe', 5, function ()
+         $array = \Cache::remember('all_together_pe', 5, function ()
         {
       $data = [];
-        $result = self::whereIn('meta_id', ['201','434','225','308'])->where('is_latest', 1)->orderBy('created_at', 'desc')->leftJoin('data_banks_eods', function ($join)
+        $result = self::whereIn('meta_id', ['201','434','225','308'])->where('is_latest', 1)->orderBy('fundamentals.meta_date', 'desc')
+        ->leftJoin('instruments', 'instruments.id', 'fundamentals.instrument_id')
+        ->leftJoin('data_banks_intradays', function ($join)
         {
-            $join->on('data_banks_eods.instrument_id', 'fundamentals.instrument_id');
-            $join->on('data_banks_eods.date', \DB::raw("'".date('Y-m-d')."'"));
+            $join->on('data_banks_intradays.instrument_id', 'fundamentals.instrument_id');
+            $join->on('data_banks_intradays.batch', "instruments.batch_id");
         })->get();
         foreach ($result as $row) {
             if(isset($data[$row->instrument_id]))
@@ -96,11 +98,12 @@ class Fundamental extends Model
                 $eps = $row->meta_value;
                     break;
             }
-            $val = @ $row->close/$eps;
+            $val = @ $row->close_price/$eps;
             $data[$row->instrument_id] =  round($val, 2) ;
         }
         return $data;       
         });
+         return $array;
     }  
 
     public function allTogetherCategory()
@@ -224,4 +227,165 @@ class Fundamental extends Model
             });
 
       }  
+
+      public static function allTogetherNav($year)
+      {
+        // dd(\Cache::forget("allTogetherNav_$year"));
+                return \Cache::remember("allTogetherNav_$year", 60, function () use ($year)
+                {
+                    // net_asset_val_per_share 205
+                    $result = self::where('meta_id', 205)->where('meta_date', 'like', "$year%")->orderBy('meta_date', 'desc')->get();
+                    $data = [];
+                        foreach ($result as $row) {
+                            if(isset($data[$row->instrument_id]))
+                            {
+                                continue;
+                            }
+                            $row->meta_value = (float) $row->meta_value;
+
+                            $data[$row->instrument_id] =  $row->meta_value ;
+                        }
+                        return $data;                             
+                });
+
+      }
+
+      public static function allTogetherPaidUp($year)
+      {
+        // \Cache::forget("allTogetherPaidUp_$year");die('df');
+                return \Cache::remember("allTogetherPaidUp_$year", 60, function () use ($year)
+                {
+                    // paid_up_capital 256
+                    $result = self::where('meta_id', 256)->where('meta_date', 'like', "$year%")->orderBy('meta_date', 'desc')->get();
+                    $data = [];
+                        foreach ($result as $row) {
+                            if(isset($data[$row->instrument_id]))
+                            {
+                                continue;
+                            }
+                            $row->meta_value = (float) $row->meta_value;
+
+                            $data[$row->instrument_id] =  $row->meta_value ;
+                        }
+                        // dd($data);
+                        return $data;                             
+                });
+
+      }
+
+
+    public static function allTogetherEps($year, $month)
+    {
+
+            // 225 => q1_eps_cont_op
+            // 434 => half_year_eps_cont_op
+            // 308 => q3_nine_months_eps
+            // 201 => earning_per_share
+                switch ($month) {
+                    case 'JAN':
+                    $month = "01";
+                        break;
+                    case 'FEB':
+                    $month = "02";
+                        break;
+                    case 'MAR':
+                    $month = "03";
+                        break;
+                    case 'APR':
+                    $month = "04";
+                        break;
+                    case 'MAY':
+                    $month = "05";
+                        break;
+                    case 'JUN':
+                    $month = "06";
+                        break;
+                    case 'JUL':
+                    $month = "07";
+                        break;
+                    case 'AUG':
+                    $month = "08";
+                        break;
+                    case 'SEP':
+                    $month = "09";
+                        break;
+                    case 'OCT':
+                    $month = 10;
+                        break;
+                    case 'NOV':
+                    $month = 11;
+                        break;
+                    case 'DEC':
+                    $month = 12;
+                        break;
+                }     
+
+             $array = \Cache::remember('all_together_eps_'.$year.$month, 5, function () use($year, $month)
+            {
+          $data = [];
+            $result = self::whereIn('meta_id', ['201','434','225','308'])
+            ->where('meta_date', "like", "$year-$month%")
+            ->orderBy('fundamentals.meta_date', 'desc')
+            ->leftJoin('instruments', 'instruments.id', 'fundamentals.instrument_id')
+            ->leftJoin('data_banks_intradays', function ($join)
+            {
+                $join->on('data_banks_intradays.instrument_id', 'fundamentals.instrument_id');
+                $join->on('data_banks_intradays.batch', "instruments.batch_id");
+            })->get();
+            foreach ($result as $row) {
+                if(isset($data[$row->instrument_id]))
+                {
+                    continue;
+                }
+                $row->meta_value = (float) $row->meta_value;
+                switch ($row->meta_id) {
+                    case '225':
+                    $eps = ($row->meta_value * 12)/3;
+                        break;
+                    case '434':
+                    $eps = ($row->meta_value * 12)/6;
+                        break;
+                    case '308':
+                    $eps = ($row->meta_value * 12)/9;
+                        break;
+                    case '201':
+                    $eps = $row->meta_value;
+                        break;
+                }
+                $val = $eps;
+                $data[$row->instrument_id] =  round($val, 2) ;
+            }
+            return $data;       
+            });
+             return $array;
+        }      
+
+        public static function allTogetherYearEnd()
+          {
+
+            $data =  \Cache::remember('allTogetherYearEnd', 60, function ()
+            {
+                
+            // year_end 435
+            $data = [];
+            $result = self::where('meta_id', 435)->where('is_latest', 1)->orderBy('meta_date', 'desc')->get();
+                        foreach ($result as $row) {
+                            if(isset($data[$row->instrument_id]))
+                            {
+                                continue;
+                            }
+                            $row->meta_value =  $row->meta_value;
+
+                            $data[$row->instrument_id] =  $row->meta_value ;
+                        }           
+                        return $data;
+            });
+            return $data;
+          }  
 }
+
+//  dividend , year end
+//
+//march june sep dec
+//(net_asset_val_per_share)
+ 
