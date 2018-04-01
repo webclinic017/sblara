@@ -131,7 +131,7 @@ function reload()
 {
 b.load()
 }
-    setInterval(reload, 60000);
+   // setInterval(reload, 60000);
 
 
 });

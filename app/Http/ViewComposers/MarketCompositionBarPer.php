@@ -33,6 +33,10 @@ class MarketCompositionBarPer
         if(isset($viewdata['height']))
             $height=(int) $viewdata['height'];
 
+        $legend=1;
+        if(isset($viewdata['legend']))
+            $legend=(int) $viewdata['legend'];
+
         $instrumentListMain=InstrumentRepository::getInstrumentsScripOnly();
         $instrumentListMain->load('sector_list');
         $instrumentList=$instrumentListMain->groupBy('sector_list_id');
@@ -114,6 +118,7 @@ class MarketCompositionBarPer
             ->with('prevDate', $prevDate)
             ->with('renderTo', "market_composition_per_$base")
             ->with('height',$height)
+            ->with('legend',$legend)
             ->with('ylabel',$base);
 
     }

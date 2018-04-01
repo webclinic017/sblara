@@ -3,7 +3,7 @@
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div class="portlet light bordered">
                 <div class="portlet-body">
-                   @include('ads.google_responsive_custom')
+                   @include('ads.google_responsive_ta_chart')
                 </div>
             </div>
         </div>
@@ -28,7 +28,7 @@
        Highcharts.chart('{{$render_to}}', {
                    chart: {
                        zoomType: 'x',
-                       type: 'column'
+                       type: 'line'
                    },
                    title: {
                        text: 'Share Holding History'

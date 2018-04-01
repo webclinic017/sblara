@@ -1,5 +1,21 @@
+@section('structured_data')
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "Course",
+  "name": "{ ! $course_details->course_name ! }",
+  "description": "{{strip_tags(str_limit($course_details->course_overview,200))}} ",
+  "provider": {
+    "@type": "Organization",
+    "name": "Stock Bangladesh Limited",
+  }
+}
+</script>
+@endsection
+
+
 @section('meta-title',$course_details->course_heading)
-@section('meta-description', substr($course_details->course_overview,0,160))
+@section('meta-description', strip_tags(substr($course_details->course_overview,0,160)))
 @extends('layouts.metronic.default')
 @section('page_heading')
 {{$course_details->course_name}}

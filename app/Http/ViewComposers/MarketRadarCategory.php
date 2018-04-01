@@ -38,7 +38,8 @@ class MarketRadarCategory
  data_banks_intradays
  WHERE
  data_banks_intradays.batch=$batch_id and data_banks_intradays.close_price -data_banks_intradays.yday_close_price>0 and
- data_banks_intradays.quote_bases NOT LIKE '%A-CB%'
+ data_banks_intradays.quote_bases NOT LIKE '%A-CB%' AND
+ data_banks_intradays.quote_bases NOT LIKE '%N-EQ%'
  GROUP BY data_banks_intradays.quote_bases";
 
         $category_data_up = DB::select($sql);

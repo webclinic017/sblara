@@ -130,8 +130,14 @@ class EpsHistoryChartQuarterToQuarter
         foreach($all_years as $year)
         {
             $temp=array();
+
             $year_start=$year."-".date('m-d',strtotime($year_end));
+            $year_start="01 $year_end $year_start";
+            $year_start=date('Y-m-d',strtotime($year_start));
+
             $from=Carbon::parse($year_start);
+
+
             $q1=$from->addMonths(3)->format("Y-M");
             $q2=$from->addMonths(3)->format("Y-M");
             $q3=$from->addMonths(3)->format("Y-M");

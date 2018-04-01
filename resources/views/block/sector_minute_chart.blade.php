@@ -1,7 +1,7 @@
 @if($show_ads)
 <div class="portlet light bordered">
     <div class="portlet-body">
-       @include('ads.google_responsive')
+       @include('ads.google_responsive_ta_chart')
     </div>
 </div>
 @endif

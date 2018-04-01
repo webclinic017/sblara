@@ -24,14 +24,22 @@ class AppServiceProvider extends ServiceProvider {
         View::composer('block.index_chart', 'App\Http\ViewComposers\IndexChart');
         View::composer('block.index_chart2', 'App\Http\ViewComposers\IndexChart');
         View::composer('block.index_mover', 'App\Http\ViewComposers\IndexMover');
+
         View::composer('block.market_radar', 'App\Http\ViewComposers\MarketRadar');
         View::composer('block.market_radar2', 'App\Http\ViewComposers\MarketRadar2');
         View::composer('block.market_radar_paidup', 'App\Http\ViewComposers\MarketRadarPaidup');
+        View::composer('block.market_radar_share_price', 'App\Http\ViewComposers\MarketRadarSharePrice');
+        View::composer('block.market_radar_public_holdings', 'App\Http\ViewComposers\MarketRadarPublicHoldings');
+        View::composer('block.market_radar_director_holdings', 'App\Http\ViewComposers\MarketRadarDirectorHoldings');
+        View::composer('block.market_radar_institute_holdings', 'App\Http\ViewComposers\MarketRadarInstituteHoldings');
         View::composer('block.market_radar_pe', 'App\Http\ViewComposers\MarketRadarPe');
         View::composer('block.market_radar_category', 'App\Http\ViewComposers\MarketRadarCategory');
+
         View::composer('block.dividend_yield_and_payout_ratio', 'App\Http\ViewComposers\DividendYieldAndPayoutRatio');
         View::composer('block.home_page_index', 'App\Http\ViewComposers\HomePageIndexChart');
         View::composer('block.market_summary', 'App\Http\ViewComposers\MarketSummary');
+        View::composer('block.up_down_single_chart', 'App\Http\ViewComposers\UpDownSingleChart');
+        View::composer('block.projected_trade_chart', 'App\Http\ViewComposers\ProjectedTradeChart');
         View::composer('block.up_down_chart', 'App\Http\ViewComposers\UpDownChart');
         View::composer('block.top_sectors', 'App\Http\ViewComposers\TopSectors');
         View::composer('block.sector_gainer_loser', 'App\Http\ViewComposers\SectorGainerLoser');

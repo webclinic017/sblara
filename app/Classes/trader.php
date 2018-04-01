@@ -226,9 +226,14 @@ function sb_nav($year, $id)
 	return  @(float) \App\Fundamental::allTogetherNav(trim($year))[$id];
 }
 
-function sb_paidup($year, $id)
+function sb_paidup($id)
 {
-	return  @(float) \App\Fundamental::allTogetherPaidUp(trim($year))[$id];
+	return  @(float) \App\Fundamental::allTogetherPaidUp()[$id];
+}
+
+function sb_dividend($type, $year, $id)
+{
+	return  @(float) \App\Fundamental::allTogetherDividend(trim($type), trim($year))[$id];
 }
 
 function sb_yearend($month, $id)

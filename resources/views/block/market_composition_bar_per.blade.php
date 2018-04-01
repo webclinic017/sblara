@@ -14,6 +14,9 @@ chart_bar_total_trade = new Highcharts.Chart({
             title: {
                 text: null
             },
+            @if(!$legend)
+            legend: false,
+            @endif
             xAxis: {
                 categories:{!! $category !!},
                 title: {

@@ -28,8 +28,17 @@
             <span class="caption-subject bold uppercase"> Portfolio Performances</span>
         </div>--}}
     </div>
-    <div class="portlet-body portfolio-content-area formn flip-scroll">
-
+    <div class="portlet-body formn flip-scroll">
+<div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="portlet light bordered">
+                <div class="portlet-body">
+                   @include('ads.google_responsive_portfolio')
+                </div>
+            </div>
+        </div>
+    </div>
+<div class="row portfolio-content-area">
          <table class="table table-striped table-bordered table-advance table-hover table-condensed flip-content">
             <thead class="flip-content">
                 <tr class="hidden-xs hidden-sm">
@@ -60,7 +69,11 @@
                 @include('portfolio.performance_item',['portfolio'=>$portfolio])
             </tbody>
         </table>
-    </div>
+</div>
+
+
+
+</div>
 </div>
 
 <div class="row margin-bottom-30">
@@ -196,6 +209,8 @@
 
 @endsection
 @section('js')
+
+{{-- AJax request is sent from js/application.js--}}
 <script>
     $(".portfolio-menu").addClass('open');
     $(".portfolioActions .performance").addClass('active');
