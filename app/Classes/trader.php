@@ -203,11 +203,15 @@ function sb_max($time, $real)
 }
 function sb_pe($id)
 {
-	return  (float) @\App\Fundamental::allTogetherPE()[$id];
+	$data = \App\Fundamental::allTogetherPE();
+	if(!isset($data[$id])){return "not found"; }
+	return  (float) @$data[$id];	
 }
 function sb_eps($year, $month, $id)
 {
-	return  (float) @\App\Fundamental::allTogetherEps(trim($year), trim($month))[$id];
+	$data = \App\Fundamental::allTogetherEps(trim($year), trim($month));
+	if(!isset($data[$id])){return "not found"; }
+	return  (float) @$data[$id];
 }
 function sb_category($id)
 {
@@ -223,12 +227,19 @@ function sb_shareholding($type, $year,  $month, $id)
 }
 function sb_nav($year, $id)
 {
-	return  @(float) \App\Fundamental::allTogetherNav(trim($year))[$id];
+	$data = \App\Fundamental::allTogetherNav(trim($year));
+	if(!isset($data[$id])){return "not found"; }
+	return  (float) @$data[$id];	
 }
 
-function sb_paidup($year, $id)
+function sb_paidup($id)
 {
-	return  @(float) \App\Fundamental::allTogetherPaidUp(trim($year))[$id];
+	return  @(float) \App\Fundamental::allTogetherPaidUp()[$id];
+}
+
+function sb_dividend($type, $year, $id)
+{
+	return  @(float) \App\Fundamental::allTogetherDividend(trim($type), trim($year))[$id];
 }
 
 function sb_yearend($month, $id)
@@ -236,6 +247,9 @@ function sb_yearend($month, $id)
 	switch ($month) {
 		case 'JAN':
 		$month = "01";
+			break;
+		case 'MAR':
+		$month = "03";
 			break;
 		case 'DEC':
 		$month = "12";
@@ -249,6 +263,7 @@ function sb_yearend($month, $id)
 	}
 	// dd(\App\Fundamental::allTogetherYearEnd());
 	@$yearend =  \App\Fundamental::allTogetherYearEnd()[$id];
+	// dd(\App\Fundamental::allTogetherYearEnd());
 	$m = $yearend[5].$yearend[6];
 	if( (int) $m == (int) $month)
 	{

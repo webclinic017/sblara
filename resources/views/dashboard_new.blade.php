@@ -15,16 +15,68 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
     </div>
 
 
-    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-            @include('block.up_down_chart')
+    <div class="col-md-4">
+        <!-- BEGIN Portlet PORTLET-->
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="icon-graph font-yellow-casablanca"></i>
+                            <span class="caption-subject bold font-yellow-casablanca uppercase">
+                            Up down </span>
+                    <span class="caption-helper"></span>
+                </div>
+                <div class="tools">
+                    <a href="" class="collapse">
+                    </a>
 
-     </div>
+                    </a>
+                    <a href="" class="remove">
+                    </a>
+                    <a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.up_down_single_chart" class="reload"></a>
+                </div>
 
+            </div>
+            <div class="portlet-body">
+
+            </div>
+        </div>
+        <!-- END Portlet PORTLET-->
+    </div>
+    <div class="col-md-4">
+        <!-- BEGIN Portlet PORTLET-->
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="icon-graph font-yellow-casablanca"></i>
+                            <span class="caption-subject bold font-yellow-casablanca uppercase">
+                            Projected Trade </span>
+                    <span class="caption-helper"></span>
+                </div>
+                <div class="tools">
+                    <a href="" class="collapse">
+                    </a>
+
+                    </a>
+                    <a href="" class="remove">
+                    </a>
+                    <a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.projected_trade_chart" class="reload"></a>
+                </div>
+
+            </div>
+            <div class="portlet-body">
+
+            </div>
+        </div>
+        <!-- END Portlet PORTLET-->
+    </div>
+
+{{--
     <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
             @include('block.index_mover')
 
      </div>
 
+--}}
 
 
 </div>
@@ -38,6 +90,97 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
             </div>
         </div>
     </div>
+
+
+<div class="row">
+
+    <div class="col-md-4">
+        <!-- BEGIN Portlet PORTLET-->
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="icon-graph font-yellow-casablanca"></i>
+                            <span class="caption-subject bold font-yellow-casablanca uppercase">
+                            Top Sector </span>
+                    <span class="caption-helper">Most of the money there</span>
+                </div>
+                <div class="tools">
+                    <a href="" class="collapse">
+                    </a>
+
+                    </a>
+                    <a href="" class="remove">
+                    </a>
+                    <a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.top_sectors" class="reload"></a>
+                </div>
+
+            </div>
+            <div class="portlet-body">
+                {{--@include('block.top_sectors')--}}
+            </div>
+        </div>
+        <!-- END Portlet PORTLET-->
+    </div>
+    <div class="col-md-4">
+        <!-- BEGIN Portlet PORTLET-->
+                <div class="portlet light bordered">
+                  <div class="portlet-title tabbable-line">
+                        <div class="caption">
+                            <i class="icon-graph font-yellow-casablanca"></i>
+                            <span class="caption-subject bold font-yellow-casablanca uppercase">
+                              Sectors (Day)</span>
+                              <span class="caption-helper">Gainer Loser</span>
+
+                          </div>
+                            <div class="tools">
+                                <a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.sector_gainer_loser:render_to=gainer_loser_whole_day_up_down_bar" class="reload"></a>
+
+                                <a href="" class="collapse">
+                                </a>
+
+                            </a>
+                            <a href="" class="remove">
+                            </a>
+                        </div>
+                    </div>
+
+                <div class="portlet-body">
+
+                </div>
+            </div>
+        <!-- END Portlet PORTLET-->
+    </div>
+    <div class="col-md-4">
+        <!-- BEGIN Portlet PORTLET-->
+                <div class="portlet light bordered">
+                  <div class="portlet-title tabbable-line">
+                        <div class="caption">
+                            <i class="icon-graph font-yellow-casablanca"></i>
+                            <span class="caption-subject bold font-yellow-casablanca uppercase">
+                              Sectors</span>
+                              <span class="caption-helper">Total Value (%)</span>
+
+                          </div>
+                            <div class="tools">
+                                <a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.market_composition_bar_per:render_to=market_composition_bar_per:base=total_value:height=400:legend=0" class="reload"></a>
+
+                                <a href="" class="collapse">
+                                </a>
+
+                            </a>
+                            <a href="" class="remove">
+                            </a>
+                        </div>
+                    </div>
+
+                <div class="portlet-body">
+
+                </div>
+            </div>
+        <!-- END Portlet PORTLET-->
+    </div>
+</div>
+
 
 <div class="row">
 
@@ -127,21 +270,6 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
         <!-- END Portlet PORTLET-->
     </div>
 </div>
-{{--
-
-    <div class="row">
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <div class="portlet light bordered">
-                <div class="portlet-body">
-                   @include('ads.redmas_responsive')
-                </div>
-            </div>
-        </div>
-    </div>
---}}
-
-
-
 <div class="row">
 
     <div class="col-md-4">
@@ -151,8 +279,8 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
                 <div class="caption">
                     <i class="icon-graph font-yellow-casablanca"></i>
                             <span class="caption-subject bold font-yellow-casablanca uppercase">
-                            Top Sector </span>
-                    <span class="caption-helper">Most of the money there</span>
+                            Market Radar: Share price </span>
+                    <span class="caption-helper"></span>
                 </div>
                 <div class="tools">
                     <a href="" class="collapse">
@@ -161,12 +289,12 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
                     </a>
                     <a href="" class="remove">
                     </a>
-                    <a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.top_sectors" class="reload"></a>
+                    <a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.market_radar_share_price" class="reload"></a>
                 </div>
 
             </div>
             <div class="portlet-body">
-                {{--@include('block.top_sectors')--}}
+
             </div>
         </div>
         <!-- END Portlet PORTLET-->
@@ -178,12 +306,12 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
                         <div class="caption">
                             <i class="icon-graph font-yellow-casablanca"></i>
                             <span class="caption-subject bold font-yellow-casablanca uppercase">
-                              Sectors (Day)</span>
-                              <span class="caption-helper">Gainer Loser</span>
+                              Market Radar: Public share</span>
+                              <span class="caption-helper"></span>
 
                           </div>
                             <div class="tools">
-                                <a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.sector_gainer_loser:render_to=gainer_loser_whole_day_up_down_bar" class="reload"></a>
+                                <a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.market_radar_public_holdings" class="reload"></a>
 
                                 <a href="" class="collapse">
                                 </a>
@@ -207,12 +335,12 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
                         <div class="caption">
                             <i class="icon-graph font-yellow-casablanca"></i>
                             <span class="caption-subject bold font-yellow-casablanca uppercase">
-                              Sectors (minute)</span>
-                              <span class="caption-helper">Gainer Loser</span>
+                              Market Radar: Institute share</span>
+                              <span class="caption-helper"></span>
 
                           </div>
                             <div class="tools">
-                                <a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.sector_gainer_loser_last_minute:render_to=gainer_loser_last_minute" class="reload"></a>
+                                <a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.market_radar_institute_holdings" class="reload"></a>
 
                                 <a href="" class="collapse">
                                 </a>
@@ -230,6 +358,18 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
         <!-- END Portlet PORTLET-->
     </div>
 </div>
+{{--
+
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="portlet light bordered">
+                <div class="portlet-body">
+                   @include('ads.redmas_responsive')
+                </div>
+            </div>
+        </div>
+    </div>
+--}}
 
     <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -278,7 +418,13 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
                 </div>
             <!-- END Portlet PORTLET-->
         </div>
-    <div class="col-md-4">
+
+         <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                    @include('block.index_mover')
+
+             </div>
+
+{{--    <div class="col-md-4">
             <!-- BEGIN Portlet PORTLET-->
                     <div class="portlet light bordered">
                       <div class="portlet-title tabbable-line">
@@ -306,7 +452,7 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
                     </div>
                 </div>
             <!-- END Portlet PORTLET-->
-        </div>
+        </div>--}}
 
 </div>
 <div class="row">

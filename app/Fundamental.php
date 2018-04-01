@@ -250,13 +250,14 @@ class Fundamental extends Model
 
       }
 
-      public static function allTogetherPaidUp($year)
+      public static function allTogetherPaidUp()
       {
         // \Cache::forget("allTogetherPaidUp_$year");die('df');
-                return \Cache::remember("allTogetherPaidUp_$year", 60, function () use ($year)
+        // (\Cache::forget("allTogetherPaidUp"));
+                return \Cache::remember("allTogetherPaidUp", 60, function ()
                 {
                     // paid_up_capital 256
-                    $result = self::where('meta_id', 256)->where('meta_date', 'like', "$year%")->orderBy('meta_date', 'desc')->get();
+                    $result = self::where('meta_id', 256)->where('is_latest',  "1")->orderBy('meta_date', 'desc')->get();
                     $data = [];
                         foreach ($result as $row) {
                             if(isset($data[$row->instrument_id]))
@@ -382,6 +383,39 @@ class Fundamental extends Model
             });
             return $data;
           }  
+
+          public static function allTogetherDividend($type, $year)
+          {
+                    // "stock_dividend" 211
+                    // "cash_dividend"   212
+
+                switch ($type) {
+                    case 'STOCK':
+                    $meta_id =  211;
+                        break;
+                    case 'CASH':
+                    $meta_id =  212;
+                        break;
+                }
+                // dd(\Cache::forget('allTogetherDividend_'.$meta_id.$year));
+                $data =  \Cache::remember('allTogetherDividend_'.$meta_id.$year, 60, function () use ($meta_id, $year)
+                {
+                    
+                    $data = [];
+                    $result = self::where('meta_id', $meta_id)->where('meta_date', 'like', "$year%")->where('is_latest', 1)->orderBy('meta_date', 'desc')->get();
+                                foreach ($result as $row) {
+                                    if(isset($data[$row->instrument_id]))
+                                    {
+                                        continue;
+                                    }
+                                    $row->meta_value =  $row->meta_value;
+
+                                    $data[$row->instrument_id] =  $row->meta_value ;
+                                }           
+                                return $data;
+                });
+                return $data;            
+          }
 }
 
 //  dividend , year end

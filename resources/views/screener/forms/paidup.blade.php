@@ -1,17 +1,10 @@
 <div id="PAIDUP">
-    <div class="alert alert-warningdf alert-dismissable" data-func="PAIDUP" >
+    <div class="alert alert-warningdf alert-dismissable" data-value="PAIDUP" >
         <div class="row">
         <div class="col-md-12">
 
                 <form class="form-inline" role="form">
-         <label class="col-md-4 control-label" for="form_control_1">PAIDUP </label>
-
-                    <div class="form-group form-md-line-input">
-                       <select class="form-control " data-param="1" id="form_control_1">
-                         {!! yearsAsOption(2016) !!}
-                       </select>
-                    </div>
-
+                      <label class="col-md-4 control-label" for="form_control_1">PAIDUP (million) </label>
                 </form>
         </div>
     </div>

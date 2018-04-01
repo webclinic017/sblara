@@ -3,9 +3,9 @@
 		<option >Select Share</option>
 		@endif
 
-        @foreach($sectorList as $sector)
+      {{--  @foreach($sectorList as $sector)
             <option value="sector_{{$sector->id}}" >{{$sector->name}} </option>
-        @endforeach
+        @endforeach--}}
 
         @foreach($instrumentList as $instrument)
             <option value="{{$instrument->id}}" >{{$instrument->instrument_code}} </option>

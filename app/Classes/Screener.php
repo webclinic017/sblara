@@ -143,12 +143,12 @@ class Screener{
 	 */
 	public function compare($val1, $operator, $val2)
 	{
-
 		if(!isset($val2[0]))
 		{
 			return false;
 		}
-		// dump($this->instrument_id);
+		if($val1[0] === "not found" || $val2[0] === "not found"  ){ return false;}
+
 		$i = $this->targetN;
 		if($this->targetType == 'WITHIN')
 		{

@@ -3,14 +3,15 @@
 Route::get('/dse/stock/ACI/advance-chemical-industries/price/history', 'controller@action')->name('/DSE/ACI/ta-chart');
 Route::get('/dse/stock/ACI/advance-chemical-industries/price/change', 'controller@action')->name('/DSE/ACI/ta-chart');
 
-Route::get('/dse/stock/ACI/advance-chemical-industries/chart/technical-analysis', 'controller@action')->name('/DSE/ACI/ta-chart');
-Route::get('/dse/stock/ACI/advance-chemical-industries/chart/advance-technical-analysis', 'controller@action')->name('/DSE/ACI/advance-ta');
-Route::get('/dse/stock/ACI/advance-chemical-industries/chart/minute-chart', 'controller@action')->name('/DSE/ACI/advance-ta');
-Route::get('/dse/stock/ACI/advance-chemical-industries/chart/news-chart', 'controller@action')->name('/DSE/ACI/advance-ta');
+Route::get('/dse/stock/ACI/advance-chemical-industries/chart/technical-analysis', 'controller@action')->name('/DSE/ACI/ta-chart'); // ta-chart
+Route::get('/dse/stock/ACI/advance-chemical-industries/chart/advance-technical-analysis', 'controller@action')->name('/DSE/ACI/advance-ta'); // advance ta-chart
+Route::get('/dse/stock/ACI/advance-chemical-industries/chart/minute-chart', 'controller@action')->name('/DSE/ACI/advance-ta'); // minute -chart
+Route::get('/dse/stock/ACI/advance-chemical-industries/chart/news-chart', 'controller@action')->name('/DSE/ACI/advance-ta'); //news chart
 
-Route::get('/dse/stock/ACI/advance-chemical-industries/company/details', 'controller@action')->name('/DSE/ACI/company-details');
-Route::get('/dse/stock/ACI/advance-chemical-industries/fundamental/details', 'controller@action')->name('/DSE/ACI/company-details');
-Route::get('/dse/stock/ACI/advance-chemical-industries/technical/details', 'controller@action')->name('/DSE/ACI/company-details');
+Route::get('/dse/stock/ACI/advance-chemical-industries/company/details', 'controller@action')->name('/DSE/ACI/trade-details'); // trade details
+Route::get('/dse/stock/ACI/advance-chemical-industries/fundamental/details', 'controller@action')->name('/DSE/ACI/fundamental-details'); // fundamental details
+Route::get('/dse/stock/ACI/advance-chemical-industries/fundamental/details', 'controller@action')->name('/DSE/ACI/company-details'); // company details
+Route::get('/dse/stock/ACI/advance-chemical-industries/technical/details', 'controller@action')->name('/DSE/ACI/company-details'); // technical details
 
 Route::get('/dse/stock/ACI/advance-chemical-industries/news/market-announcement', 'controller@action')->name('/DSE/ACI/company-details');
 Route::get('/dse/stock/ACI/advance-chemical-industries/news/search', 'controller@action')->name('/DSE/ACI/company-details');

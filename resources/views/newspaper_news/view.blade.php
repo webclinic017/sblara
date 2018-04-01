@@ -1,11 +1,19 @@
+@section('meta-title', $newspaperNews->title . ' | Share Market News')
+@section('meta-description',str_limit($newspaperNews->details,160))
+
 @extends('layouts.metronic.default')
+@section('page_heading')
+{{ $newspaperNews->title }} 
+@endsection
+
+
 @section('content')
 
 <div class="portlet light bordered" id="blockui_sample_1_portlet_body">
     <div class="portlet box green">
         <div class="portlet-title">
             <div class="caption">
-                <i class="fa fa-newspaper-o"></i>STOCK BANGLADESH NEWS
+                <i class="fa fa-newspaper-o"></i>STOCK BANGLADESH NEWS gfhgf
             </div>
         </div>
         <div class="search-page search-content-1">

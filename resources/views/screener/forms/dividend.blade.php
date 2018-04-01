@@ -8,6 +8,12 @@
 
                     <div class="form-group form-md-line-input">
                        <select class="form-control " data-param="1" id="form_control_1">
+                            <option value="STOCK">Stock</option>
+                            <option value="CASH">Cash</option>
+                       </select>
+                    </div>
+                    <div class="form-group form-md-line-input">
+                       <select class="form-control " data-param="2" id="form_control_1">
                          {!! yearsAsOption(2016) !!}
                        </select>
                     </div>

@@ -176,7 +176,7 @@ if($screener){
                 <li><a data-value = "NAV" data-rel="VALUE" >Net Asset Value</a></li>
                 <li><a data-value = "PAIDUP" data-rel="VALUE" >Paid Up Capital</a></li>
                 <li><a data-value = "EPS" data-rel="VALUE" >EPS</a></li>
-                {{-- <li><a data-value = "DIVIDEND" data-rel="VALUE" >Dividend</a></li> --}}
+                <li><a data-value = "DIVIDEND" data-rel="VALUEPERCENT" >Dividend</a></li>
                 <li><a data-value = "YEAREND" data-rel="YEARENDLIST" data-operator="IS" >Year End</a></li>
               </ul>            
             </div>

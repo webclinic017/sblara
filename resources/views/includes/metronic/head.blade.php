@@ -32,11 +32,19 @@
             <link rel="shortcut icon" type="image/png" href="/favicon.ico" />
 
             @stack('css')
+            @yield('structured_data')
             <script>
                     window.Laravel = {!! json_encode([
                         'csrfToken' => csrf_token(),
                     ]) !!};
                     var loggedIn = {{\Auth::guest()?'false':'true'}};
+            </script>
+            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({
+                      google_ad_client: "ca-pub-5791519434695332",
+                      enable_page_level_ads: true
+                 });
             </script>
     </head>
 <script src="{{ mix('metronic_home.js') }}"></script>

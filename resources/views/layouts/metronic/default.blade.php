@@ -61,7 +61,31 @@
                                 {{session()->get('error')}}
                          </div>
                         @endif
+@if(Route::current()->getName()=='ta-chart')
+  <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="portlet light bordered">
+                <div class="portlet-body">
+                   @include('ads.google_responsive_custom')
+                </div>
+            </div>
+        </div>
+    </div>
+@endif
                         @include('global-ui')
+
+@if(Route::current()->getName()=='ta-chart')
+  <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="portlet light bordered">
+                <div class="portlet-body">
+                   @include('ads.google_responsive_custom')
+                </div>
+            </div>
+        </div>
+    </div>
+@endif
+
 
                     <!-- END BREADCRUMBS -->
 
