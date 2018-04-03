@@ -49,8 +49,8 @@ class GenerateMenus
             $menu->news->link->href('javascript:;');
             $menu->news->add('News Search', ['route' => 'news-search'])->prepend('<i class="fa fa-search" ></i > ');
             $menu->news->add('News from newspaper', ['route' => 'collective-news'])->prepend('<i class="icon-bar-chart" ></i > ');
-            $menu->news->add('News Chart', ['route' => 'news-chart'])->prepend('<i class="fa fa-newspaper-o " ></i > ');
-
+            $menu->news->add('News Chart', ['route' => ['news-chart' , 'name'=>'dse-broad-index', 'instrument' => 'dsex']])->prepend('<i class="icon-bar-chart" ></i > ')->active('dse/*/news-chart');
+ 
 
             /*Sector*/
             $menu->add('Sector', ['class' => 'dropdown dropdown-fw  ']);
@@ -67,8 +67,8 @@ class GenerateMenus
             $menu->company->link->href('javascript:;')->attr(['class' => 'text-uppercase']);
             $menu->company->attr(['class' => 'dropdown dropdown-fw  '])->prepend('<i class="icon-link" ></i > ');
 
-            $menu->company->add('Company Details', ['route' => 'company-details'])->prepend('<i class="fa fa-dollar" ></i > ')->active('company-details/*');
-            $menu->company->add('Fundamental Details', ['route' => 'fundamental-details'])->prepend('<i class="fa fa-paperclip" ></i > ')->active('fundamental-details/*');
+            $menu->company->add('Trade Details', ['route' => ['trade-details', 'name' => 'ab-bank-limited', 'instrument' => 'abbank']])->prepend('<i class="fa fa-dollar" ></i > ')->active('dse/*/trade-details');
+            $menu->company->add('Fundamental Details', ['route' => ['news-chart' , 'name'=>'ab-bank-limited', 'instrument' => 'abbank']])->prepend('<i class="fa fa-paperclip" ></i > ')->active('dse/*/fundamental-details');
             $menu->company->add('Dividend Yield', ['route' => 'dividend-yield-payout-ratio'])->prepend('<i class="fa fa-paperclip" ></i > ')->active('dividend-yield-payout-ratio');
             $menu->company->add('Payout Ration', ['route' => 'dividend-yield-payout-ratio'])->prepend('<i class="fa fa-paperclip" ></i > ')->active('dividend-yield-payout-ratio');
 
@@ -79,9 +79,9 @@ class GenerateMenus
             $menu->chart->attr(['class' => 'dropdown dropdown-fw  '])->prepend('<i class="fa fa-line-chart" ></i > ');
 
             //submenu
-            $menu->chart->add('TA Chart', ['route' => 'ta-chart'])->prepend('<i class="icon-bar-chart" ></i > ');
-            $menu->chart->add('Advance TA Chart', ['route' => 'advance-ta-chart'])->prepend('<i class="fa fa-line-chart" ></i > ');
-            $menu->chart->add('Minute chart', ['route' => 'minute-chart'])->prepend('<i class="fa fa-clock-o" ></i > ')->active('minute-chart/*');
+            $menu->chart->add('TA Chart', ['route' => ['ta-chart-new' , 'name'=>'dse-broad-index', 'instrument' => 'dsex']])->prepend('<i class="icon-bar-chart" ></i > ')->active('dse/*/technical-analysis');
+            $menu->chart->add('Advance TA Chart', ['route' => ['advance-ta-chart' , 'name'=>'dse-broad-index', 'instrument' => 'dsex']])->prepend('<i class="fa fa-line-chart" ></i > ')->active('dse/*/advance-technical-analysis');
+            $menu->chart->add('Minute chart', ['route' => ['minute-chart' , 'name'=>'dse-broad-index', 'instrument' => 'dsex']])->prepend('<i class="fa fa-clock-o" ></i > ')->active('dse/*/minute-chart');
             $menu->chart->add('Market Depth', ['route' => 'market-depth'])->prepend('<i class="fa fa-gavel" ></i > ');
 
 

@@ -1,5 +1,5 @@
-@section('meta-title', ' Advance Technical Analysis Chart : '.request()->instrumentCode)
-@section('meta-description', request()->instrumentCode.' High configurable and nice looking technical analysis chart of Bangladesh. From 5 minutes candle to 1 hour candle available as well as daily data')
+@section('meta-title', ' Advance Technical Analysis Chart : '. $instrumentInfo->name)
+@section('meta-description', $instrumentInfo->name.' High configurable and nice looking technical analysis chart of Bangladesh. From 5 minutes candle to 1 hour candle available as well as daily data')
 @extends('layouts.metronic.default')
 
 @section('content')

@@ -1,29 +1,35 @@
 <?php
+Route::get('/sitemap.xml', 'SitemapController@index');
+Route::get('/dse/stock/{instrument}/{name}/chart/technical-analysis', 'ChartController@index')->name('ta-chart-new')->middleware('httpcache'); // ta-chart
 
-Route::get('/dse/stock/ACI/advance-chemical-industries/price/history', 'controller@action')->name('/DSE/ACI/ta-chart');
-Route::get('/dse/stock/ACI/advance-chemical-industries/price/change', 'controller@action')->name('/DSE/ACI/ta-chart');
+Route::get('/dse/stock/{instrument}/{name}/chart/advance-technical-analysis', 'AdvanceChartController@index')->name('advance-ta-chart')->middleware('httpcache'); // advance-ta-chart
 
-Route::get('/dse/stock/ACI/advance-chemical-industries/chart/technical-analysis', 'controller@action')->name('/DSE/ACI/ta-chart'); // ta-chart
-Route::get('/dse/stock/ACI/advance-chemical-industries/chart/advance-technical-analysis', 'controller@action')->name('/DSE/ACI/advance-ta'); // advance ta-chart
-Route::get('/dse/stock/ACI/advance-chemical-industries/chart/minute-chart', 'controller@action')->name('/DSE/ACI/advance-ta'); // minute -chart
-Route::get('/dse/stock/ACI/advance-chemical-industries/chart/news-chart', 'controller@action')->name('/DSE/ACI/advance-ta'); //news chart
+Route::get('/dse/stock/{instrument}/{name}/chart/minute-chart', 'PagesController@minuteChart')->name('minute-chart')->middleware('httpcache'); // minute -chart
 
-Route::get('/dse/stock/ACI/advance-chemical-industries/company/details', 'controller@action')->name('/DSE/ACI/trade-details'); // trade details
-Route::get('/dse/stock/ACI/advance-chemical-industries/fundamental/details', 'controller@action')->name('/DSE/ACI/fundamental-details'); // fundamental details
-Route::get('/dse/stock/ACI/advance-chemical-industries/fundamental/details', 'controller@action')->name('/DSE/ACI/company-details'); // company details
-Route::get('/dse/stock/ACI/advance-chemical-industries/technical/details', 'controller@action')->name('/DSE/ACI/company-details'); // technical details
+Route::get('/dse/stock/{instrument}/{name}/chart/news-chart', 'PagesController@newsChart')->name('news-chart')->middleware('httpcache');  //news chart
 
-Route::get('/dse/stock/ACI/advance-chemical-industries/news/market-announcement', 'controller@action')->name('/DSE/ACI/company-details');
-Route::get('/dse/stock/ACI/advance-chemical-industries/news/search', 'controller@action')->name('/DSE/ACI/company-details');
+Route::get('/dse/stock/{instrument}/{name}/fundamental/details', 'PagesController@fundamentalDetails')->name('fundamental-details')->middleware('httpcache');  // fundamental details
 
-Route::get('/dse/sector/textile/news', 'controller@action')->name('/DSE/ACI/news');
-Route::get('/dse/sector/textile/chart/technical-analysis/', 'controller@action')->name('/DSE/ACI/news');
-Route::get('/dse/sector/textile/chart/minute-chart/', 'controller@action')->name('/DSE/ACI/news');
+Route::get('/dse/stock/{instrument}/{name}/trade/details', 'PagesController@tradeDetails')->name('trade-details')->middleware('httpcache');  // trade details
 
-Route::get('/dse/market/monitor', 'controller@action')->name('/DSE/ACI/news');
-Route::get('/dse/market/share/price/list', 'controller@action')->name('/DSE/ACI/news');
-Route::get('/dse/market/share/price/table', 'controller@action')->name('/DSE/ACI/news');
-Route::get('/dse/market/share/price/data-matrix', 'controller@action')->name('/DSE/ACI/news');
+// Route::get('/dse/stock/{instrument}/{name}/news/search', 'NewsController@newsSearch')->name('news-search')->middleware('httpcache');  // trade details
+
+
+
+// Route::get('/dse/stock/ACI/advance-chemical-industries/technical/details', 'controller@action')->name('/DSE/ACI/company-details'); // technical details
+
+// Route::get('/dse/stock/ACI/advance-chemical-industries/news/market-announcement', 'controller@action')->name('/DSE/ACI/company-details'); 
+// 
+// Route::get('/dse/stock/ACI/advance-chemical-industries/news/search', 'controller@action')->name('/DSE/ACI/company-details');
+
+// Route::get('/dse/sector/textile/news', 'controller@action')->name('/DSE/ACI/news');
+// Route::get('/dse/sector/textile/chart/technical-analysis/', 'controller@action')->name('/DSE/ACI/news');
+// Route::get('/dse/sector/textile/chart/minute-chart/', 'controller@action')->name('/DSE/ACI/news');
+
+// Route::get('/dse/market/monitor', 'controller@action')->name('/DSE/ACI/news');
+// Route::get('/dse/market/share/price/list', 'controller@action')->name('/DSE/ACI/news');
+// Route::get('/dse/market/share/price/table', 'controller@action')->name('/DSE/ACI/news');
+// Route::get('/dse/market/share/price/data-matrix', 'controller@action')->name('/DSE/ACI/news');
 
 
 
@@ -252,9 +258,9 @@ Route::get('/cockpit', function () {
         return view('cockpit_page');
     })->name('cockpit');
 
-Route::get('news-chart/{instrument_id?}', 'PagesController@newsChart')->name('news-chart');
-Route::get('minute-chart/{instrument_id?}', 'PagesController@minuteChart')->name('minute-chart')->middleware('httpcache'); //httpcache implemented in PagesController@minuteChart
-Route::get('company-details/{instrument_id?}', 'PagesController@companyDetails')->name('company-details')->middleware('httpcache');
+Route::get('news-chart/{instrument_id?}', 'PagesController@newsChartRedirect');
+Route::get('minute-chart/{instrument_id?}', 'PagesController@redirectMinuteChart')->middleware('httpcache'); //httpcache implemented in PagesController@minuteChart
+Route::get('company-details/{instrument_id?}', 'PagesController@tradeDetailsRedirect');
 
 //https://stockbangladesh.com/company-details/displayCompany.php?name=FIRSTFIN
 Route::get('/company-details/displayCompany.php', function () {
@@ -262,16 +268,16 @@ Route::get('/company-details/displayCompany.php', function () {
 });
 
 
-Route::get('fundamental-details/{instrument_id?}', 'PagesController@fundamentalDetails')->name('fundamental-details')/*->middleware('httpcache')*/;
+Route::get('fundamental-details/{instrument_id?}', 'PagesController@fundamentalDetailsRedirect')/*->middleware('httpcache')*/;
 Route::get('technical-analysis-home', 'PagesController@technicalAnalysisHome')->name('technical-analysis-home')/*->middleware('httpcache')*/;
 
 
-Route::get('/advance-ta-chart', function () {
-        return view('ta_chart.advance_ta_chart');
-    })->name('advance-ta-chart');
+Route::get('/advance-ta-chart', 'AdvanceChartController@redirect');
+
 Route::get('/java-chart', 'DataBanksEodController@java_chart')->name('java-chart');
 Route::get('/ta/ajax/{reportrange?}/{instrument?}/{comparewith?}/{Indicators?}/{configure?}/{charttype?}/{overlay?}/{mov1?}/{avgPeriod1?}/{mov2?}/{avgPeriod2?}/{adj?}/{interval?}', 'DataBanksEodController@chart_img_trac');
-Route::get('/ta-chart', 'ChartController@index')->name('ta-chart')->middleware('httpcache');
+Route::get('/ta-chart', 'ChartController@redirect')->name('ta-chart');
+Route::get('/ta-chart-img', 'ChartController@taChartImg')->name('ta-chart-img')->middleware('httpcache');
 Route::get('/getchart/{img}', 'DataBanksEodController@getchart');
 
 

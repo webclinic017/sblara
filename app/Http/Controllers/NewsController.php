@@ -625,6 +625,11 @@ class NewsController extends Controller
         }
         return view('news_search.index',['instrument' => $instrument, 'result' => $result, 'meta_title' => $meta_title, 'meta_desc' => $meta_desc]);
     }
+
+    public function newsSearchRedirect()
+    {
+        return redirect('dse/stock/news/search', 301);
+    }
     
     public function viewNews($id){
       

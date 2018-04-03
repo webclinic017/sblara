@@ -3,11 +3,11 @@
 {
   "@context": "http://schema.org",
   "@type": "Course",
-  "name": "{ ! $course_details->course_name ! }",
+  "name": "{{$course_details->course_name}}",
   "description": "{{strip_tags(str_limit($course_details->course_overview,200))}} ",
   "provider": {
     "@type": "Organization",
-    "name": "Stock Bangladesh Limited",
+    "name": "Stock Bangladesh Limited"
   }
 }
 </script>

@@ -197,7 +197,7 @@ function sparkLineLineColor($val)
 
 function sparkLineFillColor($val)
 {
-    $css = ($val < 0) ? "#ffaaaa" : "#00bf00";
+    $css = ($val < 0) ? "#ffaaaa" : "#96ea96";
     return $css;
 }
 
