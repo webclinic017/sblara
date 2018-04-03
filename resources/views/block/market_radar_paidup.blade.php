@@ -1,14 +1,5 @@
 <div id="market_radar_paidup">
 </div>
-<div class="btn-group btn-group-justified">
-                                                                    <a href="javascript:;" class="btn btn-default btn-xs"> 0-10 </a>
-                                                                    <a href="javascript:;" class="btn btn-default btn-xs"> 10-30 </a>
-                                                                    <a href="javascript:;" class="btn btn-default btn-xs"> 30-50 </a>
-                                                                    <a href="javascript:;" class="btn btn-default btn-xs"> 30-50 </a>
-                                                                    <a href="javascript:;" class="btn btn-default btn-xs"> 50-100 </a>
-                                                                    <a href="javascript:;" class="btn btn-default btn-xs"> 100-200 </a>
-                                                                    <a href="javascript:;" class="btn btn-default btn-xs"> over 200 </a>
-                                                                </div>
 <script>
 $(function () {
 

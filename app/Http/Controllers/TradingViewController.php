@@ -57,7 +57,7 @@ class TradingViewController extends Controller
         $returnData['description']="$instrumentCode-SB";
         $returnData['sector']='sector';
         $returnData['type']='stock';
-        $returnData['supported_resolutions']=array("5","15","30","60","D","2D","3D","W","2W","M");
+        $returnData['supported_resolutions']=array("5","15","30","60","D","2D","3D","W","2W","M","6M");
 
         return collect($returnData)->toJson();
 
@@ -285,7 +285,7 @@ ORDER BY lm_date_time asc ,total_volume asc";
         $config=array();
         $config['supports_search']=true;
         $config['supports_group_request']=false;
-        $config['supported_resolutions']=array("5","15","30","60","D","2D","3D","W","2W","M");
+        $config['supported_resolutions']=array("5","15","30","60","D","2D","3D","W","2W","M","6M");
         $config['supports_marks']=false;
         $config['supports_time']=true;
 

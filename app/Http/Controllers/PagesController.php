@@ -195,34 +195,33 @@ dd($eq_arr);
            $trade_date_Info=Market::getActiveDates()->first();
            return response()->view('dashboard2', ['trade_date_Info' => $trade_date_Info])->setTtl(1);*/
     }
-    public function newsChart($instrument_id=13)
+    public function newsChart($instrument = "DSEX")
     {
-        return View::make("news_chart_page")->with('instrument_id',(int)$instrument_id);
+        $instrument = \App\Instrument::where('instrument_code', $instrument)->first();
+        return View::make("news_chart_page")->with('instrument_id', $instrument->id);
     }
 
-    public function minuteChart($instrument_id=12)
+    public function minuteChart($instrument_code="DSEX")
     {
 
         // cache is working separately for every share. That means minute chart page of 300 share will create 300 cache
-        $instrument_id=(int)$instrument_id;
-        $instrument_info=InstrumentRepository::getInstrumentsById([$instrument_id])->keyBy('id');
-        $instrument_name=ucwords(strtolower($instrument_info[$instrument_id]->name));
-        $instrument_code=$instrument_info[$instrument_id]->instrument_code;
+            $instrument = \App\Instrument::where('instrument_code', $instrument_code)->first();        
 
-        return response()->view('minute_chart_page', ['instrument_id' => (int)$instrument_id,'instrument_name'=>$instrument_name,'instrument_code'=>$instrument_code])->setTtl(60);
+        return response()->view('minute_chart_page', ['instrument_id' => (int)$instrument->id,'instrument_name'=>$instrument->name,'instrument_code'=>$instrument->instrument_code])->setTtl(60);
         //return View::make("minute_chart_page")->with('instrument_id',(int)$instrument_id);
 
     }
-    public function companyDetails($instrument_id=13)
+    public function tradeDetails($instrument_id = false)
     {
 
-        if(request()->has('name'))
+        if($instrument_id)
         {
-            $id = request()->name?:'ACI';
+            $id = $instrument_id;
             $instrumentInfo = \App\Instrument::where('instrument_code', $id)->first();
             $instrument_id=$instrumentInfo->id;
         }else
         {
+            $instrument_id = 13;
             $instrument_id=(int)$instrument_id;
             $instrumentInfo=InstrumentRepository::getInstrumentsById(array($instrument_id))->first();
         }
@@ -267,10 +266,10 @@ dd($eq_arr);
         //)->setTtl(60);
 
     }
-    public function fundamentalDetails($instrument_id=13)
+    public function fundamentalDetails($instrument_id="DSEX")
     {
-
-        $instrument_id=(int)$instrument_id;
+        $instrument = \App\Instrument::where('instrument_code', $instrument_id)->first();
+        $instrument_id=(int)$instrument->id;
         $instrumentInfo=InstrumentRepository::getInstrumentsById(array($instrument_id))->first();
         $category=DB::table('data_banks_intradays')->where('instrument_id',$instrument_id)->select('quote_bases')->orderBy('id')->limit(1)->get();
         $category=category($category[0]);
@@ -331,30 +330,16 @@ public function technicalAnalysisHome()
 
         //$c = FileDataRepository::get5MinutesUnadjustedData(13, 'o', 1);
         //dump($c);
-       // $c = FileDataRepository::get5MinutesUnadjustedData(13, 'h', 1);
-       // dump($c);
-       // $c = FileDataRepository::get5MinutesUnadjustedData(13, 'l', 1);
-       // dump($c);
-
-
-        $ins_id=250;
-        $latest=1;
-        $o = FileDataRepository::get15MinutesUnadjustedData($ins_id, 'o', $latest);
-        $h = FileDataRepository::get15MinutesUnadjustedData($ins_id, 'h', $latest);
-        $l = FileDataRepository::get15MinutesUnadjustedData($ins_id, 'l', $latest);
-        $c = FileDataRepository::get15MinutesUnadjustedData($ins_id, 'c', $latest);
-        $v = FileDataRepository::get15MinutesUnadjustedData($ins_id, 'v', $latest);
-        $d = FileDataRepository::get15MinutesUnadjustedData($ins_id, 'd', $latest);
-
-
-        dump("Total :  "." O =".count($o)." H =".count($h)." L =".count($l)." C =".count($c)." V =".count($v)." D =".count($d));
-        for($i=0;$i<count($c);$i++)
-        {
-            dump(" O =".$o[$i]." H =".$h[$i]." L =".$l[$i]." C =".$c[$i]." V =".$v[$i]." D =".$d[$i]);
-
-
-        }
-        dd("-----------");
+        //$c = FileDataRepository::get5MinutesUnadjustedData(13, 'h', 1);
+        //dump($c);
+        //$c = FileDataRepository::get5MinutesUnadjustedData(13, 'l', 1);
+        //dump($c);
+        //$c = FileDataRepository::get5MinutesUnadjustedData(13, 'c', 1);
+        //dump($c);
+        $c = FileDataRepository::get5MinutesUnadjustedData(13, 'c', 1);
+        dump($c);
+        $c = FileDataRepository::get5MinutesUnadjustedData(13, 'd', 1);
+        dd($c);
 
         $t=0;
 
@@ -590,6 +575,45 @@ exit;
 
     }
 
+    public function redirectMinuteChart($id = false)
+    {
+        if($id)
+        {
+            $instrument = \App\Instrument::find($id);
+            return redirect("/dse/stock/".strtolower($instrument->instrument_code)."/".str_slug($instrument->name)."/chart/minute-chart", 301);
+        }
+        return redirect("/dse/stock/dsex/dse-broad-index/chart/minute-chart", 301);            
+    }
+
+    public function newsChartRedirect($id = false)
+    {
+        if($id)
+        {
+            $instrument = \App\Instrument::find($id);
+            return redirect("/dse/stock/".strtolower($instrument->instrument_code)."/".str_slug($instrument->name)."/chart/news-chart", 301);
+        }
+        return redirect("/dse/stock/dsex/dse-broad-index/chart/news-chart", 301);
+    }
+
+    public function fundamentalDetailsRedirect($id = false)
+    {
+        if($id)
+        {
+            $instrument = \App\Instrument::find($id);
+            return redirect("/dse/stock/".strtolower($instrument->instrument_code)."/".str_slug($instrument->name)."/fundamental/details", 301);
+        }
+        return redirect("/dse/stock/abbank/ab-bank-limited/fundamental/details", 301);
+    }
+
+    public function tradeDetailsRedirect($id = false)
+    {
+        if($id)
+        {
+            $instrument = \App\Instrument::find($id);
+            return redirect("/dse/stock/".strtolower($instrument->instrument_code)."/".str_slug($instrument->name)."/trade/details", 301);
+        }
+        return redirect("/dse/stock/abbank/ab-bank-limited/trade/details", 301);
+    }
 
 
 }

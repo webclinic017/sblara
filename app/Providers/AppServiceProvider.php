@@ -44,6 +44,7 @@ class AppServiceProvider extends ServiceProvider {
         View::composer('block.top_sectors', 'App\Http\ViewComposers\TopSectors');
         View::composer('block.sector_gainer_loser', 'App\Http\ViewComposers\SectorGainerLoser');
         View::composer('block.sector_gainer_loser_last_minute', 'App\Http\ViewComposers\SectorGainerLoserLastMinute');
+        View::composer('block.sectorwise-share-price-list-dse', 'App\Http\ViewComposers\SectorWiseSharePriceListDse');
 
         View::composer('block.category_pe', 'App\Http\ViewComposers\CategoryPE');
         View::composer('block.sector_pe', 'App\Http\ViewComposers\SectorPE');

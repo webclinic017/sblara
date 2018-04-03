@@ -18,6 +18,50 @@ List of Upcoming Courses:
                 <div class="row">
                     <div class="col-md-12">
                         @foreach($batches as $batch)
+
+                        @section('structured_data')
+
+                        <script type="application/ld+json">
+                        {
+                          "@context": "http://schema.org",
+                          "@type": "Event",
+                          "name": "{{isset($batch->course_name)?$batch->course_name:$batch->course_id}} - {{$batch->batch_name}}",
+                          "startDate": "{{date('Y-m-d',strtotime($batch->c_start_date))}}T15:00-18:00",
+                          "location": {
+                            "@type": "Place",
+                            "name": "Head Office, Stock Bangladesh Ltd",
+                            "address": {
+                              "@type": "PostalAddress",
+                              "streetAddress": "99 Kazi Nazrul Islam Avenue",
+                              "addressLocality": "Kawran Bazar",
+                              "postalCode": "1215",
+                              "addressRegion": "Dhaka",
+                              "addressCountry": "BD"
+                            }
+                          },
+                          "image": [
+                            "https://stockbangladesh.com/img/technical-analysis-01-300x300.jpg"
+                           ],
+                          "description": "Join us for an afternoon of Technical Analysis session. Complimentary tea break will be served.",
+                          "endDate": "{{date('Y-m-d',strtotime($batch->c_end_time))}}T15:00-18:00",
+                          "offers": {
+                            "@type": "Offer",
+                            "url": "https://stockbangladesh.com/courses/technical-analysis",
+                            "price": "{{$batch->course_fees}}",
+                            "priceCurrency": "BDT",
+                            "availability": "http://schema.org/InStock",
+                            "validFrom": "{{date('Y-m-d',strtotime($batch->c_start_date))}}T15:00-18:00"
+                          },
+                          "performer": {
+                            "@type": "PerformingGroup",
+                            "name": "R&D Department of StockBangladesh"
+                          }
+                        }
+                        </script>
+
+                        @endsection
+
+
                         <div class="portlet box green">
                             <div class="portlet-title">
                                 <div class="caption">

@@ -431,6 +431,7 @@ function SymbolisNullOrEmpty(n) {
 			{
 				var widget = window.tvWidget = new TradingView.widget({
 				    width: "100%",
+				    height: "550px",
 					symbol:"{{request()->has('instrumentCode')?request()->instrumentCode:'DSEX'}}",
 					interval: 'D',
 					allow_symbol_change: !0,
@@ -441,7 +442,7 @@ function SymbolisNullOrEmpty(n) {
 					//	BEWARE: no trailing slash is expected in feed URL
 					datafeed: new Datafeeds.UDFCompatibleDatafeed("{{ url('/') }}",60000), // update frequency 60 sec
 
-					library_path: "metronic_custom/charting_library/",
+					library_path: "/metronic_custom/charting_library/",
 					locale: "en",
                     drawings_access: {type: "black", tools: [{name: "Regression Trend"}]},
                     disabled_features: ["use_localstorage_for_settings","widget_logo"],

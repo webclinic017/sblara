@@ -6,11 +6,10 @@ $description = "Build your own screener with our powerful filters";
 $slug = "new";
 
 if($screener){
-  $title = $screener->title
-;  $description = $screener->description;
+  $title = $screener->title;
+    $description = $screener->description;
   $slug = $screener->slug;
 }
-
 @endphp
 @section('title', ucwords(strtolower($title)))
 @section('meta-title', ucwords(strtolower($title))." : Advance Stock Scanner of DSE")
