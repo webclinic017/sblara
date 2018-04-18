@@ -14,5 +14,7 @@ class VerifyCsrfToken extends BaseVerifier
     protected $except = [
        // 'login',
        'filter',
+       'advance-ta-chart/snapshot',
+       '1.1/*',
     ];
 }
