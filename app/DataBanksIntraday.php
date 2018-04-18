@@ -228,6 +228,4 @@ class DataBanksIntraday extends Model {
     }
 
 
-
-
 }

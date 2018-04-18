@@ -8,12 +8,10 @@ use App\Repositories\DataBanksIntradayRepository;
 use App\Repositories\ExchangeRepository;
 use App\Repositories\InstrumentRepository;
 use Carbon\Carbon;
+use App\ChartLayout;
 
 class TradingViewController extends Controller
 {
-
-//[{"symbol":"APC","full_name":"APC","description":"Anadarko Petroleum Corporation","exchange":"NYSE","type":"stock"},{"symbol":"AA","full_name":"AA","description":"Alcoa Inc.","exchange":"NYSE","type":"stock"},{"symbol":"AAPL","full_name":"AAPL","description":"Apple Inc.","exchange":"NasdaqNM","type":"stock"},{"symbol":"ABB","full_name":"ABB","description":"ABB Ltd.","exchange":"NYSE","type":"stock"},{"symbol":"ABBV","full_name":"ABBV","description":"AbbVie Inc.","exchange":"NYSE","type":"stock"},{"symbol":"ABT","full_name":"ABT","description":"Abbott Laboratories","exchange":"NYSE","type":"stock"},{"symbol":"ABX","full_name":"ABX","description":"Barrick Gold Corporation","exchange":"NYSE","type":"stock"},{"symbol":"ACHN","full_name":"ACHN","description":"Achillion Pharmaceuticals, Inc.","exchange":"NasdaqNM","type":"stock"},{"symbol":"ACI","full_name":"ACI","description":"Arch Coal Inc.","exchange":"NYSE","type":"stock"},{"symbol":"ACN","full_name":"ACN","description":"Accenture plc","exchange":"NYSE","type":"stock"},{"symbol":"ACT","full_name":"ACT","description":"Actavis plc","exchange":"NYSE","type":"stock"},{"symbol":"ADBE","full_name":"ADBE","description":"Adobe Systems Inc.","exchange":"NasdaqNM","type":"stock"},{"symbol":"ADSK","full_name":"ADSK","description":"Autodesk, Inc.","exchange":"NasdaqNM","type":"stock"},{"symbol":"AEO","full_name":"AEO","description":"American Eagle Outfitters, Inc.","exchange":"NYSE","type":"stock"},{"symbol":"AGNC","full_name":"AGNC","description":"American Capital Agency Corp.","exchange":"NasdaqNM","type":"stock"},{"symbol":"AIG","full_name":"AIG","description":"American International Group, Inc.","exchange":"NYSE","type":"stock"},{"symbol":"AKAM","full_name":"AKAM","description":"Akamai Technologies, Inc.","exchange":"NasdaqNM","type":"stock"},{"symbol":"ALU","full_name":"ALU","description":"Alcatel-Lucent","exchange":"NYSE","type":"stock"},{"symbol":"ALXN","full_name":"ALXN","description":"Alexion Pharmaceuticals, Inc.","exchange":"NasdaqNM","type":"stock"},{"symbol":"AMAT","full_name":"AMAT","description":"Applied Materials, Inc.","exchange":"NasdaqNM","type":"stock"},{"symbol":"AMD","full_name":"AMD","description":"Advanced Micro Devices, Inc.","exchange":"NYSE","type":"stock"},{"symbol":"AMGN","full_name":"AMGN","description":"Amgen Inc.","exchange":"NasdaqNM","type":"stock"},{"symbol":"AMZN","full_name":"AMZN","description":"Amazon.com Inc.","exchange":"NasdaqNM","type":"stock"},{"symbol":"ANF","full_name":"ANF","description":"Abercrombie & Fitch Co.","exchange":"NYSE","type":"stock"},{"symbol":"ANR","full_name":"ANR","description":"Alpha Natural Resources, Inc.","exchange":"NYSE","type":"stock"},{"symbol":"APA","full_name":"APA","description":"Apache Corp.","exchange":"NYSE","type":"stock"},{"symbol":"AAL","full_name":"AAL","description":"American Airlines Group Inc.","exchange":"NasdaqNM","type":"stock"},{"symbol":"ARC","full_name":"ARC","description":"ARC Document Solutions, Inc.","exchange":"NYSE","type":"stock"},{"symbol":"ARIA","full_name":"ARIA","description":"Ariad Pharmaceuticals Inc.","exchange":"NasdaqNM","type":"stock"},{"symbol":"ARNA","full_name":"ARNA","description":"Arena Pharmaceuticals, Inc.","exchange":"NasdaqNM","type":"stock"}]
-
     public function search(Request $request)
     {
         $limit = (int) $request->input('limit', 30);
@@ -24,7 +22,7 @@ class TradingViewController extends Controller
             $exchangeName='DSE';
         $exchangeDetails=ExchangeRepository::getExchangeInfo($exchangeName);
         $instrumentList=InstrumentRepository::getTradingViewInstrumentList($limit,$query,$type,$exchangeDetails);
-        return $instrumentList->toJson();
+        return $instrumentList;
     }
 
 
@@ -46,7 +44,6 @@ class TradingViewController extends Controller
         $returnData['minmov2']=2;
         $returnData['pricescale']=10;
         $returnData['pointvalue']=1;
-        $returnData['session']='24x7';  //24x 7 should be given otherwise it will remove sunday treating it weekend
         //$returnData['session']='1030-1430;1'; //https://github.com/tradingview/charting_library/wiki/Trading-Sessions   github user: afmsohail@gmail.com
         $returnData['session'] = '1;1000-1600:12345';
         $returnData['has_daily']=true;
@@ -59,7 +56,7 @@ class TradingViewController extends Controller
         $returnData['type']='stock';
         $returnData['supported_resolutions']=array("5","15","30","60","D","2D","3D","W","2W","M","6M");
 
-        return collect($returnData)->toJson();
+        return $returnData;
 
 
     }
@@ -175,7 +172,7 @@ ORDER BY lm_date_time asc ,total_volume asc";
             $returnData['s'] = "ok";
         }else
         {
-            // $returnData['s'] = "no_data";
+            $returnData['s'] = "no_data";
             //  $returnData['nextTime'] = strtotime('1999-01-01');
         }
 
@@ -272,14 +269,16 @@ ORDER BY lm_date_time asc ,total_volume asc";
             $data = self::intraData($instrumentInfo->id, $from, $to, $resolution);
 
         }
+
        // return response()->view('dashboard', ['trade_date_Info' => $trade_date_Info])->setTtl(1);
-        return response()->json($data)->setTtl(60);
+        return response($data)->header('Content-Type', 'application/json')->setTtl(60);
         //return $data;
 
     }
 
     public function config()
     {
+
         //https://github.com/tradingview/charting_library/wiki/Customization-Overview
         //old config:   {"supports_search":true,"supports_group_request":false,"supports_marks":true,"supports_timescale_marks":true,"supports_time":true,"exchanges":[{"value":"","name":"All Exchanges","desc":""},{"value":"XETRA","name":"XETRA","desc":"XETRA"},{"value":"NSE","name":"NSE","desc":"NSE"},{"value":"NasdaqNM","name":"NasdaqNM","desc":"NasdaqNM"},{"value":"NYSE","name":"NYSE","desc":"NYSE"},{"value":"CDNX","name":"CDNX","desc":"CDNX"},{"value":"Stuttgart","name":"Stuttgart","desc":"Stuttgart"}],"symbolsTypes":[{"name":"All types","value":""},{"name":"Stock","value":"stock"},{"name":"Index","value":"index"}],"supportedResolutions":["D","2D","3D","W","3W","M","6M"]}
         $config=array();
@@ -307,7 +306,297 @@ ORDER BY lm_date_time asc ,total_volume asc";
         $symbolType['value']="Stock";
 
         $config['symbolsTypes'][]=$symbolType;
-
-        return collect($config)->toJson();
+        return $config;
     }
+
+    public function snapShot()
+    {
+        $path = __DIR__."/../../../storage/app/public/chartimages/";
+            if(!file_exists($path))
+            {
+                mkdir ($path);
+            }
+        $request = json_decode($_POST['images']);
+      // set the color      
+
+
+            $filename = md5(time());
+            $ext = ".png";
+
+            // decode and store in variable time axis
+            $time_axis = $request->charts[0]->timeAxis->content;
+            $time_axis = str_replace('data:image/png;base64,', '', $time_axis);
+            $time_axis = str_replace(' ', '+', $time_axis);
+            $time_axis = base64_decode($time_axis);
+            $time_axis = imagecreatefromstring($time_axis);
+          
+
+             // decode and store in variable time axis
+            $time_axis_stub = $request->charts[0]->timeAxis->rhsStub->content;
+            $time_axis_stub = str_replace('data:image/png;base64,', '', $time_axis_stub);
+            $time_axis_stub = str_replace(' ', '+', $time_axis_stub);
+            $time_axis_stub = base64_decode($time_axis_stub);
+            $time_axis_stub = imagecreatefromstring($time_axis_stub);
+            
+
+            // create  empty image with height = height of chart  and width =width of chart +width of axis
+            $canvaswidth = $request->charts[0]->panes[0]->contentWidth + $request->charts[0]->panes[0]->rightAxis->contentWidth;
+            $canvasHeight = (int) $request->charts[0]->timeAxis->contentHeight;
+            foreach($request->charts[0]->panes as $val) {
+                $canvasHeight += (int) $val->contentHeight;
+            }
+            $image = imagecreatetruecolor(
+                $canvaswidth,
+                $canvasHeight
+            );
+
+            $color = $request->charts[0]->colors->text;
+            if(isset($color[6])){
+                $color = imagecolorallocate($image, hexdec($color[1].$color[2]), hexdec($color[3].$color[4]), hexdec($color[5].$color[6]));
+            }else{
+                $color = imagecolorallocate($image, hexdec($color[1]), hexdec($color[2]), hexdec($color[3]));
+            }
+          $font = __DIR__.'/arial.ttf';            
+            // decode and store in variable chart  
+            // dd(count($request->charts[0]->panes));
+            $i = -1;
+            $padding = 0;
+            foreach ($request->charts[0]->panes as $pane) {
+                $content = $pane->content;
+                $content = str_replace('data:image/png;base64,', '', $content);
+                $content = str_replace(' ', '+', $content);
+                $content = base64_decode($content);
+                $content = imagecreatefromstring($content);
+
+            // decode and store in variable right axis
+            if(isset($pane->rightAxis))
+            {            
+                $right_axis = $pane->rightAxis->content;
+                $right_axis = str_replace('data:image/png;base64,', '', $right_axis);
+                $right_axis = str_replace(' ', '+', $right_axis);
+                $right_axis = base64_decode($right_axis);
+                $right_axis = imagecreatefromstring($right_axis);
+            }
+
+
+            if($i != -1){
+                //set studies
+                $padding += (int) $request->charts[0]->panes[$i]->contentHeight;
+            }else{
+                $count = count($request->charts[0]->panes) - 1;
+                $additional = (int) $request->charts[0]->panes[$count]->contentHeight;
+            }
+            $i++;
+            $studyMargin = 15;
+            if(isset($pane->studies)){
+                foreach ($pane->studies as $study) {
+                    $studyMarginTotal = $studyMargin;
+                    if($i == 0){
+                        $studyMarginTotal += 30;
+                    }
+                imagettftext($content, 9, 0, 10, $studyMarginTotal, $color, $font, $study);
+                $studyMargin += 15;
+                }
+            }
+            //replace area of chart in image with chart 
+            imagecopymerge(
+                        $image,
+                        $content,
+                        0,
+                        $padding,
+                        0,
+                        0,
+                        $pane->contentWidth,
+                        $pane->contentHeight,
+                        100
+                    );
+
+            //replace area of right axis in image with axis
+             imagecopymerge(
+                        $image,
+                        $right_axis,
+                        $request->charts[0]->panes[0]->contentWidth,
+                        $padding,
+                        0,
+                        0,
+                        $pane->rightAxis->contentWidth,
+                        $pane->rightAxis->contentHeight,
+                        100
+                    );
+
+            }
+
+
+            //replace area of time axis in image with axis
+
+            imagecopymerge(
+                        $image,
+                        $time_axis,
+                        0,
+                        $padding+ (int) $additional,       
+                        0,
+                        0,
+                        $request->charts[0]->timeAxis->contentWidth,
+                        $request->charts[0]->timeAxis->contentHeight,
+                        100
+                    );            
+            imagecopymerge(
+                        $image,
+                        $time_axis_stub,
+                        $request->charts[0]->timeAxis->contentWidth,
+                        $padding + (int) $additional,       
+                        0,
+                        0,
+                        $request->charts[0]->timeAxis->contentWidth,
+                        $request->charts[0]->timeAxis->contentHeight,
+                        100
+                    );            
+
+
+
+
+// imagefilledrectangle($image, 0, 0, 399, 29, $white);
+
+// The text to draw
+$text = $request->charts[0]->meta->symbol.", ".$request->charts[0]->meta->resolution.", ". $request->charts[0]->meta->exchange;
+$text2 = "O: ".$request->charts[0]->ohlc[0].", H: ".$request->charts[0]->ohlc[1].", L: ". $request->charts[0]->ohlc[2].", C: ".$request->charts[0]->ohlc[2];
+// Replace path by your own font path
+
+
+header('Content-Type: image/png');
+// Add some shadow to the text
+// imagettftext($image, 20, 0, 11, 21, $grey, $font, $text);
+
+// Add the text
+imagettftext($image, 13, 0, 10, 17, $color, $font, $text);
+imagettftext($image, 10, 0, 10, 32, $color, $font, $text2);
+
+            $stamp = imagecreatefromgif(__DIR__."/../../../public/img/chart_logo.gif");
+            // $clr = imagecolorallocatealpha($stamp, 255, 255, 255, 255);
+            // imagefill($stamp, 0, 0, $clr);
+             // imagecolortransparent ($image,);
+                $marge_right = 10;
+                $width =  $canvaswidth-100;
+                $height =  $canvasHeight - 70;
+                $marge_bottom = 10;
+                $sx = imagesx($stamp);
+                $sy = imagesy($stamp);
+                imagecopy($image, $stamp, $width/2, $height/2, 0, 0, imagesx($stamp), imagesy($stamp));
+            imagepng($image,  $path.$filename.$ext);        
+            die(asset('storage/chartimages/'.$filename));
+    }
+
+    public function share($image)
+    {
+        return view('tradingview-share')->with('image', $image);
+    }
+
+    public function saveLayout(Request $request)
+    {
+        if($request->has('chart')){
+            //update
+            $layout = \App\ChartLayout::find($request->chart);
+            $layout->content = $request->content;
+            $layout->symbol = $request->symbol;
+            $layout->resolution = $request->resolution;
+            $layout->name = $request->name;
+            $layout->updated_at = \Carbon\Carbon::now();
+            $layout->save();
+            return ['status' => 'ok'];
+        }
+        \App\ChartLayout::insert(['name' => $request->name, 'user_id' => $this->user()->id, 'content' => $request->content, 'symbol' => $request->symbol, 'resolution' => $request->resolution, 'created_at' => \Carbon\Carbon::now(), 'updated_at' => \Carbon\Carbon::now()]);
+        return ['status' => 'ok'];
+    }
+    public function layouts(Request $request)
+    {
+        if($request->has('chart'))
+        {
+            $data = [];
+            $data['data'] = \App\ChartLayout::find($request->chart);
+            $data['status'] = 'ok';
+            return $data; 
+        }
+        $data = [];
+        $data['data'] = \App\ChartLayout::select('id', 'name', 'resolution', 'slug', 'symbol', 'updated_at')->where('user_id', $this->user()->id)->get();
+        $data['status'] = 'ok';
+        return $data;
+    }
+
+    public function user()
+    {
+        if(!$user = request()->user())
+        {
+            $user = new \stdClass();
+            if(!request()->session()->has('TVUserID')){
+                session(['TVUserID' => md5(uniqid())]);
+            }
+            $user->id = session()->get('TVUserID');
+            $user->name = 'Anonymous';
+        }else{
+        //sync settings
+            
+            if(request()->session()->has('TVUserID')){
+                \App\ChartLayout::where("user_id", session('TVUserID'))->update(['user_id' => $user->id]);
+            }
+        }
+        
+        return $user;
+    }
+
+    public function chart()
+    {
+        $user = $this->user();
+        return view('advance-ta-chart-new');
+    }
+
+    public function delete()
+        {
+            $chart = ChartLayout::find(request()->chart);
+            if($chart->user_id == $this->user()->id){
+                $chart->delete();
+                return ['status'=>'ok'];
+            }
+
+        } 
+
+    public function tree()
+       {
+                // var data = [
+                //        {
+                //          'text' : 'Root node 2',
+                //          'state' : {
+                //            'opened' : true,
+                //            'selected' : true
+                //          },
+                //          'children' : [
+                //            { 'text' : 'Child 1' },
+                //            'Child 2',{
+                //             'text' : 'test node',
+                //             'children': [
+                //                 'hey', 'there'
+                //             ]
+                //            },
+                //            'child 3',
+                //            'child 4'
+                //          ]
+                //       }
+                //     ]        
+            $data = [];
+            $list = new \stdClass();
+            $data[] = 'test'; 
+            $data[] = 'test'; 
+            $data[] = 'test'; 
+            $data[] = 'test'; 
+            $data[] = 'test'; 
+            $data[] = 'test'; 
+            $data[] = 'test'; 
+            $data[] = 'test'; 
+            $data[] = 'test'; 
+            return $data;
+       }
+
+       public function tab($tab)
+          {
+            return view('tv.tabs.'.$tab);
+          }   
 }

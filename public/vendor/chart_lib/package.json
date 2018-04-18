@@ -1,0 +1,22 @@
+{
+  "name": "charting_library",
+  "version": "1.0.0",
+  "description": "This repository contains Charting Library package. If you use Git in your project, please feel free to use this repo as a submodule to your one.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tradingview/charting_library.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tradingview/charting_library/issues"
+  },
+  "homepage": "https://github.com/tradingview/charting_library#readme",
+  "dependencies": {
+    "browser-reload": "^1.1.0"
+  }
+}

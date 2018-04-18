@@ -35,6 +35,10 @@ class User extends \TCG\Voyager\Models\User implements Ath{
         return $this->hasMany('\App\Portfolio');
     }
 
+    public function watchlists() {
+        return $this->hasMany('\App\Watchlist');
+    }
+
     /**
      * Get all of the contests for the user.
      *

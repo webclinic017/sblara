@@ -2,7 +2,7 @@
 Route::get('/sitemap.xml', 'SitemapController@index');
 Route::get('/dse/stock/{instrument}/{name}/chart/technical-analysis', 'ChartController@index')->name('ta-chart-new')->middleware('httpcache'); // ta-chart
 
-Route::get('/dse/stock/{instrument}/{name}/chart/advance-technical-analysis', 'AdvanceChartController@index')->name('advance-ta-chart')->middleware('httpcache'); // advance-ta-chart
+Route::get('/dse/stock/{instrument}/{name}/chart/advance-technical-analysis', 'TradingViewController@chart')->name('advance-ta-chart')->middleware('httpcache'); // advance-ta-chart
 
 Route::get('/dse/stock/{instrument}/{name}/chart/minute-chart', 'PagesController@minuteChart')->name('minute-chart')->middleware('httpcache'); // minute -chart
 
@@ -164,6 +164,11 @@ Route::get('/dashboardnew', function () {
 });
 
 
+Route::post('/watchlist/create', 'WatchlistController@create')->middleware('auth');
+Route::get('/watchlist/remove', 'WatchlistController@remove')->middleware('auth');
+Route::post('/watchlist/{id}/add', 'WatchlistController@addItem')->middleware('auth');
+Route::get('/tv', 'TradingViewController@chart');
+Route::get('/tv/tab/{tab}', 'TradingViewController@tab');
 Route::get('/se', 'seController@index');
 Route::get('/setest', 'seController@test');
 Route::get('/download', 'DownloadController@index')->name('download');
@@ -273,6 +278,7 @@ Route::get('technical-analysis-home', 'PagesController@technicalAnalysisHome')->
 
 
 Route::get('/advance-ta-chart', 'AdvanceChartController@redirect');
+Route::post('/advance-ta-chart/snapshot', 'TradingViewController@snapshot');
 
 Route::get('/java-chart', 'DataBanksEodController@java_chart')->name('java-chart');
 Route::get('/ta/ajax/{reportrange?}/{instrument?}/{comparewith?}/{Indicators?}/{configure?}/{charttype?}/{overlay?}/{mov1?}/{avgPeriod1?}/{mov2?}/{avgPeriod2?}/{adj?}/{interval?}', 'DataBanksEodController@chart_img_trac');
@@ -280,7 +286,7 @@ Route::get('/ta-chart', 'ChartController@redirect')->name('ta-chart');
 Route::get('/ta-chart-img', 'ChartController@taChartImg')->name('ta-chart-img')->middleware('httpcache');
 Route::get('/getchart/{img}', 'DataBanksEodController@getchart');
 
-
+Route::get('/storage/chartimages/{image}', 'TradingViewController@share');
 Route::get('/dd', 'TestController@funtest');
 Route::get('/monitor', function () {
         return view('monitor');
@@ -304,6 +310,10 @@ Route::get('/price-scale-chart/{high}/{low}/{close}/{text}/', 'DataBanksEodContr
 
 //trading view
 Route::get('config/', 'TradingViewController@config');
+Route::get('sidebar-tree/', 'TradingViewController@tree');
+Route::post('1.1/charts/', 'TradingViewController@saveLayout');
+Route::delete('1.1/charts/', 'TradingViewController@delete');
+Route::get('1.1/charts/', 'TradingViewController@layouts');
 
 //tradingview function
 Route::get('/time', function () {
@@ -419,6 +429,10 @@ Route::get('/test/speed', function () {
 
     return view('speed');
 });
+
+Route::get('/financial-reports-list', 'DataExtractController@list_financial_reports')->name('financial-reports-list');
+Route::get('/financial-reports-extract/{instrument_code}/{type}', 'DataExtractController@extract_financial_reports')->name('financial-reports-list');
+
 
 /*old urls*/
 Route::get('/resources/monitor', function ()

@@ -300,4 +300,49 @@ class Instrument extends Model
         return $this->hasOne(DataBanksEod::class)->latest('id');
     }
 
+    public static function intraday()
+    {
+        $data = static::select(\DB::raw('*, round(((close_price - yday_close_price)/close_price)*100, 2) as gain '))->whereNotIn('sector_list_id', [4, 5, 22, 23 ])->where('batch_id', '!=', null)->join('data_banks_intradays', function ($join)
+        {
+            $join->on('data_banks_intradays.batch', '=', 'instruments.batch_id');
+            $join->on('data_banks_intradays.instrument_id', '=', 'instruments.id');
+        });
+        return $data;
+    }
+    public static function topGainer()
+    {
+        $data = static::intraday()->take(10)->orderBy('gain', 'desc')->get();
+        return $data;
+    } 
+
+    public static function topValue()
+    {
+        $data = static::intraday()->take(10)->orderBy('total_value', 'desc')->get();
+        return $data;
+    } 
+    public static function topVolume()
+    {
+        $data = static::intraday()->take(10)->orderBy('total_volume', 'desc')->get();
+        return $data;
+    }    
+
+    public static function topLoser()
+    {
+        $data = static::intraday()->take(10)->orderBy('gain', 'asc')->get();
+        return $data;
+    }    
+
+
+    public static function listForTvById($ids)
+    {
+        $data = static::select(\DB::raw('*, round(((close_price - yday_close_price)/close_price)*100, 2) as gain '))->whereIn('instrument_id',  $ids)->where('batch_id', '!=', null)->join('data_banks_intradays', function ($join)
+        {
+            $join->on('data_banks_intradays.batch', '=', 'instruments.batch_id');
+            $join->on('data_banks_intradays.instrument_id', '=', 'instruments.id');
+        })->orderBy('instrument_code', 'asc')->get();
+        return $data;
+    }    
+
+
+
 }

@@ -80,7 +80,8 @@ class DataBankEodRepository {
             }else
             {
                 $returnData['s'] = "no_data";
-                $returnData['nextTime'] = strtotime('yesterday');
+                // $returnData['noData'] = true;
+                // $returnData['nextTime'] = strtotime('yesterday');
             }
         return collect($returnData)->toJson();
 

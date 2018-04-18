@@ -197,7 +197,7 @@ function sparkLineLineColor($val)
 
 function sparkLineFillColor($val)
 {
-    $css = ($val < 0) ? "#ffaaaa" : "#96ea96";
+    $css = ($val < 0) ? "#ffaaaa" : "#00bf00";
     return $css;
 }
 
@@ -257,7 +257,7 @@ function imageUploader($name = 'image')
 
  function user()
 {
-    return Auth::user();
+    return \Auth::user();
 }
 /*se functions*/
 
