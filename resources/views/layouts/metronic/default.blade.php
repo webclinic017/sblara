@@ -27,11 +27,11 @@
                 <div class="page-content">
 
                     <!-- BEGIN BREADCRUMBS -->
- {{--                    <div class="breadcrumbs hidden-xs hidden-sm">
+                    <div class="breadcrumbs hidden-xs hidden-sm">
                         <h1>@yield('page_heading')</h1>
                         <h1>@yield('title')</h1>
-                        @include('html.breadcrumbs')
-                     </div> --}}
+                        {{-- @include('html.breadcrumbs') --}}
+                     </div>
 
                    <!-- BEGIN ads beneath the main menu -->
                       @include('ads.under_the_menu_1')
@@ -61,7 +61,35 @@
                                 {{session()->get('error')}}
                          </div>
                         @endif
+
+                        @if(Route::current()->getName()=='ta-chart-new')
+                          <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="portlet light bordered">
+                                        <div class="portlet-body">
+                                           @include('ads.google_responsive')
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+
+                        @if(Route::current()->getName()!='advance-ta-chart')
                         @include('global-ui')
+                        @endif
+
+                        @if(Route::current()->getName()=='ta-chart-new')
+                          <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <div class="portlet light bordered">
+                                        <div class="portlet-body">
+                                           @include('ads.google_responsive')
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+
 
                     <!-- END BREADCRUMBS -->
 

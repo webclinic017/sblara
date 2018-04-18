@@ -67,8 +67,8 @@ class GenerateMenus
             $menu->company->link->href('javascript:;')->attr(['class' => 'text-uppercase']);
             $menu->company->attr(['class' => 'dropdown dropdown-fw  '])->prepend('<i class="icon-link" ></i > ');
 
-            $menu->company->add('Trade Details', ['route' => ['trade-details', 'name' => 'ab-bank-limited', 'instrument' => 'abbank']])->prepend('<i class="fa fa-dollar" ></i > ')->active('dse/*/trade-details');
-            $menu->company->add('Fundamental Details', ['route' => ['news-chart' , 'name'=>'ab-bank-limited', 'instrument' => 'abbank']])->prepend('<i class="fa fa-paperclip" ></i > ')->active('dse/*/fundamental-details');
+            $menu->company->add('Trade Details', ['route' => ['trade-details', 'name' => 'ab-bank-limited', 'instrument' => 'abbank']])->prepend('<i class="fa fa-dollar" ></i > ')->active('dse/*/trade/details');
+            $menu->company->add('Fundamental Details', ['route' => ['fundamental-details' , 'name'=>'ab-bank-limited', 'instrument' => 'abbank']])->prepend('<i class="fa fa-paperclip" ></i > ')->active('dse/*/fundamental/details');
             $menu->company->add('Dividend Yield', ['route' => 'dividend-yield-payout-ratio'])->prepend('<i class="fa fa-paperclip" ></i > ')->active('dividend-yield-payout-ratio');
             $menu->company->add('Payout Ration', ['route' => 'dividend-yield-payout-ratio'])->prepend('<i class="fa fa-paperclip" ></i > ')->active('dividend-yield-payout-ratio');
 

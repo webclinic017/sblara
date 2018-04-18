@@ -1,8 +1,8 @@
-@section('meta-title', 'Technical Analysis Courses That Works in Bangladesh')
-@section('meta-description', 'We have trained more than 5000 investors and 95% institutes of Bangladesh. Country first technical analysis course provider. We are well equipped and organized to empower you becoming a successful trader/investors')
+@section('meta-title', 'Technical Analysis Training Courses That Works in Bangladesh')
+@section('meta-description', 'We have trained more than 5000 investors and 95% institutes of Bangladesh. Country first technical analysis training provider. We are well organized with our training tools to make you a successful trader/investors')
 @extends('layouts.metronic.default')
 @section('page_heading')
-Technical Analysis Course In Bangladesh
+Best Technical Analysis Course In Bangladesh
 @endsection
 @section('content')
 

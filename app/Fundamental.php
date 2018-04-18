@@ -394,7 +394,7 @@ class Fundamental extends Model
                     $meta_id =  211;
                         break;
                     case 'CASH':
-                    $meta_id =  212;
+                    $meta_id =  245;
                         break;
                 }
                 // dd(\Cache::forget('allTogetherDividend_'.$meta_id.$year));

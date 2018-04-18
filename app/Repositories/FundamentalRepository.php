@@ -86,7 +86,6 @@ class FundamentalRepository {
         //$groupByMetaData = Fundamental::getData($metaId,$instrumentId)->groupby('meta_id');
 
 
-
         $fundamentalData=array();
         foreach($groupByMetaData as $metaId=>$metaData)
         {
@@ -100,6 +99,62 @@ class FundamentalRepository {
                 $latestData['meta_key']=$meta_key;
                 $latestData['instrument_code']=$instrument_code;
                 $fundamentalData[$meta_key][$instrumentId]=$latestData;
+
+            }
+        }
+
+        return collect($fundamentalData);
+
+    }
+    public static function getFundamentalDataLatest($meta=array(),$ins=array())
+    {
+
+        // if id provided
+        if(is_int($meta[0]))
+        {
+            //Meta id provided
+            $metaId = $meta;
+            $metaInfo = Meta::getMetaInfoById($metaId);
+
+        }else
+        {
+            // metaKey provided
+
+            $metaInfo = Meta::getMetaInfo($meta);
+            $metaId = $metaInfo->pluck('id')->toArray();
+
+        }
+
+
+        if(is_int($ins[0]))
+        {
+            // instrument id provided
+            $instrumentId=$ins;
+            $instrumentInfo = InstrumentRepository::getInstrumentsById($instrumentId);
+
+        }else
+        {
+            // instrument code provided
+
+            $instrumentInfo = InstrumentRepository::getInstrumentsByCode($ins);
+            $instrumentId = $instrumentInfo->pluck('id')->toArray();
+
+        }
+
+
+        $groupByInstrumentData = Fundamental::getDataLatest($metaId,$instrumentId)->groupby('instrument_id');
+
+
+        $fundamentalData=array();
+        foreach($groupByInstrumentData as $instrumentId=>$allMetaData)
+        {
+            foreach($allMetaData as $metaData)
+            {
+                $meta_key=$metaInfo->where('id', $metaData->meta_id)->first()->meta_key;
+                $instrument_code=$instrumentInfo->where('id', $metaData->instrument_id)->first()->instrument_code;
+                $latestData['meta_key']=$meta_key;
+                $latestData['instrument_code']=$instrument_code;
+                $fundamentalData[$instrumentId][$meta_key]= $metaData;
 
             }
         }
@@ -216,71 +271,88 @@ class FundamentalRepository {
     {
         // Configure::write('debug', 2);
 
-        $metaKey=array('q1_eps_cont_op','half_year_eps_cont_op','q3_nine_months_eps','earning_per_share');
+        //$metaKey=array('q1_eps_cont_op','half_year_eps_cont_op','q3_nine_months_eps','earning_per_share');
+        $metaKey=array('q1_eps_cont_op','q2_eps_cont_op','q3_eps_cont_op','earning_per_share');
 
-        $fundaData=self::getFundamentalData($metaKey,$instrumentIdArr);
+
+        $fundaData=self::getFundamentalDataLatest($metaKey,$instrumentIdArr);
+
 
 
         $returnData = array();
         foreach ($instrumentIdArr as $instrument_id)
         {
-            $data_to_sort = array();
 
 
-            foreach ($fundaData as $eps_name => $data) {
-
-                if(isset($data[$instrument_id]))
-                {
-                    $temp = array();
-                    $meta_timestamp = strtotime($data[$instrument_id]['meta_date']);
-                    $temp['eps_name'] = $eps_name;
-                    $temp['meta_timestamp'] = $meta_timestamp;
-                    $temp['meta_date'] = $data[$instrument_id]['meta_date'];
-                    $temp['meta_value'] = floatval($data[$instrument_id]['meta_value']);
-                    $data_to_sort[$meta_timestamp] = $temp;
-                }else
-                {
-                    break;
-                }
-
-            }
-
-            if(count($data_to_sort))
+            if(isset($fundaData[$instrument_id]))
             {
-                krsort($data_to_sort);
 
-                $data_to_sort = array_values($data_to_sort);
 
-                if ($data_to_sort[0]['eps_name'] == 'q1_eps_cont_op') {
-                    $returnData[$instrument_id]['annualized_eps'] = $data_to_sort[0]['meta_value'] * 4;
-                    $returnData[$instrument_id]['meta_date'] = $data_to_sort[0]['meta_date'];
-                    $returnData[$instrument_id]['meta_value'] = $data_to_sort[0]['meta_value'];
-                    $returnData[$instrument_id]['text'] = 'Q1';
+
+                foreach($fundaData[$instrument_id] as $eps_name=>$data)
+                {
+
+                    if ($eps_name == 'q1_eps_cont_op') {
+
+
+                        $returnData[$instrument_id]['annualized_eps'] = (float) $data['meta_value'] * 4;
+                        $returnData[$instrument_id]['meta_date'] = $data['meta_date'];
+                        $returnData[$instrument_id]['meta_value'] = (float)$data['meta_value'];
+                        //$returnData[$instrument_id]['text'] = date('M,y',strtotime($data['meta_date']));
+                        $returnData[$instrument_id]['text'] = '3 months';
+                    }
+
+                    if ($eps_name == 'q2_eps_cont_op') {
+
+                        $q2_eps_cont_op= (float)$data['meta_value'];
+
+                        if (isset($fundaData[$instrument_id]['q1_eps_cont_op'])) {
+                            $q2_eps_cont_op = $q2_eps_cont_op+ (float)$fundaData[$instrument_id]['q1_eps_cont_op']['meta_value'];
+                        }
+
+                        $returnData[$instrument_id]['annualized_eps'] = $q2_eps_cont_op * 2;
+                        $returnData[$instrument_id]['meta_date'] = $data['meta_date'];
+                        $returnData[$instrument_id]['meta_value'] = $q2_eps_cont_op;
+                        //$returnData[$instrument_id]['text'] = date('M,y', strtotime($data['meta_date']));
+                        $returnData[$instrument_id]['text'] = '6 Months';
+
+                    }
+
+
+                    if ($eps_name == 'q3_eps_cont_op') {
+
+                        $q3_eps_cont_op = (float)$data['meta_value'];
+
+                        if (isset($fundaData[$instrument_id]['q1_eps_cont_op'])) {
+                            $q3_eps_cont_op = $q3_eps_cont_op + (float)$fundaData[$instrument_id]['q1_eps_cont_op']['meta_value'];
+                        }
+
+                        if (isset($fundaData[$instrument_id]['q2_eps_cont_op'])) {
+                            $q3_eps_cont_op = $q3_eps_cont_op + (float)$fundaData[$instrument_id]['q2_eps_cont_op']['meta_value'];
+                        }
+
+
+                        $returnData[$instrument_id]['annualized_eps'] = ($q3_eps_cont_op/3) * 4;
+                        $returnData[$instrument_id]['annualized_eps']=round($returnData[$instrument_id]['annualized_eps'],4);
+                        $returnData[$instrument_id]['meta_date'] = $data['meta_date'];
+                        $returnData[$instrument_id]['meta_value'] = round($q3_eps_cont_op,4);
+                        //$returnData[$instrument_id]['text'] = date('M,y', strtotime($data['meta_date']));
+                        $returnData[$instrument_id]['text'] = "9 months";
+
+                    }
+
+                    if ($eps_name == 'earning_per_share') {
+                        $returnData[$instrument_id]['annualized_eps'] = (float)$data['meta_value'];
+                        $returnData[$instrument_id]['meta_date'] = $data['meta_date'];
+                        $returnData[$instrument_id]['meta_value'] = (float)$data['meta_value'];
+                        $returnData[$instrument_id]['text'] = 'Annual';
+                    }
+
+                    break;
+
                 }
 
-                if ($data_to_sort[0]['eps_name'] == 'half_year_eps_cont_op') {
-                    $returnData[$instrument_id]['annualized_eps'] = $data_to_sort[0]['meta_value'] * 2;
-                    $returnData[$instrument_id]['meta_date'] = $data_to_sort[0]['meta_date'];
-                    $returnData[$instrument_id]['meta_value'] = $data_to_sort[0]['meta_value'];
-                    $returnData[$instrument_id]['text'] = 'Half year';
-                }
 
-
-                if ($data_to_sort[0]['eps_name'] == 'q3_nine_months_eps') {
-                    $returnData[$instrument_id]['annualized_eps'] = ($data_to_sort[0]['meta_value'] / 3) * 4;
-                    $returnData[$instrument_id]['annualized_eps'] = round($returnData[$instrument_id]['annualized_eps'], 2);
-                    $returnData[$instrument_id]['meta_date'] = $data_to_sort[0]['meta_date'];
-                    $returnData[$instrument_id]['meta_value'] = $data_to_sort[0]['meta_value'];
-                    $returnData[$instrument_id]['text'] = '9 months';
-
-                }
-
-                if ($data_to_sort[0]['eps_name'] == 'earning_per_share') {
-                    $returnData[$instrument_id]['annualized_eps'] = $data_to_sort[0]['meta_value'];
-                    $returnData[$instrument_id]['meta_date'] = $data_to_sort[0]['meta_date'];
-                    $returnData[$instrument_id]['meta_value'] = $data_to_sort[0]['meta_value'];
-                    $returnData[$instrument_id]['text'] = 'Annual';
-                }
             }
             else
             {
@@ -292,6 +364,8 @@ class FundamentalRepository {
 
 
         }
+
+
 
 /*        sbdump($returnData,'afmsohail@gmail.com');
         sbdump($data_to_sort,'afmsohail@gmail.com');

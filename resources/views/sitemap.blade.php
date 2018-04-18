@@ -151,7 +151,7 @@
          </url>      
       @endforeach
 
-   @foreach(\App\Instrument::all() as $instrument)
+   @foreach(\App\Instrument::whereNotIn('sector_list_id', [22, 24, 5, 4])->where('active','1')->get() as $instrument)
       <url>
          <loc>{{route("ta-chart-new", ['instrument' => $instrument->instrument_code, 'name' => str_slug($instrument->name)])}}</loc>
          <lastmod>{{$lastModify}}</lastmod>
