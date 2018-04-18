@@ -154,7 +154,7 @@
                                                                                                 </div>
                                                                                                 <div id="collapse_3_1" class="panel-collapse in">
                                                                                                     <div class="panel-body" >
-                                                                                                        <p> Please <a href="/login">login</a> to see you watchlists.</p>
+                                                                                                        <p> Please <a href="/login">login</a> to see your watchlists.</p>
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </div>
@@ -378,7 +378,7 @@
 
              TradingView.onready(function()
             {                
-                var h = screen.height - 50;
+                var h = $(window).height() - 70;
                 h = h+"px";
                 var widget = window.tvWidget = new TradingView.widget({
                     // debug: true, // uncomment this line to see Library errors and warnings in the console
