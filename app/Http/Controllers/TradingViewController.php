@@ -543,10 +543,11 @@ imagettftext($image, 10, 0, 10, 32, $color, $font, $text2);
         return $user;
     }
 
-    public function chart()
+    public function chart($ticker, $name)
     {
         $user = $this->user();
-        return view('advance-ta-chart-new');
+        $instrumentInfo = \App\Instrument::where('instrument_code', $ticker)->first();
+        return response()->view('advance-ta-chart-new', ['ticker' => $ticker, 'instrumentInfo' => $instrumentInfo]);
     }
 
     public function delete()

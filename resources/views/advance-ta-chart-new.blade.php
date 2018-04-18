@@ -1,9 +1,9 @@
-{{-- @section('meta-title', ' Advance Technical Analysis Chart : '. $instrumentInfo->name)
-@section('meta-description', $instrumentInfo->name.' High configurable and nice looking technical analysis chart of Bangladesh. From 5 minutes candle to 1 hour candle available as well as daily data') --}}
+@section('title', ' Advance Technical Analysis Chart : '. $instrumentInfo->name)
+@section('meta-title', ' Advance Technical Analysis Chart : '. $instrumentInfo->name)
+@section('meta-description', $instrumentInfo->name.' High configurable and nice looking technical analysis chart of Bangladesh. From 5 minutes candle to 1 hour candle available as well as daily data')
 @extends('layouts.metronic.default')
-
 @section('content')
-@include('tv.modals')
+
     <div class="row">
 
         <div class="col-md-12">
@@ -11,6 +11,7 @@
 
 
                                        <div id="advance-ta-chart-portlet" allowfullscreen="true" class="portlet light bordered advance-ta-chart-portlet" style="padding: 0 !important; margin:0; border: 0; margin-top:-15px">
+                                         @include('tv.modals')
                                             <div class="portlet-body">
                                                 <div class="tabbable tabbable-tabdrop advance-ta-chart">
                                                     <ul class="nav nav-tabs" style="margin-bottom: 1px !important; background-color: #EEF1F5">
@@ -131,6 +132,12 @@
                                                                                                         </div>
                                                                                                     </div>
                                                                                                 @endforeach
+                                                                                                @if($i != 0)
+
+                                                                                                                
+                                                                                                                    <a style="width: 100%; text-align: center;" href="#" data-toggle="modal" data-target="#createWatchlist">Create watchlist</a>
+                                                                                                           
+                                                                                                @endif
                                                                                                 @if($i == 0)
                                                                                                     <div class="panel panel-default">
                                                                                                         <div class="panel-heading">
@@ -318,12 +325,12 @@
                                                                 </div>  
                                                                 <div class="tv-side-nav">
                                                                     <ul >
-                                                                        <li><a  href="javascript:" style="font-size: 11px; padding:5px 0 5px 0; text-align: center; text-decoration:none ; ">Tools</a></li>
-                                                                         <li><a  href="javascript:" data-tab="#topList"><i class="fa fa-fire"></i></a></li>
-                                                                         <li><a  href="javascript:" data-tab="#watchLists"><i class="fa fa-eye"></i></a></li>
-                                                                        <li><a  href="javascript:" data-tab="#portfolios"><i class="fa fa-briefcase"></i></a></li>
-                                                                        <li><a  href="javascript:" data-tab="#screeners"><i class="fa fa-binoculars"></i></a></li>
-                                                                        <li><a  href="javascript:" data-tab="#myscreeners"><i class="fa fa-search"></i></a></li>
+                                                                        <li><a   href="javascript:" style="font-size: 11px; padding:5px 0 5px 0; text-align: center; text-decoration:none ; ">Tools</a></li>
+                                                                         <li><a data-toggle="tooltip" data-placement="left" title="Top Shares"  href="javascript:" data-tab="#topList"><i class="fa fa-fire"></i></a></li>
+                                                                         <li><a data-toggle="tooltip" data-placement="left" title="Watch List"  href="javascript:" data-tab="#watchLists"><i class="fa fa-eye"></i></a></li>
+                                                                        <li><a data-toggle="tooltip" data-placement="left" title="Portfolios"  href="javascript:" data-tab="#portfolios"><i class="fa fa-briefcase"></i></a></li>
+                                                                        <li><a data-toggle="tooltip" data-placement="left" title="SB Screeners"  href="javascript:" data-tab="#screeners"><i class="fa fa-binoculars"></i></a></li>
+                                                                        <li><a data-toggle="tooltip" data-placement="left" title="My Screeners"  href="javascript:" data-tab="#myscreeners"><i class="fa fa-search"></i></a></li>
                                                                         <li  ><a  href="javascript:"><svg height="300" width="100%">
   <text x="0" y="55" fill="#666" transform="rotate(90 20,40)">More tools coming!</text>
 </svg></a></li>
@@ -361,6 +368,9 @@
 
 
         <script type="text/javascript">
+$(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip(); 
+})            
             @php 
                 $data = \App\ChartLayout::find(1);
              @endphp
@@ -439,6 +449,9 @@
                        t.preventDefault();
                    }
                 widget.onChartReady(function() {
+                    @if(isset($ticker))
+                tvWidget.activeChart().setSymbol("{{strtoupper($ticker)}}")
+                @endif
                 widget.subscribe('onScreenshotReady', function (data) {
                     // console.log(data);
                     window.open("https://facebook.com/share.php?u="+data);
@@ -458,7 +471,7 @@
                             //share on facebook
                             widget.chart().executeActionById('takeScreenshot');
                          })
-                        .addClass("load button first apply-common-tooltip")
+                        .addClass(" button first apply-common-tooltip")
                         .append("<i class='fa fa-facebook'></i>")
                  
 // widget.takeScreenshot();

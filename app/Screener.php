@@ -30,7 +30,7 @@ class Screener extends Model
     }
     public function ids()
     {
-		$value = \Cache::remember('screener_count_'.$this->id, 1, function () {
+		$value = \Cache::remember('screener_ids_'.$this->id, 1, function () {
 			try {
     			$screener = new Scanner($this->query);
 			} catch (\Exception $e) {

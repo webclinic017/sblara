@@ -1,6 +1,14 @@
 .fa{
 	font-size: 18px;
 }
+.load.button:after{
+	content: 'Load';
+	padding: 0 5px;
+}
+.save.button:after{
+	content: 'Save';
+	padding: 0 5px;
+}
 /*.group.space-single:not(.header-group-save-load){
 	float: left !important;
 }*/
