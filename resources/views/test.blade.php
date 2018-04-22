@@ -145,6 +145,42 @@
             </div>
         </div>
 
+
+
+<div class="row">
+
+    <div class="col-md-16">
+        <!-- BEGIN Portlet PORTLET-->
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="icon-graph font-yellow-casablanca"></i>
+                            <span class="caption-subject bold font-yellow-casablanca uppercase">
+                            Projected Trade </span>
+                    <span class="caption-helper"></span>
+                </div>
+                <div class="tools">
+                    <a href="" class="collapse">
+                    </a>
+
+                    </a>
+                    <a href="" class="remove">
+                    </a>
+                    <a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block_parent.market_status" class="reload"></a>
+                </div>
+
+            </div>
+            <div class="portlet-body">
+
+            </div>
+        </div>
+        <!-- END Portlet PORTLET-->
+    </div>
+
+</div>
+
+
+
 {{--@include('block.price_matrix')--}}
 {{--@include('block.data_matrix')--}}
 

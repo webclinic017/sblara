@@ -139,3 +139,14 @@
   width: 100%;
   height: 100%;
 }
+
+.watchlist-options{
+	position: absolute !important;
+	right:30px !important;
+	top:8px !important;
+}
+.watchlist-options .dropdown-menu{
+	left:auto !important;
+	right: 0 !important;	
+	z-index: 999;
+}

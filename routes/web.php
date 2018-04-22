@@ -165,6 +165,8 @@ Route::get('/dashboardnew', function () {
 
 
 Route::post('/watchlist/create', 'WatchlistController@create')->middleware('auth');
+Route::get('/watchlist/rename', 'WatchlistController@rename')->middleware('auth');
+Route::get('/watchlist/delete', 'WatchlistController@delete')->middleware('auth');
 Route::get('/watchlist/remove', 'WatchlistController@remove')->middleware('auth');
 Route::post('/watchlist/{id}/add', 'WatchlistController@addItem')->middleware('auth');
 Route::get('/tv', 'TradingViewController@chart');

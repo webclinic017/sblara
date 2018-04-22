@@ -271,7 +271,7 @@ ORDER BY lm_date_time asc ,total_volume asc";
         }
 
        // return response()->view('dashboard', ['trade_date_Info' => $trade_date_Info])->setTtl(1);
-        return response($data)->header('Content-Type', 'application/json')->setTtl(60);
+        return response($data)->header('Content-Type', 'application/json');
         //return $data;
 
     }
@@ -488,6 +488,10 @@ imagettftext($image, 10, 0, 10, 32, $color, $font, $text2);
 
     public function share($image)
     {
+        if(request()->has('download')){
+            $path = $path = storage_path('app/public/chartimages/'.$image.'.png');
+            return response()->download($path);
+        }
         return view('tradingview-share')->with('image', $image);
     }
 
@@ -509,6 +513,7 @@ imagettftext($image, 10, 0, 10, 32, $color, $font, $text2);
     }
     public function layouts(Request $request)
     {
+        
         if($request->has('chart'))
         {
             $data = [];
@@ -516,8 +521,9 @@ imagettftext($image, 10, 0, 10, 32, $color, $font, $text2);
             $data['status'] = 'ok';
             return $data; 
         }
+        // dd((int) $this->user()->id);
         $data = [];
-        $data['data'] = \App\ChartLayout::select('id', 'name', 'resolution', 'slug', 'symbol', 'updated_at')->where('user_id', $this->user()->id)->get();
+        $data['data'] = \App\ChartLayout::select('id', 'name', 'resolution', 'slug', 'symbol', 'updated_at')->where('user_id', "=", (string) $this->user()->id)->get();
         $data['status'] = 'ok';
         return $data;
     }
@@ -528,7 +534,7 @@ imagettftext($image, 10, 0, 10, 32, $color, $font, $text2);
         {
             $user = new \stdClass();
             if(!request()->session()->has('TVUserID')){
-                session(['TVUserID' => md5(uniqid())]);
+                session(['TVUserID' => md5(uniqid().time())]);
             }
             $user->id = session()->get('TVUserID');
             $user->name = 'Anonymous';
@@ -539,7 +545,6 @@ imagettftext($image, 10, 0, 10, 32, $color, $font, $text2);
                 \App\ChartLayout::where("user_id", session('TVUserID'))->update(['user_id' => $user->id]);
             }
         }
-        
         return $user;
     }
 

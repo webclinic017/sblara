@@ -53,7 +53,7 @@ class Screener{
 	 */
 	public function parseConditions()
 	{
-		//sql query here 
+		//sql query here
 		$this->instruments = \App\Instrument::whereNotIn('sector_list_id', ['22', '24', '4', '5'])->where('active', 1)->pluck('id')->toArray(); // addition filter will be apply here with the same query.. pe, fundamental info, category etc.
 		foreach ($this->conditions as  $value) {
 			//reset the data target to adjusted eod

@@ -71,6 +71,7 @@ LEFT JOIN (
    GROUP BY 1 ) y ON x.PriceRange = y.PriceRange";
 
             $paidup_data_up = DB::select($sql);
+            $paidup_data_up = collect($paidup_data_up)->keyBy('PriceRange');
 
 
             ///////////////////////// share price up within range END  \\\\\\\\\\\\\\\\\\\\\\\
@@ -110,15 +111,15 @@ LEFT JOIN (
             $total = array();
 
             $sort = array();
-            $i = 0;
+
             foreach ($paidup_data_total as $row) {
                 $category[] = $row->PriceRange . '';
                 $total[] = $row->TotalWithinRange;
-                $up[] = isset($paidup_data_up[$i]) ? $paidup_data_up[$i]->TotalWithinRange : 0;
+                $up[] = isset($paidup_data_up[$row->PriceRange]) ? $paidup_data_up[$row->PriceRange]->TotalWithinRange : 0;
 
-                $per = isset($paidup_data_up[$i]) ? round($paidup_data_up[$i]->TotalWithinRange / $row->TotalWithinRange * 100, 2) : 0;
+                $per = isset($paidup_data_up[$row->PriceRange]) ? round($paidup_data_up[$row->PriceRange]->TotalWithinRange / $row->TotalWithinRange * 100, 2) : 0;
                 $sort[$row->PriceRange] = $per;
-                $i++;
+
             }
             arsort($sort);
 

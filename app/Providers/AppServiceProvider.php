@@ -22,6 +22,7 @@ class AppServiceProvider extends ServiceProvider {
         View::composer('html.instrument_list_bs_select', 'App\Http\ViewComposers\InstrumentListBsSelect');
         View::composer('html.instrument_list_bs_select_with_sector', 'App\Http\ViewComposers\InstrumentListBsSelectWithSector');
         View::composer('block.index_chart', 'App\Http\ViewComposers\IndexChart');
+        View::composer('block.dsex_chart', 'App\Http\ViewComposers\DsexChart');
         View::composer('block.index_chart2', 'App\Http\ViewComposers\IndexChart');
         View::composer('block.index_mover', 'App\Http\ViewComposers\IndexMover');
 

@@ -38,7 +38,6 @@ mix.combine([
 'public/css/filter.css',
 'public/vendor/jfu/css/jquery.fileupload-ui.css',
 'public/maxazan-jquery-treegrid/css/jquery.treegrid.css',
-'public/vendor/feedback/feedback.min.css',
 
 ], 'public/metronic_home.css');
 
@@ -76,8 +75,8 @@ mix.scripts([
 'public/maxazan-jquery-treegrid/js/jquery.treegrid.min.js',
 'public/jquery-easy-ticker-master/test/jquery.easing.min.js',
 'public/jquery-easy-ticker-master/jquery.easy-ticker.js',
-'public/vendor/feedback/feedback.js',
-'public/vendor/feedback/html2canvas.min.js',
+
+
 'public/js/slimscroll.min.js',
 'public/vendor/laravel-filemanager/js/lfm.js',
 ], 'public/metronic_home.js');

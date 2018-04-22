@@ -53,6 +53,8 @@ class MarketRadarCategory
 
             $category_data_up = DB::select($sql);
 
+            $category_data_up=collect($category_data_up)->keyBy('PriceRange');
+
             ///////////////////////// Category up within range END  \\\\\\\\\\\\\\\\\\\\\\\
 
 
@@ -73,16 +75,14 @@ class MarketRadarCategory
             $total = array();
 
             $sort = array();
-            $i = 0;
-
             foreach ($category_data_total as $row) {
                 $category[] = 'Cat: ' . $row->PriceRange;
                 $total[] = $row->TotalWithinRange;
-                $up[] = isset($category_data_up[$i]) ? $category_data_up[$i]->TotalWithinRange : 0;
+                $up[] = isset($category_data_up[$row->PriceRange]) ? $category_data_up[$row->PriceRange]->TotalWithinRange : 0;
 
-                $per = isset($category_data_up[$i]) ? round($category_data_up[$i]->TotalWithinRange / $row->TotalWithinRange * 100, 2) : 0;
+                $per = isset($category_data_up[$row->PriceRange]) ? round($category_data_up[$row->PriceRange]->TotalWithinRange / $row->TotalWithinRange * 100, 2) : 0;
                 $sort[$row->PriceRange] = $per;
-                $i++;
+
             }
             arsort($sort);
 

@@ -69,6 +69,7 @@ LEFT JOIN (
    GROUP BY 1 ) y ON x.PriceRange = y.PriceRange";
 
             $pe_data_up = DB::select($sql);
+            $pe_data_up = collect($pe_data_up)->keyBy('PriceRange');
 
             ///////////////////////// P/E up within range END  \\\\\\\\\\\\\\\\\\\\\\\
 
@@ -99,6 +100,7 @@ LEFT JOIN (
    GROUP BY 1 ) y ON x.PriceRange = y.PriceRange";
 
             $pe_data_total = DB::select($sql);
+            $pe_data_total = collect($pe_data_total)->keyBy('PriceRange');
 
             ///////////////////////// P/E down within range END  \\\\\\\\\\\\\\\\\\\\\\\
 
@@ -107,15 +109,15 @@ LEFT JOIN (
             $total = array();
 
             $sort = array();
-            $i = 0;
+
             foreach ($pe_data_total as $row) {
                 $category[] = '' . $row->PriceRange;
                 $total[] = $row->TotalWithinRange;
-                $up[] = isset($pe_data_up[$i]) ? $pe_data_up[$i]->TotalWithinRange : 0;
+                $up[] = isset($pe_data_up[$row->PriceRange]) ? $pe_data_up[$row->PriceRange]->TotalWithinRange : 0;
 
-                $per = isset($pe_data_up[$i]) ? round($pe_data_up[$i]->TotalWithinRange / $row->TotalWithinRange * 100, 2) : 0;
+                $per = isset($pe_data_up[$row->PriceRange]) ? round($pe_data_up[$row->PriceRange]->TotalWithinRange / $row->TotalWithinRange * 100, 2) : 0;
                 $sort[$row->PriceRange] = $per;
-                $i++;
+
             }
             arsort($sort);
 

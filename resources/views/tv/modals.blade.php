@@ -1,6 +1,6 @@
 <!-- Modal -->
 <div id="createWatchlist" class="modal fade" role="dialog">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-sm">
 
     <!-- Modal content-->
     <div class="modal-content">
@@ -41,3 +41,96 @@
   })
 </script>
 @endpush
+
+
+<!-- Modal -->
+<div id="shareModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-body">
+        <h4 class="modal-title">Download/Share Chart image</h4> <hr style="margin: 2px; margin-bottom: -10px">
+            <div class="form-group form-md-line-input" style="margin-bottom: 0px">
+                <label for="" class="label-control">Image url</label>
+                <input class="form-control"  type="text" id="imageurl" required="">
+                <div class="form-control-focus"> </div>
+            </div>
+                <div class="row">
+                  
+                <div class="col-md-12 margin-top-10 text-center">
+                  
+                <a href="#" target="_blank" id="imageshare" class="btn blue btn-sm"><i class="fa fa-facebook"></i> Share</a>
+                <a href="#" target="_blank" id="imagedownload" class="btn green btn-sm"><i class="fa fa-download"></i>Download</a>
+                <button class="btn green-jungle btn-sm btn-copy" data-clipboard-target="#imageurl"><i class="fa fa-copy"></i>Copy Link Url</button>
+                <button class="btn red btn-sm" data-dismiss="modal">Cancel</button>
+                </div> 
+                </div>      
+
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+
+<!-- Modal -->
+<div id="renameModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-body">
+        <h4 class="modal-title">Rename Watchlist</h4> <hr style="margin: 2px; margin-bottom: -10px">
+            <div class="form-group form-md-line-input" style="margin-bottom: 0px">
+                <label for="" class="label-control">Name</label>
+                <input class="form-control"  type="text" id="watchlistName" required="">
+                <input type="hidden" id="watchlistid" >
+                <div class="form-control-focus"> </div>
+            </div>
+                <div class="row">
+                  
+                <div class="col-md-12 margin-top-10 text-center">
+                  
+                <button class="btn green-jungle btn-sm save-watchlist" data-dismiss="modal" ><i class="fa fa-save"></i>Save</button>
+                <button class="btn red btn-sm" data-dismiss="modal">Cancel</button>
+                </div> 
+                </div>      
+
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+
+<!-- Modal -->
+<div id="deleteModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-body">
+        <h4 class="modal-title">Are you sure?</h4> <hr style="margin: 2px; margin-bottom: -10px">
+            <div class="form-group form-md-line-input" style="margin-bottom: 0px">
+                <input type="hidden" id="watchlistid" >
+                <div class="form-control-focus"> </div>
+            </div>
+                <div class="row">
+                  
+                <div class="col-md-12 margin-top-10 text-center">
+                  
+                <button class="btn green-jungle btn-sm deletewatchlist" data-dismiss="modal" >Yes</button>
+                <button class="btn red btn-sm" data-dismiss="modal">Cancel</button>
+                </div> 
+                </div>      
+
+      </div>
+
+    </div>
+
+  </div>
+</div>
+

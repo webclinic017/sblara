@@ -22,10 +22,16 @@
                                                             <a data-url="/ajax/load_block/block_name=block.minute_chart:show_ads=1:instrument_id=" href="#tab_1_1_3" data-toggle="tab" aria-expanded="false"> MINUTE CHART </a>
                                                         </li>
                                                         <li class="">
+                                                            <a href="#tab_1_1_3" data-toggle="tab" aria-expanded="false"  data-url="/ajax/load_block/block_name=block.market_depth_single:show_ads=1:instrument_id="> MARKET DEPTH </a>
+                                                        </li>
+                                                        <li class="">
                                                             <a href="#tab_1_1_3" data-toggle="tab"  data-url="/ajax/load_block/block_name=block.sector_minute_chart:show_ads=1:instrument_id="  aria-expanded="false"> SECTOR CHART </a>
                                                         </li>
                                                         <li class="">
-                                                            <a href="#tab_1_1_3" data-toggle="tab" aria-expanded="false"  data-url="/ajax/load_block/block_name=block.market_depth_single:show_ads=1:instrument_id="> MARKET DEPTH </a>
+                                                            <a href="#tab_1_1_3" data-toggle="tab"  data-url="https://dev.stockbangladesh.com/ajax/load_block/block_name=block.market_frame_old_site:height=500:base=total_value:instrument_id="  aria-expanded="false"> SECTOR COMPOSITION </a>
+                                                        </li>
+                                                        <li class="">
+                                                            <a href="#tab_1_1_3" data-toggle="tab"  data-url="/ajax/load_block/block_name=block_parent.market_status?a="  aria-expanded="false"> MARKET STATUS </a>
                                                         </li>
                                                         <li class="">
                                                             <a href="#tab_1_1_3" data-toggle="tab" aria-expanded="false"  data-url="/ajax/load_block/block_name=block.fundamental_summary:show_ads=1:instrument_id=" > FUNDAMENTAL </a>
@@ -37,10 +43,10 @@
                                                             <a href="#tab_1_1_3" data-toggle="tab" aria-expanded="false"  data-url="/ajax/load_block/block_name=block.dividend_history:show_ads=1:instrument_id=" > DIVIDEND HISTORY </a>
                                                         </li>
                                                         <li class="">
-                                                            <a href="#tab_1_1_3" data-toggle="tab" aria-expanded="false"  data-url="/ajax/load_block/block_name=block.news_chart:show_ads=1:instrument_id=" > NEWS CHART </a>
+                                                            <a href="#tab_1_1_3"  data-url="/ajax/load_block/block_name=block.share_holdings_history_chart:show_ads=1:instrument_id=" data-toggle="tab" aria-expanded="false"> SHARE HOLDING HISTORY </a>
                                                         </li>
                                                         <li class="">
-                                                            <a href="#tab_1_1_3"  data-url="/ajax/load_block/block_name=block.share_holdings_history_chart:show_ads=1:instrument_id=" data-toggle="tab" aria-expanded="false"> SHARE HOLDING HISTORY </a>
+                                                            <a href="#tab_1_1_3" data-toggle="tab" aria-expanded="false"  data-url="/ajax/load_block/block_name=block.news_chart:show_ads=1:instrument_id=" > NEWS CHART </a>
                                                         </li>
 
                                                     </ul>
@@ -118,12 +124,30 @@
                                                                                             @if(!\Auth::guest())
                                                                                             @php $i = 0; @endphp
                                                                                                 @foreach(request()->user()->watchlists as $portfolio)
-                                                                                                    <div class="panel panel-default" id="{{$portfolio->id}}">
+                                                                                                    <div class="panel panel-default" id="{{$portfolio->id}}" style="position: relative;">
                                                                                                         <div class="panel-heading">
                                                                                                             <h4 class="panel-title">
-                                                                                                                <a class="accordion-toggle accordion-toggle-styled {{$i != 0?"collapsed":""}}" data-toggle="collapse" data-parent="#watchLists" href="#{{$portfolio->id}}_watchList"> {{$portfolio->name}} </a>
+                                                                                                                <a class="accordion-toggle accordion-toggle-styled {{$i != 0?"collapsed":""}}" data-toggle="collapse" data-parent="#watchLists" href="#{{$portfolio->id}}_watchList">  {{$portfolio->name}} 
+                                                                                                                 </a>
                                                                                                             </h4>
+
                                                                                                         </div>
+                                                                                                                                                            <div class="btn-group watchlist-options">
+                                                        <a class="btn-sm " href="javascript:;" data-toggle="dropdown">
+                                                            <i class="fa fa-bars" ></i>
+                                                        </a>
+                                                        <ul class="dropdown-menu" role="menu">
+                                                            <li>
+                                                                <a href="javascript:;" class="rename-watchlist" data-name="{{$portfolio->name}}" data-id="{{$portfolio->id}}">
+                                                                    <i class="icon-pencil"></i> Rename </a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="javascript:;" data-id="{{$portfolio->id}}" class="delete-watchlist">
+                                                                    <i class="icon-trash"></i> Delete
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>         
                                                                                                         <div id="{{$portfolio->id}}_watchList" class="panel-collapse {{$i == 0?"in":"collapse"}}">
                                                                                                             @php $i++ ; @endphp
                                                                                                             <div class="panel-body" >
@@ -229,13 +253,13 @@
                                                                                           
 
                                                                                                     @foreach(\App\Screener::where('featured', 1)->get() as $portfolio)
-                                                                                                    <div class="panel panel-default" id="{{$portfolio->id}}">
+                                                                                                    <div class="panel panel-default" id="{{$portfolio->id}}sb">
                                                                                                         <div class="panel-heading">
                                                                                                             <h4 class="panel-title">
-                                                                                                                <a class="accordion-toggle accordion-toggle-styled {{$i != 0?"collapsed":""}}" data-toggle="collapse" data-parent="#screeners" href="#{{$portfolio->id}}_screener"> {!!$portfolio->name!!} </a>
+                                                                                                                <a class="accordion-toggle accordion-toggle-styled {{$i != 0?"collapsed":""}}" data-toggle="collapse" data-parent="#screeners" href="#{{$portfolio->id}}sb_screener"> {!!$portfolio->name!!} </a>
                                                                                                             </h4>
                                                                                                         </div>
-                                                                                                        <div id="{{$portfolio->id}}_screener" class="panel-collapse {{$i == 0?"in":"collapse"}}">
+                                                                                                        <div id="{{$portfolio->id}}sb_screener" class="panel-collapse {{$i == 0?"in":"collapse"}}">
                                                                                                             @php $i++ ; @endphp
                                                                                                             <div class="panel-body" >
 
@@ -365,10 +389,41 @@
 
 <script type="text/javascript" src="/vendor/chart_lib/datafeeds/udf/dist/polyfills.js"></script>
 <script type="text/javascript" src="/vendor/chart_lib/datafeeds/udf/dist/bundle.js"></script>
+<script type="text/javascript" src="/metronic/assets/global/plugins/clipboardjs/clipboard.min.js"></script>
 
 
         <script type="text/javascript">
 $(document).ready(function () {
+
+$('.rename-watchlist').click(function () {
+    var id = $(this).data('id')
+    var name = $(this).data('name')
+    $('#watchlistName').val(name);
+    $('#watchlistid').val(id);
+    $('#renameModal').modal();
+})
+
+$('.delete-watchlist').click(function () {
+    var id = $(this).data('id')
+    $('#watchlistName').val(name);
+    $('#watchlistid').val(id);
+    $('#deleteModal').modal();
+})
+$('.deletewatchlist').click(function () {
+    var id = $('#watchlistid').val();
+    $.get('/watchlist/delete', {id: id}, function () {
+        location.reload()
+    });
+})
+
+$('.save-watchlist').click(function () {
+  var id = $('#watchlistid').val();
+    var name = $('#watchlistName').val();
+    $.get('/watchlist/rename', {id:id, name: name}, function (data) {
+        location.reload();
+    })
+})
+      new ClipboardJS('.btn-copy')
         $('[data-toggle="tooltip"]').tooltip(); 
 })            
             @php 
@@ -401,7 +456,7 @@ $(document).ready(function () {
                     container_id: "tvChart",
                     disable_logo: !0,
                     hideideas: !0,
-                    disabled_features: ["use_localstorage_for_settings","widget_logo", "header_fullscreen_button", "show_dialog_on_snapshot_ready", 'header_screenshot'],
+                    disabled_features: ["use_localstorage_for_settings", "header_fullscreen_button", "show_dialog_on_snapshot_ready"],
                     //  BEWARE: no trailing slash is expected in feed URL
                     datafeed: new Datafeeds.UDFCompatibleDatafeed("{{ url('/') }}"),
                     library_path: "/vendor/chart_lib/charting_library/",
@@ -454,9 +509,13 @@ $(document).ready(function () {
                 @endif
                 widget.subscribe('onScreenshotReady', function (data) {
                     // console.log(data);
-                    window.open("https://facebook.com/share.php?u="+data);
+                    $('#imageurl').val(data);
+                    $('#imageshare').attr('href', "https://facebook.com/share.php?u="+data);
+                    $('#imagedownload').attr('href', data+"?download=true");
+                    $('#shareModal').modal();
+                    // window.open("https://facebook.com/share.php?u="+data);
 
-                })
+                })  
 
                     widget.addCustomCSSFile("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css");
                     widget.addCustomCSSFile("/css/charting-library.css");
@@ -465,14 +524,14 @@ $(document).ready(function () {
                         .on('click', function (e) { fullscreen(e, widget); })
                         .append("<i class='fa fa-expand'></i>")
 
-                    widget.createButton({align:"right"})
-                        .attr('title', "Share on Facebook")
-                        .on('click', function (e) { 
-                            //share on facebook
-                            widget.chart().executeActionById('takeScreenshot');
-                         })
-                        .addClass(" button first apply-common-tooltip")
-                        .append("<i class='fa fa-facebook'></i>")
+                    // widget.createButton({align:"right"})
+                    //     .attr('title', "Screenshot/Share/Save as Image")
+                    //     .on('click', function (e) { 
+                    //         //share on facebook
+                    //         widget.chart().executeActionById('takeScreenshot');
+                    //      })
+                    //     .addClass(" button first apply-common-tooltip")
+                    //     .append("<i class='fa fa-camera'></i>")
                  
 // widget.takeScreenshot();
                 });             

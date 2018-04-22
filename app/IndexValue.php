@@ -27,7 +27,7 @@ class IndexValue extends Model
     }
 
 
-    public static function getWholeDayData($limit=0,$tradeDate=null,$exchangeId=0)
+    public static function getWholeDayData($limit=0,$tradeDate=null,$exchangeId=0,$instrument_id=0)
     {
         /*We will use session value of active_trade_date as default if exist*/
 
@@ -48,6 +48,11 @@ class IndexValue extends Model
             $toDate=$activeDate->trade_date->format('Y-m-d').' '.$activeDate->market_closed->addMinute()->format('H:i:s');
 
             $query=static::where('market_id',$marketId)->whereBetween('date_time', [$fromDate, $toDate])->where('deviation','!=',0)->orderBy('date_time', 'desc');
+
+            if ($instrument_id) {
+                $query->where('instrument_id', $instrument_id);
+            }
+
             if($limit)
             {
                 $query->skip(0)->take($limit);

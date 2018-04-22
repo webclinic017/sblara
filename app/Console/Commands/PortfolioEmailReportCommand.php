@@ -47,7 +47,7 @@ class PortfolioEmailReportCommand extends Command
 
 // live server command   /opt/cpanel/ea-php70/root/usr/bin/php /home/hostingmonitors/artisan mail:PortfolioEmailReport
 // ******this need to run following command as background process once. REMEMBER !!! If server restarted it need to run again*****
-// nohup php artisan queue:work --daemon &
+// nohup php artisan queue:work --daemon > /dev/null 2>&1&
 // this should be run from sblara . last run process id from  sblara : 57831 and sbdev: 41998
     public function handle()
     {
