@@ -44,7 +44,7 @@ List of Upcoming IPO[s]
                                         </tr>
                                         <tr>
                                             <td><strong>Offered Value</strong></td>
-                                            <td>: {{$ipo->offeredValue}}</td>
+                                            <td>: {{$ipo->offeredPrice}}</td>
                                         </tr>
                                         <tr>
                                             <td><strong>Market Lot</strong></td>
@@ -65,10 +65,9 @@ List of Upcoming IPO[s]
                                     <p>{{$ipo->use_of_ipo_proceeds}}</p>
                                     <strong>Issue Manager :</strong>
                                     <p>{{$ipo->issue_manager}}</p>
-                                    <strong>NAV :</strong>
+                                    <strong>NAV :  {{$ipo->revaluation_reserve}}</strong>
                                     <p>
-                                        {{$ipo->revaluation_reserve}} :<br>
-                                        {{$ipo->w_revaluation_reserve}} :
+                                        {{-- {{$ipo->w_revaluation_reserve}} : --}}
                                     </p>
                                 </div>
                             </div>

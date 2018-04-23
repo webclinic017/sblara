@@ -458,6 +458,7 @@ ORDER BY lm_date_time asc ,total_volume asc";
 // imagefilledrectangle($image, 0, 0, 399, 29, $white);
 
 // The text to draw
+$symbol = $request->charts[0]->meta->symbol;
 $text = $request->charts[0]->meta->symbol.", ".$request->charts[0]->meta->resolution.", ". $request->charts[0]->meta->exchange;
 $text2 = "O: ".$request->charts[0]->ohlc[0].", H: ".$request->charts[0]->ohlc[1].", L: ". $request->charts[0]->ohlc[2].", C: ".$request->charts[0]->ohlc[2];
 // Replace path by your own font path
@@ -481,6 +482,7 @@ imagettftext($image, 10, 0, 10, 32, $color, $font, $text2);
                 $marge_bottom = 10;
                 $sx = imagesx($stamp);
                 $sy = imagesy($stamp);
+                $filename = $symbol.'_'.$filename;
                 imagecopy($image, $stamp, $width/2, $height/2, 0, 0, imagesx($stamp), imagesy($stamp));
             imagepng($image,  $path.$filename.$ext);        
             die(asset('storage/chartimages/'.$filename));
@@ -497,27 +499,50 @@ imagettftext($image, 10, 0, 10, 32, $color, $font, $text2);
 
     public function saveLayout(Request $request)
     {
+        $slug = str_slug($request->name);
+        $count = \App\ChartLayout::where('name', $request->name)->count();
+        if($count != 0){
+            $slug = $slug . "-".$count;
+        }
         if($request->has('chart')){
             //update
             $layout = \App\ChartLayout::find($request->chart);
+            if($layout->user_id != $this->user()->id){
+                abort(403);
+            }
             $layout->content = $request->content;
             $layout->symbol = $request->symbol;
             $layout->resolution = $request->resolution;
             $layout->name = $request->name;
+                
+                $count = \App\ChartLayout::where('name', $request->name)->whereNot('id', $request->chart)->count();
+                if($count != 0){
+                    $slug = $slug . "-".$count;
+                }            
+
+            $layout->slug = $slug;
             $layout->updated_at = \Carbon\Carbon::now();
             $layout->save();
             return ['status' => 'ok'];
         }
-        \App\ChartLayout::insert(['name' => $request->name, 'user_id' => $this->user()->id, 'content' => $request->content, 'symbol' => $request->symbol, 'resolution' => $request->resolution, 'created_at' => \Carbon\Carbon::now(), 'updated_at' => \Carbon\Carbon::now()]);
+
+            $count = \App\ChartLayout::where('name', $request->name)->count();
+            if($count != 0){
+                $slug = $slug . "-".$count;
+            }                    
+        \App\ChartLayout::insert(['name' => $request->name, 'user_id' => $this->user()->id, 'content' => $request->content, 'symbol' => $request->symbol, 'resolution' => $request->resolution, 'created_at' => \Carbon\Carbon::now(), 'updated_at' => \Carbon\Carbon::now(), 'slug' => $slug]);
         return ['status' => 'ok'];
     }
+
     public function layouts(Request $request)
     {
-        
         if($request->has('chart'))
         {
             $data = [];
-            $data['data'] = \App\ChartLayout::find($request->chart);
+            $c = \App\ChartLayout::find($request->chart);
+            $c->updated_at = Carbon::now();
+            $c->save(); 
+            $data['data'] = $c;
             $data['status'] = 'ok';
             return $data; 
         }
@@ -526,6 +551,12 @@ imagettftext($image, 10, 0, 10, 32, $color, $font, $text2);
         $data['data'] = \App\ChartLayout::select('id', 'name', 'resolution', 'slug', 'symbol', 'updated_at')->where('user_id', "=", (string) $this->user()->id)->get();
         $data['status'] = 'ok';
         return $data;
+    }
+
+    public function current()
+    {
+            $c = \App\ChartLayout::where('user_id', (string) $this->user()->id)->orderBy('updated_at', 'desc')->first();
+            return $c->slug; 
     }
 
     public function user()
@@ -548,11 +579,17 @@ imagettftext($image, 10, 0, 10, 32, $color, $font, $text2);
         return $user;
     }
 
-    public function chart($ticker, $name)
+    public function chart($ticker, $name, $layout=false)
     {
+        if($layout){
+            $data['status'] = 'ok';
+            $layout = \App\ChartLayout::where('slug', $layout)->first();
+            $data['data'] = $layout;
+            $layout = $data;
+        }
         $user = $this->user();
         $instrumentInfo = \App\Instrument::where('instrument_code', $ticker)->first();
-        return response()->view('advance-ta-chart-new', ['ticker' => $ticker, 'instrumentInfo' => $instrumentInfo]);
+        return response()->view('advance-ta-chart-new', ['ticker' => $ticker, 'instrumentInfo' => $instrumentInfo, 'layout' => $layout]);
     }
 
     public function delete()

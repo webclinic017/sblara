@@ -7,9 +7,7 @@
     <div class="row">
 
         <div class="col-md-12">
-        
-
-
+    
                                        <div id="advance-ta-chart-portlet" allowfullscreen="true" class="portlet light bordered advance-ta-chart-portlet" style="padding: 0 !important; margin:0; border: 0; margin-top:-15px">
                                          @include('tv.modals')
                                             <div class="portlet-body">
@@ -28,7 +26,7 @@
                                                             <a href="#tab_1_1_3" data-toggle="tab"  data-url="/ajax/load_block/block_name=block.sector_minute_chart:show_ads=1:instrument_id="  aria-expanded="false"> SECTOR CHART </a>
                                                         </li>
                                                         <li class="">
-                                                            <a href="#tab_1_1_3" data-toggle="tab"  data-url="https://dev.stockbangladesh.com/ajax/load_block/block_name=block.market_frame_old_site:height=500:base=total_value:instrument_id="  aria-expanded="false"> SECTOR COMPOSITION </a>
+                                                            <a href="#tab_1_1_3" data-toggle="tab"  data-url="/ajax/load_block/block_name=block.market_frame_old_site:height=500:base=total_value:instrument_id="  aria-expanded="false"> SECTOR COMPOSITION </a>
                                                         </li>
                                                         <li class="">
                                                             <a href="#tab_1_1_3" data-toggle="tab"  data-url="/ajax/load_block/block_name=block_parent.market_status?a="  aria-expanded="false"> MARKET STATUS </a>
@@ -427,12 +425,16 @@ $('.save-watchlist').click(function () {
         $('[data-toggle="tooltip"]').tooltip(); 
 })            
             @php 
+            if($layout){
+                $data = $layout;
+            }else{
                 $data = \App\ChartLayout::find(1);
+            }
              @endphp
-                var data 
-                 $.get('/1.1/charts?chart={{$data->id}}', function (d) {
-                    data = d;
-                 })
+
+                 // $.get('/1.1/charts?chart=', function (d) {
+                 //    data = d;
+                 // })
 
             function getParameterByName(name) {
                 name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
@@ -442,7 +444,8 @@ $('.save-watchlist').click(function () {
             }
 
              TradingView.onready(function()
-            {                
+            {            
+
                 var h = $(window).height() - 70;
                 h = h+"px";
                 var widget = window.tvWidget = new TradingView.widget({
@@ -451,7 +454,6 @@ $('.save-watchlist').click(function () {
                     // autosize: true,
                     height: h,
                     width: "100%",
-                    symbol: 'DSEX',
                     interval: 'D',
                     container_id: "tvChart",
                     disable_logo: !0,
@@ -461,15 +463,21 @@ $('.save-watchlist').click(function () {
                     datafeed: new Datafeeds.UDFCompatibleDatafeed("{{ url('/') }}"),
                     library_path: "/vendor/chart_lib/charting_library/",
                     locale: getParameterByName('lang') || "en",
-                    load_last_chart: true,
                     timezone: "Asia/Almaty",
-                    // saved_data: data,
+                @if(!$layout)
+                    symbol: 'DSEX',
+                    load_last_chart: true,
+                @else
+                    symbol: '{{$layout['data']->symbol}}',
+                @endif
+        
+
                     //  Regression Trend-related functionality is not implemented yet, so it's hidden for a while
                     drawings_access: { type: 'black', tools: [ { name: "Regression Trend" } ] },
                     enabled_features: ["snapshot_trading_drawings"],
                     charts_storage_url: '{{url('/')}}',
                     charts_storage_api_version: "1.1",
-                    snapshot_url: "{{url('/advance-ta-chart/snapshot')}}",
+                    snapshot_url: "{{url('/advance-ta-chart/snapshot')}}",              
                     client_id: 'stockbangladesh',
                     user_id: 'sb',
                      overrides: {
@@ -504,7 +512,8 @@ $('.save-watchlist').click(function () {
                        t.preventDefault();
                    }
                 widget.onChartReady(function() {
-                    @if(isset($ticker))
+
+                    @if(isset($ticker) && $ticker != "dsex")
                 tvWidget.activeChart().setSymbol("{{strtoupper($ticker)}}")
                 @endif
                 widget.subscribe('onScreenshotReady', function (data) {
@@ -524,16 +533,25 @@ $('.save-watchlist').click(function () {
                         .on('click', function (e) { fullscreen(e, widget); })
                         .append("<i class='fa fa-expand'></i>")
 
-                    // widget.createButton({align:"right"})
-                    //     .attr('title', "Screenshot/Share/Save as Image")
-                    //     .on('click', function (e) { 
-                    //         //share on facebook
-                    //         widget.chart().executeActionById('takeScreenshot');
-                    //      })
-                    //     .addClass(" button first apply-common-tooltip")
-                    //     .append("<i class='fa fa-camera'></i>")
+                    widget.createButton({align:"right"})
+                        .attr('title', "Screenshot/Share/Save as Image")
+                        .on('click', function (e) { 
+                            //share on facebook
+                            @if($layout)
+                                window.open("https://facebook.com/share.php?u={{url("/dse/stock/dsex/dse-broad-index/chart/advance-technical-analysis/")}}/{{$layout['data']->slug}}")
+                            @else
+                            $.get('/1.1/charts/current', function (data) {
+                                window.open("https://facebook.com/share.php?u={{url("/dse/stock/dsex/dse-broad-index/chart/advance-technical-analysis/")}}/"+data)
+                            })
+                            @endif
+                         })
+                        .addClass(" button first apply-common-tooltip process")
+                        .append("<i class='fa fa-facebook'> </i>")
                  
-// widget.takeScreenshot();
+                        @if($layout)
+                         var data = {!!json_encode($layout)!!} ;
+                        widget.loadChartFromServer(data.data);
+                        @endif
                 });             
                 //custom code
                 $('.advance-ta-chart ul li').click(function () {

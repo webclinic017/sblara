@@ -32,19 +32,30 @@
             <link rel="shortcut icon" type="image/png" href="/favicon.ico" />
 
             @stack('css')
-            @yield('structured_data')
             <script>
                     window.Laravel = {!! json_encode([
                         'csrfToken' => csrf_token(),
                     ]) !!};
                     var loggedIn = {{\Auth::guest()?'false':'true'}};
             </script>
-            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-            <script>
-                 (adsbygoogle = window.adsbygoogle || []).push({
-                      google_ad_client: "ca-pub-5791519434695332",
-                      enable_page_level_ads: true
-                 });
-            </script>
+
+
+
+         <script async='async' src='https://www.googletagservices.com/tag/js/gpt.js'></script>
+         <script>
+           var googletag = googletag || {};
+           googletag.cmd = googletag.cmd || [];
+         </script>
+
+         <script>
+           googletag.cmd.push(function() {
+             googletag.defineSlot('/87381380/home_page_double_click2', [728, 90], 'div-gpt-ad-1524461315077-0').addService(googletag.pubads());
+             googletag.pubads().enableSingleRequest();
+             googletag.pubads().collapseEmptyDivs();
+             googletag.enableServices();
+           });
+         </script>
+
+
     </head>
 <script src="{{ mix('metronic_home.js') }}"></script>

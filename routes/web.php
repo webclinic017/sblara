@@ -2,7 +2,7 @@
 Route::get('/sitemap.xml', 'SitemapController@index');
 Route::get('/dse/stock/{instrument}/{name}/chart/technical-analysis', 'ChartController@index')->name('ta-chart-new')->middleware('httpcache'); // ta-chart
 
-Route::get('/dse/stock/{instrument}/{name}/chart/advance-technical-analysis', 'TradingViewController@chart')->name('advance-ta-chart')->middleware('httpcache'); // advance-ta-chart
+Route::get('/dse/stock/{instrument}/{name}/chart/advance-technical-analysis/{layout?}', 'TradingViewController@chart')->name('advance-ta-chart')->middleware('httpcache'); // advance-ta-chart
 
 Route::get('/dse/stock/{instrument}/{name}/chart/minute-chart', 'PagesController@minuteChart')->name('minute-chart')->middleware('httpcache'); // minute -chart
 
@@ -316,6 +316,7 @@ Route::get('sidebar-tree/', 'TradingViewController@tree');
 Route::post('1.1/charts/', 'TradingViewController@saveLayout');
 Route::delete('1.1/charts/', 'TradingViewController@delete');
 Route::get('1.1/charts/', 'TradingViewController@layouts');
+Route::get('1.1/charts/current', 'TradingViewController@current');
 
 //tradingview function
 Route::get('/time', function () {
