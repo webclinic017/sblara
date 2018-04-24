@@ -49,7 +49,7 @@
 
          <script>
            googletag.cmd.push(function() {
-             googletag.defineSlot('/87381380/home_page_double_click2', [728, 90], 'div-gpt-ad-1524461315077-0').addService(googletag.pubads());
+             googletag.defineSlot('/87381380/home_page_double_click2', [[728, 90], [320, 50], [970, 90]], 'div-gpt-ad-1524465580068-0').addService(googletag.pubads());
              googletag.pubads().enableSingleRequest();
              googletag.pubads().collapseEmptyDivs();
              googletag.enableServices();

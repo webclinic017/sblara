@@ -198,10 +198,13 @@ class AjaxController extends Controller
                 $quote_bases=explode('-',$arr->quote_bases);
                 $category=$quote_bases[0];
 
-                $sector_list_id=$instrumentList->where('id',$instrument_id)->first()->sector_list_id;
+                $sector_list_id=$instrumentList->where('id',$instrument_id)->first();
+                if($sector_list_id){
+                    $sector_list_id = $sector_list_id->sector_list_id;
+                }
                 $temp['id']=$arr->instrument_id;
-                $temp['code']=$instrumentList->where('id',$instrument_id)->first()->instrument_code;
-                $temp['sector']=$sectorList->where('id',$sector_list_id)->first()->name;
+                @$temp['code']=$instrumentList->where('id',$instrument_id)->first()->instrument_code;
+                @$temp['sector']=$sectorList->where('id',$sector_list_id)->first()->name;
 
                 $temp['category']=$category;
                 if(isset($fundamentaInfo['net_asset_val_per_share'][$instrument_id]))

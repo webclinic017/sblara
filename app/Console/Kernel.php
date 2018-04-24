@@ -33,7 +33,7 @@ class Kernel extends ConsoleKernel
         Commands\GenerateCustomIndexCommand::class,
         Commands\CalculateSectorIntradayCommand::class,
 
-        // filter data
+        // filter data /// run once after trade hour
         Commands\EodUnAdjDataCommand::class,
         Commands\EodAdjDataCommand::class,
         Commands\WeeklyAdjDataCommand::class,
@@ -43,6 +43,7 @@ class Kernel extends ConsoleKernel
         Commands\IntradayData30MinutesCommand::class,
         Commands\IntradayData60MinutesCommand::class,
 
+        // during trade hour. every minute
         Commands\FileDataUpdaterCommand::class,
         Commands\FileDataUpdaterIntradayCommand::class,
         Commands\FileDataUpdaterIntraday15Command::class,

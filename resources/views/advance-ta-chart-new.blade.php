@@ -1,6 +1,12 @@
+@if($layout)
+@section('title', ' Advance Chart Layout : '. $layout['data']->name)
+@section('meta-title', ' Advance Chart Layout: '. $layout['data']->name)
+@section('meta-description', $layout['data']->name.' High configurable and nice looking technical analysis chart of Bangladesh. From 5 minutes candle to 1 hour candle available as well as daily data')
+@else
 @section('title', ' Advance Technical Analysis Chart : '. $instrumentInfo->name)
 @section('meta-title', ' Advance Technical Analysis Chart : '. $instrumentInfo->name)
 @section('meta-description', $instrumentInfo->name.' High configurable and nice looking technical analysis chart of Bangladesh. From 5 minutes candle to 1 hour candle available as well as daily data')
+@endif
 @extends('layouts.metronic.default')
 @section('content')
 
@@ -56,298 +62,12 @@
                                                                         <div id="tvChart" class="col-md-12" style="padding: 0">
                                                                             
                                                                         </div>
-                                                                        <div id="TVsidebar" class="col-md-2" style="padding: 0; display: none;">
-                                                                                <div class="tree">
-                                                                                        <div class="panel-group accordion " id="topList">
-
-                                                                                            <div class="panel panel-default" id="topGainer">
-                                                                                                <div class="panel-heading">
-                                                                                                    <h4 class="panel-title">
-                                                                                                        <a class="accordion-toggle accordion-toggle-styled" data-toggle="collapse" data-parent="#topList" href="#topGainer_1"> Top Gainer </a>
-                                                                                                    </h4>
-                                                                                                </div>
-                                                                                                <div id="topGainer_1" class="panel-collapse in">
-                                                                                                    <div class="panel-body">
-
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div>
-
-
-                                                                                            <div class="panel panel-default" id="topValue">
-                                                                                                <div class="panel-heading">
-                                                                                                    <h4 class="panel-title">
-                                                                                                         <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#topList" href="#topValue_1"> Top Value </a>
-                                                                                                    </h4>
-                                                                                                </div>
-                                                                                                <div id="topValue_1"  class="panel-collapse collapse">
-                                                                                                    <div class="panel-body" >
-                                                                                                      
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div>
-
-
-                                                                                            <div class="panel panel-default" id="topVolume">
-                                                                                                <div class="panel-heading">
-                                                                                                    <h4 class="panel-title">
-                                                                                                         <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#topList" href="#topVolume_1"> Top Volume </a>
-                                                                                                    </h4>
-                                                                                                </div>
-                                                                                                <div id="topVolume_1"  class="panel-collapse collapse">
-                                                                                                    <div class="panel-body" >
-                                                                                                        
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div>
-
-
-                                                                                            <div class="panel panel-default" id="topLoser">
-                                                                                                <div class="panel-heading">
-                                                                                                    <h4 class="panel-title">
-                                                                                                         <a class="accordion-toggle accordion-toggle-styled collapsed" data-toggle="collapse" data-parent="#topList" href="#topLoser_1"> Top Loser </a>
-                                                                                                    </h4>
-                                                                                                </div>
-                                                                                                <div id="topLoser_1"  class="panel-collapse collapse">
-                                                                                                    <div class="panel-body" >
-
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div>
-
-                                                                                        </div>
-                                                                                        <!-- watch list -->
-                                                                                        <div class="panel-group accordion " id="watchLists">
-                                                                                          
-                                                                                            @if(!\Auth::guest())
-                                                                                            @php $i = 0; @endphp
-                                                                                                @foreach(request()->user()->watchlists as $portfolio)
-                                                                                                    <div class="panel panel-default" id="{{$portfolio->id}}" style="position: relative;">
-                                                                                                        <div class="panel-heading">
-                                                                                                            <h4 class="panel-title">
-                                                                                                                <a class="accordion-toggle accordion-toggle-styled {{$i != 0?"collapsed":""}}" data-toggle="collapse" data-parent="#watchLists" href="#{{$portfolio->id}}_watchList">  {{$portfolio->name}} 
-                                                                                                                 </a>
-                                                                                                            </h4>
-
-                                                                                                        </div>
-                                                                                                                                                            <div class="btn-group watchlist-options">
-                                                        <a class="btn-sm " href="javascript:;" data-toggle="dropdown">
-                                                            <i class="fa fa-bars" ></i>
-                                                        </a>
-                                                        <ul class="dropdown-menu" role="menu">
-                                                            <li>
-                                                                <a href="javascript:;" class="rename-watchlist" data-name="{{$portfolio->name}}" data-id="{{$portfolio->id}}">
-                                                                    <i class="icon-pencil"></i> Rename </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="javascript:;" data-id="{{$portfolio->id}}" class="delete-watchlist">
-                                                                    <i class="icon-trash"></i> Delete
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>         
-                                                                                                        <div id="{{$portfolio->id}}_watchList" class="panel-collapse {{$i == 0?"in":"collapse"}}">
-                                                                                                            @php $i++ ; @endphp
-                                                                                                            <div class="panel-body" >
-
-                                                                                                            </div>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                @endforeach
-                                                                                                @if($i != 0)
-
-                                                                                                                
-                                                                                                                    <a style="width: 100%; text-align: center;" href="#" data-toggle="modal" data-target="#createWatchlist">Create watchlist</a>
-                                                                                                           
-                                                                                                @endif
-                                                                                                @if($i == 0)
-                                                                                                    <div class="panel panel-default">
-                                                                                                        <div class="panel-heading">
-                                                                                                            <h4 class="panel-title">
-                                                                                                                <a class="accordion-toggle accordion-toggle-styled" data-toggle="collapse" data-parent="#watchLists" href="#collapse_3_1"> Watchlists </a>
-                                                                                                            </h4>
-                                                                                                        </div>
-                                                                                                        <div id="collapse_3_1" class="panel-collapse in">
-                                                                                                            <div class="panel-body" >
-                                                                                                                <p>Looks like you don't have any watchlist yet. <a href="#" data-toggle="modal" data-target="#createWatchlist">Create new watchlist</a>.</p>
-                                                                                                            </div>
-                                                                                                        </div>
-                                                                                                    </div>                                                                                                
-                                                                                                @endif
-                                                                                            @else
-                                                                                            <div class="panel panel-default">
-                                                                                                <div class="panel-heading">
-                                                                                                    <h4 class="panel-title">
-                                                                                                        <a class="accordion-toggle accordion-toggle-styled" data-toggle="collapse" data-parent="#portfolios" href="#collapse_3_1"> Watchlists </a>
-                                                                                                    </h4>
-                                                                                                </div>
-                                                                                                <div id="collapse_3_1" class="panel-collapse in">
-                                                                                                    <div class="panel-body" >
-                                                                                                        <p> Please <a href="/login">login</a> to see your watchlists.</p>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            @endif
-
-                                                                                        </div>       
-                                                                                        <!-- watch list -->
-                                                                                        
-                                                                                        <!-- Portfolios -->
-
-                                                                                        <div class="panel-group accordion " id="portfolios">
-                                                                                          
-                                                                                            @if(!\Auth::guest())
-                                                                                            @php $i = 0; @endphp
-                                                                                                @foreach(request()->user()->portfolios as $portfolio)
-                                                                                                    <div class="panel panel-default" id="{{$portfolio->id}}">
-                                                                                                        <div class="panel-heading">
-                                                                                                            <h4 class="panel-title">
-                                                                                                                <a class="accordion-toggle accordion-toggle-styled {{$i != 0?"collapsed":""}}" data-toggle="collapse" data-parent="#portfolios" href="#{{$portfolio->id}}_portfolio"> {{$portfolio->portfolio_name}} </a>
-                                                                                                            </h4>
-                                                                                                        </div>
-                                                                                                        <div id="{{$portfolio->id}}_portfolio" class="panel-collapse {{$i == 0?"in":"collapse"}}">
-                                                                                                            @php $i++ ; @endphp
-                                                                                                            <div class="panel-body" >
-
-                                                                                                            </div>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                @endforeach
-                                                                                                @if($i == 0)
-                                                                                                    <div class="panel panel-default">
-                                                                                                        <div class="panel-heading">
-                                                                                                            <h4 class="panel-title">
-                                                                                                                <a class="accordion-toggle accordion-toggle-styled" data-toggle="collapse" data-parent="#portfolios" href="#collapse_3_1"> Portfolios </a>
-                                                                                                            </h4>
-                                                                                                        </div>
-                                                                                                        <div id="collapse_3_1" class="panel-collapse in">
-                                                                                                            <div class="panel-body" >
-                                                                                                                <p>Looks like you don't have any portfolio yet. <a href="/portfolio/create">Create new portfolio</a>.</p>
-                                                                                                            </div>
-                                                                                                        </div>
-                                                                                                    </div>                                                                                                
-                                                                                                @endif
-                                                                                            @else
-                                                                                            <div class="panel panel-default">
-                                                                                                <div class="panel-heading">
-                                                                                                    <h4 class="panel-title">
-                                                                                                        <a class="accordion-toggle accordion-toggle-styled" data-toggle="collapse" data-parent="#portfolios" href="#collapse_3_1"> Portfolios </a>
-                                                                                                    </h4>
-                                                                                                </div>
-                                                                                                <div id="collapse_3_1" class="panel-collapse in">
-                                                                                                    <div class="panel-body" >
-                                                                                                        <p> Please <a href="/login">login</a> to see you portfolios.</p>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            @endif
-
-                                                                                        </div>                                                                                        
-                                                                                        <!-- Portfolios -->
-                                                                                        <!-- screeners -->
-
-                                                                                        <div class="panel-group accordion " id="screeners">
-                                                                                            @php $i = 0; @endphp
-                                                                                          
-
-                                                                                                    @foreach(\App\Screener::where('featured', 1)->get() as $portfolio)
-                                                                                                    <div class="panel panel-default" id="{{$portfolio->id}}sb">
-                                                                                                        <div class="panel-heading">
-                                                                                                            <h4 class="panel-title">
-                                                                                                                <a class="accordion-toggle accordion-toggle-styled {{$i != 0?"collapsed":""}}" data-toggle="collapse" data-parent="#screeners" href="#{{$portfolio->id}}sb_screener"> {!!$portfolio->name!!} </a>
-                                                                                                            </h4>
-                                                                                                        </div>
-                                                                                                        <div id="{{$portfolio->id}}sb_screener" class="panel-collapse {{$i == 0?"in":"collapse"}}">
-                                                                                                            @php $i++ ; @endphp
-                                                                                                            <div class="panel-body" >
-
-                                                                                                            </div>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                @endforeach
-                                                                                                @if($i == 0)
-                                                                                                    <div class="panel panel-default">
-                                                                                                        <div class="panel-heading">
-                                                                                                            <h4 class="panel-title">
-                                                                                                                <a class="accordion-toggle accordion-toggle-styled" data-toggle="collapse" data-parent="#portfolios" href="#collapse_3_1"> Portfolios </a>
-                                                                                                            </h4>
-                                                                                                        </div>
-                                                                                                        <div id="collapse_3_1" class="panel-collapse in">
-                                                                                                            <div class="panel-body" >
-                                                                                                                <p>Looks like you don't have any portfolio yet. <a href="/portfolio/create">Create new portfolio</a>.</p>
-                                                                                                            </div>
-                                                                                                        </div>
-                                                                                                    </div>                                                                                                
-                                                                                                @endif
-
-
-
-
-                                                                                        </div>                                                                                            
-                                                                                        <!-- / screeners -->
-
-                                                                                        <!-- myscreeners -->
-
-                                                                                        <div class="panel-group accordion " id="myscreeners">
-                                                                                            @php $i = 0; @endphp
-                                                                                          
-                                                                                            @if(!\Auth::guest())
-                                                                                                    @foreach(request()->user()->screeners as $portfolio)
-                                                                                                    <div class="panel panel-default" id="{{$portfolio->id}}">
-                                                                                                        <div class="panel-heading">
-                                                                                                            <h4 class="panel-title">
-                                                                                                                <a class="accordion-toggle accordion-toggle-styled {{$i != 0?"collapsed":""}}" data-toggle="collapse" data-parent="#myscreeners" href="#{{$portfolio->id}}_screener"> {!!$portfolio->name!!} </a>
-                                                                                                            </h4>
-                                                                                                        </div>
-                                                                                                        <div id="{{$portfolio->id}}_screener" class="panel-collapse {{$i == 0?"in":"collapse"}}">
-                                                                                                            @php $i++ ; @endphp
-                                                                                                            <div class="panel-body" >
-
-                                                                                                            </div>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                @endforeach
-                                                                                                @if($i == 0)
-                                                                                                    <div class="panel panel-default">
-                                                                                                        <div class="panel-heading">
-                                                                                                            <h4 class="panel-title">
-                                                                                                                <a class="accordion-toggle accordion-toggle-styled" data-toggle="collapse" data-parent="#portfolios" href="#collapse_3_1"> My Screeners </a>
-                                                                                                            </h4>
-                                                                                                        </div>
-                                                                                                        <div id="collapse_3_1" class="panel-collapse in">
-                                                                                                            <div class="panel-body" >
-                                                                                                                <p>Looks like you don't have any screener yet. <a href="/screeners/new">Create new screener</a>.</p>
-                                                                                                            </div>
-                                                                                                        </div>
-                                                                                                    </div>                                                                                                
-                                                                                                @endif
-                                                                                            @else
-                                                                                            <div class="panel panel-default">
-                                                                                                <div class="panel-heading">
-                                                                                                    <h4 class="panel-title">
-                                                                                                        <a class="accordion-toggle accordion-toggle-styled" data-toggle="collapse" data-parent="#portfolios" href="#collapse_3_1"> My Screeners </a>
-                                                                                                    </h4>
-                                                                                                </div>
-                                                                                                <div id="collapse_3_1" class="panel-collapse in">
-                                                                                                    <div class="panel-body" >
-                                                                                                        <p> Please <a href="/login">login</a> to see you screeners.</p>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                            @endif
-
-                                                                                        </div>                                                                                            
-                                                                                        <!-- / myscreeners -->
-
-                                                                                </div>
-                                                                                <div class="navigation">
-                                                                                    
-                                                                                </div>
-                                                                        </div>
+                                                                        @include('tv.sidebar')
                                                                 </div>  
                                                                 <div class="tv-side-nav">
                                                                     <ul >
                                                                         <li><a   href="javascript:" style="font-size: 11px; padding:5px 0 5px 0; text-align: center; text-decoration:none ; ">Tools</a></li>
+                                                                         <li><a data-toggle="tooltip" data-placement="left" title="All Share"  href="javascript:" data-tab="#filter"><i class="fa fa-institution"></i></a></li>
                                                                          <li><a data-toggle="tooltip" data-placement="left" title="Top Shares"  href="javascript:" data-tab="#topList"><i class="fa fa-fire"></i></a></li>
                                                                          <li><a data-toggle="tooltip" data-placement="left" title="Watch List"  href="javascript:" data-tab="#watchLists"><i class="fa fa-eye"></i></a></li>
                                                                         <li><a data-toggle="tooltip" data-placement="left" title="Portfolios"  href="javascript:" data-tab="#portfolios"><i class="fa fa-briefcase"></i></a></li>
@@ -422,6 +142,11 @@ $('.save-watchlist').click(function () {
     })
 })
       new ClipboardJS('.btn-copy')
+        $( '[data-toggle=tooltip]' ).on( 'mouseout', function( e ){
+            if($(this).hasClass('active')){
+                    $(this).tooltip('hide');
+            }
+        });
         $('[data-toggle="tooltip"]').tooltip(); 
 })            
             @php 
@@ -534,7 +259,7 @@ $('.save-watchlist').click(function () {
                         .append("<i class='fa fa-expand'></i>")
 
                     widget.createButton({align:"right"})
-                        .attr('title', "Screenshot/Share/Save as Image")
+                        .attr('title', "Share Layout")
                         .on('click', function (e) { 
                             //share on facebook
                             @if($layout)
@@ -580,9 +305,19 @@ function getContent(e = false, panel = false) {
     }else{
 
         var panel = $(e.data('tab')+" .panel-collapse.in").parents('.panel-default').attr('id');
-    }
+        if($("#"+panel).hasClass('hasfilter'))
+                var hasFilter = true;
+            }
     if(!panel){return }
-    $.get('/tv/tab/'+e.data('tab').replace('#', ''), {panel: panel}, function(data){
+        var pdata = {};
+        pdata["panel"] = panel;
+        if(hasFilter){
+            $('#'+panel+" .filter-table tr .filter-param").each(function (k, v) {
+                pdata[$(this).data('name')] = $(this).val()
+            })
+        }
+        // console.log(pdata)
+    $.get('/tv/tab/'+e.data('tab').replace('#', ''), pdata, function(data){
         setTimeout(function() {
             $(e.data('tab')+" .panel-collapse.in .panel-body").html(data);
         }, 100);
@@ -595,6 +330,9 @@ $('.tree').on('click', '.accordion-toggle.accordion-toggle-styled', function () 
 
     getContent(e, $(this).attr('href').split('_')[0].replace('#', ''));
 });
+$('.tree').on('change', '.filter-param', function () {
+    getContent()
+})
 function loadSidebar(e, elem) {
     if(!elem.data('tab')){return }
     $('.tree .accordion').removeClass('active');

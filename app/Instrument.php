@@ -302,7 +302,7 @@ class Instrument extends Model
 
     public static function intraday()
     {
-        $data = static::select(\DB::raw('*, round(((close_price - yday_close_price)/close_price)*100, 2) as gain '))->whereNotIn('sector_list_id', [4, 5, 22, 23 ])->where('batch_id', '!=', null)->join('data_banks_intradays', function ($join)
+        $data = static::select(\DB::raw('*, round(((close_price - yday_close_price)/close_price)*100, 2) as gain '))->whereNotIn('sector_list_id', [4, 5, 22, 23 ])->where('batch_id', '!=', null)->where('data_banks_intradays.trade_date', lastTradeDate())->join('data_banks_intradays', function ($join)
         {
             $join->on('data_banks_intradays.batch', '=', 'instruments.batch_id');
             $join->on('data_banks_intradays.instrument_id', '=', 'instruments.id');
@@ -340,9 +340,31 @@ class Instrument extends Model
             $join->on('data_banks_intradays.batch', '=', 'instruments.batch_id');
             $join->on('data_banks_intradays.instrument_id', '=', 'instruments.id');
         })->orderBy('instrument_code', 'asc')->get();
+       
         return $data;
     }    
 
+    public static function allshares()
+    {
+        $data = static::select(\DB::raw('*, round(((close_price - yday_close_price)/close_price)*100, 2) as gain '))->where('batch_id', '!=', null)->join('data_banks_intradays', function ($join)
+        {
+            $join->on('data_banks_intradays.batch', '=', 'instruments.batch_id');
+            $join->on('data_banks_intradays.instrument_id', '=', 'instruments.id');
+        })->orderBy('instrument_code', 'asc');
+        if(request()->has('category') && request()->category != 'All'){
+            $data->where('quote_bases', 'like', request()->category."%");
+        }
+        if(request()->has('sector') && request()->sector != 'All'){
+            $data->where('sector_list_id', request()->sector);
+        }
+        $data = $data->get();
+       
+        return $data;        
+    }
 
+    public static function significantTrade()
+    {
+        dd(lastBatch());
+    }   
 
 }

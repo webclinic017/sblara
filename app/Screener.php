@@ -43,10 +43,6 @@ class Screener extends Model
 
     public function getNameAttribute()
     {
-        $sfx = "";
-        if(strlen($this->title) > 20){
-            $sfx = "...";
-        }
-        return "<span title='$this->title'>". substr($this->title, 0, 20).$sfx."</span>";
+        return shorten($this->title);
     }
 }

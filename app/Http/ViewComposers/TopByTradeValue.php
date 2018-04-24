@@ -34,7 +34,6 @@ class TopByTradeValue
         $batch_id=$market_info[0]->data_bank_intraday_batch;
 
         $sql="SELECT instruments.instrument_code,
-sector_lists.name as sector,
 data_banks_intradays.pub_last_traded_price,
 data_banks_intradays.close_price,
 data_banks_intradays.spot_last_traded_price,
@@ -48,10 +47,10 @@ instrument_id,
      )
      end
 ) - yday_close_price)/yday_close_price*100 as pchange_per
- FROM data_banks_intradays,instruments,sector_lists
+ FROM data_banks_intradays,instruments
  WHERE
  data_banks_intradays.batch=$batch_id and
- data_banks_intradays.instrument_id=instruments.id and  instruments.sector_list_id=sector_lists.id
+ data_banks_intradays.instrument_id=instruments.id and  instruments.sector_list_id!=23
  ORDER BY total_value desc LIMIT 10";
 
         $top_list=DB::select($sql);

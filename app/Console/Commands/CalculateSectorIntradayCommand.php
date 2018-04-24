@@ -129,6 +129,9 @@ class CalculateSectorIntradayCommand extends Command
 
             foreach ($instrument_list as $sector_id => $all_instrument_of_this_sector) {
 
+                if($sector_id == 23)
+                    continue;
+                
                 $total_contribution_sector = 0;
                 $total_change_sector = 0;
                 $total_change_per_sector = 0;

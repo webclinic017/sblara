@@ -443,7 +443,7 @@ class Chart
 		{
 			return "N/A";
 		}
-		return $this->intraday->quote_bases[0];
+		return @$this->intraday->quote_bases[0];
 	}
 
 	/**

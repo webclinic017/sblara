@@ -266,3 +266,28 @@ function rutime($ru, $rus, $index)
     return ($ru["ru_$index.tv_sec"] * 1000 + intval($ru["ru_$index.tv_usec"] / 1000))
     - ($rus["ru_$index.tv_sec"] * 1000 + intval($rus["ru_$index.tv_usec"] / 1000));
 }
+
+function shorten($value, $len = 20)
+{
+        $sfx = "";
+        if(strlen($value) > $len){
+            $sfx = "...";
+        }
+        return "<span title='$value'>". substr($value, 0, $len).$sfx."</span>";
+    return "<span>$value</span>";
+}
+
+function lastTradeDate()
+{
+    return \Cache::remember("dse_last_trade_date", 1, function ()
+    {
+        return (string) \DB::select(\DB::raw("select max(trade_date) as trade_date from data_banks_intradays"))[0]->trade_date;
+    });
+}
+function lastBatch()
+{
+    return \Cache::remember("dse_last_batch_date", 1, function ()
+    {
+        return (string) \DB::select(\DB::raw("select max(batch) as batch from data_banks_intradays"))[0]->batch;
+    });
+}
