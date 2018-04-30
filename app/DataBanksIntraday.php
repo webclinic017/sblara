@@ -73,7 +73,7 @@ class DataBanksIntraday extends Model {
         $cacheVar = "LatestIntraDataAll$tradeDate$exchangeId";
         // disable cache=0 minute
         $returnData = Cache::remember("$cacheVar", 0, function () use ($marketId, $batch) {
-                    $returnData = static::where('market_id', $marketId)->where('batch', $batch)->get();
+                    $returnData = static::where('market_id', $marketId)->where('instrument_id','!=', 10001)->where('instrument_id','!=', 10002)->where('instrument_id','!=', 10003)->where('batch', $batch)->get();
                     return $returnData;
 
                 });
@@ -181,6 +181,9 @@ class DataBanksIntraday extends Model {
                     if (!empty($instrumentsIdArr)) {
                         $query->whereIn('instrument_id', $instrumentsIdArr);
                     }
+
+
+                   $query->where('instrument_id', '!=', 10001)->where('instrument_id', '!=', 10002)->where('instrument_id', '!=', 10003);
 
                     $returnData = $query->get();
 

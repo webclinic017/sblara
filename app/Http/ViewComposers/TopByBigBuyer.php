@@ -50,7 +50,7 @@ instrument_id,
 ) - yday_close_price)/yday_close_price*100 as pchange_per
  FROM data_banks_intradays,instruments
  WHERE
- data_banks_intradays.batch=$batch_id and
+ data_banks_intradays.batch=$batch_id and instruments.sector_list_id!=23 and
  data_banks_intradays.instrument_id=instruments.id and  data_banks_intradays.total_trades>100
  ORDER BY big_buy desc LIMIT 10";
 

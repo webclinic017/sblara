@@ -5,6 +5,7 @@ use App\Repositories\DataBanksIntradayRepository;
 use App\Repositories\InstrumentRepository;
 use App\Repositories\FundamentalRepository;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 /*
 |--------------------------------------------------------------------------
@@ -70,6 +71,11 @@ Route::get('intraday_data_lastday/{last_update_time?}/{instrument_code?}/', func
     return $data;
 })->middleware(['auth:api', 'scopes:paid-plugin-data']);
 
+Route::get('intraday_data_lastday_zip/{last_update_time?}/{instrument_code?}/', function ($last_update_time = 0, $instrument_code = null) {
+    $data = \App\Repositories\FileDataRepository::getLastDayIntraForPlugin($last_update_time, $instrument_code);
+    return $data;
+})->middleware(['auth:api', 'scopes:paid-plugin-data']);
+
 Route::get('fundamental_data/{instrument_code?}/', function ($instrument_code = null) {
     $data = FundamentalRepository::getAmibrokerFundamentalData($instrument_code);
     return $data;
@@ -85,12 +91,44 @@ Route::get('plugin_user_stats/{username}/{hdd}/{cpu}/', function ($username, $hd
         ['user_id' => $user_id, 'login_from_ip' => $ip, 'hdd' => $hdd, 'cpu' => $cpu]
     );
 
+    $sql="SELECT count(DISTINCT user_id, hdd, cpu) as device_no FROM plugin_stats where user_id=$user_id";
+    $device=\DB::select($sql);
+    $device_no=$device[0]->device_no;
 
-    $message['user'] = $user_info[0]->plugin_message;
-    $message['user_message_color'] = '#26C281';
+
+    if ($device_no > 1) {
+        $message['user'] = "You are using plugin from $device_no device. Multiple device is restricted and account may be suspended";
+    } else {
+        $message['user'] = $user_info[0]->plugin_message;
+        //$message['user'] = "You are using plugin from $device_no device";
+    }
+    $message['user_message_color'] = '#e43a45';
+
+
+    $plugin_expired_at = $user_info[0]->plugin_expired_at;
+    if (!is_null($plugin_expired_at)) {
+        $plugin_expired_at = Carbon::parse($plugin_expired_at);
+        $today = Carbon::today();
+        $day_remaining_to_expire = $today->diffInDays($plugin_expired_at,false);
+        if ($day_remaining_to_expire > 0 and $day_remaining_to_expire < 7) {
+            $message['user_message_color'] = '#3598dc';
+            $message['user'] = "Your current subscription will expire within $day_remaining_to_expire days. Please renew your subscription before expire. Call 01552573043 for any query";
+        }
+        if ($day_remaining_to_expire <0) {
+            $user_info[0]->group_id = 1;
+        }
+        if ($day_remaining_to_expire > -7 and $day_remaining_to_expire <0) {
+            $message['user_message_color'] = '#3598dc';
+            $message['user'] = "Your subscription has been expired and downgraded to free version. Please renew your subscription. Call 01552573043 for any query";
+        }
+    }
+
+
     //$message['global'] = "Our data maintenance will go on next day -2";
     $message['global'] = null;
     $message['global_message_color'] = '#f36a5a';
+
+
     $message['eod_mode_enable'] = false;
     $message['intraday_mode_enable'] = false;
     $message['adjusted_mode_enable'] = false;
@@ -104,11 +142,7 @@ Route::get('plugin_user_stats/{username}/{hdd}/{cpu}/', function ($username, $hd
     {
         // free
 
-        $message['user'] = $user_info[0]->plugin_message;
-        $message['user_message_color'] = '#26C281';
-        //$message['global'] = "Our data maintenance will go on next day -2";
-        $message['global'] = null;
-        $message['global_message_color'] = '#f36a5a';
+
         $message['eod_mode_enable'] = true;
         $message['intraday_mode_enable'] = true;
         $message['adjusted_mode_enable'] = false;
@@ -123,11 +157,7 @@ Route::get('plugin_user_stats/{username}/{hdd}/{cpu}/', function ($username, $hd
     {
         // paid
 
-        $message['user'] = $user_info[0]->plugin_message;
-        $message['user_message_color'] = '#26C281';
-        //$message['global'] = "Our data maintenance will go on next day -2";
-        $message['global'] = null;
-        $message['global_message_color'] = '#f36a5a';
+
         $message['eod_mode_enable'] = true;
         $message['intraday_mode_enable'] = true;
         $message['adjusted_mode_enable'] = true;
@@ -140,17 +170,12 @@ Route::get('plugin_user_stats/{username}/{hdd}/{cpu}/', function ($username, $hd
     {
         // corporate
 
-        $message['user'] = $user_info[0]->plugin_message;
-        $message['user_message_color'] = '#26C281';
-        //$message['global'] = "Our data maintenance will go on next day -2";
-        $message['global'] = null;
-        $message['global_message_color'] = '#f36a5a';
         $message['eod_mode_enable'] = true;
         $message['intraday_mode_enable'] = true;
         $message['adjusted_mode_enable'] = true;
         $message['fundamental_button_enable'] = true;
         $message['resources_button_enable'] = true;
-        $message['interval'] = 60;
+        $message['interval'] = 30;
 
     }
 
@@ -158,17 +183,26 @@ Route::get('plugin_user_stats/{username}/{hdd}/{cpu}/', function ($username, $hd
     {
         // course
 
-        $message['user'] = $user_info[0]->plugin_message;
-        $message['user_message_color'] = '#26C281';
-        //$message['global'] = "Our data maintenance will go on next day -2";
-        $message['global'] = null;
-        $message['global_message_color'] = '#f36a5a';
         $message['eod_mode_enable'] = true;
         $message['intraday_mode_enable'] = true;
         $message['adjusted_mode_enable'] = true;
         $message['fundamental_button_enable'] = true;
         $message['resources_button_enable'] = true;
-        $message['interval'] = 60;
+        $message['interval'] = 30;
+
+    }
+
+    if($user_info[0]->group_id==5)
+    {
+        // sponsored
+
+
+        $message['eod_mode_enable'] = true;
+        $message['intraday_mode_enable'] = true;
+        $message['adjusted_mode_enable'] = true;
+        $message['fundamental_button_enable'] = true;
+        $message['resources_button_enable'] = true;
+        $message['interval'] = 30;
 
     }
 

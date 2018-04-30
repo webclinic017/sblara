@@ -38,6 +38,7 @@ class Kernel extends ConsoleKernel
         Commands\EodAdjDataCommand::class,
         Commands\WeeklyAdjDataCommand::class,
         Commands\MonthlyAdjDataCommand::class,
+        Commands\IntradayData1MinutesCommand::class,
         Commands\IntradayData5MinutesCommand::class,
         Commands\IntradayData15MinutesCommand::class,
         Commands\IntradayData30MinutesCommand::class,
@@ -45,7 +46,8 @@ class Kernel extends ConsoleKernel
 
         // during trade hour. every minute
         Commands\FileDataUpdaterCommand::class,
-        Commands\FileDataUpdaterIntradayCommand::class,
+        Commands\FileDataUpdaterIntraday1Command::class,  //1 minute data
+        Commands\FileDataUpdaterIntradayCommand::class,   // 5 minute data
         Commands\FileDataUpdaterIntraday15Command::class,
         Commands\FileDataUpdaterIntraday30Command::class,
         Commands\FileDataUpdaterIntraday60Command::class,

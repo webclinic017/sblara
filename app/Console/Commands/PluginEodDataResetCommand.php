@@ -63,7 +63,7 @@ class PluginEodDataResetCommand extends Command
 
     }
 
-// live server command   /opt/cpanel/ea-php70/root/usr/bin/php /home/stock/sblara/artisan plugin:resetEod
+// live server command   /opt/cpanel/ea-php70/root/usr/bin/php /home/stock/sbplugin/artisan plugin:resetEod
     public function handle()
     {
         $file="plugin/eod/data.txt";
@@ -92,6 +92,6 @@ class PluginEodDataResetCommand extends Command
 
 
 
-        $this->info('ok');
+        $this->info('ok - Run from Plugin.stockbangladesh.com');
     }
 }

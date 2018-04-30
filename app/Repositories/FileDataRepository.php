@@ -17,6 +17,30 @@ use DB;
 use Illuminate\Support\Facades\Storage;
 class FileDataRepository {
 
+    public static function geEodByDate($date, $cols = 'c', $inst = false)
+    {
+        if($inst == false){
+            $inst = \App\Instrument::active()->get()->pluck('id')->toArray();
+        }
+        if(!is_array($inst)){$inst = [$inst]; $single = true; }
+        $results = [];
+        foreach ($inst as $instrument_id) {
+            $data = self::getAdjustedEod($instrument_id, 'd');
+            $index = array_search($date, $data);
+            if(is_array($cols)){
+                $result = [];
+                foreach ($cols as $col) {
+                 @$result[$col] = self::getAdjustedEod($instrument_id, $col)[$index];   
+                }
+            }else{
+                 @$result = self::getAdjustedEod($instrument_id, $cols)[$index];
+            }            
+            $results[$instrument_id] =  $result;
+        }
+        if($single){$results = $results[$instrument_id];}
+        return $results;
+
+    }
 
     public static function getAdjustedEod($instrument_id,$field='c',$latest=1)
     {

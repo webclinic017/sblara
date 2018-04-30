@@ -82,6 +82,6 @@ class PluginAdjustedEodDataResetCommand extends Command
         $files = glob(storage_path() . '/app/plugin/adjusted_eod/*');
         $zipper->make(storage_path() . '/app/plugin/adjusted_eod.zip')->add($files)->close();
 
-        $this->info('adjusted eod data written successfully');
+        $this->info('adjusted eod data written successfully  - run from plugin.stockbangladesh.com');
     }
 }

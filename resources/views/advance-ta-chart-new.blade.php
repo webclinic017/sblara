@@ -2,6 +2,13 @@
 @section('title', ' Advance Chart Layout : '. $layout['data']->name)
 @section('meta-title', ' Advance Chart Layout: '. $layout['data']->name)
 @section('meta-description', $layout['data']->name.' High configurable and nice looking technical analysis chart of Bangladesh. From 5 minutes candle to 1 hour candle available as well as daily data')
+
+{{-- @section('og:image', $screenerImageUrl) --}}
+
+
+@section('og:title',  ' Advance Chart Layout : '. $layout['data']->name)
+@section('og:description', $layout['data']->name)
+
 @else
 @section('title', ' Advance Technical Analysis Chart : '. $instrumentInfo->name)
 @section('meta-title', ' Advance Technical Analysis Chart : '. $instrumentInfo->name)
@@ -113,6 +120,20 @@
         <script type="text/javascript">
 $(document).ready(function () {
 
+$('.addToWatchlistSubmit').click(function () {
+    $.get('/watchlist/addtomultiple?'+$('#addToWatchlistForm').serialize(), function (data) {
+
+    });
+});
+
+
+
+$('.tree').on('click', '.addItem', function (event) {
+    $('#addToWatchlistForm')[0].reset();
+    $('.instrument').val($(this).data('instrument'))
+    $('#watchlistsModal').modal();
+    event.stopImmediatePropagation();
+});
 $('.rename-watchlist').click(function () {
     var id = $(this).data('id')
     var name = $(this).data('name')
@@ -267,6 +288,8 @@ $('.save-watchlist').click(function () {
                             @else
                             $.get('/1.1/charts/current', function (data) {
                                 window.open("https://facebook.com/share.php?u={{url("/dse/stock/dsex/dse-broad-index/chart/advance-technical-analysis/")}}/"+data)
+                            }).fail(function () {
+                                swal('Please save the layout first.', '', 'error')
                             })
                             @endif
                          })
@@ -305,17 +328,17 @@ function getContent(e = false, panel = false) {
     }else{
 
         var panel = $(e.data('tab')+" .panel-collapse.in").parents('.panel-default').attr('id');
-        if($("#"+panel).hasClass('hasfilter'))
-                var hasFilter = true;
+
+
             }
     if(!panel){return }
         var pdata = {};
         pdata["panel"] = panel;
-        if(hasFilter){
+
             $('#'+panel+" .filter-table tr .filter-param").each(function (k, v) {
                 pdata[$(this).data('name')] = $(this).val()
             })
-        }
+    
         // console.log(pdata)
     $.get('/tv/tab/'+e.data('tab').replace('#', ''), pdata, function(data){
         setTimeout(function() {
@@ -371,9 +394,9 @@ $('.tree').on('click', '.removeItem', function (e) {
     $.get('/watchlist/remove', {id: id, instrument_id: instrument_id}, function (data) {
         getContent();
     });
-    event.isImmediatePropagationStopped();
+    e.stopImmediatePropagation();
 })
-$('.tree').on('click', 'table tbody tr:not(.removeItem)', function (e) {
+$('.tree').on('click', 'table tbody tr', function (e) {
     var symbol = $($(this).find('td')[0]).text().trim()
     tvWidget.chart().setSymbol(symbol);
 })

@@ -114,6 +114,9 @@ class UpdateDseIndexCommand extends Command
                 $yday_index_data = \DB::select("select * from data_banks_eods where market_id=$yday_market_id and instrument_id in ($index_id)");
                 $yday_index_data=collect($yday_index_data)->keyBy('instrument_id');
 
+                $today_intraday_index_data = DB::select("SELECT instrument_id,batch FROM data_banks_intradays WHERE market_id=$market_id and instrument_id in ($index_id) and batch=$data_bank_intraday_batch");
+                $today_intraday_index_data=collect($today_intraday_index_data)->keyBy('instrument_id');
+
 
 
                 if (!empty($dataToSave)) {
@@ -159,6 +162,7 @@ class UpdateDseIndexCommand extends Command
 
 
                 $today_eod_data=DB::table('data_banks_eods')->select('instrument_id','volume','trade','tradevalues')->where('market_id', $market_id)->get();
+
 
 
                 // new index? add here
@@ -213,23 +217,28 @@ class UpdateDseIndexCommand extends Command
                 );
 
                 /////////////////// Intraday Data DSEX \\\\\\\\\\\\\\\\\\\\
-                $temp = array();
-                $temp['market_id'] = $market_id;
-                $temp['instrument_id'] = $instrument_id;
-                $temp['open_price'] = $index_ohlc[$instrument_id]['open'];
-                $temp['pub_last_traded_price'] = $index_ohlc[$instrument_id]['close'];
-                $temp['high_price'] = $index_ohlc[$instrument_id]['high'];
-                $temp['low_price'] = $index_ohlc[$instrument_id]['low'];
-                $temp['close_price'] = $index_ohlc[$instrument_id]['close'];
-                $temp['total_trades'] = $dsexTrade;
-                $temp['total_volume'] = $dsexVolume;
-                $temp['total_value'] = $dsexTradeValues;
-                $temp['lm_date_time'] = date('Y-m-d H:i:s', strtotime($index_ohlc[$instrument_id]['date_time']));
-                $temp['trade_time'] = date('H:i', strtotime($index_ohlc[$instrument_id]['date_time']));
-                $temp['trade_date'] = date('Y-m-d', strtotime($index_ohlc[$instrument_id]['date_time']));
-                $temp['yday_close_price'] = $index_ohlc[$instrument_id]['yday_close_price'];
-                $temp['batch'] = $data_bank_intraday_batch;
-                $IntradayDataToSave[] = $temp;
+                if(!isset($today_intraday_index_data[$instrument_id]) and $data_bank_intraday_batch>0)
+                {
+
+                    $temp = array();
+                    $temp['market_id'] = $market_id;
+                    $temp['instrument_id'] = $instrument_id;
+                    $temp['open_price'] = $index_ohlc[$instrument_id]['open'];
+                    $temp['pub_last_traded_price'] = $index_ohlc[$instrument_id]['close'];
+                    $temp['high_price'] = $index_ohlc[$instrument_id]['high'];
+                    $temp['low_price'] = $index_ohlc[$instrument_id]['low'];
+                    $temp['close_price'] = $index_ohlc[$instrument_id]['close'];
+                    $temp['total_trades'] = $dsexTrade;
+                    $temp['total_volume'] = $dsexVolume;
+                    $temp['total_value'] = $dsexTradeValues;
+                    $temp['lm_date_time'] = date('Y-m-d H:i:s', strtotime($index_ohlc[$instrument_id]['date_time']));
+                    $temp['trade_time'] = date('H:i', strtotime($index_ohlc[$instrument_id]['date_time']));
+                    $temp['trade_date'] = date('Y-m-d', strtotime($index_ohlc[$instrument_id]['date_time']));
+                    $temp['yday_close_price'] = $index_ohlc[$instrument_id]['yday_close_price'];
+                    $temp['batch'] = $data_bank_intraday_batch;
+                    $IntradayDataToSave[] = $temp;
+                }
+
 
 
                 //////////////////////// EOD for DS30 \\\\\\\\\\\\\\\\\\\\\\\\\\\
@@ -272,24 +281,28 @@ class UpdateDseIndexCommand extends Command
                 ///////////////////////// Intraday Data DS30 \\\\\\\\\\\\\\\\\\\\\\\\\\
 
 
-                $temp = array();
-                $temp['market_id'] = $market_id;
-                $temp['instrument_id'] = $instrument_id;
-                $temp['open_price'] = $index_ohlc[$instrument_id]['open'];
-                $temp['pub_last_traded_price'] = $index_ohlc[$instrument_id]['close'];
-                $temp['high_price'] = $index_ohlc[$instrument_id]['high'];
-                $temp['low_price'] = $index_ohlc[$instrument_id]['low'];
-                $temp['close_price'] = $index_ohlc[$instrument_id]['close'];
-                $temp['total_trades'] = $ds30Trade;
-                $temp['total_volume'] = $ds30Volume;
-                $temp['total_value'] = $ds30TradeValues;
-                $temp['lm_date_time'] = date('Y-m-d H:i:s', strtotime($index_ohlc[$instrument_id]['date_time']));
-                $temp['trade_time'] = date('H:i', strtotime($index_ohlc[$instrument_id]['date_time']));
-                $temp['trade_date'] = date('Y-m-d', strtotime($index_ohlc[$instrument_id]['date_time']));
-                $temp['yday_close_price'] = $index_ohlc[$instrument_id]['yday_close_price'];
-                $temp['batch'] = $data_bank_intraday_batch;
-                $IntradayDataToSave[]= $temp;
+                if (!isset($today_intraday_index_data[$instrument_id]) and $data_bank_intraday_batch > 0)
+                {
+                    $temp = array();
+                    $temp['market_id'] = $market_id;
+                    $temp['instrument_id'] = $instrument_id;
+                    $temp['open_price'] = $index_ohlc[$instrument_id]['open'];
+                    $temp['pub_last_traded_price'] = $index_ohlc[$instrument_id]['close'];
+                    $temp['high_price'] = $index_ohlc[$instrument_id]['high'];
+                    $temp['low_price'] = $index_ohlc[$instrument_id]['low'];
+                    $temp['close_price'] = $index_ohlc[$instrument_id]['close'];
+                    $temp['total_trades'] = $ds30Trade;
+                    $temp['total_volume'] = $ds30Volume;
+                    $temp['total_value'] = $ds30TradeValues;
+                    $temp['lm_date_time'] = date('Y-m-d H:i:s', strtotime($index_ohlc[$instrument_id]['date_time']));
+                    $temp['trade_time'] = date('H:i', strtotime($index_ohlc[$instrument_id]['date_time']));
+                    $temp['trade_date'] = date('Y-m-d', strtotime($index_ohlc[$instrument_id]['date_time']));
+                    $temp['yday_close_price'] = $index_ohlc[$instrument_id]['yday_close_price'];
+                    $temp['batch'] = $data_bank_intraday_batch;
+                    $IntradayDataToSave[] = $temp;
 
+
+                }
 
                 //////////////////////// EOD for DSES \\\\\\\\\\\\\\\\\\\\\\\\\\\
 
@@ -318,24 +331,28 @@ class UpdateDseIndexCommand extends Command
                 ///////////////////////// Intraday Data DSES \\\\\\\\\\\\\\\\\\\\\\\\\\
 
 
-                $temp = array();
-                $temp['market_id'] = $market_id;
-                $temp['instrument_id'] = $instrument_id;
-                $temp['open_price'] = $index_ohlc[$instrument_id]['open'];
-                $temp['pub_last_traded_price'] = $index_ohlc[$instrument_id]['close'];
-                $temp['high_price'] = $index_ohlc[$instrument_id]['high'];
-                $temp['low_price'] = $index_ohlc[$instrument_id]['low'];
-                $temp['close_price'] = $index_ohlc[$instrument_id]['close'];
-                $temp['total_trades'] = $ds30Trade;
-                $temp['total_volume'] = $ds30Volume;
-                $temp['total_value'] = $ds30TradeValues;
-                $temp['lm_date_time'] = date('Y-m-d H:i:s', strtotime($index_ohlc[$instrument_id]['date_time']));
-                $temp['trade_time'] = date('H:i', strtotime($index_ohlc[$instrument_id]['date_time']));
-                $temp['trade_date'] = date('Y-m-d', strtotime($index_ohlc[$instrument_id]['date_time']));
-                $temp['yday_close_price'] = $index_ohlc[$instrument_id]['yday_close_price'];
-                $temp['batch'] = $data_bank_intraday_batch;
+                if (!isset($today_intraday_index_data[$instrument_id]) and $data_bank_intraday_batch > 0)
+                {
+                    $temp = array();
+                    $temp['market_id'] = $market_id;
+                    $temp['instrument_id'] = $instrument_id;
+                    $temp['open_price'] = $index_ohlc[$instrument_id]['open'];
+                    $temp['pub_last_traded_price'] = $index_ohlc[$instrument_id]['close'];
+                    $temp['high_price'] = $index_ohlc[$instrument_id]['high'];
+                    $temp['low_price'] = $index_ohlc[$instrument_id]['low'];
+                    $temp['close_price'] = $index_ohlc[$instrument_id]['close'];
+                    $temp['total_trades'] = $ds30Trade;
+                    $temp['total_volume'] = $ds30Volume;
+                    $temp['total_value'] = $ds30TradeValues;
+                    $temp['lm_date_time'] = date('Y-m-d H:i:s', strtotime($index_ohlc[$instrument_id]['date_time']));
+                    $temp['trade_time'] = date('H:i', strtotime($index_ohlc[$instrument_id]['date_time']));
+                    $temp['trade_date'] = date('Y-m-d', strtotime($index_ohlc[$instrument_id]['date_time']));
+                    $temp['yday_close_price'] = $index_ohlc[$instrument_id]['yday_close_price'];
+                    $temp['batch'] = $data_bank_intraday_batch;
 
-                $IntradayDataToSave[]= $temp;
+                    $IntradayDataToSave[] = $temp;
+
+                }
 
 
 

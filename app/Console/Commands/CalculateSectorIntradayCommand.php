@@ -131,7 +131,7 @@ class CalculateSectorIntradayCommand extends Command
 
                 if($sector_id == 23)
                     continue;
-                
+
                 $total_contribution_sector = 0;
                 $total_change_sector = 0;
                 $total_change_per_sector = 0;

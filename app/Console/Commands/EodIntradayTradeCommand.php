@@ -107,7 +107,7 @@ class EodIntradayTradeCommand extends Command
 
 
                 // if $data_bank_intraday_batch=0, go for fresh query in the market tables
-                if($data_bank_intraday_batch)
+                if($data_bank_intraday_batch==0)
                 {
                     // it will be 0 for the very first entry of a day. So we have to take max(data_bank_intraday_batch) frosftm the market table
 

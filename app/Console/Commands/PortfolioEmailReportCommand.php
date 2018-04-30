@@ -71,9 +71,12 @@ WHERE portfolios.user_id=users.id and portfolios.email_alert=true";
             $i=1;
             foreach($portfolio_id_list as $row)
             {
-               //  Mail::to($row->email)->send(new PortfolioReportMarkdown($row->id));
-                SendPortfolioEmail::dispatch($row)
-                    ->delay(now()->addseconds($i));
+                // direct mailing
+                 Mail::to($row->email)->send(new PortfolioReportMarkdown($row->id));
+
+                // using queue
+                /*SendPortfolioEmail::dispatch($row)
+                    ->delay(now()->addseconds($i));*/
 
            $i+=5; // email send to queue every in every 5 sec
             }

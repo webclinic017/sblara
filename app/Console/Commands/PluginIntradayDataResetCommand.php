@@ -120,7 +120,7 @@ class PluginIntradayDataResetCommand extends Command
         $heading = '';
         Storage::disk('local')->put($file, $heading);
 
-        $tradeDate = Market::getActiveDates(15);
+        $tradeDate = Market::getActiveDates(30);
         $last_trade_date = $tradeDate->first()->trade_date->addDay()->format('Y-m-d');
         $from_trade_date = $tradeDate->last()->trade_date->format('Y-m-d');
 
@@ -133,13 +133,13 @@ class PluginIntradayDataResetCommand extends Command
 
         foreach ($instrumentList as $ins) {
             $instrument_id = $ins->id;
-            echo "\nstarted  " . $ins->instrument_code;
+            echo "\n started  " . $ins->instrument_code;
             $data = DataBanksIntraday::whereBetween('lm_date_time', [$from_trade_date, $last_trade_date])->where('instrument_id', $instrument_id)->orderBy('lm_date_time', 'desc')->get();
 
             self::writeData($data, $ins->instrument_code, $file);
         }
 
 
-        $this->info('Intraday data reset ok');
+        $this->info('Intraday data reset ok - run from plugin.stockbangladesh.com');
     }
 }

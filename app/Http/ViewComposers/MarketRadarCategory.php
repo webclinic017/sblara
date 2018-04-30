@@ -48,7 +48,9 @@ class MarketRadarCategory
  WHERE
  data_banks_intradays.batch=$batch_id  and data_banks_intradays.market_id=$market_id and data_banks_intradays.close_price -data_banks_intradays.yday_close_price>0 and
  data_banks_intradays.quote_bases NOT LIKE '%A-CB%' AND
- data_banks_intradays.quote_bases NOT LIKE '%N-EQ%'
+ data_banks_intradays.quote_bases NOT LIKE '%N-EQ%' AND
+ data_banks_intradays.instrument_id !=10001 AND data_banks_intradays.instrument_id !=10002 AND data_banks_intradays.instrument_id !=10003
+
  GROUP BY data_banks_intradays.quote_bases";
 
             $category_data_up = DB::select($sql);
@@ -66,6 +68,7 @@ class MarketRadarCategory
  data_banks_intradays.batch=$batch_id  and data_banks_intradays.market_id=$market_id and
  data_banks_intradays.quote_bases NOT LIKE '%A-CB%' and
  data_banks_intradays.quote_bases NOT LIKE '%N-EQ%'
+ and data_banks_intradays.instrument_id !=10001 AND data_banks_intradays.instrument_id !=10002 AND data_banks_intradays.instrument_id !=10003
  GROUP BY data_banks_intradays.quote_bases";
 
             $category_data_total = DB::select($sql);

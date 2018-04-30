@@ -13,7 +13,7 @@
     <tr style="background: #f5f5f5">
         <td>Category</td>
         <td>
-            <select style="width: 98%" data-id="{{request()->panel}}" data-name="category" class="filter-param">
+            <select style="width: 98%" data-name="category" class="filter-param">
                 <option value="All">All</option>
                 <option value="A">A</option>
                 <option value="B">B</option>
@@ -25,7 +25,7 @@
     <tr style="background: #f5f5f5">
         <td>Sector</td>
         <td>
-            <select style="width: 98%"  data-id="{{request()->panel}}" data-name="sector" class="filter-param">
+            <select style="width: 98%"   data-name="sector" class="filter-param">
                 <option value="All">All</option>
                 @foreach(\App\SectorList::all() as $sector)
                 <option value="{{$sector->id}}">{!!shorten($sector->name, 15)!!}</option>

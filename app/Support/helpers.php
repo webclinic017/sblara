@@ -286,8 +286,5 @@ function lastTradeDate()
 }
 function lastBatch()
 {
-    return \Cache::remember("dse_last_batch_date", 1, function ()
-    {
-        return (string) \DB::select(\DB::raw("select max(batch) as batch from data_banks_intradays"))[0]->batch;
-    });
+        return (string) \DB::select(\DB::raw("select max(data_bank_intraday_batch) as batch from markets"))[0]->batch;
 }

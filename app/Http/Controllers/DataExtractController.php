@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Repositories\FundamentalRepository;
 use Illuminate\Http\Request;
+use App\Repositories\InstrumentRepository;
 
 class DataExtractController extends Controller
 {
@@ -148,4 +149,458 @@ class DataExtractController extends Controller
     {
         return view('admin.data-extractors.eps-parsing');
     }
+
+
+    public function insert_fundamental($heading, $nodes, $instrument_id, $meta_group_id = 21, $type = 'annual')
+    {
+
+        $sql = "select * from metas where meta_group_id=$meta_group_id";
+        $existing_metas_of_this_group = \DB::select($sql);
+        $existing_metas_of_this_group = collect($existing_metas_of_this_group)->keyBy('meta_key');
+
+        foreach ($nodes as $i => $node) {
+
+            $temp = array();
+
+            $i = 0;
+            $meta_id = 0;
+            foreach ($node->childNodes as $child) {
+                $data = str_replace(',', '', $child->nodeValue);
+                $data = str_replace('%', '', $data);
+                $data = trim($data);
+
+
+                if ($data != '') {
+                    $temp[] = $data;
+                    $data = trim($data);
+
+                    if ($i == 0) {
+                        // its description/ ist column
+                        $meta_key = str_slug(trim($data), '-');
+                        $meta_key = "$type-sbfn-$meta_key";
+                        if (isset($existing_metas_of_this_group[$meta_key])) {
+                            $meta_id = $existing_metas_of_this_group[$meta_key]->id;
+
+                        } else {
+
+                            \DB::table('metas')->insert(
+                                ['meta_group_id' => $meta_group_id, 'meta_key' => $meta_key, 'meta_description' => $data]
+                            );
+
+                            $sql = "select * from metas where meta_group_id=$meta_group_id";
+                            $existing_metas_of_this_group = \DB::select($sql);
+                            $existing_metas_of_this_group = collect($existing_metas_of_this_group)->keyBy('meta_key');
+
+                            $meta_id = $existing_metas_of_this_group[$meta_key]->id;
+
+                        }
+
+
+                    } else {
+                        dump("$i | meta_id=$meta_id");
+
+                        if ($meta_id) {
+
+                            if ($type == 'annual') {
+                                if (isset($heading[$i]))
+                                    $meta_date = trim($heading[$i]) . "-01-01";
+
+                            }
+                            if ($type == 'quarter') {
+                                if (isset($heading[$i]))
+                                    $meta_date = date('Y-m-d', strtotime($heading[$i]));
+                            }
+
+
+                            if ($i == 1)
+                                $is_latest = 1;
+                            else
+                                $is_latest = 0;
+
+                            $data = str_replace('(', '-', $data);
+                            $data = str_replace(')', '', $data);
+
+                            dump("Insert=>  instrument_id=$instrument_id meta_id=$meta_id meta_date=$meta_date meta_data=$data is_latest=$is_latest");
+
+                            $fundamental_insert = \App\Fundamental::updateOrCreate(
+                                ['instrument_id' => $instrument_id, 'meta_id' => $meta_id, 'meta_date' => $meta_date, 'meta_id' => $meta_id],
+                                ['meta_value' => $data, 'is_latest' => $is_latest]
+                            );
+
+                        }
+                    }
+
+                    $i++;
+
+                }
+
+
+            }
+
+        }
+
+    }
+
+
+    public function extract_annual_report($instrument_code = "UPGDCL")
+    {
+
+        libxml_use_internal_errors(true);
+
+        /* Createa a new DomDocument object */
+
+        $instrument_info = InstrumentRepository::getInstrumentsByCode(array($instrument_code));
+        $instrument_id = $instrument_info->first()->id;
+
+
+        ////////////////  CASH FLOW    STARTS        \\\\\\\\\\\\\\\\\\\\\\\\\
+
+        $dom = new \DomDocument;
+        /* Load the HTML */
+        @$dom->loadHTMLFile("http://quotes.wsj.com/BD/XDHA/$instrument_code/financials/annual/balance-sheet");
+
+        /* Heading/Financial year extracting */
+
+        $xpath = new \DomXPath($dom);
+        $heading_nodes = $xpath->query('//*[@id="cr_cashflow"]/div[2]/div/table/thead/tr');
+
+        $heading = array();
+        foreach ($heading_nodes as $i => $node) {
+
+
+            foreach ($node->childNodes as $child) {
+                $data = str_replace(',', '', $child->nodeValue);
+                $data = trim($data);
+
+
+                if ($data != '')
+                    $heading[] = $data;
+
+            }
+
+
+        }
+
+        ///// Processing Balance sheet   -    Assets  Starts \\\\\\\\\\\\\\\\\\
+
+        $nodes = $xpath->query('//*[@id="cr_cashflow"]/div[2]/div/table/tbody/tr');
+        $meta_group_id = 21; //Balance sheet-assets
+
+        self::insert_fundamental($heading, $nodes, $instrument_id, $meta_group_id, 'annual');
+
+        ///// Processing Balance sheet   -    Assets  End \\\\\\\\\\\\\\\\\\
+
+
+        ///// Processing Balance sheet   -    Liabilities  Starts \\\\\\\\\\\\\\\\\\
+
+        $meta_group_id = 22; //Balance sheet-Liabilities
+        $nodes = $xpath->query('//*[@id="cr_cashflow"]/div[3]/div[2]/table/tbody/tr');
+        self::insert_fundamental($heading, $nodes, $instrument_id, $meta_group_id, 'annual');
+
+        ///// Processing Balance sheet   -    Liabilities  Ends \\\\\\\\\\\\\\\\\\
+
+
+        ////////////////  BALANCE SHEET    ENDS        \\\\\\\\\\\\\\\\\\\\\\\\\
+
+
+        ////////////////  CASH FLOW    STARTS        \\\\\\\\\\\\\\\\\\\\\\\\\
+
+
+        $dom = new \DomDocument;
+        /* Load the HTML */
+        @$dom->loadHTMLFile("http://quotes.wsj.com/BD/XDHA/$instrument_code/financials/annual/cash-flow");
+        /* Create a new XPath object */
+        $xpath = new \DomXPath($dom);
+        /* Query all <td> nodes containing specified class name */
+        //$nodes = $xpath->query("//th[@class='fiscalYr']");
+        $heading_nodes = $xpath->query('//*[@id="cr_cashflow"]/div[2]/div[2]/table/thead/tr');
+
+        $heading = array();
+        foreach ($heading_nodes as $i => $node) {
+
+
+            foreach ($node->childNodes as $child) {
+                $data = str_replace(',', '', $child->nodeValue);
+                $data = trim($data);
+
+
+                if ($data != '')
+                    $heading[] = $data;
+
+            }
+
+
+        }
+
+
+        ///// Processing CASH FLOW:  Operating Activities  Starts \\\\\\\\\\\\\\\\\\
+
+        $meta_group_id = 23; //CASH FLOW:  Operating Activities
+        $nodes = $xpath->query('//*[@id="cr_cashflow"]/div[2]/div[2]/table/tbody/tr');
+        self::insert_fundamental($heading, $nodes, $instrument_id, $meta_group_id, 'annual');
+
+        ///// Processing CASH FLOW:  Operating Activities Ends \\\\\\\\\\\\\\\\\\
+
+
+        ///// Processing CASH FLOW:  Investing Activities  Starts \\\\\\\\\\\\\\\\\\
+
+        $meta_group_id = 24; //CASH FLOW:   Investing Activities
+        $nodes = $xpath->query('//*[@id="cr_cashflow"]/div[3]/div[2]/table/tbody/tr');
+        self::insert_fundamental($heading, $nodes, $instrument_id, $meta_group_id, 'annual');
+
+        ///// Processing CASH FLOW:   Investing Activities Ends \\\\\\\\\\\\\\\\\\
+
+
+        ///// Processing CASH FLOW:  Financing Activities  Starts \\\\\\\\\\\\\\\\\\
+
+        $meta_group_id = 25; //CASH FLOW:    Financing Activities
+        $nodes = $xpath->query('//*[@id="cr_cashflow"]/div[4]/div[2]/table/tbody/tr');
+        self::insert_fundamental($heading, $nodes, $instrument_id, $meta_group_id, 'annual');
+
+        ///// Processing CASH FLOW:    Financing Activities Ends \\\\\\\\\\\\\\\\\\
+
+
+        ////////////////  CASH FLOW    END        \\\\\\\\\\\\\\\\\\\\\\\\\
+
+
+        ////////////////  INCOME STATMENTS    START        \\\\\\\\\\\\\\\\\\\\\\\\\
+
+
+        $dom = new \DomDocument;
+        /* Load the HTML */
+        @$dom->loadHTMLFile("http://quotes.wsj.com/BD/XDHA/$instrument_code/financials/annual/income-statement");
+        /* Create a new XPath object */
+        $xpath = new \DomXPath($dom);
+        /* Query all <td> nodes containing specified class name */
+        //$nodes = $xpath->query("//th[@class='fiscalYr']");
+        $heading_nodes = $xpath->query('//*[@id="cr_cashflow"]/div[2]/div/table/thead/tr');
+
+        $heading = array();
+        foreach ($heading_nodes as $i => $node) {
+
+
+            foreach ($node->childNodes as $child) {
+                $data = str_replace(',', '', $child->nodeValue);
+                $data = trim($data);
+
+
+                if ($data != '')
+                    $heading[] = $data;
+
+            }
+
+
+        }
+
+
+        ///// Processing  	income statement data Starts \\\\\\\\\\\\\\\\\\
+
+        $meta_group_id = 26; //income statement data
+        $nodes = $xpath->query('//*[@id="cr_cashflow"]/div[2]/div/table/tbody/tr');
+        self::insert_fundamental($heading, $nodes, $instrument_id, $meta_group_id, 'annual');
+
+        ///// Processing income statement data Ends \\\\\\\\\\\\\\\\\\
+
+
+        dd("income statement data");
+
+        ////////////////  INCOME STATMENTS    END        \\\\\\\\\\\\\\\\\\\\\\\\\
+
+    }
+
+    public function extract_quarter_report($instrument_code = "UPGDCL")
+    {
+
+        libxml_use_internal_errors(true);
+
+        /* Createa a new DomDocument object */
+
+        $instrument_info = InstrumentRepository::getInstrumentsByCode(array($instrument_code));
+        $instrument_id = $instrument_info->first()->id;
+
+
+        ////////////////  CASH FLOW    STARTS        \\\\\\\\\\\\\\\\\\\\\\\\\
+
+        $dom = new \DomDocument;
+        /* Load the HTML */
+        @$dom->loadHTMLFile("http://quotes.wsj.com/BD/XDHA/$instrument_code/financials/quarter/balance-sheet");
+
+        /* Heading/Financial year extracting */
+
+        $xpath = new \DomXPath($dom);
+        $heading_nodes = $xpath->query('//*[@id="cr_cashflow"]/div[2]/div/table/thead/tr');
+
+        $heading = array();
+        foreach ($heading_nodes as $i => $node) {
+
+
+            foreach ($node->childNodes as $child) {
+                $data = str_replace(',', '', $child->nodeValue);
+                $data = trim($data);
+
+
+                if ($data != '')
+                    $heading[] = $data;
+
+            }
+
+
+        }
+
+
+        ///// Processing Balance sheet   -    Assets  Starts \\\\\\\\\\\\\\\\\\
+
+        $nodes = $xpath->query('//*[@id="cr_cashflow"]/div[2]/div/table/tbody/tr');
+        $meta_group_id = 21; //Balance sheet-assets
+
+        self::insert_fundamental($heading, $nodes, $instrument_id, $meta_group_id, 'quarter');
+
+        ///// Processing Balance sheet   -    Assets  End \\\\\\\\\\\\\\\\\\
+
+
+        ///// Processing Balance sheet   -    Liabilities  Starts \\\\\\\\\\\\\\\\\\
+
+        $meta_group_id = 22; //Balance sheet-Liabilities
+        $nodes = $xpath->query('//*[@id="cr_cashflow"]/div[3]/div[2]/table/tbody/tr');
+        self::insert_fundamental($heading, $nodes, $instrument_id, $meta_group_id, 'quarter');
+
+        ///// Processing Balance sheet   -    Liabilities  Ends \\\\\\\\\\\\\\\\\\
+
+
+        ////////////////  BALANCE SHEET    ENDS        \\\\\\\\\\\\\\\\\\\\\\\\\
+
+
+        ////////////////  CASH FLOW    STARTS        \\\\\\\\\\\\\\\\\\\\\\\\\
+
+
+        $dom = new \DomDocument;
+        /* Load the HTML */
+        @$dom->loadHTMLFile("http://quotes.wsj.com/BD/XDHA/$instrument_code/financials/quarter/cash-flow");
+        /* Create a new XPath object */
+        $xpath = new \DomXPath($dom);
+        /* Query all <td> nodes containing specified class name */
+        //$nodes = $xpath->query("//th[@class='fiscalYr']");
+        $heading_nodes = $xpath->query('//*[@id="cr_cashflow"]/div[2]/div[2]/table/thead/tr');
+
+        $heading = array();
+        foreach ($heading_nodes as $i => $node) {
+
+
+            foreach ($node->childNodes as $child) {
+                $data = str_replace(',', '', $child->nodeValue);
+                $data = trim($data);
+
+
+                if ($data != '')
+                    $heading[] = $data;
+
+            }
+
+
+        }
+
+
+        ///// Processing CASH FLOW:  Operating Activities  Starts \\\\\\\\\\\\\\\\\\
+
+        $meta_group_id = 23; //CASH FLOW:  Operating Activities
+        $nodes = $xpath->query('//*[@id="cr_cashflow"]/div[2]/div[2]/table/tbody/tr');
+        self::insert_fundamental($heading, $nodes, $instrument_id, $meta_group_id, 'quarter');
+
+        ///// Processing CASH FLOW:  Operating Activities Ends \\\\\\\\\\\\\\\\\\
+
+
+        ///// Processing CASH FLOW:  Investing Activities  Starts \\\\\\\\\\\\\\\\\\
+
+        $meta_group_id = 24; //CASH FLOW:   Investing Activities
+        $nodes = $xpath->query('//*[@id="cr_cashflow"]/div[3]/div[2]/table/tbody/tr');
+        self::insert_fundamental($heading, $nodes, $instrument_id, $meta_group_id, 'quarter');
+
+        ///// Processing CASH FLOW:   Investing Activities Ends \\\\\\\\\\\\\\\\\\
+
+
+        ///// Processing CASH FLOW:  Financing Activities  Starts \\\\\\\\\\\\\\\\\\
+
+        $meta_group_id = 25; //CASH FLOW:    Financing Activities
+        $nodes = $xpath->query('//*[@id="cr_cashflow"]/div[4]/div[2]/table/tbody/tr');
+        self::insert_fundamental($heading, $nodes, $instrument_id, $meta_group_id, 'quarter');
+
+        ///// Processing CASH FLOW:    Financing Activities Ends \\\\\\\\\\\\\\\\\\
+
+
+        ////////////////  CASH FLOW    END        \\\\\\\\\\\\\\\\\\\\\\\\\
+
+
+        ////////////////  INCOME STATMENTS    START        \\\\\\\\\\\\\\\\\\\\\\\\\
+
+
+        $dom = new \DomDocument;
+        /* Load the HTML */
+        @$dom->loadHTMLFile("http://quotes.wsj.com/BD/XDHA/$instrument_code/financials/quarter/income-statement");
+        /* Create a new XPath object */
+        $xpath = new \DomXPath($dom);
+        /* Query all <td> nodes containing specified class name */
+        //$nodes = $xpath->query("//th[@class='fiscalYr']");
+        $heading_nodes = $xpath->query('//*[@id="cr_cashflow"]/div[2]/div/table/thead/tr');
+
+        $heading = array();
+        foreach ($heading_nodes as $i => $node) {
+
+
+            foreach ($node->childNodes as $child) {
+                $data = str_replace(',', '', $child->nodeValue);
+                $data = trim($data);
+
+
+                if ($data != '')
+                    $heading[] = $data;
+
+            }
+
+
+        }
+
+
+        ///// Processing  	income statement data Starts \\\\\\\\\\\\\\\\\\
+
+        $meta_group_id = 26; //income statement data
+        $nodes = $xpath->query('//*[@id="cr_cashflow"]/div[2]/div/table/tbody/tr');
+        self::insert_fundamental($heading, $nodes, $instrument_id, $meta_group_id, 'quarter');
+
+        ///// Processing income statement data Ends \\\\\\\\\\\\\\\\\\
+
+
+        dd("income statement data");
+
+        ////////////////  INCOME STATMENTS    END        \\\\\\\\\\\\\\\\\\\\\\\\\
+
+    }
+
+
+    public function list_financial_reports()
+    {
+        $instrument_list=InstrumentRepository::getInstrumentsScripOnly();
+
+        foreach($instrument_list as $instrument)
+        {
+            $instrument_code= $instrument->instrument_code;
+
+            echo" <a href='/financial-reports-extract/$instrument_code/annual' target='_blank'>$instrument_code Annual Report</a>      .....................................               <a href='/financial-reports-extract/$instrument_code/quarter' target='_blank'>$instrument_code Quarter Report</a>  <br />";
+        }
+    }
+    public function extract_financial_reports($instrument_code,$type)
+    {
+        if($type=='annual')
+        {
+            self::extract_annual_report($instrument_code);
+        }
+
+        if($type=='quarter')
+        {
+            self::extract_quarter_report($instrument_code);
+        }
+
+
+    }
+
+
 }

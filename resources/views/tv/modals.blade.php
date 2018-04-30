@@ -134,3 +134,53 @@
   </div>
 </div>
 
+
+
+<!-- Modal -->
+<div id="watchlistsModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-body">
+        <h4 class="modal-title">Select list to add</h4> <hr style="margin: 2px; margin-bottom: -10px">
+            <div class="form-group form-md-line-input" style="margin-bottom: 0px">
+                <input type="hidden" id="watchlistid" >
+                <div class="form-control-focus"> </div>
+            </div>
+                <div class="row">
+                  
+                <div class="col-md-12 margin-top-10 text-center">
+                  @if(\Auth::guest())
+                  Please <a href="/login">login</a>
+                  @else
+                  <div class="col-md-12">
+                    <form id="addToWatchlistForm">
+                      
+                        <div class="form-group col-md-12">
+                            <div class="input-group" style="text-align: left;">
+                                <div class="icheck-list">
+                                  <input type="hidden" name="instrument_id", class="instrument">
+                                  @foreach(request()->user()->watchlists as $watchlist)
+                                    <label>
+                                        <input name="watchlist[]" value="{{$watchlist->id}}" type="checkbox" class="icheck"> {{$watchlist->name}} </label>
+                                  @endforeach
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                  </div>
+                  @endif
+                  <br>
+                <button class="btn green-jungle btn-sm addToWatchlistSubmit" data-dismiss="modal" >Add</button>
+                <button class="btn red btn-sm" data-dismiss="modal">Cancel</button>
+                </div> 
+                </div>      
+
+      </div>
+
+    </div>
+
+  </div>
+</div>
+

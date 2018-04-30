@@ -34,7 +34,7 @@ Please <a href="/login">login</a> to see your watchlists.
             <td style="color:@if($instrument->gain > 0) green @elseif($instrument->gain < 0) rgb(185, 27, 42) @else #58c3e5 @endif !important"> {{$instrument->instrument_code}} </td>
             <td style="color:@if($instrument->gain > 0) green @elseif($instrument->gain < 0) rgb(185, 27, 42) @else #58c3e5 @endif !important"> {{$instrument->close_price}} </td>
             <td style="color:@if($instrument->gain > 0) green @elseif($instrument->gain < 0) rgb(185, 27, 42) @else #58c3e5 @endif !important" > {{$instrument->gain}}% </td>
-        	<td class="removeItem" data-instrument="{{$instrument->instrument_id}}" data-id="{{request()->panel}}" style="color: rgb(185, 27, 42) !important"><i class="fa fa-times-circle"></i></td>
+        	<td class="removeItem actionIcon" data-instrument="{{$instrument->instrument_id}}" data-id="{{request()->panel}}" style="color: rgb(185, 27, 42) !important"><i class="fa fa-times-circle"></i></td>
         </tr>
         @endforeach
     </tbody>

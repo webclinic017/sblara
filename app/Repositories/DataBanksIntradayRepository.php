@@ -156,10 +156,14 @@ where (data_banks_intradays.batch=instruments.batch_id) and (data_banks_intraday
     {
         $lastMinuteData=DataBanksIntraday::getLatestTradeDataAll($tradeDate,$exchangeId);
         $lastMinuteData=$lastMinuteData->keyBy('instrument_id');
+        unset($lastMinuteData[10001]);
+        unset($lastMinuteData[10002]);
+        unset($lastMinuteData[10003]);
         $prevMinuteData=DataBanksIntraday::getMinuteAgoTradeDataAll($tradeDate,1,$exchangeId);
         $prevMinuteData = $prevMinuteData->keyBy('instrument_id');
-
         $lastMinuteData=self::growthCalculate($lastMinuteData,$prevMinuteData,$field,$limit);
+
+
         return $lastMinuteData;
     }
 

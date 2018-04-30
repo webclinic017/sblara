@@ -65,6 +65,7 @@ class FundamentalSummary
 
         $category=category($last_trade_info[0]);
 
+
         $sql="select metas.meta_key,fundamentals.meta_value,fundamentals.meta_date from metas,fundamentals
 where metas.id = fundamentals.meta_id and
 (metas.meta_key LIKE 'q1_eps_cont_op' OR metas.meta_key like 'half_year_eps_cont_op' OR metas.meta_key like 'q3_nine_months_eps' OR metas.meta_key like 'earning_per_share' )
@@ -82,11 +83,13 @@ ORDER BY fundamentals.meta_date DESC";
         }
 
         $year_end=date('d-M',strtotime($fundaData['year_end']->first()->meta_value));
+
         $year_end=Carbon::parse($year_end);
         //$year_end=Carbon::parse("3-Feb");
         if($year_end->isPast())
             $year_end->addYear();
         $fundaData['year_end']->first()->meta_value=$year_end;
+
 
         $view->with('epsData', $epsData)
             ->with('audited_pe',$audited_pe)

@@ -302,6 +302,8 @@ class Instrument extends Model
 
     public static function intraday()
     {
+        if(request()->has('range') && request()->range != "D"){return self::intradayRange();}
+
         $data = static::select(\DB::raw('*, round(((close_price - yday_close_price)/close_price)*100, 2) as gain '))->whereNotIn('sector_list_id', [4, 5, 22, 23 ])->where('batch_id', '!=', null)->where('data_banks_intradays.trade_date', lastTradeDate())->join('data_banks_intradays', function ($join)
         {
             $join->on('data_banks_intradays.batch', '=', 'instruments.batch_id');
@@ -309,25 +311,68 @@ class Instrument extends Model
         });
         return $data;
     }
+    public static function intradayRange()
+    {
+        $range = request()->range;
+        if($range == 'W'){
+            $range = 7;
+        }
+        if($range == 'M'){
+            $range = 30;
+        }
+        if($range == 'Y'){
+            $range = 365;
+        }
+        $shares = self::allshares();
+
+        $date = Carbon::now()->subDays($range)->format('Y-m-d');
+        foreach ($shares as $instrument) {
+            $prev = \App\Repositories\FileDataRepository::geEodByDate($date, 'c', $instrument->instrument_id);
+            $change = $instrument->close_price - $prev;
+            if($change == 0 || $prev == 0){ // need to find latest prev if prev = 0           
+                continue;
+            }
+
+            $gain = number_format(($change*100)/$prev, 2);
+            $instrument->gain = $gain;
+        }
+        if(request()->panel == 'topGainer'){
+            return $shares->sortByDesc('gain')->take(10);
+        }else if(request()->panel == 'topLoser'){
+            return $shares->sortBy('gain')->take(10);
+        }
+    }
     public static function topGainer()
     {
+        if(request()->has('range') && request()->range != 'D'){
+            return static::intraday();
+        }
         $data = static::intraday()->take(10)->orderBy('gain', 'desc')->get();
         return $data;
     } 
 
     public static function topValue()
     {
+        if(request()->has('range') && request()->range != 'D'){
+            return static::intraday();
+        }
         $data = static::intraday()->take(10)->orderBy('total_value', 'desc')->get();
         return $data;
     } 
     public static function topVolume()
     {
+        if(request()->has('range') && request()->range != 'D'){
+            return static::intraday();
+        }
         $data = static::intraday()->take(10)->orderBy('total_volume', 'desc')->get();
         return $data;
     }    
 
     public static function topLoser()
     {
+        if(request()->has('range') && request()->range != 'D'){
+            return static::intraday();
+        }
         $data = static::intraday()->take(10)->orderBy('gain', 'asc')->get();
         return $data;
     }    
@@ -358,13 +403,38 @@ class Instrument extends Model
             $data->where('sector_list_id', request()->sector);
         }
         $data = $data->get();
-       
         return $data;        
     }
 
     public static function significantTrade()
     {
-        dd(lastBatch());
+        $data = \DB::select(\DB::raw("
+            SELECT a.instrument_id, instruments.instrument_code, a.close_price, a.total_trades, a.close_price, round(((a.close_price - a.yday_close_price)/a.close_price)*100, 2) as gain , a.trade_date, a.trade_time, a.batch,  b.close_price, b.total_trades, b.trade_time, b.batch, (a.total_trades- b.total_trades) AS `change` FROM data_banks_intradays a 
+                JOIN data_banks_intradays b ON b.batch = a.batch - 1 AND b.`instrument_id` = a. instrument_id 
+                left join instruments on instruments.id = a.instrument_id
+                WHERE a.batch = ".lastBatch()." 
+                AND a.instrument_id not in (10001, 10002, 10003) 
+                ORDER BY `change` DESC limit 10; 
+            "));
+        return $data;
     }   
+
+    public static function significantValue()
+    {
+        $data = \DB::select(\DB::raw("
+            SELECT a.instrument_id, instruments.instrument_code, a.close_price, a.total_trades, a.close_price, round(((a.close_price - a.yday_close_price)/a.close_price)*100, 2) as gain , a.trade_date, a.trade_time, a.batch,  b.close_price, b.total_trades, b.trade_time, b.batch, (a.total_value- b.total_value) AS `change` FROM data_banks_intradays a 
+                JOIN data_banks_intradays b ON b.batch = a.batch - 1 AND b.`instrument_id` = a. instrument_id 
+                left join instruments on instruments.id = a.instrument_id
+                WHERE a.batch = ".lastBatch()." 
+                AND a.instrument_id not in (10001, 10002, 10003) 
+                ORDER BY `change` DESC limit 10; 
+            "));
+        return $data;
+    }
+
+    public static function active()
+    {
+        return static::whereNotIn('sector_list_id', [22, 23, 24]);
+    }
 
 }

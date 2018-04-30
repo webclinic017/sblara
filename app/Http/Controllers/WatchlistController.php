@@ -48,4 +48,14 @@ class WatchlistController extends Controller
 		dd(Watchlist::find(request()->id));
 		\App\WatchlistItem::where('watchlist_id', (int) request()->id)->delete();
 	}
+
+	public function addMultiple(Request $request)
+	{
+		$data = [];
+		foreach ($request->watchlist as $value) {
+			$data[] = ['watchlist_id' => $value, 'instrument_id' => $request->instrument_id];
+		}
+		\App\WatchlistItem::insert($data);
+
+	}
 }
