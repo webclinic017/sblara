@@ -117,7 +117,6 @@ class IndexChart
         date_default_timezone_set('asia/dhaka');
 
 
-
         $view->with('indexData', $indexData);
     }
 

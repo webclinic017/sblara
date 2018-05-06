@@ -178,6 +178,13 @@ function deleteIpo(id) {
   deleteRequest('/admin/ipos/' + id);
 }
 $(document).ready(function () {
+
+  setInterval(function() {
+    $.get('/ajax/load_block/block_name=fixedStat', function (data) {
+      $("#fixedStat").html(data)
+    });
+    }, 60000);
+
   $('#addNew').click(function () {
     $('form.ajax')[0].reset();
     startEditing();

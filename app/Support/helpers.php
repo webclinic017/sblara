@@ -288,3 +288,10 @@ function lastBatch()
 {
         return (string) \DB::select(\DB::raw("select max(data_bank_intraday_batch) as batch from markets"))[0]->batch;
 }
+
+function excludedInstruments()
+{
+    $ids = \App\Instrument::whereIn('sector_list_id', [22, 23, 25, 5])->pluck('id')->toArray();
+  return $ids;
+
+}

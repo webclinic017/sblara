@@ -187,12 +187,7 @@ div.center select{
 }
 /* top advertise */
 
-@media only screen and (min-width: 992px) {
-    .search-result{
-         /*left: 149px;*/
-        /*width: 500px !important;*/
-    }
-}
+
 @media only screen and (max-width: 1260px) {
     .topAdvertise{
     width: 30%;
@@ -203,4 +198,29 @@ div.center select{
 .double-row .select2-selection {
     overflow: auto !important;
   height: 80px !important;
+}
+/*fixed nav stat*/
+.fixedStat{
+    width: 45%;
+    height: 53px;
+    position: absolute;
+    right: 210px;
+    /*background: rgba(0,0,0,.1);*/
+}
+.fixedStat ul li{    
+    /*color:#fff !important;*/
+    list-style-type: none;
+    display: inline-block;
+    background: rgba(0,0,0, .1);
+    padding: 0 10px;
+    height: 50px;
+    float: left;
+    margin-left: 5px;
+    width: 65px;
+    text-align: center;
+}
+@media only screen and (max-width: 1300px) {
+    .fixedStat{
+        display: none;
+    }
 }

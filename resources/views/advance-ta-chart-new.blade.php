@@ -129,8 +129,10 @@ $('.addToWatchlistSubmit').click(function () {
 
 
 $('.tree').on('click', '.addItem', function (event) {
+    @if(!\Auth::guest())
     $('#addToWatchlistForm')[0].reset();
     $('.instrument').val($(this).data('instrument'))
+    @endif
     $('#watchlistsModal').modal();
     event.stopImmediatePropagation();
 });
@@ -431,5 +433,6 @@ setInterval(function(){
         </div>
     </div>
 
+@include("html.fb_comment",array("url"=>url('/advance-ta-chart').'?instrumentCode='.$instrumentInfo->instrument_code))
 
 @endsection

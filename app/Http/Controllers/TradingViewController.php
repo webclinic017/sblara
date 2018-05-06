@@ -515,7 +515,7 @@ imagettftext($image, 10, 0, 10, 32, $color, $font, $text2);
             $layout->resolution = $request->resolution;
             $layout->name = $request->name;
                 
-                $count = \App\ChartLayout::where('name', $request->name)->whereNot('id', $request->chart)->count();
+                $count = \App\ChartLayout::where('name', $request->name)->where('id', '!=', $request->chart)->count();
                 if($count != 0){
                     $slug = $slug . "-".$count;
                 }            

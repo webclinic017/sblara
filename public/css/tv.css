@@ -92,10 +92,10 @@
 	padding-right: 0 !important;
 }
 .tree table td:nth-child(2){
-	padding: 0 !important;
+	padding: 5px 0 !important;
 }
 .tree table td:nth-child(3){
-	padding: 0 !important;
+	padding: 5px 0 !important;
 }
 .tree table tr{
 	cursor: pointer;

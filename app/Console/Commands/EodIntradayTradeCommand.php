@@ -78,6 +78,8 @@ class EodIntradayTradeCommand extends Command
         $querystr = "select * from MKISTAT ORDER BY MKISTAT_LM_DATE_TIME DESC LIMIT 0 , 600";
         $dataFromDseServer = DB::connection('dse')->select($querystr);
 
+
+
         $this->info(count($dataFromDseServer) . ' row fetched from DSE server');
 
         if(!Market::isMarketOpen())
@@ -117,6 +119,20 @@ class EodIntradayTradeCommand extends Command
                         ->get();
                     $data_bank_intraday_batch= $mdata[0]->data_bank_intraday_batch;
                 }
+
+
+                $last_inserted_intrdays_data=\DB::select("select instrument_id,total_volume from data_banks_intradays where batch=$data_bank_intraday_batch and  lm_date_time>'$trade_date'");
+
+                // dd("select instrument_id,total_volume from data_banks_intradays where batch=$data_bank_intraday_batch and  lm_date_time>'$trade_date'");
+                $last_inserted_intrdays_data=collect($last_inserted_intrdays_data)->keyBy('instrument_id');
+
+/*                dump("select instrument_id,total_volume from data_banks_intradays where batch=$data_bank_intraday_batch and  lm_date_time>'$trade_date'");
+
+                $te=collect($dataFromDseServer)->keyBy('MKISTAT_INSTRUMENT_CODE');
+
+                dump($te['KEYACOSMET']);
+
+                dd($last_inserted_intrdays_data[169]);*/
 
                 // incrementing
                 $data_bank_intraday_batch++;
@@ -208,6 +224,24 @@ class EodIntradayTradeCommand extends Command
                                 $temp['yday_close_price'] = $data->MKISTAT_YDAY_CLOSE_PRICE;
                                 $temp['total_trades'] = $data->MKISTAT_TOTAL_TRADES;
                                 $temp['total_volume'] = $data->MKISTAT_TOTAL_VOLUME;
+                                if(isset($last_inserted_intrdays_data[$instrument_id]))
+                                {
+                                    $old_volume= $last_inserted_intrdays_data[$instrument_id]->total_volume;
+                                }else
+                                {
+                                    $old_volume=0;
+                                }
+
+                                $new_volume= $data->MKISTAT_TOTAL_VOLUME - $old_volume;
+
+                                if($new_volume>0)
+                                {
+                                    $temp['new_volume'] = $data->MKISTAT_TOTAL_VOLUME - $old_volume;
+                                }else
+                                {
+                                    $temp['new_volume'] = 0;
+                                }
+
                                 $temp['total_value'] = $data->MKISTAT_TOTAL_VALUE;
                                 $temp['public_total_trades'] = $data->MKISTAT_PUBLIC_TOTAL_TRADES;
                                 $temp['public_total_volume'] = $data->MKISTAT_PUBLIC_TOTAL_VOLUME;
@@ -220,7 +254,8 @@ class EodIntradayTradeCommand extends Command
                                 $temp['trade_date'] = date('Y-m-d', strtotime($data->MKISTAT_LM_DATE_TIME));
                                 $temp['batch'] = $data_bank_intraday_batch;
 
-                                //dd($temp);
+                                // dd($temp);
+
                                  if($data->MKISTAT_PUBLIC_TOTAL_VOLUME + $data->MKISTAT_SPOT_TOTAL_VOLUME > 0)
                                  {
                                      $instrument_ids[] = $instrument_id;

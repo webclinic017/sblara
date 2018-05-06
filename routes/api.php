@@ -71,6 +71,12 @@ Route::get('intraday_data_lastday/{last_update_time?}/{instrument_code?}/', func
     return $data;
 })->middleware(['auth:api', 'scopes:paid-plugin-data']);
 
+Route::get('intraday_data_lastday2/{last_update_time?}/{max_id?}/', function ($last_update_time = 0, $max_id = 0) {
+    $data = DataBanksIntradayRepository::getLastDayIntraForPlugin2($last_update_time, $max_id);
+    return $data;
+})->middleware(['auth:api', 'scopes:paid-plugin-data']);
+
+
 Route::get('intraday_data_lastday_zip/{last_update_time?}/{instrument_code?}/', function ($last_update_time = 0, $instrument_code = null) {
     $data = \App\Repositories\FileDataRepository::getLastDayIntraForPlugin($last_update_time, $instrument_code);
     return $data;

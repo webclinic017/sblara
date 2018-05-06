@@ -20,6 +20,10 @@
                             <!-- END LOGO -->
                             <!-- BEGIN SEARCH -->
                             @include('search')
+
+                            <div id="fixedStat">
+                                @include('fixedStat')
+                            </div>
                             <!-- END SEARCH -->
 
                             <!-- BEGIN TOPBAR ACTIONS -->

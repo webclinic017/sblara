@@ -320,4 +320,48 @@ class Market extends Model
     }
 /**/
 
+    public static function indexValue()
+    {
+        return $index = \App\IndexValue::orderBy('date_time', 'desc')->where('instrument_id', 10001)->first();
+    }
+
+    public static function upCount()
+    {
+        $excludedInstruments = join( ', ', excludedInstruments());
+        $batch = self::latestBatch();
+        $query = "SELECT COUNT(id) as total FROM data_banks_intradays WHERE batch = '$batch' AND instrument_id not in ($excludedInstruments) AND (yday_close_price - close_price) < 0";
+        $count =  \DB::select(\DB::raw($query))[0]->total;
+        return $count;
+    }
+    public static function downCount()
+    {
+        $excludedInstruments = join( ', ', excludedInstruments());
+        $batch = self::latestBatch();
+        $query = "SELECT COUNT(id) as total FROM data_banks_intradays WHERE batch = '$batch'  AND instrument_id not in ($excludedInstruments) AND (yday_close_price - close_price) > 0";
+        $count =  \DB::select(\DB::raw($query))[0]->total;
+        return $count;
+    }
+
+    public static function latestTradeDate()
+    {
+        return lastTradeDate();
+    }
+    public static function latestBatch()
+    {
+        return lastBatch();
+    }
+
+    public static function totalTrade()
+    {
+         $sql="select * from trades  ORDER by TRD_LM_DATE_TIME desc limit 1";
+         $trade = \DB::select($sql)[0]->TRD_TOTAL_TRADES;
+         return $trade;
+    }
+    public static function totalValue()
+    {
+         $sql="select * from trades  ORDER by TRD_LM_DATE_TIME desc limit 1";
+         $trade = \DB::select($sql)[0]->TRD_TOTAL_VALUE;
+         return $trade;
+    }
+
 }
