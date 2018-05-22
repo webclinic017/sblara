@@ -6,6 +6,7 @@ var loadingHtml = '\n\t<img src="/img/se_loading.gif" class=\'loading\' alt="" /
 function getValue(name) {
   return $('input[name="' + name + '"]').val();
 }
+var loading = "<div  style='padding:10px; width='100%'><div class='animated-background'></div><div class='animated-background'></div><div class='animated-background'></div></div>";
 function depthLoading() {
   return '\n<table style="font-family:Arial, Helvetica, sans-serif; font-size: 13px;" width="100%" border="0" cellspacing="0" cellpadding="0">\n  <tbody><tr>\n    <td><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">\n      <tbody><tr>\n        <td width="15%" valign="top">&nbsp;</td>\n        <td width="75%" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">\n          <tbody><tr>\n            <td width="100%" valign="top"><table width="100%" border="0" cellpadding="1" cellspacing="1" bgcolor="#E8FFFB">\n                <tbody><tr bgcolor="#339966">\n                  <td height="34%" colspan="2"><div align="center"><strong><font color="#FFFFFF">Buy</font></strong></div></td>\n                </tr>\n                <tr>\n                  <td width="50%" bgcolor="#D2F0E1"><div align="center">Buy Price </div></td>\n                  <td height="34%" bgcolor="#D2F0E1"><div align="center">Buy Volume </div></td>\n                  </tr>\n                                <tr>\n                  <td colspan="2" ><div class="animated-background" style="margin:2px; min-height:15px"></div></td>\n                  </tr>\n                                <tr>\n                  <td colspan="2" ><div class="animated-background" style="margin:2px; min-height:15px"></div></td>\n                  </tr>\n                                <tr>\n                  <td colspan="2" ><div class="animated-background" style="margin:2px; min-height:15px"></div></td>\n                  </tr>\n                                <tr>\n                  <td colspan="2" ><div class="animated-background" style="margin:2px; min-height:15px"></div></td>\n                  </tr>\n                                <tr>\n                  <td colspan="2" ><div class="animated-background" style="margin:2px; min-height:15px"></div></td>\n                  </tr>\n                                <tr>\n                  <td colspan="2" ><div class="animated-background" style="margin:2px; min-height:15px"></div></td>\n                  </tr>\n                                <tr>\n                  <td colspan="2" ><div class="animated-background" style="margin:2px; min-height:15px"></div></td>\n                  </tr>\n                                <tr>\n                  <td colspan="2" ><div class="animated-background" style="margin:2px; min-height:15px"></div></td>\n                  </tr>\n                                <tr>\n                  <td colspan="2" ><div class="animated-background" style="margin:2px; min-height:15px"></div></td>\n                  </tr>\n                              \n                            </tbody></table></td>\n\n          </tr>\n        </tbody></table></td>\n        <td width="15%" valign="top">&nbsp;</td>\n      </tr>\n      <tr>\n        <td valign="top">&nbsp;</td>\n        <td valign="top">&nbsp;</td>\n        <td valign="top">&nbsp;</td>\n      </tr>\n      <tr>\n        <td valign="top">&nbsp;</td>\n        <td valign="top">&nbsp;</td>\n        <td valign="top">&nbsp;</td>\n      </tr>\n      <tr>\n        <td valign="top">&nbsp;</td>\n        <td valign="top"><table width="100%" border="0" align="center" cellpadding="2" cellspacing="2" bgcolor="#FFF7EA">\n          <tbody><tr bgcolor="#339966">\n            <td colspan="4"><font color="#FFFFFF"><strong>Price Statistics </strong></font> </td>\n          </tr>\n\n          <tr>\n            <td colspan="4" >\n\t\t\t\t<div class="animated-background" style="margin:2px; min-height:15px"></div>\n            </td>\n          </tr>\n       \n          <tr>\n            <td colspan="4" >\n\t\t\t\t<div class="animated-background" style="margin:2px; min-height:15px"></div>\n            </td>\n          </tr>\n       \n          <tr>\n            <td colspan="4" >\n\t\t\t\t<div class="animated-background" style="margin:2px; min-height:15px"></div>\n            </td>\n          </tr>\n       \n          <tr>\n            <td colspan="4" >\n\t\t\t\t<div class="animated-background" style="margin:2px; min-height:15px"></div>\n            </td>\n          </tr>\n       \n          <tr>\n            <td colspan="4" >\n\t\t\t\t<div class="animated-background" style="margin:2px; min-height:15px"></div>\n            </td>\n          </tr>\n       \n          <tr>\n            <td colspan="4" >\n\t\t\t\t<div class="animated-background" style="margin:2px; min-height:15px"></div>\n            </td>\n          </tr>\n       \n        </tbody></table></td>\n        <td valign="top">&nbsp;</td>\n      </tr>\n      <tr>\n        <td valign="top">&nbsp;</td>\n        <td valign="top">&nbsp;</td>\n        <td valign="top">&nbsp;</td>\n      </tr>\n\n    </tbody></table></td>\n  </tr>\n</tbody></table>\t\t\n\t';
 }
@@ -723,6 +724,56 @@ $(document).ready(function () {
       $('.global-ui .prev').trigger('click');
     }
   });
+
+// instrument hover
+
+ $("body").on('mouseenter', '.instrument_hover', function () {
+  // $("#hoverCard").remove();
+  var  id = $(this).data('id');
+  var code = $(this).text();
+  $(this).after("<div id='hoverCard'><div><img width='150px' height='150px' src='/tooltip_chart/"+id+"'/><div style='position:relative'><a class='add-to-watchlist' data-instrument_id='"+id+"' > <i class='fa fa-star'></i> Add to Watchlist</a><a   href='/ta-chart?instrumentCode="+code+"' target='_blank' > <i class='fa fa-line-chart'></i> TA Chart</a><a  href='/advance-ta-chart?instrumentCode="+code+"' target='_blank'  > <i class='fa fa-bar-chart'></i> Advance TA Chart</a><a  href='/company-details/"+id+"' target='_blank' > <i class='fa fa-bank'></i> Company Details</a><a href='/fundamental-details/"+id+"' target='_blank' > <i class='fa fa-info'></i> Fundamental Details</a></div></div></div>")
+  $("#hoverCard").slideDown(100);
+ });
+ $("body").on('mouseleave', ".instrument_hover", function (e) {
+  if($(e.toElement).attr('id') == 'hoverCard'){
+    return;
+  }
+    $("#hoverCard").remove();
+ });
+ $("body").on('mouseleave', "#hoverCard", function (e) {
+    $("#hoverCard").remove();
+ });
+ 
+ $("body").on('click', ".watchlist-selector", function (e) {
+  var id = $(this).data('id');
+  
+  if($(this).is(':checked')){
+    var url =   '/watchlists/'+id+'/add';
+  }else{
+    var url =   '/watchlists/'+id+'/remove';
+  }
+
+  $.get(url+"?instrument_id="+$(this).data("instrument_id"), function (data) {
+
+  })
+ });
+ 
+ $("body").on('click', ".add-to-watchlist", function (e) {
+  var that = this;
+    if(!loggedIn){
+        swal("Please login", "You must login to add items on watchlist", "error")
+        return;
+    }
+    var id = $(this).data('instrument_id');
+    $.get('/watchlists?instrument_id='+id, function (data) {
+        $(that).parent().append(data);
+    });
+
+ });
+
+// instrument hover
+
+
 });
 /*global ui*/
 

@@ -8,7 +8,7 @@ $value = \App\Market::totalValue();
 <div class="fixedStat" style="text-align: center;">
 	<ul style="text-align: center; display: inline-block;">
 		<li style="color: @if($index->percentage_deviation < 0)red @else #009d7c @endif; min-width: 130px">
-			<div style="line-height: 25px"><strong>DSEX<i class="fa fa-caret-down"></i>{{number_format($index->percentage_deviation, 2)}}%</strong></div>
+			<div style="line-height: 25px"><strong>DSEX<i class="fa @if($index->percentage_deviation < 0) fa-caret-down @else fa-caret-up @endif"></i>{{number_format($index->percentage_deviation, 2)}}%</strong></div>
 			<div style="line-height: 25px"><strong>{{number_format($index->capital_value, 0, '.', ',')}}</strong></div>
 		</li>
 		<li >
@@ -20,7 +20,7 @@ $value = \App\Market::totalValue();
 			<div style="line-height: 25px"><strong>{{number_format($trade, 0, '.', ',')}}</strong></div>
 		</li>
 		<li style="color: @if($index->percentage_deviation < 0)red @else #009d7c @endif;; min-width: 90px">
-			<div style="line-height: 25px"><strong>Value</strong><small> (mn)</small></div>
+			<div style="line-height: 25px"><strong>Value</strong><small> (m)</small></div>
 			<div style="line-height: 25px"><strong>{{number_format($value, 2, '.', ',')}}</strong></div>
 		</li>
 	</ul>

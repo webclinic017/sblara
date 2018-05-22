@@ -17,7 +17,7 @@ use DB;
 use Illuminate\Support\Facades\Storage;
 class FileDataRepository {
 
-    public static function geEodByDate($date, $cols = 'c', $inst = false)
+    public static function getEodByDate($date, $cols = 'c', $inst = false)
     {
         if($inst == false){
             $inst = \App\Instrument::active()->get()->pluck('id')->toArray();
@@ -27,6 +27,15 @@ class FileDataRepository {
         foreach ($inst as $instrument_id) {
             $data = self::getAdjustedEod($instrument_id, 'd');
             $index = array_search($date, $data);
+            $i = 0;
+            while ($index == false ) {
+                $date = Carbon::parse($date)->addDay()->format('Y-m-d');
+                $index = array_search($date, $data);
+                if($i > 20){
+                    break;
+                }
+                $i++;
+            }
             if(is_array($cols)){
                 $result = [];
                 foreach ($cols as $col) {
@@ -38,6 +47,7 @@ class FileDataRepository {
             $results[$instrument_id] =  $result;
         }
         if($single){$results = $results[$instrument_id];}
+
         return $results;
 
     }

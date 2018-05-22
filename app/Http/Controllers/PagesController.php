@@ -325,35 +325,37 @@ dd($eq_arr);
 
 public function technicalAnalysisHome()
     {
-        $instrument_list=InstrumentRepository::getInstrumentsScripWithIndex();
+
+        $instrument_list = InstrumentRepository::getInstrumentsScripWithIndex();
         $rustart = getrusage();
 
         //$c = FileDataRepository::get5MinutesUnadjustedData(13, 'o', 1);
         //dump($c);
         //$c = FileDataRepository::get5MinutesUnadjustedData(13, 'h', 1);
-        //dump($c);
-        //$c = FileDataRepository::get5MinutesUnadjustedData(13, 'l', 1);
-        //dump($c);
-        //$c = FileDataRepository::get5MinutesUnadjustedData(13, 'c', 1);
-        //dump($c);
-        $c = FileDataRepository::get5MinutesUnadjustedData(13, 'c', 1);
-        dump($c);
-        $c = FileDataRepository::get5MinutesUnadjustedData(13, 'd', 1);
-        dd($c);
+        // dump($c);
+        // $c = FileDataRepository::get5MinutesUnadjustedData(13, 'l', 1);
+        // dump($c);
 
-        $t=0;
 
-        foreach($instrument_list as $ins) {
+        $ins_id = 250;
+        $latest = 1;
+        $function = "getAdjustedWeeklyData";
+        $o = FileDataRepository::$function($ins_id, 'o', $latest);
+        $h = FileDataRepository::$function($ins_id, 'h', $latest);
+        $l = FileDataRepository::$function($ins_id, 'l', $latest);
+        $c = FileDataRepository::$function($ins_id, 'c', $latest);
+        $v = FileDataRepository::$function($ins_id, 'v', $latest);
+        $d = FileDataRepository::$function($ins_id, 'd', $latest);
 
-            $instrument_id=$ins->id;
-            $o = FileDataRepository::get15MinutesUnadjustedData($instrument_id, 'o', $t);
-            $c = FileDataRepository::get15MinutesUnadjustedData($instrument_id, 'h', $t);
-            $c = FileDataRepository::get15MinutesUnadjustedData($instrument_id, 'l', $t);
-            $c = FileDataRepository::get15MinutesUnadjustedData($instrument_id, 'c', $t);
-            $c = FileDataRepository::get15MinutesUnadjustedData($instrument_id, 'v', $t);
-            $d = FileDataRepository::get15MinutesUnadjustedData($instrument_id, 'd', $t);
+        dump($function);
+        dump("Total :  " . " O =" . count($o) . " H =" . count($h) . " L =" . count($l) . " C =" . count($c) . " V =" . count($v) . " D =" . count($d));
+        for ($i = 0; $i < count($c); $i++) {
+            dump(" O =" . $o[$i] . " H =" . $h[$i] . " L =" . $l[$i] . " C =" . $c[$i] . " V =" . $v[$i] . " D =" . $d[$i]);
+
 
         }
+        dd("-----------");
+
         $ru = getrusage();
         echo "This process used " . $this->rutime($ru, $rustart, "utime") .
             " ms for its computations\n";

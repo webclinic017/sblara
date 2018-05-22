@@ -59,7 +59,10 @@
 }
 .se-widget .accordion{
 
+
 }
+
+
 div.center{
     text-align: center;
     width: 100%;
@@ -223,4 +226,28 @@ div.center select{
     .fixedStat{
         display: none;
     }
+}
+
+#hoverCard{
+    position: absolute;
+    background: #fff;
+    border:1px solid #e1e1e1;     
+    max-width: 450px;
+    padding: 5px;
+    z-index: 999999999;
+    margin-left: 10px;
+    display: none;
+    /*box-shadow:  0 3px 6px rgba(0,0,0,.16),0 3px 6px rgba(0,0,0,.22)!important;*/
+}
+#hoverCard a{
+    display: block;
+    padding: 5px;
+}
+#hoverCard img{
+    float:left;
+    border:1px solid #f3f3f3;
+}
+#hoverCard div{
+    display: inline-block;
+    float: right;
 }

@@ -256,6 +256,12 @@ Amibroker Data plugin for DSE
                                             </div>
                                         </div>
                                     </div>
+
+                                <div class="row margin-top-20">
+
+                                <p class="text-center"> <span class="label label-danger"> 10% Discount if paid for 6 months! </span><span class="label label-primary"> 20% Discount if paid for 1 year! </span> </p>
+                                </div>
+
                                 </div>
                             </div>
                         </div>

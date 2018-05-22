@@ -6,6 +6,8 @@
 public/blog/*
 /storage/*.key
 /storage/httpcache/*
+/storage/framework/*
+/storage/*
 /vendor
 /.idea
 /.vagrant

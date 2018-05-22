@@ -216,9 +216,11 @@ Route::get('/home', function () {
     return redirect('/');
 });
 
-Route::get('/dse-price-list', function () {
-        return view('company_list_page');
-    })->name('dse-price-list');
+// Route::get('/dse-price-list', function () {
+//         // return view('company_list_page');
+//     })->name('dse-price-list');
+
+Route::get('/dse-price-list', 'TableController@index')->name('dse-price-list');
 
 Route::get('/market-depth', function () {
         return view('market_depth_page');
@@ -319,6 +321,9 @@ Route::delete('1.1/charts/', 'TradingViewController@delete');
 Route::get('1.1/charts/', 'TradingViewController@layouts');
 Route::get('1.1/charts/current', 'TradingViewController@current');
 
+Route::get('watchlists', 'WatchlistController@listById');
+Route::get('watchlists/{id}/{action}', 'WatchlistController@action');
+
 //tradingview function
 Route::get('/time', function () {
     return json_encode(time());
@@ -384,6 +389,10 @@ Route::get('/collective/news', 'newspaperNewsController@collectiveNews')->name('
 Route::get('/news/search', 'NewsController@newsSearch')->name('news-search');
 Route::get('/news/details/{id}', 'NewsController@viewNews');
 
+Route::get('/latest-share-price', 'TableController@index');
+Route::get('/latest-share-price/{id}/details', 'TableController@details');
+Route::post('/latest-share-price/update-column', 'TableController@updateColumn');
+
 //Route::get('/resources/amibroker-data-plugin-dse', 'ComingSoonController@index')->name('amibroker-data-plugin-dse');
 
 Route::get('/resources/amibroker-data-plugin-dse', function () {
@@ -436,7 +445,7 @@ Route::get('/test/speed', function () {
 
 Route::get('/financial-reports-list', 'DataExtractController@list_financial_reports')->name('financial-reports-list');
 Route::get('/financial-reports-extract/{instrument_code}/{type}', 'DataExtractController@extract_financial_reports')->name('financial-reports-list');
-
+Route::any('/tabledata/{id}/json', 'TableController@json');
 
 /*old urls*/
 Route::get('/resources/monitor', function ()

@@ -64,9 +64,9 @@ LEFT JOIN (
       COUNT(*) as TotalWithinRange
 
      FROM
- data_banks_intradays,fundamentals,metas
+ data_banks_intradays,fundamentals
  WHERE
- data_banks_intradays.instrument_id=fundamentals.instrument_id and data_banks_intradays.batch=$batch_id and data_banks_intradays.market_id=$market_id and fundamentals.meta_id=metas.id and fundamentals.is_latest=1 and (metas.meta_key like 'paid_up_capital') and data_banks_intradays.close_price -data_banks_intradays.yday_close_price>0
+ data_banks_intradays.instrument_id=fundamentals.instrument_id and data_banks_intradays.batch=$batch_id and data_banks_intradays.market_id=$market_id and fundamentals.meta_id= 256 and fundamentals.is_latest=1  and data_banks_intradays.close_price -data_banks_intradays.yday_close_price>0
  and data_banks_intradays.instrument_id !=10001 AND data_banks_intradays.instrument_id !=10002 AND data_banks_intradays.instrument_id !=10003
 
    GROUP BY 1 ) y ON x.PriceRange = y.PriceRange";
@@ -99,9 +99,9 @@ LEFT JOIN (
       COUNT(*) as TotalWithinRange
 
      FROM
- data_banks_intradays,fundamentals,metas
+ data_banks_intradays,fundamentals
  WHERE
- data_banks_intradays.instrument_id=fundamentals.instrument_id and data_banks_intradays.market_id=$market_id and data_banks_intradays.batch=$batch_id and fundamentals.meta_id=metas.id and fundamentals.is_latest=1 and (metas.meta_key like 'paid_up_capital')
+ data_banks_intradays.instrument_id=fundamentals.instrument_id and data_banks_intradays.market_id=$market_id and data_banks_intradays.batch=$batch_id and fundamentals.meta_id=256 and fundamentals.is_latest=1 
  and data_banks_intradays.instrument_id !=10001 AND data_banks_intradays.instrument_id !=10002 AND data_banks_intradays.instrument_id !=10003
 
    GROUP BY 1 ) y ON x.PriceRange = y.PriceRange";

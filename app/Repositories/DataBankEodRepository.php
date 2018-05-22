@@ -236,7 +236,37 @@ ORDER BY lm_date_time DESC) data
     }
     public static function getPluginEodDataAll($from,$to,$adjusted=1,$instrumentCodeArr=array())
     {
-        $instrumentIdArr=array();
+
+        $sql="SELECT instruments.instrument_code,open,high,low,close,volume,DATE_FORMAT(date, '%d/%m/%Y') as date  FROM data_banks_eods, instruments WHERE date BETWEEN '$to' AND '$to' and data_banks_eods.instrument_id=instruments.id";
+
+        $eod_data_all=\DB::select($sql);
+
+        $eodForPlugin=array();
+        $temp=array();
+        $temp[]="Code";
+        $temp[]="Date";
+        $temp[]="Open";
+        $temp[]="High";
+        $temp[]="Low";
+        $temp[]="Close";
+        $temp[]="Volume";
+        $eodForPlugin[]= $temp;
+        foreach($eod_data_all as $data)
+        {
+
+            $temp = array();
+            $temp[] = $data->instrument_code;
+            $temp[] = $data->date;
+            $temp[] = $data->open;
+            $temp[] = $data->high;
+            $temp[] = $data->low;
+            $temp[] = $data->close;
+            $temp[] = $data->volume;
+            $eodForPlugin[] = $temp;
+
+        }
+
+      /*  $instrumentIdArr=array();
 
         if(!empty($instrumentCodeArr))
         {
@@ -249,7 +279,7 @@ ORDER BY lm_date_time DESC) data
             }
 
         }
-        $eodForPlugin=self::getEodForCSV($from,$to,$instrumentIdArr,$adjusted);
+        $eodForPlugin=self::getEodForCSV($from,$to,$instrumentIdArr,$adjusted);*/
         return $eodForPlugin;
     }
     /*

@@ -291,7 +291,7 @@ function lastBatch()
 
 function excludedInstruments()
 {
-    $ids = \App\Instrument::whereIn('sector_list_id', [22, 23, 25, 5])->pluck('id')->toArray();
+    $ids = \App\Instrument::whereIn('sector_list_id', [22, 23, 25, 5, 4])->pluck('id')->toArray();
   return $ids;
 
 }

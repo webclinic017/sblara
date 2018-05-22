@@ -6,7 +6,7 @@ use App\Repositories\InstrumentRepository;
 use App\Repositories\FundamentalRepository;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
-
+use Illuminate\Support\Facades\Storage;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -32,17 +32,42 @@ Route::post('login', 'MyApiLoginController@login');
 // })->middleware(['auth:api', 'scopes:paid-plugin-data']);
 
 
+/*
+ * USED API
+ *
+ * /api/login
+/api/symbol_list
+/api/eod_data_all/" + from + "/" + to
+/api/plugin_user_stats/"+username+"/" + hdd + "/" + cpu;
+/api/eod_data/" + from + "/" + to + "/" + symbol;
+/api/intraday_data_lastday2/" + to + "/" + max_id;
+/api/fundamental_data";
+ *
+ * */
+
+
 Route::get('symbol_list/', function () {
     $data = InstrumentRepository::getInstrumentsScripWithIndex();
     return json_encode($data, JSON_UNESCAPED_SLASHES);
 })->middleware(['auth:api', 'scopes:paid-plugin-data']);
 
 Route::get('eod_data/{from}/{to}/{instrument_code}/{adjusted?}', function ($from, $to, $instrument_code, $adjusted = 1) {
+
+    $file = "plugin/log.txt";
+    $heading = "eod_data | from=$from to=$to instrument_code=$instrument_code adjusted=$adjusted";
+    Storage::append($file, $heading);
+
+
     $data = DataBankEodRepository::getPluginEodData($instrument_code, $from, $to, $adjusted);
     return json_encode($data, JSON_UNESCAPED_SLASHES);
 })->middleware(['auth:api', 'scopes:paid-plugin-data']);
 
 Route::get('eod_data_all/{from}/{to}/{adjusted?}/{instrument_codes?}', function ($from, $to, $adjusted = 1, $instrument_codes = null) {
+
+/*    $file = "plugin/log.txt";
+    $heading = "eod_data_all | from=$from to=$to instrument_code=$instrument_codes adjusted=$adjusted";
+    Storage::append($file, $heading);
+*/
 
     $instrument_code_arr = array();
     if (!is_null($instrument_codes))
@@ -86,6 +111,132 @@ Route::get('fundamental_data/{instrument_code?}/', function ($instrument_code = 
     $data = FundamentalRepository::getAmibrokerFundamentalData($instrument_code);
     return $data;
     //return json_encode($data, JSON_UNESCAPED_SLASHES);
+    // return count($data);
+})->middleware(['auth:api', 'scopes:paid-plugin-data']);
+
+Route::get('import_watch_list/{username}/', function ($username = null) {
+
+    $user_info = \DB::select("select * from users where email like '$username'");
+    $user_id = $user_info[0]->id;
+
+    $return_data=array();
+   /* $watch_list['name']='name 1';
+    $instrument_list=[13,79,538];
+    $watch_list['instruments']= $instrument_list;
+    $return_data[]= $watch_list;
+
+    $watch_list['name']='name 2';
+    $instrument_list=[36,12];
+    $watch_list['instruments']= $instrument_list;
+    $return_data[] = $watch_list;
+
+    $watch_list['name']='name 3';
+    $instrument_list=[36,12];
+    $watch_list['instruments']= $instrument_list;
+    $return_data[] = $watch_list;
+
+    $watch_list['name']='name 4';
+    $instrument_list=[36,12];
+    $watch_list['instruments']= $instrument_list;
+    $return_data[] = $watch_list;
+
+    $watch_list['name']='name 5';
+    $instrument_list=[36,12];
+    $watch_list['instruments']= $instrument_list;
+    $return_data[] = $watch_list;
+
+    $watch_list['name']='name 6';
+    $instrument_list=[36,12];
+    $watch_list['instruments']= $instrument_list;
+    $return_data[] = $watch_list;
+
+    $watch_list['name']='name 7';
+    $instrument_list=[36,12];
+    $watch_list['instruments']= $instrument_list;
+    $return_data[] = $watch_list;
+
+    $watch_list['name']='name 8';
+    $instrument_list=[36,12];
+    $watch_list['instruments']= $instrument_list;
+    $return_data[] = $watch_list;
+
+    $watch_list['name']='name 9';
+    $instrument_list=[36,12];
+    $watch_list['instruments']= $instrument_list;
+    $return_data[] = $watch_list;
+
+    $watch_list['name']='name 10';
+    $instrument_list=[36,18];
+    $watch_list['instruments']= $instrument_list;
+    $return_data[] = $watch_list;
+
+    $watch_list['name']='name 11';
+    $instrument_list=[36,18];
+    $watch_list['instruments']= $instrument_list;
+    $return_data[] = $watch_list;
+
+    $watch_list['name']='name 12';
+    $instrument_list=[36,18];
+    $watch_list['instruments']= $instrument_list;
+    $return_data[] = $watch_list;
+
+    $watch_list['name']='name 13';
+    $instrument_list=[36,18];
+    $watch_list['instruments']= $instrument_list;
+    $return_data[] = $watch_list;
+
+    $watch_list['name']='name 14';
+    $instrument_list=[36,18];
+    $watch_list['instruments']= $instrument_list;
+    $return_data[] = $watch_list;
+
+    $watch_list['name']='name 15';
+    $instrument_list=[36,18];
+    $watch_list['instruments']= $instrument_list;
+    $return_data[] = $watch_list;
+
+    $watch_list['name']='name 16';
+    $instrument_list=[36,18];
+    $watch_list['instruments']= $instrument_list;
+    $return_data[] = $watch_list;
+
+    $watch_list['name']='name 17';
+    $instrument_list=[36,18];
+    $watch_list['instruments']= $instrument_list;
+    $return_data[] = $watch_list;
+
+    $watch_list['name']='name 18';
+    $instrument_list=[36,18];
+    $watch_list['instruments']= $instrument_list;
+    $return_data[] = $watch_list;
+
+    $watch_list['name']='name 19';
+    $instrument_list=[36,18];
+    $watch_list['instruments']= $instrument_list;
+    $return_data[] = $watch_list;
+
+    $watch_list['name']='name 20';
+    $instrument_list=[36,18];
+    $watch_list['instruments']= $instrument_list;
+    $return_data[] = $watch_list;
+
+    $watch_list['name']='name 21';
+    $instrument_list=[36,18];
+    $watch_list['instruments']= $instrument_list;
+    $return_data[] = $watch_list;
+
+    $watch_list['name']='name 22';
+    $instrument_list=[36,18];
+    $watch_list['instruments']= $instrument_list;
+    $return_data[] = $watch_list;
+
+    $watch_list['name']='name 23';
+    $instrument_list=[36,18];
+    $watch_list['instruments']= $instrument_list;
+    $return_data[] = $watch_list;*/
+
+
+    return json_encode($return_data, JSON_UNESCAPED_SLASHES);
     // return count($data);
 })->middleware(['auth:api', 'scopes:paid-plugin-data']);
 
@@ -141,6 +292,9 @@ Route::get('plugin_user_stats/{username}/{hdd}/{cpu}/', function ($username, $hd
     $message['fundamental_button_enable'] = false;
     $message['resources_button_enable'] = false;
     $message['interval'] = 600;
+    $message['version'] = "1.0.2";
+    $message['package'] = "free";
+    $message['expire'] = "16-Jun-2018";
 
 
 
@@ -155,6 +309,10 @@ Route::get('plugin_user_stats/{username}/{hdd}/{cpu}/', function ($username, $hd
         $message['fundamental_button_enable'] = false;
         $message['resources_button_enable'] = false;
         $message['interval'] = 120;
+        $message['version'] = "1.0.2";
+        $message['package'] = "free";
+        $message['expire'] = "16-Jun-2018";
+
 
 
     }
@@ -170,6 +328,10 @@ Route::get('plugin_user_stats/{username}/{hdd}/{cpu}/', function ($username, $hd
         $message['fundamental_button_enable'] = false;
         $message['resources_button_enable'] = false;
         $message['interval'] = 60;
+        $message['version'] = "1.0.2";
+        $message['package'] = "paid";
+        $message['expire'] = "16-Jun-2018";
+
     }
 
     if($user_info[0]->group_id==3)
@@ -182,6 +344,10 @@ Route::get('plugin_user_stats/{username}/{hdd}/{cpu}/', function ($username, $hd
         $message['fundamental_button_enable'] = true;
         $message['resources_button_enable'] = true;
         $message['interval'] = 30;
+        $message['version'] = "1.0.2";
+        $message['package'] = "corporate";
+        $message['expire'] = "16-Jun-2018";
+
 
     }
 
@@ -195,6 +361,10 @@ Route::get('plugin_user_stats/{username}/{hdd}/{cpu}/', function ($username, $hd
         $message['fundamental_button_enable'] = true;
         $message['resources_button_enable'] = true;
         $message['interval'] = 30;
+        $message['version'] = "1.0.2";
+        $message['package'] = "course";
+        $message['expire'] = "16-Jun-2018";
+
 
     }
 
@@ -209,6 +379,10 @@ Route::get('plugin_user_stats/{username}/{hdd}/{cpu}/', function ($username, $hd
         $message['fundamental_button_enable'] = true;
         $message['resources_button_enable'] = true;
         $message['interval'] = 30;
+        $message['version'] = "1.0.2";
+        $message['package'] = "sponsored";
+        $message['expire'] = "16-Jun-2018";
+
 
     }
 

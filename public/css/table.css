@@ -1,0 +1,24 @@
+table tr{
+	cursor: pointer !important;
+}
+.fixed-table-container{
+	border: 0;
+}
+/*table, tr, td, tbody, th{
+	border: 0 !important;
+	background: #fff !important;
+}*/
+.fixed-table-toolbar, .fixed-table-pagination{
+	margin: 8px;
+}
+.bootstrap-table{
+		border-radius: 8px;
+	    box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.15) !important;
+    -moz-box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.15) !important;
+    -webkit-box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.15) !important;
+    -o-box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.15) !important;
+    -ms-box-shadow: 0 0px 40px 0px rgba(0, 0, 0, 0.15) !important;
+}
+td:nth-child(even){
+	background: rgba(0,0,0, .03);
+}

@@ -58,4 +58,30 @@ class WatchlistController extends Controller
 		\App\WatchlistItem::insert($data);
 
 	}
+
+	public function listById()
+	{
+		$id = request()->instrument_id;
+		$user = \Auth::user();
+
+		$sql = "
+				SELECT watchlists.id as id, instrument_id, name from watchlists 
+				left join watchlist_items on watchlists.id = watchlist_items.watchlist_id and instrument_id = $id 
+				where user_id = $user->id order by id desc
+
+		";
+		$watchlists =  \DB::select($sql);
+		return view('watchlists_mini')->with(compact("watchlists"));
+	}
+
+	public function action($id, $action)
+	{
+		$instrument_id = request()->instrument_id;
+		if($action == "add"){
+			\App\WatchlistItem::insert(['instrument_id' => $instrument_id, "watchlist_id" => $id]);
+
+		}else{
+			\App\WatchlistItem::where('instrument_id', $instrument_id)->where("watchlist_id", $id)->delete();
+		}
+	}
 }

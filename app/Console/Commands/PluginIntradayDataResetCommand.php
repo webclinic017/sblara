@@ -43,103 +43,75 @@ class PluginIntradayDataResetCommand extends Command
      * @return mixed
      */
 
-    public function writeData($data, $instrument_code, $file)
-    {
-
-        $data = $data->groupBy('market_id');
-
-        $strToadd = '';
-
-        foreach ($data as $trade_date => $instrumentData) {
-
-            $instrumentData = $instrumentData->unique('total_volume')->values();
-
-
-                $i = 0;
-                foreach ($instrumentData as $row) {
-                    $last_minute_total_volume = $row->total_volume;
-
-                    if (isset($instrumentData[$i + 1]))
-                        $prev_minute_of_lastminute_volume = $instrumentData[$i + 1]->total_volume;
-                    else
-                    {
-                        $prev_minute_of_lastminute_volume = 0;
-
-                    }
-
-
-                    $last_minute_traded_vol = $last_minute_total_volume - $prev_minute_of_lastminute_volume;
-
-                    if($last_minute_traded_vol<0)  // skip some negative value specially for dsex
-                        continue;
-
-                    $time_formated = $row['lm_date_time']->format('H:i');
-                    $date_formated = $row['lm_date_time']->format('d/m/Y');
-
-
-                    if ($this->debug) {
-                        $strToadd .= $instrument_code . ',' . $time_formated . ',' . $date_formated . ',' . $row->close_price . ',' . $row->close_price . ',' . $row->close_price . ',' . $row->close_price . ',' . $last_minute_traded_vol . ',' . $row->total_volume . "\n";
-                        dump("last_minute_total_volume=$last_minute_total_volume | prev_minute_of_lastminute_volume=$prev_minute_of_lastminute_volume = $last_minute_traded_vol");
-                    } else {
-                        $strToadd .= $instrument_code . ',' . $time_formated . ',' . $date_formated . ',' . $row->close_price . ',' . $last_minute_traded_vol . "\n";
-
-                    }
-
-                    $i++;
-                }
-
-
-        }
-
-        Storage::append($file, $strToadd);
-
-        if (!$this->debug) {
-            $zipper = new \Chumper\Zipper\Zipper;
-            $files = glob(storage_path() . '/app/plugin/intra/*');
-            $zipper->make(storage_path() . '/app/plugin/intra.zip')->add($files)->close();
-        }
-
-
-    }
 
 
 // live server command   /opt/cpanel/ea-php70/root/usr/bin/php /home/hostingmonitors/artisan plugin:resetIntra
     public function handle()
     {
-        if ($this->debug) {
-
-            $file = "plugin/intra_data_test.txt";
-
-        } else {
-
-            $file = "plugin/intra/data.txt";
-        }
-
-
-        //$heading = 'Code,Time,Date,Close,Volume';
+        $file = "plugin/intra/data.txt";
         $heading = '';
         Storage::disk('local')->put($file, $heading);
 
-        $tradeDate = Market::getActiveDates(30);
-        $last_trade_date = $tradeDate->first()->trade_date->addDay()->format('Y-m-d');
-        $from_trade_date = $tradeDate->last()->trade_date->format('Y-m-d');
+        $instrument_list = InstrumentRepository::getInstrumentsScripWithIndex();
+        //$instrument_list2[13]=$instrument_list[13];
+        foreach ($instrument_list as $instrument) {
 
-        if ($this->debug) {
-            $instrumentList = InstrumentRepository::getInstrumentsScripWithIndex()->where('id',65);
-        }else
-        {
-            $instrumentList = InstrumentRepository::getInstrumentsScripWithIndex();
+            $instrument_id = $instrument->id;
+            $instrument_code = $instrument->instrument_code;
+
+
+            $sql = "SELECT id,instrument_id,lm_date_time,open_price,high_price,low_price,close_price,new_volume,total_volume,pub_last_traded_price,spot_last_traded_price  FROM data_banks_intradays WHERE lm_date_time >= DATE_SUB(NOW(),INTERVAL 60 DAY) and instrument_id=$instrument_id ORDER BY lm_date_time ASC";
+            $rawdata = \DB::select($sql);
+
+            $this->info($instrument_code);
+
+
+            $eod_data = array();
+            $strToadd = '';
+            foreach ($rawdata as $data) {
+
+                if ($data->new_volume <= 0)  // skip some negative value specially for dsex
+                    continue;
+                $ltp = $data->pub_last_traded_price != 0 ? $data->pub_last_traded_price : $data->spot_last_traded_price;
+                $volume = $data->new_volume;
+
+
+                $date = date('d/m/Y', strtotime($data->lm_date_time));
+                $time = date('H:i:s', strtotime($data->lm_date_time));
+
+                $strToadd .= $instrument_code . ',' . $ltp . ',' . $ltp . ',' . $ltp . ','. $ltp . ','. $volume . ',' . $date. ',' . $time . "\n";
+
+
+                $temp = array();
+
+                $temp['o'] = $data->open_price;
+                $temp['h'] = $data->high_price;
+                $temp['l'] = $data->low_price;
+                $temp['c'] = $data->close_price;
+                $temp['v'] = $data->total_volume;
+                $temp['d'] = date('d/m/Y', strtotime($data->lm_date_time));
+
+                $eod_data[$temp['d']] = $temp;
+
+
+            }
+
+            foreach($eod_data as $eod)
+            {
+                $strToadd .= $instrument_code . ',' . $eod['o'] . ',' . $eod['h'] . ',' . $eod['l'] . ',' . $eod['c'] . ',' . $eod['v'] . ',' . $eod['d'] .',' . '12:00:00' . "\n";
+            }
+
+
+            Storage::append($file, $strToadd);
+
+
         }
 
-        foreach ($instrumentList as $ins) {
-            $instrument_id = $ins->id;
-            echo "\n started  " . $ins->instrument_code;
-            $data = DataBanksIntraday::whereBetween('lm_date_time', [$from_trade_date, $last_trade_date])->where('instrument_id', $instrument_id)->orderBy('lm_date_time', 'desc')->get();
-
-            self::writeData($data, $ins->instrument_code, $file);
-        }
+        $zipper = new \Chumper\Zipper\Zipper;
+        $files = glob(storage_path() . '/app/plugin/intra/*');
+        $zipper->make(storage_path() . '/app/plugin/intra.zip')->add($files)->close();
 
 
-        $this->info('Intraday data reset ok - run from plugin.stockbangladesh.com');
+        $this->info('Intraday data reset ok - run from test.stockbangladesh.com');
     }
 }

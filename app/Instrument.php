@@ -327,7 +327,7 @@ class Instrument extends Model
 
         $date = Carbon::now()->subDays($range)->format('Y-m-d');
         foreach ($shares as $instrument) {
-            $prev = \App\Repositories\FileDataRepository::geEodByDate($date, 'c', $instrument->instrument_id);
+            $prev = \App\Repositories\FileDataRepository::getEodByDate($date, 'c', $instrument->instrument_id);
             $change = $instrument->close_price - $prev;
             if($change == 0 || $prev == 0){ // need to find latest prev if prev = 0           
                 continue;

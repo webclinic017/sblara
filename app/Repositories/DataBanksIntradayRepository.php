@@ -743,12 +743,12 @@ $returnData=array();
             $last_update_time = $market[0]->trade_date . " 00:00:00";
         }
 
-        $instrument_list=InstrumentRepository::getInstrumentsScripWithIndex()->keyBy('id');
+        //$instrument_list=InstrumentRepository::getInstrumentsScripWithIndex()->keyBy('id');
 
         //$sql = "select * from `data_banks_intradays` where `lm_date_time` >= '$last_update_time' ORDER BY `lm_date_time` DESC limit $skip,$take";
         //$sql = "select * from `data_banks_intradays` where `lm_date_time` >= '$last_update_time' and `lm_date_time` < '$to_update_time'";
         //$sql = "select instrument_id,lm_date_time,close_price,total_volume,pub_last_traded_price,spot_last_traded_price from `data_banks_intradays` where `lm_date_time` >= '$last_update_time' ORDER BY `data_banks_intradays`.`lm_date_time`  ASC";
-        $sql = "SELECT id,instrument_id,lm_date_time,open_price,high_price,low_price,close_price,new_volume,total_volume  FROM data_banks_intradays WHERE lm_date_time > '$last_update_time' and id>$max_id ORDER BY lm_date_time ASC";
+        $sql = "SELECT id,instrument_id,lm_date_time,open_price,high_price,low_price,close_price,new_volume,total_volume,pub_last_traded_price,spot_last_traded_price  FROM data_banks_intradays WHERE lm_date_time > '$last_update_time' and id>$max_id ORDER BY lm_date_time ASC";
         $rawdata = \DB::select($sql);
 
        // return $rawdata;
@@ -762,17 +762,15 @@ $returnData=array();
             if ($new_max_id < $data->id)
                 $new_max_id = $data->id;
 
-            if ($data->new_volume < 0)  // skip some negative value specially for dsex
+            if ($data->new_volume <= 0)  // skip some negative value specially for dsex
                 continue;
 
-            if(isset($instrument_list[$data->instrument_id]))
-            {
-                $instrument_code=$instrument_list[$data->instrument_id]->instrument_code;
                 $temp = array();
-                $temp['d'] = date('d/m/Y H:i',strtotime($data->lm_date_time));
-                $temp['c'] = $data->close_price;
+                $temp['d'] = date('d/m/Y H:i:s',strtotime($data->lm_date_time));
+
+                $temp['c'] = $data->pub_last_traded_price!=0? $data->pub_last_traded_price: $data->spot_last_traded_price;
                 $temp['v'] = $data->new_volume;
-                $intraday[$instrument_code][] = $temp;
+                $intraday[$data->instrument_id][] = $temp;
 
 
                 $temp = array();
@@ -784,9 +782,9 @@ $returnData=array();
                 $temp['v']= $data->total_volume;
                 $temp['d']= date('d/m/Y', strtotime($data->lm_date_time));
 
-                $eod[$instrument_code]= $temp;
+                $eod[$data->instrument_id]= $temp;
 
-            }
+
 
 
 

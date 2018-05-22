@@ -315,6 +315,7 @@ $('.save-watchlist').click(function () {
                     var instruments = {!! json_encode($instruments) !!}
                     instrument = instruments[instrument];
                     $.get(url+instrument, function (html) {
+                        $("#_tooltip").hide();
                         $('#tab_1_1_3').html(html);
                     })
                 })
@@ -433,6 +434,5 @@ setInterval(function(){
         </div>
     </div>
 
-@include("html.fb_comment",array("url"=>url('/advance-ta-chart').'?instrumentCode='.$instrumentInfo->instrument_code))
 
 @endsection
