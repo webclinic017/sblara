@@ -50,7 +50,7 @@ instrument_id,
  FROM data_banks_intradays,instruments
  WHERE
  data_banks_intradays.batch=$batch_id and
- data_banks_intradays.instrument_id=instruments.id and  instruments.sector_list_id!=23
+ data_banks_intradays.instrument_id=instruments.id and  instruments.sector_list_id!=23 and  instruments.sector_list_id!=24
  ORDER BY total_value desc LIMIT 10";
 
         $top_list=DB::select($sql);

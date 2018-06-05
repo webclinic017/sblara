@@ -170,7 +170,7 @@ class IndexMover
                     //  Opening M.Cap= $cap_equity_yesterday
 
 
-                    $final_index = ($dsex_yesterday * $market_capital_increased_for_this_instrument) / $cap_equity_yesterday;
+                   @$final_index = ($dsex_yesterday * $market_capital_increased_for_this_instrument) / $cap_equity_yesterday;
                     $final_index_change = $final_index - $dsex_yesterday;
                     $final_index_change_per = $final_index_change / $dsex_yesterday;
 

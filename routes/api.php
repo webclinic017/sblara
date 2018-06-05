@@ -116,11 +116,32 @@ Route::get('fundamental_data/{instrument_code?}/', function ($instrument_code = 
 
 Route::get('import_watch_list/{username}/', function ($username = null) {
 
-    $user_info = \DB::select("select * from users where email like '$username'");
-    $user_id = $user_info[0]->id;
+    $watchlist_info = \DB::select("SELECT watchlists.id, watchlists.name, watchlist_items.instrument_id FROM watchlists,users,watchlist_items WHERE users.email like '$username'
+and users.id = watchlists.user_id
+and watchlist_items.watchlist_id=watchlists.id");
+
+    $watchlist_info=collect($watchlist_info)->groupBy('name');
 
     $return_data=array();
-   /* $watch_list['name']='name 1';
+
+    foreach($watchlist_info as $watchlist_name=>$instrument_list_arr)
+    {
+        $watch_list=array();
+
+        $watch_list['name']="$watchlist_name";
+
+        $instrument_list=array();
+       // $instrument_list= collect($instrument_list_arr)->pluck('instrument_id')->unique();
+
+        foreach($instrument_list_arr as $instrument)
+        {
+            $instrument_list[]=$instrument->instrument_id;
+        }
+
+        $watch_list['instruments']= array_values(array_unique($instrument_list));
+        $return_data[] = $watch_list;
+    }
+  /*  $watch_list['name']='name 1';
     $instrument_list=[13,79,538];
     $watch_list['instruments']= $instrument_list;
     $return_data[]= $watch_list;
@@ -236,7 +257,7 @@ Route::get('import_watch_list/{username}/', function ($username = null) {
     $return_data[] = $watch_list;*/
 
 
-    return json_encode($return_data, JSON_UNESCAPED_SLASHES);
+    return $return_data;
     // return count($data);
 })->middleware(['auth:api', 'scopes:paid-plugin-data']);
 
@@ -286,6 +307,7 @@ Route::get('plugin_user_stats/{username}/{hdd}/{cpu}/', function ($username, $hd
     $message['global_message_color'] = '#f36a5a';
 
 
+
     $message['eod_mode_enable'] = false;
     $message['intraday_mode_enable'] = false;
     $message['adjusted_mode_enable'] = false;
@@ -293,8 +315,12 @@ Route::get('plugin_user_stats/{username}/{hdd}/{cpu}/', function ($username, $hd
     $message['resources_button_enable'] = false;
     $message['interval'] = 600;
     $message['version'] = "1.0.2";
-    $message['package'] = "free";
-    $message['expire'] = "16-Jun-2018";
+    $message['package'] = 'free';
+
+    if(is_null($user_info[0]->plugin_expired_at))
+    $message['expire'] ="never";
+    else
+        $message['expire']=date('d-M,Y',strtotime($user_info[0]->plugin_expired_at));
 
 
 
@@ -311,7 +337,7 @@ Route::get('plugin_user_stats/{username}/{hdd}/{cpu}/', function ($username, $hd
         $message['interval'] = 120;
         $message['version'] = "1.0.2";
         $message['package'] = "free";
-        $message['expire'] = "16-Jun-2018";
+
 
 
 
@@ -330,7 +356,7 @@ Route::get('plugin_user_stats/{username}/{hdd}/{cpu}/', function ($username, $hd
         $message['interval'] = 60;
         $message['version'] = "1.0.2";
         $message['package'] = "paid";
-        $message['expire'] = "16-Jun-2018";
+
 
     }
 
@@ -346,7 +372,7 @@ Route::get('plugin_user_stats/{username}/{hdd}/{cpu}/', function ($username, $hd
         $message['interval'] = 30;
         $message['version'] = "1.0.2";
         $message['package'] = "corporate";
-        $message['expire'] = "16-Jun-2018";
+
 
 
     }
@@ -363,7 +389,7 @@ Route::get('plugin_user_stats/{username}/{hdd}/{cpu}/', function ($username, $hd
         $message['interval'] = 30;
         $message['version'] = "1.0.2";
         $message['package'] = "course";
-        $message['expire'] = "16-Jun-2018";
+
 
 
     }
@@ -381,7 +407,7 @@ Route::get('plugin_user_stats/{username}/{hdd}/{cpu}/', function ($username, $hd
         $message['interval'] = 30;
         $message['version'] = "1.0.2";
         $message['package'] = "sponsored";
-        $message['expire'] = "16-Jun-2018";
+
 
 
     }

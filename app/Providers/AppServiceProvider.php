@@ -14,6 +14,14 @@ class AppServiceProvider extends ServiceProvider {
      * @return void
      */
     public function boot() {
+
+        // if(request()->getClientIp() == "202.125.72.110"){
+        //     dump(config('app.debug'));
+        //     config(['app.debug' => false]);
+        //     dd(config('app.debug'));
+
+        //     // dd(request()->getClientIp());
+        // }
         view()->composer('block.market_index', function($view) {
             $view->with('dsex', 777);
         });

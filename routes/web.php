@@ -371,6 +371,13 @@ Route::post('/user/meta/store', 'UserController@storeMeta');
 
 /* Se Routes */
 Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
+
+    Route::get('/news-parser', "NewsParserController@index");
+    Route::post('/news-parser', "NewsParserController@update");
+    Route::get('/share-percentage-cse', "SharePercetageCseController@index");
+    Route::post('/share-percentage-cse', "SharePercetageCseController@update");
+    Route::get('/share-percentage-cse/update', "SharePercetageCseController@scrape");
+
     Voyager::routes();
     Route::resource('/ipos', 'IpoController');
     Route::resource('/news', 'newspaperNewsController');

@@ -81,6 +81,7 @@ class CalculateSectorIntradayCommand extends Command
             $dsex_index_value_today=$dsex_index_data_today[0]->capital_value;
 
 
+
             // taking yesterday corporate action only
             $corporate_action_data=CorporateActionRepository::getCorporateActionAll($trade_date_info[1]->trade_date->format('Y-m-d'),$trade_date_info[1]->trade_date->format('Y-m-d'));
             $adjustment_factor = array();
@@ -125,11 +126,11 @@ class CalculateSectorIntradayCommand extends Command
             $sec = array();
             $tsym = array();
             $dataToSave = array();
-
+            
 
             foreach ($instrument_list as $sector_id => $all_instrument_of_this_sector) {
 
-                if($sector_id == 23)
+                if($sector_id == 23 || $sector_id == 24)
                     continue;
 
                 $total_contribution_sector = 0;

@@ -52,7 +52,7 @@ class AjaxController extends Controller
         $instrumentCode=$instrumentInfo->instrument_code;
     	$ch = curl_init();
         $timeout = 5;
-        curl_setopt($ch, CURLOPT_URL, "http://www.dsebd.org/bshis_new1_old.php?w=$instrumentCode&sid=0.3340593789410694");
+        curl_setopt($ch, CURLOPT_URL, "https://www.dsebd.org/bshis_new1_old.php?w=$instrumentCode&sid=0.3340593789410694");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
         $data = curl_exec($ch);
@@ -150,7 +150,7 @@ class AjaxController extends Controller
     {
         $instrumentInfo=InstrumentRepository::getInstrumentsById(array((int) $inst_id))->first();
         $code=$instrumentInfo->instrument_code;
-        $getText = getWebPage('http://www.dsebd.org/bshis_new1_old.php?w=' . $code);
+        $getText = getWebPage('https://www.dsebd.org/bshis_new1_old.php?w=' . $code);
         //dd($getText);
         $getText = preg_replace('/Please click on the button to refresh/', ' ', $getText);
         $getText = preg_replace('/<INPUT\b[^>]*>(.*?)[^>]/', ' ', $getText);
@@ -381,6 +381,8 @@ class AjaxController extends Controller
 
     public function watch_matrix()
     {
+
+
         $firstGridCodeArr = array();
         if(isset($_REQUEST['firstgrid']))
         {
@@ -448,8 +450,8 @@ class AjaxController extends Controller
         foreach($last_traded_price_all as $instrument)
         {
 
-     /*       if($instrument->sector_list_id==4 || $instrument->sector_list_id==5 || $instrument->sector_list_id==22 || $instrument->sector_list_id==23 || $instrument->sector_list_id==24)
-                continue;*/
+            if($instrument->instrument_id==10006)
+                continue;
 
             $sector=$sectorList[$instrumentList[$instrument->instrument_id]->sector_list_id]->name;
             $category=category($instrument);

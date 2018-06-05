@@ -71,5 +71,259 @@ class News extends Model
         return $allNews;
 
     }
+/// parsing news
+    public function getEpsAttribute()
+    {
+        try {
+        return $this->parseNews();
+        } catch (\Exception $e) {
+            dd($e);
+        }
+    
+    }
+
+    public function getTypeAttribute()
+    {
+       if (strpos($this->details, '(Q3 Un-audited):') !== false) {
+            return "Q3";
+        }
+       if (strpos($this->details, '(Q2 Un-audited):') !== false) {
+            return "Q2";
+        }
+       if (strpos($this->details, '(Q1 Un-audited):') !== false) {
+            return "Q1";
+        }
+        return request()->type;
+    }
+
+    public function parseNews()
+    {
+    $type = $this->type;
+        if($type == 'Q2'){
+            $rgx = "/was Tk.(.*?)as/";
+            if(!preg_match_all($rgx, $this->fullDetails, $matches)){
+                            return $data =  ['q2_eps_cont_op' => '', 'half_year_eps_cont_op' => '', 'half_year_nocf_per_share' => '', 'half_year_net_asset_val_per_share' => '', 'meta_date' => '' ];
+                // throw new \Exception("Error news parsing: $this->details", 1);
+            }
+            if(isset($matches[1][0])){
+
+                if(!isset(explode('-', str_replace("'", ' ', $matches[1][0]))[1])){
+                                return $data =  ['q2_eps_cont_op' => '', 'half_year_eps_cont_op' => '', 'half_year_nocf_per_share' => '', 'half_year_net_asset_val_per_share' => '', 'meta_date' => '' ];
+
+                throw new \Exception("Error news parsing: $this->details", 1);
+                }
+
+                try {
+                    
+            $eps = ['meta_value' => str_replace(['(', ')'], '', trim(explode('for', $matches[1][0])[0])), 'meta_date' => \Carbon\Carbon::parse("last day of ".explode('-', str_replace("'", ' ', $matches[1][0]))[1])->format('Y-m-d') ];
+                } catch (\Exception $e) {
+                    return $data =  ['q2_eps_cont_op' => '', 'half_year_eps_cont_op' => '', 'half_year_nocf_per_share' => '', 'half_year_net_asset_val_per_share' => '', 'meta_date' => '' ];
+                }
+
+            }
+
+            if(isset($matches[1][1])){
+
+                if(!isset(explode('-', str_replace("'", ' ', $matches[1][1]))[1])){
+                                                    return $data =  ['q2_eps_cont_op' => '', 'half_year_eps_cont_op' => '', 'half_year_nocf_per_share' => '', 'half_year_net_asset_val_per_share' => '', 'meta_date' => '' ];
+                throw new \Exception("Error news parsing: $this->details", 1);
+                }
+            $epsNineMonth = ['meta_value' => str_replace(['(', ')'], '', trim(explode('for', $matches[1][1])[0])), 'meta_date' => \Carbon\Carbon::parse("last day of ".explode('-', str_replace("'", ' ', $matches[1][1]))[1])->format('Y-m-d') ];
+            }
+
+            if(isset($matches[1][2])){
+                if(!isset(explode('-', str_replace("'", ' ', $matches[1][2]))[1])){
+                    // dump($this->details);
+                    // dump($matches);
+                    // dump($matches[1][2]);
+                       $nav = ['meta_value' => str_replace(['(', ')'], '', trim(explode('for', $matches[1][2])[0])), 'meta_date' => $eps['meta_date']];
+
+                }
+                try {
+                    \Carbon\Carbon::parse("last day of ".explode('-', str_replace("'", ' ', $matches[1][2]))[1])->format('Y-m-d') ;
+  
+                } catch (\Exception $e) {
+                    $matches[1][2] = str_replace(". NOCFPS w", " ", $matches[1][2]);
+                }
+                if(!isset($nav)){
+
+                    $noc = ['meta_value' => str_replace(['(', ')'], '', trim(explode('for', $matches[1][2])[0])), 'meta_date' => \Carbon\Carbon::parse("last day of ".explode('-', str_replace("'", ' ', $matches[1][2]))[1])->format('Y-m-d') ];
+                }else{
+                    $noc = ['meta_value' => null, 'meta_date' => null];
+                }
+            }
+
+            if(isset($matches[1][3])){
+            $nav = ['meta_value' => str_replace(['(', ')'], '', trim(explode('for', $matches[1][3])[0])), 'meta_date' => $noc['meta_date']];
+            }else{
+                if(!isset($nav)){
+                    $nav = ['meta_value' => null, 'meta_date' => null];
+                }
+            }
+
+            return $data =  ['q2_eps_cont_op' => $eps['meta_value'], 'half_year_eps_cont_op' => $epsNineMonth['meta_value'], 'half_year_nocf_per_share' => $noc['meta_value'], 'half_year_net_asset_val_per_share' => $nav['meta_value'], 'meta_date' => $eps['meta_date'] ];
+
+        }else if($type == 'Q3'){
+            //parse q2
+            // dd($this->details);
+            $rgx = "/was Tk.(.*?)as/";
+            if(!preg_match_all($rgx, $this->fullDetails, $matches)){
+                return $data =  ['q3_eps_cont_op' => '', 'q3_nine_months_eps' => '', 'q3_nine_months_nocf_per_share' => '', 'q3_nine_months_net_asset_val_per_share' => '', 'meta_date' => '' ];
+            }
+   
+            if(isset($matches[1][0])){
+            // dump($matches);
+            try {
+                
+            $eps = ['meta_value' => str_replace(['(', ')'], '', trim(explode('for', $matches[1][0])[0])), 'meta_date' => \Carbon\Carbon::parse("last day of ".explode('-', str_replace("'", ' ', $matches[1][0]))[1])->format('Y-m-d') ];
+            } catch (\Exception $e) {
+                return $data =  ['q3_eps_cont_op' => '', 'q3_nine_months_eps' => '', 'q3_nine_months_nocf_per_share' => '', 'q3_nine_months_net_asset_val_per_share' => '', 'meta_date' => '' ];
+            }
+            }else{
+                         return $data =  ['q3_eps_cont_op' => '', 'q3_nine_months_eps' => '', 'q3_nine_months_nocf_per_share' => '', 'q3_nine_months_net_asset_val_per_share' => '', 'meta_date' => '' ];
+            
+            }
+
+            if(isset($matches[1][1])){
+
+            $epsNineMonth = ['meta_value' => str_replace(['(', ')'], '', trim(explode('for', $matches[1][1])[0])), 'meta_date' => \Carbon\Carbon::parse("last day of ".explode('-', str_replace("'", ' ', $matches[1][1]))[1])->format('Y-m-d') ];
+            }else{
+                          return $data =  ['q3_eps_cont_op' => '', 'q3_nine_months_eps' => '', 'q3_nine_months_nocf_per_share' => '', 'q3_nine_months_net_asset_val_per_share' => '', 'meta_date' => '' ];
+            }
+
+            if(isset($matches[1][2])){
+
+            $noc = ['meta_value' => str_replace(['(', ')'], '', trim(explode('for', $matches[1][2])[0])), 'meta_date' => \Carbon\Carbon::parse("last day of ".explode('-', str_replace("'", ' ', $matches[1][2]))[1])->format('Y-m-d') ];
+            }
+            if(isset($matches[1][3])){
+            $nav = ['meta_value' => str_replace(['(', ')'], '', trim(explode('for', $matches[1][3])[0])), 'meta_date' => $noc['meta_date']];
+            }else{
+                          return $data =  ['q3_eps_cont_op' => '', 'q3_nine_months_eps' => '', 'q3_nine_months_nocf_per_share' => '', 'q3_nine_months_net_asset_val_per_share' => '', 'meta_date' => '' ];
+            }
+
+            return $data =  ['q3_eps_cont_op' => $eps['meta_value'], 'q3_nine_months_eps' => $epsNineMonth['meta_value'], 'q3_nine_months_nocf_per_share' => $noc['meta_value'], 'q3_nine_months_net_asset_val_per_share' => $nav['meta_value'], 'meta_date' => $eps['meta_date'] ];
+            
+        }else if($type == 'Q1'){
+            //parse q2
+            // dd($this->details);
+            $rgx = "/was Tk.(.*?)as/";
+            if(!preg_match_all($rgx, $this->details, $matches)){
+            }
+      
+
+            if(isset($matches[1][0])){
+
+            $eps = ['meta_value' => str_replace(['(', ')'], '', trim(explode('for', $matches[1][0])[0])), 'meta_date' => \Carbon\Carbon::parse("last day of ".explode('-', str_replace("'", ' ', $matches[1][0]))[1])->format('Y-m-d') ];
+            }
+
+            if(isset($matches[1][1])){
+
+                if(!isset(explode('-', str_replace("'", ' ', $matches[1][1]))[1])){
+            $epsNineMonth = ['meta_value' => null, 'meta_date' => null ];
+
+            $nav = ['meta_value' => str_replace(['(', ')'], '', trim(explode('for', $matches[1][1])[0])), 'meta_date' => $eps['meta_date']];
+      
+                }else{
+                    
+            $epsNineMonth = ['meta_value' => str_replace(['(', ')'], '', trim(explode('for', $matches[1][1])[0])), 'meta_date' => \Carbon\Carbon::parse("last day of ".explode('-', str_replace("'", ' ', $matches[1][1]))[1])->format('Y-m-d') ];
+                }
+            }
+
+            // if(isset($matches[1][2])){
+
+            // $noc = ['meta_value' => str_replace(['(', ')'], '', trim(explode('for', $matches[1][2])[0])), 'meta_date' => \Carbon\Carbon::parse("last day of ".explode('-', str_replace("'", ' ', $matches[1][2]))[1])->format('Y-m-d') ];
+            // }
+            if(isset($matches[1][2])){
+            $nav = ['meta_value' => str_replace(['(', ')'], '', trim(explode('for', $matches[1][2])[0])), 'meta_date' => $eps['meta_date']];
+            }
+            return $data =  ['q1_eps_cont_op' => $eps['meta_value'], 'q1_nocf_per_share' => $epsNineMonth['meta_value'],  'q1_net_asset_val_per_share' => $nav['meta_value'], 'meta_date' => $eps['meta_date'] ];
+            
+        }else if($type == "DIVIDEND"){
+            $details = $this->fullDetails;
+            // dump($details);
+            $stock = 0;
+            $cash = 0;
+            if(preg_match_all("/(( [\d.]*?%) (cash|stock|Stock|Cash))/", $details, $matches)){
+                // dd($details);
+                // dd($matches);
+                foreach ($matches[3] as $key => $value) {
+                    if(strtolower($value) == 'cash'){
+                        $cash = str_replace("%", "", trim($matches[2][$key]));
+
+                    }else if(strtolower($value) == 'stock'){
+                        $stock = str_replace("%", "", trim($matches[2][$key]));
+                    }
+                }
+            }
+               $eps = null;
+               $nav = null;
+               $noc = null;
+            if(preg_match_all("/EPS(.*)year/", $details, $matches)){
+               $string = $matches[0][0];
+
+               if(preg_match_all("/(Tk. ([+-]?([0-9]*[.])?[0-9]+))/", $string, $matches))
+               {
+                    if(isset($matches[2][0])){
+                        $eps = $matches[2][0];
+                    }
+                    if(isset($matches[2][1])){
+                        $nav = $matches[2][1];
+                    }
+                    if(isset($matches[2][2])){
+                        $noc = $matches[2][2];
+                    }
+               }
+            }else{
+                // dd($details);
+            }
+            $date = null;
+            if(preg_match_all("/ended on(.*?\d\d\d\d)/", $details, $n)){
+                $date = \Carbon\Carbon::parse($n[1][0])->format('Y-m-d');
+            }
+                        // earning_per_share 201
+            // net_asset_val_per_share 205
+            // nocf_per_share 318
+              return $data =  ['earning_per_share' => $eps, 'net_asset_val_per_share' => $nav,  'nocf_per_share' => $noc, 'meta_date' => $date, 'cashdiv' => $cash, 'stockdiv' => $stock];
+                // dump($date);
+                // dump($eps);
+                // dump($nav);
+                // dump($noc);
+                // dump($stock);
+                // dd($cash);
+        }
+
+    }
+
+    public function getFullDetailsAttribute()
+    {
+        // $fullDetails = $this->details;
+       if (strpos($this->details, ' (cont.') !== false) {
+        $remaining = $this->details;
+        $fullDetails = $remaining;
+        $i = -1;
+        while (strpos($remaining, ' (cont.') !== false) {
+            $i++;
+            $remaining = \App\News::where('post_date', 'like', $this->post_date->format('Y-m-d')."%")
+                        ->where('details', 'like', "%(Continuation news of ".$this->prefix.")%");
+   
+                       $remaining =  $remaining->where('prefix', '=', $this->prefix)->orderBy('post_date', 'asc')->take(1)->skip($i)->first();
+                       
+                       if($remaining){
+
+                            $fullDetails = str_replace("(cont.", "", $fullDetails).str_replace("(Continuation news of ".$this->prefix."):", "", $remaining->details);
+         
+                       }else{
+                        // break;
+                       }
+
+
+        }
+
+           
+        }else{
+            $fullDetails = $this->details;
+        }
+        return $fullDetails;
+    }
 
 }

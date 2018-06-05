@@ -65,19 +65,19 @@ class Table
                 $column = (array) $column;
                 @$d = $matrix[$instrument_id]->{$column['field']};
                 if($column['field']  == 'trading_code'){
-                    $d = "<a class='instrument_hover' data-id='{$matrix[$instrument_id]->instrument_id}' >$d</a>";
+                    $d = "<a class='instrument_hover' data-code=".$d." data-id='{$matrix[$instrument_id]->instrument_id}' >$d</a>";
                 }
-                if($column['field']  == 'change' || $column['field'] == 'percent_change' ){
-                    if($d < 0){
-                        $color = 'red';
-                    }else{
-                        $color = 'green';
-                    }
-                    if($column['field'] == 'percent_change'){
-                        $d .= "%";
-                    }
-                    $d = "<span style='color:$color'>$d</span>";
-                }
+                // if($column['field']  == 'change' || $column['field'] == 'percent_change' ){
+                //     if($d < 0){
+                //         $color = 'red';
+                //     }else{
+                //         $color = 'green';
+                //     }
+                //     if($column['field'] == 'percent_change'){
+                //         $d .= "%";
+                //     }
+                //     $d = "<span style='color:$color'>$d</span>";
+                // }
                 @$data->{$column['field']} = $d;
             }
             $data->id = $instrument_id;

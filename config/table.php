@@ -75,12 +75,6 @@
 	        "sortable" => true,
 	        "searchable" => true,
 	        "title" => 'Category'
-	    ], [
-	        "field" => 'audited_pe',
-	        "required"  => true,
-	        "sortable" => true,
-	        "searchable" => true,
-	        "title" => 'Audited PE'
 	    ]
 	    ]
     ];

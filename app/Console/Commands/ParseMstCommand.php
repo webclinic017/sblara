@@ -60,6 +60,7 @@ class ParseMstCommand extends Command
         set_time_limit(0);
 
         $mstDateString = "TODAY'S SHARE MARKET";
+        //$mstDateString = "TODAY'S SHARE MARKET :";
 
         $oddLotArr = array();
         $oddLotStr = "Instr Code    Max Price    Min Price    Trades    Quantity   Value(In Mn)";
@@ -78,16 +79,19 @@ class ParseMstCommand extends Command
         $page = getWebPage('http://www.dsebd.org/mst.txt');
         $rawData = explode("\n", $page);
 
+
+
         foreach ($rawData as $key => $data) {
 
             // parsing mst date
 
             if (strstr($data, $mstDateString)) {
+                dd($data);
                 $dateArr = explode(':', $data);
                 $mstDate = trim($dateArr[1]);
             }
 
-
+            dd($mstDate);
             // Checking if odd lot starting string matches. If matches line will be added in $oddLotArr array
 
             if (strstr($data, $oddLotStr)) {

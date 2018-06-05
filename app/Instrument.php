@@ -304,7 +304,7 @@ class Instrument extends Model
     {
         if(request()->has('range') && request()->range != "D"){return self::intradayRange();}
 
-        $data = static::select(\DB::raw('*, round(((close_price - yday_close_price)/close_price)*100, 2) as gain '))->whereNotIn('sector_list_id', [4, 5, 22, 23 ])->where('batch_id', '!=', null)->where('data_banks_intradays.trade_date', lastTradeDate())->join('data_banks_intradays', function ($join)
+        $data = static::select(\DB::raw('*, round(((close_price - yday_close_price)/close_price)*100, 2) as gain '))->whereNotIn('sector_list_id', [4, 5, 22, 23, 24 ])->where('batch_id', '!=', null)->where('data_banks_intradays.trade_date', lastTradeDate())->join('data_banks_intradays', function ($join)
         {
             $join->on('data_banks_intradays.batch', '=', 'instruments.batch_id');
             $join->on('data_banks_intradays.instrument_id', '=', 'instruments.id');
@@ -402,6 +402,7 @@ class Instrument extends Model
         if(request()->has('sector') && request()->sector != 'All'){
             $data->where('sector_list_id', request()->sector);
         }
+        $data->whereNotIn('sector_list_id', [22, 23, 24]);
         $data = $data->get();
         return $data;        
     }
@@ -413,7 +414,7 @@ class Instrument extends Model
                 JOIN data_banks_intradays b ON b.batch = a.batch - 1 AND b.`instrument_id` = a. instrument_id 
                 left join instruments on instruments.id = a.instrument_id
                 WHERE a.batch = ".lastBatch()." 
-                AND a.instrument_id not in (10001, 10002, 10003) 
+                AND instruments.sector_list_id not in (23, 22, 24) 
                 ORDER BY `change` DESC limit 10; 
             "));
         return $data;
@@ -426,7 +427,7 @@ class Instrument extends Model
                 JOIN data_banks_intradays b ON b.batch = a.batch - 1 AND b.`instrument_id` = a. instrument_id 
                 left join instruments on instruments.id = a.instrument_id
                 WHERE a.batch = ".lastBatch()." 
-                AND a.instrument_id not in (10001, 10002, 10003) 
+                AND instruments.sector_list_id not in (23, 22, 24) 
                 ORDER BY `change` DESC limit 10; 
             "));
         return $data;
