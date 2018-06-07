@@ -81,17 +81,19 @@ class ParseMstCommand extends Command
 
 
 
+
         foreach ($rawData as $key => $data) {
 
             // parsing mst date
 
             if (strstr($data, $mstDateString)) {
-                dd($data);
+
                 $dateArr = explode(':', $data);
                 $mstDate = trim($dateArr[1]);
+
             }
 
-            dd($mstDate);
+
             // Checking if odd lot starting string matches. If matches line will be added in $oddLotArr array
 
             if (strstr($data, $oddLotStr)) {
@@ -189,8 +191,12 @@ class ParseMstCommand extends Command
 
 
 
-        if ($activeTradeDates = Market::validateTradeDate($mstDate)) {
-            $market_id = $activeTradeDates->id;
+        if ($activeTradeDates = Market::validateTradeDate($mstDate)) {    //disable for backdate
+             $market_id = $activeTradeDates->id;                  // disable for backdate
+
+            // if (1) {  //enable for backdate
+            //$market_id = 4918;  //enable for backdate
+
             $instrumentList = InstrumentRepository::getInstrumentsScripOnly();
 
 

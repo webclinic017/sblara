@@ -18,7 +18,6 @@ class SharePercetageCseController extends Controller
 
     	 	$sql = "select * from cse_share_percentage left join instruments on instruments.id = instrument_id where created_at like '$date%' and sponsor is not NULL";
     	 	$cse = collect(\DB::select($sql))->keyBy('instrument_id');
-
     	 	$data = [];
     	 	foreach ($fundamentals as $fundamental) {
     	 		$data[$fundamental->instrument_id][$fundamental->meta_id] = $fundamental->meta_value;
@@ -46,10 +45,15 @@ class SharePercetageCseController extends Controller
 			    	$data = $xpath->query("/html/body/div/div/div[5]/div/div[2]/table/tr[3]/td/table/tr[3]/td/table/tr[2]/td/table/tr[4]/td/table/tr/td[1]/table");
 			    	$date = $xpath->query("/html/body/div/div/div[5]/div/div[2]/table/tr[3]/td/table/tr[3]/td/table/tr[2]/td/table/tr[5]/td[2]")->item(0)->nodeValue;
 			    	try {
-			    	$date = \Carbon\Carbon::parse("last day of ".$date)->format('Y-m-d');
-			    		
-			    	} catch (\Exception $e) {
+                    $date = \Carbon\Carbon::parse("last day of ".$date)->format('Y-m-d');
+                        
+                    } catch (\Exception $e) {
+                        $date = str_replace("As on", "", $date);
+                        try {
+                         $date = \Carbon\Carbon::parse("last day of ".$date)->format('Y-m-d');
+                        } catch (\Exception $e) {
 			    		$date = null;
+                        }
 			    	}
 			    	
 			    	foreach ($data->item(0)->getElementsByTagName('tr') as $key => $value) {

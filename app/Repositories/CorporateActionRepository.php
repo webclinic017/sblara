@@ -15,7 +15,8 @@ class CorporateActionRepository {
 
     public static function getCorporateAction($instrumentId)
     {
-        $corporateActionData=CorporateAction::where('instrument_id',$instrumentId)->where('active',1)->get();
+        $date=date('Y-m-d');
+        $corporateActionData=CorporateAction::where('instrument_id',$instrumentId)->where('active',1)->where('record_date','<', $date)->get();
         return $corporateActionData;
     }
 
