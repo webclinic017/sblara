@@ -76,22 +76,22 @@ class Kernel extends ConsoleKernel
             return Market::isMarketOpen();
         })->emailOutputTo('fazalmohammad19@gmail.com');*/
 
-        $schedule->command('dse:EodIntradayTrade')->cron('* 10,11,12,13,14 * * 0,1,2,3,4')->emailOutputTo('fazalmohammad19@gmail.com')->withoutOverlapping();
-        $schedule->command('dse:UpdateDseNews')->cron('2,7,12,17,22,27,32,37,42,47,52,57 10,11,12,13,14,15,16 * * 0,1,2,3,4')->withoutOverlapping();
-        $schedule->command('dse:UpdateDseIndex')->cron('* 10,11,12,13,14 * * 0,1,2,3,4')->emailOutputTo('fazalmohammad19@gmail.com')->withoutOverlapping();
-        $schedule->command('dse:ParseMst')->cron('30 16 * * 0,1,2,3,4')->emailOutputTo('fazalmohammad19@gmail.com')->withoutOverlapping();
-        $schedule->command('dse:EodIntraFinalize')->cron('15 16,18,20,22 * * 0,1,2,3,4')->emailOutputTo('fazalmohammad19@gmail.com')->withoutOverlapping();
+        $schedule->command('dse:EodIntradayTrade')->cron('* 10,11,12,13,14 * * 0,1,2,3,4')->emailOutputTo('fazalmohammad19@gmail.com')/*->withoutOverlapping()*/;
+        $schedule->command('dse:UpdateDseNews')->cron('2,7,12,17,22,27,32,37,42,47,52,57 10,11,12,13,14,15,16 * * 0,1,2,3,4')/*->withoutOverlapping()*/;
+        $schedule->command('dse:UpdateDseIndex')->cron('* 10,11,12,13,14 * * 0,1,2,3,4')->emailOutputTo('fazalmohammad19@gmail.com')/*->withoutOverlapping()*/;
+        $schedule->command('dse:ParseMst')->cron('30 16 * * 0,1,2,3,4')->emailOutputTo('fazalmohammad19@gmail.com')/*->withoutOverlapping()*/;
+        $schedule->command('dse:EodIntraFinalize')->cron('15 16,18,20,22 * * 0,1,2,3,4')->emailOutputTo('fazalmohammad19@gmail.com')/*->withoutOverlapping()*/;
 
-        $schedule->command('dse:CalculateSectorIntraday')->cron('* 10,11,12,13,14 * * 0,1,2,3,4')->emailOutputTo('fazalmohammad19@gmail.com')->withoutOverlapping();
+        $schedule->command('dse:CalculateSectorIntraday')->cron('* 10,11,12,13,14 * * 0,1,2,3,4')->emailOutputTo('fazalmohammad19@gmail.com')/*->withoutOverlapping()*/;
 
         $schedule->command('mail:PortfolioEmailReport')->cron('30 15 * * 0,1,2,3,4')->emailOutputTo('fazalmohammad19@gmail.com')->withoutOverlapping();
 
         //filter data update every minutes
-        $schedule->command('dse:FileDataUpdater')->cron('* 10,11,12,13,14 * * 0,1,2,3,4')->emailOutputTo('fazalmohammad19@gmail.com')->withoutOverlapping();
-        $schedule->command('dse:FileDataUpdaterIntraday')->cron('* 10,11,12,13,14 * * 0,1,2,3,4')->emailOutputTo('fazalmohammad19@gmail.com')->withoutOverlapping();
-        $schedule->command('dse:FileDataUpdaterIntraday15')->cron('* 10,11,12,13,14 * * 0,1,2,3,4')->emailOutputTo('fazalmohammad19@gmail.com')->withoutOverlapping();
-        $schedule->command('dse:FileDataUpdaterIntraday30')->cron('* 10,11,12,13,14 * * 0,1,2,3,4')->emailOutputTo('fazalmohammad19@gmail.com')->withoutOverlapping();
-        $schedule->command('dse:FileDataUpdaterIntraday60')->cron('* 10,11,12,13,14 * * 0,1,2,3,4')->emailOutputTo('fazalmohammad19@gmail.com')->withoutOverlapping();
+        $schedule->command('dse:FileDataUpdater')->cron('* 10,11,12,13,14 * * 0,1,2,3,4')->emailOutputTo('fazalmohammad19@gmail.com')/*->withoutOverlapping()*/;
+        $schedule->command('dse:FileDataUpdaterIntraday')->cron('* 10,11,12,13,14 * * 0,1,2,3,4')->emailOutputTo('fazalmohammad19@gmail.com')/*->withoutOverlapping()*/;
+        $schedule->command('dse:FileDataUpdaterIntraday15')->cron('* 10,11,12,13,14 * * 0,1,2,3,4')->emailOutputTo('fazalmohammad19@gmail.com')/*->withoutOverlapping()*/;
+        $schedule->command('dse:FileDataUpdaterIntraday30')->cron('* 10,11,12,13,14 * * 0,1,2,3,4')->emailOutputTo('fazalmohammad19@gmail.com')/*->withoutOverlapping()*/;
+        $schedule->command('dse:FileDataUpdaterIntraday60')->cron('* 10,11,12,13,14 * * 0,1,2,3,4')->emailOutputTo('fazalmohammad19@gmail.com')/*->withoutOverlapping()*/;
 
         //filter data reset daily
         $schedule->command('filter:EodUnAdjData')->cron('40 16 * * 0,1,2,3,4')->emailOutputTo('fazalmohammad19@gmail.com')->withoutOverlapping();

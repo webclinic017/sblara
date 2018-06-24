@@ -52,6 +52,7 @@ class SharePercetageCseController extends Controller
                         try {
                          $date = \Carbon\Carbon::parse("last day of ".$date)->format('Y-m-d');
                         } catch (\Exception $e) {
+                            dd($date);
 			    		$date = null;
                         }
 			    	}

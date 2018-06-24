@@ -282,7 +282,7 @@ class UpdateDseIndexCommand extends Command
                         'high' => $index_ohlc[$instrument_id]['high'],
                         'low' => $index_ohlc[$instrument_id]['low'],
                         'close' => $index_ohlc[$instrument_id]['close'],
-                        'volume' => $volume_00DSEX,
+                        'volume' => $value_00DSEX,
                         'trade' => $trade_00DSEX,
                         'tradevalues' => $value_00DSEX,
                         'updated' => date('Y-m-d H:i:s'),
@@ -311,7 +311,7 @@ class UpdateDseIndexCommand extends Command
                     $temp['low_price'] = $index_ohlc[$instrument_id]['low'];
                     $temp['close_price'] = $index_ohlc[$instrument_id]['close'];
                     $temp['total_trades'] = $trade_00DSEX;
-                    $temp['total_volume'] = $volume_00DSEX;
+                    $temp['total_volume'] = $value_00DSEX;
                     $temp['new_volume'] = $new_volume;
                     $temp['total_value'] = $value_00DSEX;
                     $temp['lm_date_time'] = date('Y-m-d H:i:s', strtotime($index_ohlc[$instrument_id]['date_time']));

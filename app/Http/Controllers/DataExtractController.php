@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Repositories\FundamentalRepository;
 use Illuminate\Http\Request;
 use App\Repositories\InstrumentRepository;
+use Illuminate\Support\Facades\Storage;
 
 class DataExtractController extends Controller
 {
@@ -578,6 +579,56 @@ class DataExtractController extends Controller
 
     public function list_financial_reports()
     {
+
+      /*  $file_path = "etc/DGENX.txt";
+        if (Storage::disk('local')->exists($file_path)) {
+
+            $today_data = Storage::get($file_path);
+            $rawData = explode("\n", $today_data);
+
+            $temp=array();
+            foreach($rawData as $row)
+            {
+                $rowArray = explode("\t", $row);
+
+
+                if(isset($rowArray[1]))
+                {
+
+                    $trade_date= $rowArray[1];
+                    $trade_date = strtotime($trade_date);
+                    $trade_date = date('Y-m-d', $trade_date);
+
+                    $market = \DB::select("select id from markets where trade_date='$trade_date'");
+
+
+
+                    $open=trim($rowArray[2]);
+                    $high=trim($rowArray[3]);
+                    $low=trim($rowArray[4]);
+                    $close=trim($rowArray[5]);
+                    $vol=trim($rowArray[6])/1000000;
+
+                    if (isset($market[0])) {
+
+                        $market_id= $market[0]->id;
+
+                        $sql = "INSERT INTO `data_banks_eods` (`id`, `market_id`, `instrument_id`, `open`, `high`, `low`, `close`, `volume`, `trade`, `tradevalues`, `date`) VALUES (NULL, '$market_id', 10006, $open, $high, $low, $close, $vol, 0,$vol,'$trade_date');";
+
+                        \DB::select($sql);
+                    }
+
+
+
+                }
+
+
+
+            }
+           // dd($rawData);
+        }*/
+
+
         $instrument_list=InstrumentRepository::getInstrumentsScripOnly();
 
         foreach($instrument_list as $instrument)
