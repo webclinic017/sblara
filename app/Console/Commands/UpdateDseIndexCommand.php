@@ -71,6 +71,24 @@ class UpdateDseIndexCommand extends Command
             $convertedTimestamp = strtotime($date_time);
             $trade_date = date('Y-m-d', $convertedTimestamp);
 
+            $querystr = "select * from TRD";
+            $tradeDataFromDseServer = DB::connection('dse')->select($querystr);
+
+            $TRD_TOTAL_TRADES= $TRD_TOTAL_VOLUME= $TRD_TOTAL_VALUE=0;
+            foreach ($tradeDataFromDseServer as $data) {
+
+                $TRD_TOTAL_TRADES = $data->TRD_TOTAL_TRADES;
+                $TRD_TOTAL_VOLUME = $data->TRD_TOTAL_VOLUME;
+                $TRD_TOTAL_VALUE = $data->TRD_TOTAL_VALUE;
+                $TRD_LM_DATE_TIME = date('Y-m-d H:i:s', strtotime($data->TRD_LM_DATE_TIME));
+             //   $trade_time = date('H:i', strtotime($data->TRD_LM_DATE_TIME));
+             //   $trade_date = date('Y-m-d', strtotime($data->TRD_LM_DATE_TIME));
+
+
+            }
+
+
+
 
             // Market is open. Now we will check if dse server returning today's data. Sometimes dse return previous day data
             if($activeTradeDates=Market::validateTradeDate($trade_date))
@@ -257,7 +275,7 @@ class UpdateDseIndexCommand extends Command
 
                 ////////////////////// EOD for 00DSEX \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
-                $value_00DSEX = 0;
+              /*  $value_00DSEX = 0;
                 $trade_00DSEX = 0;
                 $volume_00DSEX= 0;
 
@@ -271,7 +289,7 @@ class UpdateDseIndexCommand extends Command
                     $trade_00DSEX+= $eod_data->trade;
                     $volume_00DSEX+= $eod_data->volume;
                 }
-
+*/
 
 
                 $instrument_id = 10001;
@@ -282,9 +300,9 @@ class UpdateDseIndexCommand extends Command
                         'high' => $index_ohlc[$instrument_id]['high'],
                         'low' => $index_ohlc[$instrument_id]['low'],
                         'close' => $index_ohlc[$instrument_id]['close'],
-                        'volume' => $value_00DSEX,
-                        'trade' => $trade_00DSEX,
-                        'tradevalues' => $value_00DSEX,
+                        'volume' => $TRD_TOTAL_VALUE,                      //  here we arte using value as volume
+                        'trade' => $TRD_TOTAL_TRADES,
+                        'tradevalues' => $TRD_TOTAL_VOLUME,
                         'updated' => date('Y-m-d H:i:s'),
                         'date' => $trade_date
                     ]
@@ -292,12 +310,12 @@ class UpdateDseIndexCommand extends Command
 
 
                 if (isset($last_intraday_data[10006]))
-                    $new_volume = $value_00DSEX - $last_intraday_data[10006]->total_value;
+                    $new_volume = $TRD_TOTAL_VALUE - $last_intraday_data[10006]->total_volume;
                 else
-                    $new_volume = $value_00DSEX - 0;
+                    $new_volume = $TRD_TOTAL_VALUE - 0;
 
 
-             
+
 
                 /////////////////// Intraday Data 00DSEX \\\\\\\\\\\\\\\\\\\\
                 if (!isset($today_intraday_index_data[$instrument_id]) and $data_bank_intraday_batch > 0) {
@@ -310,15 +328,16 @@ class UpdateDseIndexCommand extends Command
                     $temp['high_price'] = $index_ohlc[$instrument_id]['high'];
                     $temp['low_price'] = $index_ohlc[$instrument_id]['low'];
                     $temp['close_price'] = $index_ohlc[$instrument_id]['close'];
-                    $temp['total_trades'] = $trade_00DSEX;
-                    $temp['total_volume'] = $value_00DSEX;
+                    $temp['total_trades'] = $TRD_TOTAL_TRADES;
+                    $temp['total_volume'] = $TRD_TOTAL_VALUE;
                     $temp['new_volume'] = $new_volume;
-                    $temp['total_value'] = $value_00DSEX;
+                    $temp['total_value'] = $TRD_TOTAL_VOLUME;
                     $temp['lm_date_time'] = date('Y-m-d H:i:s', strtotime($index_ohlc[$instrument_id]['date_time']));
                     $temp['trade_time'] = date('H:i', strtotime($index_ohlc[$instrument_id]['date_time']));
                     $temp['trade_date'] = date('Y-m-d', strtotime($index_ohlc[$instrument_id]['date_time']));
                     $temp['yday_close_price'] = $index_ohlc[$instrument_id]['yday_close_price'];
                     $temp['batch'] = $data_bank_intraday_batch;
+                    if($new_volume>0)
                     $IntradayDataToSave[] = $temp;
                 }
 

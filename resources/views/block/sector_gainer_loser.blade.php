@@ -1,8 +1,8 @@
   <div id="sector_gainer_loser"></div>
 
 <script>
-
-Highcharts.chart('sector_gainer_loser', {
+$(function () {
+    Highcharts.chart('sector_gainer_loser', {
     chart: {
         type: 'bar',
         pointWidth: '200',
@@ -46,6 +46,8 @@ Highcharts.chart('sector_gainer_loser', {
              }
              ]
 });
+
+})
 
 
 </script>

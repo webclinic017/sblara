@@ -391,7 +391,7 @@ class Instrument extends Model
 
     public static function allshares()
     {
-        $data = static::select(\DB::raw('*, round(((close_price - yday_close_price)/close_price)*100, 2) as gain '))->where('batch_id', '!=', null)->join('data_banks_intradays', function ($join)
+        $data = static::select(\DB::raw('*, round(((close_price - yday_close_price)/close_price)*100, 2) as gain, sector_lists.name as sector_name, LEFT(quote_bases , 1) as category'))->where('batch_id', '!=', null)->join('data_banks_intradays', function ($join)
         {
             $join->on('data_banks_intradays.batch', '=', 'instruments.batch_id');
             $join->on('data_banks_intradays.instrument_id', '=', 'instruments.id');
@@ -402,6 +402,7 @@ class Instrument extends Model
         if(request()->has('sector') && request()->sector != 'All'){
             $data->where('sector_list_id', request()->sector);
         }
+        $data->leftJoin('sector_lists', 'sector_lists.id', 'instruments.sector_list_id');
         $data->whereNotIn('sector_list_id', [22, 23, 24]);
         $data = $data->get();
         return $data;        

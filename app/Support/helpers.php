@@ -288,6 +288,11 @@ function lastBatch()
 {
         return (string) \DB::select(\DB::raw("select max(data_bank_intraday_batch) as batch from markets"))[0]->batch;
 }
+function lastBatchByDate($date)
+{
+    // dd($date);
+        return (string) \DB::select(\DB::raw("select max(data_bank_intraday_batch) as batch from markets where trade_date <= '$date' "))[0]->batch;
+}
 
 function excludedInstruments()
 {

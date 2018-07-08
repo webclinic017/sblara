@@ -1,8 +1,8 @@
 <div id="{{$renderTo}}"></div>
 @push('scripts')
 <script>
-
-chart_collumn_gain_loser_depth = new Highcharts.Chart({
+$(function(){
+    chart_collumn_gain_loser_depth = new Highcharts.Chart({
             chart: {
                 height:{{$height}},
                 renderTo: '{{$renderTo}}',
@@ -122,6 +122,8 @@ chart_collumn_gain_loser_depth = new Highcharts.Chart({
             ]
         });
         
+})
+
 
 </script>
 @endpush

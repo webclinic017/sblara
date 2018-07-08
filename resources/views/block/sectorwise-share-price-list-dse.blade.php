@@ -130,6 +130,9 @@ $("#sparkline_vol_{{$instrument_id}}").sparkline({{calculateDifference($instrume
 </script>
 
 <script>
+    $(function(){
+        
+    })
 @foreach($sector_up_down_details as $sector_up_down)
 new Highcharts.Chart({
             chart: {

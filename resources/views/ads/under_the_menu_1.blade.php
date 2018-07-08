@@ -17,8 +17,8 @@
   </div>
   
   <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 visible-lg visible-md">
-            <a href="{{url('https://stockbangladesh.com/courses/upcoming-courses/batches/162')}}" target="_blank">
-              <img src="{{ URL::asset('img/ads/ex_68.gif') }}" alt="100%x200" style="width: 100%; height: 100px; display: block;">
+            <a href="{{url('https://stockbangladesh.com/courses/upcoming-courses/batches/164')}}" target="_blank">
+              <img src="https://stockbangladesh.com/storage/m3fU32lYNO6GRiXUkWoM1PbLJXGztV53nUplv1F7.gif" alt="100%x200" style="width: 100%; height: 100px; display: block;">
               </a>
   </div>
     
@@ -28,8 +28,8 @@
               </a>
   </div>  
   <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 visible-lg visible-md">
-            <a href="https://stockbangladesh.com/courses/upcoming-courses/batches/163" target="_blank">
-              <img src="{{ URL::asset('img/ads/free_19.gif') }}" alt="100%x200" style="width: 100%; height: 100px; display: block;">
+            <a href="https://stockbangladesh.com/courses/upcoming-courses/batches/165" target="_blank">
+              <img src="https://stockbangladesh.com/storage/w7MsoNGWoo0vovsdqqPVDG3PIURmhOdmqVCy9Knl.gif" alt="100%x200" style="width: 100%; height: 100px; display: block;">
               </a>
   </div>
 {{--   <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 visible-lg visible-md">

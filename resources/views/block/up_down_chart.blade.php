@@ -229,7 +229,7 @@
     </div>
 </div>
 
-<script>
+<script async>
 $(function () {
 
 

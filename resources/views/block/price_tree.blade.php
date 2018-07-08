@@ -2,7 +2,7 @@
 @push('scripts')
 <script src="http://code.highcharts.com/highcharts-more.js"></script>
 <script>
-
+$(function () {
 // Parse the data from an inline table using the Highcharts Data plugin
 Highcharts.chart('price_tree', {
 
@@ -70,5 +70,7 @@ Highcharts.chart('price_tree', {
     }
 
 });
+})
+
 </script>
 @endpush

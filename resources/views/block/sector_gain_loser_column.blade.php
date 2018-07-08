@@ -1,6 +1,7 @@
 <div id="{{$renderTo}}"></div>
 @push('scripts')
 <script>
+    $(function () {
 chart_collumn_gain_loser = new Highcharts.Chart({
             chart: {
                 height:{{$height}},
@@ -99,6 +100,8 @@ chart_collumn_gain_loser = new Highcharts.Chart({
             }
             ]
         });
+    })
+
 
 </script>
 @endpush

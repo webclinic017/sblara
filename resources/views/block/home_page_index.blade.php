@@ -1,6 +1,7 @@
 <div id="container"></div>
 @push('scripts')
 <script>
+    $(function () {
 Highcharts.chart('container', {
     chart: {
         zoomType: 'xy',
@@ -67,6 +68,8 @@ Highcharts.chart('container', {
         }
     }]
 });
+        
+    })
 
 </script>
 @endpush

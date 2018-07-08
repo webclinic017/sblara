@@ -25,6 +25,7 @@ class GenerateMenus
             $menu->market->attr(['class' => 'dropdown dropdown-fw  '])->prepend('<i class="icon-home" ></i > ');
 
             $menu->market->add('Home', ['route' => 'home'])->prepend('<i class="fa fa-dashboard" ></i > ');
+            $menu->market->add('Price Board', ['route' => 'price-board'])->prepend('<i class="fa fa-tv" ></i > ');
             
             $menu->market->add('Screeners', ['class' => 'dropdown more-dropdown-sub closed'])->prepend('<i class="fa fa-binoculars" ></i > '); //should remove open class
             $menu->screeners->link->href('javascript:;');

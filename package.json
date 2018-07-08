@@ -17,5 +17,10 @@
     "laravel-mix": "0.*",
     "lodash": "^4.17.4",
     "vue": "^2.1.10"
+  },
+  "dependencies": {
+    "moment": "^2.22.2",
+    "vue-masonry": "^0.11.4",
+    "vuejs-datepicker": "^1.5.2"
   }
 }

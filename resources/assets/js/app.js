@@ -12,6 +12,26 @@ require('./bootstrap');
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
+import {VueMasonryPlugin} from 'vue-masonry';
+import VueProgressBar from 'vue-progressbar'
+
+const options = {
+  color: '#26C281',
+  tempColor: '#E43A45',
+  failedColor: '#874b4b',
+  thickness: '2px',
+  transition: {
+    speed: '1s',
+    opacity: '.6s',
+    termination: 300
+  },
+  autoRevert: true,
+  location: 'top',
+  inverse: false,
+  position: 'absolute'
+}
+Vue.use(VueProgressBar, options)
+Vue.use(VueMasonryPlugin)
 
 Vue.component(
     'passport-clients',
@@ -28,8 +48,14 @@ Vue.component(
     require('./components/passport/PersonalAccessTokens.vue')
 );
 
-Vue.component('example', require('./components/Example.vue'));
+// Vue.component('example', require('./components/Example.vue'));
 
+Vue.component('price-board', require('./components/PriceBoard.vue'));
+Vue.component('price-group', require('./components/PriceBoardGroup.vue'));
+
+if(document.getElementById("app")){
 const app = new Vue({
     el: '#app'
 });
+}
+

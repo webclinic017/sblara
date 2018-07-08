@@ -94,7 +94,7 @@
 
 
 @push('scripts')
-<script>
+<script async>
 @foreach($indexData['index'] as $row)
 
 

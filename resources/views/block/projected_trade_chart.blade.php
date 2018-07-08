@@ -75,7 +75,7 @@
             </table>
 
                      </div>
-<script>
+<script async>
 $(function () {
 
 Highcharts.chart('trade_compare', {

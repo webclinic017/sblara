@@ -1,7 +1,7 @@
   <div id="sector_gainer_loser_last_minute"></div>
 
-<script>
-
+<script async>
+$(function () {
 Highcharts.chart('sector_gainer_loser_last_minute', {
     chart: {
         type: 'bar'
@@ -45,6 +45,8 @@ Highcharts.chart('sector_gainer_loser_last_minute', {
              ]
 });
 
+
+})
 
 </script>
 

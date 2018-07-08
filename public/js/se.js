@@ -461,12 +461,12 @@ $(document).ready(function () {
   });
 });
 
-document.addEventListener('DOMContentLoaded', function () {
-  $.feedback({
-    ajaxURL: '/feedback',
-    html2canvasURL: '/vendor/feedback/html2canvas.js'
-  });
-}, false);
+// document.addEventListener('DOMContentLoaded', function () {
+//   $.feedback({
+//     ajaxURL: '/feedback',
+//     html2canvasURL: '/vendor/feedback/html2canvas.js'
+//   });
+// }, false);
 
 Highcharts.setOptions({
   credits: {

@@ -172,7 +172,8 @@ Route::post('/watchlist/{id}/add', 'WatchlistController@addItem')->middleware('a
 Route::get('/watchlist/addtomultiple', 'WatchlistController@addMultiple')->middleware('auth');
 Route::get('/tv', 'TradingViewController@chart');
 Route::get('/tv/tab/{tab}', 'TradingViewController@tab');
-Route::get('/se', 'seController@index');
+Route::any('/se', 'seController@index');
+Route::any('/price-board', 'PriceBoardController@index')->name('price-board');
 Route::get('/setest', 'seController@test');
 Route::get('/download', 'DownloadController@index')->name('download');
 Route::post('/download', 'DownloadController@download');
@@ -365,6 +366,7 @@ Route::post('search_json', 'SearchController@search');
 
 /* Se Routes */
 Route::get('/ipos', 'IpoController@upcoming')->name('ipos');
+
 Route::get('/ipos/history', 'IpoController@history')->name('ipos-history');
 Route::get('/ipos/results', 'IpoController@results')->name('ipos-results');
 Route::post('/user/meta/store', 'UserController@storeMeta');

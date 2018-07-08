@@ -19,7 +19,7 @@
       fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));</script>
         <!-- BEGIN CONTAINER -->
-        <div class="wrapper">
+        <div class="wrapper" >
             <!-- BEGIN HEADER -->
             @include('includes.metronic.header')
             <!-- END HEADER -->
@@ -152,7 +152,8 @@
             })
         </script>
 
-
+<script async defer src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.0.0/masonry.pkgd.min.js"></script>
+<script src="/js/passport-vue.js"></script>
     </body>
 
 </html>

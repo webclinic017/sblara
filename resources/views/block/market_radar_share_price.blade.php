@@ -1,6 +1,6 @@
 <div id="market_radar_share_price">
 </div>
-<script>
+<script async>
 $(function () {
 
 Highcharts.chart('market_radar_share_price', {
@@ -8,6 +8,7 @@ Highcharts.chart('market_radar_share_price', {
         type: 'column',
         height: 300
     },
+
     title: {
           style: {
                       fontSize: '14px'
@@ -40,7 +41,7 @@ Highcharts.chart('market_radar_share_price', {
             grouping: false,
             shadow: false,
             borderWidth: 0
-        }
+        },
     },
     series: [{
         name: 'Up',

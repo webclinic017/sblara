@@ -6,7 +6,8 @@ dump($chart);
     
 </div>
 <script>
-    Highcharts.chart('container', {
+    $(function () {
+         Highcharts.chart('container', {
     chart: {
         type: 'area'
     },
@@ -54,4 +55,6 @@ dump($chart);
         data: [18, 31, 54, 156, 339, 818,18, 31, 54, 156, 339, 818,18, 31, 54, 156, 339, 818,18, 31, 54, 156, 339, 818,18, 31, 54, 156, 339, 818, 1201]
     }]
 });
+    })
+   
 </script>

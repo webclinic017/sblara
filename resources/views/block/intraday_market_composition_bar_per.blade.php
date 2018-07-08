@@ -1,7 +1,7 @@
 <div id="{{$renderTo}}"></div>
 <script>
-
-chart_bar_total_trade = new Highcharts.Chart({
+$(function () {
+   chart_bar_total_trade = new Highcharts.Chart({
             chart: {
                 height:{{$height}},
                 renderTo: '{{$renderTo}}',
@@ -69,5 +69,7 @@ chart_bar_total_trade = new Highcharts.Chart({
             }, ]
         });
         
+ 
+})
 
 </script>

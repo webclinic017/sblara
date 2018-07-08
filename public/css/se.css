@@ -233,10 +233,12 @@ div.center select{
     background: #fff;
     border:1px solid #e1e1e1;     
     max-width: 450px;
+    min-width: 285px;
     padding: 5px;
     z-index: 999999999;
     margin-left: 10px;
     display: none;
+    font-size: 9px !important;
     /*box-shadow:  0 3px 6px rgba(0,0,0,.16),0 3px 6px rgba(0,0,0,.22)!important;*/
 }
 #hoverCard a{
@@ -251,3 +253,22 @@ div.center select{
     display: inline-block;
     float: right;
 }
+.text-left{
+    text-align: left;
+}
+.text-right{
+    text-align: right;
+}
+.box-shadow{
+    display: inline-block;
+-webkit-box-shadow: -1px 5px 28px -5px rgba(0,0,0,0.75);
+-moz-box-shadow: -1px 5px 28px -5px rgba(0,0,0,0.75);
+box-shadow: -1px 5px 28px -5px rgba(0,0,0,0.75);
+}
+.__cov-progress{
+    z-index: 1 !important;
+}
+.vdp-datepicker{
+    display: inline-block;
+}
+

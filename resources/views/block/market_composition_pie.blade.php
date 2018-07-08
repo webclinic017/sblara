@@ -1,8 +1,8 @@
 <div id="{{$renderTo}}"></div>
 @push('scripts')
 <script>
-
-        var colors = Highcharts.getOptions().colors;
+$(function () {
+      var colors = Highcharts.getOptions().colors;
         pie_chart = new Highcharts.Chart({
             chart: {
                 height:{{$height}},
@@ -106,5 +106,7 @@
             ]
         });
 
+})
+  
         </script>
 @endpush

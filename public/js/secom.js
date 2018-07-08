@@ -310,7 +310,7 @@ function endLoading() {
         $('.additional-fields').append(html);
       });
       /*file uploader*/
-      // $('.file-uploader').filemanager($(this).data('type'));
+      $('.file-uploader').filemanager($(this).data('type'));
       /*file uploader*/
 
       $('body').on('click', '.confirmBuy', function () {
@@ -558,12 +558,12 @@ function endLoading() {
       });
     });
 
-    document.addEventListener('DOMContentLoaded', function () {
-      $.feedback({
-        ajaxURL: '/feedback',
-        html2canvasURL: '/vendor/feedback/html2canvas.js'
-      });
-    }, false);
+    // document.addEventListener('DOMContentLoaded', function () {
+    //   $.feedback({
+    //     ajaxURL: '/feedback',
+    //     html2canvasURL: '/vendor/feedback/html2canvas.js'
+    //   });
+    // }, false);
 
     Highcharts.setOptions({
       credits: {

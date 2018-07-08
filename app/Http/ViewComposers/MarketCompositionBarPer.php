@@ -86,7 +86,7 @@ class MarketCompositionBarPer
 
         arsort($raw_value_today);
 
-
+       
         foreach($raw_value_today as $sector_name=>$data)
         {
             $todayTemp = array();
