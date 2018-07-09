@@ -137,7 +137,11 @@
 					//gain round(((d.close_price - d.yday_close_price)/d.close_price)*100, 2)
 					var value = this.getValue(instrument)
 					var prevValue = this.getPrevValue(instrument)
-					return ((( value - prevValue)/value)*100).toFixed(2)
+					if(prevValue == null){
+						prevValue = 1;
+					}
+					
+					return ((( value - prevValue)/prevValue)*100).toFixed(2)
 				}
 			,
 				getValue: function(instrument){

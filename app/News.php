@@ -101,12 +101,17 @@ class News extends Model
        if (strpos($this->details, '(Q1 Un-audited):') !== false) {
             return "Q1";
         }
+       if (strpos($this->details, 'basis of current market price') !== false) {
+            return "mf";
+        }
+
         return request()->type;
     }
 
     public function parseNews()
     {
     $type = $this->type;
+
         if($type == 'Q2'){
             $rgx = "/was Tk.(.*?)as/";
             if(!preg_match_all($rgx, $this->fullDetails, $matches)){
@@ -322,6 +327,19 @@ class News extends Model
                 // dump($noc);
                 // dump($stock);
                 // dd($cash);
+        }else if($type == "mf"){
+            $mpb = 0; $cpb = 0; $meta_date = 0;
+            preg_match_all("/Tk. ([0-9.]+) per/", $this->details, $matches);
+            // echo "\">";
+            // dd($matches);
+            $mpb = $matches[1][0];
+            $cpb = $matches[1][1];
+            preg_match_all("/operation on (.+[0-9]), the/", $this->details, $matches);
+            $meta_date = $matches[1][0];
+            $meta_date = \Carbon\Carbon::parse(str_replace(',','', $meta_date))->format('Y-m-d');
+            // print_r($mateches);
+            // die('df');
+            return ['mpb' => $mpb, 'cpb' => $cpb, 'meta_date' => $meta_date];
         }
 
     }

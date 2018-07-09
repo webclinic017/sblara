@@ -296,7 +296,62 @@
                                 </form>
 
                             </td>
+                            
+                            @elseif($n->type == "mf")
+                            {{-- mitual fund start --}}
 
+
+                            <td width="500px">
+                                {!!str_replace([$n->eps['mpb'], $n->eps['cpb']], ['<span style="background:yellow">'.$n->eps['mpb'].'</span>', '<span style="background:yellow">'.$n->eps['cpb'].'</span>', ], $n->details)!!}
+                            </td>
+
+                            <td>
+                                <form method="post" style="background:#{{$n->isUpdated?"00ff001f":"ff00001f"}}"><input type="hidden" name="news_id" value="{{$n->id}}" />
+                                    {{csrf_field()}}
+                                    <input type="hidden" name="instrument_id" value="{{$n->instrument_id}}">
+                                    <div class="row">
+                                        
+                                    <div class="form-group col-md-6">
+                                        <label for="">mpb</label>
+                                        <input type="text" class="form-control" name="1486"  value="{{$n->eps['mpb']}}">
+                                        <label class="oldData" style="color:@if($n->eps['mpb']== @$fdata[$n->instrument_id][1486]['meta_value']) green @else red  @endif" >{{@$fdata[$n->instrument_id][1486]['meta_value']}} <a class='history' > History</a></label>
+                                    </div>
+
+                                    <div class="form-group col-md-6">
+                                        <label for="">cpb</label>
+                                        <input type="text" class="form-control" name="1487" value="{{$n->eps['cpb']}}">
+                                        <label class="oldData" style="color:@if($n->eps['cpb']== @$fdata[$n->instrument_id][1487]['meta_value']) green @else red  @endif" >{{@$fdata[$n->instrument_id][1487]['meta_value']}} <a class='history' > History</a></label>
+                                    </div>
+
+
+                          
+                                    <div class="form-group col-md-6">
+                                        <label for="">meta_date</label>
+
+                                            
+                                        <input type="text" class="form-control" name="meta_date"  value="{{$n->eps['meta_date']}}">
+                                     
+                                        @php 
+                                        if(isset($fdata[$n->instrument_id][1487]['meta_date'])){
+                                        $m_date = @$fdata[$n->instrument_id][1487]['meta_date']->format('Y-m-d') ; 
+                                        }else{
+                                            $m_date = null;
+                                        }
+                                        @endphp
+                                        <label class="oldData" style="color:@if($n->eps['meta_date']== $m_date) green @else red  @endif" >{{$m_date}} <a class='history' > History</a></label>
+                                    </div>
+
+                                    <div class="form-group col-md-6">
+                                        <button class="btn btn-success form-control" style="margin-top:25px">Update</button>
+                                    </div>
+                                    
+                                    </div>
+                                </form>
+
+                            </td>
+                            
+
+                            {{-- mitual fund end --}}
                             @elseif($n->type == "DIVIDEND")
 {{--              return $data =  ['earning_per_share' => $eps, 'net_asset_val_per_share' => $nav,  'nocf_per_share' => $noc, 'meta_date' => $date, 'cashdiv' => $cash, 'stockdiv' => $stock]; --}}
                             <td width="500px">

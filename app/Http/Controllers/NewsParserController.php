@@ -35,7 +35,7 @@ class NewsParserController extends Controller
 		$news = $news->paginate(20);
 		// dd($news->pluck('instru
 		// ment_id'));
-		$fundamentals = \App\Fundamental::whereIn('instrument_id', $news->pluck('instrument_id'))->where('is_latest', 1)->whereIn('meta_id', [211, 245, 227, 308, 319, 314, 226, 434, 320, 313, 225, 315, 310, 201, 205, 318])->get();
+		$fundamentals = \App\Fundamental::whereIn('instrument_id', $news->pluck('instrument_id'))->where('is_latest', 1)->whereIn('meta_id', [211, 245, 227, 308, 319, 314, 226, 434, 320, 313, 225, 315, 310, 201, 205, 318, 1486, 1487])->get();
 		$fdata = [];
 		foreach ($fundamentals as  $fundamental) {
 			$fdata[$fundamental->instrument_id][$fundamental->meta_id] = ['meta_value' => $fundamental->meta_value, 'meta_date' => $fundamental->meta_date];

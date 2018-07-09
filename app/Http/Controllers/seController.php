@@ -14,6 +14,9 @@ class seController extends Controller
 		if(request()->has('sql')){
 			return $this->top();
 		}
+		if(request()->has('sqltask')){
+			return $this->sqlTask();
+		}
 		// return $this->test();
 // $image = imagecreatefromjpeg(__DIR__.'/../../../public/metronic/assets/layouts/layout5/img/logo.jpg');
 // // die('df');
@@ -73,6 +76,35 @@ WHERE instrument_id IN (".join(',', $instrument_ids).") ORDER BY portfolio_scrip
 
 	public function sqlTask()
 	{
+		//cpb 1487
+		//mpb 1486
+		$instruments = \App\Instrument::all()->keyBy('instrument_code');
+		// dd($instruments);
+		// $end = false;
+		// $skip = 0;
+		// while($end == false){
+
+		// 		$data = \DB::select(\DB::raw("select * from mutual_import limit $skip, 100"));
+		// 		$rowscpb = [];
+		// 		$rowsmpb = [];
+		// 		foreach ($data as $key => $value) {
+		// 			$rowscpb[] = ['meta_id' => 1487, 'meta_value' => $value->cpb, 'meta_date' => $value->q_date, 'instrument_id' => $instruments[$value->code]->id, 'is_latest' => 0];
+		// 			$rowsmpb[] = ['meta_id' => 1486, 'meta_value' => $value->mpb, 'meta_date' => $value->q_date, 'instrument_id' => $instruments[$value->code]->id, 'is_latest' => 0];
+		// 		}
+		// 		// dump($rowsmpb);
+		// 		\App\Fundamental::insert($rowscpb);
+		// 		\App\Fundamental::insert($rowsmpb);
+		// 		// dd($rowscpb);
+		// 		$skip += 100;
+		// 	if(count($data) == 0){
+		// 		$end = true;
+		// 	}
+
+			// if($skip == 500){
+			// 	$end = true;
+			// }
+
+		// }
 
 	}
 }

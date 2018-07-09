@@ -9,10 +9,9 @@ class PriceBoardController extends Controller
     public function data()
     {
 			//gain round(((d.close_price - d.yday_close_price)/d.close_price)*100, 2)
-    		$raw = 'instruments.instrument_code, d.close_price, d.total_trades, d.total_value, d.total_volume,
+    		$raw = 'instruments.instrument_code, instruments.id as instrument_id, d.close_price, d.total_trades, d.total_value, d.total_volume,
 
     		 sector_lists.name as sector_name, LEFT(d.quote_bases , 1) as category';
-
 
                          $endDate = date('Y-m-d');
             if(request()->has('range')){
