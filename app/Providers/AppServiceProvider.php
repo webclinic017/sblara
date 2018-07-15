@@ -14,7 +14,33 @@ class AppServiceProvider extends ServiceProvider {
      * @return void
      */
     public function boot() {
+  // dump( get_included_files());
+                $dbh = \DB::connection()->getPdo();
+                $stmt = $dbh->prepare("INSERT INTO q_logs (query, uri, time) VALUES (:q, :uri, :t)");
 
+                    $uri = "";
+                   if(isset($_SERVER['REQUEST_URI'])){
+                      $uri = $_SERVER['REQUEST_URI'];
+                   }
+                \DB::listen(function ($query) use ($stmt, $uri) {
+
+                   //      $lookup = "select * from `metas` where `meta_key` in (?)";
+                   // // dump(debug_backtrace());
+                   //      if($query->sql == $lookup){
+                   //          // dd(get_included_files());
+                   //      }
+                        // dump($query->sql);
+                        $stmt->bindParam(':uri', $uri);
+                        $stmt->bindParam(':q', $q);
+                        $stmt->bindParam(':t', $t);
+                        $q = $query->sql;
+                        $uri = $uri;
+                        $t = $query->time;
+                        $stmt->execute();
+                        // 
+                        // $query->bindings
+                        // $query->time
+                });
         // if(request()->getClientIp() == "202.125.72.110"){
         //     dump(config('app.debug'));
         //     config(['app.debug' => false]);
@@ -131,6 +157,11 @@ class AppServiceProvider extends ServiceProvider {
     public function register() {
         //
         Schema::defaultStringLength(191);
+
+            if (isset($_SERVER['REQUEST_URI']) && strpos($_SERVER['REQUEST_URI'], 'admin')) {
+
+                // $this->app->register(TCG\Voyager\VoyagerServiceProvider::class);
+            }
     }
 
 

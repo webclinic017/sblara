@@ -189,7 +189,6 @@ return [
         /*Se packages*/
          Unisharp\Laravelfilemanager\LaravelFilemanagerServiceProvider::class,
           Yajra\DataTables\DataTablesServiceProvider::class,
-          TCG\Voyager\VoyagerServiceProvider::class,
 
         /*Se packages*/
 

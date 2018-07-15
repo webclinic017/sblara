@@ -58,6 +58,7 @@
                         <option value="Q2">Q2</option>
                         <option value="Q3">Q3</option>
                         <option value="DIVIDEND">Dividend</option>
+                        <option value="mf">Mutual Fund</option>
                     </select>
                 </div>
                 <div class="form-group col-md-3">

@@ -16,7 +16,11 @@ class ExchangeRepository {
     public static function getExchangeInfo($exchangeName='DSE')
     {
 
-        $exchangeDetails=Exchange::where('name','like',"$exchangeName")->get()->first();
+
+        $exchangeDetails = \Cache::remember('exchange_name_'.$exchangeName, 1500, function () use ($exchangeName){
+				    return Exchange::where('name','like',"$exchangeName")->get()->first();
+				});   
+
         return $exchangeDetails;
     }
 

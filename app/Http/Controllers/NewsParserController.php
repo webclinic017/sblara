@@ -51,6 +51,22 @@ class NewsParserController extends Controller
 		if($request->has('record_date') && $request->record_date != ""){
 			$stock = $request->{"211"};
 			$cash = $request->{"245"};
+//  no dividend
+			if($stock == '0' && $cash == 0){
+			$action = \App\CorporateAction::where('record_date', $request->record_date)->where('instrument_id', $request->instrument_id)->where('action', '')->where('value', $stock)->first();
+						if(!$action){
+				$action = new \App\CorporateAction();
+				$action->instrument_id = $request->instrument_id;
+				$action->record_date = $request->record_date;
+				$action->action = 'nodiv';
+				$action->active = 1;
+			}
+			$action->value = $stock;
+			$action->save();
+			// dump($action);
+			// 	dump("stock");
+			}
+// no dividend
 			if($stock != '0'){
 			$action = \App\CorporateAction::where('record_date', $request->record_date)->where('instrument_id', $request->instrument_id)->where('action', 'stockdiv')->where('value', $stock)->first();
 						if(!$action){

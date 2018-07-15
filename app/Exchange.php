@@ -60,7 +60,6 @@ class Exchange extends Model
 
         });
 
-
         return $tradeDateList;
 
     }

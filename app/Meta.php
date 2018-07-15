@@ -24,9 +24,14 @@ class Meta extends Model
     }
     public static function getMetaInfo($meta=array())
     {
+        $data = \Cache::remember("meta_info_".join("_", $meta), 60, function () use ($meta)
+        {
+                    $data=self::with('meta_group')->whereIn('meta_key',$meta)->get();
+                    $data->keyBy('meta_key');
+                  return $data;
+        });
+        return $data;
 
-        $data=self::with('meta_group')->whereIn('meta_key',$meta)->get();
-        return $data->keyBy('meta_key');
     }
     public static function getMetaInfoById($meta=array())
     {

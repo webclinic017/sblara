@@ -166,6 +166,7 @@ class EodIntradayCommand extends Command
 
                             /////////////////// WE WILL PROCESS EOD DATA FIRST \\\\\\\\\\\\\\\\\\\\\\\
                             if ($data->MKISTAT_PUBLIC_TOTAL_VOLUME + $data->MKISTAT_SPOT_TOTAL_VOLUME > 0) {
+                                //runs more than 600 query need a better alternate. se_nba
                                 $eod = DataBanksEod::updateOrCreate(
                                     ['market_id' => $market_id, 'instrument_id' => $instrument_id],
                                     [

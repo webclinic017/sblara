@@ -18,7 +18,7 @@ class AjaxController extends Controller
     public function monitor($inst_id, $period,$dayBefore=0)
     { 
         $minuteChartData = DataBanksIntradayRepository::getDataForMinuteChart($inst_id,1,$dayBefore);
-
+ 
         $instrumentIdArr=array();
         $instrumentIdArr[]=(int) $inst_id;
 

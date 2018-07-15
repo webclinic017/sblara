@@ -351,6 +351,7 @@ Auth::routes();
 
 Route::resource('/portfolio', 'PortfolioController');
 Route::resource('/portfolio_transaction', 'PortfolioScripsController');
+Route::post('/portfolio-setting', 'PortfolioController@portfolio_setting');
 Route::get('/portfolio_diversity/{portfolio_id}', 'PortfolioController@diversity');
 Route::get('/portfolio_market_summary/{portfolio_id}', 'PortfolioController@marketSummary');
 Route::get('/portfolio_chart/{portfolio_id}', 'PortfolioController@portfolio_chart');
@@ -380,7 +381,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
     Route::post('/share-percentage-cse', "SharePercetageCseController@update");
     Route::get('/share-percentage-cse/update', "SharePercetageCseController@scrape");
 
-    Voyager::routes();
+    if(isset($_SERVER['REQUEST_URI']) && strpos($_SERVER['REQUEST_URI'], 'admin') !== false){
+          Voyager::routes();
+   }
+  
     Route::resource('/ipos', 'IpoController');
     Route::resource('/news', 'newspaperNewsController');
     Route::get('/data-extractors/share-percentage', 'DataExtractController@sharePercentage')->name('voyger.data-extractor.share-precentage');

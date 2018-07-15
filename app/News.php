@@ -85,7 +85,7 @@ class News extends Model
         }
         return $data;
         } catch (\Exception $e) {
-            dd($e);
+            // dd($e);
         }
     
     }
