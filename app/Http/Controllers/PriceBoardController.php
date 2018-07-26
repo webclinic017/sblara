@@ -54,7 +54,7 @@ class PriceBoardController extends Controller
        
 
         	$data = $data->select(\DB::raw($raw));
-        	$data = $data->orderBy('instrument_code', 'asc');
+        	// $data = $data->orderBy('instrument_code', 'asc');
         if(request()->has('category') && request()->category != 'All'){
             $data->where('quote_bases', 'like', request()->category."%");
         

@@ -14,33 +14,41 @@ class AppServiceProvider extends ServiceProvider {
      * @return void
      */
     public function boot() {
+
+        $seconds_to_cache = 30;
+        $ts = gmdate("D, d M Y H:i:s", time() + $seconds_to_cache) . " GMT";
+        header("Expires: $ts");
+        header("Pragma: cache");
+        header("Cache-Control: max-age=$seconds_to_cache");
+
   // dump( get_included_files());
-                $dbh = \DB::connection()->getPdo();
-                $stmt = $dbh->prepare("INSERT INTO q_logs (query, uri, time) VALUES (:q, :uri, :t)");
 
-                    $uri = "";
-                   if(isset($_SERVER['REQUEST_URI'])){
-                      $uri = $_SERVER['REQUEST_URI'];
-                   }
-                \DB::listen(function ($query) use ($stmt, $uri) {
+                // $dbh = \DB::connection()->getPdo();
+                // $stmt = $dbh->prepare("INSERT INTO q_logs (query, uri, time) VALUES (:q, :uri, :t)");
 
-                   //      $lookup = "select * from `metas` where `meta_key` in (?)";
-                   // // dump(debug_backtrace());
-                   //      if($query->sql == $lookup){
-                   //          // dd(get_included_files());
-                   //      }
-                        // dump($query->sql);
-                        $stmt->bindParam(':uri', $uri);
-                        $stmt->bindParam(':q', $q);
-                        $stmt->bindParam(':t', $t);
-                        $q = $query->sql;
-                        $uri = $uri;
-                        $t = $query->time;
-                        $stmt->execute();
-                        // 
-                        // $query->bindings
-                        // $query->time
-                });
+                //     $uri = "";
+                //    if(isset($_SERVER['REQUEST_URI'])){
+                //       $uri = $_SERVER['REQUEST_URI'];
+                //    }
+                // \DB::listen(function ($query) use ($stmt, $uri) {
+
+                //    //      $lookup = "select * from `metas` where `meta_key` in (?)";
+                //    // // dump(debug_backtrace());
+                //    //      if($query->sql == $lookup){
+                //    //          // dd(get_included_files());
+                //    //      }
+                //         // dump($query->sql);
+                //         $stmt->bindParam(':uri', $uri);
+                //         $stmt->bindParam(':q', $q);
+                //         $stmt->bindParam(':t', $t);
+                //         $q = $query->sql;
+                //         $uri = $uri;
+                //         $t = $query->time;
+                //         $stmt->execute();
+                //         // 
+                //         // $query->bindings
+                //         // $query->time
+                // });
         // if(request()->getClientIp() == "202.125.72.110"){
         //     dump(config('app.debug'));
         //     config(['app.debug' => false]);

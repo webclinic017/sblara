@@ -101,7 +101,7 @@ class News extends Model
        if (strpos($this->details, '(Q1 Un-audited):') !== false) {
             return "Q1";
         }
-       if (strpos($this->details, 'basis of current market price') !== false) {
+       if (strpos($this->details, 'the Fund has reported Net Asset Value') !== false) {
             return "mf";
         }
 

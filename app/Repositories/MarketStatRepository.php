@@ -133,12 +133,14 @@ class MarketStatRepository {
     public static function saveMarketStatsData($dataToSave='')
     {
         $all_meta_key=collect($dataToSave)->pluck('meta_key');
+
         $metaInfo=Meta::getMetaInfo($all_meta_key);
 
         $dataToSaveNew=array();
 
         foreach($dataToSave as $data)
         {
+
             $meta_key=$data['meta_key'];
             $meta_id=$metaInfo[$meta_key]->id;
             $market_id=$data['market_id'];

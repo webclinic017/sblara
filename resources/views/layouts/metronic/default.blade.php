@@ -40,14 +40,17 @@
 
 
 
-{{--                      <div class="alert alert-info alert-info">
+                     <div class="alert alert-info alert-danger">
                          <button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>
 
-                                                  Dear valued visitors, we have released our new Screener. Please 
+                                                  {{-- Dear valued visitors, we have released our new Screener. Please 
                          <a target="_blank" href="{{url('/screeners')}}" class="alert-link"> click here  </a> to check this one as well.
-                         If you have any suggestion, you can drop an email to info@stockbangladesh.com
+                         If you have any suggestion, you can drop an email to info@stockbangladesh.com --}}
 
-                     </div> --}}
+                         Due to high load unfortunately our free version of plugin is unavailable.  Call 01552573043 for any query
+
+                     </div>
+
                         @if(session()->has('success'))
                      <div class="alert alert-success">
                          <button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>

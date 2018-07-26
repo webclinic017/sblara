@@ -26,7 +26,7 @@ Amibroker Data plugin for DSE
                             <div class="portlet-body">
                                 <div class="pricing-content-1">
                                     <div class="row">
-                                        <div class="col-md-3">
+                               {{--          <div class="col-md-3">
                                             <div class="price-column-container border-active">
                                                 <div class="price-table-head bg-blue">
                                                     <h2 class="no-margin">Free</h2>
@@ -82,8 +82,8 @@ Amibroker Data plugin for DSE
                                                     </button>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="col-md-3">
+                                        </div> --}}
+                                        <div class="col-md-4">
                                             <div class="price-column-container border-active">
                                                 <div class="price-table-head bg-red">
                                                     <h2 class="no-margin">Paid</h2>
@@ -140,7 +140,7 @@ Amibroker Data plugin for DSE
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-4">
                                             <div class="price-column-container border-active">
                                                 <div class="price-table-head bg-green">
                                                     <h2 class="no-margin">Corporate</h2>
@@ -198,7 +198,7 @@ Amibroker Data plugin for DSE
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-4">
                                             <div class="price-column-container border-active">
                                                 <div class="price-table-head bg-purple">
                                                     <h2 class="no-margin">Course</h2>

@@ -242,6 +242,7 @@ ORDER BY lm_date_time asc ,total_volume asc";
 
     public function history(Request $request)
     {
+        // dd('under construction');
         $instrumentCode = $request->input('symbol','DSEX');
         $resolution = $request->input('resolution');
 
@@ -256,7 +257,10 @@ ORDER BY lm_date_time asc ,total_volume asc";
         $to=(int) $request->input('to',time());
 
         if($resolution=='D') {
-           $data = DataBankEodRepository::getAdjustedDataForTradingView($instrumentInfo->id, $from, $to, $resolution);
+     
+                return $data = DataBankEodRepository::getAdjustedDataForTradingView($instrumentInfo->id, $from, $to, $resolution);
+    
+           
             //$data = DataBankEodRepository::getEodDataAdjusted($instrumentInfo->id, $from, $to);
         }
         elseif($resolution=='W') {
@@ -581,6 +585,7 @@ imagettftext($image, 10, 0, 10, 32, $color, $font, $text2);
 
     public function chart($ticker, $name, $layout=false)
     {
+        // return view("tempdown");
         if($layout){
             $data['status'] = 'ok';
             $layout = \App\ChartLayout::where('slug', $layout)->first();

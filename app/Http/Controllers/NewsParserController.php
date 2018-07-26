@@ -18,6 +18,8 @@ class NewsParserController extends Controller
 				$type.= " Un-audited):";
 			}else if($type == "DIVIDEND"){
 				$type = "The Board of Directors has recommended";
+			}else if ($type == 'mf'){
+				$type = "the Fund has reported Net Asset";
 			}
 			$news->where("details", 'like', "%$type%");
 			$news->where("details", 'not like', "%Repeat News%");

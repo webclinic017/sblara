@@ -288,7 +288,7 @@ ORDER BY lm_date_time DESC) data
      * */
     public static function getEodDataAdjusted($instrumentId,$form,$to,$ohlc_format=1)
     {
-        if(is_int($form))
+                if(is_int($form))
         {
             $form = Carbon::createFromTimestamp($form);
 
@@ -303,155 +303,12 @@ ORDER BY lm_date_time DESC) data
             $to = Carbon::parse($to);
         }
 
+        $data = \Cache::remember("adjustedCache_".$instrumentId, 1, function () use ($instrumentId)
+        {
+           return self::adjustedEodCache($instrumentId);
+        });
 
-
-       $eodData=DataBanksEod::getEodByInstrument($instrumentId,$form->format('Y-m-d'),$to->format('Y-m-d'));
-
-        $faceValue=FundamentalRepository::getFundamentalData(array('face_value'),array($instrumentId))->toArray();
-        $corporateActionData=CorporateActionRepository::getCorporateAction(array($instrumentId));
-
-        $resultarr = $eodData->toArray();
-
-        foreach ($corporateActionData as $row) {
-            $action = $row->action;
-            $adjustedArr = array();
-
-            if ($action == 'stockdiv') {
-                $adjustmentFactor = (100 + $row->value) / 100;
-                $daystamp = $row->record_date->timestamp;
-
-                foreach ($resultarr as $data) {
-
-                    if ($data['date_timestamp'] < $daystamp) {
-                        $data['date'] = $data['date'];
-
-                        $data['open'] = $data['open'] / $adjustmentFactor;
-                        $data['open']=round($data['open'],2);
-
-                        $data['high'] = $data['high'] / $adjustmentFactor;
-                        $data['high'] = round($data['high'], 2);
-
-                        $data['low'] =  $data['low'] / $adjustmentFactor;
-                        $data['low'] = round($data['low'], 2);
-
-                        $data['close'] = $data['close'] / $adjustmentFactor;
-                        $data['close'] = round($data['close'], 2);
-
-                        // Notes: In previous version volume is not adjustd
-                        $data['volume'] = $data['volume'] * $adjustmentFactor;
-                    }
-
-                    $adjustedArr[] = $data;
-                }
-
-                $resultarr = array();
-                $resultarr = $adjustedArr;
-
-            } elseif ($action == 'cashdiv') {
-
-
-                if(isset($faceValue['face_value']['meta_value']))
-                    $facevalue = $faceValue['face_value']['meta_value'];
-                else
-                    $facevalue=10;
-
-                $adjustmentFactor = $facevalue * $row->value / 100;
-                $daystamp = $row->record_date->timestamp;
-
-                foreach ($resultarr as $data) {
-                    if ($data['date_timestamp'] < $daystamp) {
-                        $data['date'] = $data['date'];
-                        $data['open'] = $data['open'] - $adjustmentFactor;
-                        $data['open'] = round($data['open'], 2);
-
-                        $data['high'] = $data['high'] - $adjustmentFactor;
-                        $data['high'] = round($data['high'], 2);
-
-                        $data['low'] = $data['low'] - $adjustmentFactor;
-                        $data['low'] = round($data['low'], 2);
-
-                        $data['close'] = $data['close'] - $adjustmentFactor;
-                        $data['close'] = round($data['close'], 2);
-                    }
-
-                    $adjustedArr[] = $data;
-                }
-
-                $resultarr = array();
-                $resultarr = $adjustedArr;
-
-            } elseif ($action == 'rightshare') {
-
-                if(isset($faceValue['face_value']['meta_value']))
-                    $facevalue = $faceValue['face_value']['meta_value'];
-                else
-                    $facevalue=10;
-
-                $adjustmentFactor = (100 + $row->value) / 100;
-                $premium = $row->premium;
-
-                $daystamp = $row->record_date->timestamp;
-
-                foreach ($resultarr as $data) {
-                    if ($data['date_timestamp'] < $daystamp) {
-                        $data['date'] = $data['date'];
-                        $data['open'] = (($data['open'] * 100) + (($premium + $facevalue) * $row->value)) / (100 + $row->value);
-                        $data['open'] = round($data['open'], 2);
-
-                        $data['high'] = (($data['high'] * 100) + (($premium + $facevalue) * $row->value)) / (100 + $row->value);
-                        $data['high'] = round($data['high'], 2);
-
-                        $data['low'] = (($data['low'] * 100) + (($premium + $facevalue) * $row->value)) / (100 + $row->value);
-                        $data['low'] = round($data['low'], 2);
-
-                        $data['close'] = (($data['close'] * 100) + (($premium + $facevalue) * $row->value)) / (100 + $row->value);
-                        $data['close'] = round($data['close'], 2);
-
-                        // Notes: In previous version volume is not adjustd
-                        $data['volume'] = $data['volume'] * $adjustmentFactor;
-
-                    }
-
-                    $adjustedArr[] = $data;
-                }
-
-                $resultarr = array();
-                $resultarr = $adjustedArr;
-
-            } elseif ($action == 'split') {
-                $adjustmentFactor = $row->value;
-
-                $daystamp = $row->record_date->timestamp;
-
-                foreach ($resultarr as $data) {
-                    if ($data['date_timestamp'] < $daystamp) {
-                        $data['date'] = $data['date'];
-                        $data['open'] = $data['open'] / $adjustmentFactor;
-                        $data['open'] = round($data['open'], 2);
-
-                        $data['high'] = $data['high'] / $adjustmentFactor;
-                        $data['high'] = round($data['high'], 2);
-
-                        $data['low'] = $data['low'] / $adjustmentFactor;
-                        $data['low'] = round($data['low'], 2);
-
-                        $data['close'] = $data['close'] / $adjustmentFactor;
-                        $data['close'] = round($data['close'], 2);
-
-                        $data['volume'] = $data['volume'] * $adjustmentFactor;
-                    }
-
-                    $adjustedArr[] = $data;
-                }
-                $resultarr = array();
-                $resultarr = $adjustedArr;
-
-            }
-
-        }
-
-        $eodData = collect($resultarr);
-
+         $eodData =  $data->where("date", '<=', $to)->where('date', ">=", $form);
 
         if($ohlc_format)
         {
@@ -477,7 +334,9 @@ ORDER BY lm_date_time DESC) data
             return $eodData;
         }
 
+        
     }
+
 
     public static function getEodForCSV($form,$to,$instrumentIdArr=array(),$adjusted=1)
     {
@@ -712,6 +571,159 @@ ORDER BY lm_date_time DESC) data
 
         return collect($returnArr);
 
+    }
+
+
+    public static function adjustedEodCache($instrumentId)
+    {
+
+       $eodData=DataBanksEod::where('instrument_id', $instrumentId)->orderBy('date', 'desc')->get();
+
+        $faceValue=FundamentalRepository::getFundamentalData(array('face_value'),array($instrumentId))->toArray();
+
+        $corporateActionData=CorporateActionRepository::getCorporateAction(array($instrumentId));
+
+        $resultarr = $eodData->toArray();
+
+        foreach ($corporateActionData as $row) {
+            $action = $row->action;
+            $adjustedArr = array();
+
+            if ($action == 'stockdiv') {
+                $adjustmentFactor = (100 + $row->value) / 100;
+                $daystamp = $row->record_date->timestamp;
+
+                foreach ($resultarr as $data) {
+
+                    if ($data['date_timestamp'] < $daystamp) {
+                        $data['date'] = $data['date'];
+
+                        $data['open'] = $data['open'] / $adjustmentFactor;
+                        $data['open']=round($data['open'],2);
+
+                        $data['high'] = $data['high'] / $adjustmentFactor;
+                        $data['high'] = round($data['high'], 2);
+
+                        $data['low'] =  $data['low'] / $adjustmentFactor;
+                        $data['low'] = round($data['low'], 2);
+
+                        $data['close'] = $data['close'] / $adjustmentFactor;
+                        $data['close'] = round($data['close'], 2);
+
+                        // Notes: In previous version volume is not adjustd
+                        $data['volume'] = $data['volume'] * $adjustmentFactor;
+                    }
+
+                    $adjustedArr[] = $data;
+                }
+
+                $resultarr = array();
+                $resultarr = $adjustedArr;
+
+            } elseif ($action == 'cashdiv') {
+
+
+                if(isset($faceValue['face_value']['meta_value']))
+                    $facevalue = $faceValue['face_value']['meta_value'];
+                else
+                    $facevalue=10;
+
+                $adjustmentFactor = $facevalue * $row->value / 100;
+                $daystamp = $row->record_date->timestamp;
+
+                foreach ($resultarr as $data) {
+                    if ($data['date_timestamp'] < $daystamp) {
+                        $data['date'] = $data['date'];
+                        $data['open'] = $data['open'] - $adjustmentFactor;
+                        $data['open'] = round($data['open'], 2);
+
+                        $data['high'] = $data['high'] - $adjustmentFactor;
+                        $data['high'] = round($data['high'], 2);
+
+                        $data['low'] = $data['low'] - $adjustmentFactor;
+                        $data['low'] = round($data['low'], 2);
+
+                        $data['close'] = $data['close'] - $adjustmentFactor;
+                        $data['close'] = round($data['close'], 2);
+                    }
+
+                    $adjustedArr[] = $data;
+                }
+
+                $resultarr = array();
+                $resultarr = $adjustedArr;
+
+            } elseif ($action == 'rightshare') {
+
+                if(isset($faceValue['face_value']['meta_value']))
+                    $facevalue = $faceValue['face_value']['meta_value'];
+                else
+                    $facevalue=10;
+
+                $adjustmentFactor = (100 + $row->value) / 100;
+                $premium = $row->premium;
+
+                $daystamp = $row->record_date->timestamp;
+
+                foreach ($resultarr as $data) {
+                    if ($data['date_timestamp'] < $daystamp) {
+                        $data['date'] = $data['date'];
+                        $data['open'] = (($data['open'] * 100) + (($premium + $facevalue) * $row->value)) / (100 + $row->value);
+                        $data['open'] = round($data['open'], 2);
+
+                        $data['high'] = (($data['high'] * 100) + (($premium + $facevalue) * $row->value)) / (100 + $row->value);
+                        $data['high'] = round($data['high'], 2);
+
+                        $data['low'] = (($data['low'] * 100) + (($premium + $facevalue) * $row->value)) / (100 + $row->value);
+                        $data['low'] = round($data['low'], 2);
+
+                        $data['close'] = (($data['close'] * 100) + (($premium + $facevalue) * $row->value)) / (100 + $row->value);
+                        $data['close'] = round($data['close'], 2);
+
+                        // Notes: In previous version volume is not adjustd
+                        $data['volume'] = $data['volume'] * $adjustmentFactor;
+
+                    }
+
+                    $adjustedArr[] = $data;
+                }
+
+                $resultarr = array();
+                $resultarr = $adjustedArr;
+
+            } elseif ($action == 'split') {
+                $adjustmentFactor = $row->value;
+
+                $daystamp = $row->record_date->timestamp;
+
+                foreach ($resultarr as $data) {
+                    if ($data['date_timestamp'] < $daystamp) {
+                        $data['date'] = $data['date'];
+                        $data['open'] = $data['open'] / $adjustmentFactor;
+                        $data['open'] = round($data['open'], 2);
+
+                        $data['high'] = $data['high'] / $adjustmentFactor;
+                        $data['high'] = round($data['high'], 2);
+
+                        $data['low'] = $data['low'] / $adjustmentFactor;
+                        $data['low'] = round($data['low'], 2);
+
+                        $data['close'] = $data['close'] / $adjustmentFactor;
+                        $data['close'] = round($data['close'], 2);
+
+                        $data['volume'] = $data['volume'] * $adjustmentFactor;
+                    }
+
+                    $adjustedArr[] = $data;
+                }
+                $resultarr = array();
+                $resultarr = $adjustedArr;
+
+            }
+
+        }
+                
+       return $eodData = collect($resultarr);
     }
 
 

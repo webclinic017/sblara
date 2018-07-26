@@ -102,8 +102,6 @@ class UpdateDseIndexCommand extends Command
                 $last_intraday_data=collect($last_intraday_data)->keyBy('instrument_id');
 
 
-
-
                 $index_id=array();
                 $index_id_arr=array();
 

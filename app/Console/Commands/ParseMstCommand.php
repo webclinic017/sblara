@@ -154,7 +154,7 @@ class ParseMstCommand extends Command
                 $data2array = explode(',', $nospaces);
 
                 $marketMetaData ['cap_equity'] = trim($data2array [4]);
-
+             
             }
 
             if (strstr($data, "2. MUTUAL FUND")) {
@@ -341,7 +341,7 @@ class ParseMstCommand extends Command
 
 
             // Processing $marketMetaData
-
+            
             if (!empty($marketMetaData)) {
 
                 $dataToSave = array();

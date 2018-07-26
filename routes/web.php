@@ -469,4 +469,10 @@ Route::get('/users/login', function ()
 {
     return redirect('/login');
 });
+Route::get('/loaderio-21eda4831b3a2f606d926bec73f7f60a/', function ()
+{
+    echo "loaderio-21eda4831b3a2f606d926bec73f7f60a";
+    exit;
+    
+});
 /*old urls*/

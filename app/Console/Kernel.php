@@ -87,11 +87,17 @@ class Kernel extends ConsoleKernel
         $schedule->command('mail:PortfolioEmailReport')->cron('30 15 * * 0,1,2,3,4')->emailOutputTo('fazalmohammad19@gmail.com')->withoutOverlapping();
 
         //filter data update every minutes
+                ////////////////////////////////////////////////////////////////////////
+        ////////////////////                                    ///////////////
+        ////////////////////////////////////////////////////////////////////////
         $schedule->command('dse:FileDataUpdater')->cron('* 10,11,12,13,14 * * 0,1,2,3,4')->emailOutputTo('fazalmohammad19@gmail.com')/*->withoutOverlapping()*/;
         $schedule->command('dse:FileDataUpdaterIntraday')->cron('* 10,11,12,13,14 * * 0,1,2,3,4')->emailOutputTo('fazalmohammad19@gmail.com')/*->withoutOverlapping()*/;
         $schedule->command('dse:FileDataUpdaterIntraday15')->cron('* 10,11,12,13,14 * * 0,1,2,3,4')->emailOutputTo('fazalmohammad19@gmail.com')/*->withoutOverlapping()*/;
         $schedule->command('dse:FileDataUpdaterIntraday30')->cron('* 10,11,12,13,14 * * 0,1,2,3,4')->emailOutputTo('fazalmohammad19@gmail.com')/*->withoutOverlapping()*/;
         $schedule->command('dse:FileDataUpdaterIntraday60')->cron('* 10,11,12,13,14 * * 0,1,2,3,4')->emailOutputTo('fazalmohammad19@gmail.com')/*->withoutOverlapping()*/;
+        ////////////////////////////////////////////////////////////////////////
+        ////////////////////                                    ///////////////
+        ////////////////////////////////////////////////////////////////////////
 
         //filter data reset daily
         $schedule->command('filter:EodUnAdjData')->cron('40 16 * * 0,1,2,3,4')->emailOutputTo('fazalmohammad19@gmail.com')->withoutOverlapping();
