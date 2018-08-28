@@ -47,7 +47,7 @@
                          <a target="_blank" href="{{url('/screeners')}}" class="alert-link"> click here  </a> to check this one as well.
                          If you have any suggestion, you can drop an email to info@stockbangladesh.com --}}
 
-                         Due to high load unfortunately our free version of plugin is unavailable.  Call 01552573043 for any query
+                         Due to high load unfortunately our free version of amibroker plugin is unavailable.  mail to info@stockbangladesh.com for any query
 
                      </div>
 

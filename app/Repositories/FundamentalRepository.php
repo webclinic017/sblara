@@ -49,6 +49,7 @@ class FundamentalRepository {
     public static function getFundamentalData($meta=array(),$ins=array())
     {
 
+
         // if id provided
         if(is_int($meta[0]))
         {
@@ -95,7 +96,15 @@ class FundamentalRepository {
             {
                 $latestData=$instrumentData->first();
                 $meta_key=$metaInfo->where('id',$latestData->meta_id)->first()->meta_key;
-                $instrument_code=$instrumentInfo->where('id',$latestData->instrument_id)->first()->instrument_code;
+
+                try{
+                     $instrument_code=$instrumentInfo->where('id',$latestData->instrument_id)->first()->instrument_code;
+                }catch(\Exception $e){
+                    continue;
+                    dump($latestData->instrument_id);
+                }
+
+
                 $latestData['meta_key']=$meta_key;
                 $latestData['instrument_code']=$instrument_code;
                 $fundamentalData[$meta_key][$instrumentId]=$latestData;
@@ -249,6 +258,7 @@ class FundamentalRepository {
         $fundamentalData=array();
         foreach($groupByMetaData as $metaId=>$metaData)
         {
+            // dump($metaData->groupby('instrument_id'));
             $groupByInstrumentData=$metaData->groupby('instrument_id');
 
             foreach($groupByInstrumentData as $instrumentId=>$instrumentData)
@@ -261,7 +271,7 @@ class FundamentalRepository {
 
             }
         }
-
+        // dd($fundamentalData);
         return collect($fundamentalData);
 
     }

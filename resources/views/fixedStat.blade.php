@@ -1,9 +1,26 @@
 @php
-$index = \App\Market::indexValue();
-$up = \App\Market::upCount();
-$down = \App\Market::downCount();
-$trade = \App\Market::totalTrade();
-$value = \App\Market::totalValue();
+$index = \Cache::remember("fixed_stat_index", 1, function ()
+		{
+			return \App\Market::indexValue();
+		});
+
+$up = \Cache::remember("fixed_stat_up", 1, function ()
+		{
+			return  \App\Market::upCount();
+		});
+
+$down = \Cache::remember("fixed_stat_down", 1, function ()
+		{
+			return  \App\Market::downCount();
+		});
+$trade = \Cache::remember("fixed_stat_trade", 1, function ()
+		{
+			return  \App\Market::totalTrade();
+		});
+$value = \Cache::remember("fixed_stat_value", 1, function ()
+		{
+			return  \App\Market::totalValue();
+		});
 @endphp
 <div class="fixedStat" style="text-align: center;">
 	<ul style="text-align: center; display: inline-block;">

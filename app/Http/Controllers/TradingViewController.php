@@ -257,8 +257,12 @@ ORDER BY lm_date_time asc ,total_volume asc";
         $to=(int) $request->input('to',time());
 
         if($resolution=='D') {
-     
-                return $data = DataBankEodRepository::getAdjustedDataForTradingView($instrumentInfo->id, $from, $to, $resolution);
+                   // $data =  \Cache::remember("tv_D_ins_".$instrumentInfo->id, 1, function () use ($instrumentInfo, $resolution)
+                   //  {
+                        // return  $data = DataBankEodRepository::getAdjustedDataForTradingView($instrumentInfo->id, strtotime("01-01-2000"), time(), $resolution);
+                        return  $data = DataBankEodRepository::getAdjustedDataForTradingView($instrumentInfo->id, $from, $to, $resolution);
+                 //    });
+                 // return $data;
     
            
             //$data = DataBankEodRepository::getEodDataAdjusted($instrumentInfo->id, $from, $to);

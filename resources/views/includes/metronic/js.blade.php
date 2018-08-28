@@ -23,5 +23,5 @@
 </script>
     {{-- <script src="{{ asset('js/filter.js') }}" type="text/javascript"></script> --}}
     <script src="{{ URL::asset('metronic/assets/global/plugins/bootstrap-touchspin/bootstrap.touchspin.js') }}"></script>
-<script src="{{ asset('js/se.js') }}?v={{uniqid()}}"></script>
+<script src="{{ asset('js/se.js') }}?v=1"></script>
             @stack('scripts')

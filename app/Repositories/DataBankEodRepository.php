@@ -77,6 +77,7 @@ class DataBankEodRepository {
                 $returnData['l'] = $lowArr;
                 $returnData['v'] = $volumeArr;
                 $returnData['s'] = "ok";
+                // $returnData['noData'] = true;
             }else
             {
                 $returnData['s'] = "no_data";

@@ -21,6 +21,12 @@ class AppServiceProvider extends ServiceProvider {
         header("Pragma: cache");
         header("Cache-Control: max-age=$seconds_to_cache");
 
+
+                   // if(isset($_SERVER['REQUEST_URI'])){
+                   //    $uri = $_SERVER['REQUEST_URI'];
+                   //   \DB::table('q_logs')->insert(['uri' => $uri, 'query' => "plugin"]);
+                   // }
+
   // dump( get_included_files());
 
                 // $dbh = \DB::connection()->getPdo();
@@ -164,12 +170,12 @@ class AppServiceProvider extends ServiceProvider {
      */
     public function register() {
         //
-        Schema::defaultStringLength(191);
+        // Schema::defaultStringLength(191);
 
-            if (isset($_SERVER['REQUEST_URI']) && strpos($_SERVER['REQUEST_URI'], 'admin')) {
+            // if (isset($_SERVER['REQUEST_URI']) && strpos($_SERVER['REQUEST_URI'], 'admin')) {
 
-                // $this->app->register(TCG\Voyager\VoyagerServiceProvider::class);
-            }
+            //     // $this->app->register(TCG\Voyager\VoyagerServiceProvider::class);
+            // }
     }
 
 

@@ -45,6 +45,9 @@ class PluginAdjustedEodDataResetCommand extends Command
     {
         $strToadd='';
         foreach ($data as $row) {
+            if($row['close'] < 0 || $row['low'] < 0 || $row['open'] < 0 || $row['high']  < 0 || $row['volume'] < 0){
+                break;
+            }
             $date_formated = date('d/m/Y', strtotime($row['date']));
             $strToadd .= $instrument_code . ',' . $date_formated . ',' . round($row['open'],2). ',' . round($row['high'],2) . ',' . round($row['low'],2) . ',' . round($row['close'],2) . ',' . round($row['volume'],0) . "\n";
 

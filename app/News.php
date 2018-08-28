@@ -105,6 +105,10 @@ class News extends Model
             return "mf";
         }
 
+       if (strpos($this->details, 'The Board of Directors has recommended') !== false) {
+            return "DIVIDEND";
+        }
+
         return request()->type;
     }
 

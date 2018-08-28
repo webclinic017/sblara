@@ -1,5 +1,4 @@
 <?php
-
 return [
 
     /*
@@ -120,7 +119,7 @@ return [
     |
     */
 
-    'log' => env('APP_LOG', 'single'),
+    'log' => env('APP_LOG', 'daily'),
 
     'log_level' => env('APP_LOG_LEVEL', 'debug'),
 
@@ -164,31 +163,31 @@ return [
         Illuminate\View\ViewServiceProvider::class,
 
 
-        /*
-         * Package Service Providers...
-         */
-        Laravel\Tinker\TinkerServiceProvider::class,
-        Laravel\Passport\PassportServiceProvider::class,
-        Laracasts\Flash\FlashServiceProvider::class,
+        // /*
+        //  * Package Service Providers...
+        //  */
+        // Laravel\Tinker\TinkerServiceProvider::class,
+        // Laravel\Passport\PassportServiceProvider::class,
+        // Laracasts\Flash\FlashServiceProvider::class,
 
-        /*
-         * Application Service Providers...
-         */
+        // /*
+        //  * Application Service Providers...
+        //  */
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
-        Jrean\UserVerification\UserVerificationServiceProvider::class,
+        // Jrean\UserVerification\UserVerificationServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        Barryvdh\Debugbar\ServiceProvider::class,
-        Collective\Html\HtmlServiceProvider::class,
-        Barryvdh\HttpCache\ServiceProvider::class,
-        Intervention\Image\ImageServiceProvider::class,
-        Chumper\Zipper\ZipperServiceProvider::class,
-        Unisharp\Ckeditor\ServiceProvider::class,
-        /*Se packages*/
-         Unisharp\Laravelfilemanager\LaravelFilemanagerServiceProvider::class,
-          Yajra\DataTables\DataTablesServiceProvider::class,
+        // Barryvdh\Debugbar\ServiceProvider::class,
+        // Collective\Html\HtmlServiceProvider::class,
+        // Barryvdh\HttpCache\ServiceProvider::class,
+        // Intervention\Image\ImageServiceProvider::class,
+        // Chumper\Zipper\ZipperServiceProvider::class,
+        // Unisharp\Ckeditor\ServiceProvider::class,
+        // /*Se packages*/
+        //  Unisharp\Laravelfilemanager\LaravelFilemanagerServiceProvider::class,
+        //   Yajra\DataTables\DataTablesServiceProvider::class,
 
         /*Se packages*/
 
@@ -243,7 +242,7 @@ return [
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
-        'Image' => Intervention\Image\Facades\Image::class,
+        // 'Image' => Intervention\Image\Facades\Image::class,
         'Zipper' => Chumper\Zipper\Zipper::class,
         'UserVerification' => Jrean\UserVerification\Facades\UserVerification::class,
 

@@ -38,6 +38,7 @@ class SectorIntraday extends Model
 
             $m=new Market();
             $activeDate=$m->getActiveDates(1,$tradeDate,$exchangeId)->first();
+
             $marketId=$activeDate->id;
             $query=static::where('market_id',$marketId)->where('sector_list_id', $sector_list_id)->where('volume','>',0)->orderBy('index_time', 'desc')->groupBy('index_time');
             if($limit)
@@ -46,6 +47,7 @@ class SectorIntraday extends Model
             }
             $returnData=$query->get();
 
+            // dd($returnData);
             return $returnData;
 
         });

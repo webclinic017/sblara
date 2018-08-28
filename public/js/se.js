@@ -184,7 +184,7 @@ $(document).ready(function () {
     $.get('/ajax/load_block/block_name=fixedStat', function (data) {
       $("#fixedStat").html(data)
     });
-    }, 60000);
+    }, 120000);
 
   $('#addNew').click(function () {
     $('form.ajax')[0].reset();
@@ -724,6 +724,10 @@ $(document).ready(function () {
       $('.global-ui .prev').trigger('click');
     }
   });
+
+  // menu items on hover
+
+  // menu items on hover end
 
 // instrument hover
 

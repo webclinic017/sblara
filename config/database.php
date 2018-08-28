@@ -100,7 +100,7 @@ return [
             'engine' => null,
         ],'dse' => [
             'driver' => 'mysql',
-            'host' => '202.84.32.13',
+            'host' => '202.84.32.15',
             'port' => env('DB_PORT', '3306'),
             'database' => 'mdsdata',
             'username' => 'stockbangladesh',

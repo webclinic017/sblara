@@ -28,8 +28,13 @@ class Fundamental extends Model
     {
         $query=self::whereIn('meta_id',$metaId);
 
-        if(!empty($instrumentId))
-        $query->whereIn('instrument_id',$instrumentId);
+        if(!empty($instrumentId)){
+                    $query->whereIn('instrument_id',$instrumentId);
+            }else{
+
+                    $query->whereIn('instrument_id', \App\Repositories\InstrumentRepository::getInstrumentsAll());
+                }
+
 
         $returnData=$query->orderby('meta_date','desc')->get();
         return  $returnData;

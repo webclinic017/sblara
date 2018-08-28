@@ -1,4 +1,28 @@
 <?php
+
+Route::get('eod_data_all/{from}/{to}/{adjusted?}/{instrument_codes?}', function ($from, $to, $adjusted = 1, $instrument_codes = null) {
+
+    $instrument_code_arr = array();
+    if (!is_null($instrument_codes))
+        $instrument_code_arr = explode(',', $instrument_codes);
+
+
+    $data = \Cache::remember("plugin_eod_data_all". $instrument_codes.'_'.$adjusted.$from.$to, 1, function () use ($from, $to, $adjusted, $instrument_codes, $instrument_code_arr)
+    {
+    $data = \App\Repositories\DataBankEodRepository::getPluginEodDataAll($from, $to, $adjusted, $instrument_code_arr);
+    return json_encode($data, JSON_UNESCAPED_SLASHES);
+
+    });
+    return $data;
+
+    // $data = DataBankEodRepository::getPluginEodDataAll($from, $to, $adjusted, $instrument_code_arr);
+    // return json_encode($data, JSON_UNESCAPED_SLASHES);
+
+
+});
+
+
+
 Route::get('/sitemap.xml', 'SitemapController@index');
 Route::get('/dse/stock/{instrument}/{name}/chart/technical-analysis', 'ChartController@index')->name('ta-chart-new')->middleware('httpcache'); // ta-chart
 

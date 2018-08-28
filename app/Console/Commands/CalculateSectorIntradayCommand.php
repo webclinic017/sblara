@@ -168,7 +168,7 @@ class CalculateSectorIntradayCommand extends Command
 
                         if ($category != 'Z') {
                             $price_change = $trade_data_of_this_instrument->close_price-$yday_close_price;
-                            $no_of_securities=$needed_fundamentals_of_listed_company['total_no_securities'][$instrument_id]->meta_value;
+                            @$no_of_securities=$needed_fundamentals_of_listed_company['total_no_securities'][$instrument_id]->meta_value;
                             $total_impact_of_this_instrument = $price_change * $no_of_securities;
 
 

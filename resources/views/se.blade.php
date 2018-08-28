@@ -1,7 +1,1 @@
-@extends('layouts.metronic.default')
-
-@section('content')
-<div id="app">
-    <price-board></price-board>
-</div>
- @endsection
+Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quibusdam ex, maxime expedita iure voluptate at accusantium quam id. Nihil consequatur cum blanditiis inventore praesentium illo, asperiores aperiam id, quam pariatur.

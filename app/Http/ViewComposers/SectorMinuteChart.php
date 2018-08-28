@@ -76,7 +76,8 @@ class SectorMinuteChart
 
 
         $returnData=SectorIntradayRepository::getWholeDayData($limit = 0, $tradeDate = null, $exchangeId = 0,$sector_list_id);
-
+        // dump("df");
+        // dd($returnData);
         $data = calculateDifference($returnData, 'volume');
 
         $data=$data->reverse();

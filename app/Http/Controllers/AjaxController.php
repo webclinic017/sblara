@@ -17,8 +17,20 @@ class AjaxController extends Controller
     //
     public function monitor($inst_id, $period,$dayBefore=0)
     { 
-        $minuteChartData = DataBanksIntradayRepository::getDataForMinuteChart($inst_id,1,$dayBefore);
- 
+       $returnData = \Cache::remember("monitor_data_".$inst_id.$period.$dayBefore, 1, function () use ( $inst_id, $period, $dayBefore )
+        {
+            return $returnData = $this->monitorData($inst_id, $period,$dayBefore=0);
+        });
+       // dd($returnData);
+        
+        return response()
+         ->json(collect($returnData))->setTtl(60);
+    }
+
+    public function monitorData($inst_id, $period,$dayBefore=0)
+    {
+               $minuteChartData = DataBanksIntradayRepository::getDataForMinuteChart($inst_id,1,$dayBefore);
+    
         $instrumentIdArr=array();
         $instrumentIdArr[]=(int) $inst_id;
 
@@ -37,10 +49,9 @@ class AjaxController extends Controller
         $returnData['price_chart_color'] = $minuteChartData['yday_close_price']<$minuteChartData['cp']?'#26C281':'#D91E18';
         $returnData['lm_date_time'] = $minuteChartData['lm_date_time'];
         $returnData['bullBear'] = array_reverse($minuteChartData['bullBear']);
-        $returnData['day_total_volume'] = $minuteChartData['day_total_volume'];
+         $returnData['day_total_volume'] = $minuteChartData['day_total_volume'];
+         return $returnData;
 
-        return response()
-         ->json(collect($returnData))->setTtl(60);
     }
 
     public function market($inst_id)

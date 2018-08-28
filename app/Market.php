@@ -12,7 +12,6 @@ class Market extends Model
     protected $fillable = ['data_bank_intraday_batch', 'batch_total_trades'];
     protected $dates = [
         'trade_date',
-
     ];
 
     public function getMarketStartedAttribute($value) {

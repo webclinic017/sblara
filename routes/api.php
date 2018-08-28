@@ -6,7 +6,7 @@ use App\Repositories\InstrumentRepository;
 use App\Repositories\FundamentalRepository;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Storage;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -32,49 +32,35 @@ Route::post('login', 'MyApiLoginController@login');
 // })->middleware(['auth:api', 'scopes:paid-plugin-data']);
 
 
-/*
- * USED API
- *
- * /api/login
-/api/symbol_list
-/api/eod_data_all/" + from + "/" + to
-/api/plugin_user_stats/"+username+"/" + hdd + "/" + cpu;
-/api/eod_data/" + from + "/" + to + "/" + symbol;
-/api/intraday_data_lastday2/" + to + "/" + max_id;
-/api/fundamental_data";
- *
- * */
-
-
 Route::get('symbol_list/', function () {
     $data = InstrumentRepository::getInstrumentsScripWithIndex();
     return json_encode($data, JSON_UNESCAPED_SLASHES);
 })->middleware(['auth:api', 'scopes:paid-plugin-data']);
 
 Route::get('eod_data/{from}/{to}/{instrument_code}/{adjusted?}', function ($from, $to, $instrument_code, $adjusted = 1) {
-
-    $file = "plugin/log.txt";
-    $heading = "eod_data | from=$from to=$to instrument_code=$instrument_code adjusted=$adjusted";
-    Storage::append($file, $heading);
-
-
     $data = DataBankEodRepository::getPluginEodData($instrument_code, $from, $to, $adjusted);
     return json_encode($data, JSON_UNESCAPED_SLASHES);
 })->middleware(['auth:api', 'scopes:paid-plugin-data']);
 
 Route::get('eod_data_all/{from}/{to}/{adjusted?}/{instrument_codes?}', function ($from, $to, $adjusted = 1, $instrument_codes = null) {
 
-/*    $file = "plugin/log.txt";
-    $heading = "eod_data_all | from=$from to=$to instrument_code=$instrument_codes adjusted=$adjusted";
-    Storage::append($file, $heading);
-*/
-
     $instrument_code_arr = array();
     if (!is_null($instrument_codes))
         $instrument_code_arr = explode(',', $instrument_codes);
 
-    $data = DataBankEodRepository::getPluginEodDataAll($from, $to, $adjusted, $instrument_code_arr);
+
+    $data = \Cache::remember("plugin_eod_data_all". $instrument_codes.'_'.$adjusted.$from.$to, 1, function () use ($from, $to, $adjusted, $instrument_codes, $instrument_code_arr)
+    {
+    $data = \App\Repositories\DataBankEodRepository::getPluginEodDataAll($from, $to, $adjusted, $instrument_code_arr);
     return json_encode($data, JSON_UNESCAPED_SLASHES);
+
+    });
+    return $data;
+
+    // $data = DataBankEodRepository::getPluginEodDataAll($from, $to, $adjusted, $instrument_code_arr);
+    // return json_encode($data, JSON_UNESCAPED_SLASHES);
+
+
 })->middleware(['auth:api', 'scopes:paid-plugin-data']);
 
 //$tradeDate=2017-05-29
@@ -96,168 +82,10 @@ Route::get('intraday_data_lastday/{last_update_time?}/{instrument_code?}/', func
     return $data;
 })->middleware(['auth:api', 'scopes:paid-plugin-data']);
 
-Route::get('intraday_data_lastday2/{last_update_time?}/{max_id?}/', function ($last_update_time = 0, $max_id = 0) {
-    $data = DataBanksIntradayRepository::getLastDayIntraForPlugin2($last_update_time, $max_id);
-    return $data;
-})->middleware(['auth:api', 'scopes:paid-plugin-data']);
-
-
-Route::get('intraday_data_lastday_zip/{last_update_time?}/{instrument_code?}/', function ($last_update_time = 0, $instrument_code = null) {
-    $data = \App\Repositories\FileDataRepository::getLastDayIntraForPlugin($last_update_time, $instrument_code);
-    return $data;
-})->middleware(['auth:api', 'scopes:paid-plugin-data']);
-
 Route::get('fundamental_data/{instrument_code?}/', function ($instrument_code = null) {
     $data = FundamentalRepository::getAmibrokerFundamentalData($instrument_code);
     return $data;
     //return json_encode($data, JSON_UNESCAPED_SLASHES);
-    // return count($data);
-})->middleware(['auth:api', 'scopes:paid-plugin-data']);
-
-Route::get('import_watch_list/{username}/', function ($username = null) {
-
-    $watchlist_info = \DB::select("SELECT watchlists.id, watchlists.name, watchlist_items.instrument_id FROM watchlists,users,watchlist_items WHERE users.email like '$username'
-and users.id = watchlists.user_id
-and watchlist_items.watchlist_id=watchlists.id");
-
-    $watchlist_info=collect($watchlist_info)->groupBy('name');
-
-    $return_data=array();
-
-    foreach($watchlist_info as $watchlist_name=>$instrument_list_arr)
-    {
-        $watch_list=array();
-
-        $watch_list['name']="$watchlist_name";
-
-        $instrument_list=array();
-       // $instrument_list= collect($instrument_list_arr)->pluck('instrument_id')->unique();
-
-        foreach($instrument_list_arr as $instrument)
-        {
-            $instrument_list[]=$instrument->instrument_id;
-        }
-
-        $watch_list['instruments']= array_values(array_unique($instrument_list));
-        $return_data[] = $watch_list;
-    }
-  /*  $watch_list['name']='name 1';
-    $instrument_list=[13,79,538];
-    $watch_list['instruments']= $instrument_list;
-    $return_data[]= $watch_list;
-
-    $watch_list['name']='name 2';
-    $instrument_list=[36,12];
-    $watch_list['instruments']= $instrument_list;
-    $return_data[] = $watch_list;
-
-    $watch_list['name']='name 3';
-    $instrument_list=[36,12];
-    $watch_list['instruments']= $instrument_list;
-    $return_data[] = $watch_list;
-
-    $watch_list['name']='name 4';
-    $instrument_list=[36,12];
-    $watch_list['instruments']= $instrument_list;
-    $return_data[] = $watch_list;
-
-    $watch_list['name']='name 5';
-    $instrument_list=[36,12];
-    $watch_list['instruments']= $instrument_list;
-    $return_data[] = $watch_list;
-
-    $watch_list['name']='name 6';
-    $instrument_list=[36,12];
-    $watch_list['instruments']= $instrument_list;
-    $return_data[] = $watch_list;
-
-    $watch_list['name']='name 7';
-    $instrument_list=[36,12];
-    $watch_list['instruments']= $instrument_list;
-    $return_data[] = $watch_list;
-
-    $watch_list['name']='name 8';
-    $instrument_list=[36,12];
-    $watch_list['instruments']= $instrument_list;
-    $return_data[] = $watch_list;
-
-    $watch_list['name']='name 9';
-    $instrument_list=[36,12];
-    $watch_list['instruments']= $instrument_list;
-    $return_data[] = $watch_list;
-
-    $watch_list['name']='name 10';
-    $instrument_list=[36,18];
-    $watch_list['instruments']= $instrument_list;
-    $return_data[] = $watch_list;
-
-    $watch_list['name']='name 11';
-    $instrument_list=[36,18];
-    $watch_list['instruments']= $instrument_list;
-    $return_data[] = $watch_list;
-
-    $watch_list['name']='name 12';
-    $instrument_list=[36,18];
-    $watch_list['instruments']= $instrument_list;
-    $return_data[] = $watch_list;
-
-    $watch_list['name']='name 13';
-    $instrument_list=[36,18];
-    $watch_list['instruments']= $instrument_list;
-    $return_data[] = $watch_list;
-
-    $watch_list['name']='name 14';
-    $instrument_list=[36,18];
-    $watch_list['instruments']= $instrument_list;
-    $return_data[] = $watch_list;
-
-    $watch_list['name']='name 15';
-    $instrument_list=[36,18];
-    $watch_list['instruments']= $instrument_list;
-    $return_data[] = $watch_list;
-
-    $watch_list['name']='name 16';
-    $instrument_list=[36,18];
-    $watch_list['instruments']= $instrument_list;
-    $return_data[] = $watch_list;
-
-    $watch_list['name']='name 17';
-    $instrument_list=[36,18];
-    $watch_list['instruments']= $instrument_list;
-    $return_data[] = $watch_list;
-
-    $watch_list['name']='name 18';
-    $instrument_list=[36,18];
-    $watch_list['instruments']= $instrument_list;
-    $return_data[] = $watch_list;
-
-    $watch_list['name']='name 19';
-    $instrument_list=[36,18];
-    $watch_list['instruments']= $instrument_list;
-    $return_data[] = $watch_list;
-
-    $watch_list['name']='name 20';
-    $instrument_list=[36,18];
-    $watch_list['instruments']= $instrument_list;
-    $return_data[] = $watch_list;
-
-    $watch_list['name']='name 21';
-    $instrument_list=[36,18];
-    $watch_list['instruments']= $instrument_list;
-    $return_data[] = $watch_list;
-
-    $watch_list['name']='name 22';
-    $instrument_list=[36,18];
-    $watch_list['instruments']= $instrument_list;
-    $return_data[] = $watch_list;
-
-    $watch_list['name']='name 23';
-    $instrument_list=[36,18];
-    $watch_list['instruments']= $instrument_list;
-    $return_data[] = $watch_list;*/
-
-
-    return $return_data;
     // return count($data);
 })->middleware(['auth:api', 'scopes:paid-plugin-data']);
 
@@ -299,6 +127,9 @@ Route::get('plugin_user_stats/{username}/{hdd}/{cpu}/', function ($username, $hd
             $message['user_message_color'] = '#3598dc';
             $message['user'] = "Your subscription has been expired and downgraded to free version. Please renew your subscription. Call 01552573043 for any query";
         }
+
+
+
     }
 
 
@@ -307,38 +138,29 @@ Route::get('plugin_user_stats/{username}/{hdd}/{cpu}/', function ($username, $hd
     $message['global_message_color'] = '#f36a5a';
 
 
-
     $message['eod_mode_enable'] = false;
     $message['intraday_mode_enable'] = false;
     $message['adjusted_mode_enable'] = false;
     $message['fundamental_button_enable'] = false;
     $message['resources_button_enable'] = false;
     $message['interval'] = 600;
-    $message['version'] = "1.0.2";
-    $message['package'] = 'free';
-
-    if(is_null($user_info[0]->plugin_expired_at))
-    $message['expire'] ="never";
-    else
-        $message['expire']=date('d-M,Y',strtotime($user_info[0]->plugin_expired_at));
 
 
+           if($user_info[0]->group_id == 1){
+                 $message['global_message_color'] = '#e43a45';
+                   $message['global'] = "Due to high load unfortunately our free version of plugin is  unavailable.  Call 01552573043 for any query";
+            }
 
     if($user_info[0]->group_id==1)
     {
         // free
-
 
         $message['eod_mode_enable'] = true;
         $message['intraday_mode_enable'] = true;
         $message['adjusted_mode_enable'] = false;
         $message['fundamental_button_enable'] = false;
         $message['resources_button_enable'] = false;
-        $message['interval'] = 120;
-        $message['version'] = "1.0.2";
-        $message['package'] = "free";
-
-
+        $message['interval'] = 14000;
 
 
     }
@@ -354,10 +176,6 @@ Route::get('plugin_user_stats/{username}/{hdd}/{cpu}/', function ($username, $hd
         $message['fundamental_button_enable'] = false;
         $message['resources_button_enable'] = false;
         $message['interval'] = 60;
-        $message['version'] = "1.0.2";
-        $message['package'] = "paid";
-
-
     }
 
     if($user_info[0]->group_id==3)
@@ -370,10 +188,6 @@ Route::get('plugin_user_stats/{username}/{hdd}/{cpu}/', function ($username, $hd
         $message['fundamental_button_enable'] = true;
         $message['resources_button_enable'] = true;
         $message['interval'] = 30;
-        $message['version'] = "1.0.2";
-        $message['package'] = "corporate";
-
-
 
     }
 
@@ -387,10 +201,6 @@ Route::get('plugin_user_stats/{username}/{hdd}/{cpu}/', function ($username, $hd
         $message['fundamental_button_enable'] = true;
         $message['resources_button_enable'] = true;
         $message['interval'] = 30;
-        $message['version'] = "1.0.2";
-        $message['package'] = "course";
-
-
 
     }
 
@@ -405,10 +215,6 @@ Route::get('plugin_user_stats/{username}/{hdd}/{cpu}/', function ($username, $hd
         $message['fundamental_button_enable'] = true;
         $message['resources_button_enable'] = true;
         $message['interval'] = 30;
-        $message['version'] = "1.0.2";
-        $message['package'] = "sponsored";
-
-
 
     }
 
@@ -422,6 +228,6 @@ Route::get('trade_date_info/{date}', function ($date) {
 })->middleware(['auth:api', 'scopes:paid-plugin-data']);
 
 Route::get('intraday_live/{code}', function ($code = 'DSEX') {
-
+// this function is not in use
     DataBanksIntradayRepository::getLiveIntraForPlugin($code);
 })->middleware(['auth:api', 'scopes:paid-plugin-data']);
