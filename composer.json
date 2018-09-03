@@ -9,20 +9,18 @@
     "type": "project",
     "require": {
         "php": ">=5.6.4",
-        "barryvdh/laravel-debugbar": "^2.3",
-        "barryvdh/laravel-httpcache": "0.3.*",
         "chumper/zipper": "1.0.x",
         "intervention/image": "^2.3",
-        "jrean/laravel-user-verification": "dev-master",
+        "jrean/laravel-user-verification": "6.*",
         "laracasts/flash": "^2.0",
-        "laravel/framework": "5.5.*",
+        "laravel/framework": "5.6.*",
         "laravel/passport": "^3.0",
         "laravel/scout": "^3.0",
         "laravel/tinker": "~1.0",
         "laravelcollective/html": "^5.4",
         "lavary/laravel-menu": "^1.7",
         "maatwebsite/excel": "~2.1.0",
-        "yajra/laravel-datatables": "^1.0"
+        "tcg/voyager": "^1.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
@@ -58,8 +56,7 @@
             "php artisan optimize"
         ],
         "post-update-cmd": [
-            "Illuminate\\Foundation\\ComposerScripts::postUpdate",
-            "php artisan optimize"
+            "Illuminate\\Foundation\\ComposerScripts::postUpdate"
         ]
     },
     "config": {
@@ -67,7 +64,7 @@
         "sort-packages": true,
         "optimize-autoloader": true,
         "platform": {
-            "php": "7.0"
+            "php": "7.1.3"
         }
     },
     "repositories": {

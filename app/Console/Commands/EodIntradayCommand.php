@@ -58,7 +58,7 @@ class EodIntradayCommand extends Command
 // source update_eods_and_intraday_data cron of old site
     public function handle()
     {
-
+        set_time_limit (10);
 
         $querystr = "select SUM(MKISTAT_TOTAL_TRADES) as total_trades,SUM(MKISTAT_TOTAL_VALUE) as total_value,SUM(MKISTAT_TOTAL_VOLUME) as total_volume,MAX(MKISTAT_LM_DATE_TIME) as MKISTAT_LM_DATE_TIME from MKISTAT ORDER BY MKISTAT_LM_DATE_TIME";
         $from_dse = DB::connection('dse')->select($querystr);

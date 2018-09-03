@@ -9,7 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 use App\UserInformation;
 
-class User extends \TCG\Voyager\Models\User implements Ath{
+class User extends  \TCG\Voyager\Models\User implements Ath{
 
     use Notifiable, HasApiTokens, HasRole;
 

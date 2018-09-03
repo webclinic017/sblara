@@ -37,46 +37,60 @@ class SharePercetageCseController extends Controller
 
     	$rows = [];
     	foreach ($instruments as  $instrument) {
-			    	$page = file_get_contents("http://www.cse.com.bd/companyDetails.php?scriptCode=".$instrument->instrument_code);
+            // dump($instrument->instrument_code);
+			    	$page = file_get_contents("http://www.cse.com.bd/company/companydetails/".$instrument->instrument_code);
 			    	$dom = new \DOMDocument();
 			    	@$dom->loadHTML($page);
 			    	$xpath = new \DOMXpath($dom);
 
-			    	$data = $xpath->query("/html/body/div/div/div[5]/div/div[2]/table/tr[3]/td/table/tr[3]/td/table/tr[2]/td/table/tr[4]/td/table/tr/td[1]/table");
-			    	$date = $xpath->query("/html/body/div/div/div[5]/div/div[2]/table/tr[3]/td/table/tr[3]/td/table/tr[2]/td/table/tr[5]/td[2]")->item(0)->nodeValue;
+			    	$data = $xpath->query('//*[@id="wrapper"]/div[1]/div/div[1]/div[2]/div[2]/div/div/div/div/div/div/div/div/div/table[3]/tbody/tr[3]/td/table/tbody/tr/td[1]/table');
+
+
+
+                    foreach ($data->item(0)->getElementsByTagName('tr') as $key => $value) {
+                      
+                        if($key == 1){
+                              $row = [];
+                           foreach( $value->getElementsByTagName('td') as $k => $v){
+                                    // dump($k);
+                                    // dump($v->childNodes->item(0)->data);
+
+                                if($k == 0){
+                                    @$row['sponsor'] = $v->childNodes->item(0)->data;
+                                }else if($k == 1){
+                                    @$row['government'] = $v->childNodes->item(0)->data;
+                                }else if($k == 2){
+                                    @$row['institute'] = $v->childNodes->item(0)->data;
+                                }else if($k == 3){
+                                    @$row['foreign'] = $v->childNodes->item(0)->data;
+                                }else if($k == 4){
+                                    @$row['public'] = $v->childNodes->item(0)->data;
+                                }                                
+                           }
+
+                        }else if ($key == 3){
+                               foreach( $value->getElementsByTagName('td') as $k => $v){
+                                       if($k == 1){
+                                          $date = $v->nodeValue;
+                                       }
+                               }                            
+                        }
+                    }
+
+                        $date = substr($date, 2);
 			    	try {
-                    $date = \Carbon\Carbon::parse("last day of ".$date)->format('Y-m-d');
-                        
+                      $date = \Carbon\Carbon::parse(trim($date))->format('Y-m-d');
                     } catch (\Exception $e) {
                         $date = str_replace("As on", "", $date);
                         try {
                          $date = \Carbon\Carbon::parse("last day of ".$date)->format('Y-m-d');
                         } catch (\Exception $e) {
+                            dump('dsf');
                             dd($date);
 			    		$date = null;
                         }
 			    	}
-			    	
-			    	foreach ($data->item(0)->getElementsByTagName('tr') as $key => $value) {
-			    		
-			    		if($key == 0 ){
-			    			continue;
-			    		}
-			    		foreach ($value->getElementsByTagName('td') as $k => $v) {
-			    			if($k == 0){
-			    				@$row['sponsor'] = $v->childNodes->item(0)->data;
-			    			}else if($k == 1){
-			    				@$row['government'] = $v->childNodes->item(0)->data;
-			    			}else if($k == 2){
-			    				@$row['institute'] = $v->childNodes->item(0)->data;
-			    			}else if($k == 3){
-			    				@$row['foreign'] = $v->childNodes->item(0)->data;
-			    			}else if($k == 4){
-			    				@$row['public'] = $v->childNodes->item(0)->data;
-			    			}
-			    		}
 
-			    	}
 			    	$row['meta_date'] = $date;
 			    	$row['instrument_id'] = $instrument->id;
 			    	$row['created_at'] = \Carbon\Carbon::now();

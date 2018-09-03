@@ -15,9 +15,10 @@ class GenerateMenus
      */
     public function handle($request, Closure $next)
     {
-
+        if($request->ajax() || $request->getPathInfo() == "/history"){
+              return $next($request);
+        }
         \Menu::make('MyNavBar', function ($menu) {
-
 
             /*Market*/
             $menu->add('Market', ['class' => 'dropdown dropdown-fw  ']);
