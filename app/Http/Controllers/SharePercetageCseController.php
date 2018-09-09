@@ -34,7 +34,7 @@ class SharePercetageCseController extends Controller
     	$d = date('Y-m-d');
     	$ids = collect(\DB::select('select instrument_id from cse_share_percentage where created_at like "'.$d.'%"'))->pluck('instrument_id');
     	$instruments =\App\Instrument::whereNotIn('id', $ids)->orderBy('instrument_code', 'asc')->whereNotIn('sector_list_id', [5, 23, 22])->where('active', '=', '1')->take(5)->get();
-
+        
     	$rows = [];
     	foreach ($instruments as  $instrument) {
             // dump($instrument->instrument_code);

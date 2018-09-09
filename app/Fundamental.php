@@ -27,12 +27,12 @@ class Fundamental extends Model
     public static function getData($metaId=array(),$instrumentId=array())
     {
         $query=self::whereIn('meta_id',$metaId);
-
+        // dd(\App\Repositories\InstrumentRepository::getInstrumentsAll()->pluck('id'));
         if(!empty($instrumentId)){
                     $query->whereIn('instrument_id',$instrumentId);
             }else{
 
-                    $query->whereIn('instrument_id', \App\Repositories\InstrumentRepository::getInstrumentsAll());
+                    $query->whereIn('instrument_id', \App\Repositories\InstrumentRepository::getInstrumentsAll()->pluck('id'));
                 }
 
 
