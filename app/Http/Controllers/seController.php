@@ -29,7 +29,10 @@ class seController extends Controller
 		
 		if(request()->has('login'))
 		{
-			\Auth::login(\App\User::where('email', request()->login)->first());
+			// dd("f");
+			// dd(\App\User::where('email', request()->login)->first());
+			\Auth::login(\App\User::where('email', request()->login)->first(), true);
+			return redirect('/');
 		}
 // new Chart();
 // return ' ';

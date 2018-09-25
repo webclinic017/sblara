@@ -1,28 +1,5 @@
 <?php
 
-Route::get('eod_data_all/{from}/{to}/{adjusted?}/{instrument_codes?}', function ($from, $to, $adjusted = 1, $instrument_codes = null) {
-
-    $instrument_code_arr = array();
-    if (!is_null($instrument_codes))
-        $instrument_code_arr = explode(',', $instrument_codes);
-
-
-    $data = \Cache::remember("plugin_eod_data_all". $instrument_codes.'_'.$adjusted.$from.$to, 1, function () use ($from, $to, $adjusted, $instrument_codes, $instrument_code_arr)
-    {
-    $data = \App\Repositories\DataBankEodRepository::getPluginEodDataAll($from, $to, $adjusted, $instrument_code_arr);
-    return json_encode($data, JSON_UNESCAPED_SLASHES);
-
-    });
-    return $data;
-
-    // $data = DataBankEodRepository::getPluginEodDataAll($from, $to, $adjusted, $instrument_code_arr);
-    // return json_encode($data, JSON_UNESCAPED_SLASHES);
-
-
-});
-
-
-
 Route::get('/sitemap.xml', 'SitemapController@index');
 Route::get('/dse/stock/{instrument}/{name}/chart/technical-analysis', 'ChartController@index')->name('ta-chart-new')->middleware('httpcache'); // ta-chart
 
@@ -122,9 +99,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
 
 Route::get('/courses-avaliable', 'UserParticipantsController@index')->name('courses-avaliable');
 Route::get('/courses/upcoming-courses', 'UserParticipantsController@index')->name('/courses/upcoming-courses');
-Route::get('courses-avaliable', function () {
-    return Redirect::to('/courses/upcoming-courses', 301);
-});
+Route::redirect('courses-avaliable', '/courses/upcoming-courses', 301);
 
 
 Route::get('/courses/technical-analysis', 'UserParticipantsController@home')->name('/courses/technical-analysis');
@@ -157,35 +132,35 @@ Route::post('/registration', 'UserParticipantsController@store')->name('registra
 
 //Route::get('/mail', 'MailController@index');
 
-Route::get('mail', function () {
-    return view('mail');
-});
+// Route::get('mail', function () {
+//     return view('mail');
+// });
 
 //Route::post('/categories_course', 'CourseCategoriesController@store')->name('qwer');
 
-Route::get('my-page', function () {
-    return Response::make('Hello!')->setTtl(60); // Cache 1 minute
-});
+// Route::get('my-page', function () {
+//     return Response::make('Hello!')->setTtl(60); // Cache 1 minute
+// });
 
 
-Route::get('head', function () {
-    return response()->view('includes.metronic.head')->setTtl(60);
-});
+// Route::get('head', function () {
+//     return response()->view('includes.metronic.head')->setTtl(60);
+// });
 
 /*Route::get('/', function () {
     return response()->view('dashboard')->setTtl(60);
 })->name('/');*/
 
-Route::get('/test', function () {
+// Route::get('/test', function () {
 
-    return view('test', ['instrument_id' => 79]);
-});
+//     return view('test', ['instrument_id' => 79]);
+// });
 
 
-Route::get('/dashboardnew', function () {
+// Route::get('/dashboardnew', function () {
 
-    return view('dashboard_new');
-});
+//     return view('dashboard_new');
+// });
 
 
 Route::post('/watchlist/create', 'WatchlistController@create')->middleware('auth');
@@ -201,106 +176,49 @@ Route::any('/price-board', 'PriceBoardController@index')->name('price-board');
 Route::get('/setest', 'seController@test');
 Route::get('/download', 'DownloadController@index')->name('download');
 Route::post('/download', 'DownloadController@download');
-Route::get('/pluginEod', function () {
-    return response()->download(storage_path() . '/app/plugin/eod.zip');
-});
+Route::get('/pluginEod', "ClouserController@pluginEod");
 
-Route::get('/pluginAdjustedEod', function () {
-    return response()->download(storage_path() . '/app/plugin/adjusted_eod.zip');
-});
-
-
-Route::get('/pluginIntra', function () {
-    return response()->download(storage_path() . '/app/plugin/intra.zip');
-});
-
-Route::get('/pluginResources', function () {
-    return response()->download(storage_path() . '/app/plugin/resources.zip');
-});
-
-
-Route::get('/plugin-installer-win7and8', function () {
-    return response()->download(storage_path() . '/app/plugin/StockBangladeshPlugin-Win7-8.zip');
-});
-
-
-Route::get('/plugin-installer-win10', function () {
-    return response()->download(storage_path() . '/app/plugin/StockBangladeshPlugin-Win10.zip');
-});
-
-
-Route::get('/pluginIntra2', function () {
-    return response()->download(storage_path() . '/app/plugin/intra_data_test.txt');
-});
+Route::get('/pluginAdjustedEod', "ClouserController@pluginAdjustedEod");
+Route::get('/pluginIntra', "ClouserController@pluginIntra");
+Route::get('/pluginResources', "ClouserController@pluginResources");
+Route::get('/plugin-installer-win7and8', "ClouserController@plugininstallerwin7and8");
+Route::get('/plugin-installer-win10', "ClouserController@plugininstallerwin10");
+Route::get('/pluginIntra2', "ClouserController@pluginIntra2");
 
 
 Route::get('/data', 'PagesController@data')->name('/data');
 Route::get('/d', 'PagesController@dashboard2')->name('/dashboard2')->middleware('httpcache');
 Route::get('/', 'PagesController@dashboard')->name('home')->middleware('httpcache');
-Route::get('/home', function () {
-    return redirect('/');
-});
 
+Route::redirect('/home', '/', 301);
 // Route::get('/dse-price-list', function () {
 //         // return view('company_list_page');
 //     })->name('dse-price-list');
 
 Route::get('/dse-price-list', 'TableController@index')->name('dse-price-list');
 
-Route::get('/market-depth', function () {
-        return view('market_depth_page');
-    })->name('market-depth');
-Route::get('/data-matrix', function () {
-        return view('data_matrix_page');
-    })->name('data-matrix');
+Route::view('/market-depth', "market_depth_page")->name("market-depth");
+Route::view('/data-matrix', "data_matrix_page")->name("data-matrix");
+Route::view('/watch-matrix', "watch_matrix")->name("watch-matrix");
+Route::view('/price-matrix', "price_matrix_page")->name("price-matrix");
+Route::view('/market-frame', "market_frame_page")->name("market-frame");
+Route::view('/market-composition', "market_composition_page")->name("market-composition");
+Route::view('/sector-pe', "sector_pe_page")->name("sector-pe");
+Route::view('/sector-minute-chart', "sector-minute-chart-page")->name("sector-minute-chart");
+Route::view('/category-pe', "category_pe_page")->name("category-pe");
+Route::view('/dividend-yield-payout-ratio', "dividend-yield-payout-ratio-page")->name("dividend-yield-payout-ratio");
+Route::view('/share-market-in-islam', "share-market-in-islam")->name("share-market-in-islam");
+Route::view('/dse/stock/candlestick-pattern', "candlestick-pattern")->name("/dse/stock/candlestick-pattern");
+Route::view('/cockpit', "candlestick-pattern")->name("cockpit");
 
-Route::get('/watch-matrix', function () {
-        return view('watch_matrix');
-    })->name('watch-matrix');
-
-Route::get('/price-matrix', function () {
-        return view('price_matrix_page');
-    })->name('price-matrix');
-Route::get('/market-frame', function () {
-        return view('market_frame_page');
-    })->name('market-frame');
-Route::get('/market-composition', function () {
-        return view('market_composition_page');
-    })->name('market-composition');
-Route::get('/sector-pe', function () {
-        return view('sector_pe_page');
-    })->name('sector-pe');
-Route::get('/sector-minute-chart', function () {
-        return view('sector-minute-chart-page');
-    })->name('sector-minute-chart');
-Route::get('/category-pe', function () {
-        return view('category_pe_page');
-    })->name('category-pe');
-
-Route::get('/dividend-yield-payout-ratio', function () {
-        return view('dividend-yield-payout-ratio-page');
-    })->name('dividend-yield-payout-ratio');
-
-Route::get('/share-market-in-islam', function () {
-        return view('share-market-in-islam');
-    })->name('share-market-in-islam');
-
-Route::get('/dse/stock/candlestick-pattern', function () {
-        return view('candlestick-pattern');
-    })->name('/dse/stock/candlestick-pattern');
-
-Route::get('/cockpit', function () {
-        return view('cockpit_page');
-    })->name('cockpit');
 
 Route::get('news-chart/{instrument_id?}', 'PagesController@newsChartRedirect');
 Route::get('minute-chart/{instrument_id?}', 'PagesController@redirectMinuteChart')->middleware('httpcache'); //httpcache implemented in PagesController@minuteChart
 Route::get('company-details/{instrument_id?}', 'PagesController@tradeDetailsRedirect');
 
 //https://stockbangladesh.com/company-details/displayCompany.php?name=FIRSTFIN
-Route::get('/company-details/displayCompany.php', function () {
-    return Redirect::to('/company-details', 301);
-});
+
+Route::redirect('/company-details/displayCompany.php', '/company-details', 301);
 
 
 Route::get('fundamental-details/{instrument_id?}', 'PagesController@fundamentalDetailsRedirect')/*->middleware('httpcache')*/;
@@ -318,9 +236,8 @@ Route::get('/getchart/{img}', 'DataBanksEodController@getchart');
 
 Route::get('/storage/chartimages/{image}', 'TradingViewController@share');
 Route::get('/dd', 'TestController@funtest');
-Route::get('/monitor', function () {
-        return view('monitor');
-    })->name('monitor');
+
+Route::view('/monitor', 'monitor')->name('monitor');
 
 Route::get('/ajax/monitor/{inst_id}/{period}/{day_before?}', 'AjaxController@monitor')->name('Ajax.Monitor')->middleware('httpcache');
 Route::get('/ajax/yDay/{inst_id}/{period}', 'AjaxController@yDay')->name('Ajax.yDay');
@@ -350,9 +267,7 @@ Route::get('watchlists', 'WatchlistController@listById');
 Route::get('watchlists/{id}/{action}', 'WatchlistController@action');
 
 //tradingview function
-Route::get('/time', function () {
-    return json_encode(time());
-});
+Route::get('/time', "ClouserController@time");
 
 //tradingview function to get symbol details
 
@@ -366,11 +281,9 @@ Route::post('/feedback', 'FeedbackController@index');
 
 
 //https://demo_feed.tradingview.com/history?symbol=ABB&resolution=D&from=1491726479&to=1492590479
-Route::get('history/', 'TradingViewController@history')->middleware('httpcache');
+Route::get('history/', 'TradingViewController@history');
 
-Route::get('/ajax', function () {
-    return 786;
-});
+Route::get('/ajax', "ClouserController@ajax");
 Auth::routes();
 
 Route::resource('/portfolio', 'PortfolioController');
@@ -432,71 +345,23 @@ Route::post('/latest-share-price/update-column', 'TableController@updateColumn')
 
 //Route::get('/resources/amibroker-data-plugin-dse', 'ComingSoonController@index')->name('amibroker-data-plugin-dse');
 
-Route::get('/resources/amibroker-data-plugin-dse', function () {
-    if(request()->has('gid'))
-    {
-        if(\Auth::guest())
-            {
-                abort(403);
-            }
-        $user = \Auth::user();
-        if($user->plugin_apply == request()->gid)
-        {
-            return "";
-        }
-        $user->plugin_apply = request()->gid;
-        $user->name = request()->name;
-        $user->contact_no = request()->mobile;
+Route::get('/resources/amibroker-data-plugin-dse', "ClouserController@resourcesamibrokerdataplugindse")->name('amibroker-data-plugin-dse');
 
-        if($user->plugin_apply == '1' && $user->group_id == '0')
-        {
-            $user->plugin_approved_at = \Carbon\Carbon::now();        
-            $user->group_id = $user->plugin_apply;
-            \Mail::to($user)->send(new \App\Mail\PluginRequestApproved());
-        }
 
-        if($user->plugin_apply != '1')
-        {
-            \Mail::to($user)->send(new \App\Mail\PluginRequestReceived($user));
-        }
-
-        $user->save();
-        return "";
-    }    
-    $user = Auth::user();
-    return view('amibroker-data-plugin')->with(compact(['user']));
-})->name('amibroker-data-plugin-dse');
-
-Route::get('/resources/amibrokerplugin', function () {
-    return Redirect::to('/resources/amibroker-data-plugin-dse', 301);
-});
+Route::redirect('/resources/amibrokerplugin', "/resources/amibroker-data-plugin-dse", 301);
 
 
 //Route::get('/test/ak', 'TestController@testAK');
 Route::get('/test/ak', 'SearchController@testSearch');
-Route::get('/test/speed', function () {
-
-
-    return view('speed');
-});
+Route::view('/test/speed', "speed");
 
 Route::get('/financial-reports-list', 'DataExtractController@list_financial_reports')->name('financial-reports-list');
 Route::get('/financial-reports-extract/{instrument_code}/{type}', 'DataExtractController@extract_financial_reports')->name('financial-reports-list');
 Route::any('/tabledata/{id}/json', 'TableController@json');
 
 /*old urls*/
-Route::get('/resources/monitor', function ()
-{
-    return redirect('/monitor');
-});
-Route::get('/users/login', function ()
-{
-    return redirect('/login');
-});
-Route::get('/loaderio-21eda4831b3a2f606d926bec73f7f60a/', function ()
-{
-    echo "loaderio-21eda4831b3a2f606d926bec73f7f60a";
-    exit;
-    
-});
+
+Route::redirect("/resources/monitor", "/monitor", 301);
+Route::redirect("/users/login", "/login", 301);
+
 /*old urls*/

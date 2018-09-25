@@ -135,17 +135,16 @@
                     <label class="col-md-3 control-label">Date Range</label>
                     <div class="col-md-9">
                         <div class="input-group input-large date-picker input-daterange" data-date="10/11/2012" data-date-format="mm/dd/yyyy">
-                            <input type="text" class="form-control" name="from">
+                            <input type="text" class="form-control" name="from" required="true">
                             <span class="input-group-addon"> to </span>
-                            <input type="text" class="form-control" name="to"> </div>
+                            <input type="text" class="form-control" name="to" required="true"> </div>
                         <!-- /input-group -->
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-3 control-label">Select instruments (Max:5)</label>
                     <div class="col-md-9">
-                        <select  data-max='2' class=" form-control select2-multiple input-fixed input-large" multiple="multiple" name="instruments[]">
-                 
+                        <select required="true" class=" form-control se-select2 input-fixed input-large" multiple="multiple" name="instruments[]">
                                     @foreach(\App\Instrument::orderBy('instrument_code', 'asc')->get() as $instrument)
                                         <option value="{{$instrument->id}}">{{$instrument->instrument_code}}</option>
                                     @endforeach

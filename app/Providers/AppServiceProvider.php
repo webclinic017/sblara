@@ -16,16 +16,16 @@ class AppServiceProvider extends ServiceProvider {
     public function boot() {
 
                    if(isset($_SERVER['REQUEST_URI']) && strpos($_SERVER['REQUEST_URI'], 'admin') === false ){
-                        set_time_limit (10);
+                        set_time_limit (15);
                    }
 
 
         
-        // $seconds_to_cache = 60;
-        // $ts = gmdate("D, d M Y H:i:s", time() + $seconds_to_cache) . " GMT";
-        // header("Expires: $ts");
-        // header("Pragma: cache");
-        // header("Cache-Control: max-age=$seconds_to_cache");
+        $seconds_to_cache = 60;
+        $ts = gmdate("D, d M Y H:i:s", time() + $seconds_to_cache) . " GMT";
+        header("Expires: $ts");
+        header("Pragma: cache");
+        header("Cache-Control: max-age=$seconds_to_cache");
 
 
                    // if(isset($_SERVER['REQUEST_URI'])){

@@ -35,7 +35,7 @@
                 <div class="col-md-4">
                     <div class="form-group form-md-line-input has-success form-md-floating-label">
                         <div class="input-icon right">
-                            <input class="form-control" type="text"  name="broker_fee">
+                            <input class="form-control" type="text"  name="broker_fee" required="">
                             <label for="form_control_1">Commission</label>
                             <span class="help-block">default broker commission for this portfolio</span>
                             <i class="fa fa-scissors"></i>

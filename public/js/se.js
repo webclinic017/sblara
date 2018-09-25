@@ -180,6 +180,16 @@ function deleteIpo(id) {
 }
 $(document).ready(function () {
 
+var url = window.location.href;
+if(window.location.pathname == "/"){
+  url = window.location.origin
+}
+// console.log(window.location);
+$(".nav-collapse a[href='"+url+"']").parent('li').addClass("active");
+$(".nav-collapse a[href='"+url+"']").closest('.more-dropdown-sub').addClass("active")
+$(".nav-collapse a[href='"+url+"']").closest('.dropdown-fw').addClass("open")
+// $(".nav-collapse a[href='"+url+"']").parent('li').addClass("active");
+
   setInterval(function() {
     $.get('/ajax/load_block/block_name=fixedStat', function (data) {
       $("#fixedStat").html(data)
@@ -434,7 +444,8 @@ $(document).ready(function () {
   /*menu fix*/
   $('.select2-multiple').select2({
     maximumSelectionLength: 5,
-    placeholder: "Please Select"
+    placeholder: "Please Select",
+    allowClear: true
   });
 
   $('.date-picker').datepicker();
@@ -629,6 +640,13 @@ function loadFundamental(e) {
 
 $(document).ready(function () {
 
+
+  $('.se-select2').select2({
+    maximumSelectionLength: 5,
+    placeholder: "Please Select",
+    allowClear: true
+  });
+  
   loadChartSettings();
   $('#shareList').on('changed.bs.select', function (e) {
     if ($(this).val() == null) {

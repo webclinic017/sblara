@@ -68,46 +68,46 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('plugin:resetEod')->dailyAt('16:00')->emailOutputTo('fazalmohammad19@gmail.com')->withoutOverlapping();
+        $schedule->command('plugin:resetEod')->dailyAt('16:00')->withoutOverlapping();
         //$schedule->command('plugin:resetIntra')->dailyAt('17:00')->emailOutputTo('fazalmohammad19@gmail.com');
-        $schedule->command('plugin:resetAdjustedEod')->dailyAt('16:45')->emailOutputTo('fazalmohammad19@gmail.com')->withoutOverlapping();
+        $schedule->command('plugin:resetAdjustedEod')->dailyAt('16:45')->withoutOverlapping();
 
        /*$schedule->command('index:generateCustomIndex')->cron('* 10,11,12,13,14 * * 0,1,2,3,4')->when(function () {
             return Market::isMarketOpen();
         })->emailOutputTo('fazalmohammad19@gmail.com');*/
 
-        $schedule->command('dse:EodIntradayTrade')->cron('* 10,11,12,13,14 * * 0,1,2,3,4')->emailOutputTo('fazalmohammad19@gmail.com')/*->withoutOverlapping()*/;
+        $schedule->command('dse:EodIntradayTrade')->cron('* 10,11,12,13,14 * * 0,1,2,3,4')/*->withoutOverlapping()*/;
         $schedule->command('dse:UpdateDseNews')->cron('2,7,12,17,22,27,32,37,42,47,52,57 10,11,12,13,14,15,16 * * 0,1,2,3,4')/*->withoutOverlapping()*/;
-        $schedule->command('dse:UpdateDseIndex')->cron('* 10,11,12,13,14 * * 0,1,2,3,4')->emailOutputTo('fazalmohammad19@gmail.com')/*->withoutOverlapping()*/;
-        $schedule->command('dse:ParseMst')->cron('30 16 * * 0,1,2,3,4')->emailOutputTo('fazalmohammad19@gmail.com')/*->withoutOverlapping()*/;
-        $schedule->command('dse:EodIntraFinalize')->cron('15 16,18,20,22 * * 0,1,2,3,4')->emailOutputTo('fazalmohammad19@gmail.com')/*->withoutOverlapping()*/;
+        $schedule->command('dse:UpdateDseIndex')->cron('* 10,11,12,13,14 * * 0,1,2,3,4')/*->withoutOverlapping()*/;
+        $schedule->command('dse:ParseMst')->cron('30 16 * * 0,1,2,3,4')/*->withoutOverlapping()*/;
+        $schedule->command('dse:EodIntraFinalize')->cron('15 16,18,20,22 * * 0,1,2,3,4')/*->withoutOverlapping()*/;
 
-        $schedule->command('dse:CalculateSectorIntraday')->cron('* 10,11,12,13,14 * * 0,1,2,3,4')->emailOutputTo('fazalmohammad19@gmail.com')/*->withoutOverlapping()*/;
+        $schedule->command('dse:CalculateSectorIntraday')->cron('* 10,11,12,13,14 * * 0,1,2,3,4')/*->withoutOverlapping()*/;
 
-        $schedule->command('mail:PortfolioEmailReport')->cron('30 15 * * 0,1,2,3,4')->emailOutputTo('fazalmohammad19@gmail.com')->withoutOverlapping();
+        $schedule->command('mail:PortfolioEmailReport')->cron('30 15 * * 0,1,2,3,4')->withoutOverlapping();
 
         //filter data update every minutes
                 ////////////////////////////////////////////////////////////////////////
         ////////////////////                                    ///////////////
         ////////////////////////////////////////////////////////////////////////
-        $schedule->command('dse:FileDataUpdater')->cron('* 10,11,12,13,14 * * 0,1,2,3,4')->emailOutputTo('fazalmohammad19@gmail.com')/*->withoutOverlapping()*/;
-        $schedule->command('dse:FileDataUpdaterIntraday')->cron('* 10,11,12,13,14 * * 0,1,2,3,4')->emailOutputTo('fazalmohammad19@gmail.com')/*->withoutOverlapping()*/;
-        $schedule->command('dse:FileDataUpdaterIntraday15')->cron('* 10,11,12,13,14 * * 0,1,2,3,4')->emailOutputTo('fazalmohammad19@gmail.com')/*->withoutOverlapping()*/;
-        $schedule->command('dse:FileDataUpdaterIntraday30')->cron('* 10,11,12,13,14 * * 0,1,2,3,4')->emailOutputTo('fazalmohammad19@gmail.com')/*->withoutOverlapping()*/;
-        $schedule->command('dse:FileDataUpdaterIntraday60')->cron('* 10,11,12,13,14 * * 0,1,2,3,4')->emailOutputTo('fazalmohammad19@gmail.com')/*->withoutOverlapping()*/;
+        $schedule->command('dse:FileDataUpdater')->cron('* 10,11,12,13,14 * * 0,1,2,3,4')/*->withoutOverlapping()*/;
+        $schedule->command('dse:FileDataUpdaterIntraday')->cron('* 10,11,12,13,14 * * 0,1,2,3,4')/*->withoutOverlapping()*/;
+        $schedule->command('dse:FileDataUpdaterIntraday15')->cron('* 10,11,12,13,14 * * 0,1,2,3,4')/*->withoutOverlapping()*/;
+        $schedule->command('dse:FileDataUpdaterIntraday30')->cron('* 10,11,12,13,14 * * 0,1,2,3,4')/*->withoutOverlapping()*/;
+        $schedule->command('dse:FileDataUpdaterIntraday60')->cron('* 10,11,12,13,14 * * 0,1,2,3,4')/*->withoutOverlapping()*/;
         ////////////////////////////////////////////////////////////////////////
         ////////////////////                                    ///////////////
         ////////////////////////////////////////////////////////////////////////
 
         //filter data reset daily
-        $schedule->command('filter:EodUnAdjData')->cron('40 16 * * 0,1,2,3,4')->emailOutputTo('fazalmohammad19@gmail.com')->withoutOverlapping();
-        $schedule->command('filter:EodAdjData')->cron('43 16 * * 0,1,2,3,4')->emailOutputTo('fazalmohammad19@gmail.com')->withoutOverlapping();
-        $schedule->command('filter:WeeklyAdjData')->cron('50 16 * * 0,1,2,3,4')->emailOutputTo('fazalmohammad19@gmail.com')->withoutOverlapping();
-        $schedule->command('filter:MonthlyAdjData')->cron('58 16 * * 0,1,2,3,4')->emailOutputTo('fazalmohammad19@gmail.com')->withoutOverlapping();
-        $schedule->command('filter:IntradayData5Minutes')->cron('15 17 * * 0,1,2,3,4')->emailOutputTo('fazalmohammad19@gmail.com')->withoutOverlapping();
-        $schedule->command('filter:IntradayData15Minutes')->cron('25 17 * * 0,1,2,3,4')->emailOutputTo('fazalmohammad19@gmail.com')->withoutOverlapping();
-        $schedule->command('filter:IntradayData30Minutes')->cron('35 17 * * 0,1,2,3,4')->emailOutputTo('fazalmohammad19@gmail.com')->withoutOverlapping();
-        $schedule->command('filter:IntradayData60Minutes')->cron('45 17 * * 0,1,2,3,4')->emailOutputTo('fazalmohammad19@gmail.com')->withoutOverlapping();
+        $schedule->command('filter:EodUnAdjData')->cron('40 16 * * 0,1,2,3,4')->withoutOverlapping();
+        $schedule->command('filter:EodAdjData')->cron('43 16 * * 0,1,2,3,4')->withoutOverlapping();
+        $schedule->command('filter:WeeklyAdjData')->cron('50 16 * * 0,1,2,3,4')->withoutOverlapping();
+        $schedule->command('filter:MonthlyAdjData')->cron('58 16 * * 0,1,2,3,4')->withoutOverlapping();
+        $schedule->command('filter:IntradayData5Minutes')->cron('15 17 * * 0,1,2,3,4')->withoutOverlapping();
+        $schedule->command('filter:IntradayData15Minutes')->cron('25 17 * * 0,1,2,3,4')->withoutOverlapping();
+        $schedule->command('filter:IntradayData30Minutes')->cron('35 17 * * 0,1,2,3,4')->withoutOverlapping();
+        $schedule->command('filter:IntradayData60Minutes')->cron('45 17 * * 0,1,2,3,4')->withoutOverlapping();
 
     }
 
