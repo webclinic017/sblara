@@ -15,7 +15,7 @@
 
 
 	<div class="row">
-		<monitor-item :instruments="instruments"></monitor-item>
+		<monitor-item v-for="item in items" :item="item" :instruments="instruments" :intradays="intradays"></monitor-item>
 	</div>
 
 	</div>
@@ -23,11 +23,35 @@
 <script>
 	export default{
 		mounted(){
-			// alert('mounted')
+			axios.get("/api/instruments").then((response)=> {
+				this.instruments = response.data
+
+					this.updateData();	
+				setInterval(() =>{
+					this.updateData();	
+   				 }, 10000)
+			})
+
 		},
 		data(){
 			return {
-				instruments: [{"name":"janata", "id": 9}],
+				instruments: [],
+				items: [],
+				selected: [12, 77, 14],
+				intradays: null
+
+			}
+		},
+		methods: {
+			updateData(){
+				axios.get('/api/intraday?instruments='+this.selected).then((response)=> {
+					this.intradays = response.data;
+					this.items = [];
+					this.selected.forEach((e)=>{
+						this.items.push(e)
+					})
+
+				})
 			}
 		}
 	}

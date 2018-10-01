@@ -9,12 +9,13 @@ Market Monitor
 
 @section('content')
 
-<div id="app">
+<div id="app" style="min-height: 400px">
 	<monitor></monitor>
 </div>
 
 
 <script src="{{ url('/js/html2canvas.js')}}"></script>
+{{-- 
 <script type="text/javascript">
 	function setCookie(cname, cvalue, exdays) {
 	    var d = new Date();
@@ -89,5 +90,5 @@ $(document).ready(function(){
 	});
 });	
 </script>
-
+ --}}
 @endsection

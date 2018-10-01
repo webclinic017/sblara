@@ -282,7 +282,7 @@ class Chart
 			die("Sector minute chart not available");
 			return $this->getSectorIntradayQuery();
 		}
-		$q = "SELECT `date`, `hour`, `minute`, `open`, `close`, `high`, `low`, IFNULL((vol - (LAG(vol) OVER ())), vol)  volume, LAG(vol) OVER () vprev FROM (SELECT DISTINCT 
+		$q = "SELECT `date`, `hour`, `minute`, `open`, `close`, `high`, `low`, IFNULL((vol - (LAG(vol) OVER (order by lm_date_time asc))), vol)  volume, LAG(vol) OVER (order by lm_date_time asc) vprev FROM (SELECT DISTINCT 
 				SUBSTRING_INDEX(GROUP_CONCAT(CAST(`close_price` AS CHAR) ORDER BY `lm_date_time`), ',', 1 ) AS `open`,
 				SUBSTRING_INDEX(GROUP_CONCAT(CAST(`close_price` AS CHAR) ORDER BY `lm_date_time` DESC), ',', 1 ) AS `close`,
 				MAX(close_price) `high`, MIN(close_price) low,  MAX(total_volume) vol,  lm_date_time, DATE(lm_date_time) `date`, HOUR(lm_date_time) `hour`,  (MINUTE(lm_date_time) DIV {$this->interval})*{$this->interval} `minute`, MINUTE(lm_date_time )
@@ -321,6 +321,8 @@ class Chart
 	public function getOhlcData()
 	{
 		$q = $this->getQuery();
+		// echo $q;
+		// dd($q);
 		if(!$q){return $this->ohlcData; }
 
 			$data = \DB::select(\DB::raw($q));

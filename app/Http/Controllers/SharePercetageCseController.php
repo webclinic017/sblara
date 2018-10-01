@@ -38,7 +38,14 @@ class SharePercetageCseController extends Controller
     	$rows = [];
     	foreach ($instruments as  $instrument) {
             // dump($instrument->instrument_code);
-			    	$page = file_get_contents("http://www.cse.com.bd/company/companydetails/".$instrument->instrument_code);
+                          $arrContextOptions=array(
+                            "ssl"=>array(
+                                "verify_peer"=>false,
+                                "verify_peer_name"=>false,
+                            ),
+                        );  
+
+			    	$page = file_get_contents("https://www.cse.com.bd/company/companydetails/".$instrument->instrument_code,  false, stream_context_create($arrContextOptions));
 			    	$dom = new \DOMDocument();
 			    	@$dom->loadHTML($page);
 			    	$xpath = new \DOMXpath($dom);

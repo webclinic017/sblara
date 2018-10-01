@@ -14,7 +14,7 @@
 </script>
 
 <!-- Start of StatCounter Code for Default Guide -->
-<script type="text/javascript">
+{{-- <script type="text/javascript">
 var sc_project=3183403;
 var sc_invisible=1;
 var sc_security="557b1403";
@@ -28,5 +28,5 @@ scJsHost+
 Made Easy - StatCounter" href="http://statcounter.com/"
 target="_blank"><img class="statcounter"
 src="//c.statcounter.com/3183403/0/557b1403/1/" alt="Web
-Analytics Made Easy - StatCounter"></a></div></noscript>
+Analytics Made Easy - StatCounter"></a></div></noscript> --}}
 <!-- End of StatCounter Code for Default Guide -->

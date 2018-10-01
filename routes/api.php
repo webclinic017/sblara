@@ -45,3 +45,5 @@ Route::get('plugin_user_stats/{username}/{hdd}/{cpu}/', "ApiController@plugin_us
 Route::get('trade_date_info/{date}', "ApiController@trade_date_info")->middleware(['auth:api', 'scopes:paid-plugin-data']);
 
 Route::get('intraday_live/{code}', "ApiController@intraday_live")->middleware(['auth:api', 'scopes:paid-plugin-data']);
+
+require "api_new.php";
