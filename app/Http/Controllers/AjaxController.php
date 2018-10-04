@@ -161,7 +161,9 @@ class AjaxController extends Controller
     {
         $instrumentInfo=InstrumentRepository::getInstrumentsById(array((int) $inst_id))->first();
         $code=$instrumentInfo->instrument_code;
+
         $getText = getWebPage('https://www.dsebd.org/bshis_new1_old.php?w=' . $code);
+    
         //dd($getText);
         $getText = preg_replace('/Please click on the button to refresh/', ' ', $getText);
         $getText = preg_replace('/<INPUT\b[^>]*>(.*?)[^>]/', ' ', $getText);

@@ -61,7 +61,7 @@ function getWebPage($url)
         CURLOPT_ENCODING => "", // handle all encodings
         CURLOPT_USERAGENT => "spider", // who am i
         CURLOPT_AUTOREFERER => true, // set referer on redirect
-        CURLOPT_REFERER => "http://www.dsebd.org/mkt_depth_3.php", // set referer on redirect
+        CURLOPT_REFERER => "https://www.dsebd.org/mkt_depth_3.php", // set referer on redirect
         CURLOPT_CONNECTTIMEOUT => 5, // timeout on connect
         CURLOPT_TIMEOUT => 6, // timeout on response
         CURLOPT_MAXREDIRS => 10, // stop after 10 redirects
@@ -81,7 +81,7 @@ function getWebPage($url)
     $header['errno'] = $err;
     $header['errmsg'] = $errmsg;
     $header['content'] = $content;
-
+// dd($header); 
     return $content; //$header;
 }
 

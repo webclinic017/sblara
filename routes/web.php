@@ -365,3 +365,26 @@ Route::redirect("/resources/monitor", "/monitor", 301);
 Route::redirect("/users/login", "/login", 301);
 
 /*old urls*/
+
+
+
+
+
+
+Route::group(['middleware' => ['auth']], function () {
+
+        Route::get("/user/settings/{key}", function ($key)
+    {
+         return @\App\UserSettings::where('user_id', Auth::user()->id)->where("key", $key)->first()->value;
+    });
+    Route::post("/user/settings/{key}", function ($key)
+    {
+        $value = request('value');
+        $value = join(',', $value);
+         $data = \App\UserSettings::firstOrNew(['user_id' =>  \Auth::user()->id, "key" => $key]);
+         $data->value = $value;
+         $data->save();
+          return "";
+    });
+    
+});

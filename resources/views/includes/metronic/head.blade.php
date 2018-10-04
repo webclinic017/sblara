@@ -39,8 +39,6 @@
                     var loggedIn = {{\Auth::guest()?'false':'true'}};
             </script>
 
-
-
          <script async='async' src='https://www.googletagservices.com/tag/js/gpt.js'></script>
          <script>
            var googletag = googletag || {};

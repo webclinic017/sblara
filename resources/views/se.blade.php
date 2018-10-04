@@ -9,7 +9,7 @@ Market Monitor
 
 @section('content')
 
-<div id="app" style="min-height: 400px">
+<div id="app" style="min-height: 400px" >
 	<monitor></monitor>
 </div>
 

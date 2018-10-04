@@ -1,35 +1,36 @@
 <template>
 	<div>
 		<div class="row">
-			<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3" style="padding: 1px;">
+			<div class="col-md-3 " style="padding: 1px;">
 
 
 				<input type="HIDDEN" name="symbols" id="symbols">
 				<input type="HIDDEN" name="periods" id="periods">
-		        <button type="button" id="saveBtn" class="btn btn-primary" style="width: 100%" >Save My Watch List</button>
+		        <button type="button" id="saveBtn" @click="save" class="btn btn-primary btn-large" style="width: 400px" >Save List</button>
 		    </div>
 		    <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3" style="padding: 1px;">
-				<button type="button" id="shotBtn" class="btn btn-primary" style="width: 100%" >Screen Shot</button>
+				<!-- <button type="button" id="shotBtn" class="btn btn-primary" style="width: 100%" >Screen Shot</button> -->
 		    </div>
+
 		</div>
 
-
-	<div class="row">
-		<monitor-item v-for="item in items" :item="item" :instruments="instruments" :intradays="intradays"></monitor-item>
+	<div class="row" v-for="i in Math.ceil(items.length / 3)">
+		<monitor-item v-for="(item, index) in items.slice((i - 1) * 3, i * 3)" :item="item" :index="index + (i-1)*3" :selectedItems="selectedItems" :instruments="instruments" :intradays="intradays" :items="items"></monitor-item>
 	</div>
 
 	</div>
 </template>
 <script>
 	export default{
-		mounted(){
+		created(){
+			this.loadSavedData()
 			axios.get("/api/instruments").then((response)=> {
 				this.instruments = response.data
-
 					this.updateData();	
+
 				setInterval(() =>{
 					this.updateData();	
-   				 }, 10000)
+   				 }, 30000)
 			})
 
 		},
@@ -37,21 +38,79 @@
 			return {
 				instruments: [],
 				items: [],
-				selected: [12, 77, 14],
-				intradays: null
-
+				selectedItems: [-1, -1, -1, -1, -1, -1, -1, -1, -1],
+				intradays: null,
+				updatingStatus: true,
 			}
 		},
 		methods: {
+			loadSavedData(){
+				if(loggedIn){
+						this.updatingStatus = false;
+						axios.get("/user/settings/monitor_instruments").then((response) => {
+							if(response.data == ""){
+										var savedData = this.$cookies.get("monitor_instruments");
+										if(savedData.split(',').length > 2){
+											this.selectedItems = savedData.split(',');
+										}
+							}else{
+								this.selectedItems = response.data.split(',');
+							}
+							this.updatingStatus = true;
+							this.updateData()
+						})
+				}else{
+						var savedData = this.$cookies.get("monitor_instruments");
+						if(savedData){
+							this.selectedItems = savedData.split(',');
+						}
+				}
+			},
 			updateData(){
-				axios.get('/api/intraday?instruments='+this.selected).then((response)=> {
+				if(!this.updatingStatus){
+					return;
+				}
+				axios.get('/api/intraday?instruments='+this.getSelectedItems()).then((response)=> {
+
 					this.intradays = response.data;
 					this.items = [];
-					this.selected.forEach((e)=>{
+
+					this.selectedItems.forEach((e)=>{
 						this.items.push(e)
 					})
+				
+
+					setTimeout(() => {
+							var i = 0;
+						this.selectedItems.forEach((e)=>{
+							this.$children[i].onDataUpdate();
+							i++;
+						})						
+					}, 100);
 
 				})
+			},
+			getSelectedItems(){
+				var results = [];
+				for (var i = this.selectedItems.length - 1; i >= 0; i--) {
+					if(this.selectedItems[i] != -1){
+					results.push(this.selectedItems[i]) 
+					}
+				}
+				return results;
+			},
+			save(){
+				if(loggedIn){
+					axios.post("/user/settings/monitor_instruments", {value:this.selectedItems}).then((response)=>{
+						this.$cookies.config('300d')
+						this.$cookies.set("monitor_instruments", this.selectedItems)
+						swal("success", "Monitor successfully saved.", "success")
+					})
+				}else{
+					this.$cookies.config('300d')
+					this.$cookies.set("monitor_instruments", this.selectedItems)
+					swal("success", "Monitor successfully saved.", "success")
+				}
 			}
 		}
 	}

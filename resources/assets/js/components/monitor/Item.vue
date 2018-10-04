@@ -1,5 +1,5 @@
 <template>
-            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12" style="padding: 5px; !important">
+            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12" style="padding: 5px; !important;">
         <div class="portlet light" id="chart_portlet">
             <div class="portlet-title tabbable-line">
                 <div class="caption">
@@ -7,18 +7,18 @@
                     <span class="caption-subject font-green-sharp bold uppercase"></span>
                 </div>
                 <ul class="nav nav-tabs">
-                    <li class="active">
-                        <a href="#chart" aria-controls="chart" class="active" data-toggle="tab" aria-expanded="true"> Minute chart </a>
+                    <li :class="{active:chartTab}">
+                        <a href="javascript:"  @click="switchTab(true)"  class="active"  aria-expanded="true"> Minute chart </a>
                     </li>
-                    <li class="">
-                        <a href="#Market_depth" aria-controls="Market_depth" data-toggle="tab" aria-expanded="false" id="marketBtn"> Market Depth </a>
+                    <li :class="{active: !chartTab}">
+                        <a href="javascript:"  @click="switchTab(false)"   aria-expanded="false" id="marketBtn"> Market Depth </a>
                     </li>
                 </ul>
             </div>
             <div class="portlet-body">
                 <!--BEGIN TABS-->
                 <div class="tab-content">
-                    <div class="tab-pane active" id="chart">
+                    <div class="tab-pane" :class="{active: chartTab}" id="chart">
                                     <div class="row" >
                                         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                                             <select @change="onInstrumentChanged()" v-model="instrument_id" :class="instrument.instrument_code"   class="form-control selectpicker " data-live-search="true">
@@ -28,6 +28,7 @@
                                         </div>
                                         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 
+                                        <!-- <datepicker :format="'yyyy-MM-dd'"  @input="date"  v-model="date"  input-class="form-control"></datepicker> -->
 <!--                                             <select name="period" id="period" class="form-control selectpicker" data-live-search="true">
                                                 <option value="-1">Time range</option>
                                                 <option value="15">15 Minute</option>
@@ -40,19 +41,19 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                    <div class="clearfix margin-bottom-10"> </div>
+                                        <div class="clearfix margin-bottom-10"> </div>
 
-									<div id="chart_placeholder" >
-									    <div id="displayDiv">
-									        <div :id="instrument.instrument_code"></div>
-									    </div>
+    									<div id="chart_placeholder" >
+    									    <div id="displayDiv">
+    									        <div :id="instrument.instrument_code"></div>
+    									    </div>
 
-									</div>        
-          </div>
+    									</div>        
+                                  </div>
                     </div>
-                    <div class="tab-pane" id="Market_depth_">
-                        <div class="row" id="marketDiv_" >
-
+                    <div class="tab-pane" :class="{active: chartTab == false}" id="Market_depth_">
+                        <div v-html="depthHtml" class="row" id="marketDiv_" >
+                              
                         </div>
                     </div>
                 </div>
@@ -63,30 +64,49 @@
 </template>
 
 <script>
+
+    import Datepicker from 'vuejs-datepicker';
 	export default{
-		props:['instruments', 'item', 'intradays'],
-		mounted(){
+          components: {
+            Datepicker
+        },        
+		props:['instruments', 'item', 'intradays', 'selectedItems', 'items', 'index'],
+		created(){
+            // console.log(this.item)
+            // console.log(this.index)
+            // console.log(this.selectedItems)
+
+            if(this.item == -1){
+
+                setTimeout(() => {
+                  $('.'+this.instrument.instrument_code).selectpicker();
+                }, 100);
+                  return
+            }
+
             this.instrument_id = this.item;
             if(this.intradays == null){return}
                 this.setInstrument()
 
+                if(!this.instrument.instrument_code){
+                    return
+                }
+                
                 if(!this.intradays[this.instrument_id]){
                     return
                 }
-               this.processData(this.intradays[this.instrument_id]);
-               setTimeout(() => {
-                    $('.'+this.instrument.instrument_code).val( this.instrument_id)
-                    $('.'+this.instrument.instrument_code).selectpicker();
-                 this.loadChart()
-               }, 100);
+                this.onDataUpdate()
 		},
 		data(){
 			return{
-				chart: null,
+                chart: null,
+                depthHtml: "",
+				chartTab: true,
                 data: null,
 				instrument_id: -1,
+                date: '',
 				instrument: {
-					name: 'abc',
+					instrument_code: 'No data',
                     id: 9
 				},
                 colors: {
@@ -105,12 +125,45 @@
 				ydata: [] 
 			}
 		},
+        watch: {
+            instrument_id: function (newValue, oldValue){
+                  this.selectedItems[this.index] = newValue;
+            }
+        },
 		methods: {	
+                switchTab(val){
+                        if(!val){
+                            this.depthHtml = this.depthLoading();
+                            axios.get("/ajax/market/"+this.instrument_id).then((response)=>{
+                                this.depthHtml = response.data
+                            })
+                        }
+                        this.chartTab = val;
+                },
+                onDataUpdate(){
+                    if(this.intradays[this.instrument_id]){
+                        this.processData(this.intradays[this.instrument_id]);
+                    }else{
+                        return
+                    }
+                   
+
+                   setTimeout(() => {
+                        $('.'+this.instrument.instrument_code).val( this.instrument_id)
+                        $('.'+this.instrument.instrument_code).selectpicker();
+                     this.loadChart()
+                   }, 100);
+                },
 				append(data) {
 					this.chart.series[0].addPoint({color: "#ACB5C3", y: 136000})
 				},
 				onInstrumentChanged(){
 					if(this.instrument_id < 1){ return ;}
+
+                    if(this.selectedItems.includes(this.instrument_id)){
+                        swal("Share already selected.")
+                        return
+                    }
 
                     this.setInstrument()
                     
@@ -125,7 +178,7 @@
 				},
                  setInstrument() {
                     this.instrument = this.instruments.filter(obj => {
-                                      return obj.id === this.instrument_id
+                                      return obj.id == this.instrument_id
                                     })[0]
                 }
                 ,
@@ -135,10 +188,20 @@
                     this.xdata = [];
                     this.ydata = [];
 
+                    this.bearVolume = 0;
+                    this.bullVolume = 0;
+                    this.totalVolume = 0;
+                    this.neutralVolume = 0;
+
+
+                    if(data.length == 0){
+                        return
+                    }
                     var prevObj = null;
                     var color;
                     var prevPrice;
                     data.filter(obj =>{
+
                         this.xcat.push(moment(obj.lm_date_time).format("hh:mm"))
                         if(prevObj == null){
                            prevPrice = obj.yday_close_price;
@@ -390,7 +453,10 @@
 
 
 					    });						
-				}
+				},
+                 depthLoading() {
+  return '\n<table style="font-family:Arial, Helvetica, sans-serif; font-size: 13px;" width="100%" border="0" cellspacing="0" cellpadding="0">\n  <tbody><tr>\n    <td><table width="98%" border="0" align="center" cellpadding="0" cellspacing="0">\n      <tbody><tr>\n        <td width="15%" valign="top">&nbsp;</td>\n        <td width="75%" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">\n          <tbody><tr>\n            <td width="100%" valign="top"><table width="100%" border="0" cellpadding="1" cellspacing="1" bgcolor="#E8FFFB">\n                <tbody><tr bgcolor="#339966">\n                  <td height="34%" colspan="2"><div align="center"><strong><font color="#FFFFFF">Buy</font></strong></div></td>\n                </tr>\n                <tr>\n                  <td width="50%" bgcolor="#D2F0E1"><div align="center">Buy Price </div></td>\n                  <td height="34%" bgcolor="#D2F0E1"><div align="center">Buy Volume </div></td>\n                  </tr>\n                                <tr>\n                  <td colspan="2" ><div class="animated-background" style="margin:2px; min-height:15px"></div></td>\n                  </tr>\n                                <tr>\n                  <td colspan="2" ><div class="animated-background" style="margin:2px; min-height:15px"></div></td>\n                  </tr>\n                                <tr>\n                  <td colspan="2" ><div class="animated-background" style="margin:2px; min-height:15px"></div></td>\n                  </tr>\n                                <tr>\n                  <td colspan="2" ><div class="animated-background" style="margin:2px; min-height:15px"></div></td>\n                  </tr>\n                                <tr>\n                  <td colspan="2" ><div class="animated-background" style="margin:2px; min-height:15px"></div></td>\n                  </tr>\n                                <tr>\n                  <td colspan="2" ><div class="animated-background" style="margin:2px; min-height:15px"></div></td>\n                  </tr>\n                                <tr>\n                  <td colspan="2" ><div class="animated-background" style="margin:2px; min-height:15px"></div></td>\n                  </tr>\n                                <tr>\n                  <td colspan="2" ><div class="animated-background" style="margin:2px; min-height:15px"></div></td>\n                  </tr>\n                                <tr>\n                  <td colspan="2" ><div class="animated-background" style="margin:2px; min-height:15px"></div></td>\n                  </tr>\n                              \n                            </tbody></table></td>\n\n          </tr>\n        </tbody></table></td>\n        <td width="15%" valign="top">&nbsp;</td>\n      </tr>\n      <tr>\n        <td valign="top">&nbsp;</td>\n        <td valign="top">&nbsp;</td>\n        <td valign="top">&nbsp;</td>\n      </tr>\n      <tr>\n        <td valign="top">&nbsp;</td>\n        <td valign="top">&nbsp;</td>\n        <td valign="top">&nbsp;</td>\n      </tr>\n      <tr>\n        <td valign="top">&nbsp;</td>\n        <td valign="top"><table width="100%" border="0" align="center" cellpadding="2" cellspacing="2" bgcolor="#FFF7EA">\n          <tbody><tr bgcolor="#339966">\n            <td colspan="4"><font color="#FFFFFF"><strong>Price Statistics </strong></font> </td>\n          </tr>\n\n          <tr>\n            <td colspan="4" >\n\t\t\t\t<div class="animated-background" style="margin:2px; min-height:15px"></div>\n            </td>\n          </tr>\n       \n          <tr>\n            <td colspan="4" >\n\t\t\t\t<div class="animated-background" style="margin:2px; min-height:15px"></div>\n            </td>\n          </tr>\n       \n          <tr>\n            <td colspan="4" >\n\t\t\t\t<div class="animated-background" style="margin:2px; min-height:15px"></div>\n            </td>\n          </tr>\n       \n          <tr>\n            <td colspan="4" >\n\t\t\t\t<div class="animated-background" style="margin:2px; min-height:15px"></div>\n            </td>\n          </tr>\n       \n          <tr>\n            <td colspan="4" >\n\t\t\t\t<div class="animated-background" style="margin:2px; min-height:15px"></div>\n            </td>\n          </tr>\n       \n          <tr>\n            <td colspan="4" >\n\t\t\t\t<div class="animated-background" style="margin:2px; min-height:15px"></div>\n            </td>\n          </tr>\n       \n        </tbody></table></td>\n        <td valign="top">&nbsp;</td>\n      </tr>\n      <tr>\n        <td valign="top">&nbsp;</td>\n        <td valign="top">&nbsp;</td>\n        <td valign="top">&nbsp;</td>\n      </tr>\n\n    </tbody></table></td>\n  </tr>\n</tbody></table>\t\t\n\t';
+}
 			
 		}
 	}

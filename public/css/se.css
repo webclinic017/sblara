@@ -1,4 +1,7 @@
 /*ta chart section cutomization*/
+.page-content-container{
+    overflow: visible;
+}
 @media(max-width: 1240px)
 {
     .ta-chart-tabs{

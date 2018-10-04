@@ -33,6 +33,9 @@ const options = {
 Vue.use(VueProgressBar, options)
 Vue.use(VueMasonryPlugin)
 
+import VueCookies from 'vue-cookies'
+Vue.use(VueCookies)
+
 Vue.component(
     'passport-clients',
     require('./components/passport/Clients.vue')
@@ -60,6 +63,7 @@ Vue.component('monitor-item', require('./components/monitor/Item.vue'));
 
 
 if(document.getElementById("app")){
+  
 const app = new Vue({
     el: '#app'
 });

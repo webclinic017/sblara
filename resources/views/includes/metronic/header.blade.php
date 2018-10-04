@@ -1,4 +1,4 @@
-            @include('includes.metronic.topAdvertise')
+ 
             <header class="page-header">
                 <nav class="navbar mega-menu" role="navigation">
                     <div class="container-fluid">
