@@ -21,7 +21,7 @@
                     <div class="tab-pane" :class="{active: chartTab}" id="chart">
                                     <div class="row" >
                                         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                                            <select @change="onInstrumentChanged()" v-model="instrument_id" :class="instrument.instrument_code"   class="form-control selectpicker " data-live-search="true">
+                                            <select @change="onInstrumentChanged()" v-model="instrument_id"    class="form-control " data-live-search="true">
                                                 <option value="-1">-- Select Symbol --</option>
 													<option  v-for="ins in instruments" :value="ins.id">{{ins.instrument_code}}</option>
                                             </select>
