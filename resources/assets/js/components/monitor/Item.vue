@@ -204,14 +204,20 @@
                     data.filter(obj =>{
 
                         this.xcat.push(moment(obj.lm_date_time).format("hh:mm"))
+
+                        var prevTotalVolume = 0;
+                        
                         if(prevObj == null){
                            prevPrice = obj.yday_close_price;
                         }else{
+                               prevTotalVolume =  prevObj.total_volume
                             prevPrice = prevObj.close_price
                         }
                         var close_price = obj.close_price
 
                        color =  this.getColor(close_price, prevPrice)
+
+                        obj.new_volume =  obj.total_volume - prevTotalVolume;
 
                        if(color == this.colors.red){
                             this.bearVolume += obj.new_volume;

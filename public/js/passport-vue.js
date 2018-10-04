@@ -21126,14 +21126,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             data.filter(function (obj) {
 
                 _this6.xcat.push(moment(obj.lm_date_time).format("hh:mm"));
+
+                var prevTotalVolume = 0;
+
                 if (prevObj == null) {
                     prevPrice = obj.yday_close_price;
                 } else {
+                    prevTotalVolume = prevObj.total_volume;
                     prevPrice = prevObj.close_price;
                 }
                 var close_price = obj.close_price;
 
                 color = _this6.getColor(close_price, prevPrice);
+
+                obj.new_volume = obj.total_volume - prevTotalVolume;
 
                 if (color == _this6.colors.red) {
                     _this6.bearVolume += obj.new_volume;
