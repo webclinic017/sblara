@@ -38,6 +38,7 @@
                                                 <option value="120">2 Hour</option>
                                                 <option value="1440">Full Day</option>
                                             </select> -->
+
                                         </div>
                                     </div>
                                     <div class="row">
@@ -80,7 +81,7 @@
 
                 setTimeout(() => {
                   $('.'+this.instrument.instrument_code).selectpicker();
-                }, 100);
+                }, 500);
                   return
             }
 
@@ -152,7 +153,7 @@
                         $('.'+this.instrument.instrument_code).val( this.instrument_id)
                         $('.'+this.instrument.instrument_code).selectpicker();
                      this.loadChart()
-                   }, 100);
+                   }, 500);
                 },
 				append(data) {
 					this.chart.series[0].addPoint({color: "#ACB5C3", y: 136000})
