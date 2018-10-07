@@ -17,7 +17,7 @@ class NewsParserController extends Controller
 			if($type == "Q1" || $type == "Q2" || $type == "Q3"){
 				$type.= " Un-audited):";
 			}else if($type == "DIVIDEND"){
-				$type = "The Board of Directors has recommended";
+				$type = "dividend for the year end";
 			}else if ($type == 'mf'){
 				$type = "the Fund has reported Net Asset";
 			}
