@@ -1,12 +1,21 @@
-@section('meta-title', 'Real Time Monitoring Tools Of Share Market Prices')
-@section('meta-description', 'Price and volume chart monitoring. You can monitor multiple shares at a time. Bull and bear volume')
+@section('meta-title','Share Market Analysis Portal For Dhaka Stock Exchange (DSE)')
+@section('meta-description', "First and oldest financial portal based on share markets of Bangladesh. Pioneer in technical analysis of Bangladesh. Our mission is simple - to make you a better investor so that you can invest conveniently at Dhaka stock exchange. Our Stock Bangladesh tool lets you create the web's best looking financial charts for technical analysis. Our Scan Engine shows you the Bangladesh share market's best investing opportunities")
+
 @extends('layouts.metronic.default')
 
+@section('page_heading')
+Market Monitor
+@endsection
+
 @section('content')
-{{-- @include('block.market_summary') --}}
+
+<div id="app" style="min-height: 400px" >
+	<monitor></monitor>
+</div>
 
 
 <script src="{{ url('/js/html2canvas.js')}}"></script>
+{{-- 
 <script type="text/javascript">
 	function setCookie(cname, cvalue, exdays) {
 	    var d = new Date();
@@ -29,7 +38,6 @@
 	    }
 	    return "-1";
 	}
-
 </script>
 <div class="row">
 	<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3" style="padding: 1px;">
@@ -44,26 +52,15 @@
 		<button type="button" id="shotBtn" class="btn btn-primary" style="width: 100%" >Screen Shot</button>
     </div>
 </div>
+
+
 <div class="row">
-	@for ($id = 0; $id < 3; $id++)
+	@for ($id = 0; $id < 9; $id++)
 		<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12" style="padding: 5px; !important">
 	     	@include('block.monitor_chart')
 	    </div>
 	@endfor
-</div>
-<div class="row">
-     @for ($id = 3; $id < 6; $id++)
-		<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12" style="padding: 5px; !important">
-	     	@include('block.monitor_chart')
-	    </div>
-	@endfor
-</div>
-<div class="row">
-	@for ($id = 6; $id < 9; $id++)
-		<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12" style="padding: 5px; !important">
-	     	@include('block.monitor_chart')
-	    </div>
-	@endfor
+
 </div>
 
 <script type="text/javascript">
@@ -93,8 +90,5 @@ $(document).ready(function(){
 	});
 });	
 </script>
-{{-- @include('block.advance_chart')
-@include('block.market_summary')
-@include('block.market_summary') --}}
+ --}}
 @endsection
-
