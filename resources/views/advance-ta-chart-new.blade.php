@@ -208,7 +208,7 @@ $('.save-watchlist').click(function () {
                     hideideas: !0,
                     disabled_features: ["use_localstorage_for_settings", "header_fullscreen_button", "show_dialog_on_snapshot_ready"],
                     //  BEWARE: no trailing slash is expected in feed URL
-                    datafeed: new Datafeeds.UDFCompatibleDatafeed("{{ url('/') }}"),
+                    datafeed: new Datafeeds.UDFCompatibleDatafeed("{{ url('/') }}", 60000),
                     library_path: "/vendor/chart_lib/charting_library/",
                     locale: getParameterByName('lang') || "en",
                     timezone: "Asia/Almaty",
@@ -413,7 +413,7 @@ $('.tree').on('change', '.watchlistsselect', function (e) {
 })
 
 setInterval(function(){
-    getContent()}, 30000)
+    getContent()}, 60000)
 
         </script>
 

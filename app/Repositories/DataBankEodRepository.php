@@ -81,6 +81,7 @@ class DataBankEodRepository {
             }else
             {
                 $returnData['s'] = "no_data";
+                 
                 // $returnData['noData'] = true;
                 // $returnData['nextTime'] = strtotime('yesterday');
             }

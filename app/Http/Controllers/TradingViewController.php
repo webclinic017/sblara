@@ -54,6 +54,10 @@ class TradingViewController extends Controller
         $returnData['description']="$instrumentCode-SB";
         $returnData['sector']='sector';
         $returnData['type']='stock';
+
+        // $returnData['expired']=false;
+        // $returnData['expiration_date']= time()+ 20;
+
         $returnData['supported_resolutions']=array("5","15","30","60","D","2D","3D","W","2W","M","6M");
 
         return $returnData;
@@ -279,6 +283,8 @@ ORDER BY lm_date_time asc ,total_volume asc";
         }
 
        // return response()->view('dashboard', ['trade_date_Info' => $trade_date_Info])->setTtl(1);
+
+
         return response($data)->header('Content-Type', 'application/json');
         //return $data;
 
