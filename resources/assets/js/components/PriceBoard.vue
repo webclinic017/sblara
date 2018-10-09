@@ -4,7 +4,7 @@
 						<div class="col-md-12">
 				<vue-progress-bar></vue-progress-bar>
 			</div>
-		</div>
+		
 
 		<div class="col-md-12 board-panel">
 
