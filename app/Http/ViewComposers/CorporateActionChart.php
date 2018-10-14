@@ -77,7 +77,6 @@ class CorporateActionChart
             $voltemp[]=$data['v'][$i];
             $volume[]=$voltemp;
         }
-
         $newsList=NewsRepository::getAllNewsByInstrumentId($instrument_id)->toArray();
 
         $news_flags=array();
@@ -101,7 +100,7 @@ class CorporateActionChart
         {
             $temp2=array();
 
-            $date=strtotime($ca['record_date'])*1000;
+            $date=strtotime($ca['record_date'])*1000 + (24*60*60*1000);
 
             $temp2['x']=$date;
             $temp2['title']=$ca['action'];

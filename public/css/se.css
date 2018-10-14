@@ -1,6 +1,6 @@
 /*ta chart section cutomization*/
 .page-content-container{
-    overflow: visible;
+    overflow: hidden;
 }
 @media(max-width: 1240px)
 {

@@ -38,38 +38,38 @@
                 </thead>
                 	<tbody>
                 		@php $i = 1;  @endphp
-                		@foreach($cse as $instrument)
+                		@foreach($instruments as $instrument)
                         @php 
                             if(!isset($fundamentals[$instrument->id])){
                                 continue;
                             }
 
-                            // if($instrument->id == 30198){dd($cse[$instrument->id]);}
+                            // if($instrument->id == 30198){dd(@$cse[$instrument->id]);}
                         @endphp
                 		@php $form = [];
-                			@$form[18] = $cse[$instrument->id]->sponsor;
-                			@$form[19] = $cse[$instrument->id]->government;
-                			@$form[20] = $cse[$instrument->id]->institute;
-                			@$form[21] = $cse[$instrument->id]->foreign;
-                			@$form[22] = $cse[$instrument->id]->public;
+                			@$form[18] = @$cse[$instrument->id]->sponsor;
+                			@$form[19] = @$cse[$instrument->id]->government;
+                			@$form[20] = @$cse[$instrument->id]->institute;
+                			@$form[21] = @$cse[$instrument->id]->foreign;
+                			@$form[22] = @$cse[$instrument->id]->public;
                 		 @endphp
                 		<tr>
                 			<td>{{$i++}}</td>
                 			<td>{{$instrument->instrument_code}}</td>
 
-                			<td style="color:@if(@$fundamentals[$instrument->id][18] == @number_format(  $cse[$instrument->id]->sponsor, 2)) green @else @php $form[18] = $cse[$instrument->id]->sponsor @endphp red   @endif" >{{@$fundamentals[$instrument->id][18]}}|{{@number_format($cse[$instrument->id]->sponsor, 2)}}
+                			<td style="color:@if(@$fundamentals[$instrument->id][18] == @number_format(  @$cse[$instrument->id]->sponsor, 2)) green @else @php $form[18] = @$cse[$instrument->id]->sponsor @endphp red   @endif" >{{@$fundamentals[$instrument->id][18]}}|{{@number_format(@$cse[$instrument->id]->sponsor, 2)}}
 
                 			</td>
                 			
-                			<td style="color:@if(@$fundamentals[$instrument->id][19] == @number_format($cse[$instrument->id]->government, 2)) green @else red @php $form[19] = $cse[$instrument->id]->government @endphp   @endif" >{{@$fundamentals[$instrument->id][19]}}|{{@number_format($cse[$instrument->id]->government, 2)}}</td>
+                			<td style="color:@if(@$fundamentals[$instrument->id][19] == @number_format(@$cse[$instrument->id]->government, 2)) green @else red @php $form[19] = @$cse[$instrument->id]->government @endphp   @endif" >{{@$fundamentals[$instrument->id][19]}}|{{@number_format(@$cse[$instrument->id]->government, 2)}}</td>
 
-                			<td style="color:@if(@$fundamentals[$instrument->id][20] == @number_format($cse[$instrument->id]->institute, 2)) green @else red   @php $form[20] = $cse[$instrument->id]->institute @endphp    @endif" >{{@$fundamentals[$instrument->id][20]}}|{{@number_format($cse[$instrument->id]->institute, 2)}}</td>
+                			<td style="color:@if(@$fundamentals[$instrument->id][20] == @number_format(@$cse[$instrument->id]->institute, 2)) green @else red   @php $form[20] = @$cse[$instrument->id]->institute @endphp    @endif" >{{@$fundamentals[$instrument->id][20]}}|{{@number_format(@$cse[$instrument->id]->institute, 2)}}</td>
                 			
-                			<td style="color:@if(@$fundamentals[$instrument->id][21] == @number_format($cse[$instrument->id]->foreign, 2)) green @else red   @php $form[21] = $cse[$instrument->id]->foreign @endphp  @endif" >{{@$fundamentals[$instrument->id][21]}}|{{@number_format($cse[$instrument->id]->foreign, 2)}}</td>
+                			<td style="color:@if(@$fundamentals[$instrument->id][21] == @number_format(@$cse[$instrument->id]->foreign, 2)) green @else red   @php $form[21] = @$cse[$instrument->id]->foreign @endphp  @endif" >{{@$fundamentals[$instrument->id][21]}}|{{@number_format(@$cse[$instrument->id]->foreign, 2)}}</td>
 
-                			<td style="color:@if(@$fundamentals[$instrument->id][22] == @number_format($cse[$instrument->id]->public, 2)) green @else red   @php $form[22] = $cse[$instrument->id]->public @endphp  @endif" >{{$fundamentals[$instrument->id][22]}}|{{@number_format($cse[$instrument->id]->public, 2)}}</td>
+                			<td style="color:@if(@$fundamentals[$instrument->id][22] == @number_format(@$cse[$instrument->id]->public, 2)) green @else red   @php $form[22] = @$cse[$instrument->id]->public @endphp  @endif" >{{$fundamentals[$instrument->id][22]}}|{{@number_format(@$cse[$instrument->id]->public, 2)}}</td>
                 		
-                			<td style="color:@if(explode(' ', @$fundamentals[$instrument->id]['meta_date'])[0] == $cse[$instrument->id]->meta_date) green @php  $type = "update" @endphp  @else @php $type = "insert" @endphp red   @endif" >{{explode(' ', $fundamentals[$instrument->id]['meta_date'])[0]}}|{{$cse[$instrument->id]->meta_date}}</td>
+                			<td style="color:@if(explode(' ', @$fundamentals[$instrument->id]['meta_date'])[0] == @$cse[$instrument->id]->meta_date) green @php  $type = "update" @endphp  @else @php $type = "insert" @endphp red   @endif" >{{explode(' ', $fundamentals[$instrument->id]['meta_date'])[0]}}|{{@$cse[$instrument->id]->meta_date}}</td>
 
                 			<td>
 <!-- Trigger the modal with a button -->
@@ -94,7 +94,7 @@
 									</div>
 									<div class="form-group">
 										<label for="">Meta Date</label>
-										<input type="date" name="meta_date" class="form-control" value="{{$cse[$instrument->id]->meta_date}}">
+										<input type="date" name="meta_date" class="form-control" value="{{@$cse[$instrument->id]->meta_date}}">
 									</div>
 
 									@foreach($form as  $meta_id => $meta_value)

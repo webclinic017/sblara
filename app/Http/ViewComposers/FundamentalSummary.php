@@ -60,9 +60,11 @@ class FundamentalSummary
         $public_securities=(int)(($share_percentage_public/100)*$total_no_securities);
         $market_cap=round(($total_no_securities*$cp)/1000000,2);
         $public_cap=round(($public_securities*$cp)/1000000,2);
-        $earning_per_share=isset($fundaData['earning_per_share'][$instrument_id])?$fundaData['earning_per_share'][$instrument_id]->meta_value:'N/A';
-        $earning_per_share_year=isset($fundaData['earning_per_share'][$instrument_id])?$fundaData['earning_per_share'][$instrument_id]->meta_date->format('d-M-Y'):'N/A';
 
+        $earning_per_share=isset($fundaData['earning_per_share'][$instrument_id])?$fundaData['earning_per_share'][$instrument_id]->meta_value:'N/A';
+
+
+        $earning_per_share_year=isset($fundaData['earning_per_share'][$instrument_id])?$fundaData['earning_per_share'][$instrument_id]->meta_date->format('d-M-Y'):'N/A';
         $category=category($last_trade_info[0]);
 
 
@@ -89,7 +91,6 @@ ORDER BY fundamentals.meta_date DESC";
         if($year_end->isPast())
             $year_end->addYear();
         $fundaData['year_end']->first()->meta_value=$year_end;
-
 
         $view->with('epsData', $epsData)
             ->with('audited_pe',$audited_pe)

@@ -56,7 +56,7 @@ from (SELECT f1.instrument_id, f1.meta_id, f1.meta_value, max(f1.meta_date) meta
    where instruments.active = '1'
 ";
 $instruments = \DB::select(\DB::raw($q));
-// dd($instruments);
+
 $i = 1;
 ?>
 

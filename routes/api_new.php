@@ -8,7 +8,11 @@ Route::get("/instruments", function ()
 Route::get("/instruments/{id}/intraday", function ($id)
 {
 
-	return \App\DataBanksIntraday::where('trade_date', lastTradeDate())->where('instrument_id', $id)->select("close_price", "yday_close_price", "high_price", "instrument_id", "low_price", "open_price", "total_trades", "total_value", "total_volume", "lm_date_time", "new_volume")->groupBy('trade_time')->get();
+	$date = request('date');
+	if(!$date){
+		$date = lastTradeDate();
+	}
+	return \App\DataBanksIntraday::where('trade_date', $date)->where('instrument_id', $id)->select("close_price", "yday_close_price", "high_price", "instrument_id", "low_price", "open_price", "total_trades", "total_value", "total_volume", "lm_date_time", "new_volume")->groupBy('trade_time')->get();
 });
 
 Route::get("/intraday", function ()

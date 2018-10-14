@@ -23,9 +23,23 @@ class SharePercetageCseController extends Controller
     	 		$data[$fundamental->instrument_id][$fundamental->meta_id] = $fundamental->meta_value;
     	 		$data[$fundamental->instrument_id]['meta_date'] = $fundamental->meta_date;
     	 	}
-    	 	$fundamentals = $data;
+    	 
 
-    	// $instruments = \DB::select($sql);
+        $instruments =\App\Instrument::orderBy('instrument_code', 'asc')->whereNotIn('sector_list_id', [5, 23, 22])->where('active', '=', '1')->get();
+            
+        foreach ($instruments as $key => $value) {
+            if(!isset($data[$value->id])){
+                $data[$value->id][18] = "";
+                $data[$value->id][19] = "";
+                $data[$value->id][20] = "";
+                $data[$value->id][21] = "";
+                $data[$value->id][22] = "";
+                $data[$value->id]['meta_date'] = "";
+
+            }
+        }
+            $fundamentals = $data;
+        // dd($instruments);
     	return view('share-percentage-cse')->with(compact(['instruments', 'cse', 'fundamentals']));
     }
 
@@ -33,8 +47,9 @@ class SharePercetageCseController extends Controller
     {
     	$d = date('Y-m-d');
     	$ids = collect(\DB::select('select instrument_id from cse_share_percentage where created_at like "'.$d.'%"'))->pluck('instrument_id');
+
     	$instruments =\App\Instrument::whereNotIn('id', $ids)->orderBy('instrument_code', 'asc')->whereNotIn('sector_list_id', [5, 23, 22])->where('active', '=', '1')->take(5)->get();
-        
+        // dd($instruments);
     	$rows = [];
     	foreach ($instruments as  $instrument) {
             // dump($instrument->instrument_code);

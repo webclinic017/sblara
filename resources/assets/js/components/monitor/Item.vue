@@ -28,7 +28,7 @@
                                         </div>
                                         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 
-                                        <!-- <datepicker :format="'yyyy-MM-dd'"  @input="date"  v-model="date"  input-class="form-control"></datepicker> -->
+                                        <datepicker :format="humanizeDate" @closed="onDateChange()"  v-model="selectedDate"  input-class="form-control"></datepicker>
 <!--                                             <select name="period" id="period" class="form-control selectpicker" data-live-search="true">
                                                 <option value="-1">Time range</option>
                                                 <option value="15">15 Minute</option>
@@ -105,7 +105,7 @@
 				chartTab: true,
                 data: null,
 				instrument_id: -1,
-                date: '',
+                selectedDate: new Date(),
 				instrument: {
 					instrument_code: 'No data',
                     id: 9
@@ -118,6 +118,7 @@
 				updated_at: '',
 				totalVolume: 0,
 				bullVolume: 0,
+                moment: moment(),
 				bearVolume: 0,
 				neutralVolume: 0,
 				chartColor: "#1BA39C",
@@ -132,6 +133,13 @@
             }
         },
 		methods: {	
+                isToday(){
+                    return moment(this.selectedDate).format("YYYY-MM-DD") == moment(new Date).format("YYYY-MM-DD")
+                },
+                humanizeDate(date){
+                    return moment(date).format("(ddd) Do MMM YYYY");
+                }
+                ,
                 switchTab(val){
                         if(!val){
                             this.depthHtml = this.depthLoading();
@@ -141,6 +149,10 @@
                         }
                         this.chartTab = val;
                 },
+                onDateChange(){
+                    this.getData()
+                }
+                ,
                 onDataUpdate(){
                     if(this.intradays[this.instrument_id]){
                         this.processData(this.intradays[this.instrument_id]);
@@ -168,15 +180,22 @@
 
                     this.setInstrument()
                     
-                    axios.get("/api/instruments/"+this.instrument.id+"/intraday").then((respons)=>{
-                       this.intradays[this.instrument.id] = respons.data;
-                        this.processData(respons.data);
-                        this.loadChart()
-                    })
+                    this.getData()
 					
 					// this.loadInstrumentData();
 
 				},
+                getData(){
+                    var date = "";
+                    if(!this.isToday()){
+                        date="?date="+moment(this.selectedDate).format("YYYY-MM-DD")
+                    }
+                    axios.get("/api/instruments/"+this.instrument.id+"/intraday"+date).then((respons)=>{
+                       this.intradays[this.instrument.id] = respons.data;
+                        this.processData(respons.data);
+                        this.loadChart()
+                    })                    
+                },
                  setInstrument() {
                     this.instrument = this.instruments.filter(obj => {
                                       return obj.id == this.instrument_id
@@ -193,6 +212,7 @@
                     this.bullVolume = 0;
                     this.totalVolume = 0;
                     this.neutralVolume = 0;
+                    // this.selectedDate = "";
 
 
                     if(data.length == 0){
@@ -238,7 +258,9 @@
                     //set price color
                     this.chartColor = this.getColor(prevObj.close_price, prevObj.yday_close_price)
                     this.totalVolume = prevObj.total_volume
-                    this.updated_at = moment(prevObj.lm_date_time).toNow(true)+" ago."
+                    this.moment = moment(prevObj.lm_date_time);
+                    this.updated_at = this.moment.toNow(true)+" ago."
+                    this.selectedDate = this.moment.toDate()
                 },
                  getColor(close_price, prevPrice) {
                     var color;

@@ -366,6 +366,7 @@
                                     <div class="row">
                                         
                                     <div class="form-group col-md-6">
+                                       
                                         <label for="">earning_per_share</label>
                                         <input type="text" class="form-control" name="201"  value="{{$n->eps['earning_per_share']}}">
                                         <label class="oldData" style="color:@if($n->eps['earning_per_share']== @$fdata[$n->instrument_id][201]['meta_value']) green @else red  @endif" >{{@$fdata[$n->instrument_id][201]['meta_value']}} <a class='history' > History</a></label>

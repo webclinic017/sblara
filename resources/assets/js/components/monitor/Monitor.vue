@@ -30,7 +30,7 @@
 
 				setInterval(() =>{
 					this.updateData();	
-   				 }, 30000)
+   				 }, 60000)
 			})
 
 		},
@@ -39,7 +39,7 @@
 				instruments: [],
 				items: [],
 				selectedItems: [-1, -1, -1, -1, -1, -1, -1, -1, -1],
-				intradays: null,
+				intradays: [],
 				updatingStatus: true,
 			}
 		},
@@ -49,10 +49,14 @@
 						this.updatingStatus = false;
 						axios.get("/user/settings/monitor_instruments").then((response) => {
 							if(response.data == ""){
-										var savedData = this.$cookies.get("monitor_instruments");
-										if(savedData.split(',').length > 2){
-											this.selectedItems = savedData.split(',');
+										if( this.$cookies){
+											var savedData = this.$cookies.get("monitor_instruments");
+											if(savedData.split(',').length > 2){
+												this.selectedItems = savedData.split(',');
+
+											}
 										}
+
 							}else{
 								this.selectedItems = response.data.split(',');
 							}
@@ -60,18 +64,28 @@
 							this.updateData()
 						})
 				}else{
+
 						var savedData = this.$cookies.get("monitor_instruments");
 						if(savedData){
 							this.selectedItems = savedData.split(',');
 						}
 				}
+					if(this.selectedItems.length < 2){
+						this.selectedItems = [-1, -1, -1, -1,-1, -1, -1, -1,-1];
+					}
 			},
 			updateData(){
 				if(!this.updatingStatus){
 					return;
 				}
 				axios.get('/api/intraday?instruments='+this.getSelectedItems()).then((response)=> {
-
+					// for( var key in response.data){
+					// 	this.intradays[key] = response.data[key]
+					// }
+					// response.data.forEach((e, k) => {
+					// 	console.log(e)
+					// 	console.log(k)
+					// })
 					this.intradays = response.data;
 					this.items = [];
 
@@ -83,7 +97,10 @@
 					setTimeout(() => {
 							var i = 0;
 						this.selectedItems.forEach((e)=>{
-							this.$children[i].onDataUpdate();
+							var child = this.$children[i];
+							if(child.isToday()){
+								child.onDataUpdate();
+							}
 							i++;
 						})						
 					}, 100);
@@ -93,6 +110,14 @@
 			getSelectedItems(){
 				var results = [];
 				for (var i = this.selectedItems.length - 1; i >= 0; i--) {
+					//skip if previous date
+					var child;
+					if( child =  this.$children[i]){
+						if(!this.$children[i].isToday()){
+							continue
+						}
+					}
+					//skip if previous date
 					if(this.selectedItems[i] != -1){
 					results.push(this.selectedItems[i]) 
 					}
@@ -102,6 +127,7 @@
 			save(){
 				if(loggedIn){
 					axios.post("/user/settings/monitor_instruments", {value:this.selectedItems}).then((response)=>{
+						console.log(this.$cookies)
 						this.$cookies.config('300d')
 						this.$cookies.set("monitor_instruments", this.selectedItems)
 						swal("success", "Monitor successfully saved.", "success")
@@ -115,3 +141,6 @@
 		}
 	}
 </script>
+<style scope>	
+	.vdp-datepicker__calendar{right:0;} 
+</style>
