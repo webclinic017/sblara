@@ -535,9 +535,9 @@ ORDER BY lm_date_time DESC) data
         $from=Carbon::parse($from);
         $to=Carbon::parse($to);
 
-
+    
         $eodDataGrouped=DataBanksEod::getEodForCSV($from->format('Y-m-d'),$to->format('Y-m-d'),$instrumentIdArr,$select);
-
+  
 
         $returnArr=array();
 

@@ -56,7 +56,6 @@
 
 											}
 										}
-
 							}else{
 								this.selectedItems = response.data.split(',');
 							}

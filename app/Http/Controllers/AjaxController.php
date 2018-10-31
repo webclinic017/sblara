@@ -347,16 +347,17 @@ class AjaxController extends Controller
     }
     public function price_matrix_data()
     {
-
+        // Cache::forget("price_matrix_data_all");
         $returnData = Cache::remember("price_matrix_data_all", 1, function (){
 
             $from_date = date("Y-m-d", strtotime("-2 month"));
+
             $to_date = date("Y-m-d");
             $instrumentList = InstrumentRepository::getInstrumentsScripWithIndex();
             $sectorList = SectorListRepository::getSectorList()->keyBy('id');
-
+            
             $eodData = DataBankEodRepository::getPriceChangeHistory($from_date, $to_date, array(2, 3, 4, 6, 15, 21, 30), array(), array('close', 'high'));
-
+                // dd($eodData);
             $returnData = array();
             foreach ($eodData as $instrument_id => $data) {
 
@@ -386,7 +387,7 @@ class AjaxController extends Controller
 
             return $returnData;
         });
-
+        
 
         return json_encode($returnData,JSON_NUMERIC_CHECK);
 
@@ -538,7 +539,7 @@ class AjaxController extends Controller
         // echo '({"total":"' . count ( $result ) . '","results":' . $jsonresult . '})';
         echo $jsonresult;
 
-exit;
+       exit;
 
     }
 

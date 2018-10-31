@@ -15,11 +15,15 @@ class AppServiceProvider extends ServiceProvider {
      */
     public function boot() {
 
+        if(request()->has('sedebug')){
+              \Config::set('app.debug', true);
+        }
                    if(isset($_SERVER['REQUEST_URI']) && strpos($_SERVER['REQUEST_URI'], 'admin') === false ){
                         set_time_limit (15);
                    }
 
 
+        
         
         $seconds_to_cache = 60;
         $ts = gmdate("D, d M Y H:i:s", time() + $seconds_to_cache) . " GMT";

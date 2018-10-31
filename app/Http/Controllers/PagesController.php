@@ -232,6 +232,7 @@ dd($eq_arr);
         $lastTradeInfo=DataBanksIntradayRepository::getMinuteData(array($instrument_id),1);
 
         $prevDayTradeInfo=DataBanksIntradayRepository::getYdayMinuteData(array($instrument_id),1)->first()->first();
+
         if(count($lastTradeInfo))
             $lastTradeInfo=$lastTradeInfo->first()->first();
         else

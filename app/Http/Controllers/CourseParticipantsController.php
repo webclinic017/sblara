@@ -55,7 +55,7 @@ class CourseParticipantsController extends Controller
     {
         //
         $batches = CourseBatches::find($id);
-        $participants = CourseParticipants::where('course_batch_id',$id)->get();
+        $participants = CourseParticipants::where('course_batch_id',$id)->orderBy('created_at', 'desc')->get();
         return view('admin_courses.participants.detail', ['batches' => $batches, 'participants' => $participants]);
     }
 

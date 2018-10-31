@@ -15,7 +15,7 @@
         <tr>
             <th colspan="2">
                 <strong>                                          
-                    <a href="/batches/{{$batch->id}}" target="_blank" title="Show details">
+                    <a href="/courses/upcoming-courses/batches/{{$batch->id}}" target="_blank" title="Show details">
                         {{$batch->course_name}} 
                     </a>
                     </strong>

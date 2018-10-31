@@ -18,7 +18,7 @@ class CourseManageController extends Controller
      */
     public function index()
     {
-        $batches = CourseBatches::all();
+        $batches = CourseBatches::orderBy('id', 'desc')->get();
         return view('admin_courses.batches.list', ['batches' => $batches]);
     }
 

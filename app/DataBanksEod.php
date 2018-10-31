@@ -90,7 +90,7 @@ class DataBanksEod extends Model
         } else {
             $fromDate = $howManyDays;
         }
-
+ 
         $query = static::whereBetween('date', [$fromDate, $toDate])->orderBy('date', 'desc');
 
         if (!empty($instrumentIdArr))
@@ -105,11 +105,14 @@ class DataBanksEod extends Model
         }
 
         $dataBankall = $query->get();
-        $dataBankall = $dataBankall->groupBy('instrument_id');
 
+        $dataBankall = $dataBankall->groupBy('instrument_id');
+        // dump($dataBankall);
+        // die();
         //eliminating duplicate if exist (some duplicate data available. We have to prevent this in future)
 
         $eodData = array();
+
         foreach ($dataBankall as $instrument_id => $dataBankallGroup) {
 
             $instrumentInfo = InstrumentRepository::getInstrumentsById($instrument_id);
@@ -119,11 +122,11 @@ class DataBanksEod extends Model
                 continue;
             }
             $dataBankallGroup = $dataBankallGroup->groupBy('market_id');
-            foreach ($dataBankallGroup as $eachTradeDate) {
-                $volume = 0;
-                foreach ($eachTradeDate as $eachData)  // to eliminate duplicate data. We will take higher volume data
-                {
+            foreach ($dataBankallGroup as $key => $eachTradeDate) {
 
+                $volume = 0;
+                foreach ($eachTradeDate as $k => $eachData)  // to eliminate duplicate data. We will take higher volume data
+                {
                     if ($eachData->volume > $volume) {
                         $data = clone $eachData;
                         $data->code = $instrument_code;
@@ -131,14 +134,18 @@ class DataBanksEod extends Model
                         $volume = $eachData->volume;
 
                     }
+
                 }
                 $eodData[$instrument_id][] = $data;
+
             }
             // dd($eodData[$instrument_id][0]);
         }
 
 
+        // dd($eodData);
         return $eodData;
+
 
     }
 

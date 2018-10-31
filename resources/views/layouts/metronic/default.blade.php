@@ -10,6 +10,97 @@
     <!-- END HEAD -->
 
     <body class="page-header-fixed page-sidebar-closed-hide-logo page-md">
+{{-- anouncements --}}
+@php 
+$course = \App\CourseParticipants::getActiveCourse();
+@endphp
+@if($course)
+      <style>
+        .anouncement{
+          color:#fff;
+          height: 30px;
+          line-height: 30px;
+          width:100%;
+          /*cursor: pointer;*/
+          text-align: center;
+          position: fixed;
+          top:0;
+          z-index: 9999;
+          white-space: nowrap;
+        }
+        .navbar-fixed-top{
+          margin-top:30px !important; 
+        }
+        @media only screen and (min-width: 1000px) {
+        .navbar{
+          margin-top: 37px !important;
+        }
+        }
+        #course {
+          background: url("/img/course2.jpg")  no-repeat center center;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+            padding-right: 0 !important;
+        }
+        .anouncement a{
+            color:#ccc !important;
+            font-weight: bold;
+        }
+        .course-background{
+          /*color:#fff !important;*/
+          background: #fff;
+          /*background: rgba(0,0,0, .8);*/
+          height: 100%;
+        }
+         #course .close{
+/*          background: none !important;
+          color:#fff !important;*/
+        }
+
+        #course .modal-header{   
+           border-bottom: 1px solid #e5e5e522;
+        }
+      </style>
+    
+
+     <div id="course" class="modal fade" tabindex="-1" data-width="760">
+        <div class="course-background">
+
+              <div class="modal-header">
+                  <button type="button" class="close" style="color:#fff !important" data-dismiss="modal" aria-hidden="true">xsdfdsfsffsfsdfdsf</button>
+                  <h4 class="modal-title">Upcoming Course - 20th Jan (Friday - Saturday)</h4>
+              </div>
+              <div class="modal-body">
+                  <div class="row">
+                        
+                        <div class="col-md-12">
+                          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores temporibus sint accusamus harum ea hic, consectetur possimus cum excepturi non doloribus voluptate, saepe deleniti cupiditate reiciendis quam numquam. Itaque, magni.
+                        </div>
+
+                  </div>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" data-dismiss="modal" class="btn btn-outline dark">Close</button>
+                  <button type="button" class="btn green">Save changes</button>
+              </div>
+
+
+        </div>
+
+      </div>
+
+      <div style="background: {{$course[0]->color}}" class="anouncement" {{-- data-toggle="modal" href="#course" --}} >
+         <marquee onmouseover="this.stop();" onmouseout="this.start();">
+           {!!$course[0]->topScrollBangla!!}
+         </marquee>
+      </div>
+@endif
+{{-- anouncements --}}
+
+
+
     <div id="fb-root"></div>
     <script>(function(d, s, id) {
       var js, fjs = d.getElementsByTagName(s)[0];
@@ -34,22 +125,22 @@
                      </div>
 
                    <!-- BEGIN ads beneath the main menu -->
-                      @include('ads.under_the_menu_1')
+                      {{-- @include('ads.under_the_menu_1') --}}
                    <!-- END ads beneath the main menu -->
 
 
 
 
-                     <div class="alert alert-info alert-danger">
+  {{--                    <div class="alert alert-info alert-danger">
                          <button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>
 
-                                                  {{-- Dear valued visitors, we have released our new Screener. Please 
+                                                  Dear valued visitors, we have released our new Screener. Please 
                          <a target="_blank" href="{{url('/screeners')}}" class="alert-link"> click here  </a> to check this one as well.
-                         If you have any suggestion, you can drop an email to info@stockbangladesh.com --}}
+                         If you have any suggestion, you can drop an email to info@stockbangladesh.com
 
                          Due to high load unfortunately our free version of amibroker plugin is unavailable.  mail to info@stockbangladesh.com for any query
 
-                     </div>
+                     </div> --}}
 
                         @if(session()->has('success'))
                      <div class="alert alert-success">

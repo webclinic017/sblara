@@ -13,7 +13,7 @@ class DataBanksIntraday extends Model {
      */
 
     protected $appends = array('price_change', 'price_change_per', 'date_timestamp');
-
+    
     protected $dates = [
         'lm_date_time',
 
@@ -168,16 +168,24 @@ class DataBanksIntraday extends Model {
 
         $returnData = Cache::remember("$cacheVar", 1, function () use ($tradeDate, $exchangeId, $minute, $instrumentsIdArr) {
 
-                    $m = new Market();
-                    $activeDate = $m->getActiveDates(2, $tradeDate, $exchangeId);
-                    $marketId = $activeDate[1]->id;
+                    // $m = new Market();
+                    // $activeDate = $m->getActiveDates(2, $tradeDate, $exchangeId);
+                    // $marketId = $activeDate[1]->id;
 
-                    $query = static::where('market_id', $marketId)->orderBy('lm_date_time', 'desc');
+                    // $query = static::where('market_id', $marketId)->orderBy('lm_date_time', 'desc');
+
+
+                    $query = \App\Instrument::select('data_banks_intradays.*')->leftJoin('data_banks_intradays', function ($q)
+                    {
+                        $q->on('instruments.batch_id', "=", 'batch');
+                        $q->on('instruments.id', "=", 'instrument_id');
+                    })->orderBy('lm_date_time', 'desc');
 
                     if ($minute) {
-                        $batch = $activeDate[1]->data_bank_intraday_batch - ($minute - 1);
-                        $query->where('batch', '>=', $batch);
+                        // $batch = $activeDate[1]->data_bank_intraday_batch - ($minute - 1);
+                        // $query->where('batch', '>=', $batch);
                     }
+
                     if (!empty($instrumentsIdArr)) {
                         $query->whereIn('instrument_id', $instrumentsIdArr);
                     }
@@ -186,7 +194,7 @@ class DataBanksIntraday extends Model {
                    $query->where('instrument_id', '!=', 10001)->where('instrument_id', '!=', 10002)->where('instrument_id', '!=', 10006)->where('instrument_id', '!=', 10003);
 
                     $returnData = $query->get();
-
+                    // dd($returnData);
                     return $returnData;
                 });
 
