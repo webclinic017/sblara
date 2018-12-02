@@ -2,7 +2,7 @@
 
 
 <div class="row global-ui" style="margin-right: 0">
-<div class="col-md-12 share-list" style="z-index: 99; max-width:300px;">
+<div class="col-md-12 share-list"  max-width:300px;">
     <div class="form-group">
         <div class="input-group select2-bootstrap-prepend " style="max-width: 300px">
             <span class="input-group-btn">

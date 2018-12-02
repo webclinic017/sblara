@@ -106,8 +106,6 @@ class Market extends Model
                 $returnData = static::whereHas('exchange', function($q) use($exchangeId) {
                     $q->where('exchange_id',$exchangeId);
                 })->whereDate('trade_date','<=',DB::raw('CURDATE()'))->where('data_bank_intraday_batch','>',0)->orderBy('trade_date', 'desc')->skip(0)->take($limit)->get();
-
-
             }else
             {
                 $returnData = static::whereHas('exchange', function($q) use($exchangeId) {

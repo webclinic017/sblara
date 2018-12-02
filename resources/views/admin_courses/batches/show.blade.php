@@ -7,7 +7,7 @@
 @section('content')
 <div class="row">
   <div class="col-md-12 right">
-    <h1 class="font-blue-soft"><strong>Exclusive Training Program on {{ $batch->course->course_name }}</strong></h1>
+    <h2 class="font-blue-soft"><strong>Exclusive Training Program on {{ $batch->course->course_name }}</strong></h2>
   </div>
 </div>
 <div class="row">
@@ -17,7 +17,48 @@
 </div>
 
 <div class="row">
+  <div class="col-md-12" style="text-align: center; margin:20px;">
+    <a href="{{ route('registration.create', $batch->id) }}" class="btn btn-default blue-soft">Register Online</a>
+  </div>
+</div>
+
+<div class="row">
+  @push('css')
+    <style>
+      @media only screen and (min-width: 425px) {
+
+      }
+  </style>
+  @endpush
+
+  <div class="col-md-12 course-bg" style="margin-bottom: 20px;">
+    <img src="/img/course.jpg" alt="" class="img-responsive">
+    <small>
+         Last batch (70th Basic Technical Analysis) was lively. We could not accept every applicant as our seats were limited.
+    </small>
+  <br>
+  </div>
+</div>
+
+<div class="row">
   <div class="col-md-8 left-pannel">
+
+    <div class="col-md-12 title">
+      {{ !empty($batch->course->course_details_title)?$batch->course->course_details_title:'Course Details' }}
+    </div>
+    <div class="col-md-12 content">
+      {!! !empty($batch->course->course_details)?$batch->course->course_details:'' !!}
+    </div>
+
+      <div class="col-md-12 title">
+        {{ !empty($batch->course->course_benefit_title)?$batch->course->course_benefit_title:'Course Benefit' }}
+      </div>
+    <div class="col-md-12 content">
+      {!! !empty($batch->course->course_benefit)?$batch->course->course_benefit:'' !!}
+    </div>
+
+
+
     <div class="col-md-12 title">
       {{ !empty($batch->course->course_overview_title)?$batch->course->course_overview_title:'Training Overview' }}
     </div>
@@ -33,23 +74,13 @@
     <div class="col-md-12 title">
       {{ !empty($batch->course->why_sb_title)?$batch->course->why_sb_title:'Why StockBangladesh Ltd' }}
     </div>
-    <div class="col-md-12 content">
-      {!! !empty($batch->course->why_sb)?$batch->course->why_sb:'' !!}
-    </div>
-    <div class="col-md-12 title">
-      {{ !empty($batch->course->course_benefit_title)?$batch->course->course_benefit_title:'Course Benefit' }}
-    </div>
-    <div class="col-md-12 content">
-      {!! !empty($batch->course->course_benefit)?$batch->course->course_benefit:'' !!}
-    </div>
+
+              <div class="col-md-12 content">
+            {!! !empty($batch->course->why_sb)?$batch->course->why_sb:'' !!}
+          </div>
 
     <!-- Course content -->
-    <div class="col-md-12 title">
-      {{ !empty($batch->course->course_details_title)?$batch->course->course_details_title:'Course Details' }}
-    </div>
-    <div class="col-md-12 content">
-      {!! !empty($batch->course->course_details)?$batch->course->course_details:'' !!}
-    </div>
+
     <!-- No Smoking -->
     <div class="col-md-12 title">
     </div>
@@ -66,12 +97,12 @@
       Training Details
     </div>
     <div class="col-md-12 content">
-      <b>Start Date:</b> {{ $batch->c_start_date }}<br>
-      <b>End Date:</b> {{ $batch->c_end_date }}<br>
+      <b>Start Date:</b> {{ date('d F y', strtotime($batch->c_start_date)) }}<br>
+      <b>End Date:</b> {{ date('d F y', strtotime($batch->c_end_date)) }}<br>
       <b>Days in Week:</b> {{ $batch->course_days_oftheweek }}<br>
       <b>Duration:</b> {{ $batch->course_duration }}<br>
       <b>Time:</b> {{ $batch->c_start_time }}-{{ $batch->c_end_time }}<br>
-      <b>Last Date of Reg.: </b>{{ $batch->c_reg_last_date }}<br>
+      <b>Last Date of Reg.:</b> {{ date('d F y', strtotime($batch->c_reg_last_date)) }}<br>
       <b>Training Fees:</b> BDT {{ $batch->course_fees }} - per Participant<br>
     </div>
 
@@ -159,7 +190,7 @@
 
 </div>
 <div class="row">
-  <div class="col-md-4 col-md-offset-5">
+  <div class="col-md-4 col-md-offset-5" style="margin-top: 20px">
     <a href="{{ route('registration.create', $batch->id) }}" class="btn btn-default blue-soft">Register Online</a>
   </div>
 </div>

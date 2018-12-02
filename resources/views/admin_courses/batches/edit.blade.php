@@ -33,12 +33,13 @@
               </div>
               <div class="form-group">
                 <label for="course_venue_id">Venue:</label>
+                {{-- {!!dump($venues)!!} --}}
                 <select id="course_venue_id" name="course_venue_id" class="bs-select form-control select-filter" data-live-search="true">
           				@foreach($venues as $venue)
           					<option value="{{$venue->venue_id}}"
                       @if ($venue->venue_id==$course_batch->course_venue_id)
                         selected
-                      @endif>{{$course->course_name}}</option>>{{$venue->venue_name}}</option>
+                      @endif>{{$venue->venue_name}}</option>
           				@endforeach
           			</select>
               </div>
@@ -73,11 +74,11 @@
               </div>
               <div class="form-group">
                 <label for="c_end_date">End Date:</label>
-                <input data-provide="datepicker" class="form-control datepicker" id="c_end_date" name="c_end_date" value="{{$course_batch->c_start_date}}">
+                <input data-provide="datepicker" class="form-control datepicker" id="c_end_date" name="c_end_date" value="{{$course_batch->c_end_date}}">
               </div>
               <div class="form-group">
                 <label for="course_days_oftheweek">Course Days of the Week i.e Friday:</label>
-                <input class="form-control" id="course_days_oftheweek" name="course_days_oftheweek" value="{{$course_batch->c_start_date}}">
+                <input class="form-control" id="course_days_oftheweek" name="course_days_oftheweek" value="{{$course_batch->course_days_oftheweek}}">
               </div>
               <div class="form-group">
                 <label for="c_reg_last_date">Last Date of Registration:</label>
@@ -85,7 +86,7 @@
               </div>
               <div class="form-group">
                 <label for="c_start_time">Start Time:</label>
-                <input data-provide="timepicker" class="form-control" id="c_start_time" name="c_start_time" value="{{$course_batch->c_start_date}}">
+                <input data-provide="timepicker" class="form-control" id="c_start_time" name="c_start_time" value="{{$course_batch->c_start_time}}">
               </div>
 
               <div class="form-group">

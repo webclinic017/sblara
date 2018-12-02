@@ -11,13 +11,18 @@ class CourseParticipants extends Model
     protected $table = "course_participants";
     //public $timestamps = false;
 
-    static public function getActiveCourse()
+    static public function getActiveCourse($admin = false)
     {
-        $course_batches =  DB::select(
+      $q = 
           "SELECT b.id, b.batch_name, b.c_start_date, b.c_start_time,b.c_end_date, b.c_end_time, b.course_fees, b.course_duration, c.id as c_id, c.course_name, d.venue_id, d.venue_name
            FROM course_batches AS b, courses AS c, course_venues AS d
-           WHERE b.course_id = c.id AND b.course_venue_id = d.venue_id AND (b.batch_status = 'upcoming' OR b.batch_status='running') ORDER BY b.c_start_date asc"
-        );
+           WHERE b.course_id = c.id AND b.course_venue_id = d.venue_id AND (b.batch_status = 'upcoming' OR b.batch_status='running') ";
+           if($admin == false){
+            $q .= "and b.c_reg_last_date > '".date('Y-m-d: 00:00:00')."' ";
+           }
+           $q .= "ORDER BY b.c_start_date asc";
+        ;
+        $course_batches =  DB::select($q);
 
         //$course_batches = CourseBatches::where('c_start_date', '>=', date("Y-m-d H:i:s"))->where('c_reg_last_date', '>=', date("Y-m-d H:i:s"))->get();
         for($i = 0; $i < count($course_batches); $i++){
@@ -34,16 +39,16 @@ class CourseParticipants extends Model
 
     public static function getTopScrollBangla($course)
     {
-        $datetime1 = new \DateTime($course->c_start_date);
-        $datetime2 = new \DateTime($course->c_end_date);
+        $datetime1 = new \DateTime(explode(' ', $course->c_start_date)[0]);
+        $datetime2 = new \DateTime(explode(' ', $course->c_end_date)[0]);
         $interval = $datetime1->diff($datetime2);
 
-
       // $a = toBangla(date_diff(new \DateTime($course->c_start_date), new \DateTime($course->c_end_date), false));
-      $interval = toBangla($interval->format('%a'));
+      $interval = toBangla($interval->format('%a') + 1);
      
+
         $batch =  preg_replace("/[^0-9]/", '', $course->batch_name);
-        $string = "বাংলাদেশে প্রথম শেয়ার মার্কেটের প্রযুক্তিগত বিশ্লেষণকারী কোম্পানি \"স্টক বাংলাদেশ লিমিটেড\" এর '".$course->course_name."' কোর্সটির ".toBangla((int) $batch)."তম ব্যাচ শুরু হতে যাচ্ছে আগামী ".toBangla(date('d', strtotime($course->c_start_date)))." ".toBangla(date('M', strtotime($course->c_start_date))).", ".toBangla(date('Y', strtotime($course->c_start_date)))." ইং। ".$interval."দিনের এই কোর্সটি চলবে ".toBangla(date('D', strtotime($course->c_start_date)))." থেকে ".toBangla(date('D', strtotime($course->c_end_date)))." সকাল ".toBangla(substr($course->c_start_time, 0, 5))." ঘটিকা থেকে সন্ধ্যা ".toBangla(substr($course->c_end_time, 0, 5))." ঘটিকা পর্যন্ত। কোর্স ফি- ".toBangla($course->course_fees)." টাকা। কোর্স শেষে প্রত্যেক অংশগ্রহণকারীকে সার্টিফিকেট প্রদান করা হবে। পরিবর্তনশীল শেয়ার বাজার সম্পর্কে জানতে আপনাকেও আপডেটেড হওয়াটা জরুরী। মার্কেট সম্পর্কে জ্ঞান অর্জন করে জেনে-বুঝে বিনিয়োগ করুন, কাঙ্খিত মুনাফা অর্জন করুন। রেজিষ্ট্রেশন করতে কল করুন- <a href=\"tel:01929912878\">০১৯২৯ ৯১ ২৮ ৭৮</a>, অথবা বিস্তারিত জানতে <a href=\"/courses/upcoming-courses/batches/".$course->id."\">এখানে ক্লিক করুন</a>";
+        $string = "বাংলাদেশে প্রথম শেয়ার মার্কেটের প্রযুক্তিগত বিশ্লেষণকারী কোম্পানি \"স্টক বাংলাদেশ লিমিটেড\" এর '".$course->course_name."' কোর্সটির ".toBangla((int) $batch)."তম ব্যাচ শুরু হতে যাচ্ছে আগামী ".toBangla(date('d', strtotime($course->c_start_date)))." ".toBangla(date('M', strtotime($course->c_start_date))).", ".toBangla(date('Y', strtotime($course->c_start_date)))."। ".$interval."দিনের এই কোর্সটি চলবে ".toBangla(date('D', strtotime($course->c_start_date)))." থেকে ".toBangla(date('D', strtotime($course->c_end_date)))." সকাল ".toBangla(substr($course->c_start_time, 0, 5))." থেকে সন্ধ্যা ".toBangla(substr($course->c_end_time, 0, 5))." পর্যন্ত। কোর্স ফি- ".toBangla(number_format($course->course_fees))." টাকা। কোর্সে অংশগ্রহণকারীকে সার্টিফিকেট প্রদান করা হবে। পরিবর্তনশীল শেয়ার বাজার সম্পর্কে আপনাকেও আপডেটেড হওয়াটা জরুরী। মার্কেট সম্পর্কে জ্ঞান অর্জন করে জেনে-বুঝে বিনিয়োগ করুন, কাঙ্খিত মুনাফা অর্জন করুন। রেজিষ্ট্রেশন করতে কল করুন- <a href=\"tel:01929912878\">০১৯২৯ ৯১ ২৮ ৭৮</a>, অথবা বিস্তারিত জানতে <a href=\"/courses/upcoming-courses/batches/".$course->id."\">এখানে ক্লিক করুন</a>";
          self::getColor();
           return $string;
     }
@@ -51,25 +56,24 @@ class CourseParticipants extends Model
         $d = (int) date('d')/7;
         if($d < 1){
           // return "#1BBC9B";
-          
-          return "#9A12B3";
+          return "#1BBC9B";
         }
         if($d < 2){
           // return "#E43A45";
-          return "#9A12B3";
+          return "#1BBC9B";
         }
         if($d < 3){
           // return "#9A12B3";
-          return "#9A12B3";
+          return "#1BBC9B";
         }
         if($d < 4){
           // return "#1BBC9B";
-          return "#9A12B3";
+          return "#1BBC9B";
         }
         if($d < 5){
           // return "#E43A45";
           // return "#1BBC9B";
-          return "#9A12B3";
+          return "#1BBC9B";
           // return "#E43A45";
           // return "#1BBC9B";
         }

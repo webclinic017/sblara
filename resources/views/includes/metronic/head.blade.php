@@ -36,6 +36,7 @@
                     window.Laravel = {!! json_encode([
                         'csrfToken' => csrf_token(),
                     ]) !!};
+                    var urlName = '{{\Request::route()->getName()}}';
                     var loggedIn = {{\Auth::guest()?'false':'true'}};
             </script>
 

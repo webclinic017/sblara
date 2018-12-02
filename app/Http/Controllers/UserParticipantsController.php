@@ -52,12 +52,12 @@ class UserParticipantsController extends Controller
            'p_name' => 'required',
            'p_email' => 'required|email',
            'p_phone' => 'required',
-           'p_address' => 'required',
-           'p_profession' => 'max:100',
-           'p_organisation' => 'max:100',
-           'p_designation' => 'max:100',
-           'where_heard' => 'max:100',
-           'p_comments' => 'max:255'
+           // 'p_address' => 'required',
+           // 'p_profession' => 'max:100',
+           // 'p_organisation' => 'max:100',
+           // 'p_designation' => 'max:100',
+           // 'where_heard' => 'max:100',
+           // 'p_comments' => 'max:255'
 
         ]);
 
@@ -66,11 +66,11 @@ class UserParticipantsController extends Controller
         $participant->p_name = $request->input('p_name');
         $participant->p_email = $request->input('p_email');
         $participant->p_phone = $request->input('p_phone');
-        $participant->p_address = $request->input('p_address');
-        $participant->p_profession = $request->input('p_profession');
-        $participant->p_organisation = $request->input('p_organisation');
-        $participant->p_designation = $request->input('p_designation');
-        $participant->where_heard = $request->input('where_heard');
+        // $participant->p_address = $request->input('p_address');
+        // $participant->p_profession = $request->input('p_profession');
+        // $participant->p_organisation = $request->input('p_organisation');
+        // $participant->p_designation = $request->input('p_designation');
+        // $participant->where_heard = $request->input('where_heard');
         $participant->p_comments = $request->input('p_comments');
         $participant->save();
 

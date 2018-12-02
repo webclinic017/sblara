@@ -68,9 +68,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('plugin:resetEod')->dailyAt('16:00')->withoutOverlapping();
+        $schedule->command('plugin:resetEod')->dailyAt('16:00');
         //$schedule->command('plugin:resetIntra')->dailyAt('17:00')->emailOutputTo('fazalmohammad19@gmail.com');
-        $schedule->command('plugin:resetAdjustedEod')->dailyAt('16:45')->withoutOverlapping();
+        $schedule->command('plugin:resetAdjustedEod')->dailyAt('16:45');
 
        /*$schedule->command('index:generateCustomIndex')->cron('* 10,11,12,13,14 * * 0,1,2,3,4')->when(function () {
             return Market::isMarketOpen();
@@ -84,7 +84,7 @@ class Kernel extends ConsoleKernel
 
         $schedule->command('dse:CalculateSectorIntraday')->cron('* 10,11,12,13,14 * * 0,1,2,3,4')/*->withoutOverlapping()*/;
 
-        $schedule->command('mail:PortfolioEmailReport')->cron('30 15 * * 0,1,2,3,4')->withoutOverlapping();
+        $schedule->command('mail:PortfolioEmailReport')->cron('30 15 * * 0,1,2,3,4');
 
         //filter data update every minutes
                 ////////////////////////////////////////////////////////////////////////
@@ -100,14 +100,14 @@ class Kernel extends ConsoleKernel
         ////////////////////////////////////////////////////////////////////////
 
         //filter data reset daily
-        $schedule->command('filter:EodUnAdjData')->cron('40 16 * * 0,1,2,3,4')->withoutOverlapping();
-        $schedule->command('filter:EodAdjData')->cron('43 16 * * 0,1,2,3,4')->withoutOverlapping();
-        $schedule->command('filter:WeeklyAdjData')->cron('50 16 * * 0,1,2,3,4')->withoutOverlapping();
-        $schedule->command('filter:MonthlyAdjData')->cron('58 16 * * 0,1,2,3,4')->withoutOverlapping();
-        $schedule->command('filter:IntradayData5Minutes')->cron('15 17 * * 0,1,2,3,4')->withoutOverlapping();
-        $schedule->command('filter:IntradayData15Minutes')->cron('25 17 * * 0,1,2,3,4')->withoutOverlapping();
-        $schedule->command('filter:IntradayData30Minutes')->cron('35 17 * * 0,1,2,3,4')->withoutOverlapping();
-        $schedule->command('filter:IntradayData60Minutes')->cron('45 17 * * 0,1,2,3,4')->withoutOverlapping();
+        $schedule->command('filter:EodUnAdjData')->cron('40 16 * * 0,1,2,3,4');
+        $schedule->command('filter:EodAdjData')->cron('43 16 * * 0,1,2,3,4');
+        $schedule->command('filter:WeeklyAdjData')->cron('50 16 * * 0,1,2,3,4');
+        $schedule->command('filter:MonthlyAdjData')->cron('58 16 * * 0,1,2,3,4');
+        $schedule->command('filter:IntradayData5Minutes')->cron('15 17 * * 0,1,2,3,4');
+        $schedule->command('filter:IntradayData15Minutes')->cron('25 17 * * 0,1,2,3,4');
+        $schedule->command('filter:IntradayData30Minutes')->cron('35 17 * * 0,1,2,3,4');
+        $schedule->command('filter:IntradayData60Minutes')->cron('45 17 * * 0,1,2,3,4');
 
     }
 

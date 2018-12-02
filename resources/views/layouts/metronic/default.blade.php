@@ -12,9 +12,17 @@
     <body class="page-header-fixed page-sidebar-closed-hide-logo page-md">
 {{-- anouncements --}}
 @php 
-$course = \App\CourseParticipants::getActiveCourse();
+   
+  if(isset($_GET['action']) && $_GET['action'] == 'closeAnouncement'){
+    $_COOKIE["closeAnouncement"] = 'hide';
+    setcookie("closeAnouncement", "hide", time() + (86400 * 30), "/");
+
+  }
+
+$course = \App\Anouncement::where('expires_at', '>=', date('Y-m-d 00:00:00'))->orderBy('id', 'desc')->get();
+
 @endphp
-@if($course)
+@if(count($course)>0 && !isset($_COOKIE["closeAnouncement"]))
       <style>
         .anouncement{
           color:#fff;
@@ -45,7 +53,7 @@ $course = \App\CourseParticipants::getActiveCourse();
             padding-right: 0 !important;
         }
         .anouncement a{
-            color:#ccc !important;
+            color:#fff !important;
             font-weight: bold;
         }
         .course-background{
@@ -62,40 +70,63 @@ $course = \App\CourseParticipants::getActiveCourse();
         #course .modal-header{   
            border-bottom: 1px solid #e5e5e522;
         }
+        .closeAnouncement{
+          cursor: pointer;
+          color:#fff;
+          position: fixed;
+          top:0;
+          right: 0;
+          background: rgba(0,0,0,.8);
+          height: 30px;
+          width:30px;
+          line-height: 30px;
+          z-index: 999999999999;
+          display: inline-block;
+          text-align: center;
+        }
       </style>
     
 
-     <div id="course" class="modal fade" tabindex="-1" data-width="760">
-        <div class="course-background">
+<script type='text/javascript' src='//cdn.jsdelivr.net/jquery.marquee/1.4.0/jquery.marquee.min.js'></script>
 
-              <div class="modal-header">
-                  <button type="button" class="close" style="color:#fff !important" data-dismiss="modal" aria-hidden="true">xsdfdsfsffsfsdfdsf</button>
-                  <h4 class="modal-title">Upcoming Course - 20th Jan (Friday - Saturday)</h4>
-              </div>
-              <div class="modal-body">
-                  <div class="row">
-                        
-                        <div class="col-md-12">
-                          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores temporibus sint accusamus harum ea hic, consectetur possimus cum excepturi non doloribus voluptate, saepe deleniti cupiditate reiciendis quam numquam. Itaque, magni.
-                        </div>
-
-                  </div>
-              </div>
-              <div class="modal-footer">
-                  <button type="button" data-dismiss="modal" class="btn btn-outline dark">Close</button>
-                  <button type="button" class="btn green">Save changes</button>
-              </div>
-
-
-        </div>
-
+      <div onclick="window.location.href='?action=closeAnouncement'" class="closeAnouncement">
+        &times;
       </div>
-
-      <div style="background: {{$course[0]->color}}" class="anouncement" {{-- data-toggle="modal" href="#course" --}} >
-         <marquee onmouseover="this.stop();" onmouseout="this.start();">
-           {!!$course[0]->topScrollBangla!!}
-         </marquee>
+      <div class='marquee anouncement'   style="background:#000; color:#fff"  >
+    
       </div>
+<script>
+  $(document).ready(function () {
+    var news = [];
+
+      @foreach($course as $c)
+      news.push({message: "{!! $c->message !!}", color: "{!!$c->color!!}"})
+      @endforeach
+
+
+    var i = 0;
+    $('.marquee').html(news[0].message);
+    $('.marquee').css('background', news[0].color);
+    $('.marquee')
+    .bind('finished', function () {
+      i++;
+      if(i == news.length){
+        i = 0;
+      }      
+
+      $('.marquee').css('background', news[i].color);
+      $(this).html(news[i].message).marquee({
+        speed:8,
+        pauseOnHover: true
+      });  
+    })
+    .marquee({
+      speed:8,
+      pauseOnHover: true
+    });
+
+  })
+</script>      
 @endif
 {{-- anouncements --}}
 

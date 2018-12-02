@@ -32,31 +32,31 @@
                     <input type="text" class="form-control" id="p_email" name="p_email" value="{{ old('p_email') }}">
                   </div>
                   <div class="form-group">
-                    <label for="p_phone">Contact No:</label>
+                    <label for="p_phone">Mobile:</label>
                     <input type="text" class="form-control" id="p_phone" name="p_phone" value="{{ old('p_phone') }}">
                   </div>
-                  <div class="form-group">
+{{--                   <div class="form-group">
                     <label for="p_address">Address:</label>
                     <textarea class="form-control" id="p_address" name="p_address">{{ old('p_address') }}</textarea>
-                  </div>
+                  </div> --}}
                   <div class="form-group">
                     <label for="p_profession">Profession:</label>
                     <input type="text" class="form-control" id="p_profession" name="p_profession" value="{{ old('p_profession') }}">
                   </div>
-                  <div class="form-group">
+{{--                   <div class="form-group">
                     <label for="p_organisation">Organization:</label>
                     <input type="text" class="form-control" id="p_organisation" name="p_organisation" value="{{ old('p_organisation') }}">
-                  </div>
-                  <div class="form-group">
+                  </div> --}}
+{{--                   <div class="form-group">
                     <label for="p_designation">Designation:</label>
                     <input type="text" class="form-control" id="p_designation" name="p_designation" value="{{ old('p_designation') }}">
-                  </div>
-                  <div class="form-group">
+                  </div> --}}
+{{--                   <div class="form-group">
                     <label for="where_heard">Where have you heard about us:</label>
                     <input type="text" class="form-control" id="where_heard" name="where_heard" value="{{ old('where_heard') }}">
-                  </div>
+                  </div> --}}
                   <div class="form-group">
-                    <label for="p_comments">Comment:</label>
+                    <label for="p_comments">Message/Comment (if any):</label>
                     <textarea class="form-control" id="p_comments" name="p_comments">{{ old('p_comments') }}</textarea>
                   </div>
                   <button type="submit" class="btn btn-default">Submit</button>

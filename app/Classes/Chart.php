@@ -276,6 +276,7 @@ class Chart
 	 */
 	public function getIntradayQuery()
 	{
+		$this->intradayTable = true;
 		$this->nOfCandle = 550;		
 		if($this->isSector())
 		{
@@ -295,7 +296,7 @@ class Chart
 				ORDER BY id DESC
 				limit {$this->nOfCandle}
 				) `data`
-			";		
+			";	
 		return $q;
 	}
 
@@ -308,6 +309,7 @@ class Chart
 	{
 		if($this->interval == "D")
 		{
+			$this->intradayTable = false;
 			return $this->getEodQuery();
 		}
 			return $this->getIntradayQuery();
@@ -327,7 +329,7 @@ class Chart
 
 			$data = \DB::select(\DB::raw($q));
 			$ohlc = [];
-			$this->intradayTable = false;
+			// $this->intradayTable = false;
 			foreach ($data as $key => $value) {
 				$timestamp =  Carbon::parse($value->date);
 				$timestamp->hour($value->hour);

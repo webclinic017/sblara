@@ -65,7 +65,7 @@ class CorporateActionChart
         {
 
             $temp=array();
-            $temp[]=$data['t'][$i]*1000+12*60*60;
+            $temp[]=$data['t'][$i]*1000;
             $temp[]=$data['o'][$i];
             $temp[]=$data['h'][$i];
             $temp[]=$data['l'][$i];
@@ -73,7 +73,7 @@ class CorporateActionChart
             $ohlc[]=$temp;
 
             $voltemp=array();
-            $voltemp[]=$data['t'][$i]*1000+12*60*60;
+            $voltemp[]=$data['t'][$i]*1000;
             $voltemp[]=$data['v'][$i];
             $volume[]=$voltemp;
         }
@@ -100,7 +100,7 @@ class CorporateActionChart
         {
             $temp2=array();
 
-            $date=strtotime($ca['record_date'])*1000 + (24*60*60*1000);
+            $date=strtotime($ca['record_date'])*1000 ;
 
             $temp2['x']=$date;
             $temp2['title']=$ca['action'];

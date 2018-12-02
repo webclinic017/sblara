@@ -185,6 +185,11 @@ if(window.location.pathname == "/"){
   url = window.location.origin
 }
 // console.log(window.location);
+// console.log(url)
+var el = $(".nav-collapse a[href='"+url+"']");
+if(el.length == 0){
+  el = $(".nav-collapse a[href='"+urlName+"']");
+}
 $(".nav-collapse a[href='"+url+"']").parent('li').addClass("active");
 $(".nav-collapse a[href='"+url+"']").closest('.more-dropdown-sub').addClass("active")
 $(".nav-collapse a[href='"+url+"']").closest('.dropdown-fw').addClass("open")

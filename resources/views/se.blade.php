@@ -10,11 +10,25 @@ Market Monitor
 @section('content')
 
 <div id="app" style="min-height: 400px" >
-	@php 
-		require_once app_path()."/Classes/Dse.php";
-		$dse = new Dse();
-		
-	@endphp
+								<cockpit></cockpit>
+	<a data-toggle="modal" href="#course">CockPit</a>
+     <div id="course" class="modal fade" tabindex="-1" data-width="760">
+        <div class="course-background">
+
+              <div class="modal-body" style="padding: 0; height: 100%">
+                  <div class="row">
+                        
+                        <div class="col-md-12">
+                         			
+                        </div>
+
+                  </div>
+              </div>
+
+        </div>
+
+      </div>
+
 </div>
 
 

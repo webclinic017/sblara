@@ -59,6 +59,7 @@ Vue.component('price-group', require('./components/PriceBoardGroup.vue'));
  
 Vue.component('monitor', require('./components/monitor/Monitor.vue'));
 Vue.component('monitor-item', require('./components/monitor/Item.vue'));
+Vue.component('cockpit', require('./components/CockPit.vue'));
 
 
 

@@ -18,9 +18,9 @@ class AppServiceProvider extends ServiceProvider {
         if(request()->has('sedebug')){
               \Config::set('app.debug', true);
         }
-                   if(isset($_SERVER['REQUEST_URI']) && strpos($_SERVER['REQUEST_URI'], 'admin') === false ){
-                        set_time_limit (15);
-                   }
+           if(isset($_SERVER['REQUEST_URI']) && strpos($_SERVER['REQUEST_URI'], 'admin') === false ){
+                set_time_limit (15);
+           }
 
 
         

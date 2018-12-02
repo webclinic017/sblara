@@ -1,11 +1,11 @@
 
 <div class="container">
-  Dear {{$course_participant->p_name}} registration,<br>
+  Dear {{$course_participant->p_name}},<br>
   Thank you for registering for Exclusive Training Program on {{ $course_participant->batch->course->course_name }}<p>
 
   Here is your registration details:<p>
 
-  Name: {{$course_participant->p_name}}n<br>
+  Name: {{$course_participant->p_name}}<br>
   Email: {{ $course_participant->p_email}}<br>
   Address: {{ $course_participant->p_address}}<br>
   Contact No: {{ $course_participant->p_phone }}<br>

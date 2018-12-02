@@ -70,7 +70,9 @@ class PluginAdjustedEodDataResetCommand extends Command
         $instrumentList=InstrumentRepository::getInstrumentsScripWithIndex();
 
         foreach ($instrumentList as $ins) {
+
             $instrument_id = $ins->id;
+
             echo "\n started  " . $ins->instrument_code;
             $to=date('Y-m-d');
             //$from='2007-01-01';

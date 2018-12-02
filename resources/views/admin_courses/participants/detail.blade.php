@@ -60,7 +60,7 @@
                         Phone
                       </th>
                       <th class="sorting" tabindex="2" aria-controls="sample_3" rowspan="1" colspan="1" style="width: 100px;">
-                        Paid Status
+                        <a href="?sort=paid">Paid Status</a>
                       </th>
                       <th class="sorting" tabindex="2" aria-controls="sample_3" rowspan="1" colspan="1" style="width: 100px;">
                         Our Comments

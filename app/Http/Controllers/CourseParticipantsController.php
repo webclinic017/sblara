@@ -20,7 +20,7 @@ class CourseParticipantsController extends Controller
      */
     public function index()
     {
-      $batches = CourseParticipants::getActiveCourse();
+      $batches = CourseParticipants::getActiveCourse(true);
       return view('admin_courses.participants.list', ['batches' => $batches]);
     }
 
@@ -56,6 +56,16 @@ class CourseParticipantsController extends Controller
         //
         $batches = CourseBatches::find($id);
         $participants = CourseParticipants::where('course_batch_id',$id)->orderBy('created_at', 'desc')->get();
+
+        if(request()->has('sort')){
+            foreach ($participants as $key => $value) {
+                // dd($participants);
+                if(!isset($value->payment[0])){
+                    unset($participants[$key]);
+                }
+            }
+        }
+
         return view('admin_courses.participants.detail', ['batches' => $batches, 'participants' => $participants]);
     }
 
