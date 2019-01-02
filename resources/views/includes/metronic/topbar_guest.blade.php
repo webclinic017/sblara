@@ -1,4 +1,4 @@
-                            <div class="topbar-actions">
+                       
                                 <!-- BEGIN GROUP NOTIFICATION -->
                                     <a href="{{ route('login') }}" type="button" class="btn blue">Login</a>
                                 <!-- END GROUP NOTIFICATION -->
@@ -14,4 +14,4 @@
                                     <i class="icon-logout"></i>
                                 </button>--}}
                                 <!-- END QUICK SIDEBAR TOGGLER -->
-                            </div>
+                   

@@ -1,0 +1,1524 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+    <!--<![endif]-->
+
+    <!-- BEGIN HEAD -->
+<head>
+            <meta charset="utf-8" />
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta content="width=device-width, initial-scale=1" name="viewport" />
+            <meta name="csrf-token" content="VwqCZcu7Id2CFTwJJvEE8UuGZQvMK1dJM8HzHdht">
+            <title>Share Market Analysis Portal For Dhaka Stock Exchange (DSE)</title>
+            <meta content="First and oldest financial portal based on share markets of Bangladesh. Pioneer in technical analysis of Bangladesh. Our mission is simple - to make you a better investor so that you can invest conveniently at Dhaka stock exchange. Our Stock Bangladesh tool lets you create the web&#039;s best looking financial charts for technical analysis. Our Scan Engine shows you the Bangladesh share market&#039;s best investing opportunities" name="description" />
+            <meta content="" name="author" />
+
+            <meta property="fb:app_id"          content="184429869012471" />
+            <meta property="og:type"            content="website" />
+            <meta property="og:url"             content="http://sblara.test/se" />
+            <meta property="og:title"           content="Share Market Analysis Portal For Dhaka Stock Exchange-Bangladesh" />
+            <meta property="og:image"           content="http://sblara.test/img/sbThumb.jpg" />
+            <meta property="og:description"    content="First and oldest financial portal based on share markets of Bangladesh. Pioneer in technical analysis of Bangladesh" />
+
+
+            
+
+            
+            <!-- BEGIN LAYOUT FIRST STYLES -->
+            <link href="//fonts.googleapis.com/css?family=Oswald:400,300,700" rel="stylesheet" type="text/css" />
+            <link rel="stylesheet" href="/css/animate.css">
+            <!-- END LAYOUT FIRST STYLES -->
+            <!-- BEGIN GLOBAL MANDATORY STYLES -->
+            
+                <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css" />
+                <link href="/metronic_home.css" rel="stylesheet" type="text/css" />
+            <!-- END PAGE LEVEL PLUGINS -->
+             <link href="http://sblara.test/metronic_custom/custom.css" rel="stylesheet" type="text/css" />
+            <link href="http://sblara.test/css/se.css?v=0.035c064324a2219" rel="stylesheet" type="text/css" />
+            <link rel="shortcut icon" type="image/png" href="/favicon.ico" />
+
+                        <script>
+                    window.Laravel = {"csrfToken":"VwqCZcu7Id2CFTwJJvEE8UuGZQvMK1dJM8HzHdht"};
+                    var urlName = '';
+                    var loggedIn = true;
+            </script>
+
+         <script async='async' src='https://www.googletagservices.com/tag/js/gpt.js'></script>
+         <script>
+           var googletag = googletag || {};
+           googletag.cmd = googletag.cmd || [];
+         </script>
+
+         <script>
+           googletag.cmd.push(function() {
+             googletag.defineSlot('/87381380/home_page_double_click2', [[728, 90], [320, 50], [970, 90]], 'div-gpt-ad-1524465580068-0').addService(googletag.pubads());
+             googletag.pubads().enableSingleRequest();
+             googletag.pubads().collapseEmptyDivs();
+             googletag.enableServices();
+           });
+         </script>
+
+
+    </head>
+<script src="/metronic_home.js"></script>
+    <!-- END HEAD -->
+
+    <body class="page-header-fixed page-sidebar-closed-hide-logo page-md">
+
+
+
+
+
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.12&appId=184429869012471&autoLogAppEvents=1';
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+        <!-- BEGIN CONTAINER -->
+        <div class="wrapper" >
+            <!-- BEGIN HEADER -->
+            <header class="page-header">
+                <nav class="navbar mega-menu" role="navigation">
+                    <div class="container-fluid">
+                        <div class="clearfix navbar-fixed-top">
+                            <!-- Brand and toggle get grouped for better mobile display -->
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="toggle-icon">
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </span>
+                            </button>
+                            <!-- End Toggle Button -->
+                            <!-- BEGIN LOGO -->
+                            <a id="index" class="page-logo" href="http://sblara.test">
+                                <img src="http://sblara.test/metronic/assets/layouts/layout5/img/logo.jpg" alt="Logo"> </a>
+                                
+                            <!-- END LOGO -->
+                            <!-- BEGIN SEARCH -->
+                            <div class="col-lg-6 col-md-8 col-sm-8 col-xs-12 se-search">
+    
+<form class="search" action="extra_search.html" method="GET">
+    <input type="hidden" name="_token" value="VwqCZcu7Id2CFTwJJvEE8UuGZQvMK1dJM8HzHdht">
+    <div class="search-input">
+        <input type="name" class="form-control" name="query" placeholder="Search..." id="top-search" autocomplete="off" style="background-color: #fff; width: 300px;">
+    <a href="javascript:;" class="btn submit md-skip">
+        <i class="fa fa-search"></i>
+    </a>
+
+
+    </div>
+</form>
+<style>
+.company-search p {
+    margin-top: 0;
+}
+
+
+.company-search> .portlet {
+    margin-top: 0;
+    margin-bottom: 0px;
+    padding: 0;
+    border-radius: 2px;
+}
+
+/*
+.list-group-item.up, .list-group-item.active:focus, .list-group-item.active:hover {
+    z-index: 2;
+    color: #fff;
+    background-color: #26C281;
+    border-color: #26C281;
+}
+.list-group-item.down, .list-group-item.active:focus, .list-group-item.active:hover {
+    z-index: 2;
+    color: #fff;
+    background-color: #EF4836;
+    border-color: #EF4836;
+}
+*/
+
+</style>
+<div class="search-result company-search">
+
+
+</div>
+
+
+</div>
+                            <div id="fixedStat">
+                                <div class="fixedStat" style="text-align: center;">
+	<ul style="text-align: center; display: inline-block;">
+		<li style="color: red ; min-width: 130px">
+			<div style="line-height: 25px"><strong>DSEX<i class="fa  fa-caret-down "></i>-0.36%</strong></div>
+			<div style="line-height: 25px"><strong>5,736</strong></div>
+		</li>
+		<li >
+			<div style="line-height: 25px; color: #009dc7; text-align: left;"><strong><i class="fa fa-caret-up"></i>86</strong></div>
+			<div style="line-height: 25px;  color: red; text-align: left;"><strong><i class="fa fa-caret-down"></i>197</strong></div>
+		</li>
+		<li style="color: red ;">
+			<div style="line-height: 25px"><strong>Trade</strong></div>
+			<div style="line-height: 25px"><strong>143,809</strong></div>
+		</li>
+		<li style="color: red ;; min-width: 90px">
+			<div style="line-height: 25px"><strong>Value</strong><small> (m)</small></div>
+			<div style="line-height: 25px"><strong>10,164.40</strong></div>
+		</li>
+	</ul>
+</div>                            </div>
+                            <!-- END SEARCH -->
+
+                            <!-- BEGIN TOPBAR ACTIONS -->
+                                                             <div class="topbar-actions">
+                                <!-- BEGIN GROUP NOTIFICATION -->
+                               
+                                <!-- END GROUP NOTIFICATION -->
+                                <!-- BEGIN GROUP INFORMATION -->
+
+                                <!-- END GROUP INFORMATION -->
+                                <!-- BEGIN USER PROFILE -->
+                                <div class="btn-group-img btn-group">
+                                    <button type="button" class="btn btn-sm md-skip dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                                        <span>Hi, Selim</span>
+                                        <img src="/img/user-default.png" alt=""> </button>
+                                    <ul class="dropdown-menu-v2" role="menu">
+                                        <li>
+                                            <a href="http://sblara.test/user-information">
+                                                <i class="icon-user"></i> My Profile
+                                                
+                                            </a>
+                                        </li>
+
+                                
+                                   
+                                        <li class="divider"> </li>
+                            
+                                        <li>
+                                        <a href="http://sblara.test/logout"
+                                                                                    onclick="event.preventDefault();
+                                                                                             document.getElementById('logout-form').submit();">
+                                                                                    <i class="icon-key"></i> Log Out
+                                                                                </a>
+
+                                                                                <form id="logout-form" action="http://sblara.test/logout" method="POST" style="display: none;">
+                                                                                    <input type="hidden" name="_token" value="VwqCZcu7Id2CFTwJJvEE8UuGZQvMK1dJM8HzHdht">
+                                                                                </form>
+
+                                        </li>
+                                    </ul>
+                                </div>
+                                <!-- END USER PROFILE -->
+                                <!-- BEGIN QUICK SIDEBAR TOGGLER -->
+                                
+                                <!-- END QUICK SIDEBAR TOGGLER -->
+                            </div>                                                        <!-- END TOPBAR ACTIONS -->
+                        </div>
+                        <!-- BEGIN HEADER MENU -->
+                    <!-- BEGIN HEADER MENU -->
+                    <div class="nav-collapse collapse navbar-collapse navbar-responsive-collapse">
+                            <ul class="nav navbar-nav">
+                            	<li class="dropdown dropdown-fw ">
+                            		<a class="text-uppercase" href="javascript:;"><i class="icon-home" ></i > Market</a>
+                            		<ul class="dropdown-menu dropdown-menu-fw">
+                            			<li ><a data-name="home" href="http://sblara.test"><i class="fa fa-dashboard" ></i > Home</a>
+                            	</li>
+
+                            	<li><a  data-name="price-board" href="http://sblara.test/price-board"><i class="fa fa-tv" ></i > Price Board</a></li>
+
+                            	<li class="dropdown more-dropdown-sub closed"><a href="javascript:;"><i class="fa fa-binoculars" ></i > Screeners</a>
+                            		<ul class="dropdown-menu dropdown-menu-fw">
+                            			<li><a  data-name="screeners"  href="http://sblara.test/screeners"><i class="fa fa-binoculars" ></i > Advanced Screeners</a></li>
+                            			<li><a  data-name="/dse/stock/candlestick-pattern" href="http://sblara.test/dse/stock/candlestick-pattern"><i class="fa fa-binoculars" ></i > Candle Pattern</a></li>
+                            		</ul>
+                            	</li>
+                            	<li><a data-name="market-composition" href="http://sblara.test/market-composition"><i class="fa fa-pie-chart" ></i > Market Composition</a></li><li><a  data-name="market-frame"   href="http://sblara.test/market-frame"><i class="fa fa-tv" ></i > Market Frame</a>
+                            	</li>
+                            	<li><a href="http://sblara.test/monitor"><i class="fa fa-dashboard" ></i > Market Monitor</a></li>
+                            	<li class="dropdown more-dropdown-sub closed"><a href="javascript:;"><i class="fa fa-newspaper-o" ></i > Matrix</a><ul class="dropdown-menu dropdown-menu-fw"><li><a href="http://sblara.test/data-matrix"><i class="fa fa-paperclip" ></i > Data Matrix</a></li>
+                            		<li><a href="http://sblara.test/watch-matrix"><i class="fa fa-paperclip" ></i > Watch Matrix</a></li>
+                            		<li><a href="http://sblara.test/price-matrix"><i class="fa fa-paperclip" ></i > Price Matrix</a></li>
+                            		<li><a href="http://sblara.test/dse-price-list"><i class="fa fa-search" ></i > Price List</a></li></ul>
+                            	</li>
+                            		<li class="dropdown more-dropdown-sub closed"><a href="javascript:;"><i class="fa fa-newspaper-o" ></i > News</a><ul class="dropdown-menu dropdown-menu-fw"><li><a href="http://sblara.test/news/search"><i class="fa fa-search" ></i > News Search</a></li><li><a href="http://sblara.test/collective/news"><i class="icon-bar-chart" ></i > News from newspaper</a></li><li><a href="http://sblara.test/dse/stock/dsex/dse-broad-index/chart/news-chart"><i class="icon-bar-chart" ></i > News Chart</a></li></ul>
+                            	</li></ul>
+                            </li>
+                            <li class="dropdown dropdown-fw  "><a class="text-uppercase" href="javascript:;"><i class="icon-link" ></i > Sector</a><ul class="dropdown-menu dropdown-menu-fw">
+                            	<li>
+                            		<a href="http://sblara.test/sector-minute-chart"><i class="fa fa-tv" ></i > Sector Movement</a>
+                            	</li>
+
+                            		<li><a href="http://sblara.test/sector-pe"><i class="fa fa-tv" ></i > Sector P/E</a></li>
+                            		<li><a href="http://sblara.test/category-pe"><i class="fa fa-tv" ></i > Category P/E</a></li>
+                            	</ul>
+                            </li>
+
+                            		<li class="dropdown dropdown-fw  "><a class="text-uppercase" href="javascript:;"><i class="icon-link" ></i > Company</a><ul class="dropdown-menu dropdown-menu-fw"><li><a href="http://sblara.test/dse/stock/abbank/ab-bank-limited/trade/details"><i class="fa fa-dollar" ></i > Trade Details</a></li><li><a href="http://sblara.test/dse/stock/abbank/ab-bank-limited/fundamental/details"><i class="fa fa-paperclip" ></i > Fundamental Details</a></li><li><a href="http://sblara.test/dividend-yield-payout-ratio"><i class="fa fa-paperclip" ></i > Dividend Yield</a></li><li><a href="http://sblara.test/dividend-yield-payout-ratio"><i class="fa fa-paperclip" ></i > Payout Ration</a></li></ul>
+                            	</li>
+                            		<li class="dropdown dropdown-fw  "><a class="text-uppercase" href="javascript:;"><i class="fa fa-line-chart" ></i > Chart</a><ul class="dropdown-menu dropdown-menu-fw">
+                            			<li><a href="http://sblara.test/dse/stock/dsex/dse-broad-index/chart/technical-analysis"><i class="icon-bar-chart" ></i > TA Chart</a></li>
+                            			<li><a href="http://sblara.test/dse/stock/dsex/dse-broad-index/chart/advance-technical-analysis"><i class="fa fa-line-chart" ></i > Advance TA Chart</a></li>
+                            			<li><a href="http://sblara.test/dse/stock/dsex/dse-broad-index/chart/minute-chart"><i class="fa fa-clock-o" ></i > Minute chart</a></li>
+                            			<li><a href="http://sblara.test/market-depth"><i class="fa fa-gavel" ></i > Market Depth</a></li>
+                            		</ul></li>
+                            		<li class="dropdown dropdown-fw  "><a class="text-uppercase" href="javascript:;"><i class="icon-briefcase" ></i > Portfolio</a><ul class="dropdown-menu dropdown-menu-fw"><li><a href="http://sblara.test/portfolio"><i class="icon-bar-chart" ></i > Portfolio home</a></li><li><a href="http://sblara.test/portfolio/create"><i class="icon-bar-chart" ></i > Create new portfolio</a></li></ul></li>
+                            		<li class="dropdown dropdown-fw  "><a class="text-uppercase" href="javascript:;"><i class="fa fa-graduation-cap" ></i > Courses</a><ul class="dropdown-menu dropdown-menu-fw">
+                            			<li class="dropdown more-dropdown-sub closed"><a href="javascript:;"><i class="icon-bar-chart" ></i > Technical analysis</a><ul class="dropdown-menu dropdown-menu-fw"><li><a href="http://sblara.test/courses/technical-analysis"><i class="icon-bar-chart" ></i > TA Course Home </a></li><li><a href="http://sblara.test/courses/technical-analysis/basic-technical-analysis"><i class="icon-bar-chart" ></i > Basic TA</a></li><li><a href="http://sblara.test/courses/technical-analysis/executive-technical-analysis"><i class="icon-bar-chart" ></i > Executive TA</a></li><li><a href="http://sblara.test/courses/technical-analysis/advance-technical-analysis-course"><i class="icon-bar-chart" ></i > Advance TA</a></li><li><a href="http://sblara.test/courses/technical-analysis/advance-usage-of-amibroker"><i class="icon-bar-chart" ></i > Advance Usage of Amibroker</a></li><li><a href="http://sblara.test/courses/technical-analysis/free-technical-analysis-course"><i class="icon-bar-chart" ></i > Free TA Course</a></li></ul></li>
+
+                            			<li class="dropdown more-dropdown-sub closed"><a href="javascript:;"><i class="icon-bar-chart" ></i > Fundamental analysis</a><ul class="dropdown-menu dropdown-menu-fw"><li><a href="http://sblara.test/courses/fundamental-analysis/basic-fundamental-analysis"><i class="icon-bar-chart" ></i > Basic Fundamental </a></li><li><a href="http://sblara.test/courses/fundamental-analysis/business-and-financial-modeling"><i class="icon-bar-chart" ></i > Financial modeling</a></li><li><a href="http://sblara.test/courses/fundamental-analysis/risk-management"><i class="icon-bar-chart" ></i > Risk Management</a></li><li><a href="http://sblara.test/courses/fundamental-analysis/standard-financial-reporting-with-useful-tips"><i class="icon-bar-chart" ></i > Financial reporting</a></li></ul></li>
+
+                            			<li><a href="http://sblara.test/courses/upcoming-courses"><i class="fa fa-graduation-cap" ></i > Upcoming Courses</a></li>
+                            		</ul></li>
+
+                            		<li class="dropdown dropdown-fw  ">
+                            			<a class="text-uppercase" href="javascript:;"><i class="fa fa-database" ></i >
+                            			 Resources</a><ul class="dropdown-menu dropdown-menu-fw"><li class="dropdown more-dropdown-sub closed"><a href="javascript:;"><i class="fa fa-newspaper-o" ></i > Ipo</a><ul class="dropdown-menu dropdown-menu-fw"><li><a href="http://sblara.test/ipos"><i class="icon-link" ></i > Upcoming IPO</a></li><li><a href="http://sblara.test/ipos/history"><i class="icon-link" ></i > IPO History</a></li><li><a href="http://sblara.test/ipos/results"><i class="icon-link" ></i > IPO Results</a></li></ul></li><li class="dropdown more-dropdown-sub closed"><a href="javascript:;"><i class="fa fa-trophy" ></i > Contest</a><ul class="dropdown-menu dropdown-menu-fw"><li><a href="http://sblara.test/contests"><i class="icon-link" ></i > All Contests</a></li><li><a href="http://sblara.test/mycontests"><i class="icon-link" ></i > My Contests</a></li></ul></li><li><a href="http://www.new.stockbangladesh.net/users/login"><i class="fa fa-flash" ></i > Online Market Order</a></li><li><a href="///stockbangladesh.com/blog"><i class="fa fa-globe" ></i > SB Blog</a></li><li><a href="http://sblara.test/tutorials/technical"><i class="fa fa-sun-o" ></i > Knowledge Basket</a></li><li><a href="http://sblara.test/resources/amibroker-data-plugin-dse"><i class="fa fa-plug" ></i > Amibroker Plugin</a></li><li><a href="http://sblara.test/download"><i class="fa fa-download" ></i > Data download</a></li></ul></li>
+                            	</ul>
+                        </div>
+
+
+
+
+                        <!-- END HEADER MENU -->
+                    </div>
+                    <!--/container-->
+                </nav>
+            </header>
+
+            <!-- END HEADER -->
+            <div class="container-fluid">
+                <div class="page-content">
+
+                    <!-- BEGIN BREADCRUMBS -->
+                    <div class="breadcrumbs hidden-xs hidden-sm">
+                        <h1>Market Monitor
+</h1>
+                        <h1></h1>
+                        
+                     </div>
+
+                   <!-- BEGIN ads beneath the main menu -->
+                      
+                   <!-- END ads beneath the main menu -->
+
+
+
+
+  
+
+                        
+                        
+                        
+                                                <link href="http://sblara.test/metronic/assets/global/plugins/bootstrap-daterangepicker/daterangepicker.min.css" rel="stylesheet" type="text/css" />
+
+
+<div class="row global-ui" style="margin-right: 0">
+<div class="col-md-12 share-list"  max-width:300px;">
+    <div class="form-group">
+        <div class="input-group select2-bootstrap-prepend " style="max-width: 300px">
+            <span class="input-group-btn">
+                <button class="btn red mt-ladda-btn toggle-button"  type="button" data-select2-open="multi-prepend"> <i class="fa fa-line-chart"></i> Chart </button>
+            </span>
+              <select id="shareList"  class="instrument-select bs-select form-control" data-live-search="true" title="Select share">
+                    <option value="1" >1JANATAMF </option>
+                    <option value="4" >1STPRIMFMF </option>
+                    <option value="513" >AAMRATECH </option>
+                    <option value="502" >ABB1STMF </option>
+                    <option value="12" >ABBANK </option>
+                    <option value="13" >ACI </option>
+                    <option value="14" >ACIFORMULA </option>
+                    <option value="30024" >ACMELAB </option>
+                    <option value="16" >ACTIVEFINE </option>
+                    <option value="531" >AFCAGRO </option>
+                    <option value="17" >AFTABAUTO </option>
+                    <option value="18" >AGNISYSL </option>
+                    <option value="19" >AGRANINS </option>
+                    <option value="20" >AIBL1STIMF </option>
+                    <option value="23" >AL-HAJTEX </option>
+                    <option value="22" >ALARABANK </option>
+                    <option value="24" >ALLTEX </option>
+                    <option value="30014" >AMANFEED </option>
+                    <option value="25" >AMBEEPHA </option>
+                    <option value="26" >AMCL(PRAN) </option>
+                    <option value="27" >ANLIMAYARN </option>
+                    <option value="28" >ANWARGALV </option>
+                    <option value="30" >APEXFOODS </option>
+                    <option value="29" >APEXFOOT </option>
+                    <option value="31" >APEXSPINN </option>
+                    <option value="40" >APEXTANRY </option>
+                    <option value="529" >APOLOISPAT </option>
+                    <option value="41" >ARAMIT </option>
+                    <option value="42" >ARAMITCEM </option>
+                    <option value="517" >ARGONDENIM </option>
+                    <option value="43" >ASIAINS </option>
+                    <option value="44" >ASIAPACINS </option>
+                    <option value="30009" >ATCSLGF </option>
+                    <option value="45" >ATLASBANG </option>
+                    <option value="46" >AZIZPIPES </option>
+                    <option value="47" >BANGAS </option>
+                    <option value="48" >BANKASIA </option>
+                    <option value="34" >BARKAPOWER </option>
+                    <option value="61" >BATASHOE </option>
+                    <option value="62" >BATBC </option>
+                    <option value="63" >BAYLEASING </option>
+                    <option value="121" >BBS </option>
+                    <option value="64" >BDAUTOCA </option>
+                    <option value="65" >BDCOM </option>
+                    <option value="66" >BDFINANCE </option>
+                    <option value="67" >BDLAMPS </option>
+                    <option value="68" >BDSERVICE </option>
+                    <option value="69" >BDTHAI </option>
+                    <option value="70" >BDWELDING </option>
+                    <option value="32" >BEACHHATCH </option>
+                    <option value="33" >BEACONPHAR </option>
+                    <option value="522" >BENGALWTL </option>
+                    <option value="35" >BERGERPBL </option>
+                    <option value="36" >BEXIMCO </option>
+                    <option value="38" >BGIC </option>
+                    <option value="39" >BIFC </option>
+                    <option value="30023" >BNICL </option>
+                    <option value="50" >BRACBANK </option>
+                    <option value="51" >BRACSCBOND </option>
+                    <option value="52" >BSC </option>
+                    <option value="510" >BSCCL </option>
+                    <option value="30011" >BSRMLTD </option>
+                    <option value="53" >BSRMSTEEL </option>
+                    <option value="54" >BXPHARMA </option>
+                    <option value="55" >BXSYNTH </option>
+                    <option value="30029" >CAPMBDBLMF </option>
+                    <option value="56" >CENTRALINS </option>
+                    <option value="527" >CENTRALPHL </option>
+                    <option value="57" >CITYBANK </option>
+                    <option value="58" >CITYGENINS </option>
+                    <option value="59" >CMCKAMAL </option>
+                    <option value="30005" >CNATEX </option>
+                    <option value="60" >CONFIDCEM </option>
+                    <option value="71" >CONTININS </option>
+                    <option value="72" >CVOPRL </option>
+                    <option value="73" >DACCADYE </option>
+                    <option value="74" >DAFODILCOM </option>
+                    <option value="75" >DBH </option>
+                    <option value="76" >DBH1STMF </option>
+                    <option value="77" >DELTALIFE </option>
+                    <option value="78" >DELTASPINN </option>
+                    <option value="79" >DESCO </option>
+                    <option value="80" >DESHBANDHU </option>
+                    <option value="81" >DHAKABANK </option>
+                    <option value="82" >DHAKAINS </option>
+                    <option value="30022" >DOREENPWR </option>
+                    <option value="10002" >DS30 </option>
+                    <option value="10003" >DSES </option>
+                    <option value="10001" >DSEX </option>
+                    <option value="83" >DSHGARME </option>
+                    <option value="30021" >DSSL </option>
+                    <option value="84" >DULAMIACOT </option>
+                    <option value="85" >DUTCHBANGL </option>
+                    <option value="86" >EASTERNINS </option>
+                    <option value="87" >EASTLAND </option>
+                    <option value="88" >EASTRNLUB </option>
+                    <option value="89" >EBL </option>
+                    <option value="90" >EBL1STMF </option>
+                    <option value="91" >EBLNRBMF </option>
+                    <option value="92" >ECABLES </option>
+                    <option value="93" >EHL </option>
+                    <option value="532" >EMERALDOIL </option>
+                    <option value="515" >ENVOYTEX </option>
+                    <option value="30025" >ETL </option>
+                    <option value="526" >EXIM1STMF </option>
+                    <option value="94" >EXIMBANK </option>
+                    <option value="524" >FAMILYTEX </option>
+                    <option value="537" >FARCHEM </option>
+                    <option value="528" >FAREASTFIN </option>
+                    <option value="95" >FAREASTLIF </option>
+                    <option value="96" >FASFIN </option>
+                    <option value="504" >FBFIF </option>
+                    <option value="97" >FEDERALINS </option>
+                    <option value="540" >FEKDIL </option>
+                    <option value="98" >FINEFOODS </option>
+                    <option value="100" >FIRSTFIN </option>
+                    <option value="99" >FIRSTSBANK </option>
+                    <option value="30027" >FORTUNE </option>
+                    <option value="254" >FUWANGCER </option>
+                    <option value="101" >FUWANGFOOD </option>
+                    <option value="509" >GBBPOWER </option>
+                    <option value="102" >GEMINISEA </option>
+                    <option value="514" >GENNEXT </option>
+                    <option value="519" >GHAIL </option>
+                    <option value="520" >GHCL </option>
+                    <option value="103" >GLAXOSMITH </option>
+                    <option value="104" >GLOBALINS </option>
+                    <option value="105" >GOLDENSON </option>
+                    <option value="106" >GP </option>
+                    <option value="506" >GPHISPAT </option>
+                    <option value="107" >GQBALLPEN </option>
+                    <option value="109" >GRAMEENS2 </option>
+                    <option value="110" >GREENDELMF </option>
+                    <option value="111" >GREENDELT </option>
+                    <option value="505" >GSPFINANCE </option>
+                    <option value="112" >HAKKANIPUL </option>
+                    <option value="113" >HEIDELBCEM </option>
+                    <option value="30002" >HFL </option>
+                    <option value="114" >HRTEX </option>
+                    <option value="534" >HWAWELLTEX </option>
+                    <option value="115" >IBBLPBOND </option>
+                    <option value="116" >IBNSINA </option>
+                    <option value="117" >ICB </option>
+                    <option value="119" >ICB2NDNRB </option>
+                    <option value="120" >ICB3RDNRB </option>
+                    <option value="147" >ICBAMCL2ND </option>
+                    <option value="148" >ICBEPMF1S1 </option>
+                    <option value="149" >ICBIBANK </option>
+                    <option value="523" >ICBSONALI1 </option>
+                    <option value="151" >IDLC </option>
+                    <option value="30006" >IFADAUTOS </option>
+                    <option value="152" >IFIC </option>
+                    <option value="153" >IFIC1STMF </option>
+                    <option value="154" >IFILISLMF1 </option>
+                    <option value="155" >ILFSL </option>
+                    <option value="156" >IMAMBUTTON </option>
+                    <option value="157" >INTECH </option>
+                    <option value="158" >IPDC </option>
+                    <option value="159" >ISLAMIBANK </option>
+                    <option value="160" >ISLAMICFIN </option>
+                    <option value="161" >ISLAMIINS </option>
+                    <option value="162" >ISNLTD </option>
+                    <option value="30018" >ITC </option>
+                    <option value="163" >JAMUNABANK </option>
+                    <option value="164" >JAMUNAOIL </option>
+                    <option value="165" >JANATAINS </option>
+                    <option value="525" >JMISMDL </option>
+                    <option value="166" >JUTESPINN </option>
+                    <option value="167" >KARNAPHULI </option>
+                    <option value="168" >KAY&amp;QUE </option>
+                    <option value="546" >KBPPWBIL </option>
+                    <option value="30015" >KDSALTD </option>
+                    <option value="169" >KEYACOSMET </option>
+                    <option value="170" >KOHINOOR </option>
+                    <option value="171" >KPCL </option>
+                    <option value="539" >KPPL </option>
+                    <option value="172" >LAFSURCEML </option>
+                    <option value="173" >LANKABAFIN </option>
+                    <option value="174" >LEGACYFOOT </option>
+                    <option value="122" >LIBRAINFU </option>
+                    <option value="49" >LINDEBD </option>
+                    <option value="467" >LRGLOBMF1 </option>
+                    <option value="123" >MAKSONSPIN </option>
+                    <option value="124" >MALEKSPIN </option>
+                    <option value="125" >MARICO </option>
+                    <option value="533" >MATINSPINN </option>
+                    <option value="126" >MBL1STMF </option>
+                    <option value="127" >MEGCONMILK </option>
+                    <option value="128" >MEGHNACEM </option>
+                    <option value="129" >MEGHNALIFE </option>
+                    <option value="130" >MEGHNAPET </option>
+                    <option value="131" >MERCANBANK </option>
+                    <option value="132" >MERCINS </option>
+                    <option value="133" >METROSPIN </option>
+                    <option value="530" >MHSML </option>
+                    <option value="134" >MICEMENT </option>
+                    <option value="135" >MIDASFIN </option>
+                    <option value="136" >MIRACLEIND </option>
+                    <option value="137" >MITHUNKNIT </option>
+                    <option value="474" >MJLBD </option>
+                    <option value="138" >MODERNDYE </option>
+                    <option value="139" >MONNOCERA </option>
+                    <option value="141" >MONNOSTAF </option>
+                    <option value="142" >MPETROLEUM </option>
+                    <option value="143" >MTB </option>
+                    <option value="144" >NATLIFEINS </option>
+                    <option value="145" >NAVANACNG </option>
+                    <option value="146" >NBL </option>
+                    <option value="175" >NCCBANK </option>
+                    <option value="508" >NCCBLMF1 </option>
+                    <option value="30003" >NFML </option>
+                    <option value="176" >NHFIL </option>
+                    <option value="177" >NITOLINS </option>
+                    <option value="503" >NLI1STMF </option>
+                    <option value="178" >NORTHERN </option>
+                    <option value="190" >NORTHRNINS </option>
+                    <option value="191" >NPOLYMAR </option>
+                    <option value="192" >NTC </option>
+                    <option value="193" >NTLTUBES </option>
+                    <option value="30013" >OAL </option>
+                    <option value="195" >OLYMPIC </option>
+                    <option value="196" >ONEBANKLTD </option>
+                    <option value="197" >ORIONINFU </option>
+                    <option value="521" >ORIONPHARM </option>
+                    <option value="507" >PADMALIFE </option>
+                    <option value="198" >PADMAOIL </option>
+                    <option value="199" >PARAMOUNT </option>
+                    <option value="30030" >PDL </option>
+                    <option value="536" >PENINSULA </option>
+                    <option value="200" >PEOPLESINS </option>
+                    <option value="201" >PF1STMF </option>
+                    <option value="202" >PHARMAID </option>
+                    <option value="203" >PHENIXINS </option>
+                    <option value="204" >PHOENIXFIN </option>
+                    <option value="205" >PHPMF1 </option>
+                    <option value="206" >PIONEERINS </option>
+                    <option value="207" >PLFSL </option>
+                    <option value="208" >POPULAR1MF </option>
+                    <option value="209" >POPULARLIF </option>
+                    <option value="210" >POWERGRID </option>
+                    <option value="179" >PRAGATIINS </option>
+                    <option value="180" >PRAGATILIF </option>
+                    <option value="181" >PREMIERBAN </option>
+                    <option value="518" >PREMIERCEM </option>
+                    <option value="182" >PREMIERLEA </option>
+                    <option value="183" >PRIME1ICBA </option>
+                    <option value="184" >PRIMEBANK </option>
+                    <option value="185" >PRIMEFIN </option>
+                    <option value="186" >PRIMEINSUR </option>
+                    <option value="187" >PRIMELIFE </option>
+                    <option value="188" >PRIMETEX </option>
+                    <option value="189" >PROGRESLIF </option>
+                    <option value="211" >PROVATIINS </option>
+                    <option value="2" >PTL </option>
+                    <option value="212" >PUBALIBANK </option>
+                    <option value="213" >PURABIGEN </option>
+                    <option value="214" >QSMDRYCELL </option>
+                    <option value="215" >RAHIMAFOOD </option>
+                    <option value="216" >RAHIMTEXT </option>
+                    <option value="217" >RAKCERAMIC </option>
+                    <option value="218" >RANFOUNDRY </option>
+                    <option value="140" >RDFOOD </option>
+                    <option value="219" >RECKITTBEN </option>
+                    <option value="30017" >REGENTTEX </option>
+                    <option value="473" >RELIANCE1 </option>
+                    <option value="220" >RELIANCINS </option>
+                    <option value="221" >RENATA </option>
+                    <option value="222" >RENWICKJA </option>
+                    <option value="223" >REPUBLIC </option>
+                    <option value="224" >RNSPIN </option>
+                    <option value="543" >RSRMSTEEL </option>
+                    <option value="225" >RUPALIBANK </option>
+                    <option value="226" >RUPALIINS </option>
+                    <option value="227" >RUPALILIFE </option>
+                    <option value="242" >SAFKOSPINN </option>
+                    <option value="544" >SAIFPOWER </option>
+                    <option value="511" >SAIHAMCOT </option>
+                    <option value="244" >SAIHAMTEX </option>
+                    <option value="247" >SALAMCRST </option>
+                    <option value="250" >SALVOCHEM </option>
+                    <option value="251" >SAMATALETH </option>
+                    <option value="255" >SAMORITA </option>
+                    <option value="256" >SANDHANINS </option>
+                    <option value="257" >SAPORTL </option>
+                    <option value="258" >SAVAREFR </option>
+                    <option value="259" >SEBL1STMF </option>
+                    <option value="30031" >SEMLIBBLSF </option>
+                    <option value="30019" >SEMLLECMF </option>
+                    <option value="260" >SHAHJABANK </option>
+                    <option value="30007" >SHASHADNIM </option>
+                    <option value="30032" >SHEPHERD </option>
+                    <option value="542" >SHURWID </option>
+                    <option value="261" >SHYAMPSUG </option>
+                    <option value="262" >SIBL </option>
+                    <option value="30016" >SIMTEX </option>
+                    <option value="264" >SINGERBD </option>
+                    <option value="267" >SINOBANGLA </option>
+                    <option value="269" >SONALIANSH </option>
+                    <option value="268" >SONARBAINS </option>
+                    <option value="266" >SONARGAON </option>
+                    <option value="265" >SOUTHEASTB </option>
+                    <option value="263" >SPCERAMICS </option>
+                    <option value="538" >SPCL </option>
+                    <option value="253" >SQUARETEXT </option>
+                    <option value="252" >SQURPHARMA </option>
+                    <option value="249" >STANCERAM </option>
+                    <option value="248" >STANDARINS </option>
+                    <option value="246" >STANDBANKL </option>
+                    <option value="245" >STYLECRAFT </option>
+                    <option value="243" >SUMITPOWER </option>
+                    <option value="194" >SUNLIFEINS </option>
+                    <option value="241" >TAKAFULINS </option>
+                    <option value="240" >TALLUSPIN </option>
+                    <option value="239" >TITASGAS </option>
+                    <option value="30012" >TOSRIFA </option>
+                    <option value="238" >TRUSTB1MF </option>
+                    <option value="237" >TRUSTBANK </option>
+                    <option value="541" >TUNGHAI </option>
+                    <option value="236" >UCB </option>
+                    <option value="234" >UNIONCAP </option>
+                    <option value="512" >UNIQUEHRL </option>
+                    <option value="233" >UNITEDAIR </option>
+                    <option value="235" >UNITEDFIN </option>
+                    <option value="232" >UNITEDINS </option>
+                    <option value="30010" >UPGDCL </option>
+                    <option value="231" >USMANIAGL </option>
+                    <option value="230" >UTTARABANK </option>
+                    <option value="229" >UTTARAFIN </option>
+                    <option value="30020" >VAMLBDMF1 </option>
+                    <option value="30028" >VAMLRBBF </option>
+                    <option value="535" >WATACHEM </option>
+                    <option value="545" >WMSHIPYARD </option>
+                    <option value="30026" >YPL </option>
+                    <option value="30008" >ZAHEENSPIN </option>
+                    <option value="501" >ZAHINTEX </option>
+                    <option value="228" >ZEALBANGLA </option>
+        
+     <optgroup label="SECTOR LIST">
+                    <option value="sector_1" >Bank </option>
+                    <option value="sector_2" >Cement </option>
+                    <option value="sector_3" >Ceramics Sector </option>
+                    <option value="sector_4" >Corporate Bond </option>
+                    <option value="sector_5" >Debenture </option>
+                    <option value="sector_6" >Engineering </option>
+                    <option value="sector_7" >Financial Institutions </option>
+                    <option value="sector_8" >Food &amp; Allied </option>
+                    <option value="sector_9" >Fuel &amp; Power </option>
+                    <option value="sector_10" >Insurance </option>
+                    <option value="sector_11" >IT Sector </option>
+                    <option value="sector_12" >Jute </option>
+                    <option value="sector_13" >Miscellaneous </option>
+                    <option value="sector_14" >Mutual Funds </option>
+                    <option value="sector_15" >Paper &amp; Printing </option>
+                    <option value="sector_16" >Pharmaceuticals &amp; Chemicals </option>
+                    <option value="sector_17" >Services &amp; Real Estate </option>
+                    <option value="sector_18" >Tannery Industries </option>
+                    <option value="sector_19" >Telecommunication </option>
+                    <option value="sector_20" >Textile </option>
+                    <option value="sector_21" >Travel &amp; Leisure </option>
+                    <option value="sector_22" >Treasury Bond </option>
+                    <option value="sector_23" >Index </option>
+                </optgroup>
+
+</select>
+
+
+
+        </div>
+                                                                  
+    </div>
+</div>
+
+<div class="col-md-12 global-panel" style=" margin-top: -15px; display: none;  padding-top: 10px; padding: 0 ">
+
+
+<style>
+    table td{
+        color:#000 !important;
+    }
+    div.col-md-2{
+        /*z-index: 100;*/
+    }
+</style>
+<div class=" widget-row" style=" margin-top: -35px; margin-right: 0 !important">
+<div class="col-md-12 margin-bottom-20" style="padding-right: 0">
+    <!-- BEGIN WIDGET TAB -->
+        <style>
+        .ta-chart-tabs ul li a{
+            text-transform: uppercase !important;
+        }
+    </style>
+    <div class=" ta-chart-tabs tabbable  tabbable-tabdrop tabbable-custom">
+        <ul class="nav nav-tabs">
+
+            <li class="active">
+                <a href="#taChartTab" data-url ="#" data-toggle="tab">TA Chart </a>
+            </li>
+            <li>
+                <a href="#share_holdings" data-url="/ajax/load_block/block_name=block.minute_chart:show_ads=1:instrument_id=" data-toggle="tab"> Minute Chart </a>
+            </li>      
+
+
+            <li>
+                <a href="#share_holdings" data-url="/ajax/load_block/block_name=block.market_depth_single:show_ads=1:instrument_id=" data-toggle="tab"> MARKET DEPTH </a>
+            </li>      
+
+
+            <li>
+                <a href="#share_holdings" data-url="/ajax/load_block/block_name=block.sector_minute_chart:show_ads=1:instrument_id=" data-toggle="tab"> Sector Chart </a>
+            </li>                  
+
+            <li class="">
+                <a href="#share_holdings" data-toggle="tab"  data-url="/ajax/load_block/block_name=block.market_frame_old_site:height=500:base=total_value:instrument_id="  aria-expanded="false"> SECTOR COMPOSITION </a>
+            </li>
+            <li class="">
+                <a href="#share_holdings" data-toggle="tab"  data-url="/ajax/load_block/block_name=block_parent.market_status?a="  aria-expanded="false"> MARKET STATUS </a>
+            </li>
+            <li>
+                <a href="#share_holdings" data-url="/ajax/load_block/block_name=block.fundamental_summary:show_ads=1:instrument_id=" data-toggle="tab"> Fundamental </a>
+            </li>
+
+            <li>
+                <a href="#share_holdings" data-url="/ajax/load_block/block_name=block.news_box:show_ads=1:instrument_id=" data-toggle="tab"> News </a>
+            </li>
+
+            <li>
+                <a href="#share_holdings" data-url="/ajax/load_block/block_name=block.dividend_history:show_ads=1:instrument_id=" data-toggle="tab"> Dividend History </a>
+            </li>
+            
+             <li>
+                <a href="#share_holdings" data-url="/ajax/load_block/block_name=block.share_holdings_history_chart:show_ads=1:instrument_id=" data-toggle="tab"> Share Holding History </a>
+            </li>      
+
+            <li>
+                <a href="#share_holdings" data-url="/ajax/load_block/block_name=block.news_chart:show_ads=1:instrument_id=" data-toggle="tab"> News Chart </a>
+            </li>   
+        
+        </ul>
+        <div class="tab-content" >
+            <div class="tab-pane fade active in" id="taChartTab">
+                
+
+                                                                                         <div  class="" id="modalFade" tabindex="-1" role="dialog" aria-hidden="true">
+                                                    <div class="" id="modalDialogModalFull">
+                                                        <div class="" id="modalContent">
+                                                            <div class="modal-header" style="display: none;">
+                                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                                                                <h4 class="modal-title">Chart Options</h4>
+                                                            </div>
+                                                            <div class="" id="modalBody">
+
+    <div class="options">
+                    
+                <form action="index.html" class="form-horizontal ">
+                    <div class="form-body" >
+
+                        <div class="form-group " style="background: #f5f5f5; padding-top: 10px; display: inline-block; margin-right: 0px; margin-left: 0; width: 100%">
+                            <div class="col-md-12" style="padding: 0">
+                            <div class="col-md-2 ">
+                                <div class="margin-bottom-10">
+                                    <select name="" id="chartRange" class="bs-select form-control">
+                                        <option value="1">1 Day</option>
+                                        <option value="2">2 Days</option>
+                                        <option value="5">5 Days</option>
+                                        <option value="10">10 Days</option>
+                                        <option value="30">1 Month</option>
+                                        <option value="120">4 Months</option>
+                                        <option selected value="150">5 Months</option>
+                                        <option  value="180">6 Months</option>
+                                        <option value="365">1 Year</option>
+                                        <option value="730">2 Years</option>
+                                        <option value="1095">3 Years</option>
+                                        <option value="1460">4 Years</option>
+                                        <option value="1825">5 Years</option>
+                                        <option value="2190">6 Years</option>
+                                        <option value="2555">7 Years</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-2 ">
+                                <div class="margin-bottom-10">
+                                    <select id="configure" class="bs-select form-control" multiple>
+                                        <option value="VOLBAR" title="VOLBAR" selected="">Volume bar</option>
+                                        <option value="PSAR" title="PSAR">Parabolic SAR</option>
+                                        <option value="LOG" title="LOG">Log Scale</option>
+                                        <option value="PSCALE" title="PSCALE">Percentage Scale</option>
+                                    </select>
+
+
+                                </div>
+                            </div>
+
+                      <div class="col-md-2 " >
+                        <div class="margin-bottom-10">
+                                    <select  id="Indicator1" class="bs-select form-control" >
+                                        <option value="None">No indicator</option>
+                                        <option value="AccDist" title="A/D">Accu/Dist</option>
+                                        <option value="AroonOsc" title="ArnOsc">Aroon Oscillator</option>
+                                        <option value="Aroon" title="Aroon">Aroon Up/Down</option>
+                                        <option value="ADX" title="ADX">Avg Directional Index</option>
+                                        <option value="ATR" title="ATR">Avg True Range</option>
+                                        <option value="BBW" title="BBW">Bollinger Band Width</option>
+                                        <option value="CMF" title="CMF">Chaikin Money Flow</option>
+                                        <option value="COscillator" title="COsc">Chaikin Oscillator</option>
+                                        <option value="CVolatility" title="CVol">Chaikin Volatility</option>
+                                        <option value="CLV" title="CLV">Close Location Value</option>
+                                        <option value="CCI" title="CCI">CCI</option>
+                                        <option value="DPO" title="DPO">Detrended Price Osc</option>
+                                        <option value="DCW" title="DCW">Donchian Channel</option>
+                                        <option value="EMV" title="EMV">Ease of Movement</option>
+                                        <option value="FStoch" title="FStoch">Fast Stochastic</option>
+                                        <option value="MACD" title="MACD">MACD</option>
+                                        <option value="MDX" title="MDX">Mass Index</option>
+                                        <option value="Momentum" title="Momentum">Momentum</option>
+                                        <option value="MFI" title="MFI">Money Flow Index</option>
+                                        <option value="NVI" title="NVI">Neg Volume Index</option>
+                                        <option value="OBV" title="OBV">On Balance Volume</option>
+                                        <option value="Performance" title="Perfornamce">Performance</option>
+                                        <option value="PPO" title="PPO">% Price Oscillator</option>
+                                        <option value="PVO" title="PVO">% Volume Oscillator</option>
+                                        <option value="PVI" title="PVI">Pos Volume Index</option>
+                                        <option value="PVT" title="PVT">Price Volume Trend</option>
+                                        <option value="ROC" title="ROC">Rate of Change</option>
+                                        <option value="RSI"  title="RSI" selected="">RSI</option>
+                                        <option value="SStoch" title="SStoch">Slow Stochastic</option>
+                                        <option value="StochRSI" title="StochRSI">StochRSI</option>
+                                        <option value="TRIX" title="TRIX">TRIX</option>
+                                        <option value="UO" title="UO">Ultimate Oscillator</option>
+                                        <option value="Vol" title="VOL">Volume</option>
+                                        <option value="WilliamR" title="WilliamR">William's %R</option>
+                                    </select>  
+                            </div>
+                      </div>
+                      <div class="col-md-2 " >
+                        <div class="margin-bottom-10">
+                            
+
+                                    <select  id="Indicator2" class="bs-select form-control">
+
+
+                                            <option value="none" >No indicator</option>
+                                            <option value="AccDist" title="A/D">Accu/Dist</option>
+                                            <option value="AroonOsc" title="ArnOsc">Aroon Oscillator</option>
+                                            <option value="Aroon" title="Aroon">Aroon Up/Down</option>
+                                            <option value="ADX" title="ADX">Avg Directional Index</option>
+                                            <option value="ATR" title="ATR">Avg True Range</option>
+                                            <option value="BBW" title="BBW">Bollinger Band Width</option>
+                                            <option value="CMF" title="CMF">Chaikin Money Flow</option>
+                                            <option value="COscillator" title="COsc">Chaikin Oscillator</option>
+                                            <option value="CVolatility" title="CVol">Chaikin Volatility</option>
+                                            <option value="CLV" title="CLV">Close Location Value</option>
+                                            <option value="CCI" title="CCI">CCI</option>
+                                            <option value="DPO" title="DPO">Detrended Price Osc</option>
+                                            <option value="DCW" title="DCW">Donchian Channel</option>
+                                            <option value="EMV" title="EMV">Ease of Movement</option>
+                                            <option value="FStoch" title="FStoch">Fast Stochastic</option>
+                                            <option value="MACD" title="MACD" selected="" >MACD</option>
+                                            <option value="MDX" title="MDX">Mass Index</option>
+                                            <option value="Momentum" title="Momentum">Momentum</option>
+                                            <option value="MFI" title="MFI">Money Flow Index</option>
+                                            <option value="NVI" title="NVI">Neg Volume Index</option>
+                                            <option value="OBV" title="OBV">On Balance Volume</option>
+                                            <option value="Performance" title="Perfornamce">Performance</option>
+                                            <option value="PPO" title="PPO">% Price Oscillator</option>
+                                            <option value="PVO" title="PVO">% Volume Oscillator</option>
+                                            <option value="PVI" title="PVI">Pos Volume Index</option>
+                                            <option value="PVT" title="PVT">Price Volume Trend</option>
+                                            <option value="ROC" title="ROC">Rate of Change</option>
+                                            <option value="RSI"  title="RSI">RSI</option>
+                                            <option value="SStoch" title="SStoch">Slow Stochastic</option>
+                                            <option value="StochRSI" title="StochRSI">StochRSI</option>
+                                            <option value="TRIX" title="TRIX">TRIX</option>
+                                            <option value="UO" title="UO">Ultimate Oscillator</option>
+                                            <option value="Vol" title="VOL">Volume</option>
+                                            <option value="WilliamR" title="WilliamR">William's %R</option>
+
+                                    </select>  
+                        </div>                                    
+                      </div>
+                      <div class="col-md-2 " >
+                        <div class="margin-bottom-10">
+                        
+                                    <select  id="Indicator4" class="indicator4 form-control indicator4" multiple="">
+                                        
+                                        <option value="AccDist" title="A/D">Accu/Dist</option>
+                                        <option value="AroonOsc" title="ArnOsc">Aroon Oscillator</option>
+                                        <option value="Aroon" title="Aroon">Aroon Up/Down</option>
+                                        <option value="ADX" title="ADX">Avg Directional Index</option>
+                                        <option value="ATR" title="ATR">Avg True Range</option>
+                                        <option value="BBW" title="BBW">Bollinger Band Width</option>
+                                        <option value="CMF" title="CMF">Chaikin Money Flow</option>
+                                        <option value="COscillator" title="COsc">Chaikin Oscillator</option>
+                                        <option value="CVolatility" title="CVol">Chaikin Volatility</option>
+                                        <option value="CLV" title="CLV">Close Location Value</option>
+                                        <option value="CCI" title="CCI">CCI</option>
+                                        <option value="DPO" title="DPO">Detrended Price Osc</option>
+                                        <option value="DCW" title="DCW">Donchian Channel</option>
+                                        <option value="EMV" title="EMV">Ease of Movement</option>
+                                        <option value="FStoch" title="FStoch">Fast Stochastic</option>
+                                        <option value="MACD" title="MACD" >MACD</option>
+                                        <option value="MDX" title="MDX">Mass Index</option>
+                                        <option value="Momentum" title="Momentum">Momentum</option>
+                                        <option value="MFI" title="MFI">Money Flow Index</option>
+                                        <option value="NVI" title="NVI">Neg Volume Index</option>
+                                        <option value="OBV" title="OBV">On Balance Volume</option>
+                                        <option value="Performance" title="Perfornamce">Performance</option>
+                                        <option value="PPO" title="PPO">% Price Oscillator</option>
+                                        <option value="PVO" title="PVO">% Volume Oscillator</option>
+                                        <option value="PVI" title="PVI">Pos Volume Index</option>
+                                        <option value="PVT" title="PVT">Price Volume Trend</option>
+                                        <option value="ROC" title="ROC">Rate of Change</option>
+                                        <option value="RSI"  title="RSI">RSI</option>
+                                        <option value="SStoch" title="SStoch">Slow Stochastic</option>
+                                        <option value="StochRSI" title="StochRSI">StochRSI</option>
+                                        <option value="TRIX" title="TRIX">TRIX</option>
+                                        <option value="UO" title="UO">Ultimate Oscillator</option>
+                                        <option value="Vol" title="VOL">Volume</option>
+                                        <option value="WilliamR" title="WilliamR">William's %R</option>
+                                    </select>  
+                            </div>                                    
+                      </div>  
+
+                      <div class="col-md-2 " >
+                        <div class="margin-bottom-10">
+                     
+                                    <select  id="Indicator3" class="bs-select form-control" title="Candle patterns" data-style="yellow">
+                                             <option value="none" selected="" >Candle pattern</option>
+                                             <option value="trader_cdl2crows" >Two Crows</option>
+                                           <option value="trader_cdl3blackcrows">Three Black Crows</option>
+                                           <option value="trader_cdl3inside">Three Inside Up/Down</option>
+                                           <option value="trader_cdl3linestrike">Three-Line Strike</option>
+                                           <option value="trader_cdl3outside">Three Outside Up/Down</option>
+                                           <option value="trader_cdl3starsinsouth">Three Stars In The South</option>
+                                           <option value="trader_cdl3whitesoldiers" >Three Advancing White Soldiers</option>
+                                           <option value="trader_cdlabandonedbaby" >Abandoned Baby</option>
+                                           <option value="trader_cdlbelthold" >Belt-hold</option>
+                                           <option value="trader_cdlbreakaway" >Breakaway</option>
+                                           <option value="trader_cdlclosingmarubozu" >Closing Marubozu</option>
+                                           <option value="trader_cdlconcealbabyswall" >Concealing Baby Swallow</option>
+                                           <option value="trader_cdlcounterattack" >Counterattack</option>
+                                           <option value="trader_cdldarkcloudcover" >Dark Cloud Cover</option>
+                                           <option value="trader_cdldoji" >Doji</option>
+                                           <option value="trader_cdldojistar" >Doji Star</option>
+                                           <option value="trader_cdldragonflydoji" >Dragonfly Doji</option>
+                                           <option value="trader_cdlengulfing" >Engulfing Pattern</option>
+                                           <option value="trader_cdleveningdojistar" >Evening Doji Star</option>
+                                           <option value="trader_cdleveningstar" >Evening Star</option>
+                                           <option value="trader_cdlgapsidesidewhite" >Up/Down-gap side-by-side white lines</option>
+                                           <option value="trader_cdlgravestonedoji" >Gravestone Doji</option>
+                                           <option value="trader_cdlhammer" >Hammer</option>
+                                           <option value="trader_cdlhangingman" >Hanging Man</option>
+                                           <option value="trader_cdlharami" >Harami Pattern</option>
+                                           <option value="trader_cdlharamicross" >Harami Cross Pattern</option>
+                                           <option value="trader_cdlhighwave" >High-Wave Candle</option>
+                                           <option value="trader_cdlhikkake" >Hikkake Pattern</option>
+                                           <option value="trader_cdlhikkakemod" >Modified Hikkake Pattern</option>
+                                           <option value="trader_cdlhomingpigeon" >Homing Pigeon</option>
+                                           <option value="trader_cdlidentical3crows" >Identical Three Crows</option>
+                                           <option value="trader_cdlinneck" >In-Neck Pattern</option>
+                                           <option value="trader_cdlinvertedhammer" >Inverted Hammer</option>
+                                           <option value="trader_cdlkicking" >Kicking</option>
+                                           <option value="trader_cdlkickingbylength" >Kicking - bull/bear determined by the longer marubozu</option>
+                                           <option value="trader_cdlladderbottom" >Ladder Bottom</option>
+                                           <option value="trader_cdllongleggeddoji" >Long Legged Doji</option>
+                                           <option value="trader_cdllongline" >Long Line Candle</option>
+                                           <option value="trader_cdlmarubozu" >Marubozu</option>
+                                           <option value="trader_cdlmatchinglow" >Matching Low</option>
+                                           <option value="trader_cdlmathold" >Mat Hold</option>
+                                           <option value="trader_cdlmorningdojistar" >Morning Doji Star</option>
+                                           <option value="trader_cdlmorningstar" >Morning Star</option>
+                                           <option value="trader_cdlonneck" >On-Neck Pattern</option>
+                                           <option value="trader_cdlpiercing" >Piercing Pattern</option>
+                                           <option value="trader_cdlrickshawman" >Rickshaw Man</option>
+                                           <option value="trader_cdlrisefall3methods" >Rising/Falling Three Methods</option>
+                                           <option value="trader_cdlseparatinglines" >Separating Lines</option>
+                                           <option value="trader_cdlshootingstar" >Shooting Star</option>
+                                           <option value="trader_cdlshortline" >Short Line Candle</option>
+                                           <option value="trader_cdlspinningtop" >Spinning Top</option>
+                                           <option value="trader_cdlstalledpattern" >Stalled Pattern</option>
+                                           <option value="trader_cdlsticksandwich" >Stick Sandwich</option>
+                                           <option value="trader_cdltakuri" >Takuri (Dragonfly Doji with very long lower shadow)</option>
+                                           <option value="trader_cdltasukigap" >Tasuki Gap</option>
+                                           <option value="trader_cdlthrusting" >Thrusting Pattern</option>
+                                           <option value="trader_cdltristar" >Tristar Pattern</option>
+                                           <option value="trader_cdlunique3river" >Unique 3 River</option>
+                                           <option value="trader_cdlupsidegap2crows" >Upside Gap Two Crows</option>
+                                           <option value="trader_cdlxsidegap3methods" >Upside/Downside Gap Three Methods</option>
+                                    </select>  
+                        </div>                                    
+                      </div>                              
+                            <div class="col-md-2 ">
+                                <div class="margin-bottom-10">
+                                    <select id="charttype" class="bs-select form-control">
+                                        <option value="CandleStick" selected="">CandleStick</option>
+                                        <option value="Close">Closing Price</option>
+                                        <option value="Median">Median Price</option>
+                                        <option value="OHLC">OHLC</option>
+                                        <option value="TP">Typical Price</option>
+                                        <option value="WC">Weighted Close</option>
+                                    </select>
+
+                                </div>
+                            </div>
+                            <div class="col-md-2  ">
+                                <div class="margin-bottom-10">
+                                    <select id="overlay" class="bs-select form-control ">
+                                        <option value="" selected="">None</option>
+                                        <option value="BB" >Bollinger Band</option>
+                                        <option value="DC">Donchian Channel</option>
+                                        <option value="Envelop">Envelop (SMA 20 +/- 10%)</option>
+                                    </select>
+
+                                </div>
+
+                            </div>     
+                            <div class="col-md-2  ">
+                                <div class="margin-bottom-10">
+
+                                        <select id="mov1" class="bs-select form-control">
+                                            <option value="" selected="">None</option>
+                                            <option value="SMA" >Simple</option>
+                                            <option value="EMA">Exponential</option>
+                                            <option value="TMA">Triangular</option>
+                                            <option value="WMA">Weighted</option>
+                                            <option value="trader_dema">DEMA</option>
+                                            <option value="trader_kama">KAMA</option>
+                                            <option value="trader_mama">MAMA</option>
+                                            <option value="trader_midpoint">MidPoint</option>
+                                            <option value="trader_t3">T3</option>
+                                            <option value="trader_tema">TEMA</option>
+                                            <option value="trader_trima">TRIMA</option>
+                                            <option value="trader_ht_trendline">Hilbert Transform</option>
+
+                                        </select>
+
+
+                                </div>
+                            </div>
+                            <div class="col-md-2  ">
+                                <div class="margin-bottom-10">
+
+                                        <input id="touchspin_demo1" type="text" value="13" name="demo1" class="form-control">
+
+
+                                </div>
+                            </div>
+                            <div class="col-md-2  ">
+                                <div class="margin-bottom-10">
+                                    <select id="mov2" class="bs-select form-control">
+                                        <option value="" selected="">None</option>
+                                        <option value="SMA" >Simple</option>
+                                        <option value="EMA">Exponential</option>
+                                        <option value="TMA">Triangular</option>
+                                        <option value="WMA">Weighted</option>
+                                    </select>
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-2  ">
+                                <div class="margin-bottom-10">
+                                    <input id="touchspin_demo2" type="text" value="19" name="demo1" class="form-control">
+                                </div>
+                            </div>
+
+
+
+                            <div class="col-md-2">
+                                <div class="margin-bottom-10">
+                                    <select id="adj" class="bs-select form-control" >
+                                        <option value="1" selected>Adjusted</option>
+                                        <option value="0" >Non Adjusted</option>
+                                    </select>   
+
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-2 ">
+                                <div class="margin-bottom-10">
+                                    <select id="interval" class="form-control bs-select">
+                                        <option value="5">5 Minute</option>
+                                        <option value="10">10 Minute</option>
+                                        <option value="15">15 Minute</option>
+                                        <option value="30">30 Minute</option>
+                                        <option value="60">1 Hour</option>
+                                        <option selected="" value="D">Daily</option>
+                                    </select>
+                                </div>
+                            </div> 
+
+                            <div class="col-md-2 ">
+                                <div class="margin-bottom-10">
+                                    <select id="ChartSize" class="form-control bs-select">
+                                        <option >Chart Size</option>
+                                        <option value="S">Small</option>
+                                        <option value="M">Medium</option>
+                                        <option value="L">Large</option>
+                                        <option value="H" selected>Huge</option>
+                                    </select>
+                                </div>
+                            </div>                            
+
+                            <div class="col-md-2">
+                                <div class="margin-bottom-10">
+                                    
+                                <button data-dismiss="modal" type="button"  class="btn btn-success form-control loadChart"><i class="fa fa-refresh"></i> Update</button>      
+                                </div>
+                            </div>
+
+                            <div class="col-md-2">
+                                <div class="margin-bottom-10">
+                                    <div class="btn-group btn-group-solid hidden-sm hidden-xs">
+
+                                            <button type="button" class="btn purple prev tooltips" data-container="body" data-placement="left" data-original-title="Press left arrow of keyboard"><i class="fa fa-arrow-left"></i> Prev</button>
+                                            <button type="button" class="btn purple next tooltips" data-container="body" data-placement="right" data-original-title="Press right arrow of keyboard">Next <i class="fa fa-arrow-right"></i></button>
+
+                                    </div> 
+                                </div>
+                            </div>
+                        </div>
+
+<style>
+    @media (max-width: 990px) {
+        .{
+         margin: 10px 0 10px 0;
+            
+        }
+    }
+</style>
+
+                      </div>
+                    </div>
+                </form>
+                </div>
+
+                                                             </div>
+                                              
+                                                        </div>
+                                                        <!-- /.modal-content -->
+                                                    </div>
+                                                    <!-- /.modal-dialog -->
+                                                </div>
+           
+                
+                <div class="row margin-bottom-10" >      
+                    <div class="col-xs-6">
+                        <a class="btn red btn-sm  visible-sm visible-xs" data-toggle="modal" href="#modalFade"> <i class="fa fa-bars"></i> Options </a>
+                    </div>
+                    <div class="col-xs-6">
+                        <a  class="btn red btn-sm  visible-sm visible-xs loadChart" ><i class="fa fa-refresh"></i> Refresh </a>
+                    </div>
+                </div>
+
+        <div class="row margin-bottom-10" >      
+            <div class="col-md-12" style="text-align: center;">
+                
+            <div class="btn-group btn-group-solid hidden-md hidden-lg " >
+
+                    <button type="button" class="btn purple prev btn-sm " data-container="body" data-placement="left" ><i class="fa fa-arrow-left"></i> Prev</button>
+                    <button type="button" class="btn purple next btn-sm " data-container="body" data-placement="right" >Next <i class="fa fa-arrow-right"></i></button>
+
+            </div> 
+
+            </div>
+        </div>
+
+            
+
+            <div id="chartContainer" class="chartcontent " style="min-height: 200px; min-width: 100% !important; overflow: auto;">
+                <input type="hidden" id="chart_id" value="">
+                </div>
+
+
+            </div>
+
+            <div class="tab-pane fade container-fluid" id="share_holdings">
+                    
+            </div>
+        </div>
+    </div>
+    <!-- END WIDGET TAB -->
+
+</div>
+
+</div>
+
+
+
+
+</div>
+
+
+
+    
+</div>
+
+
+
+                        
+                        
+
+                    <!-- END BREADCRUMBS -->
+
+
+                    <!-- BEGIN SIDEBAR CONTENT LAYOUT -->
+                    <div class="page-content-container">
+
+
+
+                         
+<div id="app" style="min-height: 400px" >
+								<cockpit></cockpit>
+	<a data-toggle="modal" href="#course">CockPit</a>
+     <div id="course" class="modal fade" tabindex="-1" data-width="760">
+        <div class="course-background">
+
+              <div class="modal-body" style="padding: 0; height: 100%">
+                  <div class="row">
+                        
+                        <div class="col-md-12">
+                         			
+                        </div>
+
+                  </div>
+              </div>
+
+        </div>
+
+      </div>
+
+</div>
+
+
+<script src="http://sblara.test/js/html2canvas.js"></script>
+
+
+        
+                                                                      <!-- resposive_new_site -->
+
+                         </div>
+        
+
+
+
+                    </div>
+                    <!-- END SIDEBAR CONTENT LAYOUT -->
+
+                </div>
+
+
+                <!-- BEGIN FOOTER -->
+                <p class="copyright"> 2018 &copy; StockBangladesh Ltd &nbsp;|&nbsp; <a style="color: #fff" href="/contact-us">Contact Us</a>&nbsp;|&nbsp; <a target="_blank" style="color: #fff" href="https://hostingbangladesh.com/">Hosted by HostingBangladesh</a></p>
+                <a href="#index" class="go2top">
+                    <i class="icon-arrow-up"></i>
+                </a>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-41773758-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-41773758-1');
+</script>
+
+<!-- Start of StatCounter Code for Default Guide -->
+
+<!-- End of StatCounter Code for Default Guide -->                <!-- END FOOTER -->
+            </div>
+        </div>
+        <!-- END CONTAINER -->
+        <!-- BEGIN QUICK SIDEBAR -->
+        
+        <!-- END QUICK SIDEBAR -->
+        <!-- BEGIN QUICK NAV -->
+        
+        <!-- END QUICK NAV -->
+
+         <!-- BEGIN ALL JS SCRIPTS -->
+            <!--[if lt IE 9]>
+<script src="http://sblara.test/metronic/assets/global/plugins/respond.min.js"></script>
+<script src="http://sblara.test/metronic/assets/global/plugins/excanvas.min.js"></script>
+<script src="http://sblara.test/metronic/assets/global/plugins/ie8.fix.min.js"></script>
+<![endif]-->
+<script src="http://sblara.test/metronic/assets/global/plugins/bootstrap-tabdrop/js/bootstrap-tabdrop.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+ <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+ 
+ <script src="http://sblara.test/metronic_custom/custom.js?v=1"></script>
+<script src="http://sblara.test/js/application.js"></script>
+<!--<script src="https://cloud.tinymce.com/stable/tinymce.min.js"></script>
+  <script>tinymce.init({ selector:'textarea' });</script>-->
+<script>
+    $(document).ready(function ()
+    {
+        $('#clickmewow').click(function ()
+        {
+            $('#radio1003').attr('checked', 'checked');
+        });
+    })
+</script>
+    
+    <script src="http://sblara.test/metronic/assets/global/plugins/bootstrap-touchspin/bootstrap.touchspin.js"></script>
+<script src="http://sblara.test/js/se.js?v=1.0.6"></script>
+            
+<script>
+  if($(document).width() < 991)
+  {
+    $('.bs-select').selectpicker({
+      dropupAuto: false,
+      liveSearch: false,
+      size: 10
+    });
+  }else{
+    $('.bs-select').selectpicker({
+      dropupAuto: false,
+      size: 10
+    });    
+  }
+
+
+</script>
+<script>
+//     JsChartViewer.addEventListener(window, 'load', function() {
+//     var viewer = JsChartViewer.get('ta-chart');
+
+//     // Draw track cursor when mouse is moving over plotarea
+//     viewer.attachHandler(["MouseMovePlotArea", "TouchStartPlotArea", "TouchMovePlotArea", "ChartMove", "Now"],
+//     function(e) {
+//         this.preventDefault(e);   // Prevent the browser from using touch events for other actions
+//         traceFinance(viewer, viewer.getPlotAreaMouseX());
+//     });
+// });
+
+// //
+// // Draw finance chart track line with legend
+// //
+// function traceFinance(viewer, mouseX)
+// {
+//     // Remove all previously drawn tracking object
+//     viewer.hideObj("all");
+
+//     // It is possible for a FinanceChart to be empty, so we need to check for it.
+//     if (!viewer.getChart())
+//         return;
+
+//     // Get the data x-value that is nearest to the mouse
+//     var xValue = viewer.getChart().getNearestXValue(mouseX);
+
+//     // Iterate the XY charts (main price chart and indicator charts) in the FinanceChart
+//     var c = null;
+//     for (var i = 0; i < viewer.getChartCount(); ++i)
+//     {
+//         c = viewer.getChart(i);
+
+//         // Variables to hold the legend entries
+//         var ohlcLegend = "";
+//         var legendEntries = [];
+
+//         // Iterate through all layers to build the legend array
+//         for (var j = 0; j < c.getLayerCount(); ++j)
+//         {
+//             var layer = c.getLayerByZ(j);
+//             var xIndex = layer.getXIndexOf(xValue);
+//             var dataSetCount = layer.getDataSetCount();
+
+//             // In a FinanceChart, only layers showing OHLC data can have 4 data sets
+//             if (dataSetCount == 4)
+//             {
+//                 var highValue = layer.getDataSet(0).getValue(xIndex);
+//                 var lowValue = layer.getDataSet(1).getValue(xIndex);
+//                 var openValue = layer.getDataSet(2).getValue(xIndex);
+//                 var closeValue = layer.getDataSet(3).getValue(xIndex);
+
+//                 if (closeValue == null)
+//                     continue;
+
+//                 // Build the OHLC legend
+//                 ohlcLegend =
+//                     "Open: " + openValue.toPrecision(4) + ", High: " + highValue.toPrecision(4) +
+//                     ", Low: " + lowValue.toPrecision(4) + ", Close: " + closeValue.toPrecision(4);
+
+//                 // We also draw an upward or downward triangle for up and down days and the % change
+//                 var lastCloseValue = layer.getDataSet(3).getValue(xIndex - 1);
+//                 if (lastCloseValue != null)
+//                 {
+//                     var change = closeValue - lastCloseValue;
+//                     var percent = change * 100 / closeValue;
+//                     if (change >= 0)
+//                         ohlcLegend += "&nbsp;&nbsp;<span style='color:#008800;'>&#9650; ";
+//                     else
+//                         ohlcLegend += "&nbsp;&nbsp;<span style='color:#CC0000;'>&#9660; ";
+//                     ohlcLegend += change.toPrecision(4) + " (" + percent.toFixed(2) + "%)</span>";
+//                 }
+
+//                 // Add a spacer box, and make sure the line does not wrap within the legend entry
+//                 ohlcLegend = "<nobr>" + ohlcLegend + viewer.htmlRect(20, 0) + "</nobr> ";
+//             }
+//             else
+//             {
+//                 // Iterate through all the data sets in the layer
+//                 for (var k = 0; k < dataSetCount; ++k)
+//                 {
+//                     var dataSet = layer.getDataSetByZ(k);
+//                     var name = dataSet.getDataName();
+//                     var value = dataSet.getValue(xIndex);
+//                     if ((!name) || (value == null))
+//                         continue;
+
+//                     // In a FinanceChart, the data set name consists of the indicator name and its latest value. It is
+//                     // like "Vol: 123M" or "RSI (14): 55.34". As we are generating the values dynamically, we need to
+//                     // extract the indictor name out, and also the volume unit (if any).
+
+//                     // The unit character, if any, is the last character and must not be a digit.
+//                     var unitChar = name.charAt(name.length - 1);
+//                     if ((unitChar >= '0') && (unitChar <= '9'))
+//                         unitChar = '';
+
+//                     // The indicator name is the part of the name up to the colon character.
+//                     var delimiterPosition = name.indexOf(':');
+//                     if (delimiterPosition != -1)
+//                         name = name.substring(0, delimiterPosition);
+
+//                     // In a FinanceChart, if there are two data sets, it must be representing a range.
+//                     if (dataSetCount == 2)
+//                     {
+//                         // We show both values in the range
+//                         var value2 = layer.getDataSetByZ(1 - k).getValue(xIndex);
+//                         name = name + ": " + Math.min(value, value2).toPrecision(4) + " - "
+//                             + Math.max(value, value2).toPrecision(4);
+//                     }
+//                     else
+//                     {
+//                         // In a FinanceChart, only the layer for volume bars has 3 data sets for up/down/flat days
+//                         if (dataSetCount == 3)
+//                         {
+//                             // The actual volume is the sum of the 3 data sets.
+//                             value = layer.getDataSet(0).getValue(xIndex) + layer.getDataSet(1).getValue(xIndex) +
+//                                 layer.getDataSet(2).getValue(xIndex);
+//                         }
+
+//                         // Create the legend entry
+//                         name = name + ": " + value.toPrecision(4) + unitChar;
+//                     }
+
+//                     // Build the legend entry, consist of a colored square box and the name (with the data value in it).
+//                     legendEntries.push("<nobr>" + viewer.htmlRect(5, 5, dataSet.getDataColor(),
+//                         "solid 1px black") + " " + name + viewer.htmlRect(20, 0) + "</nobr>");
+//                 }
+//             }
+//         }
+
+//         // The legend is formed by concatenating the legend entries.
+//         var legend = legendEntries.reverse().join(" ");
+
+//         // Add the date and the ohlcLegend (if any) at the beginning of the legend
+//         legend = "<nobr>[" + c.xAxis().getFormattedLabel(xValue, "mmm dd, yyyy") + "]" + viewer.htmlRect(20, 0) +
+//             "</nobr> " + ohlcLegend + legend;
+
+//         // Get the plot area position relative to the entire FinanceChart
+//         var plotArea = c.getPlotArea();
+//         var plotAreaLeftX = plotArea.getLeftX() + c.getAbsOffsetX();
+//         var plotAreaTopY = plotArea.getTopY() + c.getAbsOffsetY();
+
+//         // Draw a vertical track line at the x-position
+//         viewer.drawVLine("trackLine" + i, c.getXCoor(xValue) + c.getAbsOffsetX(), plotAreaTopY,
+//             plotAreaTopY + plotArea.getHeight(), "black 1px dotted");
+
+//         // Display the legend on the top of the plot area
+//         viewer.showTextBox("legend" + i, plotAreaLeftX + 1, plotAreaTopY + 1, JsChartViewer.TopLeft, legend,
+//             "padding-left:5px;width:" + (plotArea.getWidth() - 1) + "px;font:11px Arial;-webkit-text-size-adjust:100%;");
+//     }
+// }
+
+</script>
+                    <!-- END ALL JS SCRIPTS -->
+
+
+
+        <script>
+            $(document).ready(function()
+            {
+                $('#clickmewow').click(function()
+                {
+                    $('#radio1003').attr('checked', 'checked');
+                });
+            })
+        </script>
+
+<script async defer src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.0.0/masonry.pkgd.min.js"></script>
+<script src="/js/passport-vue.js"></script>
+    </body>
+
+</html>

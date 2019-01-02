@@ -27,11 +27,15 @@
                             <!-- END SEARCH -->
 
                             <!-- BEGIN TOPBAR ACTIONS -->
-                            @if (Auth::guest())
-                                 @include('includes.metronic.topbar_guest')
-                            @else
-                                 @include('includes.metronic.topbar_login')
-                            @endif
+                            <script>
+                                $('document').ready(function () {
+                                    $.get('/topbarlogin', function (html) {
+                                        $("#TopBarLogin").html(html)
+                                    })
+                                })
+                            </script>
+                            <div id="TopBarLogin" class="topbar-actions"></div>
+
                             <!-- END TOPBAR ACTIONS -->
                         </div>
                         <!-- BEGIN HEADER MENU -->

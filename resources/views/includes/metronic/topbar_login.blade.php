@@ -1,4 +1,4 @@
-                            <div class="topbar-actions">
+                         
                                 <!-- BEGIN GROUP NOTIFICATION -->
                                {{--  <div class="btn-group-notification btn-group" id="header_notification_bar">
                                     <button type="button" class="btn btn-sm md-skip dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
@@ -182,4 +182,4 @@
                                     <i class="icon-logout"></i>
                                 </button>--}}
                                 <!-- END QUICK SIDEBAR TOGGLER -->
-                            </div>
+                      

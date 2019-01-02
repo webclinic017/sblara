@@ -340,6 +340,7 @@ Route::get('/news/details/{id}', 'NewsController@viewNews');
 
 Route::get('/latest-share-price', 'TableController@index');
 Route::get('/latest-share-price/{id}/details', 'TableController@details');
+Route::get('/topbarlogin', 'ClouserController@topbarlogin');
 Route::post('/latest-share-price/update-column', 'TableController@updateColumn');
 
 //Route::get('/resources/amibroker-data-plugin-dse', 'ComingSoonController@index')->name('amibroker-data-plugin-dse');

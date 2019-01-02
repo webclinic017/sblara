@@ -199,7 +199,7 @@ $(".nav-collapse a[href='"+url+"']").closest('.dropdown-fw').addClass("open")
     $.get('/ajax/load_block/block_name=fixedStat', function (data) {
       $("#fixedStat").html(data)
     });
-    }, 120000);
+    }, 340000);
 
   $('#addNew').click(function () {
     $('form.ajax')[0].reset();

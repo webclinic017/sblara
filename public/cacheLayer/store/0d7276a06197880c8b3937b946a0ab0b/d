@@ -1,0 +1,20 @@
+<div class="fixedStat" style="text-align: center;">
+	<ul style="text-align: center; display: inline-block;">
+		<li style="color: red ; min-width: 130px">
+			<div style="line-height: 25px"><strong>DSEX<i class="fa  fa-caret-down "></i>-0.36%</strong></div>
+			<div style="line-height: 25px"><strong>5,736</strong></div>
+		</li>
+		<li >
+			<div style="line-height: 25px; color: #009dc7; text-align: left;"><strong><i class="fa fa-caret-up"></i>86</strong></div>
+			<div style="line-height: 25px;  color: red; text-align: left;"><strong><i class="fa fa-caret-down"></i>197</strong></div>
+		</li>
+		<li style="color: red ;">
+			<div style="line-height: 25px"><strong>Trade</strong></div>
+			<div style="line-height: 25px"><strong>143,809</strong></div>
+		</li>
+		<li style="color: red ;; min-width: 90px">
+			<div style="line-height: 25px"><strong>Value</strong><small> (m)</small></div>
+			<div style="line-height: 25px"><strong>10,164.40</strong></div>
+		</li>
+	</ul>
+</div>

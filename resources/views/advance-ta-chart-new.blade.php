@@ -191,6 +191,81 @@ $('.save-watchlist').click(function () {
                 return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
             }
 
+ __customIndicators = [
+    {
+        name: "Equity",
+        metainfo: {
+            "_metainfoVersion": 40,
+            "id": "Equity@tv-basicstudies-1",
+            "scriptIdPart": "",
+            "name": "Equity",
+            "description": "Equity",
+            "shortDescription": "Equity",
+
+            "is_hidden_study": true,
+            "is_price_study": true,
+            "isCustomIndicator": true,
+
+            "plots": [{"id": "plot_0", "type": "line"}],
+            "defaults": {
+                "styles": {
+                    "plot_0": {
+                        "linestyle": 0,
+                        "visible": true,
+
+                        // Make the line thinner
+                        "linewidth": 1,
+
+                        // Plot type is Line
+                        "plottype": 2,
+
+                        // Show price line
+                        "trackPrice": true,
+
+                        "transparency": 40,
+
+                        // Set the plotted line color to dark red
+                        "color": "#880000"
+                    }
+                },
+
+                // Precision is set to one digit, e.g. 777.7
+                "precision": 1,
+
+                "inputs": {}
+            },
+            "styles": {
+                "plot_0": {
+                    // Output name will be displayed in the Style window
+                    "title": "Equity value",
+                    "histogramBase": 0,
+                }
+            },
+            "inputs": [],
+        },
+
+        constructor: function() {
+            this.init = function(context, inputCallback) {
+                this._context = context;
+                this._input = inputCallback;
+
+                var symbol = "#EQUITY";
+                this._context.new_sym(symbol, PineJS.Std.period(this._context), PineJS.Std.period(this._context));
+            };
+
+            this.main = function(context, inputCallback) {
+                this._context = context;
+                this._input = inputCallback;
+
+                this._context.select_sym(1);
+
+                var v = PineJS.Std.close(this._context);
+                return [v];
+            }
+        }
+    }
+];
+
              TradingView.onready(function()
             {            
 
@@ -208,6 +283,9 @@ $('.save-watchlist').click(function () {
                     hideideas: !0,
                     disabled_features: ["use_localstorage_for_settings", "header_fullscreen_button", "show_dialog_on_snapshot_ready"],
                     //  BEWARE: no trailing slash is expected in feed URL
+                    studies_overrides:{
+                        "moving average exponential.metainfo.name":"sdfs"
+                    },
                     datafeed: new Datafeeds.UDFCompatibleDatafeed("{{ url('/') }}", 60000),
                     library_path: "/vendor/chart_lib/charting_library/",
                     locale: getParameterByName('lang') || "en",
@@ -260,6 +338,16 @@ $('.save-watchlist').click(function () {
                        t.preventDefault();
                    }
                 widget.onChartReady(function() {
+
+// hack change
+                      widget.chart()._chartWidget._studiesMetaData[23].description  = "ADX With DI"
+                      widget.chart()._chartWidget._studiesMetaData[23].description_localized  = "ADX With DI"
+                      widget.chart()._chartWidget._studiesMetaData[23].shortDescription  = "ADX"
+
+
+                          // widget.chart().createStudy('Equity', false, true);
+
+
 
                     @if(isset($ticker) && $ticker != "dsex")
                 tvWidget.activeChart().setSymbol("{{strtoupper($ticker)}}")

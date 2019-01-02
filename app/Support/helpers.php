@@ -313,3 +313,7 @@ function toBangla($str)
         ];
     return str_replace($en, $bn, $str);
 }
+
+
+
+

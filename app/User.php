@@ -11,7 +11,7 @@ use App\UserInformation;
 
 class User extends  Authenticatable implements Ath{
 
-    use Notifiable, HasRole;
+    use Notifiable, HasRole, HasApiTokens;
 
     /**
      * The attributes that are mass assignable.

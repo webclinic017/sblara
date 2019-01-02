@@ -80,5 +80,13 @@ class ClouserController extends Controller
 	// 	    return response()->download(storage_path() . '/app/plugin/eod.zip');
 	// }
 
+    public function topbarlogin()
+    {
+        if(\Auth::guest()){
+            return view('includes.metronic.topbar_guest');
+        }
+        return view('includes.metronic.topbar_login');
+    }
+
 
 }
