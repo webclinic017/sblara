@@ -77,10 +77,10 @@ class DataBankEodRepository {
                 $returnData['l'] = $lowArr;
                 $returnData['v'] = $volumeArr;
                 $returnData['s'] = "ok";
-                // $returnData['noData'] = true;
+                $returnData['noData'] = true;
             }else
             {
-                $returnData['s'] = "no_data";
+                // $returnData['s'] = "no_data";
                  
                 // $returnData['noData'] = true;
                 // $returnData['nextTime'] = strtotime('yesterday');

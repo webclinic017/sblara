@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Market;
 use Illuminate\Http\Request;
 use App\Repositories\DataBankEodRepository;
 use App\Repositories\DataBanksIntradayRepository;
@@ -257,7 +257,13 @@ ORDER BY lm_date_time asc ,total_volume asc";
         $instrumentInfo=$instrumentList->where('instrument_code',"$instrumentCode")->first();
 
 
-        $from=(int) $request->input('from');
+        // $from=(int) $request->input('from');
+        if(Market::isMarketOpen()){
+            $from = time() - 4*365*24*60*60;
+        }else{
+            $from = time() - 12*365*24*60*60;
+        }
+        
         $to=(int) $request->input('to',time());
 
         if($resolution=='D') {
@@ -268,7 +274,6 @@ ORDER BY lm_date_time asc ,total_volume asc";
                  //    });
                  // return $data;
     
-           
             //$data = DataBankEodRepository::getEodDataAdjusted($instrumentInfo->id, $from, $to);
         }
         elseif($resolution=='W') {
@@ -595,6 +600,7 @@ imagettftext($image, 10, 0, 10, 32, $color, $font, $text2);
 
     public function chart($ticker, $name, $layout=false)
     {
+        // return abort('503');
         // return view("tempdown");
         if($layout){
             $data['status'] = 'ok';

@@ -1,9 +1,10 @@
 <?php 
-$hash = md5($_SERVER['REQUEST_URI']);
+$hash = md5($uri);
 function callback($html)
 {
 	global $hash;
 	file_put_contents(__DIR__.'/store/'.$hash.'/d', $html);
+	unlink(__DIR__.'/store/'.$hash.'/cst');
 	//cache completed 
 	return $html;
 	// return $html;
@@ -21,7 +22,18 @@ if (!file_exists(__DIR__.'/store/'.$hash)) {
 		echo file_get_contents(__DIR__.'/store/'.$hash.'/d');
 		exit;
 	}else{
-		 ob_start("callback");	
+		//check if another request is caching
+		//cst = cache started
+
+		if(!file_exists(__DIR__.'/store/'.$hash.'/cst') || ((time() - filemtime(__DIR__.'/store/'.$hash.'/cst')) > 60) ){ 
+			file_put_contents(__DIR__.'/store/'.$hash.'/cst', "0");
+			 ob_start("callback");	
+		}else{
+
+			echo file_get_contents(__DIR__.'/store/'.$hash.'/d');
+			exit;
+		}
+
 	}
 }
 

@@ -17,7 +17,7 @@
         <div class="caption hidden-xs">
             <i class="icon-pin font-green-sharp"></i>
                                  <span class="caption-subject font-green-sharp bold uppercase">
-                                 INDEX </span>
+                                 INDEX- </span>
         </div>
         <ul class="nav nav-tabs">
         @foreach($indexData['index'] as $data)

@@ -201,12 +201,12 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
                     </a>
                     <a href="" class="remove">
                     </a>
-                    <a href="#" data-load="false" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.market_radar_paidup" class="reload"></a>
+                    <a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.market_radar_paidup" class="reload"></a>
                 </div>
 
             </div>
             <div class="portlet-body">
-@include('include_block',['param'=>'block_name=block.market_radar_paidup'])
+{{-- @include('include_block',['param'=>'block_name=block.market_radar_paidup']) --}}
             </div>
         </div>
         <!-- END Portlet PORTLET-->
@@ -223,7 +223,7 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
 
                           </div>
                             <div class="tools">
-                                <a href="#" data-load="false" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.market_radar_pe:render_to=gainer_loser_whole_day_up_down_bar" class="reload"></a>
+                                <a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.market_radar_pe:render_to=gainer_loser_whole_day_up_down_bar" class="reload"></a>
 
                                 <a href="" class="collapse">
                                 </a>
@@ -235,7 +235,7 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
                     </div>
 
                 <div class="portlet-body">
-@include('include_block',['param'=>'block_name=block.market_radar_pe'])
+{{-- @include('include_block',['param'=>'block_name=block.market_radar_pe']) --}}
                 </div>
             </div>
         <!-- END Portlet PORTLET-->
@@ -252,7 +252,7 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
 
                           </div>
                             <div class="tools">
-                                <a href="#" data-load="false" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.market_radar_category:render_to=gainer_loser_last_minute" class="reload"></a>
+                                <a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.market_radar_category:render_to=gainer_loser_last_minute" class="reload"></a>
 
                                 <a href="" class="collapse">
                                 </a>
@@ -264,7 +264,7 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
                     </div>
 
                 <div class="portlet-body">
-@include('include_block',['param'=>'block_name=block.market_radar_category'])
+{{-- @include('include_block',['param'=>'block_name=block.market_radar_category']) --}}
                 </div>
             </div>
         <!-- END Portlet PORTLET-->
@@ -294,7 +294,7 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
 
             </div>
             <div class="portlet-body">
-@include('include_block',['param'=>'block_name=block.market_radar_share_price'])
+{{-- @include('include_block',['param'=>'block_name=block.market_radar_share_price']) --}}
             </div>
         </div>
         <!-- END Portlet PORTLET-->
@@ -311,7 +311,7 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
 
                           </div>
                             <div class="tools">
-                                <a href="#" data-load="false" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.market_radar_public_holdings" class="reload"></a>
+                                <a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.market_radar_public_holdings" class="reload"></a>
 
                                 <a href="" class="collapse">
                                 </a>
@@ -323,7 +323,7 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
                     </div>
 
                 <div class="portlet-body">
-@include('include_block',['param'=>'block_name=block.market_radar_public_holdings'])
+{{-- @include('include_block',['param'=>'block_name=block.market_radar_public_holdings']) --}}
                 </div>
             </div>
         <!-- END Portlet PORTLET-->
@@ -340,7 +340,7 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
 
                           </div>
                             <div class="tools">
-                                <a href="#" data-load="false" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.market_radar_institute_holdings" class="reload"></a>
+                                <a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.market_radar_institute_holdings" class="reload"></a>
 
                                 <a href="" class="collapse">
                                 </a>
@@ -352,7 +352,7 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
                     </div>
 
                 <div class="portlet-body">
-@include('include_block',['param'=>'block_name=block.market_radar_institute_holdings'])
+{{-- @include('include_block',['param'=>'block_name=block.market_radar_institute_holdings']) --}}
                 </div>
             </div>
         <!-- END Portlet PORTLET-->
@@ -401,7 +401,7 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
 
                               </div>
                                 <div class="tools">
-                                    <a href="#" data-load="false" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.top_by_trade_value:render_to=gainer_loser_last_minute" class="reload"></a>
+                                    <a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.top_by_trade_value:render_to=gainer_loser_last_minute" class="reload"></a>
 
                                     <a href="" class="collapse">
                                     </a>
@@ -413,7 +413,7 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
                         </div>
 
                     <div class="portlet-body">
-@include('include_block',['param'=>'block_name=block.top_by_trade_value:render_to=gainer_loser_last_minute'])
+{{-- @include('include_block',['param'=>'block_name=block.top_by_trade_value:render_to=gainer_loser_last_minute']) --}}
                     </div>
                 </div>
             <!-- END Portlet PORTLET-->
@@ -467,7 +467,7 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
                                   Big buyer/seller</span>
                               </div>
                                 <div class="tools">
-                                    <a href="#" data-load="false" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.top_by_big_buyer" class="reload"></a>
+                                    <a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.top_by_big_buyer" class="reload"></a>
 
                                     <a href="" class="collapse">
                                     </a>
@@ -479,7 +479,7 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
                         </div>
 
                     <div class="portlet-body">
-@include('include_block',['param'=>'block_name=block.top_by_big_buyer'])
+{{-- @include('include_block',['param'=>'block_name=block.top_by_big_buyer']) --}}
                     </div>
                 </div>
             <!-- END Portlet PORTLET-->
@@ -496,7 +496,7 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
 
                               </div>
                                 <div class="tools">
-                                    <a href="#" data-load="false" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.upcoming_courses:render_to=upcoming_courses" class="reload"></a>
+                                    <a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.upcoming_courses:render_to=upcoming_courses" class="reload"></a>
 
                                     <a href="" class="collapse">
                                     </a>
@@ -508,7 +508,7 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
                         </div>
 
                     <div class="portlet-body">
-@include('include_block',['param'=>'block_name=block.upcoming_courses:render_to=upcoming_courses'])
+{{-- @include('include_block',['param'=>'block_name=block.upcoming_courses:render_to=upcoming_courses']) --}}
                     </div>
                 </div>
             <!-- END Portlet PORTLET-->
@@ -525,7 +525,7 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
 
                               </div>
                                 <div class="tools">
-                                    <a href="#" data-load="false" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.recent_news:render_to=recent_news" class="reload"></a>
+                                    <a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.recent_news:render_to=recent_news" class="reload"></a>
 
                                     <a href="" class="collapse">
                                     </a>
@@ -537,7 +537,7 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
                         </div>
 
                     <div class="portlet-body">
-@include('include_block',['param'=>'block_name=block.recent_news:render_to=recent_news'])
+{{-- @include('include_block',['param'=>'block_name=block.recent_news:render_to=recent_news']) --}}
                     </div>
                 </div>
             <!-- END Portlet PORTLET-->
@@ -558,7 +558,7 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
 
                               </div>
                                 <div class="tools">
-                                    <a href="#" data-load="false" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.significant_movement_trade:render_to=significant_trade" class="reload"></a>
+                                    <a href="#" data-load="true" data-url-custom="{{ url('/ajax/load_block/') }}/block_name=block.significant_movement_trade:render_to=significant_trade" class="reload"></a>
 
                                     <a href="" class="collapse">
                                     </a>
@@ -570,7 +570,7 @@ DSE: {{$trade_date_Info->trade_date->format('l, M d, Y')}}
                         </div>
 
                     <div class="portlet-body">
-@include('include_block',['param'=>'block_name=block.significant_movement_trade:render_to=significant_trade'])
+{{-- @include('include_block',['param'=>'block_name=block.significant_movement_trade:render_to=significant_trade']) --}}
                     </div>
                 </div>
             <!-- END Portlet PORTLET-->
