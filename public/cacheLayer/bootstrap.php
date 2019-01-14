@@ -20,6 +20,7 @@ $uri = $_SERVER['REQUEST_URI'];
 	}
 
 //for trading view end
-if(strpos($uri, 'ajax/load_block') || strpos($uri, 'history/')  || strpos($uri, 'search?limit') || strpos($uri, 'symbols?symbol') || strpos($uri, 'price-board') || strpos($uri, 'technical-analysis') ||  strpos($uri, 'tv/tab') ||  in_array($uri, $cacheUri)){
+if(strpos($uri, 'ajax/load_block') || strpos($uri, 'history/')  || strpos($uri, 'search?limit') || strpos($uri, 'symbols?symbol') || strpos($uri, 'price-board') || strpos($uri, '/technical-analysis') ||  strpos($uri, 'tv/tab/filter') || strpos($uri, 'tv/tab/topList') ||  in_array($uri, $cacheUri)){
+	// not filter
 	require __DIR__."/cache.php";
 }

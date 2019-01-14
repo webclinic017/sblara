@@ -18,14 +18,20 @@ if (!file_exists(__DIR__.'/store/'.$hash)) {
 	// folder exist/even file may exist 
 	//check if file expired
 	$timeago = time() - filemtime(__DIR__.'/store/'.$hash.'/d');
-	if($timeago < 60){
+
+	$cacheTime = 60;
+	if(strpos($uri, 'history/')){
+		$cacheTime = 120;
+	}
+
+	if($timeago < $cacheTime){
 		echo file_get_contents(__DIR__.'/store/'.$hash.'/d');
 		exit;
 	}else{
 		//check if another request is caching
 		//cst = cache started
 
-		if(!file_exists(__DIR__.'/store/'.$hash.'/cst') || ((time() - filemtime(__DIR__.'/store/'.$hash.'/cst')) > 60) ){ 
+		if(!file_exists(__DIR__.'/store/'.$hash.'/cst') || ((time() - filemtime(__DIR__.'/store/'.$hash.'/cst')) > $cacheTime) ){ 
 			file_put_contents(__DIR__.'/store/'.$hash.'/cst', "0");
 			 ob_start("callback");	
 		}else{

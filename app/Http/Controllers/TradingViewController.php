@@ -600,7 +600,7 @@ imagettftext($image, 10, 0, 10, 32, $color, $font, $text2);
 
     public function chart($ticker, $name, $layout=false)
     {
-        // return abort('503');
+        // return die("Under maintenance!.");
         // return view("tempdown");
         if($layout){
             $data['status'] = 'ok';

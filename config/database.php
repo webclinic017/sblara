@@ -109,6 +109,7 @@ return [
            /* 'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
             'prefix' => '',
+             dse phone extension 154
             'strict' => false,
             'engine' => null,*/
         ],

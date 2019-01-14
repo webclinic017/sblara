@@ -100,8 +100,10 @@ class SharePercetageCseController extends Controller
                     }
 
                         $date = substr($date, 2);
-			    	try {
-                      $date = \Carbon\Carbon::parse(trim($date))->format('Y-m-d');
+
+			    	try { 
+                      $date = \Carbon\Carbon::parse(trim(str_replace(",", "", $date)))->format('Y-m-d');
+                      
                     } catch (\Exception $e) {
                         $date = str_replace("As on", "", $date);
                         try {
@@ -112,10 +114,11 @@ class SharePercetageCseController extends Controller
 			    		$date = null;
                         }
 			    	}
-
+                
 			    	$row['meta_date'] = $date;
 			    	$row['instrument_id'] = $instrument->id;
 			    	$row['created_at'] = \Carbon\Carbon::now();
+
 			    	$rows[] = $row; 
 			    	// /html/body/div/div/div[5]/div/div[2]/table/tbody/tr[3]/td/table/tbody/tr[3]/td/table/tbody/tr[2]/td/table/tbody/tr[4]/td/table/tbody/tr/td[1]/table
     	}
