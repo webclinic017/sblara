@@ -14,8 +14,11 @@ $uri = $_SERVER['REQUEST_URI'];
 //for trading view
 
 	if(strpos($uri, 'history?')){
-		// dd($uri);
-		// dd('under construction');
+	
+		if($_GET['to'] < (time() - 2*24*60*60)){
+			echo json_encode(['s'=> 'no_data']);
+			exit;
+		}
 		$uri = "/history/".$_GET['symbol']."/".$_GET['resolution'];
 	}
 
