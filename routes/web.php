@@ -329,6 +329,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
     Route::view('/feedbacks', 'admin.feedbacks');
 });
     Route::view('/contact-us', 'contact');
+    Route::get('/omo', 'OmoController@index');
 /* Se Routes */
 
 

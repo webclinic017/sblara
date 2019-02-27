@@ -1,7 +1,7 @@
 <?php
 set_time_limit(0);
  include_once public_path()."/data-extract/share_per/simplehtmldom/simple_html_dom.php";
-$instruments =\App\Instrument::with('dseSharePercentage')->orderBy('instrument_code', 'asc')->whereNotIn('sector_list_id', [5, 23, 22])->where('active', '=', '1')->get();
+$instruments =\App\Instrument::with('dseSharePercentage')->orderBy('instrument_code', 'asc')->whereNotIn('sector_list_id', [5, 23, 22, 24])->where('active', '=', '1')->get();
 
 function _startsWith($haystack, $needle) {
 	// search backwards starting from haystack length characters from the end
@@ -39,6 +39,29 @@ foreach ($instruments as $instrument) {
 
         $share_holdings[trim($temp[0])]=floatval(trim($temp[1]));
     }
+
+    $holding_date =  $html->find('font[size=-1"]');
+
+
+    $holding_date = $holding_date[count($holding_date) -1];
+    $holding_date =  $holding_date->plaintext;
+    $holding_date = str_replace(["[", "]", "as on ", ","], "", $holding_date);
+    try {
+
+
+    @$holding_date = \Carbon\Carbon::parse($holding_date);
+    } catch (\Exception $e) {
+    	$holding_date = \Carbon\Carbon::parse("1971-03-25");
+    }
+    
+    /*
+    foreach($html->find('font[size=-1"]') as $e)
+    {
+        $temp=explode(':',$e->plaintext);
+
+        $holding_date[trim($temp[0])]=floatval(trim($temp[1]));
+    }
+    */
         //echo $e->plaintext . '<br>';
 
 
@@ -111,6 +134,8 @@ foreach ($instruments as $instrument) {
         $f_share =$share_holdings['Foreign'];
         $public_share =$share_holdings['Public'];
 
+
+
 		$item->total=$total_securities;
 		$item->sponsor=$sponsor_share;
 		$item->govt=$govt_share;
@@ -125,6 +150,8 @@ foreach ($instruments as $instrument) {
         $item->last_agm = $last_agm;
 		$item->rserve_surplus = $rserve_surplus;
 		$item->update_date =$date;
+		$item->update_date =$date;
+		$item->holding_update =$holding_date->format('Y-m-d');
 		$item->save();
 	}else{
 		$item->update_date =$date;
@@ -136,7 +163,10 @@ foreach ($instruments as $instrument) {
 }
 }catch(\Exception $e)
 {
-	redirect('/admin/data-extractors/share-percentage-dse-import');
+	dump("a");
+	dump($e);
+	dd($e);
+	header("Refresh: .6; url=/admin/data-extractors/share-percentage-dse-import");
 }
 ?>
 <br>

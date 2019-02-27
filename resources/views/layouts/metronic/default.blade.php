@@ -156,7 +156,7 @@ $course = \App\Anouncement::where('expires_at', '>=', date('Y-m-d 00:00:00'))->o
                      </div>
 
                    <!-- BEGIN ads beneath the main menu -->
-                      {{-- @include('ads.under_the_menu_1') --}}
+                      @include('ads.under_the_menu_1')
                    <!-- END ads beneath the main menu -->
 
 

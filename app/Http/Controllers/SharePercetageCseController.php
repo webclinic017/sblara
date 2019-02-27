@@ -135,6 +135,7 @@ class SharePercetageCseController extends Controller
     {
 
     	$metas = $request->except(['_token', 'instrument_id', 'meta_date']);
+        // dd($request->all());
     	$instrument_id = $request->instrument_id;
     	$meta_date = $request->meta_date;
     	foreach ($metas as $meta_id => $meta_value) {

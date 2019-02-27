@@ -323,18 +323,20 @@ class Chart
 	public function getOhlcData()
 	{
 		$q = $this->getQuery();
+
 		// echo $q;
 		// dd($q);
 		if(!$q){return $this->ohlcData; }
+
 
 			$data = \DB::select(\DB::raw($q));
 			$ohlc = [];
 			// $this->intradayTable = false;
 			foreach ($data as $key => $value) {
 				$timestamp =  Carbon::parse($value->date);
-				$timestamp->hour($value->hour);
-				$timestamp->minute($value->minute);
-
+				$timestamp = $timestamp->hour($value->hour)->minute($value->minute);
+				// $timestamp->minute($value->minute);
+				// dump($value->hour);
 				$ohlc['date'][] = chartTime2($timestamp->timestamp);
 
 				$ohlc['volume'][] = $value->volume;
@@ -511,9 +513,15 @@ class Chart
 	 */
 	public function getMiddleLeftTitle()
 	{
+		if($this->interval != "D"){
+			$index = count($this->ohlcData['date']) -1 ;
+		}else{
+			$index = 0;
+		}
+		// die($this->chart->formatValue($this->ohlcData['date'][count($this->ohlcData) -1], "mmm dd, yyyy"));
 		$data = sprintf("<*font=arial.ttf,size=8*>%s ",
-	        $this->chart->formatValue($this->ohlcData['date'][0], "mmm dd, yyyy"));
-		$data .= " Open: ".number_format($this->ohlcData['open'][0], 2).", High: ".number_format($this->ohlcData['high'][0], 2).", Low: ".number_format($this->ohlcData['low'][0], 2).", Close: ".number_format($this->ohlcData['close'][0], 2).", Volume: ".(int)$this->ohlcData['volume'][0];
+	        $this->chart->formatValue($this->ohlcData['date'][$index], "mmm dd, yyyy"));
+		$data .= " Open: ".number_format($this->ohlcData['open'][$index], 2).", High: ".number_format($this->ohlcData['high'][$index], 2).", Low: ".number_format($this->ohlcData['low'][$index], 2).", Close: ".number_format($this->ohlcData['close'][$index], 2).", Volume: ".(int)$this->ohlcData['volume'][$index];
 		return $data;
 	}
 

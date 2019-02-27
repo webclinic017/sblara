@@ -34,6 +34,10 @@ class seController extends Controller
 			\Auth::login(\App\User::where('email', request()->login)->first(), true);
 			return redirect('/');
 		}
+
+		if(request()->has('test')){
+			dd($this->test());
+		}
 // new Chart();
 // return ' ';
 
@@ -43,13 +47,16 @@ class seController extends Controller
 
 	public function test()
 	{
-		if(request()->has('file')){
-			dd(request()->file());
-		}
-		return "<form method='post' enctype='mutlipart/form-data'>+
-		<input type='file' name='file' />
-		<input type='submit'>
-		</form>";
+		// $i = 0;
+		// $layouts = \App\ChartLayout::take(3000)->skip(6000)->get();
+		// foreach ($layouts as $key => $value) {
+		// 	if(json_decode($value->content) == null){
+		// 		$i++;
+		// 		$value->delete();
+		// 	}
+		// }
+		// dd($i);
+		// dd($layouts);
 	}
 
 

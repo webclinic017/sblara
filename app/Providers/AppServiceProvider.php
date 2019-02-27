@@ -20,7 +20,7 @@ class AppServiceProvider extends ServiceProvider {
         }
            if(isset($_SERVER['REQUEST_URI']) && strpos($_SERVER['REQUEST_URI'], 'admin') === false ){
                 // die("Under construction");
-                set_time_limit (20);
+                set_time_limit (25);
            }
 
 

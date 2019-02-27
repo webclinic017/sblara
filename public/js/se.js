@@ -643,6 +643,14 @@ function loadFundamental(e) {
   });
 }
 
+function updateFundamentalContent(instrument_id, instrument_code) {
+  $.get("/ajax/load_block/block_name=block.fundamental_full_block:instrument_id="+instrument_id+":instrument_code="+instrument_code, function (html) {
+    $("#fundamentalFull").html(html)
+    $("#fundamentalFull a[data-load=true]").trigger("click")
+  })
+
+}
+
 $(document).ready(function () {
 
 
@@ -656,6 +664,9 @@ $(document).ready(function () {
   $('#shareList').on('changed.bs.select', function (e) {
     if ($(this).val() == null) {
       return;
+    }
+    if(window.location.href.includes("fundamental/details")){
+      updateFundamentalContent($(this).val(), $(this).find("option:selected").text());
     }
     if ($('.toggle-button').data('state') != 'open') {
       $('.toggle-button').attr('data-state', 'open');

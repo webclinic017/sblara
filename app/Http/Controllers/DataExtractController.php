@@ -20,16 +20,17 @@ class DataExtractController extends Controller
 				max(case when meta_key = 'total_no_securities' then  meta_value end) total_no_securities ,
 				max(case when meta_key = 'share_percentage_director' then meta_value end) share_percentage_director  ,
 				max(case when meta_key = 'share_percentage_govt' then meta_value end) share_percentage_govt  ,
-				max(case when meta_key = 'share_percentage_institute' then meta_value end) share_percentage_institute  ,
+                max(case when meta_key = 'share_percentage_institute' then meta_value end) share_percentage_institute  ,
 				max(case when meta_key = 'share_percentage_foreign' then meta_value end) share_percentage_foreign  ,
 				max(case when meta_key = 'share_percentage_public' then meta_value end) share_percentage_public  ,
+                max(case when meta_key = 'share_percentage_institute' then meta_date end) holding_update_sb  ,
 				max(case when meta_key = 'net_asset_val_per_share' then meta_value end) net_asset_val_per_share  ,
 				max(case when meta_key = 'paid_up_capital' then meta_value end) paid_up_capital,
 				max(case when meta_key = 'authorized_capital' then meta_value end) authorized_capital  ,
 				max(case when meta_key = 'last_agm_held' then meta_value end) last_agm_held,
 				max(case when meta_key = 'reserve_and_surp' then meta_value end) reserve_and_surp 
 				from
-				 (SELECT meta_key, meta_id, meta_value, instrument_id FROM `fundamentals`   
+				 (SELECT meta_key, meta_id, meta_value, meta_date, instrument_id FROM `fundamentals`   
 				left join metas on metas.id = fundamentals.meta_id where  meta_key in ('total_no_securities', 'share_percentage_director', 'share_percentage_director', 'share_percentage_govt', 'share_percentage_institute', 'share_percentage_foreign', 'share_percentage_public', 'net_asset_val_per_share', 'paid_up_capital', 'authorized_capital', 'last_agm_held', 'reserve_and_surp')
 				and is_latest = '1' ) funda
 				

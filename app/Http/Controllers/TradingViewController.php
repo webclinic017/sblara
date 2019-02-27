@@ -82,7 +82,7 @@ where lm_date_time >= '$from_date' and lm_date_time < '$to_date' and instrument_
 ORDER BY lm_date_time asc ,total_volume asc";
 
         $all_data = \DB::select($sql);
-
+        // dd($all_data);
         $returnData=array();
         if (count($all_data)) {
 
@@ -106,9 +106,6 @@ ORDER BY lm_date_time asc ,total_volume asc";
                 $data->ltp=$ltp;
                 $grouped[$day_key][$base_time_key][]= $data;
             }
-
-
-
 
 
             foreach($grouped as $trade_date=>$all_day_data)
@@ -518,6 +515,16 @@ imagettftext($image, 10, 0, 10, 32, $color, $font, $text2);
 
     public function saveLayout(Request $request)
     {
+        ignore_user_abort(true);
+        set_time_limit(0);
+        // if( $layout->content = $request->content;
+        //     $layout->symbol = $request->symbol;
+        //     $layout->resolution = $request->resolution;
+        //     $layout->name = $request->name;)
+        if(empty($request->symbol) || empty($request->resolution)  || empty($request->name)   || empty($request->content) || json_decode($request->content) == null ){
+             return ['status'=> 'error'];
+        }
+       
         $slug = str_slug($request->name);
         $count = \App\ChartLayout::where('name', $request->name)->count();
         if($count != 0){

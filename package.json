@@ -19,7 +19,9 @@
     "vue": "^2.1.10"
   },
   "dependencies": {
+    "dotenv": "^6.2.0",
     "moment": "^2.22.2",
+    "mysql": "^2.16.0",
     "vue-cookies": "^1.5.7",
     "vue-draggable-resizable": "^1.7.3",
     "vue-masonry": "^0.11.4",

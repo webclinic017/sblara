@@ -23,8 +23,8 @@
   </div>
     
   <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 visible-lg visible-md">
-            <a href="http://vfsthread.com" target="_blank">
-              <img src="{{ URL::asset('img/ads/VFS_ipo.gif') }}" alt="100%x200" style="width: 100%; height: 100px; display: block;">
+            <a href="/omo" target="_blank">
+              <img src="{{ URL::asset('img/ads/omo.gif') }}" alt="100%x200" style="width: 100%; height: 100px; display: block;">
               </a>
   </div>  
   <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 visible-lg visible-md">

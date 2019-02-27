@@ -17,12 +17,12 @@ if (!file_exists(__DIR__.'/store/'.$hash)) {
 }else{
 	// folder exist/even file may exist 
 	//check if file expired
-	$timeago = time() - filemtime(__DIR__.'/store/'.$hash.'/d');
+	@$timeago = time() - filemtime(__DIR__.'/store/'.$hash.'/d');
 
 	$cacheTime = 60;
-	if(strpos($uri, 'history/')){
-		$cacheTime = 120;
-	}
+	// if(strpos($uri, 'history/')){
+	// 	$cacheTime = 120;
+	// }
 
 	if($timeago < $cacheTime){
 		echo file_get_contents(__DIR__.'/store/'.$hash.'/d');
