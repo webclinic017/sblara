@@ -28,7 +28,8 @@
                 <link href="/metronic_home.css" rel="stylesheet" type="text/css" />
             <!-- END PAGE LEVEL PLUGINS -->
              <link href="{{ URL::asset('metronic_custom/custom.css') }}" rel="stylesheet" type="text/css" />
-            <link href="{{ URL::asset('css/se.css') }}?v=0.03{{uniqid()}}" rel="stylesheet" type="text/css" />
+            <link href="{{ URL::asset('css/se.css') }}?v=1.03{{uniqid()}}" rel="stylesheet" type="text/css" />
+            <link href="{{ URL::asset('css/new.css') }}?v=1.01{{uniqid()}}" rel="stylesheet" type="text/css" />
             <link rel="shortcut icon" type="image/png" href="/favicon.ico" />
 
             @stack('css')

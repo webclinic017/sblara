@@ -11,8 +11,7 @@ $instrumentInfo = (Object) ['id' => $instrument_id, 'instrument_code' => $instru
 @endif
 </div>
 
-</div>
-<div class="clearfix"></div>
+<div class="clearfix"></div> 
 
 @include('block.fundamental_summary', array('instrument_id' => $instrumentInfo->id,'show_ads' => 1))
 

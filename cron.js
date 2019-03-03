@@ -282,6 +282,9 @@ function cron() {
           cron()
           return;
         }
+        if(result.length == 0){
+           process.exit()
+        }
       	result = result[0]
         var market = result;
 

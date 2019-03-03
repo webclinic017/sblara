@@ -7,7 +7,7 @@ Fundamental Insight of {{$instrumentInfo->name}} - Cat: {{$category}}
 @endsection
 
 @section('content')
-<div class="row margin-bottom-20">
+<div class="margin-bottom-20">
 
 
 {{-- fundamental block --}}

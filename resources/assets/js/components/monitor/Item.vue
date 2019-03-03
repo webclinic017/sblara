@@ -19,7 +19,7 @@
                 <!--BEGIN TABS-->
                 <div class="tab-content">
                     <div class="tab-pane" :class="{active: chartTab}" id="chart">
-                                    <div class="row" >
+
                                         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                                             <select @change="onInstrumentChanged()" v-model="instrument_id"    class="form-control " data-live-search="true">
                                                 <option value="-1">-- Select Symbol --</option>
@@ -40,8 +40,8 @@
                                             </select> -->
 
                                         </div>
-                                    </div>
-                                    <div class="row">
+
+
                                         <div class="clearfix margin-bottom-10"> </div>
 
     									<div id="chart_placeholder" >
@@ -49,8 +49,8 @@
     									        <div :id="instrument.instrument_code"></div>
     									    </div>
 
-    									</div>        
-                                  </div>
+    									</div>    
+
                     </div>
                     <div class="tab-pane" :class="{active: chartTab == false}" id="Market_depth_">
                         <div v-html="depthHtml" class="row" id="marketDiv_" >
